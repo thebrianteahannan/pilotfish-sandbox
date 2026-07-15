@@ -305,7 +305,7 @@
                 <xsl:when test="$partitionName = 'HAL' or $partitionName = 'PPA' or $partitionName = 'ARA' or $partitionName = 'PPS' or $partitionName = 'NSP' or ($partitionName = 'NGP' and string-length(PatientDemographics/admmaritalstatus) &gt; 0)">
                   <xsl:value-of select="PatientDemographics/admmaritalstatus" />
                 </xsl:when>
-                <xsl:when test="$partitionName = 'IRL' and $softwareID = ('517','514','515','516','518','519','520','521','522')">
+                <xsl:when test="($partitionName = 'IRL' and $softwareID = ('517','514','515','516','518','519','520','521','522','523')) or $softwareID = ('524')">
                   <xsl:value-of select="'U'" />
                 </xsl:when>
                 <xsl:when test="$partitionName = 'FPS' and $softwareID = ('314','315','316','317','318','319','320','321','322','330','331')">
@@ -487,7 +487,7 @@
                   </XCN.3>
                 </xsl:when>
                 <!--FOR NHL and FPS and NOA ONLY-->
-                <xsl:when test="$partitionName = 'NHL' or ($partitionName = 'FPS' and $facilityName = ('REA','REC','STB','CHJ','HEO','JRN','JWI','PAS','REU','SPP','LGX','ALX','MNX','PXL')) or $facilityName = 'NOA' or ($partitionName = 'IRL' and $facilityName = ('LAM','PUX','MAX','NFX','OCX','DEX','MIX','NXX','OMC','OXX','SUN','JFX','PWX','LWX','COX','CAX','GUX','TWX','WAX','WFX','GUP','GUQ','DEV','DEW','PES','WFP','WFQ')) or ($partitionName = 'GLF' and $facilityName = ('HMD','TON','CMX','KIX','CYX','HWX','TWX'))">
+                <xsl:when test="$partitionName = 'NHL' or ($partitionName = 'FPS' and $facilityName = ('REA','REC','STB','CHJ','HEO','JRN','JWI','PAS','REU','SPP','LGX','ALX','MNX','PXL')) or $facilityName = 'NOA' or ($partitionName = 'IRL' and $facilityName = ('LAM','PUX','MAX','NFX','OCX','DEX','MIX','NXX','OMC','OXX','SUN','JFX','PWX','LWX','COX','CAX','GUX','GAN','TWX','WAX','WFX','GUP','GUQ','DEV','DEW','PES','WFP','WFQ')) or ($partitionName = 'GLF' and $facilityName = ('HMD','TON','CMX','KIX','CYX','HWX','TWX'))">
                   <XCN.1>
                     <xsl:value-of select="Charge[string-length(orderingDrNPI) != 0 and string-length(misOrderingPhyName) != 0][1]/orderingDrNPI[1]" />
                   </XCN.1>
@@ -874,7 +874,7 @@
             <GT1.10 />
             <GT1.11>
               <xsl:choose>
-                <xsl:when test="($partitionName = 'NGP' or $partitionName = 'SPG' or $partitionName = 'GLF' or ($partitionName = 'IRL' and $softwareID = ('517','514','515','516')) or ($partitionName = 'FPS' and $softwareID = ('314','315','316','317','318','319','320')) ) and string-length(Guarantor/admGuarRel) = 0">
+                <xsl:when test="($partitionName = 'NGP' or $partitionName = 'SPG' or $partitionName = 'GLF' or ($partitionName = 'IRL' and $softwareID = ('517','514','515','516','518','519','520','521','522','523')) or ($partitionName = 'FPS' and $softwareID = ('314','315','316','317','318','319','320')) or $softwareID = ('524') ) and string-length(Guarantor/admGuarRel) = 0">
                   <xsl:choose>
                     <xsl:when test="Guarantor/admGuarName = PatientDemographics/admname">
                       <xsl:value-of select="'SE'" />
@@ -1141,7 +1141,7 @@
                           </xsl:when>
                         </xsl:choose>
                       </xsl:when>
-                      <xsl:when test="$partitionName = 'IRL' and $softwareID = ('517','514','515','516') and string-length(Insurance1/adminsinsuredrel) = 0">
+                      <xsl:when test="(($partitionName = 'IRL' and $softwareID = ('517','514','515','516','518','519','520','521','522','523')) or $softwareID = ('524')) and string-length(Insurance1/adminsinsuredrel) = 0">
                         <xsl:choose>
                           <xsl:when test="Guarantor/admGuarName = PatientDemographics/admname">
                             <xsl:value-of select="'SE'" />
