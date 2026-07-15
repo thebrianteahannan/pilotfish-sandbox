@@ -1,0 +1,23 @@
+# Secrets / license
+pflicense.key
+*.key
+
+# Large runtime artifacts
+eip.war*
+*.war
+*.zip
+eip-root-fromTEST/
+data/
+logs/
+debug-trace/
+*.mv.db
+*.trace.db
+database/*.mv.db
+
+# Local tooling
+.venv*/
+.DS_Store
+__pycache__/
+*.pyc
+.env
+.env.*
