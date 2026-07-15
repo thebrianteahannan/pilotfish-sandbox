@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="88363 Log to HL7 DFT.3 - Generate DFT.Transaction Monitor-Copy-1">
+      <ModuleConfig>
+        <ErrorListenerName>88363 Log to HL7 DFT.99 - Error Handling.Programmable (Trigger) Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <MustContainString />
+        <MustNotContainString />
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="88363 Log to HL7 DFT.1 - Pickup Files.Directory / File Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>11:32-11:32</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <PollingInterval>3</PollingInterval>
+        <PollingDirectory>$$FLAT_FILE_INPUT_DIRECTORY</PollingDirectory>
+        <FileNameRestriction>_88363 Log.*</FileNameRestriction>
+        <FileExtensionRestriction>txt</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>$$FLAT_FILE_ARCHIVE_DIRECTORY</TargetDirectory>
+        <CompatModeMoved>false</CompatModeMoved>
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+        <SynchResponse>false</SynchResponse>
+        <Timeout>60</Timeout>
+        <FileSortingMethod>System Default</FileSortingMethod>
+        <FileSortingDirection>Ascending</FileSortingDirection>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="88363 Log to HL7 DFT.1 - Pickup Files.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>theData</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Get Log Name From File Name">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:LogName:eip_name:{ognl:getAttribute('com.pilotfish.FileName').split('_')[2]}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Get Rest of Info For This Log Name In DB">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>select top 1 * from client_splits_88363 where LOG_NAME = ?</Query>
+          <QueryParams>[eip_pair:LOG_NAME:eip_name:{ognl:getAttribute('LogName')}:eip_value]</QueryParams>
+          <UserName>$$DATABASE_USERNAME</UserName>
+          <Password>$$DATABASE_PASSWORD</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$DATABASE_DRIVER</JdbcDriver>
+          <JdbcURL>$$DATABASE_URL</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>false</Autocommit>
+          <EnableTimeout>false</EnableTimeout>
+          <Timeout>600</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <CallbackListenerName />
+          <UseSingleOutputStream>false</UseSingleOutputStream>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+          <JDBCProperties>null</JDBCProperties>
+          <UseConnectionPooling>false</UseConnectionPooling>
+          <PermittedDBConnections>5</PermittedDBConnections>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>false</LogSQL>
+          <UseJdbcTyping>false</UseJdbcTyping>
+          <TransactionIsolationLevel>Default</TransactionIsolationLevel>
+          <TransactionIsolationDriverSpecific>-1</TransactionIsolationDriverSpecific>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Put Info Into Attrs">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:SoftwareID:eip_name://SOFTWAREID:eip_value][eip_pair:ClientName:eip_name://CLIENTNAME:eip_value][eip_pair:FacilityCode88363:eip_name://FACILITYCODE88363:eip_value][eip_pair:PartitionName:eip_name://PARTITION[1]:eip_value][eip_pair:Client:eip_name://CLIENT[1]:eip_value][eip_pair:FacilityName:eip_name://FACILITY:eip_value][eip_pair:FacilityCode:eip_name://FACILITYCODE:eip_value][eip_pair:DefaultPerfDr:eip_name://DEFAULTPERFDR:eip_value][eip_pair:AccountNumAlpha:eip_name://ACCOUNTNUMALPHA:eip_value][eip_pair:DateRange:eip_name://DATERANGE:eip_value][eip_pair:IsDefault:eip_name://ISDEFAULT:eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="88363 Log to HL7 DFT.1 - Pickup Files.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>theData</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="88363 Log to HL7 DFT.1 - Pickup Files.Route to Route Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>88363 Log to HL7 DFT.2 - Flat File to XML.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

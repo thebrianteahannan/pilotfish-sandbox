@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Format xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RoutePlacement="source" name="Flat File to Canonical">
+  <TransformationModule class="com.pilotfish.eip.modules.internal.FlatFileTransformationModule">
+    <ModuleConfig>
+      <ExecuteTransformation>true</ExecuteTransformation>
+      <FileSpec>specification.xml</FileSpec>
+      <GenerateEmptyXMLElements>false</GenerateEmptyXMLElements>
+    </ModuleConfig>
+  </TransformationModule>
+  <XSLT>
+    <ToXML>transform.xslt</ToXML>
+    <CacheXSLTToXML>false</CacheXSLTToXML>
+    <FromXML />
+    <CacheXSLTFromXML>false</CacheXSLTFromXML>
+    <XSLTEngine>SAXON</XSLTEngine>
+    <XSLTParameters>null</XSLTParameters>
+    <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+    <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+    <ExecuteTransformation>true</ExecuteTransformation>
+  </XSLT>
+  <FormatMetadata />
+  <SplitControl xmlns="http://www.pilotfishtechnology.com/eip/FormatSpec">
+    <JoinModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullJoinModule" />
+    <ForkModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullForkModule" />
+  </SplitControl>
+</Format>
+

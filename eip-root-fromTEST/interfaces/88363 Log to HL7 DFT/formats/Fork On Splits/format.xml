@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Format xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RoutePlacement="source" name="Fork On Splits">
+  <TransformationModule class="com.pilotfish.eip.modules.internal.RelayTransformationModule">
+    <ModuleConfig>
+      <ExecuteTransformation>true</ExecuteTransformation>
+    </ModuleConfig>
+  </TransformationModule>
+  <XSLT>
+    <ToXML />
+    <CacheXSLTToXML>false</CacheXSLTToXML>
+    <FromXML />
+    <CacheXSLTFromXML>false</CacheXSLTFromXML>
+    <XSLTEngine>SAXON</XSLTEngine>
+    <XSLTParameters>null</XSLTParameters>
+    <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+    <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+    <ExecuteTransformation>true</ExecuteTransformation>
+  </XSLT>
+  <FormatMetadata />
+  <SplitControl xmlns="http://www.pilotfishtechnology.com/eip/FormatSpec">
+    <JoinModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullJoinModule" />
+    <ForkModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.other.XPathForkingModule">
+      <ModuleConfig>
+        <ForkingXPath>//Split</ForkingXPath>
+        <Namespaces>null</Namespaces>
+        <ExceptionOnNoNodes>false</ExceptionOnNoNodes>
+        <KeepForkingSource>false</KeepForkingSource>
+      </ModuleConfig>
+    </ForkModule>
+  </SplitControl>
+</Format>
+

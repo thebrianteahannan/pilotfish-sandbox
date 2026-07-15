@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TestConfigurations>
+  <TestConfig name="Test Excel Transformation">
+    <AlternateDataSource>From Text</AlternateDataSource>
+    <StartingText>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#13;
+&lt;XCSExcelBook&gt;&#13;
+	&lt;XCSExcelSheet name="SU Accounts"&gt;&#13;
+		&lt;XCSExcelRow&gt;&#13;
+			&lt;PatientName&gt;Patient Name&lt;/PatientName&gt;&#13;
+			&lt;SpecimenNumber&gt;Specimen#&lt;/SpecimenNumber&gt;&#13;
+			&lt;PatientAccountNumber&gt;Patient Acct#&lt;/PatientAccountNumber&gt;&#13;
+			&lt;OrigSOUTDate&gt;Orig SOUT Date&lt;/OrigSOUTDate&gt;&#13;
+		&lt;/XCSExcelRow&gt;&#13;
+		&lt;XCSExcelRow&gt;&#13;
+			&lt;PatientName&gt;LOCKARD,DEBORAH LYNN&lt;/PatientName&gt;&#13;
+			&lt;SpecimenNumber&gt;SU23:LSU:2666&lt;/SpecimenNumber&gt;&#13;
+			&lt;PatientAccountNumber&gt;W72408298076&lt;/PatientAccountNumber&gt;&#13;
+			&lt;OrigSOUTDate&gt;08/10/23&lt;/OrigSOUTDate&gt;&#13;
+		&lt;/XCSExcelRow&gt;&#13;
+	&lt;/XCSExcelSheet&gt;&#13;
+&lt;/XCSExcelBook&gt;&#13;
+&#13;
+</StartingText>
+    <Stage>
+      <Identifier>transform@transport=88363 Log to HL7 DFT.6 - Generate Kickout Reports.Directory / File Transport</Identifier>
+      <IsStart>true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>true</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=88363 Log to HL7 DFT.6 - Generate Kickout Reports.Directory / File Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+</TestConfigurations>

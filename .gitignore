@@ -2,17 +2,22 @@
 pflicense.key
 *.key
 
-# Large runtime artifacts
+# Runtime input/output — never commit
+data/
+debug-trace/
+**/debug-trace/
+
+# Large / non-route artifacts
 eip.war*
 *.war
 *.zip
-eip-root-fromTEST/
-data/
-logs/
-debug-trace/
-*.mv.db
 *.trace.db
-database/*.mv.db
+logs/
+
+# Keep committed H2 DB under database/; ignore other copies
+/medreceivables.mv.db
+eip-root-fromTEST/*.mv.db
+eip-root-fromTEST/*.trace.db
 
 # Local tooling
 .venv*/

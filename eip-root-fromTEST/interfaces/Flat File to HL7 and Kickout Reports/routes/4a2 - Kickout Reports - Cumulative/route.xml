@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Flat File to HL7 and Kickout Reports.4a2 - Kickout Reports - Cumulative.Programmable (Trigger) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>23:13-23:13</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Flat File to HL7 and Kickout Reports.4a2 - Kickout Reports - Cumulative.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform-remove-query-results.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write DB Lookup XML to Disk-Copy-45">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+          <TargetDirectory>$$REPORT_TARGET_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('com.pilotfish.FileName') + '_' + 'BeforeRefLocationReport_' + new java.text.SimpleDateFormat('MMddyyyy').format(new java.util.Date()) + '.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="1. CDMProc Not Found (cumulative)">
+    <FormatProfile name="Generate tblCDMProcNotFound" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Flat File to HL7 and Kickout Reports.4a2 - Kickout Reports - Cumulative.Directory / File Transport" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$REPORT_TARGET_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:getAttribute('Partition') + getAttribute('Client') + '_CDMProcNotFound_Report'}</FileName>
+        <FileExtension>xls</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>true</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="2. DiagnosisCodes Accounts Report (not cumulative)">
+    <FormatProfile name="Generate Export_tblDG1_Order" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Flat File to HL7 and Kickout Reports.4a2 - Kickout Reports - Cumulative.Directory / File Transport2" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$REPORT_TARGET_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:getAttribute('com.pilotfish.FileName') + '_DiagnosisCodes_Accounts_Report_' + new java.text.SimpleDateFormat('MMddyyyy').format(new java.util.Date())}</FileName>
+        <FileExtension>xls</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>true</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="3. RefDr Phys NPI List Report (cumulative)">
+    <FormatProfile name="Generate tblRefdPhysNPIList_IRL" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Flat File to HL7 and Kickout Reports.4a2 - Kickout Reports - Cumulative.Directory / File Transport1" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$REPORT_TARGET_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:getAttribute('Partition') + getAttribute('Client') +  '_RefDr_Phys_NPI_List_Report'}</FileName>
+        <FileExtension>xls</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>true</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="5. RefLocation Accounts Report (not cumulative)">
+    <FormatProfile name="Generate Export_RefLocation_Accounts_Rep" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Flat File to HL7 and Kickout Reports.4a2 - Kickout Reports - Cumulative.Directory / File Transport3" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$REPORT_TARGET_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:getAttribute('com.pilotfish.FileName') + '_RefLocation_Accounts_Report_' + new java.text.SimpleDateFormat('MMddyyyy').format(new java.util.Date())}</FileName>
+        <FileExtension>xls</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>true</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

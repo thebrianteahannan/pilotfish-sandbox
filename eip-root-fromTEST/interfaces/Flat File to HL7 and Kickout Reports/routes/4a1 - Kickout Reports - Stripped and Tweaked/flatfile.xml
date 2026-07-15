@@ -1,0 +1,52 @@
+<FlatFile>
+	<Case length="2" start="1"/>
+	<Records>
+		<Record case="DX" name="Diagnosis">
+			<Field length="12" name="radAcctNum" start="3"/>
+			<Field length="10" name="Diag1" start="15"/>
+			<Field length="5" name="Diag1CodeSet" start="86"/>
+			<Field length="10" name="Diag2" start="96"/>
+			<Field length="10" name="Diag3" start="167"/>
+			<Field length="10" name="Diag4" start="238"/>
+			<Field length="10" name="Diag5" start="309"/>
+			<Field length="10" name="Diag6" start="380"/>
+			<Field length="10" name="Diag7" start="451"/>
+			<Field length="10" name="Diag8" start="522"/>
+			<Field length="10" name="Diag9" start="593"/>
+			<Field length="10" name="Diag10" start="714"/>
+			<Field length="10" name="Diag11" start="774"/>
+			<Field length="10" name="Diag12" start="834"/>
+		</Record>
+		<Record case="C" name="Charge">
+			<Field length="12" name="radAcctNum" start="5"/>
+			<Field length="8" name="radExamServDate" start="17"/>
+			<Field length="8" name="radExamBillingCode" start="25"/>
+			<Field length="3" name="radStatus" start="33"/>
+			<Field length="2" name="radCRDBIndicator" start="36"/>
+			<Field length="30" name="radPatientName" start="38"/>
+			<Field length="3" name="radExamLocation" start="68"/>
+			<Field length="10" name="radOrderingPhyMne" start="71"/>
+			<Field length="30" name="misOrderingPhyName" start="81"/>
+			<Field length="30" name="misOrderingPhyAddr" start="111"/>
+			<Field length="20" name="misOrderingPhyCity" start="141"/>
+			<Field length="10" name="radOrderingPhyUPIN" start="161"/>
+			<Field length="15" name="radOrderingPhyLic" start="171"/>
+			<Field length="10" name="radExamPerformingPhyMne" start="186"/>
+			<Field length="30" name="misPerfPhyName" start="196"/>
+			<Field length="30" name="misPerfPhyAddr" start="226"/>
+			<Field length="15" name="misPerfPhyLic" start="256"/>
+			<Field length="30" name="misPerfPhyCity" start="271"/>
+			<Field length="10" name="radPerfPhyUPIN" start="301"/>
+			<Field length="10" name="radExamCPT" start="311"/>
+			<Field length="10" name="radExamDept" start="321"/>
+			<Field length="10" name="radNumOfTimes" start="331"/>
+			<Field length="10" name="absPatientUnit" start="341"/>
+			<Field length="15" name="ExamApplication" start="351"/>
+			<Field length="30" name="examdesc" start="459"/>
+			<Field length="25" name="radExamNumber" start="376"/>
+			<Field length="25" name="ExamHCPCCode" start="401"/>
+			<Field length="12" name="ExamCharge" start="441"/>
+			<Field length="8" name="ExamBillDate" start="426"/>
+		</Record>
+	</Records>
+</FlatFile>

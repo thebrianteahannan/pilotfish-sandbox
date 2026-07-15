@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLXML xmlns="http://pilotfish.sqlxml" tagNameChars="_">
+	<Execute into="locations" as="location">
+		<SQL>
+			SELECT * FROM IRL_WEST_LOCATIONS_OF_FLG_LOCAT 
+		</SQL>
+	</Execute>
+	<XMLOut var="locations" />
+	<Execute into="cdmList" as="cdmList">
+		<SQL>
+			SELECT * FROM TBLWAL_PERFDR_CDMLIST
+		</SQL>
+	</Execute>
+	<XMLOut var="cdmList" appendTo="locations" />
+    <Execute into="cptTable" as="cptTable">
+		<SQL>
+			SELECT * FROM WEBSITEMEDICARECPTTABLE
+		</SQL>
+	</Execute>
+	<XMLOut var="cptTable" appendTo="locations" />
+	<Execute into="FLAGGED_ACCOUNTS" as="FLAGGED_ACCOUNT">
+		<SQL>
+			SELECT * FROM FLG_LOCATIONS 
+		</SQL>
+	</Execute>
+	<XMLOut var="FLAGGED_ACCOUNTS" appendTo="locations" />
+	<Execute into="Medicaid2223_Codes" as="Medicaid2223_Codes">
+		<SQL>
+			SELECT * FROM MEDICAID2223_CODES 
+		</SQL>
+	</Execute>
+	<XMLOut var="Medicaid2223_Codes" appendTo="locations" />
+	<Execute into="PMA_MOD26_ACCTS" as="PMA_MOD26_ACCTS">
+		<SQL>
+			SELECT * FROM PMA_MOD26_ACCTS 
+		</SQL>
+	</Execute>
+	<XMLOut var="PMA_MOD26_ACCTS" appendTo="locations" />
+	<Execute into="MEDIPASS_CERT_CODES" as="MEDIPASS_CERT_CODES">
+		<SQL>
+			SELECT * FROM MEDIPASS_CERT_CODES 
+		</SQL>
+	</Execute>
+	<XMLOut var="MEDIPASS_CERT_CODES" appendTo="locations" />
+	<Execute into="STRIP_LOCATIONS" as="STRIP_LOCATIONS">
+		<SQL>
+			SELECT * FROM STRIP_LOCATIONS 
+		</SQL>
+	</Execute>
+	<XMLOut var="STRIP_LOCATIONS" appendTo="locations" />
+	<Execute into="PARTITION_CLIENT_FACILITY_INFO" as="PARTITION_CLIENT_FACILITY_INFO">
+		<SQL>
+			SELECT * FROM CLIENT_SPLITS 
+		</SQL>
+	</Execute>
+	<XMLOut var="PARTITION_CLIENT_FACILITY_INFO" appendTo="locations" />
+	<Execute into="BAD_GROUP_NUMS" as="BAD_GROUP_NUMS">
+		<SQL>SELECT * FROM BAD_GROUP_NUMS
+		</SQL>
+	</Execute>
+	<XMLOut var="BAD_GROUP_NUMS" appendTo="locations" />
+	<Execute into="BAD_SECONDARY_INSURANCES" as="BAD_SECONDARY_INSURANCES">
+		<SQL>SELECT * FROM BAD_SECONDARY_INSURANCES
+		</SQL>
+	</Execute>
+	<XMLOut var="BAD_SECONDARY_INSURANCES" appendTo="locations" />
+	<Execute into="SECONDARY_INSURANCE_COMPANY_CODES" as="SECONDARY_INSURANCE_COMPANY_CODES">
+		<SQL>SELECT * FROM SECONDARY_INSURANCE_COMPANY_CODES
+		</SQL>
+	</Execute>
+	<XMLOut var="SECONDARY_INSURANCE_COMPANY_CODES" appendTo="locations" />
+	<Execute into="TWEAKING_RULES" as="TWEAKING_RULES">
+		<SQL>SELECT * FROM TWEAKING_RULES;
+		</SQL>
+	</Execute>
+	<XMLOut var="TWEAKING_RULES" appendTo="locations" />
+	<Execute into="STRIPPING_RULES" as="STRIPPING_RULES">
+		<SQL>SELECT * FROM STRIPPING_RULES;
+		</SQL>
+	</Execute>
+	<XMLOut var="STRIPPING_RULES" appendTo="locations" />
+	<Execute into="MUE_EDITS" as="MUE_EDITS">
+		<SQL>SELECT * FROM MUE_EDITS;
+		</SQL>
+	</Execute>
+	<XMLOut var="MUE_EDITS" appendTo="locations" />
+	<Execute into="ER_INS_PLAN_CODES" as="ER_INS_PLAN_CODES">
+		<SQL>SELECT * FROM ER_INS_PLAN_CODES;
+		</SQL>
+	</Execute>
+	<XMLOut var="ER_INS_PLAN_CODES" appendTo="locations" />
+	<Execute into="STRIP_PERFORMING_SITES" as="STRIP_PERFORMING_SITES">
+		<SQL>SELECT * FROM STRIP_PERFORMING_SITES;
+		</SQL>
+	</Execute>
+	<XMLOut var="STRIP_PERFORMING_SITES" appendTo="locations" />
+	
+</SQLXML>

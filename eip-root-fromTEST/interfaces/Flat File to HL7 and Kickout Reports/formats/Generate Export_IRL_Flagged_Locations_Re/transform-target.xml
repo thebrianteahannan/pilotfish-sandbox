@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="XCSExcelBook">
+				<xsd:complexType>
+					<xsd:sequence />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XCSExcelSheet">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Columns">
+								<xsd:complexType>
+									<xsd:sequence />
+									<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="Column">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+													<xsd:attribute form="unqualified" name="type" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:attribute form="unqualified" name="count" type="xsd:string" />
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:attribute form="unqualified" name="name" type="xsd:string" />
+							<xsd:attribute form="unqualified" name="rowCount" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XCSExcelRow" type="XCSExcelRow_type" />
+					<xsd:attribute form="unqualified" name="sheetCount" type="xsd:string" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="XCSExcelRow_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Partition" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Interface_Type" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Location" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Account_Number" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Patient_Name" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DOS" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Units" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CDM" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CPT" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

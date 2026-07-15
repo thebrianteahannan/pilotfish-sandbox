@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="XCSData" type="XCSData_type" />
+			<xsd:complexType name="XCSData_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="XCSRecord">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="___ACCOUNTNO" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="INTERFACE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DEFAULTFACILITY" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PATIENTNAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CPT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="UNITS" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SPECIMENNO" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PATHOLOGIST" type="xsd:string" />
+							<xsd:attribute form="unqualified" name="row" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Summary" type="Summary_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Summary_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="Column">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MaxLength" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NumNulls" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AllInteger" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AllNumeric" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MaxValue" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MinValue" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="TotValue" type="xsd:string" />
+							<xsd:attribute form="unqualified" name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

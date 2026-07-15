@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TestConfigurations>
+  <TestConfig name="WCH">
+    <AlternateDataSource>From Text</AlternateDataSource>
+    <StartingText>WCH</StartingText>
+    <Stage>
+      <Identifier>processor@transport=Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Database (SQL) Transport,processor=Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Processor</Identifier>
+      <IsStart>true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Database (SQL) Transport,processor=Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Processor1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@listener=Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Directory / File Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>forking@listener=Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Directory / File Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>routing</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Database (SQL) Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Database (SQL) Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Database (SQL) Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@listener=Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Directory / File Listener,processor=Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Post-Processor</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+</TestConfigurations>

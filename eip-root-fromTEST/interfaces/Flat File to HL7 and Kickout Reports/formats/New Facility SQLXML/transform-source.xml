@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="XCSExcelBook">
+				<xsd:complexType>
+					<xsd:sequence />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XCSExcelSheet">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Columns">
+								<xsd:complexType>
+									<xsd:sequence />
+									<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="Column">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+													<xsd:attribute form="unqualified" name="type" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:attribute form="unqualified" name="count" type="xsd:string" />
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="XCSExcelRow">
+								<xsd:complexType>
+									<xsd:sequence />
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SOFTWAREID">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CLIENTNAME">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PARTITION">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CLIENT">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="FACILITY">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="FACILITY_CODE">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DEFAULT_PERF_DR">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ACCOUNT_NUM_ALPHA">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DATE_RANGE">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="TWEAKING_RULES">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="STRIPPING_RULES">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SPLIT_FACILITY">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SPLIT_CODE">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="COMPARATOR">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CPT">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MAX_VALUE_PER_LINE">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CDM">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CODE">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DESCRIPTION">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:attribute form="unqualified" name="name" type="xsd:string" />
+							<xsd:attribute form="unqualified" name="rowCount" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:attribute form="unqualified" name="sheetCount" type="xsd:string" />
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

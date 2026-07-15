@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TestConfigurations>
+  <TestConfig name="Test1">
+    <AlternateDataSource>From File</AlternateDataSource>
+    <Stage>
+      <Identifier>processor@transport=88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Route to Route Transport,processor=Save Orig Data</Identifier>
+      <IsStart file="C:\Program Files\PilotFish Technology\eiPlatform Windows\eip-root\debug-trace\88363 Log to HL7 DFT.4 - Split On Specimen Alpha IDs\6 6_9\1 - Listener - 88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Programmable (Trigger) Listener.trace">true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Route to Route Transport,processor=Get Split Codes List From DB</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Route to Route Transport,processor=Convert DB Results XML to SplitList XML</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Route to Route Transport,processor=Save SplitCodesXML to Trans Attr</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Route to Route Transport,processor=Swap Orig Data Back In</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Route to Route Transport,processor=Assign Split Names To Records By Specimen Alpha IDs</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Route to Route Transport,processor=Group Records By Split Names</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@listener=88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Programmable (Trigger) Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>forking@listener=88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Programmable (Trigger) Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>routing</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Route to Route Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Route to Route Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Route to Route Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+</TestConfigurations>

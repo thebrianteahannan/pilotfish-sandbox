@@ -1,0 +1,2379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xtr:TransRoot xmlns:xtr="http://www.pilotfishtechnology.com/XCS/TransformEngine" xmlns:ff="http://www.pilotfishtechnology.com/XCS/TransformEngine/FlatFile">
+	<xtr:HandlerConfig>
+		<xtr:Builder>com.pilotfish.eip.transform.flatfile.RecordDeserializer</xtr:Builder>
+		<xtr:Serializer>com.pilotfish.eip.transform.flatfile.RecordSerializer</xtr:Serializer>
+	</xtr:HandlerConfig>
+	<xtr:Initialization>
+		<xtr:Record delimiter="\n" style="delimited" />
+		<xtr:Field style="fixed-width" />
+		<xtr:Direction selected="ToXML" />
+	</xtr:Initialization>
+	<xtr:ModuleRegistry>
+		<xtr:RecordControl class="com.pilotfish.eip.transform.flatfile.FieldRecordControl" name="Field RecordControl" />
+	</xtr:ModuleRegistry>
+	<xtr:RecordSegment delimiter="\n" name="Header">
+		<xtr:Field name="cpcs-record-type">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ged-create-date">
+			<ff:Start>3</ff:Start>
+			<ff:End>10</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ged-hosp-name">
+			<ff:Start>11</ff:Start>
+			<ff:End>40</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ged-hosp-addr-1">
+			<ff:Start>41</ff:Start>
+			<ff:End>70</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ged-hosp-addr-2">
+			<ff:Start>71</ff:Start>
+			<ff:End>100</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>101</ff:Start>
+			<ff:End>130</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>131</ff:Start>
+			<ff:End>155</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>156</ff:Start>
+			<ff:End>169</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-eor">
+			<ff:Start>170</ff:Start>
+			<ff:End>171</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+	<xtr:RecordSegment delimiter="\n" name="Patient-Demographics">
+		<xtr:Field name="cpcs-record-type">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-acct--prefix">
+			<ff:Start>3</ff:Start>
+			<ff:End>4</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-account-">
+			<ff:Start>5</ff:Start>
+			<ff:End>16</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-patient-status">
+			<ff:Start>17</ff:Start>
+			<ff:End>19</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-adm-ser-date">
+			<ff:Start>20</ff:Start>
+			<ff:End>27</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-abs-status-date">
+			<ff:Start>28</ff:Start>
+			<ff:End>35</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-name-full">
+			<ff:Start>36</ff:Start>
+			<ff:End>65</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-street">
+			<ff:Start>66</ff:Start>
+			<ff:End>95</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-street-2">
+			<ff:Start>96</ff:Start>
+			<ff:End>125</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-city">
+			<ff:Start>126</ff:Start>
+			<ff:End>145</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-state">
+			<ff:Start>146</ff:Start>
+			<ff:End>147</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-zip-code">
+			<ff:Start>148</ff:Start>
+			<ff:End>157</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-sex">
+			<ff:Start>158</ff:Start>
+			<ff:End>158</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-birthdate">
+			<ff:Start>159</ff:Start>
+			<ff:End>166</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-fin-class">
+			<ff:Start>167</ff:Start>
+			<ff:End>178</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-phone">
+			<ff:Start>179</ff:Start>
+			<ff:End>188</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ss-number">
+			<ff:Start>189</ff:Start>
+			<ff:End>197</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-pat-country">
+			<ff:Start>198</ff:Start>
+			<ff:End>207</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-pat-county">
+			<ff:Start>208</ff:Start>
+			<ff:End>217</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dis-disp-ub82">
+			<ff:Start>218</ff:Start>
+			<ff:End>219</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-adm-pri-ub82">
+			<ff:Start>220</ff:Start>
+			<ff:End>220</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-pat-wt-kg">
+			<ff:Start>221</ff:Start>
+			<ff:End>227</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-attend-doc-name">
+			<ff:Start>228</ff:Start>
+			<ff:End>247</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-attend-doc-mnem">
+			<ff:Start>248</ff:Start>
+			<ff:End>257</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-attend-doc-upin">
+			<ff:Start>258</ff:Start>
+			<ff:End>263</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-att-doc-dft-lic">
+			<ff:Start>264</ff:Start>
+			<ff:End>278</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ub82-code">
+			<ff:Start>279</ff:Start>
+			<ff:End>280</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>281</ff:Start>
+			<ff:End>286</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-date">
+			<ff:Start>287</ff:Start>
+			<ff:End>294</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-accident-date">
+			<ff:Start>295</ff:Start>
+			<ff:End>302</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>303</ff:Start>
+			<ff:End>317</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-admit-dx">
+			<ff:Start>318</ff:Start>
+			<ff:End>324</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-location">
+			<ff:Start>325</ff:Start>
+			<ff:End>334</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>335</ff:Start>
+			<ff:End>354</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>355</ff:Start>
+			<ff:End>361</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>362</ff:Start>
+			<ff:End>391</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-refer-doc-mnem">
+			<ff:Start>392</ff:Start>
+			<ff:End>401</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-refer-doc-name">
+			<ff:Start>402</ff:Start>
+			<ff:End>421</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-refer-doc-upin">
+			<ff:Start>422</ff:Start>
+			<ff:End>427</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ref-doc-dft-lic">
+			<ff:Start>428</ff:Start>
+			<ff:End>442</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>443</ff:Start>
+			<ff:End>454</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>455</ff:Start>
+			<ff:End>484</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>485</ff:Start>
+			<ff:End>490</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-unit-number">
+			<ff:Start>491</ff:Start>
+			<ff:End>500</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>501</ff:Start>
+			<ff:End>501</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-client-mnem">
+			<ff:Start>502</ff:Start>
+			<ff:End>513</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-client-name">
+			<ff:Start>514</ff:Start>
+			<ff:End>543</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-marital-status">
+			<ff:Start>544</ff:Start>
+			<ff:End>553</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-name">
+			<ff:Start>554</ff:Start>
+			<ff:End>583</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-street">
+			<ff:Start>584</ff:Start>
+			<ff:End>613</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-street-2">
+			<ff:Start>614</ff:Start>
+			<ff:End>643</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-city">
+			<ff:Start>644</ff:Start>
+			<ff:End>663</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-state">
+			<ff:Start>664</ff:Start>
+			<ff:End>665</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-zip">
+			<ff:Start>666</ff:Start>
+			<ff:End>675</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-relation">
+			<ff:Start>676</ff:Start>
+			<ff:End>685</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-home-phone">
+			<ff:Start>686</ff:Start>
+			<ff:End>695</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-work-phone">
+			<ff:Start>696</ff:Start>
+			<ff:End>705</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-name">
+			<ff:Start>706</ff:Start>
+			<ff:End>735</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-street">
+			<ff:Start>736</ff:Start>
+			<ff:End>765</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-street2">
+			<ff:Start>766</ff:Start>
+			<ff:End>795</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-city">
+			<ff:Start>796</ff:Start>
+			<ff:End>815</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-state">
+			<ff:Start>816</ff:Start>
+			<ff:End>817</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-zip">
+			<ff:Start>818</ff:Start>
+			<ff:End>827</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-relation">
+			<ff:Start>828</ff:Start>
+			<ff:End>837</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-home-ph">
+			<ff:Start>838</ff:Start>
+			<ff:End>847</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-work-ph">
+			<ff:Start>848</ff:Start>
+			<ff:End>857</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-name-out">
+			<ff:Start>858</ff:Start>
+			<ff:End>887</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-street">
+			<ff:Start>888</ff:Start>
+			<ff:End>917</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-street2">
+			<ff:Start>918</ff:Start>
+			<ff:End>947</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-city">
+			<ff:Start>948</ff:Start>
+			<ff:End>967</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-state">
+			<ff:Start>968</ff:Start>
+			<ff:End>969</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-zip-code">
+			<ff:Start>970</ff:Start>
+			<ff:End>979</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-phone">
+			<ff:Start>980</ff:Start>
+			<ff:End>989</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-mail-to-nm">
+			<ff:Start>990</ff:Start>
+			<ff:End>1014</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-mail-to-nm">
+			<ff:Start>1015</ff:Start>
+			<ff:End>1039</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-mail-to-nm">
+			<ff:Start>1040</ff:Start>
+			<ff:End>1064</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-1">
+			<ff:Start>1065</ff:Start>
+			<ff:End>1074</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-1">
+			<ff:Start>1075</ff:Start>
+			<ff:End>1082</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-1">
+			<ff:Start>1083</ff:Start>
+			<ff:End>1086</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-2">
+			<ff:Start>1087</ff:Start>
+			<ff:End>1096</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-2">
+			<ff:Start>1097</ff:Start>
+			<ff:End>1104</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-2">
+			<ff:Start>1105</ff:Start>
+			<ff:End>1108</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-3">
+			<ff:Start>1109</ff:Start>
+			<ff:End>1118</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-3">
+			<ff:Start>1119</ff:Start>
+			<ff:End>1126</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-3">
+			<ff:Start>1127</ff:Start>
+			<ff:End>1130</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-4">
+			<ff:Start>1131</ff:Start>
+			<ff:End>1140</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-4">
+			<ff:Start>1141</ff:Start>
+			<ff:End>1148</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-4">
+			<ff:Start>1149</ff:Start>
+			<ff:End>1152</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-5">
+			<ff:Start>1153</ff:Start>
+			<ff:End>1162</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-5">
+			<ff:Start>1163</ff:Start>
+			<ff:End>1170</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-5">
+			<ff:Start>1171</ff:Start>
+			<ff:End>1174</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-6">
+			<ff:Start>1175</ff:Start>
+			<ff:End>1184</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-6">
+			<ff:Start>1185</ff:Start>
+			<ff:End>1192</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-6">
+			<ff:Start>1193</ff:Start>
+			<ff:End>1196</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-7">
+			<ff:Start>1197</ff:Start>
+			<ff:End>1206</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-7">
+			<ff:Start>1207</ff:Start>
+			<ff:End>1214</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-7">
+			<ff:Start>1215</ff:Start>
+			<ff:End>1218</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-8">
+			<ff:Start>1219</ff:Start>
+			<ff:End>1228</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-8">
+			<ff:Start>1229</ff:Start>
+			<ff:End>1238</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-8">
+			<ff:Start>1239</ff:Start>
+			<ff:End>1242</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>1243</ff:Start>
+			<ff:End>1244</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-9">
+			<ff:Start>1245</ff:Start>
+			<ff:End>1254</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-9">
+			<ff:Start>1255</ff:Start>
+			<ff:End>1262</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-9">
+			<ff:Start>1263</ff:Start>
+			<ff:End>1266</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-10">
+			<ff:Start>1267</ff:Start>
+			<ff:End>1276</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-10">
+			<ff:Start>1277</ff:Start>
+			<ff:End>1284</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-10">
+			<ff:Start>1285</ff:Start>
+			<ff:End>1288</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-11">
+			<ff:Start>1289</ff:Start>
+			<ff:End>1298</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-11">
+			<ff:Start>1299</ff:Start>
+			<ff:End>1306</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-11">
+			<ff:Start>1307</ff:Start>
+			<ff:End>1310</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-12">
+			<ff:Start>1311</ff:Start>
+			<ff:End>1320</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-12">
+			<ff:Start>1321</ff:Start>
+			<ff:End>1328</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-12">
+			<ff:Start>1329</ff:Start>
+			<ff:End>1332</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-1">
+			<ff:Start>1333</ff:Start>
+			<ff:End>1342</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-2">
+			<ff:Start>1343</ff:Start>
+			<ff:End>1352</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-3">
+			<ff:Start>1353</ff:Start>
+			<ff:End>1362</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-4">
+			<ff:Start>1363</ff:Start>
+			<ff:End>1372</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-5">
+			<ff:Start>1373</ff:Start>
+			<ff:End>1382</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-6">
+			<ff:Start>1383</ff:Start>
+			<ff:End>1392</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-7">
+			<ff:Start>1393</ff:Start>
+			<ff:End>1402</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-8">
+			<ff:Start>1403</ff:Start>
+			<ff:End>1412</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-9">
+			<ff:Start>1413</ff:Start>
+			<ff:End>1422</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-10">
+			<ff:Start>1423</ff:Start>
+			<ff:End>1432</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-11">
+			<ff:Start>1433</ff:Start>
+			<ff:End>1442</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-12">
+			<ff:Start>1443</ff:Start>
+			<ff:End>1452</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-attend-doc-npi">
+			<ff:Start>1453</ff:Start>
+			<ff:End>1462</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-refer-doc-npi">
+			<ff:Start>1463</ff:Start>
+			<ff:End>1472</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>1473</ff:Start>
+			<ff:End>1482</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-doc-grp-npi">
+			<ff:Start>1483</ff:Start>
+			<ff:End>1492</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-doc-dft-lic">
+			<ff:Start>1493</ff:Start>
+			<ff:End>1507</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-visit-reason">
+			<ff:Start>1508</ff:Start>
+			<ff:End>1557</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-doc">
+			<ff:Start>1558</ff:Start>
+			<ff:End>1567</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-doc-name">
+			<ff:Start>1568</ff:Start>
+			<ff:End>1597</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-doc-npi">
+			<ff:Start>1598</ff:Start>
+			<ff:End>1607</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ref-doc-grp-npi">
+			<ff:Start>1608</ff:Start>
+			<ff:End>1617</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-svc-time">
+			<ff:Start>1618</ff:Start>
+			<ff:End>1621</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-depart-date">
+			<ff:Start>1622</ff:Start>
+			<ff:End>1629</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-depart-time">
+			<ff:Start>1630</ff:Start>
+			<ff:End>1633</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-doc-upin">
+			<ff:Start>1634</ff:Start>
+			<ff:End>1643</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-eor">
+			<ff:Start>1644</ff:Start>
+			<ff:End>1645</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+	<xtr:RecordSegment delimiter="\n" name="Insurance-1">
+		<xtr:Field name="cpcs-record-type">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-account-">
+			<ff:Start>3</ff:Start>
+			<ff:End>14</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-mnem">
+			<ff:Start>15</ff:Start>
+			<ff:End>24</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-zcus-name">
+			<ff:Start>25</ff:Start>
+			<ff:End>54</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-street">
+			<ff:Start>55</ff:Start>
+			<ff:End>84</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-street2">
+			<ff:Start>85</ff:Start>
+			<ff:End>114</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-city">
+			<ff:Start>115</ff:Start>
+			<ff:End>134</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-state">
+			<ff:Start>135</ff:Start>
+			<ff:End>136</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-zip-code">
+			<ff:Start>137</ff:Start>
+			<ff:End>146</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-country">
+			<ff:Start>147</ff:Start>
+			<ff:End>156</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-phone">
+			<ff:Start>157</ff:Start>
+			<ff:End>176</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-insured">
+			<ff:Start>177</ff:Start>
+			<ff:End>206</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-relation">
+			<ff:Start>207</ff:Start>
+			<ff:End>216</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-unit-number">
+			<ff:Start>217</ff:Start>
+			<ff:End>226</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>227</ff:Start>
+			<ff:End>244</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-pa-code">
+			<ff:Start>245</ff:Start>
+			<ff:End>249</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-pat-id">
+			<ff:Start>250</ff:Start>
+			<ff:End>268</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-ref-num">
+			<ff:Start>269</ff:Start>
+			<ff:End>286</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-group-">
+			<ff:Start>287</ff:Start>
+			<ff:End>301</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-policy-">
+			<ff:Start>302</ff:Start>
+			<ff:End>331</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-payor-id">
+			<ff:Start>332</ff:Start>
+			<ff:End>336</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-eff-date">
+			<ff:Start>337</ff:Start>
+			<ff:End>344</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-subs-name">
+			<ff:Start>345</ff:Start>
+			<ff:End>374</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-sub-add1">
+			<ff:Start>375</ff:Start>
+			<ff:End>404</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-sub-add2">
+			<ff:Start>405</ff:Start>
+			<ff:End>434</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-plan-id">
+			<ff:Start>435</ff:Start>
+			<ff:End>449</ff:End>
+		</xtr:Field>
+		<xtr:Field name="F466-ins1-treatauth">
+			<ff:Start>450</ff:Start>
+			<ff:End>479</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-sub-city">
+			<ff:Start>480</ff:Start>
+			<ff:End>499</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-sub-state">
+			<ff:Start>500</ff:Start>
+			<ff:End>501</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-sub-zip">
+			<ff:Start>502</ff:Start>
+			<ff:End>511</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-sub-gender">
+			<ff:Start>512</ff:Start>
+			<ff:End>512</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-sub-dob">
+			<ff:Start>513</ff:Start>
+			<ff:End>520</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-group-name">
+			<ff:Start>521</ff:Start>
+			<ff:End>550</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-eor">
+			<ff:Start>551</ff:Start>
+			<ff:End>552</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+	<xtr:RecordSegment delimiter="\n" name="Insurance-2">
+		<xtr:Field name="cpcs-record-type">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-account-">
+			<ff:Start>3</ff:Start>
+			<ff:End>14</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-mnem">
+			<ff:Start>15</ff:Start>
+			<ff:End>24</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-zcus-name">
+			<ff:Start>25</ff:Start>
+			<ff:End>54</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-street">
+			<ff:Start>55</ff:Start>
+			<ff:End>84</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-street2">
+			<ff:Start>85</ff:Start>
+			<ff:End>114</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-city">
+			<ff:Start>115</ff:Start>
+			<ff:End>134</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-state">
+			<ff:Start>135</ff:Start>
+			<ff:End>136</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-zip-code">
+			<ff:Start>137</ff:Start>
+			<ff:End>146</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-country">
+			<ff:Start>147</ff:Start>
+			<ff:End>156</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-phone">
+			<ff:Start>157</ff:Start>
+			<ff:End>176</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-insured">
+			<ff:Start>177</ff:Start>
+			<ff:End>206</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-relation">
+			<ff:Start>207</ff:Start>
+			<ff:End>216</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-unit-number">
+			<ff:Start>217</ff:Start>
+			<ff:End>226</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>227</ff:Start>
+			<ff:End>244</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-pa-code">
+			<ff:Start>245</ff:Start>
+			<ff:End>249</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-pat-id">
+			<ff:Start>250</ff:Start>
+			<ff:End>268</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-ref-num">
+			<ff:Start>269</ff:Start>
+			<ff:End>286</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-group-">
+			<ff:Start>287</ff:Start>
+			<ff:End>301</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-policy-">
+			<ff:Start>302</ff:Start>
+			<ff:End>331</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-payor-id">
+			<ff:Start>332</ff:Start>
+			<ff:End>336</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-eff-date">
+			<ff:Start>337</ff:Start>
+			<ff:End>344</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-subs-name">
+			<ff:Start>345</ff:Start>
+			<ff:End>374</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-sub-add1">
+			<ff:Start>375</ff:Start>
+			<ff:End>404</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-sub-add2">
+			<ff:Start>405</ff:Start>
+			<ff:End>434</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-plan-id">
+			<ff:Start>435</ff:Start>
+			<ff:End>449</ff:End>
+		</xtr:Field>
+		<xtr:Field name="F466-ins2-treatauth">
+			<ff:Start>450</ff:Start>
+			<ff:End>479</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-sub-city">
+			<ff:Start>480</ff:Start>
+			<ff:End>499</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-sub-state">
+			<ff:Start>500</ff:Start>
+			<ff:End>501</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-sub-zip">
+			<ff:Start>502</ff:Start>
+			<ff:End>511</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-sub-gender">
+			<ff:Start>512</ff:Start>
+			<ff:End>512</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-sub-dob">
+			<ff:Start>513</ff:Start>
+			<ff:End>520</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-group-name">
+			<ff:Start>521</ff:Start>
+			<ff:End>550</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-eor">
+			<ff:Start>551</ff:Start>
+			<ff:End>552</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+	<xtr:RecordSegment delimiter="\n" name="Insurance-3">
+		<xtr:Field name="cpcs-record-type">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-account-">
+			<ff:Start>3</ff:Start>
+			<ff:End>14</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-mnem">
+			<ff:Start>15</ff:Start>
+			<ff:End>24</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-zcus-name">
+			<ff:Start>25</ff:Start>
+			<ff:End>54</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-street">
+			<ff:Start>55</ff:Start>
+			<ff:End>84</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-street2">
+			<ff:Start>85</ff:Start>
+			<ff:End>114</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-city">
+			<ff:Start>115</ff:Start>
+			<ff:End>134</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-state">
+			<ff:Start>135</ff:Start>
+			<ff:End>136</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-zip-code">
+			<ff:Start>137</ff:Start>
+			<ff:End>146</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-country">
+			<ff:Start>147</ff:Start>
+			<ff:End>156</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-phone">
+			<ff:Start>157</ff:Start>
+			<ff:End>176</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-insured">
+			<ff:Start>177</ff:Start>
+			<ff:End>206</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-relation">
+			<ff:Start>207</ff:Start>
+			<ff:End>216</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-unit-number">
+			<ff:Start>217</ff:Start>
+			<ff:End>226</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>227</ff:Start>
+			<ff:End>244</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-pa-code">
+			<ff:Start>245</ff:Start>
+			<ff:End>249</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-pat-id">
+			<ff:Start>250</ff:Start>
+			<ff:End>268</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-ref-num">
+			<ff:Start>269</ff:Start>
+			<ff:End>286</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-group-">
+			<ff:Start>287</ff:Start>
+			<ff:End>301</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-policy-">
+			<ff:Start>302</ff:Start>
+			<ff:End>331</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-payor-id">
+			<ff:Start>332</ff:Start>
+			<ff:End>336</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-eff-date">
+			<ff:Start>337</ff:Start>
+			<ff:End>344</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-subs-name">
+			<ff:Start>345</ff:Start>
+			<ff:End>374</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-sub-add1">
+			<ff:Start>375</ff:Start>
+			<ff:End>404</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-sub-add2">
+			<ff:Start>405</ff:Start>
+			<ff:End>434</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-plan-id">
+			<ff:Start>435</ff:Start>
+			<ff:End>449</ff:End>
+		</xtr:Field>
+		<xtr:Field name="F466-ins3-treatauth">
+			<ff:Start>450</ff:Start>
+			<ff:End>479</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-sub-city">
+			<ff:Start>480</ff:Start>
+			<ff:End>499</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-sub-state">
+			<ff:Start>500</ff:Start>
+			<ff:End>501</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-sub-zip">
+			<ff:Start>502</ff:Start>
+			<ff:End>511</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-sub-gender">
+			<ff:Start>512</ff:Start>
+			<ff:End>512</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-sub-dob">
+			<ff:Start>513</ff:Start>
+			<ff:End>520</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-group-name">
+			<ff:Start>521</ff:Start>
+			<ff:End>550</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-eor">
+			<ff:Start>551</ff:Start>
+			<ff:End>552</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+	<xtr:RecordSegment delimiter="\n" name="Guarantor">
+		<xtr:Field name="cpcs-record-type">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-account-">
+			<ff:Start>3</ff:Start>
+			<ff:End>14</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-name">
+			<ff:Start>15</ff:Start>
+			<ff:End>44</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-street">
+			<ff:Start>45</ff:Start>
+			<ff:End>74</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-street-2">
+			<ff:Start>75</ff:Start>
+			<ff:End>94</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-city">
+			<ff:Start>95</ff:Start>
+			<ff:End>114</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-state">
+			<ff:Start>115</ff:Start>
+			<ff:End>116</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-zip-code">
+			<ff:Start>117</ff:Start>
+			<ff:End>126</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-county">
+			<ff:Start>127</ff:Start>
+			<ff:End>136</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-country">
+			<ff:Start>137</ff:Start>
+			<ff:End>146</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-phone">
+			<ff:Start>147</ff:Start>
+			<ff:End>164</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-nam-v2">
+			<ff:Start>165</ff:Start>
+			<ff:End>184</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-addr">
+			<ff:Start>185</ff:Start>
+			<ff:End>214</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-addr-2">
+			<ff:Start>215</ff:Start>
+			<ff:End>244</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-city">
+			<ff:Start>245</ff:Start>
+			<ff:End>264</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-state">
+			<ff:Start>265</ff:Start>
+			<ff:End>266</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-zip">
+			<ff:Start>267</ff:Start>
+			<ff:End>276</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-phone">
+			<ff:Start>277</ff:Start>
+			<ff:End>286</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-ss-num">
+			<ff:Start>287</ff:Start>
+			<ff:End>295</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-relation">
+			<ff:Start>296</ff:Start>
+			<ff:End>305</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-unit-number">
+			<ff:Start>306</ff:Start>
+			<ff:End>315</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>316</ff:Start>
+			<ff:End>331</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-eor">
+			<ff:Start>332</ff:Start>
+			<ff:End>333</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+	<xtr:RecordSegment delimiter="\n" name="Charge-Record">
+		<xtr:Field name="cpcs-record-type">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-acct--prefix">
+			<ff:Start>3</ff:Start>
+			<ff:End>4</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-pat-acct-">
+			<ff:Start>5</ff:Start>
+			<ff:End>16</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-ser-date">
+			<ff:Start>17</ff:Start>
+			<ff:End>24</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-bill-code">
+			<ff:Start>25</ff:Start>
+			<ff:End>32</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-status">
+			<ff:Start>33</ff:Start>
+			<ff:End>35</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-creddebit">
+			<ff:Start>36</ff:Start>
+			<ff:End>37</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-pat-name">
+			<ff:Start>38</ff:Start>
+			<ff:End>67</ff:End>
+		</xtr:Field>
+		<xtr:Field name="rad-exam-campus">
+			<ff:Start>68</ff:Start>
+			<ff:End>70</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-ord-dc-mnem">
+			<ff:Start>71</ff:Start>
+			<ff:End>80</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-ord-dc-name">
+			<ff:Start>81</ff:Start>
+			<ff:End>110</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-ord-dc-addr">
+			<ff:Start>111</ff:Start>
+			<ff:End>140</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-ord-dc-city">
+			<ff:Start>141</ff:Start>
+			<ff:End>160</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-ord-dc-upin">
+			<ff:Start>161</ff:Start>
+			<ff:End>170</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ord-doc-dft-lic">
+			<ff:Start>171</ff:Start>
+			<ff:End>185</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-per-dc-mnem">
+			<ff:Start>186</ff:Start>
+			<ff:End>195</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-per-dc-name">
+			<ff:Start>196</ff:Start>
+			<ff:End>225</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-per-dc-addr">
+			<ff:Start>226</ff:Start>
+			<ff:End>255</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-per-doc-dft-lic">
+			<ff:Start>256</ff:Start>
+			<ff:End>270</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-per-dc-city">
+			<ff:Start>271</ff:Start>
+			<ff:End>300</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-per-dc-upin">
+			<ff:Start>301</ff:Start>
+			<ff:End>310</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-cpt-code">
+			<ff:Start>311</ff:Start>
+			<ff:End>320</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-dept">
+			<ff:Start>321</ff:Start>
+			<ff:End>330</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-quantity">
+			<ff:Start>331</ff:Start>
+			<ff:End>340</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-unit-number">
+			<ff:Start>341</ff:Start>
+			<ff:End>350</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-mtech-appl">
+			<ff:Start>351</ff:Start>
+			<ff:End>365</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>366</ff:Start>
+			<ff:End>375</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-rad-exam-">
+			<ff:Start>376</ff:Start>
+			<ff:End>400</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-hcpc-code">
+			<ff:Start>401</ff:Start>
+			<ff:End>425</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-bill-date">
+			<ff:Start>426</ff:Start>
+			<ff:End>433</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>434</ff:Start>
+			<ff:End>458</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-desc">
+			<ff:Start>459</ff:Start>
+			<ff:End>488</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-ord-dc-npi">
+			<ff:Start>489</ff:Start>
+			<ff:End>498</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-chg-per-dc-npi">
+			<ff:Start>499</ff:Start>
+			<ff:End>508</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ord-doc-grp-npi">
+			<ff:Start>509</ff:Start>
+			<ff:End>518</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-per-doc-grp-npi">
+			<ff:Start>519</ff:Start>
+			<ff:End>528</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>529</ff:Start>
+			<ff:End>529</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-eor">
+			<ff:Start>530</ff:Start>
+			<ff:End>531</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+	<xtr:RecordSegment delimiter="\n" name="Query-Response">
+		<xtr:Field name="cpcs-record-type">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-account-">
+			<ff:Start>3</ff:Start>
+			<ff:End>14</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-1">
+			<ff:Start>15</ff:Start>
+			<ff:End>74</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-2">
+			<ff:Start>75</ff:Start>
+			<ff:End>134</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-3">
+			<ff:Start>135</ff:Start>
+			<ff:End>194</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-4">
+			<ff:Start>195</ff:Start>
+			<ff:End>254</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-5">
+			<ff:Start>255</ff:Start>
+			<ff:End>264</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-6">
+			<ff:Start>265</ff:Start>
+			<ff:End>274</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-7">
+			<ff:Start>275</ff:Start>
+			<ff:End>284</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-8">
+			<ff:Start>285</ff:Start>
+			<ff:End>294</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-9">
+			<ff:Start>295</ff:Start>
+			<ff:End>304</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-10">
+			<ff:Start>305</ff:Start>
+			<ff:End>314</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-11">
+			<ff:Start>315</ff:Start>
+			<ff:End>324</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-12">
+			<ff:Start>325</ff:Start>
+			<ff:End>334</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-13">
+			<ff:Start>335</ff:Start>
+			<ff:End>344</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-14">
+			<ff:Start>345</ff:Start>
+			<ff:End>404</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-query-15">
+			<ff:Start>405</ff:Start>
+			<ff:End>464</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-eor">
+			<ff:Start>465</ff:Start>
+			<ff:End>466</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+	<xtr:RecordSegment delimiter="\n" name="Diagnosis-Codes">
+		<xtr:Field name="cpcs-record-type">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-account-">
+			<ff:Start>3</ff:Start>
+			<ff:End>14</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-1">
+			<ff:Start>15</ff:Start>
+			<ff:End>21</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-1-nam">
+			<ff:Start>22</ff:Start>
+			<ff:End>81</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-1-poa">
+			<ff:Start>82</ff:Start>
+			<ff:End>82</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-2">
+			<ff:Start>83</ff:Start>
+			<ff:End>89</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-2-nam">
+			<ff:Start>90</ff:Start>
+			<ff:End>149</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-2-poa">
+			<ff:Start>150</ff:Start>
+			<ff:End>150</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-3">
+			<ff:Start>151</ff:Start>
+			<ff:End>157</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-3-nam">
+			<ff:Start>158</ff:Start>
+			<ff:End>217</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-3-poa">
+			<ff:Start>218</ff:Start>
+			<ff:End>218</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-4">
+			<ff:Start>219</ff:Start>
+			<ff:End>225</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-4-nam">
+			<ff:Start>226</ff:Start>
+			<ff:End>285</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-4-poa">
+			<ff:Start>286</ff:Start>
+			<ff:End>286</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-5">
+			<ff:Start>287</ff:Start>
+			<ff:End>293</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-5-nam">
+			<ff:Start>294</ff:Start>
+			<ff:End>353</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-5-poa">
+			<ff:Start>354</ff:Start>
+			<ff:End>354</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-6">
+			<ff:Start>355</ff:Start>
+			<ff:End>361</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-6-nam">
+			<ff:Start>362</ff:Start>
+			<ff:End>421</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-6-poa">
+			<ff:Start>422</ff:Start>
+			<ff:End>422</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-7">
+			<ff:Start>423</ff:Start>
+			<ff:End>429</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-7-nam">
+			<ff:Start>430</ff:Start>
+			<ff:End>489</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-7-poa">
+			<ff:Start>490</ff:Start>
+			<ff:End>490</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-8">
+			<ff:Start>491</ff:Start>
+			<ff:End>497</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-8-nam">
+			<ff:Start>498</ff:Start>
+			<ff:End>557</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-8-poa">
+			<ff:Start>558</ff:Start>
+			<ff:End>558</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-9">
+			<ff:Start>559</ff:Start>
+			<ff:End>565</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-9-nam">
+			<ff:Start>566</ff:Start>
+			<ff:End>625</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-9-poa">
+			<ff:Start>626</ff:Start>
+			<ff:End>626</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-rfv-dx-1-name">
+			<ff:Start>627</ff:Start>
+			<ff:End>676</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-rfv-dx-1">
+			<ff:Start>677</ff:Start>
+			<ff:End>683</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-rfv-dx-2-name">
+			<ff:Start>684</ff:Start>
+			<ff:End>733</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-rfv-dx-2">
+			<ff:Start>734</ff:Start>
+			<ff:End>740</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-rfv-dx-3-name">
+			<ff:Start>741</ff:Start>
+			<ff:End>790</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-rfv-dx-3">
+			<ff:Start>791</ff:Start>
+			<ff:End>797</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-eor">
+			<ff:Start>798</ff:Start>
+			<ff:End>799</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+	<xtr:RecordSegment delimiter="\n" name="Trailer">
+		<xtr:Field name="cpcs-record-type">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-eor">
+			<ff:Start>3</ff:Start>
+			<ff:End>4</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+	<xtr:RecordSegment delimiter="\n" name="Diagnosis-Codes-v2">
+		<xtr:Field name="cpcs-record-type">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-account-">
+			<ff:Start>3</ff:Start>
+			<ff:End>14</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-1">
+			<ff:Start>15</ff:Start>
+			<ff:End>24</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-1-nam">
+			<ff:Start>25</ff:Start>
+			<ff:End>84</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-1-poa">
+			<ff:Start>85</ff:Start>
+			<ff:End>85</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-2">
+			<ff:Start>86</ff:Start>
+			<ff:End>95</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-2-nam">
+			<ff:Start>96</ff:Start>
+			<ff:End>155</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-2-poa">
+			<ff:Start>156</ff:Start>
+			<ff:End>156</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-3">
+			<ff:Start>157</ff:Start>
+			<ff:End>166</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-3-nam">
+			<ff:Start>167</ff:Start>
+			<ff:End>226</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-3-poa">
+			<ff:Start>227</ff:Start>
+			<ff:End>227</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-4">
+			<ff:Start>228</ff:Start>
+			<ff:End>237</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-4-nam">
+			<ff:Start>238</ff:Start>
+			<ff:End>297</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-4-poa">
+			<ff:Start>298</ff:Start>
+			<ff:End>298</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-5">
+			<ff:Start>299</ff:Start>
+			<ff:End>308</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-5-nam">
+			<ff:Start>309</ff:Start>
+			<ff:End>368</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-5-poa">
+			<ff:Start>369</ff:Start>
+			<ff:End>369</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-6">
+			<ff:Start>370</ff:Start>
+			<ff:End>379</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-6-nam">
+			<ff:Start>380</ff:Start>
+			<ff:End>439</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-6-poa">
+			<ff:Start>440</ff:Start>
+			<ff:End>440</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-7">
+			<ff:Start>441</ff:Start>
+			<ff:End>450</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-7-nam">
+			<ff:Start>451</ff:Start>
+			<ff:End>510</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-7-poa">
+			<ff:Start>511</ff:Start>
+			<ff:End>511</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-8">
+			<ff:Start>512</ff:Start>
+			<ff:End>521</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-8-nam">
+			<ff:Start>522</ff:Start>
+			<ff:End>581</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-8-poa">
+			<ff:Start>582</ff:Start>
+			<ff:End>582</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-9">
+			<ff:Start>583</ff:Start>
+			<ff:End>592</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-9-nam">
+			<ff:Start>593</ff:Start>
+			<ff:End>652</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-dx-9-poa">
+			<ff:Start>653</ff:Start>
+			<ff:End>653</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-rfv-dx-1-name">
+			<ff:Start>654</ff:Start>
+			<ff:End>703</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-rfv-dx-1">
+			<ff:Start>704</ff:Start>
+			<ff:End>713</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-rfv-dx-2-name">
+			<ff:Start>714</ff:Start>
+			<ff:End>763</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-rfv-dx-2">
+			<ff:Start>764</ff:Start>
+			<ff:End>773</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-rfv-dx-3-name">
+			<ff:Start>774</ff:Start>
+			<ff:End>823</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-rfv-dx-3">
+			<ff:Start>824</ff:Start>
+			<ff:End>833</ff:End>
+		</xtr:Field>
+		<xtr:Field name="filler">
+			<ff:Start>834</ff:Start>
+			<ff:End>848</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-eor">
+			<ff:Start>849</ff:Start>
+			<ff:End>850</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+	<xtr:RecordSegment delimiter="\n" name="Guarantor-v2">
+		<xtr:Field name="cpcs-record-type">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-account-">
+			<ff:Start>3</ff:Start>
+			<ff:End>14</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-name">
+			<ff:Start>15</ff:Start>
+			<ff:End>44</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-street">
+			<ff:Start>45</ff:Start>
+			<ff:End>74</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-street-2">
+			<ff:Start>75</ff:Start>
+			<ff:End>94</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-city">
+			<ff:Start>95</ff:Start>
+			<ff:End>114</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-state">
+			<ff:Start>115</ff:Start>
+			<ff:End>116</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-zip-code">
+			<ff:Start>117</ff:Start>
+			<ff:End>126</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-county">
+			<ff:Start>127</ff:Start>
+			<ff:End>136</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-country">
+			<ff:Start>137</ff:Start>
+			<ff:End>146</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-phone">
+			<ff:Start>147</ff:Start>
+			<ff:End>164</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-nam-v2">
+			<ff:Start>165</ff:Start>
+			<ff:End>184</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-addr">
+			<ff:Start>185</ff:Start>
+			<ff:End>214</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-addr-2">
+			<ff:Start>215</ff:Start>
+			<ff:End>244</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-city">
+			<ff:Start>245</ff:Start>
+			<ff:End>264</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-state">
+			<ff:Start>265</ff:Start>
+			<ff:End>266</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-zip">
+			<ff:Start>267</ff:Start>
+			<ff:End>276</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-emp-phone">
+			<ff:Start>277</ff:Start>
+			<ff:End>286</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-ss-num">
+			<ff:Start>287</ff:Start>
+			<ff:End>295</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-guar-relation">
+			<ff:Start>296</ff:Start>
+			<ff:End>305</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-unit-number">
+			<ff:Start>306</ff:Start>
+			<ff:End>315</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>316</ff:Start>
+			<ff:End>331</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-eor">
+			<ff:Start>332</ff:Start>
+			<ff:End>333</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+	<xtr:RecordSegment delimiter="\n" name="Patient-Demographics-v2">
+		<xtr:Field name="cpcs-record-type">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-acct--prefix">
+			<ff:Start>3</ff:Start>
+			<ff:End>4</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-account-">
+			<ff:Start>5</ff:Start>
+			<ff:End>16</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-patient-status">
+			<ff:Start>17</ff:Start>
+			<ff:End>19</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-adm-ser-date">
+			<ff:Start>20</ff:Start>
+			<ff:End>27</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-abs-status-date">
+			<ff:Start>28</ff:Start>
+			<ff:End>35</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-name-full">
+			<ff:Start>36</ff:Start>
+			<ff:End>65</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-street">
+			<ff:Start>66</ff:Start>
+			<ff:End>95</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-street-2">
+			<ff:Start>96</ff:Start>
+			<ff:End>125</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-city">
+			<ff:Start>126</ff:Start>
+			<ff:End>145</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-state">
+			<ff:Start>146</ff:Start>
+			<ff:End>147</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-zip-code">
+			<ff:Start>148</ff:Start>
+			<ff:End>157</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-sex">
+			<ff:Start>158</ff:Start>
+			<ff:End>158</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-birthdate">
+			<ff:Start>159</ff:Start>
+			<ff:End>166</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-fin-class">
+			<ff:Start>167</ff:Start>
+			<ff:End>178</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-phone">
+			<ff:Start>179</ff:Start>
+			<ff:End>188</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ss-number">
+			<ff:Start>189</ff:Start>
+			<ff:End>197</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-pat-country">
+			<ff:Start>198</ff:Start>
+			<ff:End>207</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-pat-county">
+			<ff:Start>208</ff:Start>
+			<ff:End>217</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dis-disp-ub82">
+			<ff:Start>218</ff:Start>
+			<ff:End>219</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-adm-pri-ub82">
+			<ff:Start>220</ff:Start>
+			<ff:End>220</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-pat-wt-kg">
+			<ff:Start>221</ff:Start>
+			<ff:End>227</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-attend-doc-name">
+			<ff:Start>228</ff:Start>
+			<ff:End>247</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-attend-doc-mnem">
+			<ff:Start>248</ff:Start>
+			<ff:End>257</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-attend-doc-upin">
+			<ff:Start>258</ff:Start>
+			<ff:End>263</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-att-doc-dft-lic">
+			<ff:Start>264</ff:Start>
+			<ff:End>278</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ub82-code">
+			<ff:Start>279</ff:Start>
+			<ff:End>280</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>281</ff:Start>
+			<ff:End>286</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-dischg-date">
+			<ff:Start>287</ff:Start>
+			<ff:End>294</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-accident-date">
+			<ff:Start>295</ff:Start>
+			<ff:End>302</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>303</ff:Start>
+			<ff:End>317</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-admit-dx">
+			<ff:Start>318</ff:Start>
+			<ff:End>324</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-location">
+			<ff:Start>325</ff:Start>
+			<ff:End>334</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>335</ff:Start>
+			<ff:End>354</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>355</ff:Start>
+			<ff:End>361</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>362</ff:Start>
+			<ff:End>391</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-refer-doc-mnem">
+			<ff:Start>392</ff:Start>
+			<ff:End>401</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-refer-doc-name">
+			<ff:Start>402</ff:Start>
+			<ff:End>421</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-refer-doc-upin">
+			<ff:Start>422</ff:Start>
+			<ff:End>427</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ref-doc-dft-lic">
+			<ff:Start>428</ff:Start>
+			<ff:End>442</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>443</ff:Start>
+			<ff:End>454</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>455</ff:Start>
+			<ff:End>484</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>485</ff:Start>
+			<ff:End>490</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-unit-number">
+			<ff:Start>491</ff:Start>
+			<ff:End>500</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>501</ff:Start>
+			<ff:End>501</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-client-mnem">
+			<ff:Start>502</ff:Start>
+			<ff:End>513</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-client-name">
+			<ff:Start>514</ff:Start>
+			<ff:End>543</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-marital-status">
+			<ff:Start>544</ff:Start>
+			<ff:End>553</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-name">
+			<ff:Start>554</ff:Start>
+			<ff:End>583</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-street">
+			<ff:Start>584</ff:Start>
+			<ff:End>613</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-street-2">
+			<ff:Start>614</ff:Start>
+			<ff:End>643</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-city">
+			<ff:Start>644</ff:Start>
+			<ff:End>663</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-state">
+			<ff:Start>664</ff:Start>
+			<ff:End>665</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-zip">
+			<ff:Start>666</ff:Start>
+			<ff:End>675</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-relation">
+			<ff:Start>676</ff:Start>
+			<ff:End>685</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-home-phone">
+			<ff:Start>686</ff:Start>
+			<ff:End>695</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-nok-work-phone">
+			<ff:Start>696</ff:Start>
+			<ff:End>705</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-name">
+			<ff:Start>706</ff:Start>
+			<ff:End>735</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-street">
+			<ff:Start>736</ff:Start>
+			<ff:End>765</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-street2">
+			<ff:Start>766</ff:Start>
+			<ff:End>795</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-city">
+			<ff:Start>796</ff:Start>
+			<ff:End>815</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-state">
+			<ff:Start>816</ff:Start>
+			<ff:End>817</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-zip">
+			<ff:Start>818</ff:Start>
+			<ff:End>827</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-relation">
+			<ff:Start>828</ff:Start>
+			<ff:End>837</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-home-ph">
+			<ff:Start>838</ff:Start>
+			<ff:End>847</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-notify-work-ph">
+			<ff:Start>848</ff:Start>
+			<ff:End>857</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-name-out">
+			<ff:Start>858</ff:Start>
+			<ff:End>887</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-street">
+			<ff:Start>888</ff:Start>
+			<ff:End>917</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-street2">
+			<ff:Start>918</ff:Start>
+			<ff:End>947</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-city">
+			<ff:Start>948</ff:Start>
+			<ff:End>967</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-state">
+			<ff:Start>968</ff:Start>
+			<ff:End>969</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-zip-code">
+			<ff:Start>970</ff:Start>
+			<ff:End>979</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-emp-phone">
+			<ff:Start>980</ff:Start>
+			<ff:End>989</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins1-mail-to-nm">
+			<ff:Start>990</ff:Start>
+			<ff:End>1014</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins2-mail-to-nm">
+			<ff:Start>1015</ff:Start>
+			<ff:End>1039</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ins3-mail-to-nm">
+			<ff:Start>1040</ff:Start>
+			<ff:End>1064</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-1">
+			<ff:Start>1065</ff:Start>
+			<ff:End>1074</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-1">
+			<ff:Start>1075</ff:Start>
+			<ff:End>1082</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-1">
+			<ff:Start>1083</ff:Start>
+			<ff:End>1086</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-2">
+			<ff:Start>1087</ff:Start>
+			<ff:End>1096</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-2">
+			<ff:Start>1097</ff:Start>
+			<ff:End>1104</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-2">
+			<ff:Start>1105</ff:Start>
+			<ff:End>1108</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-3">
+			<ff:Start>1109</ff:Start>
+			<ff:End>1118</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-3">
+			<ff:Start>1119</ff:Start>
+			<ff:End>1126</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-3">
+			<ff:Start>1127</ff:Start>
+			<ff:End>1130</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-4">
+			<ff:Start>1131</ff:Start>
+			<ff:End>1140</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-4">
+			<ff:Start>1141</ff:Start>
+			<ff:End>1148</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-4">
+			<ff:Start>1149</ff:Start>
+			<ff:End>1152</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-5">
+			<ff:Start>1153</ff:Start>
+			<ff:End>1162</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-5">
+			<ff:Start>1163</ff:Start>
+			<ff:End>1170</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-5">
+			<ff:Start>1171</ff:Start>
+			<ff:End>1174</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-6">
+			<ff:Start>1175</ff:Start>
+			<ff:End>1184</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-6">
+			<ff:Start>1185</ff:Start>
+			<ff:End>1192</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-6">
+			<ff:Start>1193</ff:Start>
+			<ff:End>1196</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-7">
+			<ff:Start>1197</ff:Start>
+			<ff:End>1206</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-7">
+			<ff:Start>1207</ff:Start>
+			<ff:End>1214</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-7">
+			<ff:Start>1215</ff:Start>
+			<ff:End>1218</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-8">
+			<ff:Start>1219</ff:Start>
+			<ff:End>1228</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-8">
+			<ff:Start>1229</ff:Start>
+			<ff:End>1238</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-8">
+			<ff:Start>1239</ff:Start>
+			<ff:End>1242</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>1243</ff:Start>
+			<ff:End>1244</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-9">
+			<ff:Start>1245</ff:Start>
+			<ff:End>1254</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-9">
+			<ff:Start>1255</ff:Start>
+			<ff:End>1262</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-9">
+			<ff:Start>1263</ff:Start>
+			<ff:End>1266</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-10">
+			<ff:Start>1267</ff:Start>
+			<ff:End>1276</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-10">
+			<ff:Start>1277</ff:Start>
+			<ff:End>1284</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-10">
+			<ff:Start>1285</ff:Start>
+			<ff:End>1288</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-11">
+			<ff:Start>1289</ff:Start>
+			<ff:End>1298</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-11">
+			<ff:Start>1299</ff:Start>
+			<ff:End>1306</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-11">
+			<ff:Start>1307</ff:Start>
+			<ff:End>1310</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occurrence-cd-12">
+			<ff:Start>1311</ff:Start>
+			<ff:End>1320</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-date-12">
+			<ff:Start>1321</ff:Start>
+			<ff:End>1328</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-time-12">
+			<ff:Start>1329</ff:Start>
+			<ff:End>1332</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-1">
+			<ff:Start>1333</ff:Start>
+			<ff:End>1342</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-2">
+			<ff:Start>1343</ff:Start>
+			<ff:End>1352</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-3">
+			<ff:Start>1353</ff:Start>
+			<ff:End>1362</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-4">
+			<ff:Start>1363</ff:Start>
+			<ff:End>1372</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-5">
+			<ff:Start>1373</ff:Start>
+			<ff:End>1382</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-6">
+			<ff:Start>1383</ff:Start>
+			<ff:End>1392</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-7">
+			<ff:Start>1393</ff:Start>
+			<ff:End>1402</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-8">
+			<ff:Start>1403</ff:Start>
+			<ff:End>1412</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-9">
+			<ff:Start>1413</ff:Start>
+			<ff:End>1422</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-10">
+			<ff:Start>1423</ff:Start>
+			<ff:End>1432</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-11">
+			<ff:Start>1433</ff:Start>
+			<ff:End>1442</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-occur-state-12">
+			<ff:Start>1443</ff:Start>
+			<ff:End>1452</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-attend-doc-npi">
+			<ff:Start>1453</ff:Start>
+			<ff:End>1462</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-refer-doc-npi">
+			<ff:Start>1463</ff:Start>
+			<ff:End>1472</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-filler">
+			<ff:Start>1473</ff:Start>
+			<ff:End>1482</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-doc-grp-npi">
+			<ff:Start>1483</ff:Start>
+			<ff:End>1492</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-doc-dft-lic">
+			<ff:Start>1493</ff:Start>
+			<ff:End>1507</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-visit-reason">
+			<ff:Start>1508</ff:Start>
+			<ff:End>1557</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-doc">
+			<ff:Start>1558</ff:Start>
+			<ff:End>1567</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-doc-name">
+			<ff:Start>1568</ff:Start>
+			<ff:End>1597</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-doc-npi">
+			<ff:Start>1598</ff:Start>
+			<ff:End>1607</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-ref-doc-grp-npi">
+			<ff:Start>1608</ff:Start>
+			<ff:End>1617</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-svc-time">
+			<ff:Start>1618</ff:Start>
+			<ff:End>1621</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-depart-date">
+			<ff:Start>1622</ff:Start>
+			<ff:End>1629</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-depart-time">
+			<ff:Start>1630</ff:Start>
+			<ff:End>1633</ff:End>
+		</xtr:Field>
+		<xtr:Field name="adm-er-doc-upin">
+			<ff:Start>1634</ff:Start>
+			<ff:End>1643</ff:End>
+		</xtr:Field>
+		<xtr:Field name="cpcs-eor">
+			<ff:Start>1644</ff:Start>
+			<ff:End>1645</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+	<xtr:RecordControl name="Field RecordControl">
+		<ff:ControlField name="RecordType">
+			<ff:Start>1</ff:Start>
+			<ff:End>2</ff:End>
+		</ff:ControlField>
+		<ff:DefaultCase>
+			<ff:Record ref="Unknown" />
+		</ff:DefaultCase>
+		<ff:Case>
+			<ff:Test Occurs="2147483647" field="RecordType" value="H" />
+			<ff:Record ref="Header" />
+			<ff:Occurs>2147483647</ff:Occurs>
+		</ff:Case>
+		<ff:Case>
+			<ff:Test Occurs="2147483647" field="RecordType" value="P" />
+			<ff:Record ref="Patient-Demographics-v2" />
+			<ff:Occurs>2147483647</ff:Occurs>
+		</ff:Case>
+		<ff:Case>
+			<ff:Test Occurs="2147483647" field="RecordType" value="I1" />
+			<ff:Record ref="Insurance-1" />
+			<ff:Occurs>2147483647</ff:Occurs>
+		</ff:Case>
+		<ff:Case>
+			<ff:Test Occurs="2147483647" field="RecordType" value="I2" />
+			<ff:Record ref="Insurance-2" />
+			<ff:Occurs>2147483647</ff:Occurs>
+		</ff:Case>
+		<ff:Case>
+			<ff:Test Occurs="2147483647" field="RecordType" value="I3" />
+			<ff:Record ref="Insurance-3" />
+			<ff:Occurs>2147483647</ff:Occurs>
+		</ff:Case>
+		<ff:Case>
+			<ff:Test Occurs="2147483647" field="RecordType" value="G" />
+			<ff:Record ref="Guarantor-v2" />
+			<ff:Occurs>2147483647</ff:Occurs>
+		</ff:Case>
+		<ff:Case>
+			<ff:Test Occurs="2147483647" field="RecordType" value="C" />
+			<ff:Record ref="Charge-Record" />
+			<ff:Occurs>2147483647</ff:Occurs>
+		</ff:Case>
+		<ff:Case>
+			<ff:Test Occurs="2147483647" field="RecordType" value="Q" />
+			<ff:Record ref="Query-Response" />
+			<ff:Occurs>2147483647</ff:Occurs>
+		</ff:Case>
+		<ff:Case>
+			<ff:Test Occurs="2147483647" field="RecordType" value="DX" />
+			<ff:Record ref="Diagnosis-Codes-v2" />
+			<ff:Occurs>2147483647</ff:Occurs>
+		</ff:Case>
+		<ff:Case>
+			<ff:Test Occurs="2147483647" field="RecordType" value="T" />
+			<ff:Record ref="Trailer" />
+			<ff:Occurs>2147483647</ff:Occurs>
+		</ff:Case>
+	</xtr:RecordControl>
+	<xtr:RecordSegment delimiter="\n" name="Unknown">
+		<xtr:Field name="Unknown">
+			<ff:Start>1</ff:Start>
+			<ff:End>8</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+</xtr:TransRoot>
+

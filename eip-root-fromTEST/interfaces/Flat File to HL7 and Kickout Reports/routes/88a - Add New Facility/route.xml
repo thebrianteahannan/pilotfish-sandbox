@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source icon="DocXLS_Green_1.png" name="Excel File from Directory">
+    <FormatProfile name="Excel to XML" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="Flat File to HL7 and Kickout Reports.88 - Add New Facility to Database.Directory / File Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>09:47-09:47</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <PollingInterval>10</PollingInterval>
+        <PollingDirectory>$$FLAT_FILE_INPUT_DIRECTORY</PollingDirectory>
+        <FileNameRestriction>MedReceivables_NewFacilityInfo</FileNameRestriction>
+        <FileExtensionRestriction>xlsx</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>$$FLAT_FILE_ARCHIVE_DIRECTORY</TargetDirectory>
+        <CompatModeMoved>false</CompatModeMoved>
+        <Tokenizers />
+        <SerializedTransactionsTag>1</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+        <SynchResponse>false</SynchResponse>
+        <Timeout>60</Timeout>
+        <FileSortingMethod>System Default</FileSortingMethod>
+        <FileSortingDirection>Ascending</FileSortingDirection>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target icon="DataStore_OrangePurple_2.png" name="Insert New Facility in DB">
+    <FormatProfile name="New Facility SQLXML" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.db.DatabaseSqlTransport" name="Flat File to HL7 and Kickout Reports.88 - Add New Facility to Database.Database (SQL) Transport" retries="1">
+      <ModuleConfig>
+        <InputFile />
+        <WriteQuery>false</WriteQuery>
+        <Query />
+        <QueryParams />
+        <UserName>$$DATABASE_USERNAME</UserName>
+        <Password>$$DATABASE_PASSWORD</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$DATABASE_DRIVER</JdbcDriver>
+        <JdbcURL>$$DATABASE_URL</JdbcURL>
+        <KeepConnection>false</KeepConnection>
+        <Autocommit>false</Autocommit>
+        <EnableTimeout>false</EnableTimeout>
+        <Timeout>600</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema />
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <CallbackListenerName />
+        <UseSingleOutputStream>false</UseSingleOutputStream>
+        <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+        <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+        <JDBCProperties>null</JDBCProperties>
+        <UseConnectionPooling>false</UseConnectionPooling>
+        <PermittedDBConnections>5</PermittedDBConnections>
+        <LogMetadata>false</LogMetadata>
+        <LogSQL>false</LogSQL>
+        <UseJdbcTyping>false</UseJdbcTyping>
+        <TransactionIsolationLevel>Default</TransactionIsolationLevel>
+        <TransactionIsolationDriverSpecific>-1</TransactionIsolationDriverSpecific>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="DocXML_Orange_2.png" name="Overwrite Listener Route File">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Flat File to HL7 and Kickout Reports.88 - Add New Facility to Database.Directory / File Transport" retries="1">
+      <ModuleConfig>
+        <TargetDirectory />
+        <FileName />
+        <FileExtension />
+        <UseFullFilePath>Enabled</UseFullFilePath>
+        <FullPathToFile>{ognl:#properties.get('LISTENER_ROUTE_XML_DIR') + @java.io.File@separatorChar + #properties.get('LISTENER_ROUTE_XML_FILENAME')}</FullPathToFile>
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Get Data from Excel Spreadsheet">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:Client:eip_name://XCSExcelRow[1]/CLIENT:eip_value][eip_pair:Partition:eip_name://XCSExcelRow[1]/PARTITION:eip_value][eip_pair:FileHeaderFacilityName:eip_name://XCSExcelRow[1]/FILE_HEADER_FACILITY_NAME:eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="Pickup Listener Route XML File">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>{ognl:#properties.get('LISTENER_ROUTE_XML_DIR') + @java.io.File@separatorChar + #properties.get('LISTENER_ROUTE_XML_FILENAME')}</FileName>
+          <PostProcessOperation>Do Nothing</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Save Backup of Route XML File">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:#properties.get('LISTENER_ROUTE_XML_DIR') + @java.io.File@separatorChar + 'backups'}</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('Client') + "_" + new java.text.SimpleDateFormat('yyyyMMddHHmmss').format(new java.util.Date()) + "_" + #properties.get('LISTENER_ROUTE_XML_FILENAME')}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Add New Facility Listener in Route XML File">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:Partition:eip_name:{ognl:getAttribute('Partition')}:eip_value][eip_pair:Client:eip_name:{ognl:getAttribute('Client')}:eip_value][eip_pair:FacilityNameShouldBe:eip_name:{ognl:getAttribute('FileHeaderFacilityName')}:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor" name="Format XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+
