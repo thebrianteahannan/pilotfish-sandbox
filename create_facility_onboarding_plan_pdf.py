@@ -161,10 +161,9 @@ def build():
     )
     story.append(
         Paragraph(
-            "<b>Important conflict:</b> The request lists SOFTWAREID <b>513</b> for Catholic Medical, but "
-            "SOFTWAREID <b>513 is already taken</b> in the current H2 DB by FPS / Central Lab (CLIENT CNL). "
-            "SOFTWAREID <b>523</b> (requested for Gainesville) is free. Confirm with MedRec/ops whether CAT "
-            "should receive a new free software ID (e.g. 524) or whether FPS CNL will be remapped before using 513.",
+            "<b>Decision:</b> The request listed SOFTWAREID <b>513</b> for Catholic Medical (CAT / NHL), but "
+            "513 remains assigned to FPS / Central Lab (CLIENT CNL). CAT will use SOFTWAREID <b>524</b> instead. "
+            "GAN (Gainesville / IRL) uses SOFTWAREID <b>523</b> as requested.",
             s["warn"],
         )
     )
@@ -184,7 +183,7 @@ def build():
         table(
             [
                 ["Field", "NHL Catholic Medical", "IRL N Gainesville"],
-                ["SOFTWAREID", "513 (CONFLICT — see above)", "523 (free)"],
+                ["SOFTWAREID", "524 (assigned; was 513 in request)", "523 (free)"],
                 ["CLIENTNAME", "Catholic Medical", "HCA FL Gainesville Hospital"],
                 ["FILE HEADER / FacilityNameShouldBe", "Catholic Medical Center", "HCA FL Gainesville Hospital"],
                 ["PARTITION", "NHL", "IRL"],
@@ -286,7 +285,7 @@ def build():
                 "<b>Expanded-CDM processor allowlist:</b> Add CAT and GAN to OGNL on "
                 "<i>Transform Flat File to XML-New-Expanse-Expanded-CDM</i>; keep them excluded from the legacy "
                 "Flat File to XML processor.",
-                "If SOFTWAREID is brand-new (yes for 523; maybe for CAT if not reusing 513): new listener is required. "
+                "SOFTWAREIDs 524 (CAT) and 523 (GAN) are brand-new: each requires a new listener. "
                 "If it were an existing software ID with only a new split facility, listener may already exist — not the case for CAT/GAN today.",
             ],
             s["bullet"],
@@ -378,7 +377,7 @@ def build():
     story.append(
         bullets(
             [
-                "<b>0. Confirm SOFTWAREID for CAT</b> (513 conflict vs assign new ID).",
+                "<b>0. SOFTWAREIDs locked:</b> CAT=524, GAN=523.",
                 "<b>1. Gather sample files</b> from Expanded expanse folders; lock FileNameRestriction patterns and validate expanded-CDM columns.",
                 "<b>2. Database:</b> insert CLIENT_SPLITS + CLIENT_CODES (+ strip tables as needed) via 88a Excel path or SQL; export/backup H2 first.",
                 "<b>3. Route 1:</b> clone listeners/processors; update expanded-CDM OGNL allowlists.",
@@ -414,7 +413,6 @@ def build():
     story.append(
         bullets(
             [
-                "Final SOFTWAREID for Catholic Medical given 513 collision with FPS CNL.",
                 "Exact FileNameRestriction regexes from sample feed names.",
                 "Full CLIENT_CODES / strip-location row lists from the workbooks (beyond the single default CLIENT_SPLITS row).",
                 "Whether NHL CAT must force marital U and SE/CH/UN the same way later IRL expanses do.",
