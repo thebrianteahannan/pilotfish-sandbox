@@ -28,7 +28,7 @@ RUN cd /usr/local/tomcat/webapps/eip \
 COPY pflicense.key /usr/local/tomcat/webapps/eip/pflicense.key
 
 # Interface package -> eip-root
-COPY eip-root-fromTEST/ /usr/local/tomcat/webapps/eip/eip-root/
+COPY eip-root/ /usr/local/tomcat/webapps/eip/eip-root/
 COPY docker/environment-settings.conf /usr/local/tomcat/webapps/eip/eip-root/environment-settings.conf
 
 # Convert hardcoded Windows PilotFish paths (without breaking regex escapes),

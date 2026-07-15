@@ -428,7 +428,7 @@ def build():
     story.append(
         Paragraph(
             "Generated for PilotFish Sandbox / MedReceivables eiPlatform planning. "
-            "Validated against current eip-root-fromTEST and H2 medreceivables.mv.db schema.",
+            "Validated against current eip-root and H2 medreceivables.mv.db schema.",
             s["small"],
         )
     )
