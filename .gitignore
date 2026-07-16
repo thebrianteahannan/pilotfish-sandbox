@@ -4,7 +4,9 @@ pflicense.key
 
 # Runtime input/output — never commit
 data/
+data-834/
 debug-trace/
+debug-trace-834/
 **/debug-trace/
 
 # Large / non-route artifacts
@@ -13,6 +15,7 @@ eip.war*
 *.zip
 *.trace.db
 logs/
+logs-834/
 
 # Keep committed H2 DB under database/; ignore other copies
 /medreceivables.mv.db

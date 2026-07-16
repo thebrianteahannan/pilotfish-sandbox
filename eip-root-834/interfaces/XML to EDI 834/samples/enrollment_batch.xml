@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generic synthetic enrollment batch — no real PII -->
+<EnrollmentBatch>
+  <Interchange>
+    <SenderId>ACMEPAYER</SenderId>
+    <ReceiverId>ACMESPONSOR</ReceiverId>
+    <ControlNumber>000000001</ControlNumber>
+    <UsageIndicator>T</UsageIndicator>
+  </Interchange>
+  <Group>
+    <ApplicationSender>ACMEPAYER</ApplicationSender>
+    <ApplicationReceiver>ACMESPONSOR</ApplicationReceiver>
+    <GroupControlNumber>1</GroupControlNumber>
+  </Group>
+  <Transaction>
+    <TransactionSetControlNumber>0001</TransactionSetControlNumber>
+    <ReferenceId>BATCH001</ReferenceId>
+    <PurposeCode>00</PurposeCode>
+  </Transaction>
+  <Sponsor>
+    <Name>ACME SPONSOR INC</Name>
+    <IdQualifier>FI</IdQualifier>
+    <Id>123456789</Id>
+  </Sponsor>
+  <Payer>
+    <Name>ACME HEALTH PLAN</Name>
+    <IdQualifier>FI</IdQualifier>
+    <Id>987654321</Id>
+  </Payer>
+  <Members>
+    <Member>
+      <MemberId>MEM001</MemberId>
+      <RelationshipCode>18</RelationshipCode>
+      <MaintenanceTypeCode>030</MaintenanceTypeCode>
+      <MaintenanceReasonCode>XN</MaintenanceReasonCode>
+      <BenefitStatusCode>A</BenefitStatusCode>
+      <EmploymentStatusCode>FT</EmploymentStatusCode>
+      <LastName>SAMPLE</LastName>
+      <FirstName>ALEX</FirstName>
+      <IdQualifier>34</IdQualifier>
+      <IdentificationNumber>000000001</IdentificationNumber>
+      <BirthDate>19900115</BirthDate>
+      <GenderCode>U</GenderCode>
+      <PlanId>PLANGOLD</PlanId>
+      <CoverageStartDate>20260101</CoverageStartDate>
+    </Member>
+    <Member>
+      <MemberId>MEM002</MemberId>
+      <RelationshipCode>18</RelationshipCode>
+      <MaintenanceTypeCode>030</MaintenanceTypeCode>
+      <MaintenanceReasonCode>XN</MaintenanceReasonCode>
+      <BenefitStatusCode>A</BenefitStatusCode>
+      <EmploymentStatusCode>FT</EmploymentStatusCode>
+      <LastName>EXAMPLE</LastName>
+      <FirstName>JORDAN</FirstName>
+      <IdQualifier>34</IdQualifier>
+      <IdentificationNumber>000000002</IdentificationNumber>
+      <BirthDate>19850520</BirthDate>
+      <GenderCode>U</GenderCode>
+      <PlanId>PLANSILVER</PlanId>
+      <CoverageStartDate>20260101</CoverageStartDate>
+    </Member>
+  </Members>
+</EnrollmentBatch>
