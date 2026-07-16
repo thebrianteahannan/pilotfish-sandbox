@@ -1,0 +1,1549 @@
+{
+  "generated": "2026-07-16 11:10",
+  "source": "eip-root_CRLPlus_fromTEST_July16th2026",
+  "summary": {
+    "total_routes": 127,
+    "routes_with_captures": 48,
+    "total_capture_points": 57,
+    "routes_without_captures": 79
+  },
+  "routes_with_captures": [
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "1 - AIGP ACORD 121 SOAP",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/1 - AIGP ACORD 121 SOAP/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor1-WithWrapper",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "{ognl:'AIGP-' + getAttribute('com.pilotfish.FileName') + '-121SOAP.xml'}"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor-WithWrapper"
+          ]
+        },
+        {
+          "index": 2,
+          "call_processor": "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.1 - AIGP ACORD 121 SOAP"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor"
+          ]
+        }
+      ],
+      "capture_count": 2,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "2 - AIGP ACORD 121 Order Confirmation",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/2 - AIGP ACORD 121 Order Confirmation/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.2 - AIGP ACORD 121 Order Confirmation.Processor1",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "{ognl:getAttribute('sourceClient') + '-' + getAttribute('com.pilotfish.FileName') + '-121OrderConfirmation-' + getAttribute('SuccessOrFailure')}"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.2 - AIGP ACORD 121 Order Confirmation.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "3 - AIGP ACORD 1122 Status or Result",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/3 - AIGP ACORD 1122 Status or Result/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.3 - AIGP ACORD 1122 Status or Result.Processor1",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.3 - AIGP ACORD 1122 Status or Result"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.3 - AIGP ACORD 1122 Status or Result.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "4 - AIGP ACORD 1122 POST Response",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/4 - AIGP ACORD 1122 POST Response/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.4 - AIGP ACORD 1122 POST Response.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.4 - AIGP ACORD 1122 POST Response"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.4 - AIGP ACORD 1122 POST Response.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "L0 - AIGP Legacy 121 SOAP",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/L0 - AIGP Legacy 121 SOAP/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.L0 - AIGP Legacy 121 SOAP.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "{ognl:'AIGL-' + getAttribute('com.pilotfish.FileName') + '-121 SOAP'}"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L0 - AIGP Legacy 121 SOAP.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "L0-1 - ACORD 121 Order Confirmation",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/L0-1 - ACORD 121 Order Confirmation/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.L0-1 - ACORD 121 Order Confirmation.Processor1",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "{ognl:'AIGL-' + getAttribute('com.pilotfish.FileName') + '-121OrderConfirmation-Success'}",
+            "{ognl:'AIGL-' + getAttribute('com.pilotfish.FileName') + '-121OrderConfirmation-Success'}"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L0-1 - ACORD 121 Order Confirmation.Processor-Success",
+            "AmericanGeneral.L0-1 - ACORD 121 Order Confirmation.Processor-NotSuccess"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "L1 - AIGP Legacy 1122 Status or Result",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/L1 - AIGP Legacy 1122 Status or Result/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "L1-1 - AIGP Combine TIFF Attachments",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/L1-1 - AIGP Combine TIFF Attachments/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.L1-1 - AIGP Combine TIFF Attachments.Processor",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.L1-1 - AIGP Combine TIFF Attachments"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor-Copy-1"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "L1-2 - AIGP Lookup Branch Order Number",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/L1-2 - AIGP Lookup Branch Order Number/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.L1-2 - AIGP Lookup Branch Order Number.Processor-Copy-2",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.L1-2 - AIGP Lookup Branch Order Number - Request"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor-Copy-2"
+          ]
+        },
+        {
+          "index": 2,
+          "call_processor": "AmericanGeneral.L1-2 - AIGP Lookup Branch Order Number.Processor",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.L1-2 - AIGP Lookup Branch Order Number - SQLXML"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor-Copy-1"
+          ]
+        }
+      ],
+      "capture_count": 2,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "L1-3 - AIGP Lookup BranchNumber Callback",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/L1-3 - AIGP Lookup BranchNumber Callback/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.L1-3 - AIGP Lookup BranchNumber Callback.Processor-Copy-1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.L1-3 - AIGP Lookup BranchNumber Callback"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor-Copy-1"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "L2 - AIGP Legacy 1122 Stage Results",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/L2 - AIGP Legacy 1122 Stage Results/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.L2 - AIGP Legacy 1122 Stage Results.Processor-Copy-2",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.L2 - AIGP Legacy 1122 Stage Results - IDX"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor-Copy-2"
+          ]
+        },
+        {
+          "index": 2,
+          "call_processor": "AmericanGeneral.L2 - AIGP Legacy 1122 Stage Results.Processor",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.L2 - AIGP Legacy 1122 Stage Results - TIF"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor-Copy-1"
+          ]
+        }
+      ],
+      "capture_count": 2,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "L3 - AIGP Legacy 1122 ZIP and Deliver",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/L3 - AIGP Legacy 1122 ZIP and Deliver/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.L3 - AIGP Legacy 1122 ZIP and Deliver.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.L3 - AIGP Legacy 1122 ZIP and Deliver"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor-Copy-1"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "L4 - AIGP Legacy 1122 Reconciliation File",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/L4 - AIGP Legacy 1122 Reconciliation File/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.L4 - AIGP Legacy 1122 Reconciliation File.Processor",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.L4 - AIGP Legacy 1122 Reconciliation File - ZIP Listing XML"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor-Copy-1"
+          ]
+        },
+        {
+          "index": 2,
+          "call_processor": "AmericanGeneral.L4 - AIGP Legacy 1122 Reconciliation File.Processor-Copy-2",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.L4 - AIGP Legacy 1122 Reconciliation File - AIGP Reconciliation XML"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor-Copy-2"
+          ]
+        }
+      ],
+      "capture_count": 2,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "L5 - AIGP Legacy Clean SFTP Server Directory",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/L5 - AIGP Legacy Clean SFTP Server Directory/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.L5 - AIGP Legacy Clean SFTP Server Directory.Processor",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.L5 - AIGP Legacy Clean SFTP Server Directory"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor-Copy-1"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral",
+      "route": "LP1 - LifePlans Retrieve And Stage",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral/routes/LP1 - LifePlans Retrieve And Stage/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.LP1 - LifePlans Retrieve And Stage.Processor",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.LP1 - LifePlans Retrieve And Stage"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor-Copy-1"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral VALICI",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral VALICI/routes/ProcessStatus/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneralVALICI.ProcessStatus.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Clients.AmericanGeneralVALICI.ProcessStatus"
+          ],
+          "route_name_processors": [
+            "AmericanGeneralVALICI.ProcessStatus.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral VALICP",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral VALICP/routes/ProcessStatus/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneralVALICP.ProcessStatus.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Clients.AmericanGeneralVALICP.ProcessStatus"
+          ],
+          "route_name_processors": [
+            "AmericanGeneralVALICP.ProcessStatus.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanIncomeLife",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/AmericanIncomeLife/routes/ProcessStatus/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanIncomeLife.ProcessStatus.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Clients.AmericanIncomeLife.ProcessStatus"
+          ],
+          "route_name_processors": [
+            "AmericanIncomeLife.ProcessStatus.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/EquitableInspections",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/EquitableInspections/routes/ProcessStatus/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "EquitableInspections.ProcessStatus.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Clients.EquitableInspections.ProcessStatus"
+          ],
+          "route_name_processors": [
+            "EquitableInspections.ProcessStatus.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/FGLI (Resonant)",
+      "route": "1 - 121 Incoming",
+      "path": "interfaces/Clients/interfaces/FGLI (Resonant)/routes/1 - 121 Incoming/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "FGLI (Resonant).1 - 121 Incoming.Processor",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "{ognl:'Clients.FGLI (Resonant)-' + getAttribute('com.pilotfish.FileName') + '-1 - 121 Incoming'}"
+          ],
+          "route_name_processors": [
+            "FGLI.Resonant.Processor-Copy-1"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/FGLI (Resonant)",
+      "route": "2 - 121 Response",
+      "path": "interfaces/Clients/interfaces/FGLI (Resonant)/routes/2 - 121 Response/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "FGLI (Resonant).2 - 121 Response.Processor",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "{ognl:'Clients.FGLI (Resonant)-' + getAttribute('com.pilotfish.FileName') + '-2 - 121 Response'}"
+          ],
+          "route_name_processors": [
+            "FGLI.Resonant.Processor-Copy-2"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/FGLI (Resonant)",
+      "route": "3 - 1122 Status or Result POST",
+      "path": "interfaces/Clients/interfaces/FGLI (Resonant)/routes/3 - 1122 Status or Result POST/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "FGLI (Resonant).3 - 1122 Status or Result POST.Processor",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "{ognl:'Clients.FGLI (Resonant)-' + getAttribute('com.pilotfish.FileName') + '-3 - 1122 Status or Result POST'}"
+          ],
+          "route_name_processors": [
+            "FGLI.Resonant.Processor-Copy-1"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/FGLI (Resonant)",
+      "route": "4 - 1122 POST Response",
+      "path": "interfaces/Clients/interfaces/FGLI (Resonant)/routes/4 - 1122 POST Response/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "FGLI (Resonant).4 - 1122 POST Response.Processor",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "{ognl:'Clients.FGLI (Resonant)-' + getAttribute('com.pilotfish.FileName') + '-4 - 1122 POST Response'}"
+          ],
+          "route_name_processors": [
+            "FGLI.Resonant.Processor-Copy-1"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/GlobeLife",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/GlobeLife/routes/ProcessStatus/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "GlobeLife.ProcessStatus.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Clients.GlobeLife.ProcessStatus"
+          ],
+          "route_name_processors": [
+            "GlobeLife.ProcessStatus.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/GlobeLifeOfNewYork",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/GlobeLifeOfNewYork/routes/ProcessStatus/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "GlobeLifeOfNewYork.ProcessStatus.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Clients.GlobeLifeOfNewYork.ProcessStatus"
+          ],
+          "route_name_processors": [
+            "GlobeLifeOfNewYork.ProcessStatus.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/LibertyNationalLife",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/LibertyNationalLife/routes/ProcessStatus/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "LibertyNationalLife.ProcessStatus.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Clients.LibertyNationalLife.ProcessStatus"
+          ],
+          "route_name_processors": [
+            "LibertyNationalLife.ProcessStatus.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/NationalIncomeLife",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/NationalIncomeLife/routes/ProcessStatus/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "NationalIncomeLife.ProcessStatus.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Clients.NationalIncomeLife.ProcessStatus"
+          ],
+          "route_name_processors": [
+            "NationalIncomeLife.ProcessStatus.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "CombineTIFFAttachments",
+      "path": "interfaces/ImageService/routes/CombineTIFFAttachments/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "ImageService.CombineTIFFAttachments.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "ImageService.CombineTIFFAttachments"
+          ],
+          "route_name_processors": [
+            "ImageService.CombineTIFFAttachments.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "ConvertPDFToTIFF",
+      "path": "interfaces/ImageService/routes/ConvertPDFToTIFF/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "ImageService.ConvertPDFToTIFF.Processor2",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "ImageService.ConvertPDFToTIFF"
+          ],
+          "route_name_processors": [
+            "ImageService.CombineTIFFAttachments.Processor-Copy-1"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "GetDocumentRequest",
+      "path": "interfaces/ImageService/routes/GetDocumentRequest/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "ImageService.GetDocumentRequest.Processor1",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "ImageService.GetDocumentRequest"
+          ],
+          "route_name_processors": [
+            "ImageService.GetDocumentRequest.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "GetDocumentResponse",
+      "path": "interfaces/ImageService/routes/GetDocumentResponse/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "ImageService.GetDocumentResponse.Processor1",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "ImageService.GetDocumentResponse"
+          ],
+          "route_name_processors": [
+            "ImageService.GetDocumentResponse.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "LargeImage-1-RetrieveFromSFTP",
+      "path": "interfaces/ImageService/routes/LargeImage-1-RetrieveFromSFTP/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "ImageService.LargeImage-1-RetrieveFromSFTP.Processor1",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "ImageService.LargeImage-1-RetrieveFromSFTP"
+          ],
+          "route_name_processors": [
+            "ImageService.LargeImage-1-RetrieveFromSFTP.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "LargeImage-2-UpdateDatabase",
+      "path": "interfaces/ImageService/routes/LargeImage-2-UpdateDatabase/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "ImageService.LargeImage-2-UpdateDatabase.Processor1",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "ImageService.LargeImage-2-UpdateDatabase"
+          ],
+          "route_name_processors": [
+            "ImageService.LargeImage-2-UpdateDatabase.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "ManualAttach-1-RetrieveListingAndCheckDB",
+      "path": "interfaces/ImageService/routes/ManualAttach-1-RetrieveListingAndCheckDB/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "ImageService.ManualAttach-1-RetrieveListingAndCheckDB.Processor1",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "ImageService.ManualAttach-1-RetrieveListingAndCheckDB"
+          ],
+          "route_name_processors": [
+            "ImageService.ManualAttach-1-RetrieveListingAndCheckDB.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "StoreDocumentLoop",
+      "path": "interfaces/ImageService/routes/StoreDocumentLoop/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "ImageService.StoreDocumentLoop.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "ImageService.StoreDocumentLoop"
+          ],
+          "route_name_processors": [
+            "ImageService.StoreDocumentLoop.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "StoreDocumentRequest",
+      "path": "interfaces/ImageService/routes/StoreDocumentRequest/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "ImageService - StoreDocumentResponse - Capture Call Route-Copy-2",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "{ognl:getAttribute('sourceClient') + '-' + getAttribute('com.pilotfish.FileName') + '-StoreDocumentRequest'}"
+          ],
+          "route_name_processors": [
+            "ImageService.StoreDocumentResponse.Processor-Copy-2"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "StoreDocumentResponse",
+      "path": "interfaces/ImageService/routes/StoreDocumentResponse/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "ImageService - StoreDocumentResponse - Capture Call Route",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "{ognl:getAttribute('sourceClient') + '-' + getAttribute('com.pilotfish.FileName') + '-StoreDocumentResponse'}"
+          ],
+          "route_name_processors": [
+            "ImageService.StoreDocumentResponse.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Status/interfaces/Exam Order Generation Process",
+      "route": "1 - Send Exam Order",
+      "path": "interfaces/Status/interfaces/Exam Order Generation Process/routes/1 - Send Exam Order/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "Exam Order Generation Process.1 - Send Exam Order.Processor1",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "Status.Exam Order Generation Process.1 - Send Exam Order"
+          ],
+          "route_name_processors": [
+            "Exam Order Generation Process.1 - Send Exam Order.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Status/interfaces/Exam Order Generation Process",
+      "route": "2 - Receive Response",
+      "path": "interfaces/Status/interfaces/Exam Order Generation Process/routes/2 - Receive Response/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "Exam Order Generation Process.2 - Receive Response.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Status.Exam Order Generation Process.2 - Receive Response"
+          ],
+          "route_name_processors": [
+            "Exam Order Generation Process.2 - Receive Response.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Status/interfaces/Exam Order Generation Process",
+      "route": "S1 - Receive Updates",
+      "path": "interfaces/Status/interfaces/Exam Order Generation Process/routes/S1 - Receive Updates/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "Exam Order Generation Process.S1 - Receive Updates.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Status.Exam Order Generation Process.S1 - Receive Updates - SOAP Update"
+          ],
+          "route_name_processors": [
+            "Exam Order Generation Process.S1 - Receive Updates.Processor"
+          ]
+        },
+        {
+          "index": 2,
+          "call_processor": "Exam Order Generation Process.S1 - Receive Updates.Processor3",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "Status.Exam Order Generation Process.S1 - Receive Updates - Response"
+          ],
+          "route_name_processors": [
+            "Exam Order Generation Process.S1 - Receive Updates.Processor2"
+          ]
+        }
+      ],
+      "capture_count": 2,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Status",
+      "route": "1 - Poll for transactions with new status",
+      "path": "interfaces/Status/routes/1 - Poll for transactions with new status/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor1-2",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Status.1 - Poll for transactions with new status - daily"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor1-1"
+          ]
+        },
+        {
+          "index": 2,
+          "call_processor": "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor2-2",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Status.1 - Poll for transactions with new status - hourly"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor2-1"
+          ]
+        },
+        {
+          "index": 3,
+          "call_processor": "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor3-2",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Status.1 - Poll for transactions with new status - 15 mins"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor3-1"
+          ]
+        }
+      ],
+      "capture_count": 3,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Status",
+      "route": "2 - Retrieve image attachments",
+      "path": "interfaces/Status/routes/2 - Retrieve image attachments/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "Status.2 - Retrieve image attachments"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Status",
+      "route": "3 - Build normalized 1122",
+      "path": "interfaces/Status/routes/3 - Build normalized 1122/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor1",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "AmericanGeneral.1 - AIGP ACORD 121 SOAP"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor"
+          ]
+        },
+        {
+          "index": 2,
+          "call_processor": "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor1-Copy-1",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "Status.3 - Build normalized 1122"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor-Copy-1"
+          ]
+        },
+        {
+          "index": 3,
+          "call_processor": "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor1-Copy-2",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "Status.3 - Build normalized 1122"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor-Copy-2"
+          ]
+        }
+      ],
+      "capture_count": 3,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Status",
+      "route": "4 - Route to client specific",
+      "path": "interfaces/Status/routes/4 - Route to client specific/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "Status.4 - Route to client specific.Processor",
+          "section": "Source/Processors",
+          "route_name_expressions": [
+            "{ognl:'Status.4 - Route to client specific - ' + getAttribute('sourceClient')}"
+          ],
+          "route_name_processors": [
+            "Status.4 - Route to client specific.Processor1"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "Status",
+      "route": "6 - Mark Status as Consumed",
+      "path": "interfaces/Status/routes/6 - Mark Status as Consumed/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor1",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "Status.6 - Mark Status as Consumed"
+          ],
+          "route_name_processors": [
+            "AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "(root)",
+      "route": "2 - Incoming-To-Standard-121",
+      "path": "routes/2 - Incoming-To-Standard-121/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "3 - 121 Normalization - Capture Call Route-Copy-1",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "{ognl:getAttribute('sourceClient') + '-' + getAttribute('com.pilotfish.FileName') + '-IncomingToStandard121'}"
+          ],
+          "route_name_processors": [
+            "3 - 121 Normalization - Capture Route Name for Call Route-Copy-1"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "(root)",
+      "route": "3 - 121 Normalization",
+      "path": "routes/3 - 121 Normalization/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "3 - 121 Normalization - Capture Call Route",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "{ognl:getAttribute('sourceClient') + '-' + getAttribute('com.pilotfish.FileName') + '-121Normalization'}"
+          ],
+          "route_name_processors": [
+            "3 - 121 Normalization - Capture Route Name for Call Route"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    },
+    {
+      "area": "(root)",
+      "route": "5 - Insert Order",
+      "path": "routes/5 - Insert Order/route.xml",
+      "captures": [
+        {
+          "index": 1,
+          "call_processor": "5 - Insert Order - Captures Call Route",
+          "section": "Target/Processors",
+          "route_name_expressions": [
+            "{ognl:getAttribute('sourceClient') + '-' + getAttribute('com.pilotfish.FileName') + '-InsertOrder'}"
+          ],
+          "route_name_processors": [
+            "5 - Insert Order - Captures Route Name for Call Route"
+          ]
+        }
+      ],
+      "capture_count": 1,
+      "is_capture_sink": false
+    }
+  ],
+  "routes_without_captures": [
+    {
+      "area": "Clients/AmericanGeneral UBOS",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral UBOS/routes/ProcessStatus/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AmericanGeneral UFLA",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/AmericanGeneral UFLA/routes/ProcessStatus/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Axa",
+      "route": "1 - AXA ACORD 121 SOAP",
+      "path": "interfaces/Clients/interfaces/Axa/routes/1 - AXA ACORD 121 SOAP/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Axa",
+      "route": "1-1 -  AXA ACORD 121 Response",
+      "path": "interfaces/Clients/interfaces/Axa/routes/1-1 -  AXA ACORD 121 Response/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Axa",
+      "route": "2 - AXA ACORD 1122 Status",
+      "path": "interfaces/Clients/interfaces/Axa/routes/2 - AXA ACORD 1122 Status/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Axa",
+      "route": "3 - AXA ACORD Clean SFTP Server Directory",
+      "path": "interfaces/Clients/interfaces/Axa/routes/3 - AXA ACORD Clean SFTP Server Directory/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/AxaManual",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/AxaManual/routes/ProcessStatus/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie/interfaces/Erie-StoneRiver",
+      "route": "S1 - StoneRiver ACORD 121 SOAP",
+      "path": "interfaces/Clients/interfaces/Erie/interfaces/Erie-StoneRiver/routes/S1 - StoneRiver ACORD 121 SOAP/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie/interfaces/Erie-StoneRiver",
+      "route": "S2 - StoneRiver ACORD 121 Order Confirmation",
+      "path": "interfaces/Clients/interfaces/Erie/interfaces/Erie-StoneRiver/routes/S2 - StoneRiver ACORD 121 Order Confirmation/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie/interfaces/FTP Server Cleanup",
+      "route": "1 - Download Orphan Files",
+      "path": "interfaces/Clients/interfaces/Erie/interfaces/FTP Server Cleanup/routes/1 - Download Orphan Files/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie/interfaces/FTP Server Cleanup",
+      "route": "2 - Archive Downloaded Orphan Files",
+      "path": "interfaces/Clients/interfaces/Erie/interfaces/FTP Server Cleanup/routes/2 - Archive Downloaded Orphan Files/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie/interfaces/Teledex Lookup",
+      "route": "1 - ELFP - Retreive Remote_ID and Remote_NO",
+      "path": "interfaces/Clients/interfaces/Erie/interfaces/Teledex Lookup/routes/1 - ELFP - Retreive Remote_ID and Remote_NO/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie/interfaces/Teledex Lookup",
+      "route": "2 - ELFP - Add Attributes for Remote_ID and Remote_NO",
+      "path": "interfaces/Clients/interfaces/Erie/interfaces/Teledex Lookup/routes/2 - ELFP - Add Attributes for Remote_ID and Remote_NO/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie",
+      "route": "1 - ELFP ACORD 103 SOAP",
+      "path": "interfaces/Clients/interfaces/Erie/routes/1 - ELFP ACORD 103 SOAP/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie",
+      "route": "1r - ELFP ACORD 103 Order Confirmation",
+      "path": "interfaces/Clients/interfaces/Erie/routes/1r - ELFP ACORD 103 Order Confirmation/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie",
+      "route": "2 - ELFP 1122 Status Update",
+      "path": "interfaces/Clients/interfaces/Erie/routes/2 - ELFP 1122 Status Update/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie",
+      "route": "2A - Start Outgoing 103 Generation",
+      "path": "interfaces/Clients/interfaces/Erie/routes/2A - Start Outgoing 103 Generation/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie",
+      "route": "2B - Insert Comompiled Data Into 103",
+      "path": "interfaces/Clients/interfaces/Erie/routes/2B - Insert Comompiled Data Into 103/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie",
+      "route": "3 - ELFP POST Status or Result",
+      "path": "interfaces/Clients/interfaces/Erie/routes/3 - ELFP POST Status or Result/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie",
+      "route": "4 - ELFP Status or Result Response",
+      "path": "interfaces/Clients/interfaces/Erie/routes/4 - ELFP Status or Result Response/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie",
+      "route": "T0A - ELFP Get Incoming Image Files",
+      "path": "interfaces/Clients/interfaces/Erie/routes/T0A - ELFP Get Incoming Image Files/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie",
+      "route": "T1 - ELFP Load Incoming 103 to Image Server",
+      "path": "interfaces/Clients/interfaces/Erie/routes/T1 - ELFP Load Incoming 103 to Image Server/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie",
+      "route": "T2 - ELFP Load Incoming 103 Response",
+      "path": "interfaces/Clients/interfaces/Erie/routes/T2 - ELFP Load Incoming 103 Response/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie",
+      "route": "T3 - ELFP Update DB After Incoming 103 Upload",
+      "path": "interfaces/Clients/interfaces/Erie/routes/T3 - ELFP Update DB After Incoming 103 Upload/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie",
+      "route": "T4 - ELFP Link DocID to Flownet Number",
+      "path": "interfaces/Clients/interfaces/Erie/routes/T4 - ELFP Link DocID to Flownet Number/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Erie",
+      "route": "T5 - ELFP Process DocID and Flownet Num Link Response",
+      "path": "interfaces/Clients/interfaces/Erie/routes/T5 - ELFP Process DocID and Flownet Num Link Response/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/FidelityGuarantyLife (FGLI) (OLD)",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/FidelityGuarantyLife (FGLI) (OLD)/routes/ProcessStatus/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/LadderLife",
+      "route": "1 - 121 Incoming",
+      "path": "interfaces/Clients/interfaces/LadderLife/routes/1 - 121 Incoming/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/LadderLife",
+      "route": "2 - 121 Response",
+      "path": "interfaces/Clients/interfaces/LadderLife/routes/2 - 121 Response/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/LadderLife",
+      "route": "3 - 1122 Status or Result POST",
+      "path": "interfaces/Clients/interfaces/LadderLife/routes/3 - 1122 Status or Result POST/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/LadderLife",
+      "route": "4 - 1122 POST Response",
+      "path": "interfaces/Clients/interfaces/LadderLife/routes/4 - 1122 POST Response/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/LadderLife",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/LadderLife/routes/ProcessStatus/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/LincolnNational",
+      "route": "ProcessStatus",
+      "path": "interfaces/Clients/interfaces/LincolnNational/routes/ProcessStatus/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/PacificLife",
+      "route": "1 - PACT ACORD 121 SOAP",
+      "path": "interfaces/Clients/interfaces/PacificLife/routes/1 - PACT ACORD 121 SOAP/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/PacificLife",
+      "route": "2 - PACT ACORD 121 Order Confirmation",
+      "path": "interfaces/Clients/interfaces/PacificLife/routes/2 - PACT ACORD 121 Order Confirmation/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/PacificLife",
+      "route": "3 - PACT ACORD 1122 Status or Result POST",
+      "path": "interfaces/Clients/interfaces/PacificLife/routes/3 - PACT ACORD 1122 Status or Result POST/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/PacificLife",
+      "route": "3-1 - PACT Combine TIFF Attachments",
+      "path": "interfaces/Clients/interfaces/PacificLife/routes/3-1 - PACT Combine TIFF Attachments/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/PacificLife",
+      "route": "4 - PACT ACORD 1122 POST Response",
+      "path": "interfaces/Clients/interfaces/PacificLife/routes/4 - PACT ACORD 1122 POST Response/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/PacificLife",
+      "route": "9 - Test 1122 Prepare And Post",
+      "path": "interfaces/Clients/interfaces/PacificLife/routes/9 - Test 1122 Prepare And Post/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/PacificLife",
+      "route": "R1 - Reconciliation Report",
+      "path": "interfaces/Clients/interfaces/PacificLife/routes/R1 - Reconciliation Report/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Prudential",
+      "route": "1 - PRUX ACORD 121 SOAP",
+      "path": "interfaces/Clients/interfaces/Prudential/routes/1 - PRUX ACORD 121 SOAP/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Prudential",
+      "route": "2 - PRUX ACORD 121 Order Confirmation",
+      "path": "interfaces/Clients/interfaces/Prudential/routes/2 - PRUX ACORD 121 Order Confirmation/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Prudential",
+      "route": "3 - PRUX ACORD 1122 Stage File",
+      "path": "interfaces/Clients/interfaces/Prudential/routes/3 - PRUX ACORD 1122 Stage File/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Prudential",
+      "route": "4a - PRUX ACORD 1122 Status or Result POST",
+      "path": "interfaces/Clients/interfaces/Prudential/routes/4a - PRUX ACORD 1122 Status or Result POST/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Prudential",
+      "route": "4b - PRUX ACORD 1122 Status or Result SFTP - Internal Test",
+      "path": "interfaces/Clients/interfaces/Prudential/routes/4b - PRUX ACORD 1122 Status or Result SFTP - Internal Test/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Prudential",
+      "route": "5 - PRUX ACORD 1122 POST Response",
+      "path": "interfaces/Clients/interfaces/Prudential/routes/5 - PRUX ACORD 1122 POST Response/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Prudential",
+      "route": "6 - PRUX ACORD 123 SOAP",
+      "path": "interfaces/Clients/interfaces/Prudential/routes/6 - PRUX ACORD 123 SOAP/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Prudential",
+      "route": "E1 - Error Reporting",
+      "path": "interfaces/Clients/interfaces/Prudential/routes/E1 - Error Reporting/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Prudential",
+      "route": "V1 - Validate 121",
+      "path": "interfaces/Clients/interfaces/Prudential/routes/V1 - Validate 121/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Prudential",
+      "route": "V2 - Validation Error Handling",
+      "path": "interfaces/Clients/interfaces/Prudential/routes/V2 - Validation Error Handling/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Teledex",
+      "route": "1 - Stage Incoming Order",
+      "path": "interfaces/Clients/interfaces/Teledex/routes/1 - Stage Incoming Order/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Teledex",
+      "route": "2 - Teledex Order Confirmation",
+      "path": "interfaces/Clients/interfaces/Teledex/routes/2 - Teledex Order Confirmation/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Teledex",
+      "route": "3 - Generate Teledex DB",
+      "path": "interfaces/Clients/interfaces/Teledex/routes/3 - Generate Teledex DB/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Clients/Teledex",
+      "route": "4 - Upload Erie 103 Files",
+      "path": "interfaces/Clients/interfaces/Teledex/routes/4 - Upload Erie 103 Files/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Common",
+      "route": "99 - Capture Requests and Responses",
+      "path": "interfaces/Common/routes/99 - Capture Requests and Responses/route.xml",
+      "is_capture_sink": true
+    },
+    {
+      "area": "Common",
+      "route": "BackupErrorRoute",
+      "path": "interfaces/Common/routes/BackupErrorRoute/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Common",
+      "route": "Base64Decode",
+      "path": "interfaces/Common/routes/Base64Decode/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Common",
+      "route": "ErrorRoute",
+      "path": "interfaces/Common/routes/ErrorRoute/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Common",
+      "route": "Insert Message into Database",
+      "path": "interfaces/Common/routes/Insert Message into Database/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Common",
+      "route": "Remove PHI from ACORD XML",
+      "path": "interfaces/Common/routes/Remove PHI from ACORD XML/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "ManualAttach-2-DownloadAttachment",
+      "path": "interfaces/ImageService/routes/ManualAttach-2-DownloadAttachment/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "ManualAttach-3-UpdateDatabase",
+      "path": "interfaces/ImageService/routes/ManualAttach-3-UpdateDatabase/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "TestConverter",
+      "path": "interfaces/ImageService/routes/TestConverter/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "TestDecodeImagesInACORD1122",
+      "path": "interfaces/ImageService/routes/TestDecodeImagesInACORD1122/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "ImageService",
+      "route": "TestDecodePDFInGetImageResponse",
+      "path": "interfaces/ImageService/routes/TestDecodePDFInGetImageResponse/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "PacificLife 1122 Processing",
+      "route": "Pacific Life 1122",
+      "path": "interfaces/PacificLife 1122 Processing/routes/Pacific Life 1122/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Status",
+      "route": "91 - Generate daily report",
+      "path": "interfaces/Status/routes/91 - Generate daily report/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Testing",
+      "route": "TestCaseID-1-ReceiveRequest",
+      "path": "interfaces/Testing/routes/TestCaseID-1-ReceiveRequest/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Testing",
+      "route": "TestCaseID-2-SendResponse",
+      "path": "interfaces/Testing/routes/TestCaseID-2-SendResponse/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Testing",
+      "route": "TestCaseID-9-ErrorHandler",
+      "path": "interfaces/Testing/routes/TestCaseID-9-ErrorHandler/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Uncategorized",
+      "route": "1 - SFTP-To-Inbound",
+      "path": "interfaces/Uncategorized/routes/1 - SFTP-To-Inbound/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Uncategorized",
+      "route": "1 - Web-Service-To-Inbound",
+      "path": "interfaces/Uncategorized/routes/1 - Web-Service-To-Inbound/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "Uncategorized",
+      "route": "Outgoing-To-SFTP",
+      "path": "interfaces/Uncategorized/routes/Outgoing-To-SFTP/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "(root)",
+      "route": "1 - Doctype Discovery",
+      "path": "routes/1 - Doctype Discovery/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "(root)",
+      "route": "1a - NAILBA 800 Message Forking",
+      "path": "routes/1a - NAILBA 800 Message Forking/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "(root)",
+      "route": "1b - ACORD Message Forking",
+      "path": "routes/1b - ACORD Message Forking/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "(root)",
+      "route": "6 - Insert Order Callback",
+      "path": "routes/6 - Insert Order Callback/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "(root)",
+      "route": "7 - Synchronous Confirmation",
+      "path": "routes/7 - Synchronous Confirmation/route.xml",
+      "is_capture_sink": false
+    },
+    {
+      "area": "(root)",
+      "route": "R1 - Fallout Report",
+      "path": "routes/R1 - Fallout Report/route.xml",
+      "is_capture_sink": false
+    }
+  ]
+}

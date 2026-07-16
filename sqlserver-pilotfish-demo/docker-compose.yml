@@ -1,0 +1,63 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-demo-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "PilotFish_Demo1!"
+      MSSQL_PID: Developer
+    ports:
+      - "14333:1433"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"PilotFish_Demo1!\" -C -Q \"SELECT 1\" || exit 1",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  sqlserver-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-demo-sqlserver-init
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ./sql:/sql:ro
+    entrypoint:
+      - /bin/bash
+      - -lc
+      - |
+        set -euo pipefail
+        echo "Initializing PilotFishDemo database..."
+        /opt/mssql-tools18/bin/sqlcmd \
+          -S sqlserver \
+          -U sa \
+          -P 'PilotFish_Demo1!' \
+          -C \
+          -i /sql/01_init.sql
+        echo "Seed complete."
+        /opt/mssql-tools18/bin/sqlcmd \
+          -S sqlserver \
+          -U sa \
+          -P 'PilotFish_Demo1!' \
+          -C \
+          -d PilotFishDemo \
+          -Q "SELECT CaptureId, ClientName, DocumentType, Status FROM dbo.Captures ORDER BY CaptureId"
+
+  pilotfish:
+    build:
+      context: ./pilotfish
+    image: pilotfish-sqlserver-demo:23R1
+    container_name: pf-demo-pilotfish
+    depends_on:
+      sqlserver-init:
+        condition: service_completed_successfully
+    ports:
+      - "8090:8080"
+    volumes:
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
