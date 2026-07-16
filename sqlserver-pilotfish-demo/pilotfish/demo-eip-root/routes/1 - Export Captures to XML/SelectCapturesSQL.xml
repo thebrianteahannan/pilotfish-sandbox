@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLXML xmlns="http://pilotfish.sqlxml">
+  <Execute into="records" as="Capture">
+    <SQL>
+      SELECT
+        CaptureId,
+        ClientName,
+        DocumentType,
+        Status,
+        CapturePayload,
+        CONVERT(VARCHAR(19), CreatedAt, 126) AS CreatedAt
+      FROM dbo.Captures
+      ORDER BY CaptureId
+    </SQL>
+  </Execute>
+  <XMLOut var="records" />
+</SQLXML>

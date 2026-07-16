@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors />
+  <Source icon="" name="SQL Server Captures">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.db.DatabaseSqlListener" enabled="true" name="Poll Captures Table">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>true</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>true</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <PollingInterval>15</PollingInterval>
+        <InputFile>SelectCapturesSQL.xml</InputFile>
+        <WriteQuery>false</WriteQuery>
+        <Query />
+        <QueryParams />
+        <UserName>$$db.username</UserName>
+        <Password>$$db.password</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$db.driver</JdbcDriver>
+        <JdbcURL>$$db.url</JdbcURL>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <BatchSensitive>false</BatchSensitive>
+        <Timeout>120</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema />
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <UseSingleOutputStream>true</UseSingleOutputStream>
+        <RefreshHandler>false</RefreshHandler>
+        <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+        <JDBCProperties>null</JDBCProperties>
+        <LogMetadata>false</LogMetadata>
+        <LogSQL>true</LogSQL>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target icon="" name="Captures XML File">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Write Captures XML" retries="3">
+      <ModuleConfig>
+        <TargetDirectory>$$XML_OUTPUT_DIRECTORY</TargetDirectory>
+        <FileName>captures_export</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
