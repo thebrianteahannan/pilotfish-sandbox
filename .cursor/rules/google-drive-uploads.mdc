@@ -1,0 +1,16 @@
+---
+description: Always upload Google Drive files into CursorFiles
+alwaysApply: true
+---
+
+# Google Drive uploads → CursorFiles
+
+Whenever you upload a file to Google Drive (PDF, docs, zip, etc.):
+
+1. Put it in the shared folder named **CursorFiles** (also accept `cursorfiles` / case-insensitive match).
+2. Resolve the folder by listing Drive folders and matching the name case-insensitively. If none exists, create a folder named `CursorFiles`.
+3. On `files.create`, set `parents` to that folder id. Never leave new uploads in Drive root.
+4. If a file was already uploaded to the wrong place, move it into `CursorFiles` before finishing (update parents).
+5. Prefer the existing `Google Drive` secret / authorized-user credentials already available in the environment.
+
+Do this every time—no exceptions unless the user explicitly names a different destination folder.

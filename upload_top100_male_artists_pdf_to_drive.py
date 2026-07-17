@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Upload Top_100_Male_Music_Artists.pdf to Google Drive (cursorfiles)."""
+"""Upload Top_100_Male_Music_Artists.pdf to Google Drive (CursorFiles)."""
 
 import json
 import os
@@ -12,7 +12,7 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-FOLDER_NAME = "cursorfiles"
+FOLDER_NAME = "CursorFiles"
 ROOT = Path(__file__).resolve().parent
 file_path = ROOT / "Top_100_Male_Music_Artists.pdf"
 filename = file_path.name
