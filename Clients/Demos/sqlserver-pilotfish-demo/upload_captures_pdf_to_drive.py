@@ -7,7 +7,7 @@ from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-FOLDER_NAME = "A - Cursor Files"
+FOLDER_NAME = "cursorfiles"
 ROOT = Path(__file__).resolve().parent
 file_path = ROOT / "PilotFishDemo_Captures_Table.pdf"
 filename = file_path.name
