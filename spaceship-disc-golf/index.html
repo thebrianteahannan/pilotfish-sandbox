@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Orbit Disc - Spaceship Disc Golf</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Exo+2:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="hud">
+    <header class="brand-bar">
+      <h1>Orbit Disc</h1>
+      <p class="tag">Fly. Fling. Chain out.</p>
+    </header>
+    <div class="stats">
+      <div><span class="label">Score</span><span id="score">0</span></div>
+      <div><span class="label">Hole</span><span id="hole">1 / 5</span></div>
+      <div><span class="label">Discs</span><span id="discs">inf</span></div>
+    </div>
+    <p id="toast" class="toast" hidden></p>
+    <div class="help">
+      <kbd>W</kbd><kbd>S</kbd> thrust |
+      <kbd>A</kbd><kbd>D</kbd> turn |
+      <kbd>R</kbd><kbd>F</kbd> climb |
+      <kbd>Q</kbd><kbd>E</kbd> roll |
+      <kbd>Space</kbd> throw | drag to look
+    </div>
+  </div>
+
+  <div id="start-screen">
+    <div class="panel">
+      <p class="eyebrow">LAN arcade</p>
+      <h2>Orbit Disc</h2>
+      <p>Pilot a skiff through alpine peaks and fire discs into mountain-top baskets. Chain the chains. Respect the flight path.</p>
+      <button id="start-btn" type="button">Launch</button>
+      <p class="hint">Best with keyboard + mouse. Touch: drag to steer, tap Throw.</p>
+    </div>
+  </div>
+
+  <button id="throw-btn" type="button" class="throw-fab" hidden>Throw</button>
+  <canvas id="c"></canvas>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
