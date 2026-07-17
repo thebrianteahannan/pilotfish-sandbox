@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Directory / File Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>15:28-15:28</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <PollingInterval>30</PollingInterval>
+        <PollingDirectory>$$FLAT_FILE_INPUT_DIRECTORY</PollingDirectory>
+        <FileNameRestriction>get_config_from_db</FileNameRestriction>
+        <FileExtensionRestriction>txt</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>$$FLAT_FILE_ARCHIVE_DIRECTORY</TargetDirectory>
+        <CompatModeMoved>false</CompatModeMoved>
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+        <SynchResponse>false</SynchResponse>
+        <Timeout>60</Timeout>
+        <FileSortingMethod>System Default</FileSortingMethod>
+        <FileSortingDirection>Ascending</FileSortingDirection>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>partition</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:software_id:eip_name:323:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.BlankXMLIntoDataProcessor" name="Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Processor2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Get Partition Config From DB" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.db.DatabaseSqlTransport" name="Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Database (SQL) Transport" retries="1">
+      <ModuleConfig>
+        <InputFile />
+        <WriteQuery>false</WriteQuery>
+        <Query>SELECT * FROM CLIENT_SPLITS where softwareid = ?;
+SELECT * FROM CLIENT_CODES where software_id = ?;
+SELECT * FROM FLG_LOCATIONS where ?;
+SELECT * FROM MUE_EDITS where software_id = ?;
+SELECT * FROM STRIPPING_RULES where partition = 'WCH' and client = 'WES';
+SELECT * FROM TWEAKING_RULES where partition = 'WCH' and client = 'WES';
+SELECT * FROM STRIP_LOCATIONS where software_id = ?;</Query>
+        <QueryParams>[eip_pair:Param1:eip_name:{ognl:getAttribute('software_id')}:eip_value][eip_pair:Param2:eip_name:{ognl:getAttribute('software_id')}:eip_value][eip_pair:Param3:eip_name:{ognl:getAttribute('software_id')}:eip_value][eip_pair:Param4:eip_name:{ognl:getAttribute('software_id')}:eip_value][eip_pair:Param5:eip_name:{ognl:getAttribute('software_id')}:eip_value]</QueryParams>
+        <UserName>$$DATABASE_USERNAME</UserName>
+        <Password>$$DATABASE_PASSWORD</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$DATABASE_DRIVER</JdbcDriver>
+        <JdbcURL>$$DATABASE_URL</JdbcURL>
+        <KeepConnection>false</KeepConnection>
+        <Autocommit>false</Autocommit>
+        <EnableTimeout>false</EnableTimeout>
+        <Timeout>600</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema />
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <CallbackListenerName />
+        <UseSingleOutputStream>false</UseSingleOutputStream>
+        <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+        <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+        <JDBCProperties>null</JDBCProperties>
+        <UseConnectionPooling>false</UseConnectionPooling>
+        <PermittedDBConnections>5</PermittedDBConnections>
+        <LogMetadata>false</LogMetadata>
+        <LogSQL>false</LogSQL>
+        <UseJdbcTyping>false</UseJdbcTyping>
+      </ModuleConfig>
+    </Transport>
+    <PostProcessors>
+      <Processor class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor" name="Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Post-Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Post-Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$HL7_TARGET_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('partition') + "_config_from_db.xml"}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </PostProcessors>
+  </Target>
+</Route>
+

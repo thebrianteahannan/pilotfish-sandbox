@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Format xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RoutePlacement="target" name="Generate Accounts Without DOS Report">
+  <TransformationModule class="com.pilotfish.eip.modules.transform.CSVTransformationModule">
+    <ModuleConfig>
+      <ExecuteTransformation>true</ExecuteTransformation>
+      <Delimiter>,</Delimiter>
+      <OutputQuotes>true</OutputQuotes>
+      <OutputColumnHeaders>true</OutputColumnHeaders>
+      <DetectDelimiter>false</DetectDelimiter>
+      <Columns />
+      <LinesToSkip>0</LinesToSkip>
+      <ColumnsToSuppress />
+      <SuppressEmptyTags>false</SuppressEmptyTags>
+      <IgnoreQuotes>false</IgnoreQuotes>
+      <UseUTF8Tag>false</UseUTF8Tag>
+    </ModuleConfig>
+  </TransformationModule>
+  <XSLT>
+    <ToXML />
+    <CacheXSLTToXML>false</CacheXSLTToXML>
+    <FromXML>transform.xslt</FromXML>
+    <CacheXSLTFromXML>false</CacheXSLTFromXML>
+    <XSLTEngine>SAXON</XSLTEngine>
+    <XSLTParameters>[eip_pair:Interface:eip_name:{ognl:getAttribute('SplitCode')}:eip_value][eip_pair:DefaultFacility:eip_name:{ognl:getAttribute('FacilityCode')}:eip_value]</XSLTParameters>
+    <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+    <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+    <ExecuteTransformation>true</ExecuteTransformation>
+  </XSLT>
+  <FormatMetadata />
+  <SplitControl xmlns="http://www.pilotfishtechnology.com/eip/FormatSpec">
+    <JoinModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullJoinModule" />
+    <ForkModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullForkModule" />
+  </SplitControl>
+</Format>
+

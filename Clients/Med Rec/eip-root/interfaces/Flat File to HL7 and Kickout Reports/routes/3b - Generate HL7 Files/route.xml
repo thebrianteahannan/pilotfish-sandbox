@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Flat File to HL7 and Kickout Reports.99b - Error - Handle Any Error.Programmable (Trigger) Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <MustContainString />
+        <MustNotContainString />
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="Canonical HL7 XML">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="2-2 - Generate HL7 Files for Cerner.Programmable (Trigger) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>15:47-15:47</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Get Charge and Demographics Counts">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:NumCharges:eip_name:count(//Group[@stripped="false"]/Charge):eip_value][eip_pair:NumDemographics:eip_name:count(//Group[@stripped="false"]/PatientDemographics):eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Remove Lookup Info Not For This SoftwareID">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform-remove-lookup-not-for-this-softwareid.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:SoftwareID:eip_name:{ognl:getAttribute('SoftwareID')}:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Remove non 797 dept and remove blank cpt charges">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'MED'}</ExecuteProcessor>
+          <XSLTPath>transform-remove-non-797-radExamDept-charges.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor11">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor10">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+          <TargetDirectory>{ognl:#properties.get('HL7_TARGET_DIRECTORY') + @java.io.File@separatorChar + getAttribute('SplitCode') + new java.text.SimpleDateFormat('hhmm').format(new java.util.Date())}</TargetDirectory>
+          <TargetFileName>{ognl:'Begin_GenerateHL7Files.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="If there is no SplitCode then use the DefaultSplitCode">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('SplitCode') == null || getAttribute('SplitCode').toString().length() == 0}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:SplitCode:eip_name:{ognl:getAttribute('DefaultSplitCode')}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="If there is no FacilityCode then use the Default FacilityCode">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('FacilityCode') == null || getAttribute('FacilityCode').toString().length() == 0}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:FacilityCode:eip_name:{ognl:getAttribute('DefaultFacilityCode')}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Generate Accounts Without Date of Service Report - PPA NEO ONLY">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Partition') == 'PPA' and getAttribute('Client') == 'NEO'}</ExecuteProcessor>
+          <Listener>Flat File to HL7 and Kickout Reports.4a5 - Kickout Reports - Accounts With No Date of Service.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Generate Accession Report - PPA NEO HAA NSP PPS ONLY">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:(getAttribute('Partition') == 'PPA' and getAttribute('Client') == 'NEO') || (getAttribute('Partition') == 'NGP' and getAttribute('Client') == 'CAQ') || (getAttribute('Partition') == 'HAL' and getAttribute('Client') == 'HAA') || getAttribute('Partition') == 'PPS' || getAttribute('Partition') == 'NSP'}</ExecuteProcessor>
+          <Listener>Flat File to HL7 and Kickout Reports.4a6 - Kickout Reports - Accession Log.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="Batch of ADT A04s (Demos)">
+    <FormatProfile name="Generate ADT A04 HL7" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="2-2 - Generate HL7 Files for Cerner.Directory / File Transport" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:#properties.get('HL7_TARGET_DIRECTORY') + ( #properties.get('is_debug') ?  @java.io.File@separatorChar + getAttribute('SplitCode') + new java.text.SimpleDateFormat('hhmm').format(new java.util.Date()) : '' )}</TargetDirectory>
+        <FileName>{ognl:getAttribute('SplitCode').toString().toUpperCase() + new java.text.SimpleDateFormat('MMdd').format(new java.util.Date()) + 'a'}</FileName>
+        <FileExtension>ADT</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor12">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Partition') == 'ARA' &amp;&amp; getAttribute('Client') == 'ARA'}</ExecuteProcessor>
+          <Listener>Flat File to HL7 and Kickout Reports.4a4 - Kickout Reports - Ref Phys - Ariana - Ligolab.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Sort File in predictible order-Copy-2">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+          <XSLTPath>transform-sort.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:FileType:eip_name:ADT:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Post-Processor-Copy-2">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+          <Listener>Flat File to HL7 and Kickout Reports.3d - Generate HL7 Debug Logging - ADT.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.hl7.HL7TransformationProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor2-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TransformationDirection>XML to HL7 2.X</TransformationDirection>
+          <ExecuteTransformation>true</ExecuteTransformation>
+          <SUBCOMPONETS_CONFIG>Default</SUBCOMPONETS_CONFIG>
+          <FIELDS_TO_FORCE_CHILD_POPULATION />
+          <FIELDS_TO_AVOID_CHILD_POPULATION />
+          <PUT_FIRST_CHILD_TO_ATTRIBUTE>false</PUT_FIRST_CHILD_TO_ATTRIBUTE>
+          <REBUILD_FORMAT_FOR_UNEXPECTED_VERSION>false</REBUILD_FORMAT_FOR_UNEXPECTED_VERSION>
+          <USE_ALTERNATIVE_CACHE>false</USE_ALTERNATIVE_CACHE>
+          <HL7Version>2.5.1</HL7Version>
+          <CACHE_SIZE>20</CACHE_SIZE>
+          <CACHE_ON_START>true</CACHE_ON_START>
+          <FOLDER_WITH_ADDITIONAL_XSD />
+          <FAIL_IF_REQUIRED_NOT_FOUND>false</FAIL_IF_REQUIRED_NOT_FOUND>
+          <DETECT_LINE_SEPARATOR_TAG>false</DETECT_LINE_SEPARATOR_TAG>
+          <IGNORE_UNKNOWN_Z_SEGMNENTS>false</IGNORE_UNKNOWN_Z_SEGMNENTS>
+          <IGNORE_SEGMNENTS_MAX_OCCURS>true</IGNORE_SEGMNENTS_MAX_OCCURS>
+          <INCLUDE_EMPTY_FIELDS>false</INCLUDE_EMPTY_FIELDS>
+          <USE_FRIENDLY_NAMES>false</USE_FRIENDLY_NAMES>
+          <USE_ATTRIBUTE_FRIENDLY_NAMES>false</USE_ATTRIBUTE_FRIENDLY_NAMES>
+          <USE_NAMESPACE>false</USE_NAMESPACE>
+          <CustomMessageStructure />
+          <USE_COMPATIBILITY_SCHEMAS>false</USE_COMPATIBILITY_SCHEMAS>
+          <FILL_FORMAT_FIELDS>false</FILL_FORMAT_FIELDS>
+          <ADD_BATCH_SEGMENTS>false</ADD_BATCH_SEGMENTS>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.EOLProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <EndlineSequence>\n</EndlineSequence>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.custom.EmptyLineProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor3">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>ADT_data</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor4">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:demo_count:eip_name:{ognl:@org.apache.commons.lang.StringUtils@countMatches(getAttribute('ADT_data').toString(),"PID|").toString()}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor6">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>demo_count</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor5">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$HL7_TARGET_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('SplitCode').toString().toUpperCase() + new java.text.SimpleDateFormat('MMdd').format(new java.util.Date()) + 'a_demo_count.txt'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor7">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>ADT_data</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="DFT DPT P03s (Charges)">
+    <FormatProfile name="Generate DFT DPT P03 HL7" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="2-2 - Generate HL7 Files for Cerner.Directory / File Transport1" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:#properties.get('HL7_TARGET_DIRECTORY') + ( #properties.get('is_debug') ?  @java.io.File@separatorChar + getAttribute('SplitCode') + new java.text.SimpleDateFormat('hhmm').format(new java.util.Date()) : '' )}</TargetDirectory>
+        <FileName>{ognl:getAttribute('SplitCode').toString().toUpperCase() + new java.text.SimpleDateFormat('MMdd').format(new java.util.Date()) + 'd'}</FileName>
+        <FileExtension>DFT</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Append PatientType to CDMs - FPS ONLY">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Partition') == 'FPS'}</ExecuteProcessor>
+          <XSLTPath>transform-add-patient-type-to-cdm-for-fps.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Append A to CDMs - Stamford ONLY">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Partition') == 'SPG'}</ExecuteProcessor>
+          <XSLTPath>transform-add-A-to-cdm-for-SPG.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Call Route to generate report for cdm appeding A's">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Partition') == 'SPG'}</ExecuteProcessor>
+          <Listener>Flat File to HL7 and Kickout Reports.4d - CDM Appended A Report.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Sort File in predictible order">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+          <XSLTPath>transform-sort.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:FileType:eip_name:DFT:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Post-Processor-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+          <Listener>Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Remove MUE Edits Log XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>remove_mue_edits.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.hl7.HL7TransformationProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TransformationDirection>XML to HL7 2.X</TransformationDirection>
+          <ExecuteTransformation>true</ExecuteTransformation>
+          <SUBCOMPONETS_CONFIG>Default</SUBCOMPONETS_CONFIG>
+          <FIELDS_TO_FORCE_CHILD_POPULATION />
+          <FIELDS_TO_AVOID_CHILD_POPULATION />
+          <PUT_FIRST_CHILD_TO_ATTRIBUTE>false</PUT_FIRST_CHILD_TO_ATTRIBUTE>
+          <REBUILD_FORMAT_FOR_UNEXPECTED_VERSION>false</REBUILD_FORMAT_FOR_UNEXPECTED_VERSION>
+          <USE_ALTERNATIVE_CACHE>false</USE_ALTERNATIVE_CACHE>
+          <HL7Version>2.5.1</HL7Version>
+          <CACHE_SIZE>20</CACHE_SIZE>
+          <CACHE_ON_START>true</CACHE_ON_START>
+          <FOLDER_WITH_ADDITIONAL_XSD />
+          <FAIL_IF_REQUIRED_NOT_FOUND>false</FAIL_IF_REQUIRED_NOT_FOUND>
+          <DETECT_LINE_SEPARATOR_TAG>false</DETECT_LINE_SEPARATOR_TAG>
+          <IGNORE_UNKNOWN_Z_SEGMNENTS>false</IGNORE_UNKNOWN_Z_SEGMNENTS>
+          <IGNORE_SEGMNENTS_MAX_OCCURS>true</IGNORE_SEGMNENTS_MAX_OCCURS>
+          <INCLUDE_EMPTY_FIELDS>false</INCLUDE_EMPTY_FIELDS>
+          <USE_FRIENDLY_NAMES>false</USE_FRIENDLY_NAMES>
+          <USE_ATTRIBUTE_FRIENDLY_NAMES>false</USE_ATTRIBUTE_FRIENDLY_NAMES>
+          <USE_NAMESPACE>false</USE_NAMESPACE>
+          <CustomMessageStructure />
+          <USE_COMPATIBILITY_SCHEMAS>false</USE_COMPATIBILITY_SCHEMAS>
+          <FILL_FORMAT_FIELDS>false</FILL_FORMAT_FIELDS>
+          <ADD_BATCH_SEGMENTS>false</ADD_BATCH_SEGMENTS>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.EOLProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <EndlineSequence>\n</EndlineSequence>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.custom.EmptyLineProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor1-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Swap Data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>DFT_data</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Calculate Charge Count">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:charge_count:eip_name:{ognl:@org.apache.commons.lang.StringUtils@countMatches(getAttribute('DFT_data').toString(),"FT1|").toString()}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Swap Charge Count to data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>charge_count</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Count to File">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$HL7_TARGET_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('SplitCode').toString().toUpperCase() + new java.text.SimpleDateFormat('MMdd').format(new java.util.Date()) + 'd_charge_count.txt'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Swap Data Back">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>DFT_data</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="Remove MSH if Debug">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+          <UseDefaultEncoding>false</UseDefaultEncoding>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:MSH.*:eip_name::eip_value]</REGEX_TABLE_TAG>
+          <PostProcessOptions>Replace all \n with newlines</PostProcessOptions>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="MUE Edits Report">
+    <FormatProfile name="Generate DFT DPT P03 HL7" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Route to Route Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>Flat File to HL7 and Kickout Reports.3-1 - Reports - MUE Edits.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Error If Charges Without Demo">
+    <FormatProfile name="Check If Charges Without Demo" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.other.NullTransport" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Null Transport" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor8">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:Status:eip_name://Status:eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor9">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Status') == 'ERROR'}</ExecuteProcessor>
+          <Listener>Flat File to HL7 and Kickout Reports.99a - Error - Charge Without Demo.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

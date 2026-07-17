@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="XCSData">
+				<xsd:complexType>
+					<xsd:sequence />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Header" type="Header_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Patient-Demographics" type="Patient-Demographics_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Insurance-1" type="Insurance-1_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Insurance-2" type="Insurance-2_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Insurance-3" type="Insurance-3_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Guarantor" type="Guarantor_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Charge-Record" type="Charge-Record_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Query-Response" type="Query-Response_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Diagnosis-Codes" type="Diagnosis-Codes_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Trailer" type="Trailer_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Diagnosis-Codes-v2" type="Diagnosis-Codes-v2_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Guarantor-v2" type="Guarantor-v2_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Patient-Demographics-v2" type="Patient-Demographics-v2_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unknown" type="Unknown_element_type" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="Guarantor-v2_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-record-type" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-account-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-street" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-street-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-zip-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-county" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-country" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-nam-v2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-addr" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-addr-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-zip" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-ss-num" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-relation" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-unit-number" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-eor" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Patient-Demographics-v2_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-record-type" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-acct--prefix" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-account-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-patient-status" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-adm-ser-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-abs-status-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-name-full" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-street" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-street-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-zip-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-sex" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-birthdate" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-fin-class" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ss-number" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-pat-country" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-pat-county" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dis-disp-ub82" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-adm-pri-ub82" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-pat-wt-kg" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-attend-doc-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-attend-doc-mnem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-attend-doc-upin" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-att-doc-dft-lic" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ub82-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-accident-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-admit-dx" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-location" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-refer-doc-mnem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-refer-doc-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-refer-doc-upin" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ref-doc-dft-lic" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-unit-number" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-client-mnem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-client-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-marital-status" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-street" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-street-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-zip" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-relation" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-home-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-work-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-street" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-street2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-zip" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-relation" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-home-ph" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-work-ph" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-name-out" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-street" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-street2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-zip-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-mail-to-nm" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-mail-to-nm" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-mail-to-nm" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-3" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-3" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-3" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-4" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-4" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-4" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-5" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-5" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-5" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-6" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-6" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-6" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-7" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-7" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-7" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-8" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-8" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-8" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-9" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-9" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-9" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-10" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-10" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-10" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-11" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-11" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-11" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-12" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-12" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-12" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-3" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-4" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-5" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-6" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-7" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-8" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-9" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-10" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-11" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-12" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-attend-doc-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-refer-doc-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-doc-grp-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-doc-dft-lic" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-visit-reason" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-doc" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-doc-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-doc-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ref-doc-grp-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-svc-time" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-depart-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-depart-time" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-doc-upin" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-eor" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Trailer_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-record-type" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-eor" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Query-Response_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-record-type" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-account-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-3" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-4" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-5" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-6" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-7" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-8" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-9" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-10" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-11" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-12" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-13" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-14" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-query-15" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-eor" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Patient-Demographics_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-record-type" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-acct--prefix" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-account-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-patient-status" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-adm-ser-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-abs-status-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-name-full" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-street" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-street-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-zip-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-sex" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-birthdate" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-fin-class" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ss-number" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-pat-country" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-pat-county" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dis-disp-ub82" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-adm-pri-ub82" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-pat-wt-kg" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-attend-doc-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-attend-doc-mnem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-attend-doc-upin" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-att-doc-dft-lic" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ub82-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-accident-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-admit-dx" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-location" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-refer-doc-mnem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-refer-doc-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-refer-doc-upin" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ref-doc-dft-lic" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-unit-number" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-client-mnem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-client-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-marital-status" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-street" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-street-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-zip" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-relation" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-home-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-nok-work-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-street" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-street2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-zip" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-relation" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-home-ph" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-notify-work-ph" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-name-out" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-street" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-street2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-zip-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-emp-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-mail-to-nm" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-mail-to-nm" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-mail-to-nm" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-3" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-3" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-3" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-4" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-4" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-4" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-5" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-5" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-5" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-6" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-6" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-6" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-7" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-7" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-7" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-8" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-8" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-8" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-9" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-9" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-9" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-10" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-10" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-10" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-11" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-11" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-11" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occurrence-cd-12" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-date-12" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-time-12" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-3" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-4" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-5" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-6" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-7" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-8" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-9" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-10" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-11" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-occur-state-12" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-attend-doc-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-refer-doc-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-doc-grp-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-doc-dft-lic" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-visit-reason" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-doc" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-doc-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-doc-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ref-doc-grp-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-svc-time" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-depart-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-depart-time" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="adm-er-doc-upin" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-eor" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Header_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-record-type" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ged-create-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ged-hosp-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ged-hosp-addr-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ged-hosp-addr-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-eor" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Charge-Record_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-record-type" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-acct--prefix" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-pat-acct-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-ser-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-bill-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-status" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-creddebit" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-pat-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="rad-exam-campus" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-ord-dc-mnem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-ord-dc-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-ord-dc-addr" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-ord-dc-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-ord-dc-upin" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ord-doc-dft-lic" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-per-dc-mnem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-per-dc-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-per-dc-addr" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-per-doc-dft-lic" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-per-dc-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-per-dc-upin" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-cpt-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-dept" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-quantity" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-unit-number" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-mtech-appl" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-rad-exam-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-hcpc-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-bill-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-desc" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-ord-dc-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-chg-per-dc-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ord-doc-grp-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-per-doc-grp-npi" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-eor" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Guarantor_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-record-type" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-account-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-street" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-street-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-zip-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-county" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-country" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-nam-v2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-addr" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-addr-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-zip" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-emp-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-ss-num" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-guar-relation" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-unit-number" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-eor" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Diagnosis-Codes-v2_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-record-type" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-account-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-1-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-1-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-2-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-2-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-3" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-3-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-3-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-4" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-4-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-4-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-5" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-5-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-5-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-6" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-6-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-6-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-7" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-7-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-7-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-8" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-8-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-8-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-9" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-9-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-9-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-rfv-dx-1-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-rfv-dx-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-rfv-dx-2-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-rfv-dx-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-rfv-dx-3-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-rfv-dx-3" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-eor" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Insurance-1_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-record-type" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-account-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-mnem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-zcus-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-street" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-street2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-zip-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-country" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-insured" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-relation" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-unit-number" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-pa-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-pat-id" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-ref-num" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-group-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-policy-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-payor-id" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-eff-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-subs-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-sub-add1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-sub-add2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-plan-id" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="F466-ins1-treatauth" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-sub-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-sub-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-sub-zip" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-sub-gender" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-sub-dob" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins1-group-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-eor" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Diagnosis-Codes_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-record-type" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-account-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-1-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-1-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-2-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-2-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-3" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-3-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-3-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-4" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-4-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-4-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-5" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-5-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-5-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-6" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-6-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-6-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-7" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-7-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-7-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-8" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-8-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-8-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-9" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-9-nam" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-dischg-dx-9-poa" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-rfv-dx-1-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-rfv-dx-1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-rfv-dx-2-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-rfv-dx-2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-rfv-dx-3-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-rfv-dx-3" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-eor" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Unknown_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unknown" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Insurance-3_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-record-type" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-account-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-mnem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-zcus-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-street" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-street2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-zip-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-country" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-insured" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-relation" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-unit-number" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-pa-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-pat-id" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-ref-num" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-group-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-policy-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-payor-id" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-eff-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-subs-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-sub-add1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-sub-add2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-plan-id" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="F466-ins3-treatauth" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-sub-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-sub-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-sub-zip" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-sub-gender" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-sub-dob" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins3-group-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-eor" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Insurance-2_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-record-type" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-account-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-mnem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-zcus-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-street" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-street2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-zip-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-country" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-phone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-insured" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-relation" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-unit-number" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-filler" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-pa-code" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-pat-id" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-ref-num" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-group-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-policy-" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-payor-id" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-eff-date" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-subs-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-sub-add1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-sub-add2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-plan-id" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="F466-ins2-treatauth" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-sub-city" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-sub-state" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-sub-zip" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-sub-gender" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-sub-dob" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-ins2-group-name" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="cpcs-eor" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

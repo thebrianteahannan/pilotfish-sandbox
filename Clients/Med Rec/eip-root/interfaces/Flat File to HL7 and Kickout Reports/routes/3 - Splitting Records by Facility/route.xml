@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="2-1 - Split and Strip Records by Facility.Route to Route Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('SplitCount') &gt; 0</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="2-1 - Split Records by Facility.Route to Route Transport2" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Transaction Monitor-Copy-1">
+      <ModuleConfig>
+        <ErrorListenerName>Flat File to HL7 and Kickout Reports.99b - Error - Handle Any Error.Programmable (Trigger) Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <MustContainString />
+        <MustNotContainString />
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Split Records" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="2-1 - Split and Strip Records by Facility.Programmable (Trigger) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>14:30-14:30</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor10-Copy-2">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+          <TargetDirectory>{ognl:#properties.get('HL7_TARGET_DIRECTORY')}</TargetDirectory>
+          <TargetFileName>{ognl:'Begin_Split_Route.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Save Data into Temp Trans Attr">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>tempData</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Save Data into Temp Trans Attr For Reports">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>tempDataForReports</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>true</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Query Database for Split Information">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>select * from client_splits cs left join client_codes cc on cs.facility = cc.facility and cs.softwareid = cc.software_id
+where cs.partition = ? and cs.client like ?</Query>
+          <QueryParams>[eip_pair:Partition:eip_name:{ognl:getAttribute('Partition').toUpperCase()}:eip_value][eip_pair:Client:eip_name:{ognl:getAttribute('Client').toUpperCase()}:eip_value]</QueryParams>
+          <UserName>$$DATABASE_USERNAME</UserName>
+          <Password>$$DATABASE_PASSWORD</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$DATABASE_DRIVER</JdbcDriver>
+          <JdbcURL>$$DATABASE_URL</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>false</Autocommit>
+          <EnableTimeout>false</EnableTimeout>
+          <Timeout>600</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <CallbackListenerName />
+          <UseSingleOutputStream>false</UseSingleOutputStream>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+          <JDBCProperties>null</JDBCProperties>
+          <UseConnectionPooling>false</UseConnectionPooling>
+          <PermittedDBConnections>5</PermittedDBConnections>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>false</LogSQL>
+          <UseJdbcTyping>false</UseJdbcTyping>
+          <TransactionIsolationLevel>Default</TransactionIsolationLevel>
+          <TransactionIsolationDriverSpecific>-1</TransactionIsolationDriverSpecific>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="DB Results to SplintInfo XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform6.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Get Default Split Code">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:DefaultSplitCode:eip_name://Split[IsDefault='true']/@split_code:eip_value][eip_pair:DefaultFacilityCode:eip_name://Split[IsDefault='true']/@facility_code:eip_value][eip_pair:DefaultAccountNumAlpha:eip_name://Split[IsDefault='true']/@account_num_alpha:eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Store Split Database Results to Attribute">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>split_info_query_results</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Put Data Back">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>tempData</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Wrap Groups In Client Node with ClientCode">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:Partition:eip_name:{ognl:getAttribute('Partition').toUpperCase()}:eip_value][eip_pair:Client:eip_name:{ognl:getAttribute('Client').toUpperCase()}:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Assign Split Codes">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform2.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:SplitInfoXML:eip_name:{ognl:getAttribute('split_info_query_results')}:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Remove Duplicates That Don't Have a Split Code Assigned">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Client') != 'SPG'}</ExecuteProcessor>
+          <XSLTPath>transformRemoveDuplicates.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:DefaultSplitCode:eip_name:{ognl:getAttribute('DefaultSplitCode')}:eip_value][eip_pair:DefaultFacilityCode:eip_name:{ognl:getAttribute('DefaultFacilityCode')}:eip_value][eip_pair:DefaultAccountNumAlpha:eip_name:{ognl:getAttribute('DefaultAccountNumAlpha')}:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Remove defaults if split is present - PPA ONLY">
+        <ModuleConfig>
+          <ExecuteProcessor>false</ExecuteProcessor>
+          <XSLTPath>transform-PPA-remove-defaults-if-split-present.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Remove Duplicates - Specific Ones">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Client') == 'NFL' || getAttribute('Client') == 'ORA' || getAttribute('Client') == 'OWE' || getAttribute('Client') == 'SAR' || getAttribute('Client') == 'TRD' || getAttribute('Client') == 'BRN' || getAttribute('Client') == 'WES'}</ExecuteProcessor>
+          <XSLTPath>transform-remove-dups-part1.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Group Splits and Clients Together">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transformGroupSplitsAndClients.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Get Split Count">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:SplitCount:eip_name:count(//Split[Client/@client_code != '']):eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Get Split Count - NPS ONLY">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Partition') == 'NPS'}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:SplitCount:eip_name:{ognl:getAttribute('SplitCount') != null ? (getAttribute('SplitCount') - 1) : 0}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Save Data Again">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Client') != 'PPA'}</ExecuteProcessor>
+          <AttributeName>dataBeforeSplit</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>true</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Generate Kickout Reports (only once before splitting)">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>Flat File to HL7 and Kickout Reports.3-0 - Generate Reports.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor10-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+          <TargetDirectory>{ognl:#properties.get('HL7_TARGET_DIRECTORY')}</TargetDirectory>
+          <TargetFileName>{ognl:'Before_Splitting.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Remove Splits with no client code">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Partition') == 'NPS' || getAttribute('Partition') == 'PPS'}</ExecuteProcessor>
+          <XSLTPath>transform-pps-remove-empty-splits.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="Continue With Split File">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="2-1 - Split and Strip Records by Facility.Route to Route Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>2-2 - Generate HL7 Files for Cerner.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="New Architecture.2-1 - Split Records by Facility.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>tempData</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="New Architecture.2-1 - Split Records by Facility.Processor3">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:SplitCode:eip_name://Split/@split_code:eip_value][eip_pair:FacilityCode:eip_name://Split/@facility_code:eip_value][eip_pair:AccountNumAlpha:eip_name://Split/@account_num_alpha:eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Swap Query Info Results Into Data - PPA ONLY">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Client') == 'PPA' || getAttribute('Partition') == 'NGP' || (getAttribute('Partition') == 'HAL' &amp;&amp; getAttribute('Client') == 'HAX')}</ExecuteProcessor>
+          <AttributeName>split_info_query_results</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Get Default Perf Dr (after the split has happened) - PPA and SPG ONLY">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Client') == 'PPA' || getAttribute('Partition') == 'NGP' || (getAttribute('Partition') == 'HAL' &amp;&amp; getAttribute('Client') == 'HAX')}</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:DefaultPerfDr:eip_name:{ognl:"//SplitInfo/Split[@split_code = '" + getAttribute("SplitCode") + "']/@default_perf_dr"}:eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.AttributeConcatenationProcessor" name="Concat Data - NON PPS">
+        <ModuleConfig>
+          <ExecuteProcessor>false</ExecuteProcessor>
+          <Namespace />
+          <Tags>[eip_pair:query_results:eip_name:feed_info_query_results:eip_value][eip_pair:import:eip_name:tempData:eip_value]</Tags>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Swap orig data back - PPS ONLY - ALL NOW">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>tempData</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Concat Data - PPS ONLY - ALL NOW">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform-concatenate.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:Tag1:eip_name:query_results:eip_value][eip_pair:Source1:eip_name:feed_info_query_results:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="New Architecture.2-1 - Split Records by Facility.Processor2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform5.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Continue With Non Split File">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="2-1 - Split Records by Facility.Route to Route Transport2" retries="1">
+      <ModuleConfig>
+        <ServiceName>2-2 - Generate HL7 Files for Cerner.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Swap Query Info Results Into Data - SPG ONLY">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Client') == 'SPG'}</ExecuteProcessor>
+          <AttributeName>split_info_query_results</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Get Default Perf Dr (after the split has happened) - SPG ONLY">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Client') == 'SPG'}</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:DefaultPerfDr:eip_name:{ognl:"//SplitInfo/Split[@split_code = '" + getAttribute("SplitCode") + "']/@default_perf_dr"}:eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Put Original Data Back Because We Did Not Split">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>tempData</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

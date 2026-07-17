@@ -45,7 +45,7 @@ RUN chmod +x /tmp/fix-windows-paths.sh \
 
 # Seed H2 database used by DATABASE_URL=jdbc:h2:/opt/pilotfish/database/medreceivables
 # Entrypoint will copy this into the mounted volume when the volume DB is missing/empty.
-COPY database/medreceivables.mv.db /opt/pilotfish/seed/medreceivables.mv.db
+COPY Clients/Med Rec/database/medreceivables.mv.db /opt/pilotfish/seed/medreceivables.mv.db
 
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

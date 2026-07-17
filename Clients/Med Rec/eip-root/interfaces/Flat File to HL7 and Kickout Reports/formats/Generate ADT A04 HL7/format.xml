@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Format xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RoutePlacement="target" name="Generate ADT A04 HL7">
+  <TransformationModule class="com.pilotfish.eip.modules.internal.RelayTransformationModule">
+    <ModuleConfig>
+      <ExecuteTransformation>true</ExecuteTransformation>
+    </ModuleConfig>
+  </TransformationModule>
+  <XSLT>
+    <ToXML />
+    <CacheXSLTToXML>false</CacheXSLTToXML>
+    <FromXML>transform.xslt</FromXML>
+    <FromXMLAdditional>
+      <XsltFile>transform2.xslt</XsltFile>
+    </FromXMLAdditional>
+    <CacheXSLTFromXML>false</CacheXSLTFromXML>
+    <XSLTEngine>SAXON</XSLTEngine>
+    <XSLTParameters>[eip_pair:partitionName:eip_name:{ognl:getAttribute('Partition')}:eip_value][eip_pair:clientName:eip_name:{ognl:getAttribute('Client')}:eip_value][eip_pair:facilityName:eip_name:{ognl:getAttribute('SplitCode')}:eip_value][eip_pair:facilityCode:eip_name:{ognl:getAttribute('FacilityCode')}:eip_value][eip_pair:file_name:eip_name:{ognl:getAttribute('com.pilotfish.FileName') + '.' + getAttribute('com.pilotfish.FileExtension')}:eip_value][eip_pair:accountNumAlpha:eip_name:{ognl:getAttribute('AccountNumAlpha')}:eip_value][eip_pair:softwareID:eip_name:{ognl:getAttribute('SoftwareID')}:eip_value]</XSLTParameters>
+    <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+    <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+    <ExecuteTransformation>true</ExecuteTransformation>
+  </XSLT>
+  <FormatMetadata />
+  <SplitControl xmlns="http://www.pilotfishtechnology.com/eip/FormatSpec">
+    <JoinModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullJoinModule" />
+    <ForkModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullForkModule" />
+  </SplitControl>
+</Format>
+

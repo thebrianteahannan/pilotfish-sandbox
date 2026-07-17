@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XCSData>
+	<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<soap:Header>
+			<wsa:MessageID>urn:uuid:0149f520-a3c5-48fd-8121-80e0100cd5ff</wsa:MessageID>
+			<wsa:ReplyTo>
+				<wsa:Address>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:Address>
+			</wsa:ReplyTo>
+			<wsa:To>https://www.xifin.net/test/accession/services</wsa:To>
+			<wsse:Security soap:mustUnderstand="1">
+				<wsu:Timestamp wsu:Id="Timestamp-6cc50ec5-e4c6-42f9-8ee4-3ddbfedfd798">
+					<wsu:Created>2025-7-24T15:14:11.885Z</wsu:Created>
+					<wsu:Expires>2025-7-24T15:14:11.885Z</wsu:Expires>
+				</wsu:Timestamp>
+				<wsse:UsernameToken wsu:Id="SecurityToken-26d2d70b-0c3a-46f1-bfdf-fa0389c3218a">
+					<wsse:Username>palmbeachligolab</wsse:Username>
+					<wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">TkCIOtMmI+lgdorRqiG5JyLsQDQ=</wsse:Password>
+					<wsse:Nonce>MjAyNTcyNDE1MTQxMTg4NQ==</wsse:Nonce>
+					<wsu:Created>2025-7-24T15:14:11.885Z</wsu:Created>
+				</wsse:UsernameToken>
+			</wsse:Security>
+		</soap:Header>
+		<soap:Body>
+			<CreateAccessionRequest xmlns="http://www.xifin.com/schema/accession">
+				<MessageHeader xmlns="http://www.xifin.com/schema/msgHeader">
+					<SequenceNumber>1753370051</SequenceNumber>
+					<UserId>palmbeachligolab</UserId>
+					<SourceApplication />
+					<OrgAlias>palmbeach</OrgAlias>
+				</MessageHeader>
+				<Payload>
+					<CreateAccession>
+						<AccessionId>40038541</AccessionId>
+						<IgnoreErrors>true</IgnoreErrors>
+						<ReceiptDate>2025-07-22</ReceiptDate>
+						<DateOfService>2025-07-21</DateOfService>
+						<ClientId>2-2865680</ClientId>
+						<PatientInfo>
+							<PatientId>30228713</PatientId>
+							<Person>
+								<Name xmlns="http://www.xifin.com/schema/types">
+									<FirstName>AMY</FirstName>
+									<LastName>CHAPMAN</LastName>
+								</Name>
+								<DateOfBirth xmlns="http://www.xifin.com/schema/types">1967-09-25</DateOfBirth>
+								<Gender xmlns="http://www.xifin.com/schema/types">Female</Gender>
+								<Address xmlns="http://www.xifin.com/schema/types">
+									<AddressLine1>893 SOUTHWICK AVENUE</AddressLine1>
+									<City>CLAYTON</City>
+									<State>NC</State>
+									<ZIP>27527</ZIP>
+								</Address>
+								<HomePhone xmlns="http://www.xifin.com/schema/types">9196325400</HomePhone>
+							</Person>
+							<PatientType>Non-patient</PatientType>
+						</PatientInfo>
+						<FinalReportedDate>2025-07-24</FinalReportedDate>
+						<Physicians>
+							<Ordering>
+								<NPI>1578827010</NPI>
+								<Name>Tholen Bailey, Jodi</Name>
+							</Ordering>
+						</Physicians>
+						<OrderedTests>
+							<TestSequenceNumber>1</TestSequenceNumber>
+							<TransactionType>+</TransactionType>
+							<TestId>87626</TestId>
+							<acc:DiagnosisCodes xmlns:acc="http://www.xifin.com/schema/accession">
+								<acc:DiagnosisCode>Z01.419</acc:DiagnosisCode>
+							</acc:DiagnosisCodes>
+							<PlaceOfService>ATNECP</PlaceOfService>
+							<RenderingPhysician>
+								<NPI>1174782205</NPI>
+							</RenderingPhysician>
+							<Units>1</Units>
+						</OrderedTests>
+						<OrderedTests>
+							<TestSequenceNumber>2</TestSequenceNumber>
+							<TransactionType>+</TransactionType>
+							<TestId>88175</TestId>
+							<acc:DiagnosisCodes xmlns:acc="http://www.xifin.com/schema/accession">
+								<acc:DiagnosisCode>Z01.419</acc:DiagnosisCode>
+							</acc:DiagnosisCodes>
+							<PlaceOfService>ECP</PlaceOfService>
+							<RenderingPhysician>
+								<NPI>1174782205</NPI>
+							</RenderingPhysician>
+							<Units>1</Units>
+						</OrderedTests>
+						<InsuranceInfo>
+							<PayorPriority>1</PayorPriority>
+							<PayorId>C</PayorId>
+							<InsuredRelationship>18</InsuredRelationship>
+						</InsuranceInfo>
+					</CreateAccession>
+				</Payload>
+			</CreateAccessionRequest>
+		</soap:Body>
+	</soap:Envelope>
+	<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<soap:Header>
+			<wsa:MessageID>urn:uuid:138bbd15-89cd-451d-aa88-7795285a8273</wsa:MessageID>
+			<wsa:ReplyTo>
+				<wsa:Address>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:Address>
+			</wsa:ReplyTo>
+			<wsa:To>https://www.xifin.net/test/accession/services</wsa:To>
+			<wsse:Security soap:mustUnderstand="1">
+				<wsu:Timestamp wsu:Id="Timestamp-8ba74525-5104-4a7e-a3bf-04b87e1196ce">
+					<wsu:Created>2025-7-27T13:56:10.244Z</wsu:Created>
+					<wsu:Expires>2025-7-27T13:56:10.244Z</wsu:Expires>
+				</wsu:Timestamp>
+				<wsse:UsernameToken wsu:Id="SecurityToken-c3b4fd33-a509-4682-bb59-70c8d2c8ac6e">
+					<wsse:Username>palmbeachligolab</wsse:Username>
+					<wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">M8AYApOLBIPn5FmBeTPrPwWfmVU=</wsse:Password>
+					<wsse:Nonce>MjAyNTcyNzEzNTYxMDI0NA==</wsse:Nonce>
+					<wsu:Created>2025-7-27T13:56:10.244Z</wsu:Created>
+				</wsse:UsernameToken>
+			</wsse:Security>
+		</soap:Header>
+		<soap:Body>
+			<CreateAccessionRequest xmlns="http://www.xifin.com/schema/accession">
+				<MessageHeader xmlns="http://www.xifin.com/schema/msgHeader">
+					<SequenceNumber>1753624570</SequenceNumber>
+					<UserId>palmbeachligolab</UserId>
+					<SourceApplication />
+					<OrgAlias>palmbeach</OrgAlias>
+				</MessageHeader>
+				<Payload>
+					<CreateAccession>
+						<AccessionId>40005251</AccessionId>
+						<IgnoreErrors>true</IgnoreErrors>
+						<ReceiptDate>2025-06-19</ReceiptDate>
+						<DateOfService>2025-06-12</DateOfService>
+						<ClientId>1-0011577</ClientId>
+						<PatientInfo>
+							<PatientId>32001573</PatientId>
+							<Person>
+								<Name xmlns="http://www.xifin.com/schema/types">
+									<FirstName>WILLIAM</FirstName>
+									<LastName>MCLEOD</LastName>
+								</Name>
+								<DateOfBirth xmlns="http://www.xifin.com/schema/types">1959-06-19</DateOfBirth>
+								<Gender xmlns="http://www.xifin.com/schema/types">Male</Gender>
+								<Address xmlns="http://www.xifin.com/schema/types">
+									<State>FL</State>
+								</Address>
+							</Person>
+							<PatientType>Non-patient</PatientType>
+						</PatientInfo>
+						<FinalReportedDate>2025-07-24</FinalReportedDate>
+						<Physicians>
+							<Ordering>
+								<NPI>1114242039</NPI>
+								<Name>Kovalyshyn, Ivanka</Name>
+							</Ordering>
+						</Physicians>
+						<OrderedTests>
+							<TestSequenceNumber>1</TestSequenceNumber>
+							<TransactionType>+</TransactionType>
+							<TestId>88342-TC</TestId>
+							<Modifiers>
+								<Mod1>TC</Mod1>
+							</Modifiers>
+							<acc:DiagnosisCodes xmlns:acc="http://www.xifin.com/schema/accession">
+								<acc:DiagnosisCode>D48.5</acc:DiagnosisCode>
+							</acc:DiagnosisCodes>
+							<PlaceOfService>APPPBPPANONGOV</PlaceOfService>
+							<RenderingPhysician>
+								<NPI>1871574665</NPI>
+							</RenderingPhysician>
+							<Units>1</Units>
+						</OrderedTests>
+						<InsuranceInfo>
+							<PayorPriority>1</PayorPriority>
+							<PayorId>C</PayorId>
+							<InsuredRelationship>18</InsuredRelationship>
+						</InsuranceInfo>
+					</CreateAccession>
+				</Payload>
+			</CreateAccessionRequest>
+		</soap:Body>
+	</soap:Envelope>
+</XCSData>
+

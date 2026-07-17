@@ -1,0 +1,167 @@
+<Specification>
+	<Case length="2" start="1"/>
+	<Record case="P" name="PatientDemographics" keyed="true">
+		<Field grouping="true" key="true" length="12" name="admAcctNum" start="5"/>
+		<Field length="8" name="absAdmitdate" start="20"/>
+		<Field length="30" name="admname" start="36"/>
+		<Field length="30" name="admstreet" start="66"/>
+		<Field length="30" name="admstreet2" start="96"/>
+		<Field length="20" name="admpatcity" start="126"/>
+		<Field length="2" name="admpatstate" start="146"/>
+		<Field length="10" name="admzipcode" start="148"/>
+		<Field length="1" name="admpatsex" start="158"/>
+		<Field length="8" name="admbirthdate" start="159"/>
+		<Field length="1" name="admpatienttype" start="17"/>
+		<Field length="12" name="admFinClass" start="167"/>
+		<Field length="10" name="admpatphone" start="179"/>
+		<Field length="9" name="admssn" start="189"/>
+		<Field length="20" name="absattendingdocname" start="228"/>
+		<Field length="10" name="absattendingdocmnem" start="248"/>
+		<Field length="6" name="absattendingdocupin" start="258"/>
+		<Field length="10" name="AttendDrNPI" start="1453"/>
+		<Field length="10" name="RefDrNPI" start="1463"/>
+		<Field length="10" name="ERDrNPI" start="1598"/>
+		<Field length="2" name="admOccurrenceCode" start="279"/>
+		<Field length="8" name="absdischargedate" start="287"/>
+		<Field length="8" name="admaccidentdate" start="295"/>
+		<Field length="25" name="admemplphone" start="339"/>
+		<Field length="10" name="absadmitdiag" start="318"/>
+		<Field length="10" name="admLocation" start="328"/>
+		<Field length="10" name="radrefphymne" start="392"/>
+		<Field length="20" name="radrefphyname" start="402"/>
+		<Field length="6" name="radrefphyupin" start="422"/>
+		<Field length="10" name="absPatientUnit" start="491"/>
+		<Field length="1" name="reflabBillType" start="501"/>
+		<Field length="10" name="Filler2" start="502"/>
+		<Field length="30" name="admemplname" start="858"/>
+		<Field length="30" name="admemplstreet" start="888"/>
+		<Field length="20" name="admemplcity" start="948"/>
+		<Field length="2" name="admemplstate" start="946"/>
+		<Field length="10" name="admemplzip" start="970"/>
+		<Field length="50" name="ChiefComplaint" start="1508"/>
+	</Record>
+	<Record case="I1" name="Insurance1" keyed="true">
+		<Field grouping="true" key="true" length="12" name="admAcctNum" start="3"/>
+		<Field length="10" name="adminsmne" start="15"/>
+		<Field length="30" name="admInsName" start="25"/>
+		<Field length="30" name="adminsstreet" start="55"/>
+		<Field length="20" name="adminscity" start="115"/>
+		<Field length="2" name="adminsstate" start="135"/>
+		<Field length="10" name="adminszip" start="137"/>
+		<Field length="20" name="admInsPhone" start="157"/>
+		<Field length="30" name="adminsinsuredname" start="177"/>
+		<Field length="10" name="adminsinsuredrel" start="207"/>
+		<Field length="10" name="absPatientUnit" start="217"/>
+		<Field length="18" name="adminstreatmentauth" start="227"/>
+		<Field length="25" name="adminsPaCode" start="245"/>
+		<Field length="15" name="adminsgroup" start="287"/>
+		<Field length="30" name="adminspolicy" start="302"/>
+	</Record>
+	<Record case="I2" name="Insurance2" keyed="true">
+		<Field grouping="true" key="true" length="12" name="admAcctNum" start="3"/>
+		<Field length="10" name="adminsmne" start="15"/>
+		<Field length="30" name="admInsName" start="25"/>
+		<Field length="30" name="adminsstreet" start="55"/>
+		<Field length="20" name="adminscity" start="115"/>
+		<Field length="2" name="adminsstate" start="135"/>
+		<Field length="10" name="adminszip" start="137"/>
+		<Field length="20" name="admInsPhone" start="157"/>
+		<Field length="30" name="adminsinsuredname" start="177"/>
+		<Field length="10" name="adminsinsuredrel" start="207"/>
+		<Field length="10" name="absPatientUnit" start="217"/>
+		<Field length="18" name="adminstreatmentauth" start="227"/>
+		<Field length="25" name="adminsPaCode" start="245"/>
+		<Field length="15" name="adminsgroup" start="287"/>
+		<Field length="30" name="adminspolicy" start="302"/>
+	</Record>
+	<Record case="I3" name="Insurance3" keyed="true">
+		<Field grouping="true" key="true" length="12" name="admAcctNum" start="3"/>
+		<Field length="10" name="adminsmne" start="15"/>
+		<Field length="30" name="admInsName" start="25"/>
+		<Field length="30" name="adminsstreet" start="55"/>
+		<Field length="20" name="adminscity" start="115"/>
+		<Field length="2" name="adminsstate" start="135"/>
+		<Field length="10" name="adminszip" start="137"/>
+		<Field length="20" name="admInsPhone" start="157"/>
+		<Field length="30" name="adminsinsuredname" start="177"/>
+		<Field length="10" name="adminsinsuredrel" start="207"/>
+		<Field length="10" name="absPatientUnit" start="217"/>
+		<Field length="18" name="adminstreatmentauth" start="227"/>
+		<Field length="25" name="adminsPaCode" start="245"/>
+		<Field length="15" name="adminsgroup" start="287"/>
+		<Field length="30" name="adminspolicy" start="302"/>
+	</Record>
+	<Record case="G" name="Guarantor" keyed="true">
+		<Field grouping="true" key="true" length="12" name="admAcctNum" start="3"/>
+		<Field length="30" name="admGuarName" start="15"/>
+		<Field length="30" name="admGuarAddr1" start="45"/>
+		<Field length="20" name="admGuarAddr2" start="75"/>
+		<Field length="20" name="admGuarCity" start="95"/>
+		<Field length="2" name="admGuarState" start="115"/>
+		<Field length="10" name="admGuarZip" start="117"/>
+		<Field length="10" name="admGuarHomePhone" start="147"/>
+		<Field length="10" name="admGuarEmployer" start="165"/>
+		<Field length="30" name="admGuarEmplAddr1" start="185"/>
+		<Field length="30" name="admGuarEmplAddr2" start="215"/>
+		<Field length="20" name="admGuarEmplCity" start="245"/>
+		<Field length="2" name="admGuarEmplState" start="265"/>
+		<Field length="10" name="admGuarEmplZip" start="267"/>
+		<Field length="10" name="admGuarEmplPhone" start="277"/>
+		<Field length="9" name="admGuarSSN" start="287"/>
+		<Field length="10" name="admGuarRel" start="296"/>
+		<Field length="10" name="admPatientUnit" start="306"/>
+		<Field length="16" name="npr1" start="278"/>
+	</Record>
+	<Record case="C" name="Charge" keyed="false">
+		<Field grouping="true" key="true" length="12" name="radAcctNum" start="5"/>
+		<Field key="true" length="8" name="radExamServDate" start="17"/>
+		<Field key="true" length="8" name="radExamBillingCode" start="25"/>
+		<Field key="true" length="3" name="radStatus" start="33"/>
+		<Field length="2" name="radCRDBIndicator" start="36"/>
+		<Field length="30" name="radPatientName" start="38"/>
+		<Field length="3" name="radExamLocation" start="68"/>
+		<Field length="10" name="radOrderingPhyMne" start="71"/>
+		<Field length="30" name="misOrderingPhyName" start="81"/>
+		<Field length="30" name="misOrderingPhyAddr" start="111"/>
+		<Field length="20" name="misOrderingPhyCity" start="141"/>
+		<Field length="10" name="radOrderingPhyUPIN" start="161"/>
+		<Field length="15" name="radOrderingPhyLic" start="171"/>
+		<Field key="true" length="10" name="radExamPerformingPhyMne" start="186"/>
+		<Field length="30" name="misPerfPhyName" start="196"/>
+		<Field length="30" name="misPerfPhyAddr" start="226"/>
+		<Field length="15" name="misPerfPhyLic" start="256"/>
+		<Field length="30" name="misPerfPhyCity" start="271"/>
+		<Field length="10" name="radPerfPhyUPIN" start="301"/>
+		<Field key="true" length="10" name="radExamCPT" start="311"/>
+		<Field length="10" name="radExamDept" start="321"/>
+		<Field key="true" length="10" name="radNumOfTimes" start="331"/>
+		<Field length="10" name="absPatientUnit" start="341"/>
+		<Field length="15" name="ExamApplication" start="351"/>
+		<Field length="30" name="examdesc" start="459"/>
+		<Field length="25" name="radExamNumber" start="376"/>
+		<Field length="25" name="ExamHCPCCode" start="401"/>
+		<Field length="12" name="ExamCharge" start="441"/>
+		<Field length="8" name="ExamBillDate" start="426"/>
+	</Record>
+	<Record case="DX" name="DiagnosisCodes" keyed="true">
+		<Field grouping="true" key="true" length="12" name="radAcctNum" start="3"/>
+		<Field key="true" length="10" name="Diag1" start="15"/>
+		<Field key="true" length="5" name="Diag1CodeSet" start="86"/>
+		<Field key="true" length="10" name="Diag2" start="96"/>
+		<Field key="true" length="10" name="Diag3" start="167"/>
+		<Field key="true" length="10" name="Diag4" start="238"/>
+		<Field key="true" length="10" name="Diag5" start="309"/>
+		<Field key="true" length="10" name="Diag6" start="380"/>
+		<Field key="true" length="10" name="Diag7" start="451"/>
+		<Field key="true" length="10" name="Diag8" start="522"/>
+		<Field key="true" length="10" name="Diag9" start="593"/>
+		<Field key="true" length="10" name="Diag10" start="714"/>
+		<Field key="true" length="10" name="Diag11" start="774"/>
+		<Field key="true" length="10" name="Diag12" start="834"/>
+	</Record>
+	<Record case="H" name="Header" keyed="true">
+		<Field length="30" name="FacilityName" start="10"/>
+	</Record>
+	<Record case="D2" name="Unknown" keyed="true"/>
+	<Record case="Q" name="Unknown" keyed="true"/>
+</Specification>

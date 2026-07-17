@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLXML xmlns="http://pilotfish.sqlxml" tagNameChars="_">
+	<Execute into="locations" as="location">
+		<SQL>
+			SELECT * FROM IRL_WEST_LOCATIONS_OF_FLG_LOCAT 
+		</SQL>
+	</Execute>
+	<XMLOut var="locations" />
+	<Execute into="cdmList" as="cdmList">
+		<SQL>
+			SELECT * FROM TBLWAL_PERFDR_CDMLIST
+		</SQL>
+	</Execute>
+	<XMLOut var="cdmList" appendTo="locations" />
+    <Execute into="cptTable" as="cptTable">
+		<SQL>
+			SELECT * FROM WEBSITEMEDICARECPTTABLE
+		</SQL>
+	</Execute>
+	<XMLOut var="cptTable" appendTo="locations" />
+	<Execute into="FLAGGED_ACCOUNTS" as="FLAGGED_ACCOUNT">
+		<SQL>
+			SELECT * FROM FTWAL_FLG_LOCATIONS 
+		</SQL>
+	</Execute>
+	<XMLOut var="FLAGGED_ACCOUNTS" appendTo="locations" />
+	<Execute into="Medicaid2223_Codes" as="Medicaid2223_Codes">
+		<SQL>
+			SELECT * FROM MEDICAID2223_CODES 
+		</SQL>
+	</Execute>
+	<XMLOut var="Medicaid2223_Codes" appendTo="locations" />
+	<Execute into="PMA_MOD26_ACCTS" as="PMA_MOD26_ACCTS">
+		<SQL>
+			SELECT * FROM PMA_MOD26_ACCTS 
+		</SQL>
+	</Execute>
+	<XMLOut var="PMA_MOD26_ACCTS" appendTo="locations" />
+	<Execute into="MEDIPASS_CERT_CODES" as="MEDIPASS_CERT_CODES">
+		<SQL>
+			SELECT * FROM MEDIPASS_CERT_CODES 
+		</SQL>
+	</Execute>
+	<XMLOut var="MEDIPASS_CERT_CODES" appendTo="locations" />
+	<Execute into="TBLIRL279_STRIPLOCATIONS" as="TBLIRL279_STRIPLOCATIONS">
+		<SQL>
+			SELECT * FROM TBLIRL279_STRIPLOCATIONS 
+		</SQL>
+	</Execute>
+	<XMLOut var="TBLIRL279_STRIPLOCATIONS" appendTo="locations" />
+	
+</SQLXML>

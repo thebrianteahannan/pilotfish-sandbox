@@ -4,23 +4,24 @@ pflicense.key
 
 # Runtime input/output — never commit
 data/
-data-834/
 debug-trace/
-debug-trace-834/
 **/debug-trace/
+logs/
 
 # Large / non-route artifacts
 eip.war*
 *.war
 *.zip
 *.trace.db
-logs/
-logs-834/
 
-# Keep committed H2 DB under database/; ignore other copies
+# Keep committed H2 DB under Clients/Med Rec/database/; ignore other copies
 /medreceivables.mv.db
 eip-root/*.mv.db
 eip-root/*.trace.db
+Clients/**/eip-root/*.mv.db
+Clients/**/eip-root/*.trace.db
+Clients/Med Rec/database/medreceivables-original.mv.db
+Clients/Med Rec/CAT_GAN_Expanse_Deploy/
 
 # Local tooling
 .venv*/
@@ -30,6 +31,3 @@ __pycache__/
 .env
 .env.*
 node_modules/
-jets-pizza-clone/node_modules/
-jets-pizza-clone/package-lock.json
-jets-pizza-clone/artifacts/screenshots/

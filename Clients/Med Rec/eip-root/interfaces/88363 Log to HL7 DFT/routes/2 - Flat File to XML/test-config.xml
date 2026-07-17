@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TestConfigurations>
+  <TestConfig name="test1">
+    <AlternateDataSource>From File</AlternateDataSource>
+    <Stage>
+      <Identifier>processor@transport=88363 Log to HL7 DFT.2 - Flat File to XML.Route to Route Transport,processor=88363 Log to HL7 DFT.2 - Flat File to XML.Processor</Identifier>
+      <IsStart file="C:\Program Files\PilotFish Technology\eiPlatform Windows\eip-root\interfaces\88363 Log to HL7 DFT\data\archive\88363_Log_COCLSU Lee's Summit Medical Ce_2023-10-08_22B662-001-00-00.txt">true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@listener=88363 Log to HL7 DFT.2 - Flat File to XML.Programmable (Trigger) Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>forking@listener=88363 Log to HL7 DFT.2 - Flat File to XML.Programmable (Trigger) Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@listener=88363 Log to HL7 DFT.2 - Flat File to XML.Programmable (Trigger) Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>routing</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=88363 Log to HL7 DFT.2 - Flat File to XML.Route to Route Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=88363 Log to HL7 DFT.2 - Flat File to XML.Route to Route Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=88363 Log to HL7 DFT.2 - Flat File to XML.Route to Route Transport,processor=88363 Log to HL7 DFT.2 - Flat File to XML.Processor1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=88363 Log to HL7 DFT.2 - Flat File to XML.Route to Route Transport,processor=88363 Log to HL7 DFT.2 - Flat File to XML.Processor2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>true</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=88363 Log to HL7 DFT.2 - Flat File to XML.Route to Route Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+</TestConfigurations>

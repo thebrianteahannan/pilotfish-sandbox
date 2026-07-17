@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TestConfigurations>
+  <TestConfig name="test1">
+    <AlternateDataSource>From Text</AlternateDataSource>
+    <StartingText>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#13;
+&lt;XCSData&gt;&#13;
+	&lt;XCSRecord row="0"&gt;&#13;
+		&lt;Facility&gt;COCLSU&lt;/Facility&gt;&#13;
+		&lt;Location&gt;W.CT&lt;/Location&gt;&#13;
+		&lt;PatientName&gt;LOCKARD,DEBORAH LYNN&lt;/PatientName&gt;&#13;
+		&lt;PatientAcctNum&gt;SU23:LSU:2666&lt;/PatientAcctNum&gt;&#13;
+		&lt;SpecDate&gt;W72408298076&lt;/SpecDate&gt;&#13;
+		&lt;RecvDate&gt;08/07/23&lt;/RecvDate&gt;&#13;
+		&lt;OrigSOUTDate&gt;08/07/23&lt;/OrigSOUTDate&gt;&#13;
+		&lt;NewProcDocDate&gt;08/10/23&lt;/NewProcDocDate&gt;&#13;
+		&lt;NewProcedure&gt;09/18/23&lt;/NewProcedure&gt;&#13;
+		&lt;Units&gt;88363&lt;/Units&gt;&#13;
+		&lt;OrigSOUTDoc&gt;1	PRHALAN2&lt;/OrigSOUTDoc&gt;&#13;
+		&lt;AddtlSignersTypeAndDate&gt;PRHAMOM1(FA),09/18/23; PRHALAN2(FA),09/25/23&lt;/AddtlSignersTypeAndDate&gt;&#13;
+	&lt;/XCSRecord&gt;&#13;
+	&lt;XCSRecord row="1"&gt;&#13;
+		&lt;Facility&gt;COCLSU&lt;/Facility&gt;&#13;
+		&lt;Location&gt;W.2S&lt;/Location&gt;&#13;
+		&lt;PatientName&gt;VICK,DONETTE&lt;/PatientName&gt;&#13;
+		&lt;PatientAcctNum&gt;SU23:LSU:2789&lt;/PatientAcctNum&gt;&#13;
+		&lt;SpecDate&gt;W72408325746&lt;/SpecDate&gt;&#13;
+		&lt;RecvDate&gt;08/16/23&lt;/RecvDate&gt;&#13;
+		&lt;OrigSOUTDate&gt;08/16/23&lt;/OrigSOUTDate&gt;&#13;
+		&lt;NewProcDocDate&gt;08/21/23&lt;/NewProcDocDate&gt;&#13;
+		&lt;NewProcedure&gt;09/05/23&lt;/NewProcedure&gt;&#13;
+		&lt;Units&gt;88363&lt;/Units&gt;&#13;
+		&lt;OrigSOUTDoc&gt;1	PRHALAN2&lt;/OrigSOUTDoc&gt;&#13;
+		&lt;AddtlSignersTypeAndDate&gt;PRHALAN2(FA),08/28/23; PRHALAN2(FA),09/01/23; PRHALAN2(FA),09/05/23; PRELSCR(FA),09/05/23; PRHALAN2(FA),09/13/23&lt;/AddtlSignersTypeAndDate&gt;&#13;
+	&lt;/XCSRecord&gt;&#13;
+	&lt;XCSRecord row="2"&gt;&#13;
+		&lt;Facility&gt;COCLSU&lt;/Facility&gt;&#13;
+		&lt;Location&gt;W.2E&lt;/Location&gt;&#13;
+		&lt;PatientName&gt;MATTUCKS,SUSAN LYNN&lt;/PatientName&gt;&#13;
+		&lt;PatientAcctNum&gt;SU23:LSU:2826&lt;/PatientAcctNum&gt;&#13;
+		&lt;SpecDate&gt;W72408331585&lt;/SpecDate&gt;&#13;
+		&lt;RecvDate&gt;08/18/23&lt;/RecvDate&gt;&#13;
+		&lt;OrigSOUTDate&gt;08/18/23&lt;/OrigSOUTDate&gt;&#13;
+		&lt;NewProcDocDate&gt;08/24/23&lt;/NewProcDocDate&gt;&#13;
+		&lt;NewProcedure&gt;09/12/23&lt;/NewProcedure&gt;&#13;
+		&lt;Units&gt;88363&lt;/Units&gt;&#13;
+		&lt;OrigSOUTDoc&gt;1	PRHALAN2&lt;/OrigSOUTDoc&gt;&#13;
+		&lt;AddtlSignersTypeAndDate&gt;PRELSCR(FA),09/12/23&lt;/AddtlSignersTypeAndDate&gt;&#13;
+	&lt;/XCSRecord&gt;&#13;
+	&lt;XCSRecord row="3"&gt;&#13;
+		&lt;Facility&gt;Facility:	COCLSU Lee's Summit Medical Center `	QQZ: 	88363 Log ~&lt;/Facility&gt;&#13;
+	&lt;/XCSRecord&gt;&#13;
+	&lt;XCSRecord row="4"&gt;&#13;
+		&lt;Facility&gt;&amp;lt;==EOF==&amp;gt;&lt;/Facility&gt;&#13;
+	&lt;/XCSRecord&gt;&#13;
+	&lt;XCSRecord row="5" /&gt;&#13;
+	&lt;XCSRecord row="6" /&gt;&#13;
+	&lt;Summary&gt;&#13;
+		&lt;Column name="Facility"&gt;&#13;
+			&lt;MaxLength&gt;64&lt;/MaxLength&gt;&#13;
+			&lt;NumNulls&gt;0&lt;/NumNulls&gt;&#13;
+			&lt;AllInteger&gt;false&lt;/AllInteger&gt;&#13;
+			&lt;AllNumeric&gt;false&lt;/AllNumeric&gt;&#13;
+			&lt;MaxValue&gt;4.9E-324&lt;/MaxValue&gt;&#13;
+			&lt;MinValue&gt;1.7976931348623157E308&lt;/MinValue&gt;&#13;
+			&lt;TotValue&gt;0.0&lt;/TotValue&gt;&#13;
+		&lt;/Column&gt;&#13;
+		&lt;Column name="Location"&gt;&#13;
+			&lt;MaxLength&gt;4&lt;/MaxLength&gt;&#13;
+			&lt;NumNulls&gt;0&lt;/NumNulls&gt;&#13;
+			&lt;AllInteger&gt;false&lt;/AllInteger&gt;&#13;
+			&lt;AllNumeric&gt;false&lt;/AllNumeric&gt;&#13;
+			&lt;MaxValue&gt;4.9E-324&lt;/MaxValue&gt;&#13;
+			&lt;MinValue&gt;1.7976931348623157E308&lt;/MinValue&gt;&#13;
+			&lt;TotValue&gt;0.0&lt;/TotValue&gt;&#13;
+		&lt;/Column&gt;&#13;
+		&lt;Column name="PatientName"&gt;&#13;
+			&lt;MaxLength&gt;20&lt;/MaxLength&gt;&#13;
+			&lt;NumNulls&gt;0&lt;/NumNulls&gt;&#13;
+			&lt;AllInteger&gt;false&lt;/AllInteger&gt;&#13;
+			&lt;AllNumeric&gt;false&lt;/AllNumeric&gt;&#13;
+			&lt;MaxValue&gt;4.9E-324&lt;/MaxValue&gt;&#13;
+			&lt;MinValue&gt;1.7976931348623157E308&lt;/MinValue&gt;&#13;
+			&lt;TotValue&gt;0.0&lt;/TotValue&gt;&#13;
+		&lt;/Column&gt;&#13;
+		&lt;Column name="PatientAcctNum"&gt;&#13;
+			&lt;MaxLength&gt;13&lt;/MaxLength&gt;&#13;
+			&lt;NumNulls&gt;0&lt;/NumNulls&gt;&#13;
+			&lt;AllInteger&gt;false&lt;/AllInteger&gt;&#13;
+			&lt;AllNumeric&gt;false&lt;/AllNumeric&gt;&#13;
+			&lt;MaxValue&gt;4.9E-324&lt;/MaxValue&gt;&#13;
+			&lt;MinValue&gt;1.7976931348623157E308&lt;/MinValue&gt;&#13;
+			&lt;TotValue&gt;0.0&lt;/TotValue&gt;&#13;
+		&lt;/Column&gt;&#13;
+		&lt;Column name="SpecDate"&gt;&#13;
+			&lt;MaxLength&gt;12&lt;/MaxLength&gt;&#13;
+			&lt;NumNulls&gt;0&lt;/NumNulls&gt;&#13;
+			&lt;AllInteger&gt;false&lt;/AllInteger&gt;&#13;
+			&lt;AllNumeric&gt;false&lt;/AllNumeric&gt;&#13;
+			&lt;MaxValue&gt;4.9E-324&lt;/MaxValue&gt;&#13;
+			&lt;MinValue&gt;1.7976931348623157E308&lt;/MinValue&gt;&#13;
+			&lt;TotValue&gt;0.0&lt;/TotValue&gt;&#13;
+		&lt;/Column&gt;&#13;
+		&lt;Column name="RecvDate"&gt;&#13;
+			&lt;MaxLength&gt;8&lt;/MaxLength&gt;&#13;
+			&lt;NumNulls&gt;0&lt;/NumNulls&gt;&#13;
+			&lt;AllInteger&gt;false&lt;/AllInteger&gt;&#13;
+			&lt;AllNumeric&gt;false&lt;/AllNumeric&gt;&#13;
+			&lt;MaxValue&gt;4.9E-324&lt;/MaxValue&gt;&#13;
+			&lt;MinValue&gt;1.7976931348623157E308&lt;/MinValue&gt;&#13;
+			&lt;TotValue&gt;0.0&lt;/TotValue&gt;&#13;
+		&lt;/Column&gt;&#13;
+		&lt;Column name="OrigSOUTDate"&gt;&#13;
+			&lt;MaxLength&gt;8&lt;/MaxLength&gt;&#13;
+			&lt;NumNulls&gt;0&lt;/NumNulls&gt;&#13;
+			&lt;AllInteger&gt;false&lt;/AllInteger&gt;&#13;
+			&lt;AllNumeric&gt;false&lt;/AllNumeric&gt;&#13;
+			&lt;MaxValue&gt;4.9E-324&lt;/MaxValue&gt;&#13;
+			&lt;MinValue&gt;1.7976931348623157E308&lt;/MinValue&gt;&#13;
+			&lt;TotValue&gt;0.0&lt;/TotValue&gt;&#13;
+		&lt;/Column&gt;&#13;
+		&lt;Column name="NewProcDocDate"&gt;&#13;
+			&lt;MaxLength&gt;8&lt;/MaxLength&gt;&#13;
+			&lt;NumNulls&gt;0&lt;/NumNulls&gt;&#13;
+			&lt;AllInteger&gt;false&lt;/AllInteger&gt;&#13;
+			&lt;AllNumeric&gt;false&lt;/AllNumeric&gt;&#13;
+			&lt;MaxValue&gt;4.9E-324&lt;/MaxValue&gt;&#13;
+			&lt;MinValue&gt;1.7976931348623157E308&lt;/MinValue&gt;&#13;
+			&lt;TotValue&gt;0.0&lt;/TotValue&gt;&#13;
+		&lt;/Column&gt;&#13;
+		&lt;Column name="NewProcedure"&gt;&#13;
+			&lt;MaxLength&gt;8&lt;/MaxLength&gt;&#13;
+			&lt;NumNulls&gt;0&lt;/NumNulls&gt;&#13;
+			&lt;AllInteger&gt;false&lt;/AllInteger&gt;&#13;
+			&lt;AllNumeric&gt;false&lt;/AllNumeric&gt;&#13;
+			&lt;MaxValue&gt;4.9E-324&lt;/MaxValue&gt;&#13;
+			&lt;MinValue&gt;1.7976931348623157E308&lt;/MinValue&gt;&#13;
+			&lt;TotValue&gt;0.0&lt;/TotValue&gt;&#13;
+		&lt;/Column&gt;&#13;
+		&lt;Column name="Units"&gt;&#13;
+			&lt;MaxLength&gt;5&lt;/MaxLength&gt;&#13;
+			&lt;NumNulls&gt;0&lt;/NumNulls&gt;&#13;
+			&lt;AllInteger&gt;false&lt;/AllInteger&gt;&#13;
+			&lt;AllNumeric&gt;false&lt;/AllNumeric&gt;&#13;
+			&lt;MaxValue&gt;88363.0&lt;/MaxValue&gt;&#13;
+			&lt;MinValue&gt;88363.0&lt;/MinValue&gt;&#13;
+			&lt;TotValue&gt;265089.0&lt;/TotValue&gt;&#13;
+		&lt;/Column&gt;&#13;
+		&lt;Column name="OrigSOUTDoc"&gt;&#13;
+			&lt;MaxLength&gt;10&lt;/MaxLength&gt;&#13;
+			&lt;NumNulls&gt;0&lt;/NumNulls&gt;&#13;
+			&lt;AllInteger&gt;false&lt;/AllInteger&gt;&#13;
+			&lt;AllNumeric&gt;false&lt;/AllNumeric&gt;&#13;
+			&lt;MaxValue&gt;4.9E-324&lt;/MaxValue&gt;&#13;
+			&lt;MinValue&gt;1.7976931348623157E308&lt;/MinValue&gt;&#13;
+			&lt;TotValue&gt;0.0&lt;/TotValue&gt;&#13;
+		&lt;/Column&gt;&#13;
+		&lt;Column name="AddtlSignersTypeAndDate"&gt;&#13;
+			&lt;MaxLength&gt;112&lt;/MaxLength&gt;&#13;
+			&lt;NumNulls&gt;0&lt;/NumNulls&gt;&#13;
+			&lt;AllInteger&gt;false&lt;/AllInteger&gt;&#13;
+			&lt;AllNumeric&gt;false&lt;/AllNumeric&gt;&#13;
+			&lt;MaxValue&gt;4.9E-324&lt;/MaxValue&gt;&#13;
+			&lt;MinValue&gt;1.7976931348623157E308&lt;/MinValue&gt;&#13;
+			&lt;TotValue&gt;0.0&lt;/TotValue&gt;&#13;
+		&lt;/Column&gt;&#13;
+	&lt;/Summary&gt;&#13;
+&lt;/XCSData&gt;&#13;
+&#13;
+</StartingText>
+    <Stage>
+      <Identifier>xslt@transport=88363 Log to HL7 DFT.3 - Generate DFT.Directory / File Transport</Identifier>
+      <IsStart>true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=88363 Log to HL7 DFT.3 - Generate DFT.Directory / File Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=88363 Log to HL7 DFT.3 - Generate DFT.Directory / File Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=88363 Log to HL7 DFT.3 - Generate DFT.Directory / File Transport,processor=Cleanup Empty Lines 1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=88363 Log to HL7 DFT.3 - Generate DFT.Directory / File Transport,processor=Cleanup Empty Lines 2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=88363 Log to HL7 DFT.3 - Generate DFT.Directory / File Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>true</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+</TestConfigurations>

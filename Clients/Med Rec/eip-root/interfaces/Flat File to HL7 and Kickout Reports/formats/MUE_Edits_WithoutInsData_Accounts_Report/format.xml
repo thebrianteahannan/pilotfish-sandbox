@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Format xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RoutePlacement="target" name="MUE_Edits_WithoutInsData_Accounts_Report">
+  <TransformationModule class="com.pilotfish.eip.modules.transform.ExcelTransformationModule">
+    <ModuleConfig>
+      <ExecuteTransformation>true</ExecuteTransformation>
+      <XMLEncoding>UTF-8</XMLEncoding>
+      <AddExcelHeader>false</AddExcelHeader>
+      <HeaderRows>1</HeaderRows>
+      <ColumnHeaderRow>1</ColumnHeaderRow>
+      <InvalidDataType>false</InvalidDataType>
+      <SuppressEmptyRows>true</SuppressEmptyRows>
+      <SuppressEmptyColumns>false</SuppressEmptyColumns>
+      <UseFirstColumnAsRowname>false</UseFirstColumnAsRowname>
+      <ExcelVersion>97 (.xls)</ExcelVersion>
+      <DocumentPassword>false</DocumentPassword>
+      <Password />
+      <UseAllSheets>true</UseAllSheets>
+      <LegacyCompatibilityMode>false</LegacyCompatibilityMode>
+      <UseSheetNumbers>0</UseSheetNumbers>
+      <UseFormattedDate>true</UseFormattedDate>
+      <DateFormat>MM/dd/yy</DateFormat>
+      <SheetNameAttribute>name</SheetNameAttribute>
+      <ReplaceSmartCharacters>false</ReplaceSmartCharacters>
+      <UseSimpleMode>false</UseSimpleMode>
+    </ModuleConfig>
+  </TransformationModule>
+  <XSLT>
+    <ToXML />
+    <CacheXSLTToXML>false</CacheXSLTToXML>
+    <FromXML>transform.xslt</FromXML>
+    <CacheXSLTFromXML>false</CacheXSLTFromXML>
+    <XSLTEngine>SAXON</XSLTEngine>
+    <XSLTParameters>null</XSLTParameters>
+    <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+    <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+    <ExecuteTransformation>true</ExecuteTransformation>
+  </XSLT>
+  <FormatMetadata />
+  <SplitControl xmlns="http://www.pilotfishtechnology.com/eip/FormatSpec">
+    <JoinModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullJoinModule" />
+    <ForkModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullForkModule" />
+  </SplitControl>
+</Format>
+

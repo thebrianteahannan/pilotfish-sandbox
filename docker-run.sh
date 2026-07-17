@@ -25,20 +25,23 @@ DATA_DIR="${ROOT_DIR}/data"
 LOGS_DIR="${ROOT_DIR}/logs"
 DEBUG_TRACE_DIR="${ROOT_DIR}/debug-trace"
 
+# Med Rec H2 volume (interface-specific); root data/{in,out,archive} are shared scratch dirs
+MEDREC_DATA_DIR="${ROOT_DIR}/Clients/Med Rec/data"
+
 ensure_dirs() {
   mkdir -p \
-    "${DATA_DIR}/input/staging" \
-    "${DATA_DIR}/output" \
+    "${DATA_DIR}/in/staging" \
+    "${DATA_DIR}/out" \
     "${DATA_DIR}/archive" \
-    "${DATA_DIR}/database" \
+    "${MEDREC_DATA_DIR}/database" \
     "${LOGS_DIR}" \
     "${DEBUG_TRACE_DIR}"
 
   for client in NSP-Multi PPS-Multi HAL-Multi NGP-Multi PPA-Multi; do
     mkdir -p \
-      "${DATA_DIR}/input/${client}/in" \
-      "${DATA_DIR}/input/${client}/out" \
-      "${DATA_DIR}/input/${client}/archive"
+      "${DATA_DIR}/in/${client}/in" \
+      "${DATA_DIR}/in/${client}/out" \
+      "${DATA_DIR}/in/${client}/archive"
   done
 }
 
@@ -84,17 +87,18 @@ cmd_start() {
   docker run -d \
     --name "${CONTAINER_NAME}" \
     -p "${HOST_PORT}:8080" \
-    -v "${DATA_DIR}/input:/opt/pilotfish/input" \
-    -v "${DATA_DIR}/output:/opt/pilotfish/output" \
+    -v "${DATA_DIR}/in:/opt/pilotfish/input" \
+    -v "${DATA_DIR}/out:/opt/pilotfish/output" \
     -v "${DATA_DIR}/archive:/opt/pilotfish/archive" \
-    -v "${DATA_DIR}/database:/opt/pilotfish/database" \
+    -v "${MEDREC_DATA_DIR}/database:/opt/pilotfish/database" \
     -v "${LOGS_DIR}:/usr/local/tomcat/webapps/eip/logs" \
     -v "${DEBUG_TRACE_DIR}:/usr/local/tomcat/webapps/eip/eip-root/debug-trace" \
     "${IMAGE_NAME}"
 
   cmd_url
   echo
-  echo "Data dirs : ${DATA_DIR}/{input,output,archive,database}"
+  echo "Data dirs : ${DATA_DIR}/{in,out,archive}"
+  echo "Database  : ${MEDREC_DATA_DIR}/database"
   echo "EIP log   : ${LOGS_DIR}/eip.log   (or: ./docker-run.sh logs)"
   echo "Debug     : ${DEBUG_TRACE_DIR}"
 }

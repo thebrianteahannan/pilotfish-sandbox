@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Programmable (Trigger) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>13:15-13:15</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Processor3">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>orig_data</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="Get AccountNumber From File">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>C:\PilotFish\input\filter_by_account_number.txt</FileName>
+          <PostProcessOperation>Do Nothing</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>account_number</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Processor4">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>orig_data</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="Write XML">
+    <FormatProfile name="Filter Records by AccountNo" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Directory / File Transport" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:#properties.get('HL7_TARGET_DIRECTORY') + ( #properties.get('is_debug') ?  @java.io.File@separatorChar + getAttribute('SplitCode') + new java.text.SimpleDateFormat('hhmm').format(new java.util.Date()) : '' )}</TargetDirectory>
+        <FileName>{ognl:getAttribute('SplitCode').toString().toUpperCase() + new java.text.SimpleDateFormat('MMdd').format(new java.util.Date()) + 'd_filtered'}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor" name="Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Write HL7">
+    <FormatProfile name="Filter Records by AccountNo" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Directory / File Transport1" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:#properties.get('HL7_TARGET_DIRECTORY') + ( #properties.get('is_debug') ?  @java.io.File@separatorChar + getAttribute('SplitCode') + new java.text.SimpleDateFormat('hhmm').format(new java.util.Date()) : '' )}</TargetDirectory>
+        <FileName>{ognl:getAttribute('SplitCode').toString().toUpperCase() + new java.text.SimpleDateFormat('MMdd').format(new java.util.Date()) + 'd_filtered'}</FileName>
+        <FileExtension>DFT</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Remove MUE Edits Log XML-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>remove_mue_edits.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.hl7.HL7TransformationProcessor" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor2-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TransformationDirection>XML to HL7 2.X</TransformationDirection>
+          <ExecuteTransformation>true</ExecuteTransformation>
+          <SUBCOMPONETS_CONFIG>Default</SUBCOMPONETS_CONFIG>
+          <FIELDS_TO_FORCE_CHILD_POPULATION />
+          <FIELDS_TO_AVOID_CHILD_POPULATION />
+          <PUT_FIRST_CHILD_TO_ATTRIBUTE>false</PUT_FIRST_CHILD_TO_ATTRIBUTE>
+          <REBUILD_FORMAT_FOR_UNEXPECTED_VERSION>false</REBUILD_FORMAT_FOR_UNEXPECTED_VERSION>
+          <USE_ALTERNATIVE_CACHE>false</USE_ALTERNATIVE_CACHE>
+          <HL7Version>2.5.1</HL7Version>
+          <CACHE_SIZE>20</CACHE_SIZE>
+          <CACHE_ON_START>true</CACHE_ON_START>
+          <FOLDER_WITH_ADDITIONAL_XSD />
+          <FAIL_IF_REQUIRED_NOT_FOUND>false</FAIL_IF_REQUIRED_NOT_FOUND>
+          <DETECT_LINE_SEPARATOR_TAG>false</DETECT_LINE_SEPARATOR_TAG>
+          <IGNORE_UNKNOWN_Z_SEGMNENTS>false</IGNORE_UNKNOWN_Z_SEGMNENTS>
+          <IGNORE_SEGMNENTS_MAX_OCCURS>true</IGNORE_SEGMNENTS_MAX_OCCURS>
+          <INCLUDE_EMPTY_FIELDS>false</INCLUDE_EMPTY_FIELDS>
+          <USE_FRIENDLY_NAMES>false</USE_FRIENDLY_NAMES>
+          <USE_ATTRIBUTE_FRIENDLY_NAMES>false</USE_ATTRIBUTE_FRIENDLY_NAMES>
+          <USE_NAMESPACE>false</USE_NAMESPACE>
+          <CustomMessageStructure />
+          <USE_COMPATIBILITY_SCHEMAS>false</USE_COMPATIBILITY_SCHEMAS>
+          <FILL_FORMAT_FIELDS>false</FILL_FORMAT_FIELDS>
+          <ADD_BATCH_SEGMENTS>false</ADD_BATCH_SEGMENTS>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

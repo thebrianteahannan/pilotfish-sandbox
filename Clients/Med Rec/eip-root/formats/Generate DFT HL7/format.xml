@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Format xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RoutePlacement="target" name="Generate DFT HL7">
+  <TransformationModule class="com.pilotfish.eip.modules.transform.hl7.HL7v2TransformationModule">
+    <ModuleConfig>
+      <ExecuteTransformation>true</ExecuteTransformation>
+      <SUBCOMPONETS_CONFIG>Default</SUBCOMPONETS_CONFIG>
+      <FIELDS_TO_FORCE_CHILD_POPULATION />
+      <FIELDS_TO_AVOID_CHILD_POPULATION />
+      <PUT_FIRST_CHILD_TO_ATTRIBUTE>false</PUT_FIRST_CHILD_TO_ATTRIBUTE>
+      <REBUILD_FORMAT_FOR_UNEXPECTED_VERSION>false</REBUILD_FORMAT_FOR_UNEXPECTED_VERSION>
+      <USE_ALTERNATIVE_CACHE>false</USE_ALTERNATIVE_CACHE>
+      <HL7Version>2.5.1</HL7Version>
+      <CACHE_SIZE>20</CACHE_SIZE>
+      <CACHE_ON_START>true</CACHE_ON_START>
+      <FOLDER_WITH_ADDITIONAL_XSD />
+      <FAIL_IF_REQUIRED_NOT_FOUND>false</FAIL_IF_REQUIRED_NOT_FOUND>
+      <DETECT_LINE_SEPARATOR_TAG>false</DETECT_LINE_SEPARATOR_TAG>
+      <IGNORE_UNKNOWN_Z_SEGMNENTS>false</IGNORE_UNKNOWN_Z_SEGMNENTS>
+      <IGNORE_SEGMNENTS_MAX_OCCURS>true</IGNORE_SEGMNENTS_MAX_OCCURS>
+      <INCLUDE_EMPTY_FIELDS>false</INCLUDE_EMPTY_FIELDS>
+      <USE_FRIENDLY_NAMES>false</USE_FRIENDLY_NAMES>
+      <USE_ATTRIBUTE_FRIENDLY_NAMES>false</USE_ATTRIBUTE_FRIENDLY_NAMES>
+      <USE_NAMESPACE>false</USE_NAMESPACE>
+      <CustomMessageStructure />
+      <USE_COMPATIBILITY_SCHEMAS>false</USE_COMPATIBILITY_SCHEMAS>
+      <FILL_FORMAT_FIELDS>false</FILL_FORMAT_FIELDS>
+      <ADD_BATCH_SEGMENTS>false</ADD_BATCH_SEGMENTS>
+    </ModuleConfig>
+  </TransformationModule>
+  <XSLT>
+    <ToXML />
+    <CacheXSLTToXML>false</CacheXSLTToXML>
+    <FromXML>transform.xslt</FromXML>
+    <CacheXSLTFromXML>false</CacheXSLTFromXML>
+    <XSLTEngine>SAXON</XSLTEngine>
+    <XSLTParameters>null</XSLTParameters>
+    <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+    <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+    <ExecuteTransformation>true</ExecuteTransformation>
+  </XSLT>
+  <FormatMetadata />
+  <SplitControl xmlns="http://www.pilotfishtechnology.com/eip/FormatSpec">
+    <JoinModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullJoinModule" />
+    <ForkModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullForkModule" />
+  </SplitControl>
+</Format>
+
