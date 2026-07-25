@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Format xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" name="AIL 1122">
+  <TransformationModule class="com.pilotfish.eip.modules.internal.RelayTransformationModule">
+    <ModuleConfig>
+      <ExecuteTransformation>true</ExecuteTransformation>
+    </ModuleConfig>
+  </TransformationModule>
+  <XSLT>
+    <ToXML />
+    <CacheXSLTToXML>false</CacheXSLTToXML>
+    <FromXML>transform.xslt</FromXML>
+    <FromXMLAdditional>
+      <XsltFile>transform_fix_requirement_info.xslt</XsltFile>
+    </FromXMLAdditional>
+    <CacheXSLTFromXML>false</CacheXSLTFromXML>
+    <XSLTVersion>1.0</XSLTVersion>
+    <XSLTEngine>XALAN_INTERPRETED</XSLTEngine>
+    <XSLTParameters>null</XSLTParameters>
+    <ExecuteTransformation>true</ExecuteTransformation>
+    <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+    <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+  </XSLT>
+  <FormatMetadata />
+  <SplitControl xmlns="http://www.pilotfishtechnology.com/eip/FormatSpec">
+    <JoinModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullJoinModule" />
+    <ForkModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullForkModule" />
+  </SplitControl>
+</Format>
+

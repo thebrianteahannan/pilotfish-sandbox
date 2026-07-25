@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PoolsConfig>
+  <Pool BaseThreadCount="1" ExpirationTimeout="10000" IdleTimeout="500" MaxThreadCount="1" QueueSize="-1" name="AmericanIncomeLife.3.SFTP">
+    <Stage Route="3 - 1122 Status or Result POST" System="" name="Upload Test Status" type="Transport" />
+  </Pool>
+  <Pool BaseThreadCount="1" ExpirationTimeout="10000" IdleTimeout="500" MaxThreadCount="1" QueueSize="-1" name="AmericanIncomeLife.3.Every">
+    <Stage Route="3 - 1122 Status or Result POST" System="" name="" type="Every" />
+  </Pool>
+</PoolsConfig>
+
