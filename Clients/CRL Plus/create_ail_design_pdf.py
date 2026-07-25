@@ -78,9 +78,9 @@ def styles():
 
 def bullets(items, s):
     return ListFlowable(
-        [ListItem(Paragraph(i, s["bullet"]), leftIndent=12, value="bullet") for i in items],
+        [ListItem(Paragraph(i, s["bullet"]), leftIndent=12, value="•") for i in items],
         bulletType="bullet",
-        start="bullet",
+        start="•",
     )
 
 
