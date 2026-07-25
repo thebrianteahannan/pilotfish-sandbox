@@ -1,0 +1,20 @@
+services:
+  ail-sandbox:
+    build: ./webui
+    container_name: pf-crlplus-ail-sandbox
+    restart: unless-stopped
+    environment:
+      OUTPUT_DIR: /output
+      SAMPLE_DIR: /sample-data
+      AIL_AUTH_USER: ail
+      AIL_AUTH_PASS: "AilSandbox$$Test1"
+      AIL_SKIP_OUTBOUND: "true"
+      HOST: 0.0.0.0
+      PORT: 8094
+      # Host LAN IP shown in the UI (override if your NIC changes)
+      LAN_IP: ${LAN_IP:-192.168.68.52}
+    ports:
+      - "8094:8094"
+    volumes:
+      - ./output:/output
+      - ./sample-data:/sample-data:ro

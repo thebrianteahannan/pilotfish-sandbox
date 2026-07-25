@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CRL Plus — AIL Sandbox</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14212b;
+      --muted: #5b6b76;
+      --paper: #f3f0e8;
+      --panel: rgba(255,252,246,0.88);
+      --line: #c9c2b4;
+      --accent: #0b6e4f;
+      --accent-2: #c45c26;
+      --ok: #1f7a4d;
+      --shadow: 0 18px 40px rgba(20, 33, 43, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #d9ebe3 0%, transparent 55%),
+        radial-gradient(900px 500px at 100% 0%, #f0d9c8 0%, transparent 50%),
+        linear-gradient(180deg, #efe9dc 0%, var(--paper) 40%, #e7ece8 100%);
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 60px; }
+    header {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 22px;
+      animation: rise 0.7s ease both;
+    }
+    .brand {
+      font-family: "Source Serif 4", serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0;
+    }
+    .brand span { color: var(--accent); }
+    .lede { margin: 0; color: var(--muted); max-width: 46rem; line-height: 1.45; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+    }
+    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      box-shadow: var(--shadow);
+      padding: 18px 18px 16px;
+      backdrop-filter: blur(6px);
+      animation: rise 0.8s ease both;
+    }
+    .panel:nth-child(2) { animation-delay: 0.08s; }
+    h2 {
+      font-family: "Source Serif 4", serif;
+      font-size: 1.25rem;
+      margin: 0 0 10px;
+    }
+    .meta { display: grid; gap: 8px; margin: 0 0 14px; }
+    .row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 8px;
+      font-size: 0.92rem;
+    }
+    .row b { color: var(--muted); font-weight: 500; }
+    code, .mono {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.84rem;
+      background: #ebe6db;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 3px;
+      background: var(--accent);
+      color: #fff;
+      font: 600 0.95rem "DM Sans", sans-serif;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    button:hover { transform: translateY(-1px); background: #095a41; }
+    button.secondary { background: var(--ink); }
+    button.secondary:hover { background: #0d1820; }
+    .flow {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+    .flow li {
+      border-left: 3px solid var(--accent);
+      padding: 8px 10px;
+      background: rgba(11, 110, 79, 0.06);
+      font-size: 0.9rem;
+    }
+    .flow li strong { display: block; margin-bottom: 2px; }
+    .results { margin-top: 16px; animation: rise 0.9s ease both; animation-delay: 0.12s; }
+    .tx {
+      border-top: 1px solid var(--line);
+      padding: 14px 0;
+    }
+    .tx:first-child { border-top: 0; }
+    .tx h3 {
+      margin: 0 0 6px;
+      font-size: 1.02rem;
+      font-family: "Source Serif 4", serif;
+    }
+    .steps { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+    .steps li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--ok); margin-top: 5px;
+    }
+    .empty { color: var(--muted); font-size: 0.95rem; }
+    .toast {
+      position: fixed; right: 16px; bottom: 16px;
+      background: var(--ink); color: #fff;
+      padding: 10px 14px; border-radius: 4px;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      font-size: 0.9rem; z-index: 10;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="brand">CRL Plus <span>American Income Life</span></p>
+      <p class="lede">
+        Sandbox for the AIL electronic-order programming request — Ladder/FGL pattern:
+        HTTP POST intake, Status.4 client routing, and 1122 status/result handling.
+      </p>
+    </header>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>Endpoint &amp; credentials</h2>
+        <div class="meta">
+          <div class="row"><b>External TEST</b><span class="mono">{{ external_url }}</span></div>
+          <div class="row"><b>LAN sandbox</b><span class="mono">{{ local_url }}</span></div>
+          <div class="row"><b>Web UI</b><span class="mono">http://{{ lan_ip }}:{{ port }}/</span></div>
+          <div class="row"><b>Basic auth</b><span class="mono">{{ auth_user }} / {{ auth_pass }}</span></div>
+          <div class="row"><b>sourceClient</b><span class="mono">AIL</span></div>
+          <div class="row"><b>Outbound 1122</b><span>{% if skip_outbound %}Skipped (awaiting AIL WS details){% else %}Mock POST enabled{% endif %}</span></div>
+        </div>
+        <div class="actions">
+          <button id="runSample" type="button">Run sample 121 order</button>
+          <button id="refresh" class="secondary" type="button">Refresh results</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Implemented route set</h2>
+        <ol class="flow">
+          <li><strong>1 — 121 Incoming</strong>HttpPostListener path <code>ail</code> + auth-test.txt</li>
+          <li><strong>2 — 121 Response</strong>Synchronous accept/failure response to sender</li>
+          <li><strong>Status.4</strong><code>sourceClient=AIL</code> → <code>AIL 1122 Status</code></li>
+          <li><strong>3 — 1122 Status/Result</strong>Format AIL 1122; outbound optional/skippable</li>
+          <li><strong>4 — 1122 POST Response</strong>Archive + mark status sent</li>
+        </ol>
+      </section>
+    </div>
+
+    <section class="panel results">
+      <h2>Sandbox results</h2>
+      <div id="results">
+        {% if transactions %}
+          {% for tx in transactions %}
+          <article class="tx">
+            <h3>{{ tx.meta.trackingId }} · {{ tx.meta.insured or 'Insured' }}</h3>
+            <div class="meta">
+              <div class="row"><b>When</b><span>{{ tx.receivedAt }}</span></div>
+              <div class="row"><b>Via</b><span>{{ tx.via }}</span></div>
+              <div class="row"><b>Policy</b><span class="mono">{{ tx.meta.polNumber }}</span></div>
+            </div>
+            <ul class="steps">
+              {% for step in tx.steps %}
+              <li><span class="dot"></span><div><strong>{{ step.route }}</strong><div>{{ step.detail }}</div></div></li>
+              {% endfor %}
+            </ul>
+          </article>
+          {% endfor %}
+        {% else %}
+          <p class="empty">No transactions yet. Run the sample order or POST an ACORD 121 to the LAN endpoint.</p>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+    const toast = (msg) => {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 2200);
+    };
+    const render = (transactions) => {
+      const root = document.getElementById('results');
+      if (!transactions.length) {
+        root.innerHTML = '<p class="empty">No transactions yet. Run the sample order or POST an ACORD 121 to the LAN endpoint.</p>';
+        return;
+      }
+      root.innerHTML = transactions.map(tx => `
+        <article class="tx">
+          <h3>${tx.meta.trackingId} · ${tx.meta.insured || 'Insured'}</h3>
+          <div class="meta">
+            <div class="row"><b>When</b><span>${tx.receivedAt}</span></div>
+            <div class="row"><b>Via</b><span>${tx.via}</span></div>
+            <div class="row"><b>Policy</b><span class="mono">${tx.meta.polNumber}</span></div>
+          </div>
+          <ul class="steps">
+            ${tx.steps.map(step => `
+              <li><span class="dot"></span><div><strong>${step.route}</strong><div>${step.detail}</div></div></li>
+            `).join('')}
+          </ul>
+        </article>
+      `).join('');
+    };
+    document.getElementById('runSample').addEventListener('click', async () => {
+      const res = await fetch('/api/run-sample', { method: 'POST' });
+      const data = await res.json();
+      if (!data.ok) { toast(data.error || 'Failed'); return; }
+      toast('Sample 121 processed for AIL');
+      const list = await fetch('/api/transactions').then(r => r.json());
+      render(list.transactions || []);
+    });
+    document.getElementById('refresh').addEventListener('click', async () => {
+      const list = await fetch('/api/transactions').then(r => r.json());
+      render(list.transactions || []);
+      toast('Results refreshed');
+    });
+  </script>
+</body>
+</html>
