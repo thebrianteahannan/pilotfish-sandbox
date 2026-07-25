@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2">
+  <UserAuthRequest>
+    <UserLoginName>ail</UserLoginName>
+    <UserPswd>
+      <CryptType>NONE</CryptType>
+      <Pswd>AilSandbox$Test1</Pswd>
+    </UserPswd>
+  </UserAuthRequest>
+  <TXLifeRequest>
+    <TransRefGUID>AIL-SANDBOX-0001</TransRefGUID>
+    <TransType tc="121">General Requirement Order Request</TransType>
+    <TransExeDate>2026-07-24</TransExeDate>
+    <TransExeTime>15:30:00</TransExeTime>
+    <OLifE>
+      <SourceInfo>
+        <SourceInfoName>AIL</SourceInfoName>
+        <SourceInfoDescription>American Income Life</SourceInfoDescription>
+      </SourceInfo>
+      <Holding id="Holding_1">
+        <HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+        <Policy>
+          <PolNumber>AIL-POL-10001</PolNumber>
+          <Carrier>
+            <CarrierCode>AIL</CarrierCode>
+            <CarrierName>American Income Life</CarrierName>
+          </Carrier>
+          <Life>
+            <FaceAmt>100000</FaceAmt>
+          </Life>
+          <RequirementInfo id="Req_1">
+            <ReqCode tc="5">Paramedical</ReqCode>
+            <ReqStatus tc="1">Outstanding</ReqStatus>
+            <TrackingID>AIL-TRK-10001</TrackingID>
+          </RequirementInfo>
+        </Policy>
+      </Holding>
+      <Party id="Party_Insured">
+        <Person>
+          <FirstName>Jordan</FirstName>
+          <LastName>Ellis</LastName>
+          <Gender tc="1">Male</Gender>
+          <BirthDate>1988-04-12</BirthDate>
+        </Person>
+      </Party>
+      <Relation OriginatingObjectID="Holding_1" RelatedObjectID="Party_Insured">
+        <RelationRoleCode tc="32">Insured</RelationRoleCode>
+      </Relation>
+    </OLifE>
+  </TXLifeRequest>
+</TXLife>
