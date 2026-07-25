@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SQLXML xmlns="http://pilotfish.sqlxml">
+  <!--
+    Claim PENDING events atomically:
+    UPDATE marks them PROCESSED and OUTPUT returns the claimed rows (+ patient data)
+    so they are not re-polled on the next cycle.
+  -->
   <Execute into="records" as="Event">
     <SQL>
-      SELECT
-        e.EventId,
-        e.SourceSystem,
-        e.EventType,
-        ISNULL(e.ChildEventTypes, '') AS ChildEventTypes,
-        e.OffenderId,
+      UPDATE e
+      SET Status = N'PROCESSED'
+      OUTPUT
+        inserted.EventId,
+        inserted.SourceSystem,
+        inserted.EventType,
+        ISNULL(inserted.ChildEventTypes, '') AS ChildEventTypes,
+        inserted.OffenderId,
         p.Mrn,
         p.LastName,
         p.FirstName,
@@ -19,21 +26,20 @@
         p.State,
         p.Zip,
         ISNULL(p.Phone, '') AS Phone,
-        e.FacilityCode,
-        ISNULL(e.UnitCode, '') AS UnitCode,
-        ISNULL(e.BedCode, '') AS BedCode,
-        ISNULL(e.PriorFacilityCode, '') AS PriorFacilityCode,
-        ISNULL(e.PriorUnitCode, '') AS PriorUnitCode,
-        ISNULL(e.PriorBedCode, '') AS PriorBedCode,
-        ISNULL(e.AttendingNpi, '') AS AttendingNpi,
-        ISNULL(e.AttendingName, '') AS AttendingName,
-        CONVERT(VARCHAR(19), e.EventTimestamp, 126) AS EventTimestamp,
-        e.Status,
-        ISNULL(e.Notes, '') AS Notes
+        inserted.FacilityCode,
+        ISNULL(inserted.UnitCode, '') AS UnitCode,
+        ISNULL(inserted.BedCode, '') AS BedCode,
+        ISNULL(inserted.PriorFacilityCode, '') AS PriorFacilityCode,
+        ISNULL(inserted.PriorUnitCode, '') AS PriorUnitCode,
+        ISNULL(inserted.PriorBedCode, '') AS PriorBedCode,
+        ISNULL(inserted.AttendingNpi, '') AS AttendingNpi,
+        ISNULL(inserted.AttendingName, '') AS AttendingName,
+        CONVERT(VARCHAR(19), inserted.EventTimestamp, 126) AS EventTimestamp,
+        inserted.Status,
+        ISNULL(inserted.Notes, '') AS Notes
       FROM dbo.OperationalEvents e
       INNER JOIN dbo.Patients p ON p.OffenderId = e.OffenderId
       WHERE e.Status = N'PENDING'
-      ORDER BY e.EventId
     </SQL>
   </Execute>
   <XMLOut var="records" />

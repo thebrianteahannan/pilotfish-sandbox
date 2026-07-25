@@ -60,6 +60,8 @@ async function refreshEvents() {
     tbody.innerHTML = (data.events || [])
       .map((e) => {
         const multi = e.EventType === "MULTI";
+        const statusClass =
+          String(e.Status).toUpperCase() === "PROCESSED" ? "processed" : "pending";
         return `<tr>
         <td>${e.EventId}</td>
         <td><span class="pill ${multi ? "multi" : ""}">${e.EventType}</span>${
@@ -74,7 +76,7 @@ async function refreshEvents() {
         )}</div></td>
         <td>${escapeHtml(e.SourceSystem)}</td>
         <td>${escapeHtml(e.FacilityCode)} / ${escapeHtml(e.UnitCode || "-")} / ${escapeHtml(e.BedCode || "-")}</td>
-        <td>${escapeHtml(e.Status)}</td>
+        <td><span class="pill ${statusClass}">${escapeHtml(e.Status)}</span></td>
       </tr>`;
       })
       .join("");
