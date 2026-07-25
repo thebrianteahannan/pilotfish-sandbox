@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLXML xmlns="http://pilotfish.sqlxml">
+  <Execute into="records" as="Event">
+    <SQL>
+      SELECT
+        e.EventId,
+        e.SourceSystem,
+        e.EventType,
+        ISNULL(e.ChildEventTypes, '') AS ChildEventTypes,
+        e.OffenderId,
+        p.Mrn,
+        p.LastName,
+        p.FirstName,
+        ISNULL(p.MiddleName, '') AS MiddleName,
+        CONVERT(VARCHAR(8), p.BirthDate, 112) AS BirthDate,
+        p.Sex,
+        p.Street,
+        p.City,
+        p.State,
+        p.Zip,
+        ISNULL(p.Phone, '') AS Phone,
+        e.FacilityCode,
+        ISNULL(e.UnitCode, '') AS UnitCode,
+        ISNULL(e.BedCode, '') AS BedCode,
+        ISNULL(e.PriorFacilityCode, '') AS PriorFacilityCode,
+        ISNULL(e.PriorUnitCode, '') AS PriorUnitCode,
+        ISNULL(e.PriorBedCode, '') AS PriorBedCode,
+        ISNULL(e.AttendingNpi, '') AS AttendingNpi,
+        ISNULL(e.AttendingName, '') AS AttendingName,
+        CONVERT(VARCHAR(19), e.EventTimestamp, 126) AS EventTimestamp,
+        e.Status,
+        ISNULL(e.Notes, '') AS Notes
+      FROM dbo.OperationalEvents e
+      INNER JOIN dbo.Patients p ON p.OffenderId = e.OffenderId
+      WHERE e.Status = N'PENDING'
+      ORDER BY e.EventId
+    </SQL>
+  </Execute>
+  <XMLOut var="records" />
+</SQLXML>
