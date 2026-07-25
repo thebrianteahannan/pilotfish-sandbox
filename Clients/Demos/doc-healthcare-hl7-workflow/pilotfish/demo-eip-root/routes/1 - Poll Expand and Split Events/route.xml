@@ -62,6 +62,13 @@
       </ModuleConfig>
     </Listener>
     <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Raw SQLXML Snapshot">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$EVENT_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>raw_sqlxml_events.xml</TargetFileName>
+        </ModuleConfig>
+      </Processor>
       <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Expand MULTI Events Into Single Events">
         <ModuleConfig>
           <ExecuteProcessor>true</ExecuteProcessor>
