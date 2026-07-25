@@ -33,14 +33,34 @@ services:
       - -lc
       - |
         set -euo pipefail
-        echo "Initializing DocHealthcare database..."
+        echo "Initializing SQL Server Housing database..."
         /opt/mssql-tools18/bin/sqlcmd \
           -S sqlserver \
           -U sa \
           -P 'PilotFish_Demo1!' \
           -C \
           -i /sql/01_init.sql
-        echo "Seed complete."
+        echo "SQL Server seed complete."
+
+  oracle:
+    image: gvenzl/oracle-xe:21-slim-faststart
+    container_name: pf-doc-hl7-oracle
+    restart: unless-stopped
+    environment:
+      ORACLE_PASSWORD: PilotFish_O1
+      APP_USER: docoms
+      APP_USER_PASSWORD: PilotFish_O1
+    ports:
+      - "1521:1521"
+    volumes:
+      - ./sql/oracle:/container-entrypoint-initdb.d:ro
+      - oracle-data:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 15s
+      timeout: 10s
+      retries: 40
+      start_period: 90s
 
   pilotfish:
     build:
@@ -51,6 +71,8 @@ services:
     depends_on:
       sqlserver-init:
         condition: service_completed_successfully
+      oracle:
+        condition: service_healthy
     ports:
       - "8091:8080"
     volumes:
@@ -62,9 +84,13 @@ services:
       context: ./webui
     image: pilotfish-doc-hl7-webui:latest
     container_name: pf-doc-hl7-webui
+    # oracledb/cryptography wheels SIGILL on some ARM hosts; run amd64 under emulation
+    platform: linux/amd64
     restart: unless-stopped
     depends_on:
       sqlserver:
+        condition: service_healthy
+      oracle:
         condition: service_healthy
       pilotfish:
         condition: service_started
@@ -74,6 +100,9 @@ services:
       DB_USER: sa
       DB_PASSWORD: "PilotFish_Demo1!"
       DB_NAME: DocHealthcare
+      ORACLE_USER: docoms
+      ORACLE_PASSWORD: PilotFish_O1
+      ORACLE_DSN: oracle:1521/XEPDB1
       HL7_DIR: /output/hl7
       EVENTS_DIR: /output/events
       LAN_HINT: "http://192.168.68.52:8092/"
@@ -81,3 +110,6 @@ services:
       - "8092:8092"
     volumes:
       - ./output:/output:ro
+
+volumes:
+  oracle-data:

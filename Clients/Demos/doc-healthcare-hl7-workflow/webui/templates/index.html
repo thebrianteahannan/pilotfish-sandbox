@@ -18,7 +18,8 @@
     </p>
     <nav class="nav">
       <a href="#pipeline">Pipeline</a>
-      <a href="#route-1">Route 1</a>
+      <a href="#route-1a">Route 1a SQL</a>
+      <a href="#route-1b">Route 1b Oracle</a>
       <a href="#route-2">Route 2</a>
       <a href="#inject">Add Event</a>
       <a href="#results">HL7 Results</a>
@@ -29,82 +30,116 @@
   <main>
     <section class="panel" id="pipeline">
       <h2>End-to-end pipeline</h2>
-      <p class="section-lead">Click a route card to jump into the construction details.</p>
+      <p class="section-lead">Two real databases feed one HL7 generation route — matching the case study.</p>
       <div class="pipeline">
-        <div class="pipe-node db"><strong>Legacy DBs</strong><span>Oracle OMS + SQL Server Housing events in <code>OperationalEvents</code></span></div>
-        <div class="pipe-node r1"><strong>Route 1</strong><span>Poll PENDING rows, expand MULTI → single events</span></div>
-        <div class="pipe-node r2"><strong>Route 2</strong><span>XPath fork each Event, map ADT trigger</span></div>
-        <div class="pipe-node r2"><strong>Transform</strong><span>XSLT builds MSH/EVN/PID/PV1/ZPF pipe HL7</span></div>
-        <div class="pipe-node out"><strong>HL7 Out</strong><span>One <code>.hl7</code> file per healthcare transaction</span></div>
+        <div class="pipe-node db"><strong>Oracle OMS</strong><span>Driver <code>oracle.jdbc.OracleDriver</code><br/>Route 1b polls <code>operational_events</code></span></div>
+        <div class="pipe-node db"><strong>SQL Server Housing</strong><span>Driver <code>SQLServerDriver</code><br/>Route 1a polls <code>OperationalEvents</code></span></div>
+        <div class="pipe-node r1"><strong>Expand MULTI</strong><span>Each source expands packages into single events</span></div>
+        <div class="pipe-node r2"><strong>Route 2</strong><span>Fork + HL7 ADT transform</span></div>
+        <div class="pipe-node out"><strong>HL7 Out</strong><span>MyAvatar-bound <code>.hl7</code> files</span></div>
       </div>
       <div class="route-links">
-        <a class="route-card" href="#route-1">
-          <span class="badge r1">Route 1</span>
-          <h3>Poll, Expand &amp; Hand Off</h3>
-          <p>DatabaseSqlListener → expand MULTI XSLT → EIPTransport to Route 2.</p>
+        <a class="route-card" href="#route-1a">
+          <span class="badge r1">Route 1a</span>
+          <h3>SQL Server Housing listener</h3>
+          <p><code>mssql-jdbc</code> → claim PENDING housing events → expand → Route 2.</p>
+        </a>
+        <a class="route-card" href="#route-1b">
+          <span class="badge r1">Route 1b</span>
+          <h3>Oracle OMS listener</h3>
+          <p><code>ojdbc11</code> → select/update PENDING OMS events → expand → Route 2.</p>
         </a>
         <a class="route-card" href="#route-2">
           <span class="badge r2">Route 2</span>
           <h3>Split Events → HL7 ADT</h3>
-          <p>XPathForkingModule on <code>//Event</code> → trigger map → DirectoryTransport.</p>
+          <p>Shared fork + XSLT + DirectoryTransport for both sources.</p>
         </a>
       </div>
     </section>
 
-    <section class="panel" id="route-1">
-      <span class="badge r1">Route 1</span>
-      <h2>1 — Poll Expand and Split Events</h2>
-      <p class="section-lead">Tap a node to see how that stage is constructed.</p>
+    <section class="panel" id="route-1a">
+      <span class="badge r1">Route 1a</span>
+      <h2>1a — Poll SQL Server Housing Events</h2>
+      <p class="section-lead">Microsoft SQL Server 2022 via Microsoft JDBC.</p>
       <div class="flow">
-        <div class="node" data-detail="r1-listener"><div class="kicker">Listener</div><div class="title">Poll Operational Events</div></div>
+        <div class="node" data-detail="r1a-listener"><div class="kicker">Listener</div><div class="title">Poll SQL Server</div></div>
         <div class="arrow">→</div>
-        <div class="node" data-detail="r1-raw"><div class="kicker">Processor</div><div class="title">Write Raw SQLXML</div></div>
+        <div class="node" data-detail="r1a-driver"><div class="kicker">JDBC</div><div class="title">SQLServerDriver</div></div>
         <div class="arrow">→</div>
-        <div class="node" data-detail="r1-expand"><div class="kicker">XSLT</div><div class="title">Expand MULTI</div></div>
+        <div class="node" data-detail="r1a-expand"><div class="kicker">XSLT</div><div class="title">Expand MULTI</div></div>
         <div class="arrow">→</div>
-        <div class="node" data-detail="r1-snapshot"><div class="kicker">Processor</div><div class="title">Write Expanded XML</div></div>
-        <div class="arrow">→</div>
-        <div class="node" data-detail="r1-handoff"><div class="kicker">Transport</div><div class="title">EIPTransport → Route 2</div></div>
+        <div class="node" data-detail="r1a-handoff"><div class="kicker">Transport</div><div class="title">EIPTransport → Route 2</div></div>
       </div>
-      <div class="detail" id="r1-listener">
-        <h4>DatabaseSqlListener</h4>
+      <div class="detail open" id="r1a-listener">
+        <h4>DatabaseSqlListener — SQL Server</h4>
         <ul>
           <li>Class: <code>com.pilotfish.eip.modules.db.DatabaseSqlListener</code></li>
-          <li>Polls every <strong>15 seconds</strong></li>
-          <li>SQLXML file: <code>SelectOperationalEventsSQL.xml</code></li>
-          <li>Selects <code>Status = 'PENDING'</code> joined to <code>Patients</code></li>
-          <li>JDBC via <code>$$db.url</code> → SQL Server <code>DocHealthcare</code></li>
+          <li>JdbcDriver: <code>$$sqlserver.driver</code> = <code>com.microsoft.sqlserver.jdbc.SQLServerDriver</code></li>
+          <li>JdbcURL: <code>jdbc:sqlserver://sqlserver:1433;databaseName=DocHealthcare;...</code></li>
+          <li>Claims PENDING with <code>UPDATE...OUTPUT</code> → status becomes PROCESSED</li>
         </ul>
       </div>
-      <div class="detail" id="r1-raw">
-        <h4>FileWriteProcessor — raw snapshot</h4>
+      <div class="detail" id="r1a-driver">
+        <h4>Driver JAR</h4>
         <ul>
-          <li>Writes SQLXML batch to <code>output/events/raw_sqlxml_events.xml</code></li>
-          <li>Useful to see uppercase <code>EIPData/RECORDS/EVENT</code> structure from the listener</li>
+          <li><code>mssql-jdbc-12.8.1.jre11.jar</code> in <code>WEB-INF/lib</code></li>
+          <li>Seed data: transfers, bed assigns, housing MULTI packages (EventIds 1003+)</li>
         </ul>
       </div>
-      <div class="detail open" id="r1-expand">
-        <h4>XSLT — Expand MULTI into single Events</h4>
+      <div class="detail" id="r1a-expand">
+        <h4>Expand MULTI</h4>
         <ul>
-          <li>File: <code>transform-expand-multi-events.xslt</code></li>
-          <li><code>MULTI</code> with <code>ChildEventTypes=ADMIT,BED_ASSIGN,DEMO_UPDATE</code> becomes 3 <code>&lt;Event&gt;</code> nodes</li>
-          <li>Child IDs become <code>1002-1</code>, <code>1002-2</code>, <code>1002-3</code> with <code>IsExpandedFromMulti=true</code></li>
-          <li>Single events pass through unchanged</li>
+          <li>Same XSLT as Oracle route — e.g. <code>TRANSFER,BED_ASSIGN</code> → 2 events</li>
         </ul>
       </div>
-      <div class="detail" id="r1-snapshot">
-        <h4>FileWriteProcessor — expanded snapshot</h4>
+      <div class="detail" id="r1a-handoff">
+        <h4>Handoff</h4>
         <ul>
-          <li>Writes <code>output/events/expanded_events.xml</code></li>
-          <li>This is the batch Route 2 will fork</li>
+          <li>EIPTransport → <code>Split And Generate HL7.Programmable (Trigger) Listener</code></li>
         </ul>
       </div>
-      <div class="detail" id="r1-handoff">
-        <h4>EIPTransport handoff</h4>
+    </section>
+
+    <section class="panel" id="route-1b">
+      <span class="badge r1">Route 1b</span>
+      <h2>1b — Poll Oracle OMS Events</h2>
+      <p class="section-lead">Oracle XE 21 via Oracle JDBC (ojdbc11).</p>
+      <div class="flow">
+        <div class="node" data-detail="r1b-listener"><div class="kicker">Listener</div><div class="title">Poll Oracle OMS</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r1b-driver"><div class="kicker">JDBC</div><div class="title">OracleDriver</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r1b-expand"><div class="kicker">XSLT</div><div class="title">Expand MULTI</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r1b-handoff"><div class="kicker">Transport</div><div class="title">EIPTransport → Route 2</div></div>
+      </div>
+      <div class="detail open" id="r1b-listener">
+        <h4>DatabaseSqlListener — Oracle</h4>
         <ul>
-          <li>Class: <code>com.pilotfish.eip.modules.internal.EIPTransport</code></li>
-          <li>ServiceName: <code>Split And Generate HL7.Programmable (Trigger) Listener</code></li>
-          <li>Passes the expanded <code>&lt;Events&gt;</code> document into Route 2</li>
+          <li>Class: <code>com.pilotfish.eip.modules.db.DatabaseSqlListener</code></li>
+          <li>JdbcDriver: <code>$$oracle.driver</code> = <code>oracle.jdbc.OracleDriver</code></li>
+          <li>JdbcURL: <code>jdbc:oracle:thin:@oracle:1521/XEPDB1</code></li>
+          <li>User: <code>docoms</code> / schema tables <code>operational_events</code>, <code>patients</code></li>
+          <li>SQLXML: SELECT PENDING, then UPDATE to PROCESSED</li>
+        </ul>
+      </div>
+      <div class="detail" id="r1b-driver">
+        <h4>Driver JAR</h4>
+        <ul>
+          <li><code>ojdbc11-21.9.0.0.jar</code> in <code>WEB-INF/lib</code></li>
+          <li>Seed data: admits, discharges, demo updates, OMS MULTI (EventIds 2001+)</li>
+        </ul>
+      </div>
+      <div class="detail" id="r1b-expand">
+        <h4>Expand MULTI</h4>
+        <ul>
+          <li>e.g. <code>ADMIT,BED_ASSIGN,DEMO_UPDATE</code> → 3 forked HL7 messages</li>
+        </ul>
+      </div>
+      <div class="detail" id="r1b-handoff">
+        <h4>Handoff</h4>
+        <ul>
+          <li>Same Route 2 listener as SQL Server — one HL7 pipeline for both DBs</li>
         </ul>
       </div>
     </section>
@@ -185,7 +220,8 @@
             <option value="BED_ASSIGN">BED_ASSIGN → A02</option>
             <option value="DEMO_UPDATE">DEMO_UPDATE → A08</option>
             <option value="DISCHARGE">DISCHARGE → A03</option>
-            <option value="MULTI" selected>MULTI (split package)</option>
+            <option value="MULTI" selected>MULTI OMS → Oracle (ADMIT…)</option>
+            <option value="MULTI_HOUSING">MULTI Housing → SQL Server</option>
           </select>
         </label>
         <label>MULTI children

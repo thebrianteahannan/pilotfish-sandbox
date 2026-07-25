@@ -4,10 +4,11 @@ PilotFish eiPlatform demo based on the [Government Healthcare Workflow Automatio
 
 ## What it does
 
-1. **SQL Server** seeds legacy operational events from Oracle OMS + SQL Server Housing
-2. **PilotFish Route 1** polls `PENDING` events and expands `MULTI` packages into single healthcare transactions
-3. **PilotFish Route 2** forks each event (`XPathForkingModule`) and generates an HL7 ADT message for MyAvatar
-4. HL7 files land in `output/hl7/`
+1. **Oracle XE** (OMS) + **SQL Server** (Housing) seed operational events in separate databases
+2. **PilotFish Route 1a** polls SQL Server Housing (`SQLServerDriver` / mssql-jdbc)
+3. **PilotFish Route 1b** polls Oracle OMS (`OracleDriver` / ojdbc11)
+4. Both expand `MULTI` packages and hand off to **Route 2**, which forks and writes HL7 ADT for MyAvatar
+5. HL7 files land in `output/hl7/`
 
 ### Event → HL7 trigger map
 
@@ -62,6 +63,7 @@ docker compose down -v
 | Service    | Host port |
 |------------|-----------|
 | SQL Server | 14334     |
+| Oracle XE  | 1521      |
 | PilotFish  | 8091      |
 | Demo Web UI| 8092      |
 

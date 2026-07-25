@@ -74,7 +74,9 @@ async function refreshEvents() {
         <td>${escapeHtml(e.LastName)}, ${escapeHtml(e.FirstName)}<div class="mono" style="color:var(--muted);font-size:.75rem">${escapeHtml(
           e.OffenderId
         )}</div></td>
-        <td>${escapeHtml(e.SourceSystem)}</td>
+        <td>${escapeHtml(e.SourceSystem)}<div class="mono" style="color:var(--muted);font-size:.75rem">${escapeHtml(
+          e.DbEngine || ""
+        )}</div></td>
         <td>${escapeHtml(e.FacilityCode)} / ${escapeHtml(e.UnitCode || "-")} / ${escapeHtml(e.BedCode || "-")}</td>
         <td><span class="pill ${statusClass}">${escapeHtml(e.Status)}</span></td>
       </tr>`;
@@ -101,9 +103,18 @@ async function addEvent(ev) {
   btn.disabled = true;
   setStatus("Inserting event into SQL Server…");
 
+  let eventType = document.getElementById("eventType").value;
+  let sourceSystem;
+  if (eventType === "MULTI_HOUSING") {
+    eventType = "MULTI";
+    sourceSystem = "SQLSERVER_HOUSING";
+  } else if (eventType === "MULTI") {
+    sourceSystem = "ORACLE_OMS";
+  }
   const body = {
     offenderId: document.getElementById("offenderId").value,
-    eventType: document.getElementById("eventType").value,
+    eventType,
+    sourceSystem,
     childEventTypes: document.getElementById("childEventTypes").value,
     notes: document.getElementById("notes").value || undefined,
   };
@@ -166,12 +177,16 @@ function syncPresetChildren() {
   const type = document.getElementById("eventType");
   const children = document.getElementById("childEventTypes");
   const apply = () => {
-    if (type.value === "MULTI" && !children.value) {
+    if (type.value === "MULTI") {
       children.value = "ADMIT,BED_ASSIGN,DEMO_UPDATE";
+    } else if (type.value === "MULTI_HOUSING") {
+      children.value = "TRANSFER,BED_ASSIGN";
+    } else {
+      children.value = "";
     }
-    if (type.value !== "MULTI") children.value = "";
   };
   type.addEventListener("change", apply);
+  apply();
 }
 
 document.addEventListener("DOMContentLoaded", () => {

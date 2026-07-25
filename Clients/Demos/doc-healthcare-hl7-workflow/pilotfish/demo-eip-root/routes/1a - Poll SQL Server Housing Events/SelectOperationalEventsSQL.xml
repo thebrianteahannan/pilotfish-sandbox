@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SQLXML xmlns="http://pilotfish.sqlxml">
-  <!--
-    Claim PENDING events atomically:
-    UPDATE marks them PROCESSED and OUTPUT returns the claimed rows (+ patient data)
-    so they are not re-polled on the next cycle.
-  -->
+  <!-- SQL Server Housing Administration: claim PENDING events -->
   <Execute into="records" as="Event">
     <SQL>
       UPDATE e

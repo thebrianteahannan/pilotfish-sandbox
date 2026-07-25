@@ -12,9 +12,11 @@ RUN rm -rf /usr/local/tomcat/webapps/eip/eip-root/interfaces \
              /opt/pilotfish/output/hl7 \
              /opt/pilotfish/output/events
 
-# Microsoft JDBC driver for SQL Server
+# Microsoft JDBC driver for SQL Server + Oracle JDBC driver for OMS
 ADD https://repo1.maven.org/maven2/com/microsoft/sqlserver/mssql-jdbc/12.8.1.jre11/mssql-jdbc-12.8.1.jre11.jar \
     /usr/local/tomcat/webapps/eip/WEB-INF/lib/mssql-jdbc-12.8.1.jre11.jar
+ADD https://repo1.maven.org/maven2/com/oracle/database/jdbc/ojdbc11/21.9.0.0/ojdbc11-21.9.0.0.jar \
+    /usr/local/tomcat/webapps/eip/WEB-INF/lib/ojdbc11-21.9.0.0.jar
 
 COPY demo-eip-root/ /usr/local/tomcat/webapps/eip/eip-root/
 

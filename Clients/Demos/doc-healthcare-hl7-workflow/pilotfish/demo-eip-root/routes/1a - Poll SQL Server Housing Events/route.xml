@@ -19,9 +19,9 @@
     </ModuleConfig>
   </RoutingModule>
   <TransactionMonitors />
-  <Source icon="" name="Operational Events From Legacy DBs">
+  <Source icon="" name="SQL Server Housing Events">
     <FormatProfile name="Relay (System Format)" />
-    <Listener class="com.pilotfish.eip.modules.db.DatabaseSqlListener" enabled="true" name="Poll Operational Events">
+    <Listener class="com.pilotfish.eip.modules.db.DatabaseSqlListener" enabled="true" name="Poll SQL Server Housing Events">
       <ModuleConfig>
         <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
         <CLIAllowed>false</CLIAllowed>
@@ -37,12 +37,12 @@
         <WriteQuery>false</WriteQuery>
         <Query />
         <QueryParams />
-        <UserName>$$db.username</UserName>
-        <Password>$$db.password</Password>
+        <UserName>$$sqlserver.username</UserName>
+        <Password>$$sqlserver.password</Password>
         <UseDataSource>false</UseDataSource>
         <DataSource />
-        <JdbcDriver>$$db.driver</JdbcDriver>
-        <JdbcURL>$$db.url</JdbcURL>
+        <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+        <JdbcURL>$$sqlserver.url</JdbcURL>
         <SchedulerStartTag />
         <SchedulerEndTag />
         <ExcludeDaysTag />
@@ -62,11 +62,11 @@
       </ModuleConfig>
     </Listener>
     <Processors>
-      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Raw SQLXML Snapshot">
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Raw SQL Server Snapshot">
         <ModuleConfig>
           <ExecuteProcessor>true</ExecuteProcessor>
           <TargetDirectory>$$EVENT_OUTPUT_DIRECTORY</TargetDirectory>
-          <TargetFileName>raw_sqlxml_events.xml</TargetFileName>
+          <TargetFileName>raw_sqlserver_events.xml</TargetFileName>
         </ModuleConfig>
       </Processor>
       <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Expand MULTI Events Into Single Events">
@@ -80,11 +80,11 @@
           <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
         </ModuleConfig>
       </Processor>
-      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Expanded Events Snapshot">
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Expanded SQL Server Events">
         <ModuleConfig>
           <ExecuteProcessor>true</ExecuteProcessor>
           <TargetDirectory>$$EVENT_OUTPUT_DIRECTORY</TargetDirectory>
-          <TargetFileName>expanded_events.xml</TargetFileName>
+          <TargetFileName>expanded_sqlserver_events.xml</TargetFileName>
         </ModuleConfig>
       </Processor>
     </Processors>
