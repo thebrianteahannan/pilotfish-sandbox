@@ -54,3 +54,27 @@ services:
     volumes:
       - ./output:/opt/pilotfish/output
       - ./logs:/usr/local/tomcat/webapps/eip/logs
+
+  webui:
+    build:
+      context: ./webui
+    image: pilotfish-doc-hl7-webui:latest
+    container_name: pf-doc-hl7-webui
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      pilotfish:
+        condition: service_started
+    environment:
+      DB_HOST: sqlserver
+      DB_PORT: "1433"
+      DB_USER: sa
+      DB_PASSWORD: "PilotFish_Demo1!"
+      DB_NAME: DocHealthcare
+      HL7_DIR: /output/hl7
+      EVENTS_DIR: /output/events
+      LAN_HINT: "http://192.168.68.52:8092/"
+    ports:
+      - "8092:8092"
+    volumes:
+      - ./output:/output:ro

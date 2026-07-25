@@ -63,5 +63,7 @@ docker compose down -v
 |------------|-----------|
 | SQL Server | 14334     |
 | PilotFish  | 8091      |
+| Demo Web UI| 8092      |
 
-PilotFish UI: http://localhost:8091/eip/
+- Route visualizer + event injector: http://localhost:8092/ (LAN: http://192.168.x.x:8092/)
+- PilotFish UI: http://localhost:8091/eip/

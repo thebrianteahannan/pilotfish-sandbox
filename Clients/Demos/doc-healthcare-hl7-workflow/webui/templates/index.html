@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DOC HL7 Workflow — Route Visualizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+  <header>
+    <h1>DOC Healthcare → HL7 Routes</h1>
+    <p>
+      Visual of the PilotFish routes built for the corrections healthcare workflow case study:
+      database events in, MULTI packages split, HL7 ADT out for MyAvatar.
+    </p>
+    <nav class="nav">
+      <a href="#pipeline">Pipeline</a>
+      <a href="#route-1">Route 1</a>
+      <a href="#route-2">Route 2</a>
+      <a href="#inject">Add Event</a>
+      <a href="#results">HL7 Results</a>
+      <a id="eip-link" href="http://localhost:8091/eip/" target="_blank" rel="noreferrer">PilotFish EIP</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="panel" id="pipeline">
+      <h2>End-to-end pipeline</h2>
+      <p class="section-lead">Click a route card to jump into the construction details.</p>
+      <div class="pipeline">
+        <div class="pipe-node db"><strong>Legacy DBs</strong><span>Oracle OMS + SQL Server Housing events in <code>OperationalEvents</code></span></div>
+        <div class="pipe-node r1"><strong>Route 1</strong><span>Poll PENDING rows, expand MULTI → single events</span></div>
+        <div class="pipe-node r2"><strong>Route 2</strong><span>XPath fork each Event, map ADT trigger</span></div>
+        <div class="pipe-node r2"><strong>Transform</strong><span>XSLT builds MSH/EVN/PID/PV1/ZPF pipe HL7</span></div>
+        <div class="pipe-node out"><strong>HL7 Out</strong><span>One <code>.hl7</code> file per healthcare transaction</span></div>
+      </div>
+      <div class="route-links">
+        <a class="route-card" href="#route-1">
+          <span class="badge r1">Route 1</span>
+          <h3>Poll, Expand &amp; Hand Off</h3>
+          <p>DatabaseSqlListener → expand MULTI XSLT → EIPTransport to Route 2.</p>
+        </a>
+        <a class="route-card" href="#route-2">
+          <span class="badge r2">Route 2</span>
+          <h3>Split Events → HL7 ADT</h3>
+          <p>XPathForkingModule on <code>//Event</code> → trigger map → DirectoryTransport.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="panel" id="route-1">
+      <span class="badge r1">Route 1</span>
+      <h2>1 — Poll Expand and Split Events</h2>
+      <p class="section-lead">Tap a node to see how that stage is constructed.</p>
+      <div class="flow">
+        <div class="node" data-detail="r1-listener"><div class="kicker">Listener</div><div class="title">Poll Operational Events</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r1-raw"><div class="kicker">Processor</div><div class="title">Write Raw SQLXML</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r1-expand"><div class="kicker">XSLT</div><div class="title">Expand MULTI</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r1-snapshot"><div class="kicker">Processor</div><div class="title">Write Expanded XML</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r1-handoff"><div class="kicker">Transport</div><div class="title">EIPTransport → Route 2</div></div>
+      </div>
+      <div class="detail" id="r1-listener">
+        <h4>DatabaseSqlListener</h4>
+        <ul>
+          <li>Class: <code>com.pilotfish.eip.modules.db.DatabaseSqlListener</code></li>
+          <li>Polls every <strong>15 seconds</strong></li>
+          <li>SQLXML file: <code>SelectOperationalEventsSQL.xml</code></li>
+          <li>Selects <code>Status = 'PENDING'</code> joined to <code>Patients</code></li>
+          <li>JDBC via <code>$$db.url</code> → SQL Server <code>DocHealthcare</code></li>
+        </ul>
+      </div>
+      <div class="detail" id="r1-raw">
+        <h4>FileWriteProcessor — raw snapshot</h4>
+        <ul>
+          <li>Writes SQLXML batch to <code>output/events/raw_sqlxml_events.xml</code></li>
+          <li>Useful to see uppercase <code>EIPData/RECORDS/EVENT</code> structure from the listener</li>
+        </ul>
+      </div>
+      <div class="detail open" id="r1-expand">
+        <h4>XSLT — Expand MULTI into single Events</h4>
+        <ul>
+          <li>File: <code>transform-expand-multi-events.xslt</code></li>
+          <li><code>MULTI</code> with <code>ChildEventTypes=ADMIT,BED_ASSIGN,DEMO_UPDATE</code> becomes 3 <code>&lt;Event&gt;</code> nodes</li>
+          <li>Child IDs become <code>1002-1</code>, <code>1002-2</code>, <code>1002-3</code> with <code>IsExpandedFromMulti=true</code></li>
+          <li>Single events pass through unchanged</li>
+        </ul>
+      </div>
+      <div class="detail" id="r1-snapshot">
+        <h4>FileWriteProcessor — expanded snapshot</h4>
+        <ul>
+          <li>Writes <code>output/events/expanded_events.xml</code></li>
+          <li>This is the batch Route 2 will fork</li>
+        </ul>
+      </div>
+      <div class="detail" id="r1-handoff">
+        <h4>EIPTransport handoff</h4>
+        <ul>
+          <li>Class: <code>com.pilotfish.eip.modules.internal.EIPTransport</code></li>
+          <li>ServiceName: <code>Split And Generate HL7.Programmable (Trigger) Listener</code></li>
+          <li>Passes the expanded <code>&lt;Events&gt;</code> document into Route 2</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="panel" id="route-2">
+      <span class="badge r2">Route 2</span>
+      <h2>2 — Generate HL7 ADT</h2>
+      <p class="section-lead">Source format forks; target processors build each HL7 file.</p>
+      <div class="flow">
+        <div class="node" data-detail="r2-listen"><div class="kicker">Listener</div><div class="title">TriggerableListener</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r2-fork"><div class="kicker">Format</div><div class="title">Split Events fork</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r2-attrs"><div class="kicker">Processors</div><div class="title">Attrs + trigger map</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r2-xslt"><div class="kicker">XSLT</div><div class="title">Event → HL7 text</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r2-write"><div class="kicker">Transport</div><div class="title">Write .hl7 file</div></div>
+      </div>
+      <div class="detail" id="r2-listen">
+        <h4>TriggerableListener</h4>
+        <ul>
+          <li>Name: <code>Split And Generate HL7.Programmable (Trigger) Listener</code></li>
+          <li>Receives expanded event batch from Route 1</li>
+        </ul>
+      </div>
+      <div class="detail open" id="r2-fork">
+        <h4>FormatProfile “Split Events”</h4>
+        <ul>
+          <li>ForkModule: <code>com.pilotfish.eip.modules.other.XPathForkingModule</code></li>
+          <li>ForkingXPath: <code>//Event</code></li>
+          <li>One transaction per healthcare event (7 DB rows → 10 txs when MULTIs expand)</li>
+        </ul>
+      </div>
+      <div class="detail" id="r2-attrs">
+        <h4>Post-fork attribute mapping</h4>
+        <ul>
+          <li>XPathEvaluator sets <code>EventId</code>, <code>EventType</code>, <code>OffenderId</code></li>
+          <li>ADMIT→A01, TRANSFER/BED_ASSIGN→A02, DISCHARGE→A03, DEMO_UPDATE→A08</li>
+          <li>Must run on the <strong>target</strong> after fork so each file gets the right name</li>
+        </ul>
+      </div>
+      <div class="detail" id="r2-xslt">
+        <h4>transform-event-to-hl7.xslt</h4>
+        <ul>
+          <li>Output method: text (pipe-delimited HL7 2.5.1)</li>
+          <li>Segments: MSH, EVN, PID, PV1, ZPF (PilotFish audit)</li>
+          <li>Sending app/facility: <code>PILOTFISH|DOC</code> → receiving <code>MYAVATAR|NETSMART</code></li>
+        </ul>
+      </div>
+      <div class="detail" id="r2-write">
+        <h4>DirectoryTransport</h4>
+        <ul>
+          <li>Directory: <code>/opt/pilotfish/output/hl7</code></li>
+          <li>FileName: <code>{EventId}_{EventType}_{Hl7Trigger}.hl7</code></li>
+          <li>Example: <code>1002-1_ADMIT_A01.hl7</code></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="panel" id="inject">
+      <h2>Add an event</h2>
+      <p class="section-lead">
+        Inserts a PENDING row into SQL Server. PilotFish picks it up on the next poll (~15s) and the matching HL7 appears below.
+      </p>
+      <form id="event-form" class="form-grid">
+        <label>Patient
+          <select name="offenderId" id="offenderId">
+            {% for oid, p in patients.items() %}
+            <option value="{{ oid }}">{{ p.label }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label>Event type
+          <select name="eventType" id="eventType">
+            <option value="ADMIT">ADMIT → A01</option>
+            <option value="TRANSFER">TRANSFER → A02</option>
+            <option value="BED_ASSIGN">BED_ASSIGN → A02</option>
+            <option value="DEMO_UPDATE">DEMO_UPDATE → A08</option>
+            <option value="DISCHARGE">DISCHARGE → A03</option>
+            <option value="MULTI" selected>MULTI (split package)</option>
+          </select>
+        </label>
+        <label>MULTI children
+          <input name="childEventTypes" id="childEventTypes" value="ADMIT,BED_ASSIGN,DEMO_UPDATE" placeholder="ADMIT,BED_ASSIGN" />
+        </label>
+        <button class="btn btn-primary" type="submit">Add event &amp; wait for HL7</button>
+        <label style="grid-column: 1 / -1;">Notes
+          <input name="notes" id="notes" placeholder="Optional note stored on the event" />
+        </label>
+      </form>
+      <div id="status" class="status">Ready.</div>
+
+      <h3 style="margin: 1.2rem 0 0.4rem; font-size: 1rem;">Recent DB events</h3>
+      <div style="overflow:auto;">
+        <table id="events-table">
+          <thead>
+            <tr>
+              <th>Id</th><th>Type</th><th>Patient</th><th>Source</th><th>Location</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" id="results">
+      <div style="display:flex;justify-content:space-between;gap:.75rem;align-items:center;flex-wrap:wrap;">
+        <div>
+          <h2 style="margin-bottom:.2rem;">HL7 results</h2>
+          <p class="section-lead" style="margin:0;">Newest generated messages from <code>output/hl7</code>.</p>
+        </div>
+        <button class="btn" type="button" id="refresh-hl7">Refresh Results</button>
+      </div>
+      <div id="results" class="results"></div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
