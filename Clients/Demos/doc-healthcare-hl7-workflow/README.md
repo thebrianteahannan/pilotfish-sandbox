@@ -67,5 +67,7 @@ docker compose down -v
 | PilotFish  | 8091      |
 | Demo Web UI| 8092      |
 
-- Route visualizer + event injector: http://localhost:8092/ (LAN: http://192.168.x.x:8092/)
+- Route visualizer + event injector: http://localhost:8092/ (LAN: http://192.168.68.52:8092/)
+- In **Add an event**, choose **Target database** = Oracle OMS or SQL Server Housing — same form, either DB
+- PilotFish Route 1a/1b polls the chosen DB; Route 2 generates identical HL7 ADT either way
 - PilotFish UI: http://localhost:8091/eip/

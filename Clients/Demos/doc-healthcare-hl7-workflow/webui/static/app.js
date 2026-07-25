@@ -53,6 +53,41 @@ function renderHl7(files) {
     .join("");
 }
 
+function dbPillClass(engine) {
+  const e = String(engine || "").toLowerCase();
+  if (e.includes("oracle")) return "db-oracle";
+  if (e.includes("sql")) return "db-sqlserver";
+  return "";
+}
+
+async function refreshHealth() {
+  try {
+    const data = await readJson(await fetch("/api/health"));
+    const root = document.getElementById("db-health");
+    if (!root) return data;
+    root.querySelectorAll(".db-chip").forEach((chip) => {
+      const key = chip.getAttribute("data-db");
+      const up = data[key] === "up";
+      chip.classList.toggle("up", up);
+      chip.classList.toggle("down", !up);
+      chip.textContent =
+        key === "oracle"
+          ? `Oracle ${up ? "up" : "down"}`
+          : `SQL Server ${up ? "up" : "down"}`;
+    });
+    return data;
+  } catch (err) {
+    const root = document.getElementById("db-health");
+    if (root) {
+      root.querySelectorAll(".db-chip").forEach((chip) => {
+        chip.classList.add("down");
+        chip.classList.remove("up");
+      });
+    }
+    throw err;
+  }
+}
+
 async function refreshEvents() {
   try {
     const data = await readJson(await fetch("/api/events"));
@@ -62,8 +97,10 @@ async function refreshEvents() {
         const multi = e.EventType === "MULTI";
         const statusClass =
           String(e.Status).toUpperCase() === "PROCESSED" ? "processed" : "pending";
+        const dbClass = dbPillClass(e.DbEngine);
         return `<tr>
         <td>${e.EventId}</td>
+        <td><span class="pill ${dbClass}">${escapeHtml(e.DbEngine || "?")}</span></td>
         <td><span class="pill ${multi ? "multi" : ""}">${e.EventType}</span>${
           e.ChildEventTypes
             ? `<div class="mono" style="color:var(--muted);font-size:.75rem;margin-top:.2rem">${escapeHtml(
@@ -74,9 +111,7 @@ async function refreshEvents() {
         <td>${escapeHtml(e.LastName)}, ${escapeHtml(e.FirstName)}<div class="mono" style="color:var(--muted);font-size:.75rem">${escapeHtml(
           e.OffenderId
         )}</div></td>
-        <td>${escapeHtml(e.SourceSystem)}<div class="mono" style="color:var(--muted);font-size:.75rem">${escapeHtml(
-          e.DbEngine || ""
-        )}</div></td>
+        <td>${escapeHtml(e.SourceSystem)}</td>
         <td>${escapeHtml(e.FacilityCode)} / ${escapeHtml(e.UnitCode || "-")} / ${escapeHtml(e.BedCode || "-")}</td>
         <td><span class="pill ${statusClass}">${escapeHtml(e.Status)}</span></td>
       </tr>`;
@@ -101,27 +136,26 @@ async function addEvent(ev) {
   const form = ev.target;
   const btn = form.querySelector("button[type=submit]");
   btn.disabled = true;
-  setStatus("Inserting event into SQL Server…");
 
-  let eventType = document.getElementById("eventType").value;
-  let sourceSystem;
-  if (eventType === "MULTI_HOUSING") {
-    eventType = "MULTI";
-    sourceSystem = "SQLSERVER_HOUSING";
-  } else if (eventType === "MULTI") {
-    sourceSystem = "ORACLE_OMS";
-  }
+  const targetDatabase = document.getElementById("targetDatabase").value;
+  const dbLabel = targetDatabase === "sqlserver" ? "SQL Server Housing" : "Oracle OMS";
+  setStatus(`Inserting event into ${dbLabel}…`);
+
+  const eventType = document.getElementById("eventType").value;
   const body = {
     offenderId: document.getElementById("offenderId").value,
     eventType,
-    sourceSystem,
+    targetDatabase,
     childEventTypes: document.getElementById("childEventTypes").value,
     notes: document.getElementById("notes").value || undefined,
   };
 
   try {
-    const health = await readJson(await fetch("/api/health"));
-    if (!health.ok) throw new Error(health.error || "Database is down");
+    const health = await refreshHealth();
+    const dbKey = targetDatabase === "sqlserver" ? "sqlserver" : "oracle";
+    if (health[dbKey] !== "up") {
+      throw new Error(`${dbLabel} is down — pick the other database or wait for it to recover.`);
+    }
 
     const data = await readJson(
       await fetch("/api/events", {
@@ -133,20 +167,20 @@ async function addEvent(ev) {
     if (!data.ok) throw new Error(data.error || "Insert failed");
 
     setStatus(
-      `Event ${data.eventId} inserted (${data.eventType}). Waiting for PilotFish poll + HL7 generation…`
+      `Event ${data.eventId} inserted into ${data.dbEngine} (${data.eventType}). Waiting for PilotFish poll + shared Route 2 HL7…`
     );
     await refreshEvents();
 
     const waitData = await readJson(await fetch(`/api/wait-hl7/${data.eventId}?timeout=50`));
     if (waitData.ready && waitData.files.length) {
       setStatus(
-        `Generated ${waitData.files.length} HL7 message(s) for event ${data.eventId}.`,
+        `Generated ${waitData.files.length} HL7 message(s) for ${data.dbEngine} event ${data.eventId}.`,
         "ok"
       );
       renderHl7(waitData.files);
     } else {
       setStatus(
-        `Event ${data.eventId} is in the DB, but HL7 files were not ready yet. PilotFish polls every ~15s — try Refresh Results.`,
+        `Event ${data.eventId} is in ${data.dbEngine}, but HL7 files were not ready yet. PilotFish polls every ~15s — try Refresh Results.`,
         "err"
       );
       await refreshRecentHl7();
@@ -175,17 +209,21 @@ function wireRouteDetails() {
 
 function syncPresetChildren() {
   const type = document.getElementById("eventType");
+  const target = document.getElementById("targetDatabase");
   const children = document.getElementById("childEventTypes");
   const apply = () => {
-    if (type.value === "MULTI") {
-      children.value = "ADMIT,BED_ASSIGN,DEMO_UPDATE";
-    } else if (type.value === "MULTI_HOUSING") {
-      children.value = "TRANSFER,BED_ASSIGN";
-    } else {
+    if (type.value !== "MULTI") {
       children.value = "";
+      return;
     }
+    // Sensible defaults by DB role; user can edit either way.
+    children.value =
+      target.value === "sqlserver"
+        ? "TRANSFER,BED_ASSIGN"
+        : "ADMIT,BED_ASSIGN,DEMO_UPDATE";
   };
   type.addEventListener("change", apply);
+  target.addEventListener("change", apply);
   apply();
 }
 
@@ -196,6 +234,10 @@ document.addEventListener("DOMContentLoaded", () => {
   syncPresetChildren();
   document.getElementById("event-form").addEventListener("submit", addEvent);
   document.getElementById("refresh-hl7").addEventListener("click", refreshRecentHl7);
+  refreshHealth().catch(() => {});
   refreshEvents();
   refreshRecentHl7();
+  setInterval(() => {
+    refreshHealth().catch(() => {});
+  }, 15000);
 });

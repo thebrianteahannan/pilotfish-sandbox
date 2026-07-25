@@ -198,13 +198,42 @@ section h2 {
   max-height: 320px;
 }
 
+.db-health {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 0.85rem;
+}
+.db-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #f3f6f8;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 650;
+  padding: 0.28rem 0.7rem;
+}
+.db-chip.up {
+  background: #d9efe6;
+  border-color: #9dcebb;
+  color: #0f6e56;
+}
+.db-chip.down {
+  background: #f8e2e2;
+  border-color: #e0b0b0;
+  color: #a12828;
+}
+
 .form-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr auto;
+  grid-template-columns: 1.15fr 1.2fr 1fr 1fr auto;
   gap: 0.65rem;
   align-items: end;
 }
-@media (max-width: 850px) { .form-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 980px) { .form-grid { grid-template-columns: 1fr 1fr; } }
 label { display: grid; gap: 0.3rem; font-size: 0.82rem; color: var(--muted); font-weight: 600; }
 select, input, textarea {
   width: 100%;
@@ -267,3 +296,5 @@ th { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-
 .pill.multi { background: #f6e3d4; color: #7a3d12; }
 .pill.pending { background: #f3e6c8; color: #7a5a10; }
 .pill.processed { background: #d9efe6; color: #0f6e56; }
+.pill.db-oracle { background: #e4e8f8; color: #2f3a8f; }
+.pill.db-sqlserver { background: #e2f0f6; color: #1f6f8b; }

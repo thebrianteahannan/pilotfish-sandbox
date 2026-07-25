@@ -203,9 +203,20 @@
     <section class="panel" id="inject">
       <h2>Add an event</h2>
       <p class="section-lead">
-        Inserts a PENDING row into SQL Server. PilotFish claims it on the next poll (~15s), marks it PROCESSED, and the matching HL7 appears below.
+        Choose <strong>Oracle</strong> or <strong>SQL Server</strong>, insert a PENDING row, then PilotFish polls that DB (~15s),
+        expands MULTI if needed, and Route 2 writes the same HL7 ADT output either way.
       </p>
+      <div id="db-health" class="db-health" aria-live="polite">
+        <span class="db-chip" data-db="oracle">Oracle …</span>
+        <span class="db-chip" data-db="sqlserver">SQL Server …</span>
+      </div>
       <form id="event-form" class="form-grid">
+        <label>Target database
+          <select name="targetDatabase" id="targetDatabase">
+            <option value="oracle">Oracle OMS (Route 1b)</option>
+            <option value="sqlserver">SQL Server Housing (Route 1a)</option>
+          </select>
+        </label>
         <label>Patient
           <select name="offenderId" id="offenderId">
             {% for oid, p in patients.items() %}
@@ -220,8 +231,7 @@
             <option value="BED_ASSIGN">BED_ASSIGN → A02</option>
             <option value="DEMO_UPDATE">DEMO_UPDATE → A08</option>
             <option value="DISCHARGE">DISCHARGE → A03</option>
-            <option value="MULTI" selected>MULTI OMS → Oracle (ADMIT…)</option>
-            <option value="MULTI_HOUSING">MULTI Housing → SQL Server</option>
+            <option value="MULTI" selected>MULTI (package → split)</option>
           </select>
         </label>
         <label>MULTI children
@@ -234,12 +244,12 @@
       </form>
       <div id="status" class="status">Ready.</div>
 
-      <h3 style="margin: 1.2rem 0 0.4rem; font-size: 1rem;">Recent DB events</h3>
+      <h3 style="margin: 1.2rem 0 0.4rem; font-size: 1rem;">Recent DB events (both databases)</h3>
       <div style="overflow:auto;">
         <table id="events-table">
           <thead>
             <tr>
-              <th>Id</th><th>Type</th><th>Patient</th><th>Source</th><th>Location</th><th>Status</th>
+              <th>Id</th><th>Database</th><th>Type</th><th>Patient</th><th>Source</th><th>Location</th><th>Status</th>
             </tr>
           </thead>
           <tbody></tbody>

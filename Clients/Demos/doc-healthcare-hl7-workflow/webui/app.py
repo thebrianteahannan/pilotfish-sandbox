@@ -87,14 +87,31 @@ def db_error_response(exc: Exception, status: int = 503):
     return jsonify({"ok": False, "error": msg}), status
 
 
-def source_for_event_type(event_type: str, explicit: str | None = None) -> str:
-    if explicit:
-        return explicit
-    if event_type in {"TRANSFER", "BED_ASSIGN"}:
-        return "SQLSERVER_HOUSING"
-    if event_type == "MULTI":
-        return "ORACLE_OMS"
-    return "ORACLE_OMS"
+def resolve_target(payload: dict) -> tuple[str, str]:
+    """
+    Returns (db_key, source_system).
+    db_key is 'oracle' or 'sqlserver'. Explicit targetDatabase wins.
+    """
+    raw = (payload.get("targetDatabase") or payload.get("dbEngine") or "").strip().lower()
+    if raw in {"oracle", "oms", "oracle_oms"}:
+        return "oracle", "ORACLE_OMS"
+    if raw in {"sqlserver", "sql", "sql server", "housing", "sqlserver_housing"}:
+        return "sqlserver", "SQLSERVER_HOUSING"
+
+    explicit_source = (payload.get("sourceSystem") or "").strip().upper()
+    if explicit_source == "SQLSERVER_HOUSING":
+        return "sqlserver", explicit_source
+    if explicit_source == "ORACLE_OMS":
+        return "oracle", explicit_source
+
+    # Legacy fallback: housing-flavored MULTI / transfer events → SQL Server
+    event_type = (payload.get("eventType") or "ADMIT").upper()
+    children = (payload.get("childEventTypes") or "").upper()
+    if event_type in {"TRANSFER", "BED_ASSIGN"} or (
+        event_type == "MULTI" and "TRANSFER" in children
+    ):
+        return "sqlserver", "SQLSERVER_HOUSING"
+    return "oracle", "ORACLE_OMS"
 
 
 def decode_hl7(path: Path) -> str:
@@ -305,7 +322,8 @@ def api_health():
         ora_ok = True
     except Exception as exc:  # noqa: BLE001
         errors.append(f"oracle: {exc}")
-    ok = sql_ok and ora_ok
+    # Partial availability is OK — UI can still target the healthy DB.
+    ok = sql_ok or ora_ok
     return jsonify(
         {
             "ok": ok,
@@ -319,12 +337,26 @@ def api_health():
 
 @app.get("/api/events")
 def api_events():
+    rows = []
+    errors = []
     try:
-        rows = fetch_sqlserver_events() + fetch_oracle_events()
-        rows.sort(key=lambda r: int(r["EventId"]), reverse=True)
-        return jsonify({"ok": True, "events": rows[:80]})
+        rows.extend(fetch_sqlserver_events())
     except Exception as exc:  # noqa: BLE001
-        return db_error_response(exc)
+        errors.append(f"sqlserver: {exc}")
+    try:
+        rows.extend(fetch_oracle_events())
+    except Exception as exc:  # noqa: BLE001
+        errors.append(f"oracle: {exc}")
+    if not rows and errors:
+        return jsonify({"ok": False, "error": "; ".join(errors), "events": []}), 503
+    rows.sort(key=lambda r: int(r["EventId"]), reverse=True)
+    return jsonify(
+        {
+            "ok": True,
+            "events": rows[:80],
+            "warnings": errors or None,
+        }
+    )
 
 
 @app.get("/api/hl7")
@@ -338,22 +370,22 @@ def api_add_event():
     payload = request.get_json(force=True, silent=True) or {}
     offender_id = payload.get("offenderId") or "OFF-10021"
     event_type = (payload.get("eventType") or "ADMIT").upper()
-    # MULTI children decide source when MULTI is chosen from housing package
     children = payload.get("childEventTypes") or ""
+    db_key, source = resolve_target(payload)
     if event_type == "MULTI" and not children:
-        children = "ADMIT,BED_ASSIGN,DEMO_UPDATE"
-    if event_type == "MULTI" and "TRANSFER" in children.upper():
-        source = "SQLSERVER_HOUSING"
-    else:
-        source = source_for_event_type(event_type, payload.get("sourceSystem"))
-    notes = payload.get("notes") or f"UI-injected {event_type}"
+        children = (
+            "TRANSFER,BED_ASSIGN"
+            if db_key == "sqlserver"
+            else "ADMIT,BED_ASSIGN,DEMO_UPDATE"
+        )
+    notes = payload.get("notes") or f"UI-injected {event_type} via {source}"
     patient = PATIENTS.get(offender_id) or PATIENTS["OFF-10021"]
     facility = payload.get("facilityCode") or patient["facility"]
     unit = payload.get("unitCode") or patient["unit"]
     bed = payload.get("bedCode") or patient["bed"]
 
     try:
-        if source == "SQLSERVER_HOUSING":
+        if db_key == "sqlserver":
             event_id = insert_sqlserver_event(
                 event_type, source, children, offender_id, patient, facility, unit, bed, notes, payload
             )
@@ -374,6 +406,7 @@ def api_add_event():
             "childEventTypes": children,
             "offenderId": offender_id,
             "sourceSystem": source,
+            "targetDatabase": db_key,
             "dbEngine": db_engine,
             "expectedFiles": expected_hl7_names(event_id, event_type, children),
             "pollHintSeconds": 20,
