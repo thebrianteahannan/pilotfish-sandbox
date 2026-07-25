@@ -35,6 +35,9 @@ def _now() -> str:
 
 
 def _lan_ip() -> str:
+    override = (os.environ.get("LAN_IP") or "").strip()
+    if override:
+        return override
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
