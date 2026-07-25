@@ -7,6 +7,32 @@ function setStatus(msg, cls = "") {
   el.className = `status ${cls}`.trim();
 }
 
+function escapeHtml(s) {
+  return String(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+async function readJson(res) {
+  const text = await res.text();
+  let data = null;
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    const snippet = (text || "").replace(/\s+/g, " ").slice(0, 160);
+    throw new Error(
+      res.ok
+        ? `Unexpected non-JSON response: ${snippet || "(empty)"}`
+        : `Server error ${res.status}. ${snippet || "SQL Server may be restarting — wait a few seconds and retry."}`
+    );
+  }
+  if (!res.ok) {
+    throw new Error((data && data.error) || `Request failed (${res.status})`);
+  }
+  return data;
+}
+
 function renderHl7(files) {
   const root = resultsEl();
   if (!files.length) {
@@ -27,38 +53,43 @@ function renderHl7(files) {
     .join("");
 }
 
-function escapeHtml(s) {
-  return String(s)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
-}
-
 async function refreshEvents() {
-  const res = await fetch("/api/events");
-  const data = await res.json();
-  const tbody = document.querySelector("#events-table tbody");
-  tbody.innerHTML = (data.events || [])
-    .map((e) => {
-      const multi = e.EventType === "MULTI";
-      return `<tr>
+  try {
+    const data = await readJson(await fetch("/api/events"));
+    const tbody = document.querySelector("#events-table tbody");
+    tbody.innerHTML = (data.events || [])
+      .map((e) => {
+        const multi = e.EventType === "MULTI";
+        return `<tr>
         <td>${e.EventId}</td>
         <td><span class="pill ${multi ? "multi" : ""}">${e.EventType}</span>${
-          e.ChildEventTypes ? `<div class="mono" style="color:var(--muted);font-size:.75rem;margin-top:.2rem">${e.ChildEventTypes}</div>` : ""
+          e.ChildEventTypes
+            ? `<div class="mono" style="color:var(--muted);font-size:.75rem;margin-top:.2rem">${escapeHtml(
+                e.ChildEventTypes
+              )}</div>`
+            : ""
         }</td>
-        <td>${e.LastName}, ${e.FirstName}<div class="mono" style="color:var(--muted);font-size:.75rem">${e.OffenderId}</div></td>
-        <td>${e.SourceSystem}</td>
-        <td>${e.FacilityCode} / ${e.UnitCode || "-"} / ${e.BedCode || "-"}</td>
-        <td>${e.Status}</td>
+        <td>${escapeHtml(e.LastName)}, ${escapeHtml(e.FirstName)}<div class="mono" style="color:var(--muted);font-size:.75rem">${escapeHtml(
+          e.OffenderId
+        )}</div></td>
+        <td>${escapeHtml(e.SourceSystem)}</td>
+        <td>${escapeHtml(e.FacilityCode)} / ${escapeHtml(e.UnitCode || "-")} / ${escapeHtml(e.BedCode || "-")}</td>
+        <td>${escapeHtml(e.Status)}</td>
       </tr>`;
-    })
-    .join("");
+      })
+      .join("");
+  } catch (err) {
+    setStatus(`Could not load events: ${err.message || err}`, "err");
+  }
 }
 
 async function refreshRecentHl7() {
-  const res = await fetch("/api/hl7");
-  const data = await res.json();
-  renderHl7((data.files || []).slice(0, 8));
+  try {
+    const data = await readJson(await fetch("/api/hl7"));
+    renderHl7((data.files || []).slice(0, 8));
+  } catch (err) {
+    setStatus(`Could not load HL7: ${err.message || err}`, "err");
+  }
 }
 
 async function addEvent(ev) {
@@ -69,28 +100,31 @@ async function addEvent(ev) {
   setStatus("Inserting event into SQL Server…");
 
   const body = {
-    offenderId: form.offenderId.value,
-    eventType: form.eventType.value,
-    childEventTypes: form.childEventTypes.value,
-    notes: form.notes.value || undefined,
+    offenderId: document.getElementById("offenderId").value,
+    eventType: document.getElementById("eventType").value,
+    childEventTypes: document.getElementById("childEventTypes").value,
+    notes: document.getElementById("notes").value || undefined,
   };
 
   try {
-    const res = await fetch("/api/events", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    const data = await res.json();
-    if (!data.ok) throw new Error("Insert failed");
+    const health = await readJson(await fetch("/api/health"));
+    if (!health.ok) throw new Error(health.error || "Database is down");
+
+    const data = await readJson(
+      await fetch("/api/events", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      })
+    );
+    if (!data.ok) throw new Error(data.error || "Insert failed");
 
     setStatus(
       `Event ${data.eventId} inserted (${data.eventType}). Waiting for PilotFish poll + HL7 generation…`
     );
     await refreshEvents();
 
-    const wait = await fetch(`/api/wait-hl7/${data.eventId}?timeout=50`);
-    const waitData = await wait.json();
+    const waitData = await readJson(await fetch(`/api/wait-hl7/${data.eventId}?timeout=50`));
     if (waitData.ready && waitData.files.length) {
       setStatus(
         `Generated ${waitData.files.length} HL7 message(s) for event ${data.eventId}.`,

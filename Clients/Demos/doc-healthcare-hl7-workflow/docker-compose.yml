@@ -2,6 +2,7 @@ services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: pf-doc-hl7-sqlserver
+    restart: unless-stopped
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: "PilotFish_Demo1!"
@@ -46,6 +47,7 @@ services:
       context: ./pilotfish
     image: pilotfish-doc-hl7-workflow:23R1
     container_name: pf-doc-hl7-pilotfish
+    restart: unless-stopped
     depends_on:
       sqlserver-init:
         condition: service_completed_successfully
@@ -60,6 +62,7 @@ services:
       context: ./webui
     image: pilotfish-doc-hl7-webui:latest
     container_name: pf-doc-hl7-webui
+    restart: unless-stopped
     depends_on:
       sqlserver:
         condition: service_healthy

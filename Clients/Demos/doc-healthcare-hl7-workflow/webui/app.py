@@ -90,6 +90,26 @@ def db():
     )
 
 
+def db_error_response(exc: Exception, status: int = 503):
+    msg = str(exc)
+    if "Adaptive Server is unavailable" in msg or "20009" in msg:
+        msg = "SQL Server is unavailable. It may have restarted — wait a few seconds and try again."
+    return jsonify({"ok": False, "error": msg}), status
+
+
+@app.get("/api/health")
+def api_health():
+    try:
+        with db() as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT 1")
+            cur.fetchone()
+        return jsonify({"ok": True, "db": "up", "hl7Dir": str(HL7_DIR)})
+    except Exception as exc:  # noqa: BLE001
+        body, code = db_error_response(exc)
+        return body, code
+
+
 def decode_hl7(path: Path) -> str:
     raw = path.read_bytes()
     return raw.replace(b"\r", b"\n").decode("utf-8", errors="replace").strip()
@@ -146,22 +166,25 @@ def index():
 
 @app.get("/api/events")
 def api_events():
-    with db() as conn:
-        cur = conn.cursor(as_dict=True)
-        cur.execute(
-            """
-            SELECT TOP 50
-              e.EventId, e.SourceSystem, e.EventType, e.ChildEventTypes,
-              e.OffenderId, p.LastName, p.FirstName, e.FacilityCode, e.UnitCode,
-              e.BedCode, e.Status, CONVERT(VARCHAR(19), e.EventTimestamp, 126) AS EventTimestamp,
-              e.Notes
-            FROM dbo.OperationalEvents e
-            INNER JOIN dbo.Patients p ON p.OffenderId = e.OffenderId
-            ORDER BY e.EventId DESC
-            """
-        )
-        rows = cur.fetchall()
-    return jsonify({"events": rows})
+    try:
+        with db() as conn:
+            cur = conn.cursor(as_dict=True)
+            cur.execute(
+                """
+                SELECT TOP 50
+                  e.EventId, e.SourceSystem, e.EventType, e.ChildEventTypes,
+                  e.OffenderId, p.LastName, p.FirstName, e.FacilityCode, e.UnitCode,
+                  e.BedCode, e.Status, CONVERT(VARCHAR(19), e.EventTimestamp, 126) AS EventTimestamp,
+                  e.Notes
+                FROM dbo.OperationalEvents e
+                INNER JOIN dbo.Patients p ON p.OffenderId = e.OffenderId
+                ORDER BY e.EventId DESC
+                """
+            )
+            rows = cur.fetchall()
+        return jsonify({"ok": True, "events": rows})
+    except Exception as exc:  # noqa: BLE001
+        return db_error_response(exc)
 
 
 @app.get("/api/hl7")
@@ -195,41 +218,44 @@ def api_add_event():
     unit = payload.get("unitCode") or patient["unit"]
     bed = payload.get("bedCode") or patient["bed"]
 
-    with db() as conn:
-        cur = conn.cursor(as_dict=True)
-        cur.execute("SELECT ISNULL(MAX(EventId), 1000) + 1 AS NextId FROM dbo.OperationalEvents")
-        event_id = int(cur.fetchone()["NextId"])
-        cur.execute(
-            """
-            INSERT INTO dbo.OperationalEvents (
-              EventId, SourceSystem, EventType, ChildEventTypes, OffenderId,
-              FacilityCode, UnitCode, BedCode, PriorFacilityCode, PriorUnitCode, PriorBedCode,
-              AttendingNpi, AttendingName, EventTimestamp, Status, Notes
-            ) VALUES (
-              %s, %s, %s, %s, %s,
-              %s, %s, %s, %s, %s, %s,
-              %s, %s, %s, N'PENDING', %s
+    try:
+        with db() as conn:
+            cur = conn.cursor(as_dict=True)
+            cur.execute("SELECT ISNULL(MAX(EventId), 1000) + 1 AS NextId FROM dbo.OperationalEvents")
+            event_id = int(cur.fetchone()["NextId"])
+            cur.execute(
+                """
+                INSERT INTO dbo.OperationalEvents (
+                  EventId, SourceSystem, EventType, ChildEventTypes, OffenderId,
+                  FacilityCode, UnitCode, BedCode, PriorFacilityCode, PriorUnitCode, PriorBedCode,
+                  AttendingNpi, AttendingName, EventTimestamp, Status, Notes
+                ) VALUES (
+                  %s, %s, %s, %s, %s,
+                  %s, %s, %s, %s, %s, %s,
+                  %s, %s, %s, N'PENDING', %s
+                )
+                """,
+                (
+                    event_id,
+                    source,
+                    event_type,
+                    children or None,
+                    offender_id,
+                    facility,
+                    unit,
+                    bed,
+                    payload.get("priorFacilityCode"),
+                    payload.get("priorUnitCode"),
+                    payload.get("priorBedCode"),
+                    patient["npi"],
+                    patient["attending"],
+                    datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S"),
+                    notes,
+                ),
             )
-            """,
-            (
-                event_id,
-                source,
-                event_type,
-                children or None,
-                offender_id,
-                facility,
-                unit,
-                bed,
-                payload.get("priorFacilityCode"),
-                payload.get("priorUnitCode"),
-                payload.get("priorBedCode"),
-                patient["npi"],
-                patient["attending"],
-                datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S"),
-                notes,
-            ),
-        )
-        conn.commit()
+            conn.commit()
+    except Exception as exc:  # noqa: BLE001
+        return db_error_response(exc)
 
     expected = expected_hl7_names(event_id, event_type, children)
     return jsonify(
