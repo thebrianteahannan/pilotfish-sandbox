@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLXML xmlns="http://pilotfish.sqlxml">
+  <!--
+    Oracle OMS: select PENDING rows, then mark them PROCESSED.
+    (Oracle has no SQL Server-style UPDATE...OUTPUT result set.)
+  -->
+  <Execute into="records" as="Event">
+    <SQL>
+      SELECT
+        e.event_id AS EventId,
+        e.source_system AS SourceSystem,
+        e.event_type AS EventType,
+        NVL(e.child_event_types, '') AS ChildEventTypes,
+        e.offender_id AS OffenderId,
+        p.mrn AS Mrn,
+        p.last_name AS LastName,
+        p.first_name AS FirstName,
+        NVL(p.middle_name, '') AS MiddleName,
+        TO_CHAR(p.birth_date, 'YYYYMMDD') AS BirthDate,
+        p.sex AS Sex,
+        p.street AS Street,
+        p.city AS City,
+        p.state AS State,
+        p.zip AS Zip,
+        NVL(p.phone, '') AS Phone,
+        e.facility_code AS FacilityCode,
+        NVL(e.unit_code, '') AS UnitCode,
+        NVL(e.bed_code, '') AS BedCode,
+        NVL(e.prior_facility_code, '') AS PriorFacilityCode,
+        NVL(e.prior_unit_code, '') AS PriorUnitCode,
+        NVL(e.prior_bed_code, '') AS PriorBedCode,
+        NVL(e.attending_npi, '') AS AttendingNpi,
+        NVL(e.attending_name, '') AS AttendingName,
+        TO_CHAR(e.event_timestamp, 'YYYY-MM-DD') || 'T' || TO_CHAR(e.event_timestamp, 'HH24:MI:SS') AS EventTimestamp,
+        e.status AS Status,
+        NVL(e.notes, '') AS Notes
+      FROM operational_events e
+      INNER JOIN patients p ON p.offender_id = e.offender_id
+      WHERE e.status = 'PENDING'
+      ORDER BY e.event_id
+    </SQL>
+  </Execute>
+  <Execute>
+    <SQL>
+      UPDATE operational_events
+      SET status = 'PROCESSED'
+      WHERE status = 'PENDING'
+    </SQL>
+  </Execute>
+  <XMLOut var="records" />
+</SQLXML>
