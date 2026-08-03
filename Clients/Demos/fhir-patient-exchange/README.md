@@ -4,7 +4,9 @@ PilotFish eiPlatform demo for HL7 **FHIR R4** exchange (inspired by [FHIR Integr
 
 **Important:** The current running stack still uses a directory-listener scaffold. That is **not** the intended FHIR design. Read the research note first:
 
-- [`documents/FHIR_REST_Interface_Research.pdf`](documents/FHIR_REST_Interface_Research.pdf) — what FHIR REST is, and how to implement it in PilotFish (`RESTfulWebServiceListener` + synchronous response)
+- Research PDF (browser / LAN): http://192.168.68.52:8103/documents/fhir-rest-research.pdf  
+  (local: http://localhost:8103/documents/fhir-rest-research.pdf)
+- [`documents/FHIR_REST_Interface_Research.pdf`](documents/FHIR_REST_Interface_Research.pdf) — same file on disk
 - [`DESIGN.md`](DESIGN.md) — target REST architecture (rebuild pending)
 
 ## What the temporary scaffold does (to be replaced)

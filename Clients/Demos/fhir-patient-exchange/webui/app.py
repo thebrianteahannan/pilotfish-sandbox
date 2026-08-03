@@ -514,5 +514,46 @@ def route_diagrams_pdf():
     return send_file(path, mimetype="application/pdf", as_attachment=False, download_name=ROUTE_PDF_NAME)
 
 
+RESEARCH_PDF_NAME = os.environ.get("RESEARCH_PDF_NAME", "FHIR_REST_Interface_Research.pdf")
+
+
+def _research_pdf_path() -> Path | None:
+    for base in (DOCUMENTS_DIR, Path(__file__).resolve().parent.parent / "documents"):
+        path = base / RESEARCH_PDF_NAME
+        if path.is_file():
+            return path
+    return None
+
+
+@app.get("/documents/fhir-rest-research.pdf")
+def fhir_rest_research_pdf():
+    path = _research_pdf_path()
+    if not path:
+        return ("FHIR REST research PDF not found under documents/.", 404)
+    return send_file(
+        path,
+        mimetype="application/pdf",
+        as_attachment=False,
+        download_name=RESEARCH_PDF_NAME,
+    )
+
+
+@app.get("/documents/<path:name>")
+def documents_file(name: str):
+    """Serve any non-hidden PDF/file from the documents mount (browser-friendly)."""
+    if not name or name.startswith(".") or "/" in name or "\\" in name or ".." in name:
+        return ("Not found", 404)
+    for base in (DOCUMENTS_DIR, Path(__file__).resolve().parent.parent / "documents"):
+        path = (base / name).resolve()
+        try:
+            path.relative_to(base.resolve())
+        except ValueError:
+            continue
+        if path.is_file():
+            mime = "application/pdf" if path.suffix.lower() == ".pdf" else "application/octet-stream"
+            return send_file(path, mimetype=mime, as_attachment=False, download_name=path.name)
+    return ("Not found", 404)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=WEBUI_PORT, debug=False)
