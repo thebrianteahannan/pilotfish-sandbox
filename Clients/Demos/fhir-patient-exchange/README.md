@@ -1,8 +1,13 @@
 # FHIR Patient Exchange Demo
 
-PilotFish eiPlatform demo for HL7 **FHIR R4** Patient / Bundle exchange (inspired by [FHIR Integration & CMS interoperability](https://healthcare.pilotfishtechnology.com/fhir-integration-cms-0057-f-compliance/)).
+PilotFish eiPlatform demo for HL7 **FHIR R4** exchange (inspired by [FHIR Integration & CMS interoperability](https://healthcare.pilotfishtechnology.com/fhir-integration-cms-0057-f-compliance/)).
 
-## What it does
+**Important:** The current running stack still uses a directory-listener scaffold. That is **not** the intended FHIR design. Read the research note first:
+
+- [`documents/FHIR_REST_Interface_Research.pdf`](documents/FHIR_REST_Interface_Research.pdf) — what FHIR REST is, and how to implement it in PilotFish (`RESTfulWebServiceListener` + synchronous response)
+- [`DESIGN.md`](DESIGN.md) — target REST architecture (rebuild pending)
+
+## What the temporary scaffold does (to be replaced)
 
 1. **EHR systems** submit FHIR R4 Patient or Bundle JSON via the web UI
 2. UI wraps each resource in a `<FhirMessage>` envelope and drops it into `input/inbound/`

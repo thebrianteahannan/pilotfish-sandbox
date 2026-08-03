@@ -1,92 +1,101 @@
 # FHIR Patient Exchange — Design
 
+> **Status (2026-08-03):** The directory-listener demo was a temporary scaffold and is **not** the intended FHIR architecture.  
+> See research PDF: [`documents/FHIR_REST_Interface_Research.pdf`](documents/FHIR_REST_Interface_Research.pdf).  
+> Rebuild target: **synchronous RESTful FHIR** via `RESTfulWebServiceListener` + `SynchronousResponseTransport`.
+
 ## 1. Purpose
 
-Demo PilotFish ingesting HL7 FHIR R4 Patient (and Patient+Observation Bundle) JSON from provider systems, applying structural/business validation, then dual-writing to SQL Server (BI) and a mock FHIR store directory — inspired by PilotFish FHIR / CMS interoperability messaging.
+Provide a PilotFish Sandbox demo of **HL7 FHIR R4 REST** resource exchange (initially Patient create/read), with real HTTP request/response semantics — not file-drop integration.
 
 ## 2. Context / actors
 
-- Sources: Hospital / EHR systems submitting FHIR R4 JSON via demo Web UI (directory drop)
-- Destinations: SQL Server `FhirResources` table; `output/fhir-store/*.json` mock FHIR repository
-- Demo vs production: **Demo only** — heuristic validation, shared `sa` password, no real FHIR REST server or OAuth
+- Sources: EHR / app FHIR **clients** calling HTTP endpoints
+- Destinations: PilotFish FHIR façade (persist + sync HTTP response); optional later outbound call to an external FHIR server
+- Demo vs production: **Demo only** — heuristic validation, basic auth optional, no SMART/OAuth unless explicitly added later
 
-## 3. Inbound contract
+## 3. Inbound contract (target)
 
-- Transport: Directory poll (`DirectoryListener`) of XML envelopes produced by the Web UI from FHIR JSON
-- Format / envelope: `<FhirMessage>` with metadata + `<RawFhir>` CDATA (FHIR R4 JSON)
-- Identity fields: `ResourceId`, `PatientId` (MRN), `SourceSystem`
-- Samples path: `samples/*.json`
+- Transport: **HTTP REST** on eiPlatform  
+  ` /eip/rest/fhir/{Resource}[/{id}] `
+- Format: `application/fhir+json` (FHIR R4)
+- Interactions (v1): `POST Patient` (create), `GET Patient/{id}` (read)
+- Identity: FHIR logical `id`; business MRN via `Patient.identifier`
+- Samples: raw FHIR JSON used by Web UI / curl as a **client**
 
-## 4. Outbound contract(s)
+## 4. Outbound contract(s) (target)
 
 | Destination | Format | Success criterion |
 |-------------|--------|-------------------|
-| SQL Server | SQLXML insert into `dbo.FhirResources` | Row with `ValidationStatus=PASS` |
-| FHIR store | Original FHIR JSON (`.json`) | File under `output/fhir-store/` |
-| Kickout | Validation snapshot XML | File under `output/kickout/` when FAIL |
+| HTTP client (sync) | Patient or OperationOutcome JSON | Correct status (201/200/404/400) + body |
+| Persistence store | FHIR JSON | Resource readable by subsequent GET |
+| Optional SQL audit | Row | Written **after** successful persist |
 
-## 5. Pipeline
+## 5. Pipeline (target modules)
 
 | Stage | Module / mechanism | Notes |
 |-------|--------------------|-------|
-| Listener | `com.pilotfish.eip.modules.file.DirectoryListener` | Polls `$$FHIR_INBOUND_DIRECTORY`, `xml` |
-| Archive Inbound | `com.pilotfish.eip.modules.file.FileWriteProcessor` | Snapshot received envelope |
-| Basic Validation | `com.pilotfish.eip.modules.transform.XSLTProcessor` | resourceType / id / RawFhir checks |
-| Bundle Flag Snapshot | `com.pilotfish.eip.modules.file.FileWriteProcessor` | Renamed honestly — not a true fork |
-| Advanced Validation | `com.pilotfish.eip.modules.transform.XSLTProcessor` | MRN, name, Patient/Bundle rules |
-| Validation Snapshot | `com.pilotfish.eip.modules.file.FileWriteProcessor` | `_validated.xml` |
-| Router | `com.pilotfish.eip.modules.routing.XPathRoutingModule` | FAIL→kickout; PASS→SQL+store |
-| Map To SQL XML | `com.pilotfish.eip.modules.transform.XSLTProcessor` | PilotFish SQLXML insert |
-| Insert Resource SQL | `com.pilotfish.eip.modules.db.DatabaseSqlTransport` | JDBC SQL Server |
-| Extract FHIR JSON | `com.pilotfish.eip.modules.transform.XSLTProcessor` | Emits RawFhir text |
-| Write FHIR Store | `com.pilotfish.eip.modules.file.DirectoryTransport` | `.json` to store dir |
-| Write Kickout | `com.pilotfish.eip.modules.file.DirectoryTransport` | Fail path |
+| Listener | `com.pilotfish.eip.modules.http.rest.RESTfulWebServiceListener` | `SERVICE_NAME=fhir`, `Synchronous=true`, GET+POST |
+| Branch | Router / XPath on `com.pilotfish.HttpMethodName` | create vs read |
+| JSON handling | `JSONTransformationProcessor` and/or keep JSON | Mapping aid; not IG validation |
+| Validate | XSLT / heuristic → OperationOutcome on fail | Fail-closed HTTP 4xx |
+| Persist / load | SQL and/or directory store as **backend**, not the public API | Source of truth for GET |
+| Status / headers | `HttpResponseCodeProcessor`, `AddHttpResponseHeadersProcessor` | 201 + Location, Content-Type |
+| Reply | `com.pilotfish.eip.modules.internal.SynchronousResponseTransport` | Sync body to caller |
 
-**Note:** There is no dedicated FHIR Listener/Transport in `modules.conf`; FHIR I/O is JSON + HTTP/directory. This demo uses Directory + XSLT heuristics (honest labeling). Format Builder FHIR support exists in V2 GUI only.
+**Not the public FHIR API:** `DirectoryListener` (retired as the FHIR story).
 
 ## 6. State & idempotency
 
-- Status model: `PASS` / `FAIL` on validation; SQL only on PASS
-- When state advances: after advanced validation; SQL+file on PASS (demo dual-write, no outbox)
-- Dedup keys: none enforced (demo); `ResourceId` + timestamp filenames
-- Retry / poison: kickout directory on FAIL; listener Move to archive after poll
+- Status model: HTTP semantics + stored resource versions (simple v1: last-write)
+- When state advances: persist then respond (no claim-before-complete)
+- Dedup keys: FHIR `id`; conditional create later (`If-None-Exist`) optional
+- Retry / poison: OperationOutcome to client; optional audit of failures
 
 ## 7. Validation
 
-- What is checked: resourceType Patient|Bundle; resource id; RawFhir JSON markers; Patient name/MRN; Bundle entry presence when Bundle
-- What is NOT checked: full FHIR profile/StructureDefinition validation, terminology, OAuth, REST OperationOutcome
-- Does failure block outbound? **yes** (router gates SQL + FHIR store)
+- What is checked (v1): resourceType, required Patient fields, JSON parse
+- What is NOT checked: full StructureDefinition/IG, terminology, SMART scopes
+- Does failure block outbound? **yes** — HTTP error, no silent success
 
 ## 8. Dual-write / side effects
 
-- Order of commits: router fans out SQL and FHIR store in parallel (`retries=1`)
-- Compensation: none
-- Demo shortcuts: accepted dual-write without outbox (listed in Risks)
+- Order: persist resource → sync HTTP response → optional SQL audit
+- Compensation: none in demo; document if SQL audit added as best-effort
+- Demo shortcuts: in-memory/SQL store rather than full FHIR repository history
 
 ## 9. Risks & bottlenecks
 
 | Severity | Risk | Why it bites here | Mitigation / accepted? |
 |----------|------|-------------------|------------------------|
-| High | Dual-write without outbox | SQL may succeed while file fails (or reverse) | Accepted demo risk |
-| Med | Validation theater if renamed poorly | Heuristic XSLT ≠ FHIR validator | Documented; gates FAIL path |
-| Med | Runtime vs eip-root drift | Two trees | convert_routes_to_v2 syncs both |
-| Low | Directory instead of REST listener | Story is FHIR API; demo uses file drop | Honest README labeling |
-| Low | Shared sa password / PHI mounts | Local sandbox | Demo only |
+| High | REST listener untested on 23R1 image | Could fail at smoke | Phase 1 spike before UI polish |
+| High | Pretending directory demo is FHIR | Wrong partner contract | Research PDF + rebuild |
+| Med | Partial FHIR surface | Clients expect search/transaction | Scope v1 explicitly |
+| Med | Validation theater | Heuristic ≠ validator | Label in README |
+| Low | Auth | Basic only | Demo only |
 
 ## 10. Ops
 
-- Ports: SQL **14337**, EIP **8102**, Web UI **8103**
-- Volumes: `input/`, `output/`, `logs/`, `documents/`, routes for viewer
-- Heap / special JVM: 512M–2G (no SNIP)
-- Dependencies / cold start: ~60–90s for SQL init + EIP
+- Ports: SQL **14337**, EIP **8102**, Web UI **8103** (adjust if rebound)
+- LAN: `LAN_HINT=http://192.168.68.52:8103/` (re-detect 192.*); EIP REST also on LAN `:8102`
+- Heap: 512M–2G unless expanded
+- Cold start: 60–90s
 
 ## 11. Observability
 
 - Logs: `logs/eip.log`
-- Kickout dir: `output/kickout`
-- Transaction / debug tracing: on in route.xml for demo
+- Client-visible: HTTP status + OperationOutcome
+- Route design PDF after REST rebuild
 
 ## 12. Open questions
 
-- Future: swap DirectoryListener for `RESTfulWebServiceListener` when smoke-proven on `pilotfish-eip:23R1`
-- Future: add HL7 v2 → FHIR Patient mapping route
+- Persist backend choice (SQL JSON vs files vs both)
+- Include Bundle transaction in v1 or phase 3?
+- Deprecate directory-route artifacts immediately on rebuild?
+- Auth header expectations for demo clients
+
+## References
+
+- `documents/FHIR_REST_Interface_Research.pdf`
+- https://www.hl7.org/fhir/R4/http.html
+- https://healthcare.pilotfishtechnology.com/restful-listener-configuration/
