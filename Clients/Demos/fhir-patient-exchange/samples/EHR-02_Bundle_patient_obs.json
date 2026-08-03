@@ -1,0 +1,59 @@
+{
+  "resourceType": "Bundle",
+  "id": "bundle-bob-vitals-001",
+  "type": "collection",
+  "timestamp": "2026-08-03T14:30:00Z",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:patient-bob",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-bob-002",
+        "identifier": [
+          {
+            "system": "http://hospital.example.org/mrn",
+            "value": "MRN-20002"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "official",
+            "family": "Baker",
+            "given": ["Robert"]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1977-11-02"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-hr",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-hr-bob-001",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ],
+          "text": "Heart rate"
+        },
+        "subject": {
+          "reference": "Patient/pat-bob-002"
+        },
+        "effectiveDateTime": "2026-08-03T14:25:00Z",
+        "valueQuantity": {
+          "value": 72,
+          "unit": "beats/minute",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      }
+    }
+  ]
+}

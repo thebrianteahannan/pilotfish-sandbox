@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FHIR Patient Exchange — PilotFish Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+  <header>
+    <p class="brand">PilotFish · FHIR Demo</p>
+    <h1>FHIR Patient Exchange</h1>
+    <p>
+      Demo of HL7 FHIR R4 Patient / Bundle ingest on PilotFish — inspired by
+      <a href="{{ case_study_url }}" target="_blank" rel="noreferrer">FHIR Integration &amp; CMS interoperability</a>.
+      EHR systems submit FHIR JSON; PilotFish validates, inserts SQL, and writes a mock FHIR store.
+    </p>
+    <div class="main-tabs" role="tablist" aria-label="App views">
+      <button type="button" class="main-tab active" data-main-tab="demo" role="tab" aria-selected="true">Demo</button>
+      <button type="button" class="main-tab" data-main-tab="routes" role="tab" aria-selected="false">Routes</button>
+      {% if has_xslt %}
+      <button type="button" class="main-tab" data-main-tab="xslt" role="tab" aria-selected="false">XSLT</button>
+      {% endif %}
+    </div>
+    <nav class="nav" id="demo-nav">
+      <a href="#pipeline">Pipeline</a>
+      <a href="#inject">Submit FHIR</a>
+      <a href="#results">Results</a>
+      <a href="{{ eip_url }}" target="_blank" rel="noreferrer">PilotFish EIP</a>
+      {% if lan_hint %}<a href="{{ lan_hint }}">{{ lan_hint }}</a>{% endif %}
+    </nav>
+  </header>
+
+  <div id="tab-demo">
+    <main>
+      <section class="panel" id="pipeline">
+        <h2>FHIR R4 exchange pipeline</h2>
+        <p class="section-lead">Directory ingest of FHIR envelopes → structural / business validation → SQL BI + mock FHIR store (kickout on FAIL).</p>
+        <div class="pipeline">
+          <div class="pipe-node src"><strong>EHR / API</strong><span>FHIR R4 JSON<br/>Patient or Bundle</span></div>
+          <div class="pipe-node eng"><strong>Basic Validation</strong><span>resourceType / id</span></div>
+          <div class="pipe-node eng"><strong>Bundle Flag</strong><span>snapshot (not a fork)</span></div>
+          <div class="pipe-node eng"><strong>Advanced Validation</strong><span>MRN / name / entries</span></div>
+          <div class="pipe-node out"><strong>Transports</strong><span>SQL insert<br/>FHIR store .json</span></div>
+        </div>
+      </section>
+
+      <section class="panel" id="inject">
+        <h2>Submit FHIR from an EHR</h2>
+        <p class="section-lead">Wraps FHIR JSON into an inbound envelope. Route 1 polls every 10s. Demo only — heuristic validation, not a full FHIR validator.</p>
+        <form id="inject-form" class="form-grid">
+          <label>Source system
+            <select name="sourceCode" id="sourceCode">
+              {% for code, name in sources.items() %}
+              <option value="{{ code }}">{{ name }} ({{ code }})</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>Sample resource
+            <select name="sample" id="sample">
+              <option value="">(custom / paste below)</option>
+            </select>
+          </label>
+          <label class="wide">FHIR R4 JSON
+            <textarea name="fhir" id="fhir" rows="12" placeholder='{"resourceType":"Patient",...}'></textarea>
+          </label>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary" id="submit-btn">Submit resource</button>
+            <span id="status" class="status"></span>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" id="results">
+        <div class="row-head">
+          <h2>Results</h2>
+          <button type="button" class="btn" id="refresh-btn">Refresh</button>
+        </div>
+        <div class="split">
+          <div>
+            <h3>SQL Server (BI source)</h3>
+            <div id="messages-table" class="table-wrap"></div>
+          </div>
+          <div>
+            <h3>FHIR store</h3>
+            <div id="store-list" class="file-list"></div>
+            <pre id="store-view" class="viewer"></pre>
+            <h3>Validation / kickout</h3>
+            <div id="val-list" class="file-list"></div>
+            <pre id="val-view" class="viewer"></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="tab-routes" class="routes-tab" hidden>
+    <div class="routes-toolbar">
+      <label for="route-select">V2 route
+        <select id="route-select"></select>
+      </label>
+      <label for="route-layout">Layout
+        <select id="route-layout">
+          <option value="pipeline" selected>Pipeline (Listener / Router / Transport)</option>
+          <option value="wrap">Wrap grid</option>
+        </select>
+      </label>
+      <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route design PDF</a>
+      <a class="btn" href="/static/route-viewer/docs.html?config=changed" target="_blank" rel="noreferrer">All routes (print)</a>
+      <span id="routes-status" class="status"></span>
+    </div>
+    <iframe id="route-viewer-frame" class="route-viewer-frame" title="V2 route graph viewer" src="about:blank"></iframe>
+  </div>
+
+  {% if has_xslt %}
+  <div id="tab-xslt" class="xslt-tab" hidden>
+    <aside class="xslt-sidebar">
+      <div class="xslt-sidebar-head">
+        <h2>XSLT files</h2>
+        <span id="xslt-status" class="status"></span>
+      </div>
+      <ul id="xslt-file-list" class="xslt-file-list"></ul>
+    </aside>
+    <section class="xslt-viewer">
+      <div class="xslt-viewer-head">
+        <code id="xslt-path" class="xslt-path">Select an XSLT file</code>
+        <span id="xslt-meta" class="muted"></span>
+      </div>
+      <pre class="xslt-source"><code id="xslt-code"></code></pre>
+    </section>
+  </div>
+  {% endif %}
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

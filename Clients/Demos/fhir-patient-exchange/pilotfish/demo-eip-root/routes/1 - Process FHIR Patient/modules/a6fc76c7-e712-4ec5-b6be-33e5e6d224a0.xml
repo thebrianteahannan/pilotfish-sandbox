@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="a6fc76c7-e712-4ec5-b6be-33e5e6d224a0" name="Extract FHIR JSON" type="XSLT Transformation" tag="Processor" class="com.pilotfish.eip.modules.transform.XSLTProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <XSLTPath>to-fhir-json.xslt</XSLTPath>
+      
+          
+      <CacheXSLTToXML>false</CacheXSLTToXML>
+      
+          
+      <XSLTEngine>Saxon</XSLTEngine>
+      
+          
+      <XSLTParameters>null</XSLTParameters>
+      
+          
+      <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+      
+          
+      <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+      
+        
+   </ModuleConfig>
+</Module>
