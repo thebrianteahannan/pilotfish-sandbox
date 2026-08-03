@@ -177,6 +177,22 @@ Capture answers in the interface `DESIGN.md` (see §8). If missing, ask the user
 
 Document chosen ports in `README.md` before `compose up`.
 
+### 1.1 LAN access (required when spinning up a Web UI)
+
+Whenever an interface Web UI is brought up for local demo / review (`docker compose up`, smoke test, or “spin it up”), agents **must** expose it on the machine’s **192.x LAN address** as well as `localhost`, so it can be opened from phones, tablets, and other devices on the same network.
+
+**Required every time:**
+
+1. Detect the host’s primary IPv4 on a `192.*` interface (this Sandbox’s usual address is `192.168.68.52` on `en0`; re-detect — do not hardcode forever if DHCP changes).
+2. Publish the Web UI with Docker host port mapping (already binds `0.0.0.0` by default) — do **not** bind only to `127.0.0.1`.
+3. Set compose env `LAN_HINT=http://<192.x.x.x>:<webui-port>/` so the UI nav shows the LAN link.
+4. List **both** URLs in `README.md` and in the agent summary when the stack is running:
+   - Local: `http://localhost:<port>/`
+   - LAN: `http://192.x.x.x:<port>/`
+5. Prefer Flask/Web UI `host=0.0.0.0` (already the demo pattern).
+
+**Anti-pattern:** shipping or announcing only `localhost` / `127.0.0.1` when the user needs to review from another device.
+
 ---
 
 ## 2. Standard directory scaffold
@@ -309,6 +325,7 @@ Do not refactor unrelated demos. Prefer copying the closest existing demo assemb
 - Bind-mount runtime interfaces and `input/` / `output/` / `logs/` as other demos do.
 - Heap: if SNIP (or similarly heavy) processors load, set sufficient `CATALINA_OPTS` (EDI demo uses ~6GB max) and document why.
 - Web UI `depends_on` EIP when useful; document cold-start wait (often 60–90s).
+- **LAN:** set `LAN_HINT` to `http://<192.x.x.x>:<webui-port>/` (see §1.1). Host ports must remain reachable on the LAN interface; announce both localhost and LAN URLs after `compose up`.
 - Secrets: demo password may match existing demos for local convenience, but **DESIGN.md and README must say demo-only** — never invent “production-ready” claims around `sa` + shared passwords.
 - Prefer least-privilege DB users when creating new non-demo client interfaces.
 
@@ -453,8 +470,9 @@ Every interface README must include:
 2. Prerequisites (`pilotfish-eip:23R1`, Docker)
 3. `docker compose up` instructions
 4. Ports table
-5. Smoke / useful commands
-6. Explicit **Demo only** callouts for credentials / PHI / validation limits
+5. **Local and LAN Web UI URLs** (`http://localhost:<port>/` and `http://192.x.x.x:<port>/`)
+6. Smoke / useful commands
+7. Explicit **Demo only** callouts for credentials / PHI / validation limits
 
 ---
 
@@ -470,6 +488,8 @@ Every interface README must include:
 | Claiming “HL7 automation” / “SNIP compliant” from heuristic passes | Accurate language in README + DESIGN |
 | World-writable PHI without demo labeling | Label + restrict for client work |
 | Skipping DESIGN.md because “it’s just a demo” | Short DESIGN.md still required |
+| Announcing only `localhost` after spin-up | Also set `LAN_HINT` + list `http://192.x.x.x:<port>/` (§1.1) |
+| Binding Web UI / publish to `127.0.0.1` only | Keep default `0.0.0.0` host publish so LAN devices can connect |
 
 ---
 
@@ -483,7 +503,8 @@ An interface construct is done when:
 4. Runtime config and diagrams agree **or** drift is documented.  
 5. Web/route viewer present when routes are part of the deliverable.  
 6. **Route design PDF** exists under `documents/` (generated with `--config changed`).  
-7. Agent summary lists known limitations in plain language (no compliance theater).
+7. **LAN URL** is set (`LAN_HINT`) and both localhost + `192.x` URLs are listed when the UI is running (§1.1).  
+8. Agent summary lists known limitations in plain language (no compliance theater).
 
 ---
 
@@ -491,7 +512,12 @@ An interface construct is done when:
 
 ```bash
 cd "Clients/Demos/<slug>"
+# detect LAN (example); set LAN_HINT in compose before up
+LAN_IP=$(ipconfig getifaddr en0)   # macOS; expect 192.*
+# ensure docker-compose.yml has: LAN_HINT: "http://192.x.x.x:<webui-port>/"  (resolved LAN IP)
 docker compose up -d --build
+echo "Local: http://localhost:<webui-port>/"
+echo "LAN:   http://${LAN_IP}:<webui-port>/"
 docker compose logs -f pilotfish
 # happy path: drop sample or use Web UI
 ls -la output/*
