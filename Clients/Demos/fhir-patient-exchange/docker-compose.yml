@@ -88,6 +88,7 @@ services:
       ROUTE_PDF_NAME: FHIR_V2_Route_Diagrams.pdf
       ENV_SETTINGS_FILE: /environment-settings.conf
       WEBUI_PORT: "8103"
+      LAN_HINT: "http://192.168.68.52:8103/"
     ports:
       - "8103:8103"
     volumes:

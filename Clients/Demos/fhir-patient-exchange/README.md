@@ -38,7 +38,8 @@ Wait ~60–90s for SQL init + PilotFish, then open the web UI.
 | PilotFish   | 8102      |
 | Demo Web UI | 8103      |
 
-- Web UI: http://localhost:8103/
+- Web UI (local): http://localhost:8103/
+- Web UI (LAN): http://192.168.68.52:8103/
 - PilotFish EIP: http://localhost:8102/eip/
 - Route design PDF: `documents/FHIR_V2_Route_Diagrams.pdf`
 
