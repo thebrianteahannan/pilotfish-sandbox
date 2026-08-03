@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="ad803fa1-2a70-4255-af51-9c96dab47dc5" name="2 - Generate 837 And SNIP">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="801d5d9a-99fa-474d-a7be-6943309c584b" moduleId="56d64f85-0aa9-48e7-9166-be912848b06a" label="Generate 837 And SNIP.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="de30ff13-26f5-46f1-a3bc-14e1e4166fc9" moduleId="9e32263c-aede-42a6-8f70-a0e662273a04" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="23794a9b-172a-4549-b1a0-cd01b72cbcaa" moduleId="9e8558d2-5bf6-46c4-95e9-f21bcdc21834" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="3e5e58f4-4e51-4495-934b-affdd6176317" moduleId="30d147f1-e8c6-4182-8e0d-db5c05f69e8f" label="Read Claim Keys" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="c46d8ceb-0b19-4c5f-9337-3cb1c7e89fd6" moduleId="1ef00fb6-0152-4f9b-ab29-11549f2efe35" label="Debug Write Claim XML" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="53a1b6fe-fcd4-4c8f-b2ee-63e105b54503" moduleId="fd3d497d-8ac7-4cde-baf6-e44506910eec" label="Map Claim To EDI XML" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="bfe8c311-f86d-4166-8751-7bb69c81c22b" moduleId="b7fd1d0f-7382-49a7-83f5-b266aae7318a" label="Write Intermediate EDI XML" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="883b9f4c-8cd8-40f4-8db7-afe3d7ba41a7" moduleId="b9f39e9b-af8a-4f10-b260-e3cd620dc08a" label="Save EDI XML for SNIP" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="59e31031-4c21-499e-82bc-f053f0a9f58e" moduleId="c3429851-a658-4b57-86db-3c5442e7e918" label="EDI Transformation Module - XML to EDI" x="2600.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="f1386f07-92b7-42d0-9b1f-31593b3dee0d" moduleId="2aa3227a-6f6a-4de2-8f93-d9a0d3577c7a" label="Write 837 EDI File" x="2860.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="1bf674fe-0860-4aeb-b82b-2d39324986ad" moduleId="fb5f6e31-1b91-4dff-b091-dcd2e7ff627e" label="Restore EDI XML for SNIP" x="3120.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="a30e9526-92f7-47ca-a832-5770d9148ed3" moduleId="6d132158-0345-4e07-a393-eefdb469ded4" label="EDI SNIP Validation (Types 1-3)" x="3380.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="8e141f50-cb5e-4931-81b9-2ec31e0c7007" moduleId="50234a7c-97b4-4d50-86da-9e52fbd4d2a8" label="Write SNIP Results" x="3640.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="6ace83fb-958c-4d26-a74f-097121141b68" sourceNodeId="801d5d9a-99fa-474d-a7be-6943309c584b" targetNodeId="de30ff13-26f5-46f1-a3bc-14e1e4166fc9" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="83177868-da3d-4cb9-983e-1ce0a90bbb6c" sourceNodeId="3e5e58f4-4e51-4495-934b-affdd6176317" targetNodeId="c46d8ceb-0b19-4c5f-9337-3cb1c7e89fd6" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="b57deef6-8ae5-44d5-9074-958870f10106" sourceNodeId="c46d8ceb-0b19-4c5f-9337-3cb1c7e89fd6" targetNodeId="53a1b6fe-fcd4-4c8f-b2ee-63e105b54503" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="bda542f4-e5a9-4380-a71c-67bdd31717db" sourceNodeId="53a1b6fe-fcd4-4c8f-b2ee-63e105b54503" targetNodeId="bfe8c311-f86d-4166-8751-7bb69c81c22b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="3e51e7ba-2c44-4144-96d9-75c46db7c9ed" sourceNodeId="bfe8c311-f86d-4166-8751-7bb69c81c22b" targetNodeId="883b9f4c-8cd8-40f4-8db7-afe3d7ba41a7" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="0797d209-e037-4e25-acb7-cc82830597d7" sourceNodeId="883b9f4c-8cd8-40f4-8db7-afe3d7ba41a7" targetNodeId="59e31031-4c21-499e-82bc-f053f0a9f58e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="fb0574fb-ad81-48de-868d-a3714c951b1c" sourceNodeId="59e31031-4c21-499e-82bc-f053f0a9f58e" targetNodeId="f1386f07-92b7-42d0-9b1f-31593b3dee0d" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="87cc7be2-04d1-40e6-b93e-b9dc25f72d2f" sourceNodeId="f1386f07-92b7-42d0-9b1f-31593b3dee0d" targetNodeId="1bf674fe-0860-4aeb-b82b-2d39324986ad" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="edc2ba29-19b3-4e50-9cc1-289c36154aca" sourceNodeId="1bf674fe-0860-4aeb-b82b-2d39324986ad" targetNodeId="a30e9526-92f7-47ca-a832-5770d9148ed3" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="433444c0-2490-4ca2-a019-fa0d47a79237" sourceNodeId="a30e9526-92f7-47ca-a832-5770d9148ed3" targetNodeId="8e141f50-cb5e-4931-81b9-2ec31e0c7007" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="f99e362d-de28-4fd8-90cd-c1be8925bbfa" sourceNodeId="de30ff13-26f5-46f1-a3bc-14e1e4166fc9" targetNodeId="23794a9b-172a-4549-b1a0-cd01b72cbcaa" sourceConnector="right-output" targetConnector="router-input:c5e3f298-ea17-4fe5-91c5-62d46af797d4" condition="true"/>
+      <Connection id="6c1a1113-31fe-4320-a797-34d835fda186" sourceNodeId="23794a9b-172a-4549-b1a0-cd01b72cbcaa" targetNodeId="3e5e58f4-4e51-4495-934b-affdd6176317" sourceConnector="router-output:df3342d9-4491-4b72-8879-07a8d50086f2" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

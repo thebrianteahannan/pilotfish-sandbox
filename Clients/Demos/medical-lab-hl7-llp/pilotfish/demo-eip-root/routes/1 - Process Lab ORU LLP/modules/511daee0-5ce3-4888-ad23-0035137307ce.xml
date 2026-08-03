@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="511daee0-5ce3-4888-ad23-0035137307ce" name="Archive Inbound ORU" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$LAB_INBOUND_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:'ORU_' + @java.lang.System@currentTimeMillis() + '.hl7'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

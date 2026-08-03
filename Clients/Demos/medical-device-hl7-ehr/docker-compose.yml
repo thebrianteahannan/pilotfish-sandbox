@@ -1,0 +1,64 @@
+services:
+  ehr-mock:
+    build:
+      context: ./ehr-mock
+    image: pilotfish-device-ehr-mock:latest
+    container_name: pf-devhl7-ehr-mock
+    restart: unless-stopped
+    ports:
+      - "2581:2581"
+    environment:
+      MLLP_PORT: "2581"
+      MLLP_LABEL: "EHR mock"
+    volumes:
+      - ./output/ehr-received:/received
+
+  pilotfish:
+    build:
+      context: ./pilotfish
+    image: pilotfish-medical-device-hl7-ehr:23R1
+    container_name: pf-devhl7-pilotfish
+    restart: unless-stopped
+    depends_on:
+      - ehr-mock
+    environment:
+      CATALINA_OPTS: "-Xms512M -Xmx2048M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8100:8080"
+      - "2580:2580"
+    volumes:
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+      - ./samples:/opt/pilotfish/samples:ro
+
+  webui:
+    build:
+      context: ./webui
+    image: pilotfish-devhl7-webui:latest
+    container_name: pf-devhl7-webui
+    restart: unless-stopped
+    depends_on:
+      - pilotfish
+    environment:
+      EIP_LLP_HOST: host.docker.internal
+      EIP_LLP_PORT: "2580"
+      INBOUND_DIR: /output/inbound
+      OUTBOUND_DIR: /output/ehr-outbound
+      RECEIVED_DIR: /output/ehr-received
+      SAMPLE_DIR: /samples
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      ROUTE_PDF_NAME: DeviceHL7EHR_V2_Route_Diagrams.pdf
+      ENV_SETTINGS_FILE: /environment-settings.conf
+      LAN_HINT: "http://127.0.0.1:8101/"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8101:8101"
+    volumes:
+      - ./output:/output
+      - ./samples:/samples:ro
+      - ./documents:/documents:ro
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/environment-settings.conf:ro
+      - ./eip-root/interfaces/Medical Device HL7 EHR/routes:/routes:ro

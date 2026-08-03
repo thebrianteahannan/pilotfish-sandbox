@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="95f8143f-1c16-4ea8-83ee-07d006c1ba4e" name="Write Raw Claims Snapshot" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$CLAIM_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>raw_pending_claims.xml</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

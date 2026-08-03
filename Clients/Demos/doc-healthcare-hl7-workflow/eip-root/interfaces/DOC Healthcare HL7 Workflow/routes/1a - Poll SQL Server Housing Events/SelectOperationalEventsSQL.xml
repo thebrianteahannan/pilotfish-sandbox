@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLXML xmlns="http://pilotfish.sqlxml">
+  <!-- SQL Server Housing Administration: claim PENDING events -->
+  <Execute into="records" as="Event">
+    <SQL>
+      UPDATE e
+      SET Status = N'PROCESSED'
+      OUTPUT
+        inserted.EventId,
+        inserted.SourceSystem,
+        inserted.EventType,
+        ISNULL(inserted.ChildEventTypes, '') AS ChildEventTypes,
+        inserted.OffenderId,
+        p.Mrn,
+        p.LastName,
+        p.FirstName,
+        ISNULL(p.MiddleName, '') AS MiddleName,
+        CONVERT(VARCHAR(8), p.BirthDate, 112) AS BirthDate,
+        p.Sex,
+        p.Street,
+        p.City,
+        p.State,
+        p.Zip,
+        ISNULL(p.Phone, '') AS Phone,
+        inserted.FacilityCode,
+        ISNULL(inserted.UnitCode, '') AS UnitCode,
+        ISNULL(inserted.BedCode, '') AS BedCode,
+        ISNULL(inserted.PriorFacilityCode, '') AS PriorFacilityCode,
+        ISNULL(inserted.PriorUnitCode, '') AS PriorUnitCode,
+        ISNULL(inserted.PriorBedCode, '') AS PriorBedCode,
+        ISNULL(inserted.AttendingNpi, '') AS AttendingNpi,
+        ISNULL(inserted.AttendingName, '') AS AttendingName,
+        CONVERT(VARCHAR(19), inserted.EventTimestamp, 126) AS EventTimestamp,
+        inserted.Status,
+        ISNULL(inserted.Notes, '') AS Notes
+      FROM dbo.OperationalEvents e
+      INNER JOIN dbo.Patients p ON p.OffenderId = e.OffenderId
+      WHERE e.Status = N'PENDING'
+    </SQL>
+  </Execute>
+  <XMLOut var="records" />
+</SQLXML>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="screel@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source icon="DocEDI_Purple_1.png" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="EDI-Utility.14a - EDI SNIP Validations Report.Programmable (Trigger) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>true</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>true</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>08:38-08:38</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Copy in original edi for validation report">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>TA-EDI-DATA</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XMLWrapProcessor" name="Wrap the EDI with an XML element">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <ROOT_ELEMENT_NAME_TAG>XCSData</ROOT_ELEMENT_NAME_TAG>
+          <USE_CDATA_TAG>true</USE_CDATA_TAG>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Transform EDI wrapped element to line numbers (re-parse the EDI file here)">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform.xslt</XSLTPath>
+          <CacheXSLTToXML>true</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:segment-delimiter:eip_name:{ognl:getAttribute('com.pilotfish.EDI.SegmentDelimiter')}:eip_value][eip_pair:element-delimiter:eip_name:{ognl:getAttribute('com.pilotfish.EDI.FieldDelimiter')}:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Copy XML into attribute for mapping later">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>TA-EDI-MAP</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor" name="Format the xml for EDI validations report">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="Spreadsheet_Green_2.png" name="Report">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="EDI-Utility.14a - EDI SNIP Validations Report.Synchronous Response Transport" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Swap in original EDI validation results for validation report">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.edi.validation.results</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor" name="Format XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Normalize Errors by adding group number and transaction to the errors">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>normalize.xslt</XSLTPath>
+          <CacheXSLTToXML>true</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Sort errors so they appear in the order of the EDI file">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>sort.xslt</XSLTPath>
+          <CacheXSLTToXML>true</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Merge EDI validation errors with the mapped (reparsed) EDI document">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>merge.xslt</XSLTPath>
+          <CacheXSLTToXML>true</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:map:eip_name:{ognl:getAttribute('TA-EDI-MAP')}:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Save transform to results 2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.edi.validation.results2</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Swap in original EDI XML so we can merge the errors with the XML (inline)">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ta_xml_edi') != null}</ExecuteProcessor>
+          <AttributeName>ta_xml_edi</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Swap in single bill EDI XML">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ta_individual_bill_xml') != null}</ExecuteProcessor>
+          <AttributeName>ta_individual_bill_xml</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Merge errors with EDI XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform-merge.xslt</XSLTPath>
+          <CacheXSLTToXML>true</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:results:eip_name:{ognl:getAttribute('com.pilotfish.edi.validation.results2')}:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Copy the merged results to attribute">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ta_xml_edi') != null}</ExecuteProcessor>
+          <AttributeName>ta_xml_edi</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Copy the merged results to attribute for individule bill">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ta_individual_bill_xml') != null}</ExecuteProcessor>
+          <AttributeName>ta_xml_edi</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Swap in the merged EDI errors into transaction data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.edi.validation.results2</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Create HTML validation report">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>html.xslt</XSLTPath>
+          <CacheXSLTToXML>true</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:edi-text:eip_name:{ognl:getAttribute('TA-EDI-DATA')}:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.AttributeRemovalProcessor" name="Remove atts we dont need">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetAttributes>[eip_pair:TA-EDI-MAP:eip_name:only needed for validation report:eip_value][eip_pair:com.pilotfish.edi.validation.results2:eip_name:only needed for validation report:eip_value]</TargetAttributes>
+          <GlobalAttributes />
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

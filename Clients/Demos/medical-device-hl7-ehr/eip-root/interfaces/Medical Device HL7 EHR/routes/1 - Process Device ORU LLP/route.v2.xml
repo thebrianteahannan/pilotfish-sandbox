@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="e7eb9d30-cb91-430f-9de9-6aa003ead853" name="1 - Process Device ORU LLP">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="5249194e-a1fd-4687-b125-9c0ca2175fa9" moduleId="4f0c43dc-8d42-414d-a815-95cf970c34ac" label="Device HL7 LLP Inbound" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="955196de-790d-4de7-9f42-6180047620cb" moduleId="9408cbad-6403-47a2-93ce-449d9c46c5ea" label="Archive Device ORU" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="5adcc9ec-e731-4523-b5b8-3d46edc18daf" moduleId="9fdf4a98-3291-4fa3-a967-7af2f917b943" label="HL7 Parse Validation" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="82bdc97a-9701-4fab-8bf9-07e02b89b082" moduleId="3e3d33b8-df87-40ec-97a2-82565bdec5ee" label="Audit EHR Outbound" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="b372ef6a-0ff9-4e1f-babd-c0322501c013" moduleId="f0c6dea3-38e4-4a29-951b-92a2c5690f14" label="Send ORU To EHR LLP" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="8cc77b51-4bb5-4aab-9375-47c04f8f8af8" sourceNodeId="5249194e-a1fd-4687-b125-9c0ca2175fa9" targetNodeId="955196de-790d-4de7-9f42-6180047620cb" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="7d8a3181-0f22-41fc-86ed-9f1377a99415" sourceNodeId="955196de-790d-4de7-9f42-6180047620cb" targetNodeId="5adcc9ec-e731-4523-b5b8-3d46edc18daf" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="c04c758e-aa7d-4e38-8ce2-89c99478b465" sourceNodeId="5adcc9ec-e731-4523-b5b8-3d46edc18daf" targetNodeId="82bdc97a-9701-4fab-8bf9-07e02b89b082" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="12e0f12a-e9fc-489e-b4d9-c088a6ca0429" sourceNodeId="82bdc97a-9701-4fab-8bf9-07e02b89b082" targetNodeId="b372ef6a-0ff9-4e1f-babd-c0322501c013" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

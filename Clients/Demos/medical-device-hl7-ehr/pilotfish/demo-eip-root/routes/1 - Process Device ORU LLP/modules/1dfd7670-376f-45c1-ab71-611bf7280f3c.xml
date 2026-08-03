@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="1dfd7670-376f-45c1-ab71-611bf7280f3c" name="Archive Device ORU" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$DEVICE_INBOUND_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:'DEV_' + @java.lang.System@currentTimeMillis() + '.hl7'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

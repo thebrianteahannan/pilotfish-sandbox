@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="b5757224-8867-476e-b2e4-786428dd53d8" name="Poll SQL Server Claims" type="Database Polling (SQL)" tag="Listener" class="com.pilotfish.eip.modules.db.DatabaseSqlListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <CLIAllowed>false</CLIAllowed>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <FIFOQueueName/>
+      
+        
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      
+        
+      <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      
+        
+      <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+      
+        
+      <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+      
+        
+      <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      
+        
+      <PollingInterval>15</PollingInterval>
+      
+        
+      <InputFile>SelectClaimsSQL.xml</InputFile>
+      
+        
+      <WriteQuery>false</WriteQuery>
+      
+        
+      <Query/>
+      
+        
+      <QueryParams/>
+      
+        
+      <UserName>$$sqlserver.username</UserName>
+      
+        
+      <Password>$$sqlserver.password</Password>
+      
+        
+      <UseDataSource>false</UseDataSource>
+      
+        
+      <DataSource/>
+      
+        
+      <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+      
+        
+      <JdbcURL>$$sqlserver.url</JdbcURL>
+      
+        
+      <SchedulerStartTag/>
+      
+        
+      <SchedulerEndTag/>
+      
+        
+      <ExcludeDaysTag/>
+      
+        
+      <ExcludeDatesTag/>
+      
+        
+      <TimeZone>System Default</TimeZone>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Timeout>120</Timeout>
+      
+        
+      <RestrictMetaDataToCatalog/>
+      
+        
+      <RestrictMetaDataToSchema/>
+      
+        
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+        
+      <UseSingleOutputStream>true</UseSingleOutputStream>
+      
+        
+      <RefreshHandler>false</RefreshHandler>
+      
+        
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+        
+      <JDBCProperties>null</JDBCProperties>
+      
+        
+      <LogMetadata>false</LogMetadata>
+      
+        
+      <LogSQL>true</LogSQL>
+      
+      
+   </ModuleConfig>
+</Module>

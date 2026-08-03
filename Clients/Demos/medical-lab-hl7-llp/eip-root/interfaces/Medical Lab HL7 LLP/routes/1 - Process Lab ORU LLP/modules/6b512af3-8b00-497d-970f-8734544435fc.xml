@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="6b512af3-8b00-497d-970f-8734544435fc" name="Send ORU To MEDITECH LLP" type="HL7 MLLP (Simple)" tag="Transport" class="com.pilotfish.eip.modules.hl7.HL7SimpleTransport">
+   <ModuleConfig>
+      <Host>meditech-mock</Host>
+      
+        
+      <Port>2576</Port>
+      
+        
+      <Timeout>5000</Timeout>
+      
+        
+      <KeepConnection>false</KeepConnection>
+      
+        
+      <IdleTimeout>-1</IdleTimeout>
+      
+        
+      <ResponseTimeout>30000</ResponseTimeout>
+      
+        
+      <IgnoreAck>false</IgnoreAck>
+      
+        
+      <ResponseListener/>
+      
+      
+   </ModuleConfig>
+</Module>

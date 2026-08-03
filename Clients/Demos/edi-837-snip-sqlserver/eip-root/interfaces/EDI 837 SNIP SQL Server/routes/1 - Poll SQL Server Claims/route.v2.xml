@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="9e111b74-93ab-412c-850f-7af570527d56" name="1 - Poll SQL Server Claims">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="e78c7a49-c236-47ef-a4a1-2ddc9e9b69cb" moduleId="b5757224-8867-476e-b2e4-786428dd53d8" label="Poll SQL Server Claims" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="fc6ec867-5a41-4555-8302-9d58736189fd" moduleId="95f8143f-1c16-4ea8-83ee-07d006c1ba4e" label="Write Raw Claims Snapshot" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="70582807-e3a3-4b79-85e8-10ccac19491e" moduleId="851c6cb9-17f4-4823-953b-279ad2a4656f" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="6cc7ebdc-64c3-4b87-aef6-b740c03b3f16" moduleId="ec81dde4-97a1-4264-8ae9-a695c67492a6" label="Hand Off Claims" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="a16d54c9-7935-4075-8b2a-83b9f79fe725" sourceNodeId="e78c7a49-c236-47ef-a4a1-2ddc9e9b69cb" targetNodeId="fc6ec867-5a41-4555-8302-9d58736189fd" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="4f197051-4563-4457-bdef-ce3ec399aa37" sourceNodeId="fc6ec867-5a41-4555-8302-9d58736189fd" targetNodeId="70582807-e3a3-4b79-85e8-10ccac19491e" sourceConnector="right-output" targetConnector="router-input:b6606c9d-f216-4710-836a-b05c4d32cef4" condition="true"/>
+      <Connection id="aabcafe4-a71c-4af1-9b8e-52f30c36c921" sourceNodeId="70582807-e3a3-4b79-85e8-10ccac19491e" targetNodeId="6cc7ebdc-64c3-4b87-aef6-b740c03b3f16" sourceConnector="router-output:4778748c-4c40-4ea7-8977-9eb75c48b3ff" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="f0c6dea3-38e4-4a29-951b-92a2c5690f14" name="Send ORU To EHR LLP" type="HL7 MLLP (Simple)" tag="Transport" class="com.pilotfish.eip.modules.hl7.HL7SimpleTransport">
+   <ModuleConfig>
+      <Host>ehr-mock</Host>
+      
+        
+      <Port>2581</Port>
+      
+        
+      <Timeout>5000</Timeout>
+      
+        
+      <KeepConnection>false</KeepConnection>
+      
+        
+      <IdleTimeout>-1</IdleTimeout>
+      
+        
+      <ResponseTimeout>30000</ResponseTimeout>
+      
+        
+      <IgnoreAck>false</IgnoreAck>
+      
+        
+      <ResponseListener/>
+      
+      
+   </ModuleConfig>
+</Module>

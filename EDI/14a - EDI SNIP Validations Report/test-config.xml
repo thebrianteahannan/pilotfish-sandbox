@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TestConfigurations>
+  <TestConfig name="test">
+    <AlternateDataSource>From File</AlternateDataSource>
+    <Stage>
+      <Identifier>processor@transport=Real-Time-Service.91_Merge_Validation_Errors.Synchronous Response Transport,processor=Real-Time-Service.91_Merge_Validation_Errors.Processor</Identifier>
+      <IsStart file="C:\pilotfish\src\aws-pilotfish\eiPlatform\realtime\eip-root\data\test\edi\270_EQ30.X12">true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=Real-Time-Service.91_Merge_Validation_Errors.Synchronous Response Transport,processor=Real-Time-Service.91_Merge_Validation_Errors.Processor1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=Real-Time-Service.91_Merge_Validation_Errors.Synchronous Response Transport,processor=Real-Time-Service.91_Merge_Validation_Errors.Wrap_Data</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@listener=Real-Time-Service.91_Merge_Validation_Errors.Programmable (Trigger) Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>forking@listener=Real-Time-Service.91_Merge_Validation_Errors.Programmable (Trigger) Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>routing</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=Real-Time-Service.91_Merge_Validation_Errors.Synchronous Response Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=Real-Time-Service.91_Merge_Validation_Errors.Synchronous Response Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=Real-Time-Service.91_Merge_Validation_Errors.Synchronous Response Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+</TestConfigurations>

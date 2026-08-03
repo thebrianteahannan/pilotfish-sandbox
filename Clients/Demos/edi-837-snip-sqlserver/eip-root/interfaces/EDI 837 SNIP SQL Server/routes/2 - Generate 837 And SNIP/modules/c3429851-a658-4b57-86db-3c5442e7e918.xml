@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c3429851-a658-4b57-86db-3c5442e7e918" name="EDI Transformation Module - XML to EDI" type="EDI" tag="Processor" class="com.pilotfish.eip.modules.transform.EDITransformationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+      
+          
+      <ExecuteTransformation>true</ExecuteTransformation>
+      
+          
+      <TransformationDirection>XML to EDI</TransformationDirection>
+      
+          
+      <UseInternalData>false</UseInternalData>
+      
+          
+      <FriendlyNamesLevel>None</FriendlyNamesLevel>
+      
+          
+      <CODE_DEFS>false</CODE_DEFS>
+      
+          
+      <SegmentIndexing>true</SegmentIndexing>
+      
+          
+      <OutputEndlines>true</OutputEndlines>
+      
+          
+      <UseProvidedDelimiters>true</UseProvidedDelimiters>
+      
+          
+      <DataDelimiter>*</DataDelimiter>
+      
+          
+      <SubDelimiter>:</SubDelimiter>
+      
+          
+      <RepetitionDelimiter>^</RepetitionDelimiter>
+      
+          
+      <RecordDelimiter>~</RecordDelimiter>
+      
+          
+      <USE_LEGACY_FORMAT>false</USE_LEGACY_FORMAT>
+      
+        
+   </ModuleConfig>
+</Module>

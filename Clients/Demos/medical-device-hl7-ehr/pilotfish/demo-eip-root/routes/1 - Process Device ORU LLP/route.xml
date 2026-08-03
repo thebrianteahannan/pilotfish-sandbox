@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule">
+    <ModuleConfig />
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="Medical Devices">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.hl7.HL7TCPListener" enabled="true" name="Device HL7 LLP Inbound">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <Engine>PilotFish</Engine>
+        <Port>2580</Port>
+        <TimeoutTag>0</TimeoutTag>
+        <SynchronousTag>false</SynchronousTag>
+        <SynchronousTimeout>60</SynchronousTimeout>
+        <AutogenerateSynchronousACK>true</AutogenerateSynchronousACK>
+        <MaximumConnections>10</MaximumConnections>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Archive Device ORU">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$DEVICE_INBOUND_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:'DEV_' + @java.lang.System@currentTimeMillis() + '.hl7'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.hl7.HL7ValidationProcessor" name="HL7 Parse Validation">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <CharacterEncoding>UTF-8</CharacterEncoding>
+          <ThrowException>true</ThrowException>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Audit EHR Outbound">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$EHR_OUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:'TO_EHR_' + @java.lang.System@currentTimeMillis() + '.hl7'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="Hospital EHR">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.hl7.HL7SimpleTransport" name="Send ORU To EHR LLP" retries="1">
+      <ModuleConfig>
+        <Host>ehr-mock</Host>
+        <Port>2581</Port>
+        <Timeout>5000</Timeout>
+        <KeepConnection>false</KeepConnection>
+        <IdleTimeout>-1</IdleTimeout>
+        <ResponseTimeout>30000</ResponseTimeout>
+        <IgnoreAck>false</IgnoreAck>
+        <ResponseListener />
+      </ModuleConfig>
+    </Transport>
+    <Processors />
+  </Target>
+</Route>

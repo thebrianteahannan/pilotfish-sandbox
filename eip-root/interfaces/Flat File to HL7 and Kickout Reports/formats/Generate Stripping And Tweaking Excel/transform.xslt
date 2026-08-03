@@ -196,7 +196,7 @@
           <CPT>CPT</CPT>
           <Units>Units</Units>
         </XCSExcelRow>
-        <xsl:for-each select="Stripped/StrippedCharges/Charge[@stripped = 'true' and @stripped_reason='Strip Charge: Strip performing site locations']">
+        <xsl:for-each select="Stripped/StrippedCharges/Charge[@stripped = 'true' and (@stripped_reason='Strip Charge: Strip performing site locations' or @stripped_huggins_monadnock = 'true' or @stripped_reason='Strip Charge: NHL CAT Huggins/Monadnock Filler2')]">
           <XCSExcelRow>
             <DateOfService>
               <xsl:value-of select="Charge/radExamServDate" />
@@ -208,7 +208,15 @@
               <xsl:value-of select="Charge/radPatientName" />
             </PatientName>
             <PerformingSite>
-              <xsl:value-of select="Charge/performingSite" />
+              <!-- CAT Huggins/Monadnock strips are keyed on Filler2; other site strips use performingSite -->
+              <xsl:choose>
+                <xsl:when test="@stripped_huggins_monadnock = 'true' or @stripped_reason='Strip Charge: NHL CAT Huggins/Monadnock Filler2'">
+                  <xsl:value-of select="PatientDemographics/Filler2" />
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="Charge/performingSite" />
+                </xsl:otherwise>
+              </xsl:choose>
             </PerformingSite>
             <CPT>
               <xsl:value-of select="Charge/radExamBillingCode" />

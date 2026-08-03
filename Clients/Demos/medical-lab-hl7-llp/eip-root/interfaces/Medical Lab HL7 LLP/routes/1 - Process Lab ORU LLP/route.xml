@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule">
+    <ModuleConfig />
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="Medical Lab">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.hl7.HL7TCPListener" enabled="true" name="Lab HL7 LLP Inbound">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <Engine>PilotFish</Engine>
+        <Port>2575</Port>
+        <TimeoutTag>0</TimeoutTag>
+        <SynchronousTag>false</SynchronousTag>
+        <SynchronousTimeout>60</SynchronousTimeout>
+        <AutogenerateSynchronousACK>true</AutogenerateSynchronousACK>
+        <MaximumConnections>10</MaximumConnections>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Archive Inbound ORU">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$LAB_INBOUND_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:'ORU_' + @java.lang.System@currentTimeMillis() + '.hl7'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.hl7.HL7ValidationProcessor" name="HL7 Parse Validation">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <CharacterEncoding>UTF-8</CharacterEncoding>
+          <ThrowException>true</ThrowException>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Audit Outbound ORU">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$LAB_MEDITECH_OUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:'TO_MEDITECH_' + @java.lang.System@currentTimeMillis() + '.hl7'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="MEDITECH">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.hl7.HL7SimpleTransport" name="Send ORU To MEDITECH LLP" retries="1">
+      <ModuleConfig>
+        <Host>meditech-mock</Host>
+        <Port>2576</Port>
+        <Timeout>5000</Timeout>
+        <KeepConnection>false</KeepConnection>
+        <IdleTimeout>-1</IdleTimeout>
+        <ResponseTimeout>30000</ResponseTimeout>
+        <IgnoreAck>false</IgnoreAck>
+        <ResponseListener />
+      </ModuleConfig>
+    </Transport>
+    <Processors />
+  </Target>
+</Route>

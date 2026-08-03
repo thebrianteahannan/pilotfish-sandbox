@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Medical Lab HL7 LLP — V2 Routes</title>
+    <style>
+      :root {
+        --ink: #172033;
+        --muted: #5a6a7a;
+        --line: #c9d5e0;
+        --accent: #0b6e4f;
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        color: var(--ink);
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      }
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem 1.25rem;
+        padding: 0.65rem 1.25rem;
+        border-bottom: 1px solid var(--line);
+        background: #f5f8fb;
+      }
+      .toolbar label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      .toolbar select {
+        font: inherit;
+        font-size: 0.85rem;
+        padding: 0.2rem 0.4rem;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: #fff;
+        color: var(--ink);
+      }
+      .toolbar .hint {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .cover {
+        padding: 2.2rem 2rem 1.4rem;
+        border-bottom: 1px solid var(--line);
+        page-break-after: always;
+      }
+      .cover .brand {
+        color: var(--accent);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        margin: 0 0 0.5rem;
+      }
+      .cover h1 {
+        margin: 0 0 0.5rem;
+        font-size: 1.75rem;
+      }
+      .cover p {
+        margin: 0;
+        color: var(--muted);
+        max-width: 62ch;
+        line-height: 1.45;
+      }
+      .cover ul {
+        margin: 1rem 0 0;
+        padding-left: 1.2rem;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+      .route-block {
+        padding: 0.5rem 0 1.5rem;
+        page-break-before: always;
+        break-before: page;
+      }
+      .route-block:first-of-type {
+        page-break-before: auto;
+        break-before: auto;
+      }
+      .route-block h2 {
+        margin: 0;
+        padding: 0.85rem 1.25rem;
+        font-size: 1.05rem;
+        border-bottom: 1px solid var(--line);
+        background: #f5f8fb;
+      }
+      .route-block iframe {
+        display: block;
+        width: 100%;
+        border: 0;
+        background: #fff;
+        min-height: 420px;
+      }
+      .status {
+        padding: 1rem 1.25rem;
+        color: var(--muted);
+      }
+      @media print {
+        .toolbar { display: none; }
+        .cover { page-break-after: always; }
+        .route-block { page-break-inside: avoid; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="toolbar">
+      <label for="config-mode">Box config
+        <select id="config-mode" title="Inline configuration inside boxes">
+          <option value="compact">Names only</option>
+          <option value="changed" selected>Non-default values</option>
+          <option value="all">All values</option>
+        </select>
+      </label>
+      <span class="hint">Same dropdown as Routes · used for print / PDF · tip: run <code>tools/export_route_diagrams.py --config …</code></span>
+    </div>
+    <section class="cover">
+      <p class="brand">PilotFish · Medical Lab HL7 LLP</p>
+      <h1>V2 Route Diagrams</h1>
+      <p>
+        Lab ORU inbound HL7 LLP → HAPI validate → MEDITECH outbound HL7 LLP (mock).
+      </p>
+      <ul id="toc"></ul>
+      <p class="status" id="status">Loading routes…</p>
+    </section>
+    <div id="routes"></div>
+    <script>
+      (function () {
+        const status = document.getElementById("status");
+        const toc = document.getElementById("toc");
+        const host = document.getElementById("routes");
+        const configSel = document.getElementById("config-mode");
+        const pending = new Map();
+        const params = new URLSearchParams(location.search);
+        const initialConfig = ["compact", "changed", "all"].includes(params.get("config"))
+          ? params.get("config")
+          : "changed";
+        configSel.value = initialConfig;
+
+        const CONFIG_LABELS = {
+          compact: "Names only",
+          changed: "Non-default values",
+          all: "All values",
+        };
+
+        window.addEventListener("message", (ev) => {
+          const data = ev.data || {};
+          if (data.type !== "route-viewer-size") return;
+          const frame = pending.get(data.route);
+          if (!frame) return;
+          if (data.height) frame.style.height = `${Math.ceil(data.height)}px`;
+        });
+
+        function frameSrc(routeId, config) {
+          return (
+            `./index.html?route=${encodeURIComponent(routeId)}` +
+            `&mode=docs&layout=pipeline&config=${encodeURIComponent(config)}`
+          );
+        }
+
+        let loadedRoutes = [];
+
+        function renderFrames(config) {
+          host.innerHTML = "";
+          pending.clear();
+          loadedRoutes.forEach((r) => {
+            const block = document.createElement("section");
+            block.className = "route-block";
+            block.innerHTML = `<h2>${r.name || r.dir}</h2>`;
+            const frame = document.createElement("iframe");
+            frame.title = r.name || r.id;
+            frame.src = frameSrc(r.id, config);
+            pending.set(r.id, frame);
+            block.appendChild(frame);
+            host.appendChild(block);
+          });
+          status.textContent =
+            `${loadedRoutes.length} route${loadedRoutes.length === 1 ? "" : "s"}` +
+            ` · Box config: ${CONFIG_LABELS[config] || config}`;
+          const url = new URL(location.href);
+          url.searchParams.set("config", config);
+          history.replaceState(null, "", url);
+        }
+
+        configSel.addEventListener("change", () => renderFrames(configSel.value));
+
+        async function boot() {
+          try {
+            const res = await fetch("/api/v2/routes");
+            const data = await res.json();
+            loadedRoutes = data.routes || [];
+            if (!loadedRoutes.length) {
+              status.textContent = "No V2 routes found.";
+              return;
+            }
+            toc.innerHTML = loadedRoutes
+              .map((r, i) => `<li>${i + 1}. ${r.name || r.dir}</li>`)
+              .join("");
+            renderFrames(configSel.value);
+            document.documentElement.setAttribute("data-ready", "1");
+          } catch (err) {
+            status.textContent = `Failed to load routes: ${err.message}`;
+          }
+        }
+        boot();
+      })();
+    </script>
+  </body>
+</html>

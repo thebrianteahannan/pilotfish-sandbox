@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="b3a0135a-3ba1-4f98-9a09-3942d85624b0" name="Split Batch" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:#xpath(&quot;string(//IsBatch)&quot;) == 'true' || #xpath(&quot;string(//IsBatch)&quot;) == '1'}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$HL7_VALIDATION_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('com.pilotfish.FileName') + '_batch_split.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

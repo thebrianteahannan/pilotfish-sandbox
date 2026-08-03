@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Medical Device HL7 → EHR Demo</title>
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <p class="brand">PilotFish · Medical Devices</p>
+      <h1>Device HL7 → EHR</h1>
+      <p class="sub">Case study slice: mocked vitals monitor + CGM → validate → EHR LLP</p>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button type="button" class="tab active" data-tab="demo" aria-selected="true">Demo</button>
+      <button type="button" class="tab" data-tab="routes" aria-selected="false">Routes</button>
+      {% if has_xslt %}
+      <button type="button" class="tab" data-tab="xslt" aria-selected="false">XSLT</button>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main id="tab-demo" class="panel">
+    <section class="cardish">
+      <h2>Simulate medical devices</h2>
+      <p>Each button emits a device-specific ORU over MLLP to <code>{{ llp }}</code> (MSH-3 identifies the device).</p>
+      <div class="device-grid">
+        {% for d in devices %}
+        <article class="device-card" data-device="{{ d.id }}">
+          <h3>{{ d.name }}</h3>
+          <p class="muted">{{ d.blurb }} · <code>{{ d.sendingApp }}</code></p>
+          <button type="button" class="btn primary btn-sim" data-device="{{ d.id }}">Simulate reading</button>
+        </article>
+        {% endfor %}
+      </div>
+      <pre id="ack-out" class="log">ACK will appear here…</pre>
+      <p id="send-status" class="status"></p>
+    </section>
+
+    <section>
+      <h2>Artifacts</h2>
+      <button type="button" id="btn-refresh" class="btn">Refresh</button>
+      <div class="cols">
+        <div>
+          <h3>Inbound archive</h3>
+          <div id="list-inbound" class="file-list"></div>
+        </div>
+        <div>
+          <h3>EHR outbound audit</h3>
+          <div id="list-outbound" class="file-list"></div>
+        </div>
+        <div>
+          <h3>EHR mock received</h3>
+          <div id="list-received" class="file-list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="tab-routes" class="routes-tab" hidden>
+    <div class="routes-toolbar">
+      <label for="route-select">V2 route
+        <select id="route-select"></select>
+      </label>
+      <label for="route-layout">Layout
+        <select id="route-layout">
+          <option value="pipeline" selected>Pipeline</option>
+          <option value="wrap">Wrap grid</option>
+        </select>
+      </label>
+      <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route design PDF</a>
+      <a class="btn" href="/static/route-viewer/docs.html?config=changed" target="_blank" rel="noreferrer">All routes (print)</a>
+      <span id="routes-status" class="status"></span>
+    </div>
+    <iframe id="route-viewer-frame" class="route-viewer-frame" title="V2 route graph" src="about:blank"></iframe>
+  </div>
+
+  {% if has_xslt %}
+  <div id="tab-xslt" class="xslt-tab" hidden>
+    <aside class="xslt-sidebar">
+      <div class="xslt-sidebar-head">
+        <h2>XSLT files</h2>
+        <span id="xslt-status" class="status"></span>
+      </div>
+      <ul id="xslt-file-list" class="xslt-file-list"></ul>
+    </aside>
+    <section class="xslt-viewer">
+      <div class="xslt-viewer-head">
+        <code id="xslt-path" class="xslt-path">Select an XSLT file</code>
+        <span id="xslt-meta" class="muted"></span>
+      </div>
+      <pre class="xslt-source"><code id="xslt-code"></code></pre>
+    </section>
+  </div>
+  {% endif %}
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

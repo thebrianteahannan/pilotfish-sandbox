@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="2550b5ed-c0e0-4d91-b132-9a909bc64c5d" name="Audit Outbound ORU" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$LAB_MEDITECH_OUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:'TO_MEDITECH_' + @java.lang.System@currentTimeMillis() + '.hl7'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

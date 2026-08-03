@@ -1,0 +1,21 @@
+---
+description: How to construct PilotFish Sandbox interfaces — follow the global playbook
+globs: Clients/**
+alwaysApply: false
+---
+
+# PilotFish interface construction
+
+When creating, scaffolding, expanding, or design-documenting a PilotFish interface under `Clients/`:
+
+1. **Read and follow** `docs/INTERFACE_CONSTRUCTION_PLAYBOOK.md` end-to-end.
+2. **Choose modules from** `PilotFish_Documentation/` (tracker + deep dives) and `PilotFish_V2/` (`modules.conf` + `com/pilotfish/eip/modules` Java). EIP modules are shared with V1 — use that code to learn FQCNs and config items. Do not invent class names.
+3. **Assemble runtime as V1** `pilotfish/demo-eip-root/**/route.xml` for `pilotfish-eip:23R1`. Copy a Sandbox demo skeleton when one exists for those classes. **Generate V2** (`route.v2.xml`) for Routes tab / PDF. `PilotFish_V2` is for module + format knowledge — not “author V2-only runtime” unless the user overrides.
+4. **Do not invent** a one-off layout — after module selection, copy the closest demo (`edi-837-snip-sqlserver` or `hl7-healthcare-automation`) and delete unused pieces.
+5. **Before coding:** capture pre-flight answers and create `DESIGN.md` from the playbook §8 template (include chosen FQCNs in the Pipeline table).
+6. **No silent drift** between runtime V1 and diagram V2; call out doc/WAR version skew (e.g. 26R1 docs vs 23R1 image) in DESIGN.md.
+7. **No compliance theater:** stages named Validate / SNIP / Split must gate, validate the wire artifact, or truly fork — otherwise rename and document.
+8. **No claim-before-complete** and **no dual-write without compensation** unless explicitly listed as an accepted demo risk in `DESIGN.md`.
+9. **Ship:** README (ports + smoke cmds), bounded polls/throttling for heavy stages, kickout/poison story, Web UI + route-viewer when routes are part of the deliverable (`config=changed` default for docs/PDF).
+10. **Always generate the route design PDF** into `documents/` (`python3 tools/export_route_diagrams.py --config changed`, then ensure the PDF lives under `<interface>/documents/`). Do this for every new interface without waiting to be asked.
+11. **Done only after** smoke test (§7 of the playbook), PDF in `documents/`, and a plain-language list of limitations.

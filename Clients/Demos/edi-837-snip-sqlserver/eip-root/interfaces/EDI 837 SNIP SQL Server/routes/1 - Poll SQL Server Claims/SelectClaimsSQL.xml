@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLXML xmlns="http://pilotfish.sqlxml">
+  <Execute into="records" as="Claim">
+    <SQL>
+      DECLARE @claimed TABLE (
+        ClaimId INT,
+        ClaimNumber NVARCHAR(40),
+        PatientId NVARCHAR(20),
+        BillingProviderId NVARCHAR(20),
+        PayerId NVARCHAR(30),
+        PayerName NVARCHAR(80),
+        ServiceDate DATE,
+        ClaimAmount DECIMAL(12,2),
+        PlaceOfService CHAR(2),
+        DiagnosisCode NVARCHAR(10),
+        Status NVARCHAR(20),
+        Notes NVARCHAR(200)
+      );
+
+      UPDATE dbo.Claims
+      SET Status = N'PROCESSED'
+      OUTPUT
+        inserted.ClaimId,
+        inserted.ClaimNumber,
+        inserted.PatientId,
+        inserted.BillingProviderId,
+        inserted.PayerId,
+        inserted.PayerName,
+        inserted.ServiceDate,
+        inserted.ClaimAmount,
+        inserted.PlaceOfService,
+        inserted.DiagnosisCode,
+        inserted.Status,
+        inserted.Notes
+      INTO @claimed
+      WHERE Status = N'PENDING';
+
+      SELECT
+        c.ClaimId,
+        c.ClaimNumber,
+        c.PatientId,
+        p.MemberId,
+        p.LastName,
+        p.FirstName,
+        ISNULL(p.MiddleName, '') AS MiddleName,
+        CONVERT(VARCHAR(8), p.BirthDate, 112) AS BirthDate,
+        p.Sex,
+        p.Street,
+        p.City,
+        p.State,
+        p.Zip,
+        ISNULL(p.Phone, '') AS Phone,
+        c.BillingProviderId,
+        pr.Npi AS BillingNpi,
+        pr.OrgName AS BillingOrgName,
+        pr.Street AS BillingStreet,
+        pr.City AS BillingCity,
+        pr.State AS BillingState,
+        pr.Zip AS BillingZip,
+        ISNULL(pr.Taxonomy, '') AS BillingTaxonomy,
+        c.PayerId,
+        c.PayerName,
+        CONVERT(VARCHAR(8), c.ServiceDate, 112) AS ServiceDate,
+        CAST(c.ClaimAmount AS VARCHAR(20)) AS ClaimAmount,
+        c.PlaceOfService,
+        c.DiagnosisCode,
+        c.Status,
+        ISNULL(c.Notes, '') AS Notes,
+        ISNULL((
+          SELECT STRING_AGG(
+            CONCAT(
+              CAST(cl.LineNumber AS VARCHAR(10)), N'^',
+              cl.ProcedureCode, N'^',
+              ISNULL(cl.Modifier1, N''), N'^',
+              CAST(cl.ChargeAmount AS VARCHAR(20)), N'^',
+              CAST(cl.Units AS VARCHAR(20)), N'^',
+              CONVERT(VARCHAR(8), cl.ServiceDate, 112)
+            ),
+            N'|'
+          ) WITHIN GROUP (ORDER BY cl.LineNumber)
+          FROM dbo.ClaimLines cl
+          WHERE cl.ClaimId = c.ClaimId
+        ), '') AS LinesBlob
+      FROM @claimed c
+      INNER JOIN dbo.Patients p ON p.PatientId = c.PatientId
+      INNER JOIN dbo.Providers pr ON pr.ProviderId = c.BillingProviderId
+    </SQL>
+  </Execute>
+  <XMLOut var="records" />
+</SQLXML>

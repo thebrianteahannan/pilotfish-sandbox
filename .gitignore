@@ -7,6 +7,11 @@ data/
 debug-trace/
 **/debug-trace/
 logs/
+**/logs/
+
+# Large vendor / reference trees (keep local only)
+PilotFish_V2/
+PilotFish_Documentation/
 
 # Large / non-route artifacts
 eip.war*
@@ -22,6 +27,18 @@ Clients/**/eip-root/*.mv.db
 Clients/**/eip-root/*.trace.db
 Clients/Med Rec/database/medreceivables-original.mv.db
 Clients/Med Rec/CAT_GAN_Expanse_Deploy/
+Clients/Med Rec/deploy/
+Clients/Med Rec/funky-chars-issues/
+
+# Demo runtime scratch (keep documents/ route PDFs and .gitkeep placeholders)
+Clients/Demos/**/output/**
+!Clients/Demos/**/output/**/.gitkeep
+Clients/Demos/**/input/**
+Clients/Demos/**/Chat_User_Prompts*.pdf
+
+# Local process logs / helpers
+Clients/CRL Plus/sandbox/*.log
+Clients/CRL Plus/sandbox/*.out
 
 # Local tooling
 .venv*/

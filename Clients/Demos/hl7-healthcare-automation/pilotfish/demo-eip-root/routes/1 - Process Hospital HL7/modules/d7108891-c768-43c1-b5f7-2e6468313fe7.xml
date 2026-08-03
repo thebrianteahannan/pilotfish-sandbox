@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="d7108891-c768-43c1-b5f7-2e6468313fe7" name="Archive Inbound Envelope" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$HL7_VALIDATION_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('com.pilotfish.FileName') + '_received.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

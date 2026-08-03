@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="d6e73f1e-cb53-474d-8e71-acdcf42fab47" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="14e24d1d-7955-4c40-acc8-b99dbb070431" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="30c7c18d-5c8b-4fa9-ac6b-ffe0fddff0b2" name="Rule 1 - Write Kickout" type="XPATH">
+               <condition>//ValidationAdvanced = 'FAIL' or //ValidationBasic = 'FAIL'</condition>
+            </output>
+            <output id="210dfe21-e6b9-42ab-beff-d58df2b39713" name="Rule 2 - Insert Message SQL, Send To Clearinghouse" type="XPATH">
+               <condition>//ValidationAdvanced = 'PASS'</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

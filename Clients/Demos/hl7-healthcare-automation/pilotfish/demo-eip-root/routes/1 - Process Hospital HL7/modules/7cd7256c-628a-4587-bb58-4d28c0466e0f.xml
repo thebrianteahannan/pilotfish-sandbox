@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7cd7256c-628a-4587-bb58-4d28c0466e0f" name="Write Validation Snapshot" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$HL7_VALIDATION_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('com.pilotfish.FileName') + '_validated.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

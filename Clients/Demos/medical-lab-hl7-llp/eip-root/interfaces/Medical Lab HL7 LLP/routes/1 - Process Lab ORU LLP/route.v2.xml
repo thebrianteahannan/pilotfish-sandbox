@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="abf53b70-279d-491c-bdc8-ef50e228ba4a" name="1 - Process Lab ORU LLP">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="963226e5-1ed7-4cb0-9aff-3e513b6243a6" moduleId="3b2d8833-f205-4ad7-b6c0-fed3cb8b784f" label="Lab HL7 LLP Inbound" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="729eb0d8-6ee8-4123-9a41-6b74f9b8c980" moduleId="4dd656a5-7a8b-4e08-8325-141a9b57f9d2" label="Archive Inbound ORU" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="4887f943-6d99-41c1-a1fb-15945d10b331" moduleId="82c366a3-8954-4561-b688-2b69ecca4b23" label="HL7 Parse Validation" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="a7e73651-94d5-49bc-bb3e-ce2899809ff8" moduleId="2550b5ed-c0e0-4d91-b132-9a909bc64c5d" label="Audit Outbound ORU" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="0eb9bfdc-6023-41ce-8683-f3a050d24066" moduleId="6b512af3-8b00-497d-970f-8734544435fc" label="Send ORU To MEDITECH LLP" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="1c74c0c9-0275-4c76-aa60-e8bdde92da90" sourceNodeId="963226e5-1ed7-4cb0-9aff-3e513b6243a6" targetNodeId="729eb0d8-6ee8-4123-9a41-6b74f9b8c980" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="230913c3-1dcd-47da-be30-9f7852793c1d" sourceNodeId="729eb0d8-6ee8-4123-9a41-6b74f9b8c980" targetNodeId="4887f943-6d99-41c1-a1fb-15945d10b331" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="056b0fb7-2c4c-4f9d-9c88-1e07a79d5e3f" sourceNodeId="4887f943-6d99-41c1-a1fb-15945d10b331" targetNodeId="a7e73651-94d5-49bc-bb3e-ce2899809ff8" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="d74f8408-07b7-4f58-af26-a6dddaab5cd2" sourceNodeId="a7e73651-94d5-49bc-bb3e-ce2899809ff8" targetNodeId="0eb9bfdc-6023-41ce-8683-f3a050d24066" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="9e8558d2-5bf6-46c4-95e9-f21bcdc21834" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="c5e3f298-ea17-4fe5-91c5-62d46af797d4" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="df3342d9-4491-4b72-8879-07a8d50086f2" name="Rule 1 - Write SNIP Results" type="XPATH">
+               <condition>count(.//CLAIMID | .//ClaimId) &gt; 0 and string-length(normalize-space(string((.//CLAIMID | .//ClaimId)[1]))) &gt; 0</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>
