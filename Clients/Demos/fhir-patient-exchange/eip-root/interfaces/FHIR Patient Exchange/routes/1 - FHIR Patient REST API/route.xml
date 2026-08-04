@@ -9,7 +9,7 @@
             <TransportTarget name="Create Patient Response" />
           </Targets>
           <Condition>
-            <OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'POST' &amp;&amp; 'Patient'.equalsIgnoreCase(String.valueOf(getAttribute('com.pilotfish.ResourceName'))) &amp;&amp; 'PASS'.equals(String.valueOf(getAttribute('fhir.ValidationStatus')))</OGNLExpression>
+            <OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'POST' &amp;&amp; 'Patient'.equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName')) &amp;&amp; getAttribute('fhir.ValidationStatus') == 'PASS'</OGNLExpression>
           </Condition>
         </Rule>
         <Rule>
@@ -17,7 +17,7 @@
             <TransportTarget name="Bad Request Response" />
           </Targets>
           <Condition>
-            <OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'POST' &amp;&amp; 'Patient'.equalsIgnoreCase(String.valueOf(getAttribute('com.pilotfish.ResourceName')))</OGNLExpression>
+            <OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'POST' &amp;&amp; 'Patient'.equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName'))</OGNLExpression>
           </Condition>
         </Rule>
         <Rule>
@@ -25,7 +25,7 @@
             <TransportTarget name="Read Patient Response" />
           </Targets>
           <Condition>
-            <OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'GET' &amp;&amp; 'Patient'.equalsIgnoreCase(String.valueOf(getAttribute('com.pilotfish.ResourceName'))) &amp;&amp; getAttribute('com.pilotfish.ResourceID') != null &amp;&amp; !String.valueOf(getAttribute('com.pilotfish.ResourceID')).trim().isEmpty()</OGNLExpression>
+            <OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'GET' &amp;&amp; 'Patient'.equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName')) &amp;&amp; getAttribute('com.pilotfish.ResourceID') != null &amp;&amp; getAttribute('com.pilotfish.ResourceID').toString().trim().length() &gt; 0</OGNLExpression>
           </Condition>
         </Rule>
         <Rule>
@@ -111,7 +111,7 @@
       <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Validation Status">
         <ModuleConfig>
           <ExecuteProcessor>true</ExecuteProcessor>
-          <AttributePairs>[eip_pair:fhir.ValidationStatus:eip_name:{ognl:(getAttribute('fhir.HasPatientType') != null &amp;&amp; getAttribute('fhir.LogicalId') != null &amp;&amp; !String.valueOf(getAttribute('fhir.LogicalId')).trim().isEmpty() &amp;&amp; getAttribute('fhir.PatientId') != null &amp;&amp; getAttribute('fhir.HasName') != null) ? 'PASS' : 'FAIL'}:eip_value]</AttributePairs>
+          <AttributePairs>[eip_pair:fhir.ValidationStatus:eip_name:{ognl:(getAttribute('fhir.HasPatientType') != null &amp;&amp; getAttribute('fhir.LogicalId') != null &amp;&amp; getAttribute('fhir.LogicalId').toString().trim().length() &gt; 0 &amp;&amp; getAttribute('fhir.PatientId') != null &amp;&amp; getAttribute('fhir.HasName') != null) ? 'PASS' : 'FAIL'}:eip_value]</AttributePairs>
           <AttributeScope>Transaction</AttributeScope>
           <GlobalAttributes>BUCKET</GlobalAttributes>
         </ModuleConfig>
@@ -251,7 +251,7 @@ VALUES ('REST', ?, ?, ?, '', 0, 'PASS', 'rest-api', ?);</Query>
       <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Read Status Code">
         <ModuleConfig>
           <ExecuteProcessor>true</ExecuteProcessor>
-          <AttributePairs>[eip_pair:com.pilotfish.HTTPResponseCode:eip_name:{ognl:(getAttribute('fhir.FoundRaw') != null &amp;&amp; !String.valueOf(getAttribute('fhir.FoundRaw')).trim().isEmpty()) ? '200' : '404'}:eip_value]</AttributePairs>
+          <AttributePairs>[eip_pair:com.pilotfish.HTTPResponseCode:eip_name:{ognl:(getAttribute('fhir.FoundRaw') != null &amp;&amp; getAttribute('fhir.FoundRaw').toString().trim().length() &gt; 0) ? '200' : '404'}:eip_value]</AttributePairs>
           <AttributeScope>Transaction</AttributeScope>
           <GlobalAttributes>BUCKET</GlobalAttributes>
         </ModuleConfig>

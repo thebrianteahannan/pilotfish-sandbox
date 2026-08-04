@@ -4,7 +4,7 @@
       <ExecuteProcessor>true</ExecuteProcessor>
       
           
-      <AttributePairs>[eip_pair:fhir.ValidationStatus:eip_name:{ognl:(getAttribute('fhir.HasPatientType') != null &amp;&amp; getAttribute('fhir.LogicalId') != null &amp;&amp; !String.valueOf(getAttribute('fhir.LogicalId')).trim().isEmpty() &amp;&amp; getAttribute('fhir.PatientId') != null &amp;&amp; getAttribute('fhir.HasName') != null) ? 'PASS' : 'FAIL'}:eip_value]</AttributePairs>
+      <AttributePairs>[eip_pair:fhir.ValidationStatus:eip_name:{ognl:(getAttribute('fhir.HasPatientType') != null &amp;&amp; getAttribute('fhir.LogicalId') != null &amp;&amp; getAttribute('fhir.LogicalId').toString().trim().length() &gt; 0 &amp;&amp; getAttribute('fhir.PatientId') != null &amp;&amp; getAttribute('fhir.HasName') != null) ? 'PASS' : 'FAIL'}:eip_value]</AttributePairs>
       
           
       <AttributeScope>Transaction</AttributeScope>

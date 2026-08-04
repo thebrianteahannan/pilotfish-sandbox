@@ -4,7 +4,7 @@
       <ExecuteProcessor>true</ExecuteProcessor>
       
           
-      <AttributePairs>[eip_pair:com.pilotfish.HTTPResponseCode:eip_name:{ognl:(getAttribute('fhir.FoundRaw') != null &amp;&amp; !String.valueOf(getAttribute('fhir.FoundRaw')).trim().isEmpty()) ? '200' : '404'}:eip_value]</AttributePairs>
+      <AttributePairs>[eip_pair:com.pilotfish.HTTPResponseCode:eip_name:{ognl:(getAttribute('fhir.FoundRaw') != null &amp;&amp; getAttribute('fhir.FoundRaw').toString().trim().length() &gt; 0) ? '200' : '404'}:eip_value]</AttributePairs>
       
           
       <AttributeScope>Transaction</AttributeScope>
