@@ -177,6 +177,24 @@ Capture answers in the interface `DESIGN.md` (see §8). If missing, ask the user
 
 Document chosen ports in `README.md` before `compose up`.
 
+### 1.1 LAN access (required when spinning up a Web UI)
+
+Whenever an interface Web UI is brought up for local demo / review (`docker compose up`, smoke test, or “spin it up”), agents **must** expose it on the machine’s **192.x LAN address** as well as `localhost`, so it can be opened from phones, tablets, and other devices on the same network.
+
+**Required every time:**
+
+1. Detect the host’s primary IPv4 on a `192.*` interface (this Sandbox’s usual address is `192.168.68.52` on `en0`; re-detect — do not hardcode forever if DHCP changes).
+2. Publish the Web UI with Docker host port mapping (already binds `0.0.0.0` by default) — do **not** bind only to `127.0.0.1`.
+3. Set compose env `LAN_HINT=http://<192.x.x.x>:<webui-port>/` so the UI nav shows the LAN link.
+4. List **both** URLs in `README.md` and in the agent summary when the stack is running:
+   - Local: `http://localhost:<port>/`
+   - LAN: `http://192.x.x.x:<port>/`
+5. Prefer Flask/Web UI `host=0.0.0.0` (already the demo pattern).
+
+**Anti-pattern:** shipping or announcing only `localhost` / `127.0.0.1` when the user needs to review from another device.
+
+For **PDFs and other review files**, also follow §6.2 (serve under `/documents/…` and paste LAN browser links — do not rely on Google Drive alone).
+
 ---
 
 ## 2. Standard directory scaffold
@@ -309,6 +327,7 @@ Do not refactor unrelated demos. Prefer copying the closest existing demo assemb
 - Bind-mount runtime interfaces and `input/` / `output/` / `logs/` as other demos do.
 - Heap: if SNIP (or similarly heavy) processors load, set sufficient `CATALINA_OPTS` (EDI demo uses ~6GB max) and document why.
 - Web UI `depends_on` EIP when useful; document cold-start wait (often 60–90s).
+- **LAN:** set `LAN_HINT` to `http://<192.x.x.x>:<webui-port>/` (see §1.1). Host ports must remain reachable on the LAN interface; announce both localhost and LAN URLs after `compose up`.
 - Secrets: demo password may match existing demos for local convenience, but **DESIGN.md and README must say demo-only** — never invent “production-ready” claims around `sa` + shared passwords.
 - Prefer least-privilege DB users when creating new non-demo client interfaces.
 
@@ -339,9 +358,26 @@ Any time you **create a new interface** (or add/change routes enough that diagra
    - `documents/<ShortName>_V2_Route_Diagrams.pdf`
 4. PDF layout: **no cover page**; green brand header (and route title) on **every** page.
 5. Expose the PDF from the Web UI at `/documents/route-diagrams.pdf` (mount `./documents` read-only; Routes tab link **Route design PDF**).
-6. Mention the PDF path in `README.md`.
+6. Mention the PDF path in `README.md` **and** announce browser URLs per §6.2.
 
 Skipping the PDF requires the user to opt out explicitly; “optional” is not the default.
+
+### 6.2 Browser / LAN links for every deliverable PDF (**required**)
+
+Whenever an agent produces a PDF the user needs to review (route diagrams, research notes, design write-ups, playbooks for an interface, etc.), **do not leave it as a git-only / Finder-only file**. Drive uploads often break when credentials expire — always provide a **clickable browser link** on the LAN.
+
+**Required every time a PDF is created or updated:**
+
+1. Write the PDF under the interface’s `documents/` (or Sandbox `docs/` if it is a global playbook).
+2. Ensure the Web UI (or a short-lived static server bound to `0.0.0.0`) **serves** that file over HTTP with `Content-Type: application/pdf` and inline disposition (open in browser, not force-download-only).
+3. Prefer stable Flask routes under `/documents/…` with `./documents` mounted read-only (pattern: `/documents/route-diagrams.pdf`, `/documents/<name>.pdf`). Add a nav / Routes-tab link when the UI has chrome.
+4. With the stack up, **paste both URLs in the agent summary** (and README when durable):
+   - Local: `http://localhost:<webui-port>/documents/<file>.pdf`
+   - LAN: `http://<192.x.x.x>:<webui-port>/documents/<file>.pdf`
+5. Verify with `curl` that the LAN URL returns HTTP 200 and `application/pdf` before calling the work done.
+6. Google Drive upload remains optional/extra when the `Google Drive` secret works — **never** the only way to view the file. If Drive fails, the LAN browser link is still mandatory.
+
+**Anti-pattern:** “PDF is at `documents/Foo.pdf` in the repo” with no running HTTP URL the user can open from a phone or tablet.
 
 ---
 
@@ -354,9 +390,10 @@ Minimum bar:
 - [ ] Kickout / fail path exercised once **or** explicitly marked “not implemented” in DESIGN.md
 - [ ] Routes tab renders `route.v2.xml`
 - [ ] **Route design PDF** written under `documents/` (`--config changed`)
+- [ ] **Browser/LAN PDF URLs** work (HTTP 200, `application/pdf`) for every review PDF (§6.2)
 - [ ] No silent claim of partner-grade validation unless gated
 
-Record: ports, sample used, output paths, and any known failures (e.g. SNIP noise).
+Record: ports, sample used, output paths, LAN PDF links, and any known failures (e.g. SNIP noise).
 
 ---
 
@@ -453,8 +490,10 @@ Every interface README must include:
 2. Prerequisites (`pilotfish-eip:23R1`, Docker)
 3. `docker compose up` instructions
 4. Ports table
-5. Smoke / useful commands
-6. Explicit **Demo only** callouts for credentials / PHI / validation limits
+5. **Local and LAN Web UI URLs** (`http://localhost:<port>/` and `http://192.x.x.x:<port>/`)
+6. **Browser links** for review PDFs under `/documents/…` (local + LAN) — see §6.2
+7. Smoke / useful commands
+8. Explicit **Demo only** callouts for credentials / PHI / validation limits
 
 ---
 
@@ -470,6 +509,10 @@ Every interface README must include:
 | Claiming “HL7 automation” / “SNIP compliant” from heuristic passes | Accurate language in README + DESIGN |
 | World-writable PHI without demo labeling | Label + restrict for client work |
 | Skipping DESIGN.md because “it’s just a demo” | Short DESIGN.md still required |
+| Announcing only `localhost` after spin-up | Also set `LAN_HINT` + list `http://192.x.x.x:<port>/` (§1.1) |
+| Binding Web UI / publish to `127.0.0.1` only | Keep default `0.0.0.0` host publish so LAN devices can connect |
+| Leaving a review PDF only on disk / in git / Drive | Serve via Web UI `/documents/…` and paste LAN browser URL (§6.2) |
+| Relying solely on Google Drive for PDF review | Drive is optional; LAN HTTP link is required even when Drive works |
 
 ---
 
@@ -483,7 +526,9 @@ An interface construct is done when:
 4. Runtime config and diagrams agree **or** drift is documented.  
 5. Web/route viewer present when routes are part of the deliverable.  
 6. **Route design PDF** exists under `documents/` (generated with `--config changed`).  
-7. Agent summary lists known limitations in plain language (no compliance theater).
+7. **LAN URL** is set (`LAN_HINT`) and both localhost + `192.x` URLs are listed when the UI is running (§1.1).  
+8. **Every review PDF** has a working browser link on localhost **and** `192.x` (§6.2), pasted in the agent summary.  
+9. Agent summary lists known limitations in plain language (no compliance theater).
 
 ---
 
@@ -491,7 +536,12 @@ An interface construct is done when:
 
 ```bash
 cd "Clients/Demos/<slug>"
+# detect LAN (example); set LAN_HINT in compose before up
+LAN_IP=$(ipconfig getifaddr en0)   # macOS; expect 192.*
+# ensure docker-compose.yml has: LAN_HINT: "http://192.x.x.x:<webui-port>/"  (resolved LAN IP)
 docker compose up -d --build
+echo "Local: http://localhost:<webui-port>/"
+echo "LAN:   http://${LAN_IP}:<webui-port>/"
 docker compose logs -f pilotfish
 # happy path: drop sample or use Web UI
 ls -la output/*
@@ -499,5 +549,10 @@ python3 tools/export_route_diagrams.py --config changed
 # ensure PDF is under documents/ (exporter may write output/route-diagrams/ — copy if needed)
 mkdir -p documents && cp -f output/route-diagrams/*Route_Diagrams*.pdf documents/ 2>/dev/null || true
 ls -la documents/
+# always give the user a browser link (Drive optional / flaky)
+echo "PDF local: http://localhost:<webui-port>/documents/route-diagrams.pdf"
+echo "PDF LAN:   http://${LAN_IP}:<webui-port>/documents/route-diagrams.pdf"
+curl -sS -o /dev/null -w "%{http_code} %{content_type}\n" \
+  "http://${LAN_IP}:<webui-port>/documents/route-diagrams.pdf"
 docker compose down -v   # destroys DB volume — warn user first
 ```
