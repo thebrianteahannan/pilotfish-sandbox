@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="73bafbc3-748f-4a81-8269-e3e54b575f84" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="a93f4879-3d44-4442-bf4e-c4be2ac68f68" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="0f7027c2-0fda-4f77-9bc9-244875af4256" name="Rule 1 - Create Patient Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="0285a96b-0ed4-4842-9004-4baa16a99102" name="Rule 2 - Bad Request Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="ec16e2b1-98b3-4f7c-9f64-26812eb438ac" name="Rule 3 - Read Patient Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="5e46f64f-9dbf-4050-b68b-8385b364bc92" name="Rule 4 - Method Not Allowed Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

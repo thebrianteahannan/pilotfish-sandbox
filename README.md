@@ -24,3 +24,4 @@ Agents constructing any interface under `Clients/` must follow:
 | HL7 Healthcare Automation | `Clients/Demos/hl7-healthcare-automation/` |
 | Medical Lab HL7 LLP → MEDITECH | `Clients/Demos/medical-lab-hl7-llp/` |
 | Medical Device HL7 → EHR | `Clients/Demos/medical-device-hl7-ehr/` |
+| FHIR Patient Exchange | `Clients/Demos/fhir-patient-exchange/` |

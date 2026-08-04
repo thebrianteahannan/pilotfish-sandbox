@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="6426fa8a-b17d-40bc-8674-4c415bab9c1b" name="FHIR R4 REST" type="RESTful Web Service" tag="Listener" class="com.pilotfish.eip.modules.http.rest.RESTfulWebServiceListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <CLIAllowed>false</CLIAllowed>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <FIFOQueueName/>
+      
+        
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      
+        
+      <SERVICE_NAME>fhir</SERVICE_NAME>
+      
+        
+      <USER_NAME/>
+      
+        
+      <PASSWORD/>
+      
+        
+      <POST_SUPPORTED>true</POST_SUPPORTED>
+      
+        
+      <GET_SUPPORTED>true</GET_SUPPORTED>
+      
+        
+      <PUT_SUPPORTED>false</PUT_SUPPORTED>
+      
+        
+      <DELETE_SUPPORTED>false</DELETE_SUPPORTED>
+      
+        
+      <SupportedResources>Patient</SupportedResources>
+      
+        
+      <Timeout>60</Timeout>
+      
+        
+      <RequireSSL>false</RequireSSL>
+      
+        
+      <Synchronous>true</Synchronous>
+      
+        
+      <HTTPHeaders/>
+      
+        
+      <UseLegacyTokenParam>false</UseLegacyTokenParam>
+      
+        
+      <WadlFile/>
+      
+      
+   </ModuleConfig>
+</Module>

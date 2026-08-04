@@ -1,0 +1,98 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-fhir-sqlserver
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "PilotFish_Demo1!"
+      MSSQL_PID: Developer
+    ports:
+      - "14337:1433"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"PilotFish_Demo1!\" -C -Q \"SELECT 1\" || exit 1",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  sqlserver-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-fhir-sqlserver-init
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ./sql:/sql:ro
+    entrypoint:
+      - /bin/bash
+      - -lc
+      - |
+        set -euo pipefail
+        echo "Initializing FHIR Patient Exchange demo database..."
+        /opt/mssql-tools18/bin/sqlcmd \
+          -S sqlserver \
+          -U sa \
+          -P 'PilotFish_Demo1!' \
+          -C \
+          -i /sql/01_init.sql
+        echo "SQL Server seed complete."
+
+  pilotfish:
+    build:
+      context: ./pilotfish
+    image: pilotfish-fhir-patient-exchange:23R1
+    container_name: pf-fhir-pilotfish
+    restart: unless-stopped
+    depends_on:
+      sqlserver-init:
+        condition: service_completed_successfully
+    environment:
+      CATALINA_OPTS: "-Xms512M -Xmx2048M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8102:8080"
+    volumes:
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+
+  webui:
+    build:
+      context: ./webui
+    image: pilotfish-fhir-webui:latest
+    container_name: pf-fhir-webui
+    restart: unless-stopped
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      pilotfish:
+        condition: service_started
+    environment:
+      DB_HOST: sqlserver
+      DB_PORT: "1433"
+      DB_USER: sa
+      DB_PASSWORD: "PilotFish_Demo1!"
+      DB_NAME: FhirPatientExchangeDemo
+      FHIR_STORE_DIR: /output/fhir-store
+      SAMPLE_DIR: /samples
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      ROUTE_PDF_NAME: FHIR_V2_Route_Diagrams.pdf
+      RESEARCH_PDF_NAME: FHIR_REST_Interface_Research.pdf
+      ENV_SETTINGS_FILE: /environment-settings.conf
+      WEBUI_PORT: "8103"
+      LAN_HINT: "http://192.168.68.52:8103/"
+      FHIR_BASE_URL: "http://pilotfish:8080/eip/rest/fhir"
+      FHIR_PUBLIC_BASE_URL: "http://192.168.68.52:8102/eip/rest/fhir"
+    ports:
+      - "8103:8103"
+    volumes:
+      - ./output:/output:ro
+      - ./samples:/samples:ro
+      - ./documents:/documents:ro
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/environment-settings.conf:ro
+      - ./eip-root/interfaces/FHIR Patient Exchange/routes:/routes:ro
