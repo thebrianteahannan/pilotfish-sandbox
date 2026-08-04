@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="77dfc3dd-ffe0-4ad0-a267-e98d95d2d743" name="Create Response Headers" type="AddHttpResponseHeadersProcessor" tag="Processor" class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <HeaderTable>[eip_pair:Content-Type:eip_name:application/fhir+json:eip_value][eip_pair:Location:eip_name:{ognl:'/eip/rest/fhir/Patient/' + getAttribute('fhir.LogicalId')}:eip_value]</HeaderTable>
+      
+        
+   </ModuleConfig>
+</Module>

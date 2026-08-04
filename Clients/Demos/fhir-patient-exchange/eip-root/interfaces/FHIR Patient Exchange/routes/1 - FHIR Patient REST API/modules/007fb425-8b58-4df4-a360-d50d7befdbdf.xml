@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="007fb425-8b58-4df4-a360-d50d7befdbdf" name="Detect Patient Type" type="RegExIntoTransactionAttributeProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <RegEx>"resourceType"\s*:\s*"Patient"</RegEx>
+      
+          
+      <AttributeName>fhir.HasPatientType</AttributeName>
+      
+          
+      <MatchGroupNumber>0</MatchGroupNumber>
+      
+        
+   </ModuleConfig>
+</Module>

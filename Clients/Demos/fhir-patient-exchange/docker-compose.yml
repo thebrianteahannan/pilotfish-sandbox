@@ -57,7 +57,6 @@ services:
     ports:
       - "8102:8080"
     volumes:
-      - ./input:/opt/pilotfish/input
       - ./output:/opt/pilotfish/output
       - ./logs:/usr/local/tomcat/webapps/eip/logs
 
@@ -78,21 +77,20 @@ services:
       DB_USER: sa
       DB_PASSWORD: "PilotFish_Demo1!"
       DB_NAME: FhirPatientExchangeDemo
-      INBOUND_DIR: /inbound
       FHIR_STORE_DIR: /output/fhir-store
-      VALIDATION_DIR: /output/validation
-      KICKOUT_DIR: /output/kickout
       SAMPLE_DIR: /samples
       ROUTES_DIR: /routes
       DOCUMENTS_DIR: /documents
       ROUTE_PDF_NAME: FHIR_V2_Route_Diagrams.pdf
+      RESEARCH_PDF_NAME: FHIR_REST_Interface_Research.pdf
       ENV_SETTINGS_FILE: /environment-settings.conf
       WEBUI_PORT: "8103"
       LAN_HINT: "http://192.168.68.52:8103/"
+      FHIR_BASE_URL: "http://pilotfish:8080/eip/rest/fhir"
+      FHIR_PUBLIC_BASE_URL: "http://192.168.68.52:8102/eip/rest/fhir"
     ports:
       - "8103:8103"
     volumes:
-      - ./input/inbound:/inbound
       - ./output:/output:ro
       - ./samples:/samples:ro
       - ./documents:/documents:ro

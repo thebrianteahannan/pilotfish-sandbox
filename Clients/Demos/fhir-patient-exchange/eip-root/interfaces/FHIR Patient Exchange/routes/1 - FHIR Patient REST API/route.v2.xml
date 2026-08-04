@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="3b3e78f2-3aad-4a99-b445-11baed5aa398" name="1 - FHIR Patient REST API">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="d9c19007-e0df-4932-960d-45efbeebdeb5" moduleId="f2bf7d56-ee7d-4a7b-a4b0-630b05b65d9f" label="FHIR R4 REST" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="0cf01339-3fa0-477f-a236-57a0fd27a29b" moduleId="fee265ed-ce13-48f0-a02c-c877799f9c40" label="Save Raw Body" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="f2a141fb-8645-450d-a78e-6a8c009d9b4d" moduleId="538fcfa7-2cd1-418a-8a95-7d88522114a9" label="Extract Logical Id" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="979f853b-8ef7-4198-aac3-ca20c0d3e517" moduleId="b131d042-c3c7-44a9-addd-0ba041d10553" label="Extract MRN" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="5621f3dc-25c6-4543-a86a-bb775264b416" moduleId="007fb425-8b58-4df4-a360-d50d7befdbdf" label="Detect Patient Type" x="1040.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="3d089c25-e64b-4407-be10-9b7b8b1f6aa1" moduleId="7d836186-6bc6-4b46-a951-653174529db3" label="Detect Name" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="7c3ff3fc-cce5-45d4-b184-111da8941959" moduleId="bcc3a47b-7104-4b88-bd28-d0ed34862fb7" label="Set Validation Status" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="21856c28-a39f-4b07-a626-fadace8ca25d" moduleId="d59d2501-6835-4a76-be40-fdadc92425e7" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="120.0"/>
+      <Node id="5e77a6ae-0b6f-4903-901e-238c92198bde" moduleId="7103d67a-be35-4c52-9745-c6ab87c65ea2" label="Restore Body For Persist" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="24442e39-c055-4f7d-942f-93f79ca7fcc9" moduleId="9af5cfd1-81b3-4801-be44-4ae641ab7ff7" label="Write FHIR Store File" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="3ba8baac-61d1-47e6-92d7-fbd78bac0cff" moduleId="e761b360-df5d-42d8-b9ba-4daa6c1d3509" label="Upsert Patient SQL" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="b4988a6c-b8c9-45e5-9b8c-42b914e0f993" moduleId="253837eb-2712-47e4-a7d3-f6cdae16facf" label="Restore Body For Response" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="f74fe739-289d-45ab-95cf-dc1750286074" moduleId="426cd004-496f-4144-b9af-08f2cbac914f" label="Set 201 Created" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="5ad5e6a6-88a7-473f-8fce-e5340e2c000e" moduleId="c4b0c2b9-49e5-4554-9d60-cdba6041734c" label="Create Response Headers" x="2600.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="f3805cdb-3524-4308-97f2-11483a81deed" moduleId="4f894be7-83f5-418d-989c-d4b992026d78" label="Create Patient Response" x="2860.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="3e32619b-1fe6-4b37-be32-fa6fb749502d" moduleId="5985f15a-8de0-402b-ae59-5eb148a14f57" label="Select Patient SQL" x="1300.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="925f8b10-4a44-44ad-bc78-f7e7162b71c4" moduleId="890413e2-9656-4967-93c7-58b49489de80" label="Detect SQL Hit" x="1560.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="01c0be0e-8c96-4fa2-929b-869434952dcc" moduleId="54074fdc-0f9a-4263-8b8c-4f4b0d20401e" label="Map SQL To FHIR JSON" x="1820.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="523ffd77-f68b-4455-9471-1da0a208776a" moduleId="22410ac5-e17a-48d5-bf45-357c3bfb262a" label="Set Read Status Code" x="2080.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="28ebba26-956c-4931-80e2-405d867c36af" moduleId="53b77673-1266-4a52-9fb7-9490da265925" label="Read Response Headers" x="2340.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="6973b977-735a-4123-a242-b652d9ced6f0" moduleId="19ba0202-1e4e-451a-b2ae-578822759d1d" label="Read Patient Response" x="2600.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="5b86cf14-afae-42dd-bda2-e83e12171fc3" moduleId="206a773b-741b-4ab0-950e-80029156a317" label="Load 400 Outcome" x="1300.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="1dcd1513-17b9-4e9f-81d2-d384511cf292" moduleId="b3f18afd-3523-4dfd-8223-9f273fda9bd6" label="Set 400 Bad Request" x="1560.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="388cdc0e-af87-4e6e-8d49-578708e17764" moduleId="4467d6e3-7ba9-4111-8d2d-6219e296caa5" label="Bad Request Headers" x="1820.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="cf4c6b1b-0175-4fc5-af01-947ca2ef9706" moduleId="34c9c846-c0fe-49cf-a45a-1968d1447a2d" label="Bad Request Response" x="2080.0" y="280.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="f329b2dc-1703-4993-9232-5cac634870c4" moduleId="933b2216-5338-44a2-bec2-50be6adad313" label="Load 405 Outcome" x="1300.0" y="420.0" width="180.0" height="64.0"/>
+      <Node id="3166a36f-cac1-4a02-b8b4-3be1cf3ea1b0" moduleId="57beb8e9-7c3a-47be-9862-6674813f7a13" label="Set 405" x="1560.0" y="420.0" width="180.0" height="64.0"/>
+      <Node id="d7dc3bc1-0d96-45df-9305-8b60402e4041" moduleId="f6db0713-6e7a-486e-a958-628629437fca" label="Method Not Allowed Headers" x="1820.0" y="420.0" width="180.0" height="64.0"/>
+      <Node id="4556e1d5-137c-4777-95ca-b3a92ae5b991" moduleId="090ddd2e-e24a-4c9b-bfb7-6ac664b84a35" label="Method Not Allowed Response" x="2080.0" y="420.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="39873ab4-bc51-4aee-af67-a77ed2a5daaf" sourceNodeId="d9c19007-e0df-4932-960d-45efbeebdeb5" targetNodeId="0cf01339-3fa0-477f-a236-57a0fd27a29b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="9af4c6f0-14fc-409e-8fbb-05bedbdccff8" sourceNodeId="0cf01339-3fa0-477f-a236-57a0fd27a29b" targetNodeId="f2a141fb-8645-450d-a78e-6a8c009d9b4d" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="81500755-988a-47c9-9758-b216735aea02" sourceNodeId="f2a141fb-8645-450d-a78e-6a8c009d9b4d" targetNodeId="979f853b-8ef7-4198-aac3-ca20c0d3e517" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="be27a663-cf0c-4fa7-af82-bb2cc00a608c" sourceNodeId="979f853b-8ef7-4198-aac3-ca20c0d3e517" targetNodeId="5621f3dc-25c6-4543-a86a-bb775264b416" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="2d425d47-43aa-46ed-86d2-b0a05f9874b4" sourceNodeId="5621f3dc-25c6-4543-a86a-bb775264b416" targetNodeId="3d089c25-e64b-4407-be10-9b7b8b1f6aa1" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="1fda5360-66c8-41bc-b7b0-d99277c97ea2" sourceNodeId="3d089c25-e64b-4407-be10-9b7b8b1f6aa1" targetNodeId="7c3ff3fc-cce5-45d4-b184-111da8941959" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="1f28b4ff-729a-4805-808f-6d6f4c23c559" sourceNodeId="5e77a6ae-0b6f-4903-901e-238c92198bde" targetNodeId="24442e39-c055-4f7d-942f-93f79ca7fcc9" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="827315ea-8581-437c-a343-367617ba3ab1" sourceNodeId="24442e39-c055-4f7d-942f-93f79ca7fcc9" targetNodeId="3ba8baac-61d1-47e6-92d7-fbd78bac0cff" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="e182b503-7ad0-4a4f-85b0-ce8d2fbdb781" sourceNodeId="3ba8baac-61d1-47e6-92d7-fbd78bac0cff" targetNodeId="b4988a6c-b8c9-45e5-9b8c-42b914e0f993" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="7ef59b3f-3dc7-4d05-8508-9569727442ad" sourceNodeId="b4988a6c-b8c9-45e5-9b8c-42b914e0f993" targetNodeId="f74fe739-289d-45ab-95cf-dc1750286074" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="901e1e65-7a5a-414b-822b-aff00838e94f" sourceNodeId="f74fe739-289d-45ab-95cf-dc1750286074" targetNodeId="5ad5e6a6-88a7-473f-8fce-e5340e2c000e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="defa78b8-4e50-4460-937a-4f10932dc9b3" sourceNodeId="5ad5e6a6-88a7-473f-8fce-e5340e2c000e" targetNodeId="f3805cdb-3524-4308-97f2-11483a81deed" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="a7d5898a-9a5e-4fee-9a52-c0ba6ec4d997" sourceNodeId="3e32619b-1fe6-4b37-be32-fa6fb749502d" targetNodeId="925f8b10-4a44-44ad-bc78-f7e7162b71c4" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="fc1c925f-554c-4873-8e43-a50c28f7e891" sourceNodeId="925f8b10-4a44-44ad-bc78-f7e7162b71c4" targetNodeId="01c0be0e-8c96-4fa2-929b-869434952dcc" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="eaa72ef8-cb70-478b-a59b-5012137ff08c" sourceNodeId="01c0be0e-8c96-4fa2-929b-869434952dcc" targetNodeId="523ffd77-f68b-4455-9471-1da0a208776a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="5d98fca9-cbf9-4038-8a45-ceba98dfd43e" sourceNodeId="523ffd77-f68b-4455-9471-1da0a208776a" targetNodeId="28ebba26-956c-4931-80e2-405d867c36af" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="b5deedcc-b875-42a1-bc34-e13ca7174b80" sourceNodeId="28ebba26-956c-4931-80e2-405d867c36af" targetNodeId="6973b977-735a-4123-a242-b652d9ced6f0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="c776ab90-3714-4d85-9abf-3f2fc0c6ac89" sourceNodeId="5b86cf14-afae-42dd-bda2-e83e12171fc3" targetNodeId="1dcd1513-17b9-4e9f-81d2-d384511cf292" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="42bcb667-d503-4ca9-9364-02ce196c3cde" sourceNodeId="1dcd1513-17b9-4e9f-81d2-d384511cf292" targetNodeId="388cdc0e-af87-4e6e-8d49-578708e17764" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="2474107c-3e85-40b8-86b8-b6fb6f8c7f66" sourceNodeId="388cdc0e-af87-4e6e-8d49-578708e17764" targetNodeId="cf4c6b1b-0175-4fc5-af01-947ca2ef9706" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="7d1e0884-7aea-41db-a24f-68b96e2b0932" sourceNodeId="f329b2dc-1703-4993-9232-5cac634870c4" targetNodeId="3166a36f-cac1-4a02-b8b4-3be1cf3ea1b0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="3f864137-1895-4d1c-986f-1c1cd0152a51" sourceNodeId="3166a36f-cac1-4a02-b8b4-3be1cf3ea1b0" targetNodeId="d7dc3bc1-0d96-45df-9305-8b60402e4041" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="2c101be3-33cd-4bb3-bd11-c445c4e418f4" sourceNodeId="d7dc3bc1-0d96-45df-9305-8b60402e4041" targetNodeId="4556e1d5-137c-4777-95ca-b3a92ae5b991" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="8e401d25-c437-4d7e-b356-f78cee75fb97" sourceNodeId="7c3ff3fc-cce5-45d4-b184-111da8941959" targetNodeId="21856c28-a39f-4b07-a626-fadace8ca25d" sourceConnector="right-output" targetConnector="router-input:b9ec1ec2-d444-4389-8282-bcb39a8d51fc" condition="true"/>
+      <Connection id="3aaebd44-1869-4287-9dfe-bc54f68ded6a" sourceNodeId="21856c28-a39f-4b07-a626-fadace8ca25d" targetNodeId="5e77a6ae-0b6f-4903-901e-238c92198bde" sourceConnector="router-output:6c95bf80-49ce-4878-8839-3a168234685f" targetConnector="left-input" condition="true"/>
+      <Connection id="bbb1c4e0-99d5-419e-b3e6-c53486679f7b" sourceNodeId="21856c28-a39f-4b07-a626-fadace8ca25d" targetNodeId="3e32619b-1fe6-4b37-be32-fa6fb749502d" sourceConnector="router-output:2ae0e0e2-3b7a-4b7c-a85f-0d73478a68ba" targetConnector="left-input" condition="true"/>
+      <Connection id="1c512c38-999a-4bba-8786-fc940ab1548c" sourceNodeId="21856c28-a39f-4b07-a626-fadace8ca25d" targetNodeId="5b86cf14-afae-42dd-bda2-e83e12171fc3" sourceConnector="router-output:0d98c4f7-8615-4b21-8085-1b1bbdc76819" targetConnector="left-input" condition="true"/>
+      <Connection id="aeac9bb9-fbb5-4a07-aa2d-eff67a44724d" sourceNodeId="21856c28-a39f-4b07-a626-fadace8ca25d" targetNodeId="f329b2dc-1703-4993-9232-5cac634870c4" sourceConnector="router-output:75d2e7e9-5366-402a-8d93-0ac3129c36bf" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

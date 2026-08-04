@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="1bbb3cfc-fd59-4eba-9734-63b1919e214b" name="Set Validation Status" type="TransactionAttributePopulationProcessor" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.ValidationStatus:eip_name:{ognl:(getAttribute('fhir.HasPatientType') != null &amp;&amp; getAttribute('fhir.LogicalId') != null &amp;&amp; !String.valueOf(getAttribute('fhir.LogicalId')).trim().isEmpty() &amp;&amp; getAttribute('fhir.PatientId') != null &amp;&amp; getAttribute('fhir.HasName') != null) ? 'PASS' : 'FAIL'}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

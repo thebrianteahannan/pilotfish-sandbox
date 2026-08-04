@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FHIR Patient Exchange — PilotFish Demo</title>
+  <title>FHIR Patient REST — PilotFish Demo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet" />
@@ -11,12 +11,15 @@
 </head>
 <body>
   <header>
-    <p class="brand">PilotFish · FHIR Demo</p>
-    <h1>FHIR Patient Exchange</h1>
+    <p class="brand">PilotFish · FHIR REST Demo</p>
+    <h1>FHIR Patient REST API</h1>
     <p>
-      Demo of HL7 FHIR R4 Patient / Bundle ingest on PilotFish — inspired by
-      <a href="{{ case_study_url }}" target="_blank" rel="noreferrer">FHIR Integration &amp; CMS interoperability</a>.
-      EHR systems submit FHIR JSON; PilotFish validates, inserts SQL, and writes a mock FHIR store.
+      Synchronous HL7 FHIR R4 Patient create/read on PilotFish
+      <code>RESTfulWebServiceListener</code> — not a directory drop.
+      Research:
+      <a href="/documents/fhir-rest-research.pdf" target="_blank" rel="noreferrer">FHIR REST research PDF</a>.
+      Inspired by
+      <a href="{{ case_study_url }}" target="_blank" rel="noreferrer">PilotFish FHIR / CMS interoperability</a>.
     </p>
     <div class="main-tabs" role="tablist" aria-label="App views">
       <button type="button" class="main-tab active" data-main-tab="demo" role="tab" aria-selected="true">Demo</button>
@@ -27,9 +30,9 @@
     </div>
     <nav class="nav" id="demo-nav">
       <a href="#pipeline">Pipeline</a>
-      <a href="#inject">Submit FHIR</a>
+      <a href="#client">FHIR client</a>
       <a href="#results">Results</a>
-      <a href="/documents/fhir-rest-research.pdf" target="_blank" rel="noreferrer">FHIR REST research PDF</a>
+      <a href="/documents/fhir-rest-research.pdf" target="_blank" rel="noreferrer">Research PDF</a>
       <a href="{{ eip_url }}" target="_blank" rel="noreferrer">PilotFish EIP</a>
       {% if lan_hint %}<a href="{{ lan_hint }}">{{ lan_hint }}</a>{% endif %}
     </nav>
@@ -38,60 +41,65 @@
   <div id="tab-demo">
     <main>
       <section class="panel" id="pipeline">
-        <h2>FHIR R4 exchange pipeline</h2>
-        <p class="section-lead">Directory ingest of FHIR envelopes → structural / business validation → SQL BI + mock FHIR store (kickout on FAIL).</p>
+        <h2>RESTful FHIR pipeline</h2>
+        <p class="section-lead">
+          Public base:
+          <code id="fhir-base">{{ fhir_public_base }}</code>
+          — <code>POST /Patient</code>, <code>GET /Patient/{id}</code>, sync HTTP response.
+        </p>
         <div class="pipeline">
-          <div class="pipe-node src"><strong>EHR / API</strong><span>FHIR R4 JSON<br/>Patient or Bundle</span></div>
-          <div class="pipe-node eng"><strong>Basic Validation</strong><span>resourceType / id</span></div>
-          <div class="pipe-node eng"><strong>Bundle Flag</strong><span>snapshot (not a fork)</span></div>
-          <div class="pipe-node eng"><strong>Advanced Validation</strong><span>MRN / name / entries</span></div>
-          <div class="pipe-node out"><strong>Transports</strong><span>SQL insert<br/>FHIR store .json</span></div>
+          <div class="pipe-node src"><strong>FHIR Client</strong><span>HTTP JSON<br/>application/fhir+json</span></div>
+          <div class="pipe-node eng"><strong>REST Listener</strong><span>Synchronous<br/>/eip/rest/fhir</span></div>
+          <div class="pipe-node eng"><strong>Validate + Route</strong><span>POST create / GET read<br/>or OperationOutcome</span></div>
+          <div class="pipe-node eng"><strong>Persist</strong><span>SQL + fhir-store file</span></div>
+          <div class="pipe-node out"><strong>Sync Response</strong><span>201 / 200 / 404 / 400</span></div>
         </div>
       </section>
 
-      <section class="panel" id="inject">
-        <h2>Submit FHIR from an EHR</h2>
-        <p class="section-lead">Wraps FHIR JSON into an inbound envelope. Route 1 polls every 10s. Demo only — heuristic validation, not a full FHIR validator.</p>
-        <form id="inject-form" class="form-grid">
-          <label>Source system
-            <select name="sourceCode" id="sourceCode">
-              {% for code, name in sources.items() %}
-              <option value="{{ code }}">{{ name }} ({{ code }})</option>
-              {% endfor %}
-            </select>
-          </label>
+      <section class="panel" id="client">
+        <h2>Call the FHIR API</h2>
+        <p class="section-lead">This UI is a FHIR client. It POSTs/GETs the PilotFish REST listener (same calls you can make with curl from any LAN device).</p>
+        <form id="create-form" class="form-grid">
           <label>Sample resource
             <select name="sample" id="sample">
               <option value="">(custom / paste below)</option>
             </select>
           </label>
-          <label class="wide">FHIR R4 JSON
+          <label class="wide">Patient JSON (POST /Patient)
             <textarea name="fhir" id="fhir" rows="12" placeholder='{"resourceType":"Patient",...}'></textarea>
           </label>
           <div class="actions">
-            <button type="submit" class="btn btn-primary" id="submit-btn">Submit resource</button>
-            <span id="status" class="status"></span>
+            <button type="submit" class="btn btn-primary" id="create-btn">POST create</button>
+            <span id="create-status" class="status"></span>
           </div>
         </form>
+        <form id="read-form" class="form-grid" style="margin-top:1.25rem">
+          <label>Patient id
+            <input name="resourceId" id="resourceId" placeholder="pat-alice-001" />
+          </label>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary" id="read-btn">GET read</button>
+            <span id="read-status" class="status"></span>
+          </div>
+        </form>
+        <h3>Last HTTP response</h3>
+        <pre id="http-view" class="viewer">(none yet)</pre>
       </section>
 
       <section class="panel" id="results">
         <div class="row-head">
-          <h2>Results</h2>
+          <h2>Persistence</h2>
           <button type="button" class="btn" id="refresh-btn">Refresh</button>
         </div>
         <div class="split">
           <div>
-            <h3>SQL Server (BI source)</h3>
+            <h3>SQL Server (source of truth)</h3>
             <div id="messages-table" class="table-wrap"></div>
           </div>
           <div>
-            <h3>FHIR store</h3>
+            <h3>FHIR store files</h3>
             <div id="store-list" class="file-list"></div>
             <pre id="store-view" class="viewer"></pre>
-            <h3>Validation / kickout</h3>
-            <div id="val-list" class="file-list"></div>
-            <pre id="val-view" class="viewer"></pre>
           </div>
         </div>
       </section>
@@ -110,6 +118,7 @@
         </select>
       </label>
       <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route design PDF</a>
+      <a class="btn" href="/documents/fhir-rest-research.pdf" target="_blank" rel="noreferrer">Research PDF</a>
       <a class="btn" href="/static/route-viewer/docs.html?config=changed" target="_blank" rel="noreferrer">All routes (print)</a>
       <span id="routes-status" class="status"></span>
     </div>

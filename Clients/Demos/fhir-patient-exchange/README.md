@@ -1,32 +1,24 @@
-# FHIR Patient Exchange Demo
+# FHIR Patient REST Demo
 
-PilotFish eiPlatform demo for HL7 **FHIR R4** exchange (inspired by [FHIR Integration & CMS interoperability](https://healthcare.pilotfishtechnology.com/fhir-integration-cms-0057-f-compliance/)).
+PilotFish eiPlatform demo for **HL7 FHIR R4 REST** Patient create/read (synchronous HTTP), aligned with the research note:
 
-**Important:** The current running stack still uses a directory-listener scaffold. That is **not** the intended FHIR design. Read the research note first:
+- Browser/LAN: http://192.168.68.52:8103/documents/fhir-rest-research.pdf
+- Local: http://localhost:8103/documents/fhir-rest-research.pdf
 
-- Research PDF (browser / LAN): http://192.168.68.52:8103/documents/fhir-rest-research.pdf  
-  (local: http://localhost:8103/documents/fhir-rest-research.pdf)
-- [`documents/FHIR_REST_Interface_Research.pdf`](documents/FHIR_REST_Interface_Research.pdf) — same file on disk
-- [`DESIGN.md`](DESIGN.md) — target REST architecture (rebuild pending)
+## What it does
 
-## What the temporary scaffold does (to be replaced)
-
-1. **EHR systems** submit FHIR R4 Patient or Bundle JSON via the web UI
-2. UI wraps each resource in a `<FhirMessage>` envelope and drops it into `input/inbound/`
-3. **Route 1 — Process FHIR Patient**:
-   - DirectoryListener (FHIR feed)
-   - Basic Validation (resourceType / id / RawFhir markers)
-   - Bundle Flag Snapshot (audit file — not a true fork)
-   - Advanced Validation (MRN, name, Bundle entries)
-   - Router → kickout **or** dual transports:
-     - SQL Server insert (BI source)
-     - Mock FHIR store `.json` file
-4. Web UI shows SQL rows, FHIR store files, validation snapshots, and a **Routes** tab with V2 diagrams
+1. FHIR clients call PilotFish at `/eip/rest/fhir/Patient` (POST create) and `/eip/rest/fhir/Patient/{id}` (GET read)
+2. **Route 1 — FHIR Patient REST API**
+   - `RESTfulWebServiceListener` (`SERVICE_NAME=fhir`, `Synchronous=true`)
+   - Heuristic validation for create (resourceType, id, MRN, name)
+   - Persist to SQL Server + `output/fhir-store/{id}.json`
+   - `SynchronousResponseTransport` returns Patient or OperationOutcome with 201/200/404/400/405
+3. Web UI is a **FHIR client** (not a directory dropper)
 
 ## Prerequisites
 
 - Docker Desktop running
-- Local image `pilotfish-eip:23R1` already built from the PilotFish Sandbox root
+- Local image `pilotfish-eip:23R1` built from the Sandbox root
 
 ## Run
 
@@ -35,39 +27,36 @@ cd "Clients/Demos/fhir-patient-exchange"
 docker compose up -d --build
 ```
 
-Wait ~60–90s for SQL init + PilotFish, then open the web UI.
+Wait ~60–90s, then open the Web UI.
 
-## Ports
+## Ports / URLs
 
-| Service     | Host port |
-|-------------|-----------|
-| SQL Server  | 14337     |
-| PilotFish   | 8102      |
-| Demo Web UI | 8103      |
+| Service | Host port |
+|---------|-----------|
+| SQL Server | 14337 |
+| PilotFish EIP | 8102 |
+| Demo Web UI | 8103 |
 
-- Web UI (local): http://localhost:8103/
-- Web UI (LAN): http://192.168.68.52:8103/
-- PilotFish EIP: http://localhost:8102/eip/
-- Route design PDF: `documents/FHIR_V2_Route_Diagrams.pdf`
+- Web UI local: http://localhost:8103/
+- Web UI LAN: http://192.168.68.52:8103/
+- FHIR REST (LAN): http://192.168.68.52:8102/eip/rest/fhir/Patient
+- Research PDF: http://192.168.68.52:8103/documents/fhir-rest-research.pdf
+- Route design PDF: http://192.168.68.52:8103/documents/route-diagrams.pdf
 
-## Useful commands
+## curl examples
 
 ```bash
-docker compose logs -f pilotfish
-ls -la output/fhir-store output/validation output/kickout
-docker compose exec sqlserver /opt/mssql-tools18/bin/sqlcmd \
-  -S localhost -U sa -P 'PilotFish_Demo1!' -C -d FhirPatientExchangeDemo \
-  -Q "SELECT ResourceRowId, SourceCode, ResourceType, ResourceId, PatientId, ValidationStatus FROM dbo.FhirResources ORDER BY ResourceRowId"
-python3 tools/convert_routes_to_v2.py
-python3 tools/export_route_diagrams.py --config changed
-docker compose down -v
+curl -sS -D- -H 'Content-Type: application/fhir+json' \
+  --data-binary @samples/EHR-01_Patient_alice.json \
+  http://192.168.68.52:8102/eip/rest/fhir/Patient
+
+curl -sS -D- http://192.168.68.52:8102/eip/rest/fhir/Patient/pat-alice-001
 ```
 
 ## Demo only
 
-- Heuristic XSLT validation — **not** full FHIR StructureDefinition / terminology validation
-- Inbound is directory-mediated (Web UI envelope), not a live FHIR REST server
-- Shared `sa` password for local convenience — never production
-- Dual-write SQL + file without outbox compensation (accepted demo risk)
+- Heuristic validation — not full StructureDefinition / IG validation
+- Patient create + read only (no search/transaction yet)
+- Shared `sa` password for local convenience
 
 See `DESIGN.md`.

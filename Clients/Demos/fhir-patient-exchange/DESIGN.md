@@ -1,101 +1,84 @@
 # FHIR Patient Exchange — Design
 
-> **Status (2026-08-03):** The directory-listener demo was a temporary scaffold and is **not** the intended FHIR architecture.  
-> See research PDF: [`documents/FHIR_REST_Interface_Research.pdf`](documents/FHIR_REST_Interface_Research.pdf).  
-> Rebuild target: **synchronous RESTful FHIR** via `RESTfulWebServiceListener` + `SynchronousResponseTransport`.
+> Implemented as synchronous **FHIR REST** (see `documents/FHIR_REST_Interface_Research.pdf`). DirectoryListener is retired.
 
 ## 1. Purpose
 
-Provide a PilotFish Sandbox demo of **HL7 FHIR R4 REST** resource exchange (initially Patient create/read), with real HTTP request/response semantics — not file-drop integration.
+Demo PilotFish accepting HL7 FHIR R4 Patient create/read over HTTP REST with synchronous responses.
 
 ## 2. Context / actors
 
-- Sources: EHR / app FHIR **clients** calling HTTP endpoints
-- Destinations: PilotFish FHIR façade (persist + sync HTTP response); optional later outbound call to an external FHIR server
-- Demo vs production: **Demo only** — heuristic validation, basic auth optional, no SMART/OAuth unless explicitly added later
+- Sources: FHIR HTTP clients (Web UI, curl, LAN devices)
+- Destinations: Sync HTTP response; SQL `FhirResources`; file mirror under `output/fhir-store`
+- Demo vs production: **Demo only**
 
-## 3. Inbound contract (target)
+## 3. Inbound contract
 
-- Transport: **HTTP REST** on eiPlatform  
-  ` /eip/rest/fhir/{Resource}[/{id}] `
-- Format: `application/fhir+json` (FHIR R4)
-- Interactions (v1): `POST Patient` (create), `GET Patient/{id}` (read)
-- Identity: FHIR logical `id`; business MRN via `Patient.identifier`
-- Samples: raw FHIR JSON used by Web UI / curl as a **client**
+- Transport: `RESTfulWebServiceListener` — `/eip/rest/fhir/{Resource}[/{id}]`
+- Format: `application/fhir+json`
+- Interactions: `POST Patient`, `GET Patient/{id}`
+- Identity: FHIR `id`; MRN via `identifier.value` (demo expects `MRN-*`)
+- Samples: `samples/*.json`
 
-## 4. Outbound contract(s) (target)
+## 4. Outbound contract(s)
 
 | Destination | Format | Success criterion |
 |-------------|--------|-------------------|
-| HTTP client (sync) | Patient or OperationOutcome JSON | Correct status (201/200/404/400) + body |
-| Persistence store | FHIR JSON | Resource readable by subsequent GET |
-| Optional SQL audit | Row | Written **after** successful persist |
+| HTTP client | Patient / OperationOutcome JSON | 201 / 200 / 404 / 400 / 405 |
+| SQL `FhirResources` | Row keyed by ResourceType+ResourceId | Readable by subsequent GET |
+| fhir-store file | `{id}.json` | Mirror of created Patient |
 
-## 5. Pipeline (target modules)
+## 5. Pipeline
 
-| Stage | Module / mechanism | Notes |
-|-------|--------------------|-------|
-| Listener | `com.pilotfish.eip.modules.http.rest.RESTfulWebServiceListener` | `SERVICE_NAME=fhir`, `Synchronous=true`, GET+POST |
-| Branch | Router / XPath on `com.pilotfish.HttpMethodName` | create vs read |
-| JSON handling | `JSONTransformationProcessor` and/or keep JSON | Mapping aid; not IG validation |
-| Validate | XSLT / heuristic → OperationOutcome on fail | Fail-closed HTTP 4xx |
-| Persist / load | SQL and/or directory store as **backend**, not the public API | Source of truth for GET |
-| Status / headers | `HttpResponseCodeProcessor`, `AddHttpResponseHeadersProcessor` | 201 + Location, Content-Type |
-| Reply | `com.pilotfish.eip.modules.internal.SynchronousResponseTransport` | Sync body to caller |
-
-**Not the public FHIR API:** `DirectoryListener` (retired as the FHIR story).
+| Stage | Module | Notes |
+|-------|--------|-------|
+| Listener | `com.pilotfish.eip.modules.http.rest.RESTfulWebServiceListener` | `SERVICE_NAME=fhir`, `Synchronous=true` |
+| Extract / validate | RegEx + Attribute Population | Heuristic PASS/FAIL for create |
+| Router | `XPathRoutingModule` OGNL on method/resource/validation | Create / Read / 400 / 405 |
+| Persist | `FileWriteProcessor` + `DatabaseSqlProcessor` MERGE | After validation on create |
+| Read | `DatabaseSqlProcessor` SELECT + XSLT | Empty → OperationOutcome |
+| Status / headers | `HttpResponseCodeProcessor`, `AddHttpResponseHeadersProcessor` | fhir+json, Location |
+| Reply | `com.pilotfish.eip.modules.internal.SynchronousResponseTransport` | Sync body |
 
 ## 6. State & idempotency
 
-- Status model: HTTP semantics + stored resource versions (simple v1: last-write)
-- When state advances: persist then respond (no claim-before-complete)
-- Dedup keys: FHIR `id`; conditional create later (`If-None-Exist`) optional
-- Retry / poison: OperationOutcome to client; optional audit of failures
+- MERGE upsert on create (same id updates RawFhir)
+- Respond after persist
+- Dedup: unique (ResourceType, ResourceId)
 
 ## 7. Validation
 
-- What is checked (v1): resourceType, required Patient fields, JSON parse
-- What is NOT checked: full StructureDefinition/IG, terminology, SMART scopes
-- Does failure block outbound? **yes** — HTTP error, no silent success
+- Checked: resourceType Patient, id, MRN-ish identifier value, family name
+- Not checked: full FHIR profiles, terminology, OAuth/SMART
+- Failure blocks create with HTTP 400 OperationOutcome
 
 ## 8. Dual-write / side effects
 
-- Order: persist resource → sync HTTP response → optional SQL audit
-- Compensation: none in demo; document if SQL audit added as best-effort
-- Demo shortcuts: in-memory/SQL store rather than full FHIR repository history
+- Order: file write → SQL MERGE → sync response body restored from attribute
+- Accepted demo risk: file/SQL dual-write without outbox
 
 ## 9. Risks & bottlenecks
 
-| Severity | Risk | Why it bites here | Mitigation / accepted? |
-|----------|------|-------------------|------------------------|
-| High | REST listener untested on 23R1 image | Could fail at smoke | Phase 1 spike before UI polish |
-| High | Pretending directory demo is FHIR | Wrong partner contract | Research PDF + rebuild |
-| Med | Partial FHIR surface | Clients expect search/transaction | Scope v1 explicitly |
-| Med | Validation theater | Heuristic ≠ validator | Label in README |
-| Low | Auth | Basic only | Demo only |
+| Severity | Risk | Mitigation / accepted? |
+|----------|------|------------------------|
+| High | REST listener quirks on 23R1 | Smoke-tested with curl |
+| Med | Heuristic validation | Labeled demo-only |
+| Med | Dual-write file+SQL | Accepted demo risk |
+| Low | No search/transaction yet | Scoped in README |
 
 ## 10. Ops
 
-- Ports: SQL **14337**, EIP **8102**, Web UI **8103** (adjust if rebound)
-- LAN: `LAN_HINT=http://192.168.68.52:8103/` (re-detect 192.*); EIP REST also on LAN `:8102`
-- Heap: 512M–2G unless expanded
-- Cold start: 60–90s
+- Ports: SQL 14337, EIP 8102, Web UI 8103
+- LAN: `LAN_HINT=http://192.168.68.52:8103/`; FHIR public base on `:8102`
+- Cold start ~60–90s
 
 ## 11. Observability
 
-- Logs: `logs/eip.log`
-- Client-visible: HTTP status + OperationOutcome
-- Route design PDF after REST rebuild
+- `logs/eip.log`
+- HTTP status + OperationOutcome to client
+- Routes PDF under `documents/`
 
 ## 12. Open questions
 
-- Persist backend choice (SQL JSON vs files vs both)
-- Include Bundle transaction in v1 or phase 3?
-- Deprecate directory-route artifacts immediately on rebuild?
-- Auth header expectations for demo clients
-
-## References
-
-- `documents/FHIR_REST_Interface_Research.pdf`
-- https://www.hl7.org/fhir/R4/http.html
-- https://healthcare.pilotfishtechnology.com/restful-listener-configuration/
+- Add Bundle transaction / search in a later phase
+- Basic auth on REST listener for demos?

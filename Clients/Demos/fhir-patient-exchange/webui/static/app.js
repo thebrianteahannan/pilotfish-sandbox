@@ -1,14 +1,34 @@
 async function getJson(url, opts) {
   const res = await fetch(url, opts);
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || res.statusText);
+  if (!res.ok && data.error) throw new Error(data.error);
   return data;
 }
 
-function setStatus(msg, isError) {
-  const el = document.getElementById("status");
+function setStatus(id, msg, isError) {
+  const el = document.getElementById(id);
+  if (!el) return;
   el.textContent = msg || "";
   el.style.color = isError ? "#fca5a5" : "";
+}
+
+function showHttp(result) {
+  const view = document.getElementById("http-view");
+  const body = result.body || "";
+  let pretty = body;
+  try {
+    pretty = JSON.stringify(JSON.parse(body), null, 2);
+  } catch (_) {
+    /* keep raw */
+  }
+  view.textContent = [
+    `${result.status || "?"} ${result.url || ""}`,
+    result.error ? `error: ${result.error}` : "",
+    "",
+    pretty || "(empty body)",
+  ]
+    .filter((line, i, arr) => !(line === "" && arr[i - 1] === ""))
+    .join("\n");
 }
 
 function renderFiles(containerId, viewId, files) {
@@ -46,32 +66,23 @@ function renderMessages(messages) {
     .map(
       (m) => `<tr>
       <td>${m.ResourceRowId}</td>
-      <td>${m.SourceCode || ""}</td>
-      <td>${m.ResourceType || ""}${m.IsBundle ? " (bundle)" : ""}</td>
+      <td>${m.ResourceType || ""}</td>
       <td>${m.ResourceId || ""}</td>
       <td>${m.PatientId || ""}</td>
-      <td>${m.PatientName || ""}</td>
       <td><strong>${m.ValidationStatus || ""}</strong></td>
     </tr>`
     )
     .join("");
   wrap.innerHTML = `<table>
-    <thead><tr><th>Id</th><th>Source</th><th>Type</th><th>Resource</th><th>MRN</th><th>Name</th><th>Status</th></tr></thead>
+    <thead><tr><th>Id</th><th>Type</th><th>Resource</th><th>MRN</th><th>Status</th></tr></thead>
     <tbody>${rows}</tbody>
   </table>`;
 }
 
 async function refresh() {
-  const [messages, store, val, ko] = await Promise.all([
-    getJson("/api/messages"),
-    getJson("/api/fhir-store"),
-    getJson("/api/validation"),
-    getJson("/api/kickout"),
-  ]);
+  const [messages, store] = await Promise.all([getJson("/api/resources"), getJson("/api/fhir-store")]);
   renderMessages(messages.messages || []);
   renderFiles("store-list", "store-view", store.files || []);
-  const combined = [...(val.files || []), ...(ko.files || [])];
-  renderFiles("val-list", "val-view", combined);
 }
 
 async function loadSamples() {
@@ -86,42 +97,65 @@ async function loadSamples() {
   select.addEventListener("change", () => {
     const hit = (data.files || []).find((f) => f.name === select.value);
     document.getElementById("fhir").value = hit ? hit.content : "";
-    for (const code of ["EHR-01", "EHR-02", "EHR-03"]) {
-      if (select.value.startsWith(code)) {
-        document.getElementById("sourceCode").value = code;
-        break;
-      }
+    try {
+      const id = hit ? JSON.parse(hit.content).id : "";
+      if (id) document.getElementById("resourceId").value = id;
+    } catch (_) {
+      /* ignore */
     }
   });
 }
 
 document.getElementById("refresh-btn").addEventListener("click", () => {
-  refresh().catch((e) => setStatus(e.message, true));
+  refresh().catch((e) => setStatus("create-status", e.message, true));
 });
 
-document.getElementById("inject-form").addEventListener("submit", async (ev) => {
+document.getElementById("create-form").addEventListener("submit", async (ev) => {
   ev.preventDefault();
-  const btn = document.getElementById("submit-btn");
+  const btn = document.getElementById("create-btn");
   btn.disabled = true;
-  setStatus("Submitting…");
+  setStatus("create-status", "POST /Patient …");
   try {
     const fd = new FormData(ev.target);
     const payload = Object.fromEntries(fd.entries());
-    const created = await getJson("/api/inject", {
+    const result = await getJson("/api/fhir/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-    setStatus(`Queued ${created.file} — waiting for route…`);
-    const waited = await getJson(
-      `/api/wait-message?resourceId=${encodeURIComponent(created.meta.resourceId)}&timeout=60`
+    showHttp(result);
+    setStatus(
+      "create-status",
+      result.status ? `HTTP ${result.status}` : result.error || "No response",
+      !result.ok
     );
-    if (waited.message) setStatus(`Inserted resource #${waited.message.ResourceRowId}`);
-    else if (waited.kickout?.length) setStatus(`Routed to kickout: ${waited.kickout[0].name}`, true);
-    else setStatus("Processed");
+    try {
+      const id = JSON.parse(result.body || "{}").id;
+      if (id) document.getElementById("resourceId").value = id;
+    } catch (_) {
+      /* ignore */
+    }
     await refresh();
   } catch (e) {
-    setStatus(e.message, true);
+    setStatus("create-status", e.message, true);
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+document.getElementById("read-form").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const btn = document.getElementById("read-btn");
+  btn.disabled = true;
+  const id = document.getElementById("resourceId").value.trim();
+  setStatus("read-status", `GET /Patient/${id} …`);
+  try {
+    const result = await getJson(`/api/fhir/read/${encodeURIComponent(id)}`);
+    showHttp(result);
+    setStatus("read-status", result.status ? `HTTP ${result.status}` : result.error || "No response", !result.ok);
+    await refresh();
+  } catch (e) {
+    setStatus("read-status", e.message, true);
   } finally {
     btn.disabled = false;
   }
@@ -135,11 +169,9 @@ function setMainTab(tab) {
     b.classList.toggle("active", on);
     b.setAttribute("aria-selected", on ? "true" : "false");
   });
-  const demo = document.getElementById("tab-demo");
-  const routes = document.getElementById("tab-routes");
+  document.getElementById("tab-demo").hidden = tab !== "demo";
+  document.getElementById("tab-routes").hidden = tab !== "routes";
   const xslt = document.getElementById("tab-xslt");
-  demo.hidden = tab !== "demo";
-  routes.hidden = tab !== "routes";
   if (xslt) xslt.hidden = tab !== "xslt";
   document.body.classList.toggle("routes-mode", tab === "routes" || tab === "xslt");
   const nav = document.getElementById("demo-nav");
@@ -176,7 +208,7 @@ async function loadRoutesTab() {
     const list = data.routes || [];
     select.innerHTML = "";
     if (!list.length) {
-      status.textContent = "No route.v2.xml found. Run tools/convert_routes_to_v2.py";
+      status.textContent = "No route.v2.xml found.";
       return;
     }
     list.forEach((r) => {
@@ -200,7 +232,7 @@ document.querySelectorAll(".main-tab").forEach((btn) => {
 });
 
 loadSamples().catch(() => {});
-refresh().catch((e) => setStatus(e.message, true));
+refresh().catch((e) => setStatus("create-status", e.message, true));
 setInterval(() => refresh().catch(() => {}), 20000);
 if (location.hash === "#routes") setMainTab("routes");
 else if (location.hash === "#xslt") setMainTab("xslt");
@@ -269,10 +301,5 @@ async function loadXsltTab() {
     xsltLoaded = true;
     status.textContent = `${files.length} file${files.length === 1 ? "" : "s"}`;
     await selectXsltFile(files[0].path, files[0]);
-    return;
-  }
-  if (activeXsltPath) {
-    const btn = listEl.querySelector(`button[data-path="${CSS.escape(activeXsltPath)}"]`);
-    if (btn) btn.classList.add("active");
   }
 }

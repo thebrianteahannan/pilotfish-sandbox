@@ -29,7 +29,7 @@ BRAND = "PILOTFISH  ·  FHIR PATIENT EXCHANGE"
 BASE = "http://127.0.0.1:8103"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 ROUTES = [
-    ("1 — Process FHIR Patient", "1-process-fhir-patient", "route1.png"),
+    ("1 — FHIR Patient REST API", "1-fhir-patient-rest-api", "route1.png"),
 ]
 MARGIN = 0.28 * inch
 TITLE_H = 0.42 * inch
@@ -41,9 +41,9 @@ CONFIG_LABELS = {
 }
 
 WINDOW_BY_CONFIG = {
-    "compact": {"1-process-fhir-patient": (2000, 2200)},
-    "changed": {"1-process-fhir-patient": (2400, 3600)},
-    "all": {"1-process-fhir-patient": (2600, 5200)},
+    "compact": {"1-fhir-patient-rest-api": (2200, 2400)},
+    "changed": {"1-fhir-patient-rest-api": (2600, 4200)},
+    "all": {"1-fhir-patient-rest-api": (2800, 5600)},
 }
 
 
