@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="1ccb2ff3-a12b-443e-b038-9edbba4732cb" name="Detect Name" type="RegEx to Attribute" tag="Processor" class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <RegEx>"family"\s*:\s*"[^"]+"</RegEx>
+      
+          
+      <AttributeName>fhir.HasName</AttributeName>
+      
+          
+      <MatchGroupNumber>0</MatchGroupNumber>
+      
+        
+   </ModuleConfig>
+</Module>

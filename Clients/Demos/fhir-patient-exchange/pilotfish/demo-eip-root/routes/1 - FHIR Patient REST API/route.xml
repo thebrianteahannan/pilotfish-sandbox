@@ -144,12 +144,13 @@
           <InputFile />
           <WriteQuery>true</WriteQuery>
           <Query>MERGE dbo.FhirResources AS t
-USING (SELECT ? AS ResourceType, ? AS ResourceId) AS s
+USING (SELECT ? AS ResourceType, ? AS ResourceId, ? AS RawFhir, ? AS PatientId) AS s
 ON t.ResourceType = s.ResourceType AND t.ResourceId = s.ResourceId
-WHEN MATCHED THEN UPDATE SET RawFhir = ?, PatientId = ?, ValidationStatus = 'PASS', SourceCode = 'REST', ReceivedAt = SYSUTCDATETIME()
+WHEN MATCHED THEN UPDATE SET RawFhir = s.RawFhir, PatientId = s.PatientId, ValidationStatus = 'PASS', SourceCode = 'REST', ReceivedAt = SYSUTCDATETIME()
 WHEN NOT MATCHED THEN INSERT (SourceCode, ResourceType, ResourceId, PatientId, PatientName, IsBundle, ValidationStatus, SourceFile, RawFhir)
-VALUES ('REST', ?, ?, ?, '', 0, 'PASS', 'rest-api', ?);</Query>
-          <QueryParams>[eip_pair:p1:eip_name:Patient:eip_value][eip_pair:p2:eip_name:{ognl:getAttribute('fhir.LogicalId')}:eip_value][eip_pair:p3:eip_name:{ognl:getAttribute('fhir.RawBody')}:eip_value][eip_pair:p4:eip_name:{ognl:getAttribute('fhir.PatientId')}:eip_value][eip_pair:p5:eip_name:Patient:eip_value][eip_pair:p6:eip_name:{ognl:getAttribute('fhir.LogicalId')}:eip_value][eip_pair:p7:eip_name:{ognl:getAttribute('fhir.PatientId')}:eip_value][eip_pair:p8:eip_name:{ognl:getAttribute('fhir.RawBody')}:eip_value]</QueryParams>
+VALUES ('REST', s.ResourceType, s.ResourceId, s.PatientId, '', 0, 'PASS', 'rest-api', s.RawFhir)
+OUTPUT INSERTED.ResourceRowId AS ResourceRowId;</Query>
+          <QueryParams>[eip_pair:p1:eip_name:Patient:eip_value][eip_pair:p2:eip_name:{ognl:getAttribute('fhir.LogicalId')}:eip_value][eip_pair:p3:eip_name:{ognl:getAttribute('fhir.RawBody')}:eip_value][eip_pair:p4:eip_name:{ognl:getAttribute('fhir.PatientId')}:eip_value]</QueryParams>
           <UserName>$$sqlserver.username</UserName>
           <Password>$$sqlserver.password</Password>
           <UseDataSource>false</UseDataSource>
@@ -230,7 +231,7 @@ VALUES ('REST', ?, ?, ?, '', 0, 'PASS', 'rest-api', ?);</Query>
         <ModuleConfig>
           <ExecuteProcessor>true</ExecuteProcessor>
           <AttributeScope>Transaction</AttributeScope>
-          <XPathExpressions>[eip_pair:fhir.FoundRaw:eip_name:normalize-space(string((.//*[local-name()='RawFhir'])[1])):eip_value]</XPathExpressions>
+          <XPathExpressions>[eip_pair:fhir.FoundRaw:eip_name:normalize-space(string((.//*[upper-case(local-name())='RAWFHIR'])[1])):eip_value]</XPathExpressions>
           <GlobalAttributeExpressions />
           <Namespaces>null</Namespaces>
           <Namespace />

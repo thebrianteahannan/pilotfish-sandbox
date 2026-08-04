@@ -3,10 +3,10 @@
   <!-- Converts SQLXML select of RawFhir into either the Patient JSON text or a 404 OperationOutcome JSON. -->
   <xsl:output method="text" encoding="UTF-8"/>
   <xsl:template match="/">
-    <xsl:variable name="raw" select="normalize-space(string((.//*[local-name()='RawFhir'])[1]))"/>
+    <xsl:variable name="raw" select="normalize-space(string((.//*[upper-case(local-name())='RAWFHIR'])[1]))"/>
     <xsl:choose>
       <xsl:when test="$raw != ''">
-        <xsl:value-of select="string((.//*[local-name()='RawFhir'])[1])"/>
+        <xsl:value-of select="string((.//*[upper-case(local-name())='RAWFHIR'])[1])"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>{</xsl:text>

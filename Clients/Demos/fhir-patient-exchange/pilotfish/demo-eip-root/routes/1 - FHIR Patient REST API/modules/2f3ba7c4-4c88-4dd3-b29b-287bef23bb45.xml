@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="2f3ba7c4-4c88-4dd3-b29b-287bef23bb45" name="Extract MRN" type="RegEx to Attribute" tag="Processor" class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <RegEx>"value"\s*:\s*"(MRN-[^"]+)"</RegEx>
+      
+          
+      <AttributeName>fhir.PatientId</AttributeName>
+      
+          
+      <MatchGroupNumber>1</MatchGroupNumber>
+      
+        
+   </ModuleConfig>
+</Module>
