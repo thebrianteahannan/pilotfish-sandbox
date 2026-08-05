@@ -9,7 +9,7 @@
 <body>
   <header class="top">
     <div class="app-bar">
-      <p class="brand">PilotFish · FHIR R4 Platform (Phase 2)</p>
+      <p class="brand">PilotFish · FHIR R4 Platform (Phase 3)</p>
       <nav class="tabs" role="tablist">
         <button type="button" class="tab active" data-tab="demo">Demo</button>
         <button type="button" class="tab" data-tab="routes">Routes</button>
@@ -60,6 +60,7 @@
         <button type="button" id="btn-invoke" class="btn primary">Invoke</button>
         <button type="button" id="btn-meta" class="btn">GET metadata</button>
         <button type="button" id="btn-outbound" class="btn">Enqueue outbound GET (Route 2)</button>
+        <button type="button" id="btn-txn" class="btn">Load transaction Bundle sample</button>
         <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a>
       </div>
       <p id="status" class="status"></p>
@@ -95,12 +96,12 @@
 
   <main id="tab-info" class="panel info-tab" hidden>
     <h1>Expandable FHIR server + outbound client</h1>
-    <p class="sub">Multi-resource CRUD · metadata · Phase 2 token search (core-6) · optional remote proxy. Not the entire FHIR spec.</p>
-    <p class="sub">Core-6 indexed search: Patient, Practitioner, Organization, Observation, Encounter, Condition (EAV <code>FhirSearchTokens</code>). Other types: <code>_id</code> + legacy <code>q</code>.</p>
+    <p class="sub">Multi-resource CRUD · metadata · Phase 2 token search (core-6) · Phase 3 Bundle transaction/batch · optional remote proxy. Not the entire FHIR spec.</p>
+    <p class="sub">Core-6 indexed search: Patient, Practitioner, Organization, Observation, Encounter, Condition. Bundle: <code>POST /Bundle</code> with <code>type=transaction</code> (atomic) or <code>batch</code> (per-entry).</p>
     {% if lan_hint %}<p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>{% endif %}
     <p class="sub muted">PF: <code>{{ fhir_public_base }}</code></p>
     <p class="sub muted">Remote: <a href="{{ fhir_remote_base }}" target="_blank" rel="noreferrer"><code>{{ fhir_remote_base }}</code></a></p>
-    <p class="sub muted">See <a href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a> and <code>DESIGN.md</code> for Phase 2 scope and roadmap.</p>
+    <p class="sub muted">See <a href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a> and <code>DESIGN.md</code> for Phase 3 scope and roadmap.</p>
   </main>
 
   <script src="/static/app.js"></script>

@@ -1,0 +1,18 @@
+{
+  "resourceType": "Bundle",
+  "type": "batch",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Organization",
+        "id": "org-batch-001",
+        "active": true,
+        "name": "Batch Demo Clinic"
+      },
+      "request": { "method": "POST", "url": "Organization" }
+    },
+    {
+      "request": { "method": "GET", "url": "Patient/does-not-exist-xyz" }
+    }
+  ]
+}

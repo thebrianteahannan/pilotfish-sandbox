@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="d3265434-a506-4593-be05-db31040d6b22" name="Extract Outbound URL" type="RegExIntoTransactionAttributeProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <RegEx>"url"\s*:\s*"([^"]+)"</RegEx>
+      
+          
+      <AttributeName>fhir.OutUrl</AttributeName>
+      
+          
+      <MatchGroupNumber>1</MatchGroupNumber>
+      
+        
+   </ModuleConfig>
+</Module>

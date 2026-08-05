@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="20b2a1ad-c46a-44d7-804e-8fa4e43b1b6d" name="Extract Body ResourceType" type="RegExIntoTransactionAttributeProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <RegEx>"resourceType"\s*:\s*"([^"]+)"</RegEx>
+      
+          
+      <AttributeName>fhir.BodyResourceType</AttributeName>
+      
+          
+      <MatchGroupNumber>1</MatchGroupNumber>
+      
+        
+   </ModuleConfig>
+</Module>
