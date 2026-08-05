@@ -474,6 +474,7 @@ body.docs-mode .config-mode-label {
 .route-node-routing .route-node-stripe { background: var(--routing); }
 .route-node-transport .route-node-stripe { background: var(--transport); }
 .route-node-post-processor .route-node-stripe { background: var(--post-processor); }
+.route-node-group .route-node-stripe { background: #5b6b8c; }
 
 .route-node-listener .route-node-kind { color: #246f7e; }
 .route-node-processor .route-node-kind { color: #4166b3; }
@@ -481,6 +482,34 @@ body.docs-mode .config-mode-label {
 .route-node-routing .route-node-kind { color: #a04975; }
 .route-node-transport .route-node-kind { color: #267852; }
 .route-node-post-processor .route-node-kind { color: #69772f; }
+.route-node-group .route-node-kind { color: #3f4d66; }
+
+/* Collapsed Processor Group — dashed container look (docs overview) */
+.route-node-group {
+  border: 1.5px dashed #6b7c99;
+  background: linear-gradient(180deg, #f7f9fc 0%, #eef2f8 100%);
+  box-shadow: none;
+}
+.route-node-group .route-node-group-desc {
+  margin-top: 4px;
+  font-size: 11px;
+  line-height: 1.25;
+  color: #5a6a7a;
+  font-weight: 400;
+}
+.route-node-group .route-node-group-count {
+  margin-top: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #3f4d66;
+  letter-spacing: 0.01em;
+}
+body.docs-mode .route-node-group .route-node-group-desc {
+  font-size: 12px;
+}
+body.docs-mode .route-node-group .route-node-group-count {
+  font-size: 11.5px;
+}
 
 .route-connector-dot {
   position: absolute;

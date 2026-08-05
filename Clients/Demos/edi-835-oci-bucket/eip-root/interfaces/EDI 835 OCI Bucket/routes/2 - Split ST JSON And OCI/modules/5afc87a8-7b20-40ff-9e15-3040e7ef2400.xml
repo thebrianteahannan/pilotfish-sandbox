@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="5afc87a8-7b20-40ff-9e15-3040e7ef2400" name="Debug Write Transaction XML" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$JSON_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('OciObjectName').replace('.json','.xml')}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

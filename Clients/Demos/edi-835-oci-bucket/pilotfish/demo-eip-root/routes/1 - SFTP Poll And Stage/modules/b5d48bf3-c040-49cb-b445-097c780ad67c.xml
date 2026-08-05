@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="b5d48bf3-c040-49cb-b445-097c780ad67c" name="Archive Raw 835" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$ARCHIVE_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:(getAttribute('com.pilotfish.FileName') != null ? getAttribute('com.pilotfish.FileName') : '835') + '_' + @java.lang.System@currentTimeMillis() + '.edi'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

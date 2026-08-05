@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="e304eef8-30ff-45ae-92f4-37752d26ac1c" name="Read ST Control Number" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:StControlNumber:eip_name:normalize-space(string((/*[local-name()='Transaction']/@ControlNumber | //*[local-name()='Transaction']/@ControlNumber | //*[local-name()='Segment'][*[local-name()='Element'][1]='ST']/*[local-name()='Element'][3])[1])):eip_value][eip_pair:DocType:eip_name:normalize-space(string((/*[local-name()='Transaction']/@DocType | //*[local-name()='Transaction']/@DocType | //*[local-name()='Segment'][*[local-name()='Element'][1]='ST']/*[local-name()='Element'][2])[1])):eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="fb853ef3-58fa-4d19-8da7-a2d5e40063fb" name="Write JSON Summary" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$RESPONSE_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:'summary_' + @java.lang.System@currentTimeMillis() + '.json'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

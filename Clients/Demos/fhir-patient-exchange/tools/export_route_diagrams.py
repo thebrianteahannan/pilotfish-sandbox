@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Screenshot FHIR demo V2 route diagrams and assemble a PDF.
+"""Screenshot V2 route diagrams and assemble a PDF.
 
 Tall pipelines are scaled to page width and sliced vertically across pages.
 
@@ -35,18 +35,40 @@ BRAND = "PILOTFISH  ·  FHIR PATIENT EXCHANGE"
 BASE = "http://127.0.0.1:8103"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 ROUTES = [
-    ("1 — FHIR Patient REST API", "1-fhir-patient-rest-api", "route1.png"),
+    {
+        "title": "1 — FHIR Patient REST API (Overview)",
+        "route": "1-fhir-patient-rest-api",
+        "file": "route1-overview.png",
+        "collapse": "all",
+        "window": {"compact": (2400, 2800), "changed": (2600, 3600), "all": (2800, 4200)},
+    },
+    {
+        "title": "1 · Ingress",
+        "route": "1-fhir-patient-rest-api",
+        "file": "route1-ingress.png",
+        "group": "ingress",
+        "window": {"compact": (2200, 2400), "changed": (2400, 3800), "all": (2600, 4600)},
+    },
+    {
+        "title": "1 · Create Patient",
+        "route": "1-fhir-patient-rest-api",
+        "file": "route1-create.png",
+        "group": "create",
+        "window": {"compact": (2200, 2400), "changed": (2400, 4000), "all": (2600, 5000)},
+    },
+    {
+        "title": "1 · Read Patient",
+        "route": "1-fhir-patient-rest-api",
+        "file": "route1-read.png",
+        "group": "read",
+        "window": {"compact": (2200, 2200), "changed": (2400, 3600), "all": (2600, 4400)},
+    },
 ]
 MARGIN = 0.28 * inch
+# Single compact brand+title row
 HEADER_H = 0.36 * inch
+# Small overlap between vertical slices so connectors aren't lost at the tear line
 SLICE_OVERLAP_PX = 48
-
-
-WINDOW_BY_CONFIG = {
-    "compact": {"1-fhir-patient-rest-api": (2200, 2400)},
-    "changed": {"1-fhir-patient-rest-api": (2600, 4200)},
-    "all": {"1-fhir-patient-rest-api": (2800, 5600)},
-}
 
 
 def wait_health(timeout=30):
@@ -61,11 +83,21 @@ def wait_health(timeout=30):
     raise SystemExit("Web UI not reachable on :8103")
 
 
-def shot(route_id: str, dest: Path, size: tuple[int, int], config: str):
-    url = (
-        f"{BASE}/static/route-viewer/index.html"
-        f"?route={route_id}&mode=docs&layout=pipeline&bare=1&config={config}"
-    )
+def shot(route_id: str, dest: Path, size: tuple[int, int], config: str, *, collapse: str = "", group: str = ""):
+    qs = [
+        f"route={route_id}",
+        "mode=docs",
+        "layout=pipeline",
+        "bare=1",
+        f"config={config}",
+    ]
+    if collapse or group:
+        qs.append("groups=1")
+    if collapse:
+        qs.append(f"collapse={collapse}")
+    if group:
+        qs.append(f"group={group}")
+    url = f"{BASE}/static/route-viewer/index.html?{'&'.join(qs)}"
     cmd = [
         CHROME,
         "--headless=new",
@@ -212,7 +244,9 @@ def build_pdf(images: list[tuple[str, Path]], pdf_path: Path, brand: str):
 
 
 # GitHub secret scanning matches Vault *service* tokens as s.[A-Za-z0-9]{24}.
-# Compressed image streams in PDFs can collide (false positive). "s." → "s_".
+# Compressed image byte streams inside a PDF occasionally collide with that
+# pattern (false positive — not a real HashiCorp token). Break the exact
+# scanner shape in-place without changing PDF length/offsets: "s." → "s_".
 _VAULT_SERVICE_FP = re.compile(rb"s\.[A-Za-z0-9]{24}")
 
 
@@ -252,19 +286,29 @@ def main():
     images = []
     if not args.skip_capture:
         wait_health()
-        sizes = WINDOW_BY_CONFIG[config]
-        for title, rid, name in ROUTES:
+        for entry in ROUTES:
+            title = entry["title"]
+            rid = entry["route"]
+            name = entry["file"]
             dest = SHOTS / name
-            size = sizes.get(rid, (2200, 4000))
-            print(f"Capturing {title} (config={config}, window={size[0]}x{size[1]})")
-            shot(rid, dest, size, config)
+            size = entry.get("window", {}).get(config) or (2200, 4000)
+            collapse = entry.get("collapse") or ""
+            group = entry.get("group") or ""
+            extra = ""
+            if collapse:
+                extra = f", collapse={collapse}"
+            elif group:
+                extra = f", group={group}"
+            print(f"Capturing {title} (config={config}, window={size[0]}x{size[1]}{extra})")
+            shot(rid, dest, size, config, collapse=collapse, group=group)
             trimmed = trim_diagram(Image.open(dest))
             trimmed.save(dest)
             print(f"  cropped -> {trimmed.size[0]}x{trimmed.size[1]}")
             images.append((title, dest))
     else:
-        for title, rid, name in ROUTES:
-            dest = SHOTS / name
+        for entry in ROUTES:
+            title = entry["title"]
+            dest = SHOTS / entry["file"]
             if not dest.exists():
                 raise SystemExit(f"Missing {dest}; run without --skip-capture")
             print(f"Using existing {dest} ({Image.open(dest).size})")

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="8f6e0843-8b1b-4ff1-b6ed-6a91bae01411" name="Poll SFTP for EDI 835" type="FTPListener" tag="Listener" class="com.pilotfish.eip.modules.file.ftp.FTPListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <CLIAllowed>false</CLIAllowed>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <FIFOQueueName/>
+      
+        
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      
+        
+      <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      
+        
+      <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+      
+        
+      <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+      
+        
+      <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      
+        
+      <FTPListenerType>Encrypted FTP (JSCH SSH/SFTP)</FTPListenerType>
+      
+        
+      <Host>$$SFTP_HOST</Host>
+      
+        
+      <Port>$$SFTP_PORT</Port>
+      
+        
+      <PollingInterval>10</PollingInterval>
+      
+        
+      <PollingDirectory>$$SFTP_POLL_DIR</PollingDirectory>
+      
+        
+      <FileNameRestriction/>
+      
+        
+      <FileExtensionRestriction>edi,835,txt</FileExtensionRestriction>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <FilenameIsMvsDsn>false</FilenameIsMvsDsn>
+      
+        
+      <SerializedTransactionsTag>50</SerializedTransactionsTag>
+      
+        
+      <Timeout>300</Timeout>
+      
+        
+      <Sftp_SocketTimeout>0</Sftp_SocketTimeout>
+      
+        
+      <RetryConnection>true</RetryConnection>
+      
+        
+      <RetryDelay>5</RetryDelay>
+      
+        
+      <KeepConnection>false</KeepConnection>
+      
+        
+      <UsePassiveMode>true</UsePassiveMode>
+      
+        
+      <SSLProtocol>TLS</SSLProtocol>
+      
+        
+      <Protection>Private (P)</Protection>
+      
+        
+      <FileType>Binary</FileType>
+      
+        
+      <StopWhenPollingFailure>false</StopWhenPollingFailure>
+      
+        
+      <SubFolderIterationTag>false</SubFolderIterationTag>
+      
+        
+      <UseChangeDirectoryCommand>false</UseChangeDirectoryCommand>
+      
+        
+      <ReconnectAfterBytes>102400</ReconnectAfterBytes>
+      
+        
+      <CacheType>File Cache</CacheType>
+      
+        
+      <PostProcessOperation>Delete</PostProcessOperation>
+      
+        
+      <TargetDirectory/>
+      
+        
+      <UserName>$$SFTP_USER</UserName>
+      
+        
+      <Password>$$SFTP_PASSWORD</Password>
+      
+        
+      <KeyAuthentication>false</KeyAuthentication>
+      
+        
+      <KeyFileName/>
+      
+        
+      <UseKeyStore>false</UseKeyStore>
+      
+        
+      <KeyStoreFilePath/>
+      
+        
+      <KeyStoreFileType/>
+      
+        
+      <KeyStoreFilePassword/>
+      
+        
+      <UseTrustStore>false</UseTrustStore>
+      
+        
+      <TrustStoreFilePath/>
+      
+        
+      <TrustStoreFileType/>
+      
+        
+      <TrustStoreFilePassword/>
+      
+        
+      <CheckFTPPermissions>false</CheckFTPPermissions>
+      
+        
+      <CheckPreviouslyProcessed>false</CheckPreviouslyProcessed>
+      
+        
+      <CheckWriteInProgress>true</CheckWriteInProgress>
+      
+        
+      <SchedulerStartTag/>
+      
+        
+      <SchedulerEndTag/>
+      
+        
+      <ExcludeDaysTag/>
+      
+        
+      <ExcludeDatesTag/>
+      
+        
+      <TimeZone>System Default</TimeZone>
+      
+      
+   </ModuleConfig>
+</Module>

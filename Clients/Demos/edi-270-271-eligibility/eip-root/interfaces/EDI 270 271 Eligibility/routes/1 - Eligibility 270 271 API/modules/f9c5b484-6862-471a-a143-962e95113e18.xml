@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="f9c5b484-6862-471a-a143-962e95113e18" name="Snapshot Inbound Body" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$REQUEST_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:'in_' + getAttribute('com.pilotfish.ResourceName') + '_' + @java.lang.System@currentTimeMillis() + '.dat'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

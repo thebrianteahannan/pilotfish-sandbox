@@ -1,0 +1,30 @@
+{
+  "groups": [
+    {
+      "id": "map-edi",
+      "title": "Map Claim \u2192 EDI",
+      "description": "Keys, XML map, intermediate EDI XML",
+      "labels": [
+        "Read Claim Keys",
+        "Debug Write Claim XML",
+        "Map Claim To EDI XML",
+        "Write Intermediate EDI XML",
+        "Save EDI XML for SNIP"
+      ]
+    },
+    {
+      "id": "edi-snip",
+      "title": "EDI + SNIP",
+      "description": "XML\u2192EDI wire, write 837, SNIP 1\u20133",
+      "labels": [
+        "EDI Transformation Module - XML to EDI",
+        "Write 837 EDI File",
+        "Restore EDI XML for SNIP",
+        "EDI SNIP Validation (Types 1-3)"
+      ],
+      "transports": [
+        "Write SNIP Results"
+      ]
+    }
+  ]
+}

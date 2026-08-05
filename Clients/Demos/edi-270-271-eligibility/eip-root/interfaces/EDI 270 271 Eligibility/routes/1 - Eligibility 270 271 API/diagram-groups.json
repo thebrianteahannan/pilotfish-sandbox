@@ -1,0 +1,35 @@
+{
+  "groups": [
+    {
+      "id": "build-270",
+      "title": "Build 270 X12",
+      "description": "Request \u2192 EDI XML \u2192 wire + 200",
+      "labels": [
+        "Map Request To 270 EDI XML",
+        "Write 270 EDI XML",
+        "XML to EDI 270",
+        "Write 270 EDI Wire",
+        "Set 200 Build",
+        "270 Response Headers"
+      ],
+      "transports": [
+        "Return 270"
+      ]
+    },
+    {
+      "id": "parse-271",
+      "title": "Parse 271",
+      "description": "Wire \u2192 JSON summary + 200",
+      "labels": [
+        "Snapshot Raw 271",
+        "Map 271 Wire To JSON",
+        "Write JSON Summary",
+        "Set 200 Parse",
+        "JSON Response Headers"
+      ],
+      "transports": [
+        "Return Summary"
+      ]
+    }
+  ]
+}

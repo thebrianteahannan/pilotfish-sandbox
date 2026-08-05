@@ -10,6 +10,7 @@
     : ".";
   window.ROUTE_VIEWER_BASE = BASE;
   const XML_URL = `${BASE}/route.v2.xml`;
+  const GROUPS_URL = `${BASE}/diagram-groups.json`;
   const docsMode = params.get("mode") === "docs" || params.has("print");
   const layoutMode = (params.get("layout") || "pipeline").toLowerCase(); // pipeline | wrap | raw
   const colsParam = parseInt(params.get("cols") || "4", 10);
@@ -17,6 +18,9 @@
   const PAD = docsMode ? 28 : 72;
   let configMode = (params.get("config") || "compact").toLowerCase(); // compact | changed | all
   if (!["compact", "changed", "all"].includes(configMode)) configMode = "compact";
+  const groupsEnabled = params.get("groups") === "1" || params.has("collapse") || params.has("group");
+  const collapseMode = (params.get("collapse") || "").toLowerCase(); // all | ""
+  const focusGroupId = (params.get("group") || "").trim();
 
   const KIND_LABEL = {
     listener: "Listener",
@@ -25,6 +29,7 @@
     routing: "Routing",
     transport: "Transport",
     "post-processor": "Post-Processor",
+    group: "Processor Group",
   };
 
   const state = {
@@ -138,6 +143,7 @@
 
   function applyNodeSizes(route) {
     route.nodes.forEach((n) => {
+      if (n.kind === "group") return; // keep docs group box dimensions
       const mod = state.modules.get(n.moduleId) || n.module;
       if (window.RouteModuleConfig && window.RouteModuleConfig.estimateInlineSize) {
         const s = window.RouteModuleConfig.estimateInlineSize(mod, configMode, n.label);
@@ -462,7 +468,7 @@
     state.route.nodes.forEach((n) => {
       (byKind[n.kind] || (byKind[n.kind] = [])).push(n);
     });
-    const order = ["listener", "processor", "transform", "routing", "transport", "post-processor"];
+      const order = ["listener", "processor", "transform", "routing", "transport", "post-processor", "group"];
     order.forEach((kind) => {
       const list = byKind[kind];
       if (!list) return;
@@ -493,6 +499,7 @@
         routing: "#b65a87",
         transport: "#2f8f64",
         "post-processor": "#7b8d37",
+        group: "#5b6b8c",
       }[kind] || "#7a8ca8"
     );
   }
@@ -620,11 +627,14 @@
       node.style.width = `${n.width}px`;
       node.style.height = `${n.height}px`;
       const mod = n.module || state.modules.get(n.moduleId);
-      const inline =
-        window.RouteModuleConfig && window.RouteModuleConfig.renderInlineConfig
-          ? window.RouteModuleConfig.renderInlineConfig(mod, configMode)
-          : "";
-      node.innerHTML = `
+      if (n.kind === "group" && window.RouteDiagramGroups) {
+        node.innerHTML = window.RouteDiagramGroups.renderGroupInnerHtml(n);
+      } else {
+        const inline =
+          window.RouteModuleConfig && window.RouteModuleConfig.renderInlineConfig
+            ? window.RouteModuleConfig.renderInlineConfig(mod, configMode)
+            : "";
+        node.innerHTML = `
         <div class="route-node-content">
           <div class="route-node-kind">${escapeHtml(n.kindTitle)}</div>
           <div class="route-node-name" title="${escapeAttr(n.label)}">${escapeHtml(n.label)}</div>
@@ -634,6 +644,7 @@
         <span class="route-connector-dot route-connector-input"></span>
         <span class="route-connector-dot route-connector-output"></span>
       `;
+      }
       if (!state.useGeometricPorts) {
         const outs = routerOutputs(n.id);
         if (outs.length > 1) {
@@ -908,6 +919,27 @@
       state.modules = await window.RouteModuleConfig.loadModules(moduleIds);
       route.nodes.forEach((n) => applyModuleMeta(n, state.modules.get(n.moduleId)));
 
+      // Optional docs-only Processor Groups (overview collapse / detail focus)
+      let groupNote = "";
+      if (groupsEnabled && window.RouteDiagramGroups) {
+        try {
+          const gres = await fetch(GROUPS_URL);
+          if (gres.ok) {
+            const spec = await gres.json();
+            if (focusGroupId) {
+              window.RouteDiagramGroups.focusGroup(route, spec, focusGroupId, docsMode);
+              groupNote = ` · group detail: ${focusGroupId}`;
+            } else if (collapseMode === "all") {
+              window.RouteDiagramGroups.collapseAll(route, spec, docsMode);
+              groupNote = " · groups collapsed";
+            }
+            state.connections = route.connections;
+          }
+        } catch (err) {
+          console.warn("diagram-groups load failed", err);
+        }
+      }
+
       if (layoutMode === "pipeline") {
         autoLayoutPipeline(route, { keepSizes: true });
       } else if (layoutMode === "wrap") {
@@ -928,7 +960,7 @@
             ? " · all config"
             : "";
       el.title.textContent = route.name;
-      el.meta.textContent = `${route.nodes.length} modules (${loaded} configs) · ${route.connections.length} connections · v${route.version}${layoutLabel}${cfgLabel}`;
+      el.meta.textContent = `${route.nodes.length} modules (${loaded} configs) · ${route.connections.length} connections · v${route.version}${layoutLabel}${cfgLabel}${groupNote}`;
       renderTree();
       renderNodes();
       renderConnections();

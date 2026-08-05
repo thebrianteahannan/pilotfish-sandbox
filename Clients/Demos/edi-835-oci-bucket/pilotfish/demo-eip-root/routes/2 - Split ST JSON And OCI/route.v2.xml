@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="d8573f48-f92a-4038-b287-b59cdcc6318a" name="2 - Split ST JSON And OCI">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="5250577d-585f-40d4-8533-6fb2a13452b3" moduleId="a1648daa-e360-4fba-a70b-8b32ccf8140c" label="Poll Staged EDI And Fork ST" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="2c026a1c-e373-43a3-881c-4ab88ffe1b08" moduleId="7819e694-bb38-486c-878e-688f6517732f" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="c3aa876a-21d0-434f-a778-2019ce0980ac" moduleId="85537777-c965-4c5b-9163-50eff1848587" label="Read ST Control Number" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="5a4eee2b-843c-46d6-bf6d-cf8d74a3609e" moduleId="ebb6b5d6-c27f-4595-9f13-1c019a526a23" label="Set OCI Object Name" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="26a4f012-9e66-458f-96e0-832a08cca4e0" moduleId="3b0583b3-160c-4aec-bfb8-61568d05a9a9" label="Set OCI Object URL" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="46388754-e77f-4b93-b121-6841986b7107" moduleId="b61f9d88-653e-4b2f-8ee4-6701e381fc8c" label="Debug Write Transaction XML" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="8c3cb185-1f3a-45a9-ac2a-f653b85d7de1" moduleId="9a5b90e3-d2a1-403f-ada2-4f749414ed98" label="Map Transaction XML To JSON" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="60a70373-a5bf-42ab-92ef-71edc3e616b5" moduleId="7f5ce7ce-aea6-4274-8004-2d766ec5a4b1" label="Archive JSON Object" x="2600.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="12a98c72-42c4-4649-910a-2f458727cf55" moduleId="a950b5eb-46fd-420b-8530-de5a3b2bea66" label="OCI Object Storage PutObject" x="2860.0" y="0.0" width="180.0" height="64.0" retries="3"/>
+   </Nodes>
+   <Connections>
+      <Connection id="d2b85747-a857-47da-8ee4-bf8e53dc480d" sourceNodeId="5250577d-585f-40d4-8533-6fb2a13452b3" targetNodeId="2c026a1c-e373-43a3-881c-4ab88ffe1b08" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="6770ca83-89c1-4217-b8ae-f74456e94b4f" sourceNodeId="c3aa876a-21d0-434f-a778-2019ce0980ac" targetNodeId="5a4eee2b-843c-46d6-bf6d-cf8d74a3609e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="48501646-0019-4162-8c28-9a263c305d00" sourceNodeId="5a4eee2b-843c-46d6-bf6d-cf8d74a3609e" targetNodeId="26a4f012-9e66-458f-96e0-832a08cca4e0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="0fa764ab-4f0f-4db8-9772-9736daa554b5" sourceNodeId="26a4f012-9e66-458f-96e0-832a08cca4e0" targetNodeId="46388754-e77f-4b93-b121-6841986b7107" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="d27ef98e-4979-4df8-a733-c45110f10ae9" sourceNodeId="46388754-e77f-4b93-b121-6841986b7107" targetNodeId="8c3cb185-1f3a-45a9-ac2a-f653b85d7de1" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="77e232e2-46be-45df-ae4a-fedd93840742" sourceNodeId="8c3cb185-1f3a-45a9-ac2a-f653b85d7de1" targetNodeId="60a70373-a5bf-42ab-92ef-71edc3e616b5" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="fbb27fde-679b-41a4-acff-f151aa26542f" sourceNodeId="60a70373-a5bf-42ab-92ef-71edc3e616b5" targetNodeId="12a98c72-42c4-4649-910a-2f458727cf55" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="757524c5-51ee-4153-9e6e-27fd7352ed71" sourceNodeId="2c026a1c-e373-43a3-881c-4ab88ffe1b08" targetNodeId="c3aa876a-21d0-434f-a778-2019ce0980ac" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>
