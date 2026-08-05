@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Screenshot V2 route diagrams and assemble a PDF that fills each page.
+"""Screenshot V2 route diagrams and assemble a PDF.
+
+Tall pipelines are scaled to page width and sliced vertically across pages.
 
 Usage:
   python3 tools/export_route_diagrams.py
@@ -21,6 +23,9 @@ from reportlab.lib.units import inch
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
+# Trusted local Chrome captures can exceed Pillow's default pixel guard.
+Image.MAX_IMAGE_PIXELS = 400_000_000
+
 ROOT = Path(__file__).resolve().parents[1]
 SHOTS = ROOT / "output" / "route-diagrams"
 DOCS = ROOT / "documents"
@@ -33,13 +38,9 @@ ROUTES = [
     ("2 — Generate 837 And SNIP", "2-generate-837-and-snip", "route2.png"),
 ]
 MARGIN = 0.28 * inch
-TITLE_H = 0.42 * inch
+HEADER_H = 0.36 * inch
+SLICE_OVERLAP_PX = 48
 
-CONFIG_LABELS = {
-    "compact": "Names only",
-    "changed": "Non-default box config",
-    "all": "All box config values",
-}
 
 # Window chrome size grows when inline config is shown.
 WINDOW_BY_CONFIG = {
@@ -80,10 +81,10 @@ def shot(route_id: str, dest: Path, size: tuple[int, int], config: str):
         "--headless=new",
         "--disable-gpu",
         "--hide-scrollbars",
-        "--force-device-scale-factor=2",
+        "--force-device-scale-factor=1",
         f"--window-size={size[0]},{size[1]}",
         f"--screenshot={dest}",
-        "--virtual-time-budget=20000",
+        "--virtual-time-budget=30000",
         url,
     ]
     subprocess.run(cmd, check=True, capture_output=True)
@@ -106,8 +107,9 @@ def trim_diagram(im: Image.Image) -> Image.Image:
     w, h = rgb.size
     left, top, right, bottom = w, h, 0, 0
     found = False
-    for y in range(0, h, 1):
-        for x in range(0, w, 1):
+    # Sample for speed, then refine near hits is overkill; step-2 keeps quality for PDF.
+    for y in range(0, h, 2):
+        for x in range(0, w, 2):
             if is_ink(*px[x, y]):
                 found = True
                 left = min(left, x)
@@ -127,70 +129,94 @@ def trim_diagram(im: Image.Image) -> Image.Image:
     return ImageOps.expand(cropped, border=12, fill=(255, 255, 255))
 
 
-def best_pagesize(iw: int, ih: int):
+def choose_pagesize(iw: int, ih: int):
+    """Prefer orientation that maximizes width-scale for a tall strip."""
     candidates = [landscape(letter), letter]
     best = None
     best_scale = -1.0
     for page in candidates:
-        cw, ch = page
-        usable_w = cw - 2 * MARGIN
-        usable_h = ch - 2 * MARGIN - TITLE_H
-        scale = min(usable_w / iw, usable_h / ih)
-        if scale > best_scale:
-            best_scale = scale
+        pw, ph = page
+        usable_w = pw - 2 * MARGIN
+        usable_h = ph - 2 * MARGIN - HEADER_H
+        # Vertical-slice strategy: always fill width; height is cut into pages.
+        scale = usable_w / iw
+        # Prefer pages that also give more vertical room per slice when scale ties.
+        score = scale + (usable_h / max(ih, 1)) * 1e-6
+        if score > best_scale:
+            best_scale = score
             best = page
-    return best, best_scale
+    return best
 
 
-def build_pdf(images: list[tuple[str, Path]], pdf_path: Path, config: str, brand: str):
-    """One page per route: green brand header + diagram (no cover page)."""
+def vertical_slices(im: Image.Image, slice_h_px: int) -> list[Image.Image]:
+    """Cut a tall image into overlapping vertical bands."""
+    iw, ih = im.size
+    if ih <= slice_h_px:
+        return [im]
+    slices: list[Image.Image] = []
+    step = max(1, slice_h_px - SLICE_OVERLAP_PX)
+    y = 0
+    while y < ih:
+        y2 = min(ih, y + slice_h_px)
+        slices.append(im.crop((0, y, iw, y2)))
+        if y2 >= ih:
+            break
+        y += step
+    return slices
+
+
+def draw_header(c: canvas.Canvas, brand: str, title: str, page_label: str, cw: float, ch: float):
+    c.setFillColorRGB(1, 1, 1)
+    c.rect(0, 0, cw, ch, fill=1, stroke=0)
+    c.setFillColorRGB(0.04, 0.43, 0.31)
+    c.setFont("Helvetica-Bold", 10)
+    y = ch - MARGIN - 0.16 * inch
+    left = f"{brand}  ·  {title}"
+    c.drawString(MARGIN, y, left)
+    if page_label:
+        c.setFillColorRGB(0.35, 0.4, 0.48)
+        c.setFont("Helvetica", 9)
+        c.drawRightString(cw - MARGIN, y, page_label)
+
+
+def build_pdf(images: list[tuple[str, Path]], pdf_path: Path, brand: str):
+    """One or more pages per route: single header row + vertical diagram slices."""
     c = canvas.Canvas(str(pdf_path), pagesize=landscape(letter))
-    brand_h = 0.30 * inch
-    title_h = 0.34 * inch
-    top_chrome = brand_h + title_h
 
     for title, path in images:
         im = trim_diagram(Image.open(path))
         iw, ih = im.size
-        # pagesize with room for brand + title
-        candidates = [landscape(letter), letter]
-        best_page, best_scale = None, -1.0
-        for page in candidates:
-            pw, ph = page
-            usable_w = pw - 2 * MARGIN
-            usable_h = ph - 2 * MARGIN - top_chrome
-            scale = min(usable_w / iw, usable_h / ih)
-            if scale > best_scale:
-                best_scale = scale
-                best_page = page
-        c.setPageSize(best_page)
-        cw, ch = best_page
-        dw, dh = iw * best_scale, ih * best_scale
-        x = (cw - dw) / 2
-        y = MARGIN + max(0, (ch - 2 * MARGIN - top_chrome - dh) / 2)
+        page = choose_pagesize(iw, ih)
+        c.setPageSize(page)
+        cw, ch = page
+        usable_w = cw - 2 * MARGIN
+        usable_h = ch - 2 * MARGIN - HEADER_H
+        scale = usable_w / iw
+        # Pixel height of one page band at screenshot resolution
+        slice_h_px = max(1, int(usable_h / scale))
+        bands = vertical_slices(im, slice_h_px)
+        total = len(bands)
 
-        c.setFillColorRGB(1, 1, 1)
-        c.rect(0, 0, cw, ch, fill=1, stroke=0)
-        c.setFillColorRGB(0.04, 0.43, 0.31)
-        c.setFont("Helvetica-Bold", 11)
-        c.drawString(MARGIN, ch - MARGIN - 0.18 * inch, brand)
-        c.setFillColorRGB(0.09, 0.14, 0.2)
-        c.setFont("Helvetica-Bold", 12)
-        c.drawString(
-            MARGIN,
-            ch - MARGIN - 0.18 * inch - brand_h,
-            f"{title}  ·  {CONFIG_LABELS.get(config, config)}",
-        )
-        c.drawImage(
-            ImageReader(im),
-            x,
-            y,
-            width=dw,
-            height=dh,
-            preserveAspectRatio=True,
-            mask="auto",
-        )
-        c.showPage()
+        for idx, band in enumerate(bands, start=1):
+            if idx > 1:
+                c.setPageSize(page)
+            bw, bh = band.size
+            dw, dh = bw * scale, bh * scale
+            x = MARGIN + (usable_w - dw) / 2
+            # Pin each band just under the header (don't vertically center — wastes space)
+            y = ch - MARGIN - HEADER_H - dh
+            page_label = f"{idx}/{total}" if total > 1 else ""
+            draw_header(c, brand, title, page_label, cw, ch)
+            c.drawImage(
+                ImageReader(band),
+                x,
+                y,
+                width=dw,
+                height=dh,
+                preserveAspectRatio=True,
+                mask="auto",
+            )
+            c.showPage()
     c.save()
 
 
@@ -202,25 +228,39 @@ def main():
         default="changed",
         help="Box config mode from the Routes dropdown (default: changed)",
     )
+    parser.add_argument(
+        "--skip-capture",
+        action="store_true",
+        help="Rebuild PDF from existing PNGs in output/route-diagrams/",
+    )
     args = parser.parse_args()
     config = args.config
 
-    wait_health()
     SHOTS.mkdir(parents=True, exist_ok=True)
     images = []
-    sizes = WINDOW_BY_CONFIG[config]
-    for title, rid, name in ROUTES:
-        dest = SHOTS / name
-        size = sizes.get(rid, (2200, 2400))
-        print(f"Capturing {title} (config={config}, window={size[0]}x{size[1]})")
-        shot(rid, dest, size, config)
-        trimmed = trim_diagram(Image.open(dest))
-        trimmed.save(dest)
-        print(f"  cropped -> {trimmed.size[0]}x{trimmed.size[1]}")
-        images.append((title, dest))
+    if not args.skip_capture:
+        wait_health()
+        sizes = WINDOW_BY_CONFIG[config]
+        for title, rid, name in ROUTES:
+            dest = SHOTS / name
+            size = sizes.get(rid, (2200, 4000))
+            print(f"Capturing {title} (config={config}, window={size[0]}x{size[1]})")
+            shot(rid, dest, size, config)
+            trimmed = trim_diagram(Image.open(dest))
+            trimmed.save(dest)
+            print(f"  cropped -> {trimmed.size[0]}x{trimmed.size[1]}")
+            images.append((title, dest))
+    else:
+        for title, rid, name in ROUTES:
+            dest = SHOTS / name
+            if not dest.exists():
+                raise SystemExit(f"Missing {dest}; run without --skip-capture")
+            print(f"Using existing {dest} ({Image.open(dest).size})")
+            images.append((title, dest))
+
     DOCS.mkdir(parents=True, exist_ok=True)
     pdf = DOCS / PDF_NAME
-    build_pdf(images, pdf, config, BRAND)
+    build_pdf(images, pdf, BRAND)
     print("Wrote", pdf)
 
 

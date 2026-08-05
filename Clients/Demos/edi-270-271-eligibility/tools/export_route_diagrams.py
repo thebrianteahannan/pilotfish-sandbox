@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Screenshot CSV→JSON demo V2 route diagrams and assemble a PDF.
+"""Screenshot V2 route diagrams and assemble a PDF.
 
 Tall pipelines are scaled to page width and sliced vertically across pages.
 
@@ -29,22 +29,33 @@ Image.MAX_IMAGE_PIXELS = 400_000_000
 ROOT = Path(__file__).resolve().parents[1]
 SHOTS = ROOT / "output" / "route-diagrams"
 DOCS = ROOT / "documents"
-PDF_NAME = "CSV_to_JSON_V2_Route_Diagrams.pdf"
-BRAND = "PILOTFISH  ·  CSV TO JSON"
-BASE = "http://127.0.0.1:8109"
+PDF_NAME = "EDI270_271_V2_Route_Diagrams.pdf"
+TITLE = "EDI 270/271 Eligibility — V2 Route Diagrams"
+BRAND = "PILOTFISH  ·  EDI 270/271 ELIGIBILITY DEMO"
+BASE = "http://127.0.0.1:8107"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 ROUTES = [
-    ("1 — Convert CSV To JSON", "1-convert-csv-to-json", "route1.png"),
+    ("1 — Eligibility 270 271 API", "1-eligibility-270-271-api", "route1.png"),
 ]
 MARGIN = 0.28 * inch
 HEADER_H = 0.36 * inch
 SLICE_OVERLAP_PX = 48
 
 
+# Window chrome size grows when inline config is shown.
 WINDOW_BY_CONFIG = {
-    "compact": {"1-convert-csv-to-json": (1800, 1800)},
-    "changed": {"1-convert-csv-to-json": (2200, 2800)},
-    "all": {"1-convert-csv-to-json": (2400, 4000)},
+    "compact": {
+        "1-poll-sql-server-claims": (2000, 1200),
+        "2-generate-837-and-snip": (2000, 2600),
+    },
+    "changed": {
+        "1-poll-sql-server-claims": (2200, 1800),
+        "2-generate-837-and-snip": (2400, 4200),
+    },
+    "all": {
+        "1-poll-sql-server-claims": (2400, 2600),
+        "2-generate-837-and-snip": (2600, 5600),
+    },
 }
 
 
@@ -57,7 +68,7 @@ def wait_health(timeout=30):
                     return
         except Exception:
             time.sleep(0.5)
-    raise SystemExit("Web UI not reachable on :8109")
+    raise SystemExit("Web UI not reachable on :8107")
 
 
 def shot(route_id: str, dest: Path, size: tuple[int, int], config: str):

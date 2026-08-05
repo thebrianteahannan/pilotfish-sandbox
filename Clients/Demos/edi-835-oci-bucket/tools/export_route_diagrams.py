@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Screenshot CSV→JSON demo V2 route diagrams and assemble a PDF.
+"""Screenshot HL7 demo V2 route diagrams and assemble a PDF.
 
 Tall pipelines are scaled to page width and sliced vertically across pages.
 
@@ -29,12 +29,13 @@ Image.MAX_IMAGE_PIXELS = 400_000_000
 ROOT = Path(__file__).resolve().parents[1]
 SHOTS = ROOT / "output" / "route-diagrams"
 DOCS = ROOT / "documents"
-PDF_NAME = "CSV_to_JSON_V2_Route_Diagrams.pdf"
-BRAND = "PILOTFISH  ·  CSV TO JSON"
-BASE = "http://127.0.0.1:8109"
+PDF_NAME = "EDI835_OCI_V2_Route_Diagrams.pdf"
+BRAND = "PILOTFISH  ·  EDI 835 OCI DEMO"
+BASE = "http://127.0.0.1:8105"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 ROUTES = [
-    ("1 — Convert CSV To JSON", "1-convert-csv-to-json", "route1.png"),
+    ("1 — SFTP Poll And Stage", "1-sftp-poll-and-stage", "route1.png"),
+    ("2 — Split ST JSON And OCI", "2-split-st-json-and-oci", "route2.png"),
 ]
 MARGIN = 0.28 * inch
 HEADER_H = 0.36 * inch
@@ -42,9 +43,18 @@ SLICE_OVERLAP_PX = 48
 
 
 WINDOW_BY_CONFIG = {
-    "compact": {"1-convert-csv-to-json": (1800, 1800)},
-    "changed": {"1-convert-csv-to-json": (2200, 2800)},
-    "all": {"1-convert-csv-to-json": (2400, 4000)},
+    "compact": {
+        "1-sftp-poll-and-stage": (2000, 1400),
+        "2-split-st-json-and-oci": (2200, 2800),
+    },
+    "changed": {
+        "1-sftp-poll-and-stage": (2200, 2200),
+        "2-split-st-json-and-oci": (2400, 4200),
+    },
+    "all": {
+        "1-sftp-poll-and-stage": (2400, 3000),
+        "2-split-st-json-and-oci": (2600, 5600),
+    },
 }
 
 
@@ -57,7 +67,7 @@ def wait_health(timeout=30):
                     return
         except Exception:
             time.sleep(0.5)
-    raise SystemExit("Web UI not reachable on :8109")
+    raise SystemExit("Web UI not reachable on :8105")
 
 
 def shot(route_id: str, dest: Path, size: tuple[int, int], config: str):
