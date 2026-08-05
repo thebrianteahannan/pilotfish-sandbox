@@ -99,12 +99,16 @@ public class FhirJwtAuthProcessor extends AbstractProcessor {
     public TransactionData processData(TransactionData data) throws EIPException {
         try {
             String method = str(data, "com.pilotfish.HttpMethodName");
+            String resourceName = str(data, "com.pilotfish.ResourceName");
             boolean requireWrites = boolCfg(data, REQUIRE_WRITES_TAG, true);
             boolean isWrite = "POST".equalsIgnoreCase(method)
                     || "PUT".equalsIgnoreCase(method)
                     || "DELETE".equalsIgnoreCase(method);
+            boolean isBulkOp = "$export".equals(resourceName)
+                    || "$export-status".equals(resourceName)
+                    || "$export-file".equals(resourceName);
 
-            if (!requireWrites || !isWrite) {
+            if ((!requireWrites || !isWrite) && !isBulkOp) {
                 data.getAttributes().setAttribute(ATTR_AUTH_STATUS, "SKIP");
                 return data;
             }

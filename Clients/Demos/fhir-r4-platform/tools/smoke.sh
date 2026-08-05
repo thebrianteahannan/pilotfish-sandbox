@@ -48,6 +48,36 @@ echo "$batch" | head -c 260; echo
 echo "$batch" | grep -q 'batch-response' || { echo "FAIL: expected batch-response"; exit 1; }
 echo "$batch" | grep -q '404' || { echo "FAIL: batch should include 404 entry"; exit 1; }
 curl -sf "$BASE/Organization/org-batch-001" | grep -q 'org-batch-001' || { echo "FAIL: batch org not persisted"; exit 1; }
+echo '== bulk $export =='
+code="$(curl -s -o /tmp/fhir-export.json -D /tmp/fhir-export.hdr -w '%{http_code}' "${AUTH[@]}" "$BASE/\$export?_type=Patient,Observation")"
+echo "kickoff HTTP $code"; head -20 /tmp/fhir-export.hdr; head -c 200 /tmp/fhir-export.json; echo
+[ "$code" = "202" ] || { echo 'FAIL: expected 202 from $export'; exit 1; }
+loc="$(python3 - <<'PY2'
+from pathlib import Path
+for line in Path("/tmp/fhir-export.hdr").read_text().splitlines():
+    if line.lower().startswith("content-location:"):
+        print(line.split(":",1)[1].strip()); break
+PY2
+)"
+[ -n "$loc" ] || { echo "FAIL: missing Content-Location"; exit 1; }
+# localize to BASE host if absolute
+status_path="${loc#*://eip/rest/fhir}"
+status_path="${loc##*/eip/rest/fhir}"
+# prefer parse job id
+job="$(basename "$loc")"
+echo "polling job $job"
+manifest=""
+for i in $(seq 1 30); do
+  manifest="$(curl -sf "${AUTH[@]}" "$BASE/\$export-status/$job" || true)"
+  echo "$manifest" | grep -q '"output"' && break
+  sleep 1
+done
+echo "$manifest" | head -c 300; echo
+echo "$manifest" | grep -q '"output"' || { echo "FAIL: export never completed"; exit 1; }
+echo "$manifest" | grep -q 'Patient' || { echo "FAIL: manifest missing Patient output"; exit 1; }
+ndjson="$(curl -sf "${AUTH[@]}" "$BASE/\$export-file/$job?_type=Patient")"
+echo "$ndjson" | head -c 220; echo
+echo "$ndjson" | grep -q 'pat-alice-001' || { echo "FAIL: Patient.ndjson missing pat-alice-001"; exit 1; }
 echo "== invalid Patient gender (expect 400 OperationOutcome) =="
 code="$(curl -s -o /tmp/fhir-bad.json -w '%{http_code}' "${AUTH[@]}" -H 'Content-Type: application/fhir+json' --data-binary @"$SAMPLES/Patient_invalid_gender.json" "$BASE/Patient")"
 echo "HTTP $code"; head -c 280 /tmp/fhir-bad.json; echo

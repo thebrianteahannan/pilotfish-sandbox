@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="8d1c401b-2a69-44a2-9323-16474289200a" name="Run Bulk Export Op" type="FhirBulkExportProcessor" tag="Processor" class="com.pilotfish.eip.modules.fhir.FhirBulkExportProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <JdbcUrl>$$sqlserver.url</JdbcUrl>
+      
+          
+      <JdbcUser>$$sqlserver.username</JdbcUser>
+      
+          
+      <JdbcPassword>$$sqlserver.password</JdbcPassword>
+      
+          
+      <ExportDirectory>/opt/pilotfish/output/bulk-export</ExportDirectory>
+      
+          
+      <PublicFhirBase>http://localhost:8110/eip/rest/fhir</PublicFhirBase>
+      
+        
+   </ModuleConfig>
+</Module>

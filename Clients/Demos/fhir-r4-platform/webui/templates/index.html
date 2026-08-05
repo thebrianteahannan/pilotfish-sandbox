@@ -9,7 +9,7 @@
 <body>
   <header class="top">
     <div class="app-bar">
-      <p class="brand">PilotFish · FHIR R4 Platform (Phase 5)</p>
+      <p class="brand">PilotFish · FHIR R4 Platform (Phase 6)</p>
       <nav class="tabs" role="tablist">
         <button type="button" class="tab active" data-tab="demo">Demo</button>
         <button type="button" class="tab" data-tab="routes">Routes</button>
@@ -102,12 +102,12 @@
 
   <main id="tab-info" class="panel info-tab" hidden>
     <h1>Expandable FHIR server + outbound client</h1>
-    <p class="sub">Multi-resource CRUD · metadata · token search · Bundle · HAPI validation · Keycloak Bearer on writes · optional remote proxy. Not the entire FHIR spec.</p>
+    <p class="sub">CRUD · search · Bundle · HAPI validation · Keycloak writes · Bulk $export · optional remote proxy. Not the entire FHIR spec.</p>
     <p class="sub">Core-6 indexed search: Patient, Practitioner, Organization, Observation, Encounter, Condition. Bundle: <code>POST /Bundle</code> with <code>type=transaction</code> (atomic) or <code>batch</code> (per-entry).</p>
     {% if lan_hint %}<p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>{% endif %}
     <p class="sub muted">PF: <code>{{ fhir_public_base }}</code></p>
     <p class="sub muted">Remote: <a href="{{ fhir_remote_base }}" target="_blank" rel="noreferrer"><code>{{ fhir_remote_base }}</code></a></p>
-    <p class="sub muted">See <a href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a> and <code>DESIGN.md</code> for Phase 5 scope and roadmap. Keycloak: <code>{{ oauth_token_url }}</code></p>
+    <p class="sub muted">See <a href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a> and <code>DESIGN.md</code> for Phase 6 scope and roadmap. Keycloak: <code>{{ oauth_token_url }}</code></p>
   </main>
 
   <script src="/static/app.js"></script>

@@ -1,15 +1,15 @@
 {
   "resourceType": "CapabilityStatement",
-  "id": "pilotfish-fhir-r4-platform-phase5",
+  "id": "pilotfish-fhir-r4-platform-phase6",
   "url": "http://localhost:8110/eip/rest/fhir/metadata",
-  "version": "0.5.0",
-  "name": "PilotFishFhirR4PlatformPhase5",
-  "title": "PilotFish FHIR R4 Expandable Platform (Phase 5)",
+  "version": "0.6.0",
+  "name": "PilotFishFhirR4PlatformPhase6",
+  "title": "PilotFish FHIR R4 Expandable Platform (Phase 6)",
   "status": "draft",
   "experimental": true,
   "date": "2026-08-05",
   "publisher": "PilotFish Sandbox Demo",
-  "description": "Phase 5 expandable FHIR R4 fa\u00e7ade. CRUD; token search; Bundle transaction/batch; HAPI base-R4 validation; Keycloak OAuth2 Bearer required on create/update/delete. Deferred: full SMART launch/EHR context, US Core, Bulk export.",
+  "description": "Phase 6 expandable FHIR R4 fa\u00e7ade with async system-level Bulk $export (NDJSON), Keycloak Bearer on writes/export, HAPI validation, search, and Bundle transaction/batch. Deferred: multi-partition Bulk, group export, _since deletion markers, full SMART launch.",
   "kind": "instance",
   "fhirVersion": "4.0.1",
   "format": [
@@ -19,7 +19,7 @@
   "rest": [
     {
       "mode": "server",
-      "documentation": "SQL-backed FHIR with HAPI validation and Keycloak JWT on write interactions. Read/search/metadata remain open for demo convenience.",
+      "documentation": "Includes async GET/POST /$export (202 + Content-Location), GET /$export-status/{jobId}, GET /$export-file/{jobId}?_type=ResourceType. Bearer required for export ops.",
       "resource": [
         {
           "type": "Patient",
@@ -1192,7 +1192,14 @@
             ]
           }
         ]
-      }
+      },
+      "operation": [
+        {
+          "name": "export",
+          "definition": "http://hl7.org/fhir/uv/bulkdata/OperationDefinition/export",
+          "documentation": "Demo async system Bulk export to NDJSON under /opt/pilotfish/output/bulk-export/{jobId}."
+        }
+      ]
     }
   ]
 }

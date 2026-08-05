@@ -10,7 +10,11 @@
         </Rule>
         <Rule>
           <Targets><TransportTarget name="Unauthorized Response" /></Targets>
-          <Condition><OGNLExpression>(getAttribute('com.pilotfish.HttpMethodName') == 'POST' || getAttribute('com.pilotfish.HttpMethodName') == 'PUT' || getAttribute('com.pilotfish.HttpMethodName') == 'DELETE') &amp;&amp; getAttribute('fhir.AuthStatus') != 'PASS'</OGNLExpression></Condition>
+          <Condition><OGNLExpression>(getAttribute('com.pilotfish.HttpMethodName') == 'POST' || getAttribute('com.pilotfish.HttpMethodName') == 'PUT' || getAttribute('com.pilotfish.HttpMethodName') == 'DELETE' || '$export'.equals(getAttribute('com.pilotfish.ResourceName')) || '$export-status'.equals(getAttribute('com.pilotfish.ResourceName')) || '$export-file'.equals(getAttribute('com.pilotfish.ResourceName'))) &amp;&amp; getAttribute('fhir.AuthStatus') != 'PASS'</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="Bulk Export Response" /></Targets>
+          <Condition><OGNLExpression>getAttribute('com.pilotfish.ResourceName') != null &amp;&amp; ('$export'.equals(getAttribute('com.pilotfish.ResourceName').toString()) || '$export-status'.equals(getAttribute('com.pilotfish.ResourceName').toString()) || '$export-file'.equals(getAttribute('com.pilotfish.ResourceName').toString()))</OGNLExpression></Condition>
         </Rule>
         <Rule>
           <Targets><TransportTarget name="Bundle Execute Response" /></Targets>
@@ -64,7 +68,7 @@
         <GET_SUPPORTED>true</GET_SUPPORTED>
         <PUT_SUPPORTED>true</PUT_SUPPORTED>
         <DELETE_SUPPORTED>true</DELETE_SUPPORTED>
-        <SupportedResources>Patient,Practitioner,PractitionerRole,Organization,Location,Encounter,Observation,Condition,Procedure,AllergyIntolerance,MedicationRequest,Medication,Immunization,DiagnosticReport,DocumentReference,CarePlan,CareTeam,Goal,ServiceRequest,Coverage,Claim,ExplanationOfBenefit,Appointment,Schedule,Slot,RelatedPerson,Person,EpisodeOfCare,Binary,Bundle,Parameters,metadata</SupportedResources>
+        <SupportedResources>Patient,Practitioner,PractitionerRole,Organization,Location,Encounter,Observation,Condition,Procedure,AllergyIntolerance,MedicationRequest,Medication,Immunization,DiagnosticReport,DocumentReference,CarePlan,CareTeam,Goal,ServiceRequest,Coverage,Claim,ExplanationOfBenefit,Appointment,Schedule,Slot,RelatedPerson,Person,EpisodeOfCare,Binary,Bundle,Parameters,metadata,$export,$export-status,$export-file</SupportedResources>
         <Timeout>60</Timeout>
         <RequireSSL>false</RequireSSL>
         <Synchronous>true</Synchronous>
@@ -160,6 +164,39 @@
     </Processors>
   </Target>
 
+
+  <Target icon="" name="BulkExport">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Bulk Export Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.fhir.FhirBulkExportProcessor" name="Run Bulk Export Op">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <JdbcUrl>$$sqlserver.url</JdbcUrl>
+          <JdbcUser>$$sqlserver.username</JdbcUser>
+          <JdbcPassword>$$sqlserver.password</JdbcPassword>
+          <ExportDirectory>/opt/pilotfish/output/bulk-export</ExportDirectory>
+          <PublicFhirBase>http://localhost:8110/eip/rest/fhir</PublicFhirBase>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Bulk Body">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.BulkBody') != null &amp;&amp; getAttribute('fhir.BulkBody').toString().trim().length() &gt; 0}</ExecuteProcessor>
+          <AttributeName>fhir.BulkBody</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor" name="Bulk Headers">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <HeaderTable>[eip_pair:Content-Type:eip_name:{ognl:'$export-file'.equals(getAttribute('com.pilotfish.ResourceName')) ? 'application/fhir+ndjson' : 'application/fhir+json'}:eip_value][eip_pair:Content-Location:eip_name:{ognl:getAttribute('fhir.BulkContentLocation')}:eip_value]</HeaderTable>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
 
   <Target icon="" name="BundleExecute">
     <FormatProfile name="Relay (System Format)" />
