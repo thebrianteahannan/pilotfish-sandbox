@@ -31,6 +31,9 @@ CAPABILITY_PDF_NAME = os.environ.get(
     "CAPABILITY_PDF_NAME", "FHIR_R4_Platform_Capability_Brief.pdf"
 )
 TEST_PLAN_PDF_NAME = os.environ.get("TEST_PLAN_PDF_NAME", "FHIR_R4_Platform_Test_Plan.pdf")
+EXPERT_DD_PDF_NAME = os.environ.get(
+    "EXPERT_DD_PDF_NAME", "FHIR_R4_Platform_Expert_Due_Diligence.pdf"
+)
 TEST_RESULTS_NAME = os.environ.get("TEST_RESULTS_NAME", "test-results.json")
 WEBUI_PORT = int(os.environ.get("WEBUI_PORT", "8111"))
 LAN_HINT = os.environ.get("LAN_HINT", "")
@@ -451,6 +454,18 @@ def test_plan_pdf_alias():
         return send_file(path)
     return Response(
         "Test plan PDF not generated yet. Run: python3 tools/export_test_plan_pdf.py",
+        status=404,
+    )
+
+
+@app.get("/documents/expert-due-diligence.pdf")
+def expert_dd_pdf_alias():
+    path = DOCUMENTS_DIR / EXPERT_DD_PDF_NAME
+    if path.is_file():
+        return send_file(path)
+    return Response(
+        "Expert due diligence PDF not generated yet. "
+        "Run: python3 tools/export_fhir_expert_critique_pdf.py",
         status=404,
     )
 

@@ -257,6 +257,13 @@
           "expect": { "status": 200 }
         },
         {
+          "id": "expert-due-diligence-pdf",
+          "name": "Expert Due Diligence PDF served",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/documents/expert-due-diligence.pdf" },
+          "expect": { "status": 200 }
+        },
+        {
           "id": "route-pdf",
           "name": "Route diagrams PDF served",
           "type": "http",
