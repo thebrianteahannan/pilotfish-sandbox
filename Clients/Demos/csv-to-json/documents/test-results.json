@@ -1,14 +1,14 @@
 {
   "interface": "CSV to JSON",
   "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/csv-to-json",
-  "started_at": "2026-08-05T14:24:39.308930+00:00",
-  "finished_at": "2026-08-05T14:24:39.399389+00:00",
+  "started_at": "2026-08-05T14:24:52.398581+00:00",
+  "finished_at": "2026-08-05T14:24:52.436644+00:00",
   "summary": {
-    "pass": 5,
-    "fail": 2,
+    "pass": 8,
+    "fail": 0,
     "skip": 0,
     "error": 0,
-    "total": 7
+    "total": 8
   },
   "results": [
     {
@@ -16,7 +16,7 @@
       "name": "Web UI loads",
       "suite": "Health",
       "status": "pass",
-      "duration_ms": 22,
+      "duration_ms": 21,
       "message": "UI OK (http://127.0.0.1:8109/)",
       "detail": ""
     },
@@ -25,7 +25,7 @@
       "name": "API health",
       "suite": "Health",
       "status": "pass",
-      "duration_ms": 18,
+      "duration_ms": 2,
       "message": "HTTP 200",
       "detail": ""
     },
@@ -34,7 +34,7 @@
       "name": "Routes API",
       "suite": "Health",
       "status": "pass",
-      "duration_ms": 12,
+      "duration_ms": 1,
       "message": "HTTP 200",
       "detail": ""
     },
@@ -43,7 +43,7 @@
       "name": "Copy sample CSV into inbound",
       "suite": "Convert sample",
       "status": "pass",
-      "duration_ms": 24,
+      "duration_ms": 11,
       "message": "ok",
       "detail": ""
     },
@@ -58,21 +58,30 @@
     },
     {
       "id": "route-pdf",
-      "name": "Route PDF",
+      "name": "Route PDF on disk",
       "suite": "Documents",
-      "status": "fail",
-      "duration_ms": 6,
-      "message": "expected HTTP 200, got 404",
-      "detail": "Route design PDF not found. Run: python3 tools/export_route_diagrams.py --config changed"
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/csv-to-json/documents/CSV_to_JSON_V2_Route_Diagrams.pdf",
+      "detail": ""
     },
     {
       "id": "brief-pdf",
-      "name": "Capability Brief PDF",
+      "name": "Capability Brief PDF on disk",
       "suite": "Documents",
-      "status": "fail",
-      "duration_ms": 4,
-      "message": "expected HTTP 200, got 404",
-      "detail": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>\n"
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/csv-to-json/documents/CSV_to_JSON_Capability_Brief.pdf",
+      "detail": ""
+    },
+    {
+      "id": "test-plan-pdf",
+      "name": "Test Plan PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/csv-to-json/documents/CSV_to_JSON_Test_Plan.pdf",
+      "detail": ""
     }
   ],
   "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/csv-to-json/tests/plan.json"
