@@ -80,19 +80,6 @@
           <UseUTF8Tag>false</UseUTF8Tag>
         </ModuleConfig>
       </Processor>
-      <Processor class="com.pilotfish.eip.modules.json.JSONTransformationProcessor" name="XML to JSON">
-        <ModuleConfig>
-          <ExecuteProcessor>true</ExecuteProcessor>
-          <TransformationDirection>XML to JSON</TransformationDirection>
-          <ExecuteTransformation>true</ExecuteTransformation>
-          <ConverterVersion>2.0</ConverterVersion>
-          <HandleAttributes>true</HandleAttributes>
-          <SkipNS>false</SkipNS>
-          <ExcludeMarkups>false</ExcludeMarkups>
-          <EnhancedConversion>false</EnhancedConversion>
-          <HandlePrefix>false</HandlePrefix>
-        </ModuleConfig>
-      </Processor>
     </Processors>
   </Source>
   <Target icon="" name="JSON Output">
@@ -112,5 +99,18 @@
         <Shell>/bin/bash</Shell>
       </ModuleConfig>
     </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="XML to JSON">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>csv-xml-to-json.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
   </Target>
 </Route>

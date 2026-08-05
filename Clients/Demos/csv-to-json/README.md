@@ -7,8 +7,8 @@ Simple PilotFish eiPlatform demo: poll a folder for CSV files, convert to JSON, 
 1. Drop a `.csv` into `input/inbound` (or use the Web UI)
 2. **Route 1 — Convert CSV To JSON**
    - `DirectoryListener` polls every 10s (`.csv` only), Moves file to `output/archive`
-   - `CSVTransformationProcessor` → Dialect A XML (`XCSData` / `XCSRecord`)
-   - `JSONTransformationProcessor` → JSON (converter 2.0)
+   - Source: `CSVTransformationProcessor` → Dialect A XML (`XCSData` / `XCSRecord`)
+   - Target: XSLT `csv-xml-to-json.xslt` → `{"records":[…]}` JSON
    - `DirectoryTransport` writes `output/json/<basename>.json`
 3. Web UI submits samples and shows JSON + archive
 
@@ -53,6 +53,6 @@ Or use **Convert to JSON** in the Web UI.
 
 - No schema validation / kickout path
 - Listener archives CSV before JSON write (accepted demo risk)
-- JSON shape mirrors CSV Dialect A XML, not a custom flat map
+- JSON is a simple `records` array from Dialect A column tags (not full CSV schema validation)
 
 See `DESIGN.md`.

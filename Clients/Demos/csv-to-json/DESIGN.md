@@ -29,10 +29,10 @@ Simple PilotFish demo that polls a folder for CSV files, converts them to JSON, 
 | Stage | Module / mechanism | Notes |
 |-------|--------------------|-------|
 | Listener | `com.pilotfish.eip.modules.file.DirectoryListener` | `.csv` only; Move → archive |
-| Processor | `com.pilotfish.eip.modules.transform.CSVTransformationProcessor` | CSV → XML (Dialect A `XCSData`) |
-| Processor | `com.pilotfish.eip.modules.json.JSONTransformationProcessor` | XML → JSON (converter 2.0) |
+| Source processor | `com.pilotfish.eip.modules.transform.CSVTransformationProcessor` | CSV → XML (Dialect A `XCSData`) |
 | FormatProfile | Relay | Pass-through |
-| Router | `com.pilotfish.eip.modules.routing.XPathRoutingModule` | Always `true()` → Write JSON |
+| Router | `com.pilotfish.eip.modules.routing.XPathRoutingModule` | Always `true()` on XML → Write JSON |
+| Target processor | `com.pilotfish.eip.modules.transform.XSLTProcessor` (`csv-xml-to-json.xslt`) | Dialect A XML → `{"records":[…]}` JSON text; after route so XPath router sees XML |
 | Transport | `com.pilotfish.eip.modules.file.DirectoryTransport` | `.json` → `$$JSON_OUTPUT_DIRECTORY` |
 
 ## 6. State & idempotency
@@ -59,7 +59,7 @@ Simple PilotFish demo that polls a folder for CSV files, converts them to JSON, 
 |----------|------|------------------------|
 | Med | Archive-before-JSON (listener Move) | Accepted demo risk; labeled in README |
 | Med | No schema validation / kickout | Explicitly not implemented |
-| Low | JSON shape mirrors Dialect A (`XCSData`/`XCSRecord`) | Expected; not a custom pretty map |
+| Low | Native `JSONTransformationProcessor` emits duplicate sibling keys for Dialect A | Prefer XSLT `{"records":[…]}` for valid multi-row JSON |
 | Low | Docs/V2 may be newer than `23R1` | Modules present in `modules-csv` / `modules-json` 23R1 jars |
 
 ## 10. Ops
