@@ -126,7 +126,7 @@ h3 { margin: 0.8rem 0 0.4rem; font-size: 1rem; color: var(--muted); }
   grid-template-columns: 1.1fr 0.9fr;
   gap: 1rem;
 }
-.file-list { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem; }
+.file-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 0.5rem; min-width: 0; }
 .file-list button {
   font-family: var(--mono);
   font-size: 0.78rem;
@@ -215,6 +215,96 @@ body.routes-mode .nav { display: none; }
   border-radius: 12px;
   background: #e8edf5;
   min-height: 0;
+}
+.cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 0.75rem;
+  align-items: start;
+}
+.cols > * {
+  min-width: 0;
+}
+.file-list article {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0;
+  background: rgba(255, 255, 255, 0.03);
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+.file-list pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  font-size: 0.75rem;
+  max-height: 8rem;
+  overflow: auto;
+  margin: 0.4rem 0 0;
+  max-width: 100%;
+}
+.log {
+  background: #0b1a2d;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.75rem;
+  min-height: 4rem;
+  white-space: pre-wrap;
+}
+.muted { color: var(--muted); font-size: 0.85rem; }
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.85rem;
+}
+.auto-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+}
+.oci-live {
+  border: 1px solid rgba(61, 184, 233, 0.45);
+  border-radius: 12px;
+  padding: 0.65rem 0.75rem 0.75rem;
+  background: rgba(61, 184, 233, 0.06);
+}
+.oci-live h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: #062033;
+  background: #3db8e9;
+  border-radius: 999px;
+  padding: 0.15rem 0.45rem;
+}
+.live-badge.pulse {
+  background: #f0a202;
+  animation: live-pulse 0.9s ease-in-out 2;
+}
+.oci-meta { margin: 0.15rem 0 0.55rem; }
+@keyframes live-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+@media (max-width: 960px) {
+  .cols { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 960px) {

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDI 270/271 Eligibility Demo</title>
+  <link rel="stylesheet" href="/static/app.css" />
+  <style>
+    .theater-aaa { border: 1px solid #f87171; background: rgba(248,113,113,.12); border-radius: 12px; padding: .85rem 1rem; }
+    .theater-ok { border: 1px solid #34d399; background: rgba(52,211,153,.12); border-radius: 12px; padding: .85rem 1rem; }
+    .steps pre { max-height: 180px; overflow: auto; font-size: 11px; }
+    .pill { display:inline-block; padding:.15rem .55rem; border-radius:999px; font-size:.75rem; font-weight:700; }
+    .pill.bad { background:#f87171; color:#2a0a0a; }
+    .pill.good { background:#34d399; color:#052e1a; }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div>
+      <p class="brand">PilotFish · EDI 270/271</p>
+      <h1>Clinic eligibility — AAA theater then success</h1>
+      <p class="sub">Build real X12 270 → mock payer 271 → parse benefits / AAA. Orchestrated by this clinic UI.</p>
+      {% if lan_hint %}
+      <p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>
+      {% endif %}
+      <p class="sub muted">EIP: <code>{{ pf_public }}</code> · Payer: <code>{{ payer_public }}</code></p>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button type="button" class="tab active" data-tab="demo" aria-selected="true">Demo</button>
+      <button type="button" class="tab" data-tab="routes" aria-selected="false">Routes</button>
+      {% if has_xslt %}
+      <button type="button" class="tab" data-tab="xslt" aria-selected="false">XSLT</button>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main id="tab-demo" class="panel">
+    <section class="cardish">
+      <h2>Front desk check</h2>
+      <label>Preset member
+        <select id="preset">
+          {% for p in presets %}
+          <option value="{{ p.id }}">{{ p.label }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <div class="form-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;margin:.75rem 0;">
+        <label>Member ID <input id="MemberId" /></label>
+        <label>Last name <input id="LastName" /></label>
+        <label>First name <input id="FirstName" /></label>
+        <label>Birth (CCYYMMDD) <input id="BirthDate" /></label>
+        <label>Gender <input id="Gender" /></label>
+        <label>Service type <input id="ServiceTypeCode" value="30" /></label>
+      </div>
+      <div class="actions">
+        <button type="button" id="btn-check" class="btn primary">Check eligibility</button>
+        <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route design PDF</a>
+      </div>
+      <p id="status" class="status"></p>
+      <div id="result-banner"></div>
+    </section>
+
+    <section>
+      <h2>Wire steps</h2>
+      <div class="cols steps">
+        <div><h3>1. EligibilityRequest XML</h3><pre id="step-request">—</pre></div>
+        <div><h3>2. X12 270 (PilotFish)</h3><pre id="step-270">—</pre></div>
+        <div><h3>3. X12 271 (mock payer)</h3><pre id="step-271">—</pre></div>
+        <div><h3>4. Parsed summary JSON</h3><pre id="step-summary">—</pre></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Artifact folders</h2>
+      <button type="button" id="btn-refresh" class="btn">Refresh</button>
+      <div class="cols">
+        <div><h3>requests/</h3><div id="list-requests" class="file-list"></div></div>
+        <div><h3>270/</h3><div id="list-270" class="file-list"></div></div>
+        <div><h3>271/</h3><div id="list-271" class="file-list"></div></div>
+        <div><h3>responses/</h3><div id="list-responses" class="file-list"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="tab-routes" class="routes-tab" hidden>
+    <div class="routes-toolbar">
+      <label for="route-select">V2 route
+        <select id="route-select"></select>
+      </label>
+      <label for="route-layout">Layout
+        <select id="route-layout">
+          <option value="pipeline" selected>Pipeline</option>
+          <option value="wrap">Wrap grid</option>
+        </select>
+      </label>
+      <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route design PDF</a>
+      <span id="routes-status" class="muted"></span>
+    </div>
+    <iframe id="route-viewer-frame" class="route-viewer-frame" title="Route viewer" src="about:blank"></iframe>
+  </div>
+
+  {% if has_xslt %}
+  <div id="tab-xslt" class="xslt-tab" hidden>
+    <aside class="xslt-sidebar">
+      <div class="xslt-sidebar-head"><h2>XSLT</h2><span id="xslt-status" class="muted"></span></div>
+      <select id="xslt-select"></select>
+    </aside>
+    <div class="xslt-viewer">
+      <div class="xslt-viewer-head"><span class="xslt-path" id="xslt-path"></span></div>
+      <pre class="xslt-source"><code id="xslt-view"></code></pre>
+    </div>
+  </div>
+  {% endif %}
+
+  <script>
+    window.ELIG_PRESETS = {{ presets | tojson }};
+  </script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
