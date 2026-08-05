@@ -25,7 +25,7 @@ Regenerate:
 python3 tools/export_stakeholder_brief.py
 python3 tools/export_fhir_expert_critique_pdf.py
 python3 tools/export_fhir_aws_deploy_pdf.py
-python3 tools/export_route_diagrams.py --config changed
+python3 tools/export_route_diagrams.py --config compact
 python3 tools/export_test_plan_pdf.py
 python3 tools/run_interface_tests.py --wait
 # or after compose:
@@ -35,6 +35,19 @@ python3 tools/run_interface_tests.py --watch
 ```
 
 See Web UI **Tests** tab for the pass/fail list.
+
+## Secrets / credentials (read this)
+
+- **GitHub “Vault token in route PDF” alerts** are almost always **false positives**:
+  compressed PNG streams randomly match `s.` + 24 alphanumerics. Route PDF
+  export now scrubs that scanner pattern; you can also run
+  `python3 tools/scrub_pdf_secret_false_positives.py --demos`. **No HashiCorp
+  Vault is used in this demo** — nothing to rotate for those alerts.
+- **Demo-only local credentials** (`PilotFish_Demo1!`, `fhir-demo-secret`,
+  Keycloak `admin`) are intentionally checked in so `docker compose up` works
+  offline. They are **not** production secrets — replace before any shared or
+  cloud deploy. Route module XML keeps passwords as `$$…` refs; the Web UI
+  redacts sensitive env values.
 ## Bulk export
 
 ```bash
