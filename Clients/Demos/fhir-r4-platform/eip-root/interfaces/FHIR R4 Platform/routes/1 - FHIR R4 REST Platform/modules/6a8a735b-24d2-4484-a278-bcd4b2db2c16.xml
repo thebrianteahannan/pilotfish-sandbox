@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="6a8a735b-24d2-4484-a278-bcd4b2db2c16" name="Create Headers" type="HTTP Response Headers" tag="Processor" class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <HeaderTable>[eip_pair:Content-Type:eip_name:application/fhir+json:eip_value]</HeaderTable>
+      
+        
+   </ModuleConfig>
+</Module>

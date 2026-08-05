@@ -1,8 +1,6 @@
-# FHIR R4 Expandable Platform (Phase 4)
+# FHIR R4 Expandable Platform (Phase 5)
 
-Multi-resource **FHIR R4 REST** façade on PilotFish with SQL primary store, token search (core-6), Bundle transaction/batch, and **HAPI FHIR base-R4 profile validation**.
-
-> Not the entire FHIR specification — see `DESIGN.md`.
+Multi-resource **FHIR R4 REST** on PilotFish with SQL store, search, Bundle transaction/batch, HAPI validation, and **Keycloak OAuth2 Bearer on writes**.
 
 ## Quick start
 
@@ -16,33 +14,25 @@ docker compose up -d --build
 |-------|-----|
 | Web UI | http://127.0.0.1:8111/ |
 | FHIR base | http://127.0.0.1:8110/eip/rest/fhir |
-| Metadata | http://127.0.0.1:8110/eip/rest/fhir/metadata |
+| Keycloak | http://127.0.0.1:8112/ (admin / admin) |
 
-## Phase 4 validation
+## Auth (writes)
 
-CREATE/UPDATE (and Bundle transaction/batch bodies) run through a custom `FhirProfileValidationProcessor` (HAPI instance validator). Failures return **HTTP 400** with a dynamic **OperationOutcome**.
+POST/PUT/DELETE require:
+
+```http
+Authorization: Bearer <access_token>
+```
 
 ```bash
-# Expect 400 OperationOutcome (invalid Patient.gender)
-curl -sS -D- -H 'Content-Type: application/fhir+json' \
-  --data-binary @samples/Patient_invalid_gender.json \
+TOKEN=$(curl -s -X POST http://127.0.0.1:8112/realms/fhir-demo/protocol/openid-connect/token \
+  -d grant_type=client_credentials \
+  -d client_id=fhir-r4-platform \
+  -d client_secret=fhir-demo-secret | python3 -c 'import sys,json;print(json.load(sys.stdin)["access_token"])')
+
+curl -sS -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/fhir+json' \
+  --data-binary @samples/Patient_alice.json \
   http://127.0.0.1:8110/eip/rest/fhir/Patient
 ```
 
-Rebuilds compile the shaded validator module inside `pilotfish/Dockerfile` (not committed as a fat JAR).
-
-## Phase 3 Bundles
-
-```bash
-curl -sS -H 'Content-Type: application/fhir+json' \
-  --data-binary @samples/Bundle_transaction_patient_obs.json \
-  http://127.0.0.1:8110/eip/rest/fhir/Bundle
-```
-
-## Ports
-
-| Service | Host |
-|---------|------|
-| SQL Server | 14338 |
-| PilotFish EIP | 8110 |
-| Web UI | 8111 |
+GET metadata / read / search remain open for the demo. See `DESIGN.md`.

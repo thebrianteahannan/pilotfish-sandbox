@@ -9,6 +9,10 @@
           <Condition><OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'GET' &amp;&amp; 'metadata'.equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName'))</OGNLExpression></Condition>
         </Rule>
         <Rule>
+          <Targets><TransportTarget name="Unauthorized Response" /></Targets>
+          <Condition><OGNLExpression>(getAttribute('com.pilotfish.HttpMethodName') == 'POST' || getAttribute('com.pilotfish.HttpMethodName') == 'PUT' || getAttribute('com.pilotfish.HttpMethodName') == 'DELETE') &amp;&amp; getAttribute('fhir.AuthStatus') != 'PASS'</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
           <Targets><TransportTarget name="Bundle Execute Response" /></Targets>
           <Condition><OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'POST' &amp;&amp; getAttribute('com.pilotfish.ResourceName') != null &amp;&amp; 'Bundle'.equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName').toString()) &amp;&amp; getAttribute('fhir.BundleInteraction') != null &amp;&amp; getAttribute('fhir.BundleInteraction').toString().trim().length() &gt; 0 &amp;&amp; getAttribute('fhir.ProfileValidationStatus') == 'PASS'</OGNLExpression></Condition>
         </Rule>
@@ -115,6 +119,15 @@
       <Processor class="com.pilotfish.eip.modules.fhir.FhirProfileValidationProcessor" name="HAPI FHIR Profile Validation">
         <ModuleConfig>
           <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.fhir.FhirJwtAuthProcessor" name="Keycloak JWT Auth">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <JwksUrl>http://keycloak:8080/realms/fhir-demo/protocol/openid-connect/certs</JwksUrl>
+          <ExpectedIssuer>http://localhost:8112/realms/fhir-demo</ExpectedIssuer>
+          <ExpectedAudience>account</ExpectedAudience>
+          <RequireOnWrites>true</RequireOnWrites>
         </ModuleConfig>
       </Processor>
     </Processors>
@@ -655,6 +668,43 @@ SELECT @@ROWCOUNT AS RowsAffected;</Query>
         <ModuleConfig>
           <ExecuteProcessor>true</ExecuteProcessor>
           <HeaderTable>[eip_pair:Content-Type:eip_name:application/fhir+json:eip_value]</HeaderTable>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="Unauthorized">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Unauthorized Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="Load 401 Fallback">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>outcomes/operation-outcome-401.json</FileName>
+          <PostProcessOperation>Do Nothing</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Auth Outcome">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.AuthOutcome') != null &amp;&amp; getAttribute('fhir.AuthOutcome').toString().trim().length() &gt; 0}</ExecuteProcessor>
+          <AttributeName>fhir.AuthOutcome</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.HttpResponseCodeProcessor" name="Unauthorized Status">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <StatusCode>401 Unauthorized</StatusCode>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor" name="Unauthorized Headers">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <HeaderTable>[eip_pair:Content-Type:eip_name:application/fhir+json:eip_value][eip_pair:WWW-Authenticate:eip_name:Bearer realm="fhir-demo":eip_value]</HeaderTable>
         </ModuleConfig>
       </Processor>
     </Processors>

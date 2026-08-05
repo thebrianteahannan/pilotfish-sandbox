@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="d207061e-0144-4196-b108-45b12e1c13d6" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="bdb39bd7-9d5a-45bc-806a-782c2cf0bbfd" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="a47ac221-c1ad-462c-a707-1092cc7b8308" name="Rule 1 - Metadata Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="dd60a418-991a-4ada-b098-31cb48994cb4" name="Rule 2 - Unauthorized Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="680e8e26-dcc9-4531-bfa1-164253653795" name="Rule 3 - Bundle Execute Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="62256d48-6519-4bfa-bdbd-41b656780500" name="Rule 4 - Create Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="bd4dfeed-de52-4122-8202-3730c7a63c54" name="Rule 5 - Update Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="83dedfcf-d75b-4b15-92b2-9844787179f3" name="Rule 6 - Bad Request Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="eec08cad-84de-4b46-9ca8-35646dd88e92" name="Rule 7 - Delete Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="86e35a7e-9c4d-4489-838c-445ffd9836ff" name="Rule 8 - Read Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="a43d6043-ceef-4fde-be82-e317ed54ba7c" name="Rule 9 - Search Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="80a2f5de-bd76-4a4c-a4b5-254aabade334" name="Rule 10 - Not Supported Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>
