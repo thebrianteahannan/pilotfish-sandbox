@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="3869f970-fe0d-4df8-a556-0adf652e1763" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="905ecb58-0607-4c7a-b742-7e32462c19b8" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="87c192db-3119-49b7-b58e-592e131f9dee" name="Rule 1 - Call Remote FHIR" type="XPATH">
+               <condition>true()</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

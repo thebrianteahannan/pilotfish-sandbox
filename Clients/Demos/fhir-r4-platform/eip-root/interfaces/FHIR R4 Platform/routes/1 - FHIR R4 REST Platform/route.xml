@@ -95,7 +95,7 @@
       <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Normalize Ids And Validation">
         <ModuleConfig>
           <ExecuteProcessor>true</ExecuteProcessor>
-          <AttributePairs>[eip_pair:fhir.EffectiveId:eip_name:{ognl:(getAttribute('com.pilotfish.ResourceID') != null &amp;&amp; getAttribute('com.pilotfish.ResourceID').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.ResourceID').toString().trim() : ((getAttribute('fhir.LogicalId') != null) ? getAttribute('fhir.LogicalId').toString().trim() : '')}:eip_value][eip_pair:fhir.ValidationStatus:eip_name:{ognl:(getAttribute('fhir.BodyResourceType') != null &amp;&amp; getAttribute('com.pilotfish.ResourceName') != null &amp;&amp; getAttribute('fhir.BodyResourceType').toString().equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName')) &amp;&amp; getAttribute('fhir.EffectiveId') != null &amp;&amp; getAttribute('fhir.EffectiveId').toString().trim().length() &gt; 0) ? 'PASS' : 'FAIL'}:eip_value][eip_pair:fhir.SearchId:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter._id')}:eip_value][eip_pair:fhir.SearchQ:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.q')}:eip_value]</AttributePairs>
+          <AttributePairs>[eip_pair:fhir.EffectiveId:eip_name:{ognl:(getAttribute('com.pilotfish.ResourceID') != null &amp;&amp; getAttribute('com.pilotfish.ResourceID').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.ResourceID').toString().trim() : ((getAttribute('fhir.LogicalId') != null) ? getAttribute('fhir.LogicalId').toString().trim() : '')}:eip_value][eip_pair:fhir.ValidationStatus:eip_name:{ognl:(getAttribute('fhir.BodyResourceType') != null &amp;&amp; getAttribute('com.pilotfish.ResourceName') != null &amp;&amp; getAttribute('fhir.BodyResourceType').toString().equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName')) &amp;&amp; getAttribute('fhir.EffectiveId') != null &amp;&amp; getAttribute('fhir.EffectiveId').toString().trim().length() &gt; 0) ? 'PASS' : 'FAIL'}:eip_value][eip_pair:fhir.SearchId:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter._id')}:eip_value][eip_pair:fhir.SearchQ:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.q')}:eip_value][eip_pair:fhir.SearchIdentifier:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.identifier')}:eip_value][eip_pair:fhir.SearchFamily:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.family')}:eip_value][eip_pair:fhir.SearchGiven:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.given')}:eip_value][eip_pair:fhir.SearchName:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.name')}:eip_value][eip_pair:fhir.SearchGender:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.gender')}:eip_value][eip_pair:fhir.SearchBirthdate:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.birthdate')}:eip_value][eip_pair:fhir.SearchPatient:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.patient')}:eip_value][eip_pair:fhir.SearchCode:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.code')}:eip_value][eip_pair:fhir.SearchDate:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.date')}:eip_value][eip_pair:fhir.SearchStatus:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.status')}:eip_value][eip_pair:fhir.SearchCategory:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.category')}:eip_value][eip_pair:fhir.SearchClass:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.class')}:eip_value][eip_pair:fhir.SearchClinicalStatus:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.clinical-status')}:eip_value][eip_pair:fhir.SearchOnsetDate:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.onset-date')}:eip_value][eip_pair:fhir.SearchActive:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.active')}:eip_value]</AttributePairs>
           <AttributeScope>Transaction</AttributeScope>
           <GlobalAttributes>BUCKET</GlobalAttributes>
         </ModuleConfig>
@@ -184,6 +184,33 @@ OUTPUT INSERTED.ResourceRowId AS ResourceRowId;</Query>
           <LogSQL>true</LogSQL>
         </ModuleConfig>
       </Processor>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Reindex Search Tokens">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>EXEC dbo.FhirReindexResource ?, ?; SELECT 1 AS Reindexed;</Query>
+          <QueryParams>[eip_pair:p1:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:p2:eip_name:{ognl:getAttribute('fhir.EffectiveId').toString()}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>60</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
       <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Body For Response">
         <ModuleConfig>
           <ExecuteProcessor>true</ExecuteProcessor>
@@ -248,6 +275,33 @@ WHEN NOT MATCHED THEN INSERT (SourceCode, ResourceType, ResourceId, PatientId, P
 VALUES ('REST', s.ResourceType, s.ResourceId, '', '', CASE WHEN s.ResourceType = 'Bundle' THEN 1 ELSE 0 END, 'PASS', 'rest-api', s.RawFhir, 'local')
 OUTPUT INSERTED.ResourceRowId AS ResourceRowId;</Query>
           <QueryParams>[eip_pair:p1:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:p2:eip_name:{ognl:getAttribute('fhir.EffectiveId').toString()}:eip_value][eip_pair:p3:eip_name:{ognl:getAttribute('fhir.RawBody')}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>60</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Reindex Search Tokens Update">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>EXEC dbo.FhirReindexResource ?, ?; SELECT 1 AS Reindexed;</Query>
+          <QueryParams>[eip_pair:p1:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:p2:eip_name:{ognl:getAttribute('fhir.EffectiveId').toString()}:eip_value]</QueryParams>
           <UserName>$$sqlserver.username</UserName>
           <Password>$$sqlserver.password</Password>
           <UseDataSource>false</UseDataSource>
@@ -372,12 +426,8 @@ OUTPUT INSERTED.ResourceRowId AS ResourceRowId;</Query>
         <ModuleConfig>
           <InputFile />
           <WriteQuery>true</WriteQuery>
-          <Query>SELECT TOP 50 ResourceType, ResourceId, RawFhir FROM dbo.FhirResources
-WHERE ResourceType = ? AND DeletedAt IS NULL
-AND (? IS NULL OR LTRIM(RTRIM(CAST(? AS NVARCHAR(128)))) = '' OR ResourceId = ?)
-AND (? IS NULL OR LTRIM(RTRIM(CAST(? AS NVARCHAR(200)))) = '' OR RawFhir LIKE '%' + ? + '%')
-ORDER BY UpdatedAt DESC</Query>
-          <QueryParams>[eip_pair:t:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:sid1:eip_name:{ognl:getAttribute('fhir.SearchId')}:eip_value][eip_pair:sid2:eip_name:{ognl:getAttribute('fhir.SearchId')}:eip_value][eip_pair:sid3:eip_name:{ognl:getAttribute('fhir.SearchId')}:eip_value][eip_pair:q1:eip_name:{ognl:getAttribute('fhir.SearchQ')}:eip_value][eip_pair:q2:eip_name:{ognl:getAttribute('fhir.SearchQ')}:eip_value][eip_pair:q3:eip_name:{ognl:getAttribute('fhir.SearchQ')}:eip_value]</QueryParams>
+          <Query>EXEC dbo.FhirSearchResources ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?;</Query>
+          <QueryParams>[eip_pair:t:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:id:eip_name:{ognl:getAttribute('fhir.SearchId')}:eip_value][eip_pair:identifier:eip_name:{ognl:getAttribute('fhir.SearchIdentifier')}:eip_value][eip_pair:family:eip_name:{ognl:getAttribute('fhir.SearchFamily')}:eip_value][eip_pair:given:eip_name:{ognl:getAttribute('fhir.SearchGiven')}:eip_value][eip_pair:name:eip_name:{ognl:getAttribute('fhir.SearchName')}:eip_value][eip_pair:gender:eip_name:{ognl:getAttribute('fhir.SearchGender')}:eip_value][eip_pair:birthdate:eip_name:{ognl:getAttribute('fhir.SearchBirthdate')}:eip_value][eip_pair:patient:eip_name:{ognl:getAttribute('fhir.SearchPatient')}:eip_value][eip_pair:code:eip_name:{ognl:getAttribute('fhir.SearchCode')}:eip_value][eip_pair:date:eip_name:{ognl:getAttribute('fhir.SearchDate')}:eip_value][eip_pair:status:eip_name:{ognl:getAttribute('fhir.SearchStatus')}:eip_value][eip_pair:category:eip_name:{ognl:getAttribute('fhir.SearchCategory')}:eip_value][eip_pair:class:eip_name:{ognl:getAttribute('fhir.SearchClass')}:eip_value][eip_pair:clinical:eip_name:{ognl:getAttribute('fhir.SearchClinicalStatus')}:eip_value][eip_pair:onset:eip_name:{ognl:getAttribute('fhir.SearchOnsetDate')}:eip_value][eip_pair:active:eip_name:{ognl:getAttribute('fhir.SearchActive')}:eip_value][eip_pair:q:eip_name:{ognl:getAttribute('fhir.SearchQ')}:eip_value]</QueryParams>
           <UserName>$$sqlserver.username</UserName>
           <Password>$$sqlserver.password</Password>
           <UseDataSource>false</UseDataSource>
@@ -458,6 +508,34 @@ SELECT @@ROWCOUNT AS RowsAffected;</Query>
           <LogSQL>true</LogSQL>
         </ModuleConfig>
       </Processor>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Delete Search Tokens">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>DELETE FROM dbo.FhirSearchTokens WHERE ResourceType = ? AND ResourceId = ?; SELECT @@ROWCOUNT AS TokensDeleted;</Query>
+          <QueryParams>[eip_pair:t:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:id:eip_name:{ognl:getAttribute('com.pilotfish.ResourceID').toString()}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>60</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
+
       <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Delete Outcome">
         <ModuleConfig>
           <ExecuteProcessor>true</ExecuteProcessor>

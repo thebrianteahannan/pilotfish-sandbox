@@ -9,7 +9,7 @@
 <body>
   <header class="top">
     <div class="app-bar">
-      <p class="brand">PilotFish · FHIR R4 Platform (Phase 1)</p>
+      <p class="brand">PilotFish · FHIR R4 Platform (Phase 2)</p>
       <nav class="tabs" role="tablist">
         <button type="button" class="tab active" data-tab="demo">Demo</button>
         <button type="button" class="tab" data-tab="routes">Routes</button>
@@ -35,12 +35,24 @@
           </select>
         </label>
         <label>Id <input id="id" placeholder="pat-alice-001" /></label>
-        <label>Query (search) <input id="query" placeholder="_id=pat-alice-001 or q=Alice" /></label>
+        <label>Query (search) <input id="query" placeholder="family=Smith or _id=pat-alice-001" /></label>
         <label>Sample
           <select id="sample"><option value="">—</option></select>
         </label>
         <label class="auto-refresh"><input type="checkbox" id="proxy" /> Proxy to remote FHIR</label>
       </div>
+      <div id="search-helpers" class="form-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;margin:.65rem 0;">
+        <label>family <input id="sp-family" data-sp="family" placeholder="Smith" /></label>
+        <label>given <input id="sp-given" data-sp="given" placeholder="Alice" /></label>
+        <label>identifier <input id="sp-identifier" data-sp="identifier" placeholder="MRN-1001" /></label>
+        <label>patient <input id="sp-patient" data-sp="patient" placeholder="Patient/pat-alice-001" /></label>
+        <label>code <input id="sp-code" data-sp="code" placeholder="8867-4" /></label>
+        <label>status <input id="sp-status" data-sp="status" placeholder="final" /></label>
+        <label>name <input id="sp-name" data-sp="name" /></label>
+        <label>gender <input id="sp-gender" data-sp="gender" placeholder="female" /></label>
+        <label>birthdate <input id="sp-birthdate" data-sp="birthdate" placeholder="1985-03-12" /></label>
+      </div>
+      <p class="muted" id="search-hint" style="margin:.25rem 0 .75rem;font-size:.88rem;">Phase 2 helpers for core-6 types. Apply into Query, or type the query string directly. Other types: <code>_id</code> / <code>q</code>.</p>
       <label>Body (POST/PUT)
         <textarea id="body" rows="8" style="width:100%;font-family:ui-monospace,monospace;font-size:12px;"></textarea>
       </label>
@@ -83,11 +95,12 @@
 
   <main id="tab-info" class="panel info-tab" hidden>
     <h1>Expandable FHIR server + outbound client</h1>
-    <p class="sub">Multi-resource CRUD · metadata · simple search · optional remote proxy. Not the entire FHIR spec.</p>
+    <p class="sub">Multi-resource CRUD · metadata · Phase 2 token search (core-6) · optional remote proxy. Not the entire FHIR spec.</p>
+    <p class="sub">Core-6 indexed search: Patient, Practitioner, Organization, Observation, Encounter, Condition (EAV <code>FhirSearchTokens</code>). Other types: <code>_id</code> + legacy <code>q</code>.</p>
     {% if lan_hint %}<p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>{% endif %}
     <p class="sub muted">PF: <code>{{ fhir_public_base }}</code></p>
     <p class="sub muted">Remote: <a href="{{ fhir_remote_base }}" target="_blank" rel="noreferrer"><code>{{ fhir_remote_base }}</code></a></p>
-    <p class="sub muted">See <a href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a> and <code>DESIGN.md</code> for Phase 1 scope and roadmap.</p>
+    <p class="sub muted">See <a href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a> and <code>DESIGN.md</code> for Phase 2 scope and roadmap.</p>
   </main>
 
   <script src="/static/app.js"></script>

@@ -38,15 +38,54 @@ document.getElementById("btn-meta").addEventListener("click", () => {
   document.getElementById("btn-invoke").click();
 });
 
+const CORE6 = new Set(["Patient", "Practitioner", "Organization", "Observation", "Encounter", "Condition"]);
+
+function buildSearchQueryFromHelpers() {
+  const parts = [];
+  document.querySelectorAll("#search-helpers [data-sp]").forEach((el) => {
+    const v = (el.value || "").trim();
+    if (v) parts.push(`${encodeURIComponent(el.dataset.sp)}=${encodeURIComponent(v)}`);
+  });
+  return parts.join("&");
+}
+
+function syncSearchHelpersVisibility() {
+  const rt = document.getElementById("resourceType").value;
+  const box = document.getElementById("search-helpers");
+  const hint = document.getElementById("search-hint");
+  const show = CORE6.has(rt);
+  if (box) box.style.display = show ? "grid" : "none";
+  if (hint) hint.style.display = show ? "block" : "none";
+}
+
+document.getElementById("resourceType").addEventListener("change", syncSearchHelpersVisibility);
+document.querySelectorAll("#search-helpers [data-sp]").forEach((el) => {
+  el.addEventListener("change", () => {
+    const built = buildSearchQueryFromHelpers();
+    if (built) document.getElementById("query").value = built;
+  });
+  el.addEventListener("input", () => {
+    const built = buildSearchQueryFromHelpers();
+    document.getElementById("query").value = built;
+  });
+});
+syncSearchHelpersVisibility();
+
 document.getElementById("btn-invoke").addEventListener("click", async () => {
   const status = document.getElementById("status");
   status.textContent = "Calling…";
   try {
+    let query = document.getElementById("query").value;
+    const method = document.getElementById("method").value;
+    if (method === "GET" && !document.getElementById("id").value) {
+      const built = buildSearchQueryFromHelpers();
+      if (built) query = built;
+    }
     const payload = {
-      method: document.getElementById("method").value,
+      method,
       resourceType: document.getElementById("resourceType").value,
       id: document.getElementById("id").value,
-      query: document.getElementById("query").value,
+      query,
       sample: document.getElementById("sample").value,
       body: document.getElementById("body").value,
       proxy: document.getElementById("proxy").checked,

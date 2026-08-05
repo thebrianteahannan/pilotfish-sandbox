@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="993cee72-f13c-4e57-a18c-e1c208958725" name="Reindex Search Tokens Update" type="Database (SQL)" tag="Processor" class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor">
+   <ModuleConfig>
+      <InputFile/>
+      
+          
+      <WriteQuery>true</WriteQuery>
+      
+          
+      <Query>EXEC dbo.FhirReindexResource ?, ?; SELECT 1 AS Reindexed;</Query>
+      
+          
+      <QueryParams>[eip_pair:p1:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:p2:eip_name:{ognl:getAttribute('fhir.EffectiveId').toString()}:eip_value]</QueryParams>
+      
+          
+      <UserName>$$sqlserver.username</UserName>
+      
+          
+      <Password>$$sqlserver.password</Password>
+      
+          
+      <UseDataSource>false</UseDataSource>
+      
+          
+      <DataSource/>
+      
+          
+      <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+      
+          
+      <JdbcURL>$$sqlserver.url</JdbcURL>
+      
+          
+      <KeepConnection>false</KeepConnection>
+      
+          
+      <Autocommit>true</Autocommit>
+      
+          
+      <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+      
+          
+      <Timeout>60</Timeout>
+      
+          
+      <RestrictMetaDataToCatalog/>
+      
+          
+      <RestrictMetaDataToSchema/>
+      
+          
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+          
+      <UseSingleOutputStream>true</UseSingleOutputStream>
+      
+          
+      <RefreshHandler>false</RefreshHandler>
+      
+          
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+          
+      <JDBCProperties>null</JDBCProperties>
+      
+          
+      <LogMetadata>false</LogMetadata>
+      
+          
+      <LogSQL>true</LogSQL>
+      
+        
+   </ModuleConfig>
+</Module>

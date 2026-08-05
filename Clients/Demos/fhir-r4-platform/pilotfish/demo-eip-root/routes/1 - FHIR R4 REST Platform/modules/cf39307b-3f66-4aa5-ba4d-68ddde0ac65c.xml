@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="cf39307b-3f66-4aa5-ba4d-68ddde0ac65c" name="Search Resources SQL" type="Database (SQL)" tag="Processor" class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor">
+   <ModuleConfig>
+      <InputFile/>
+      
+          
+      <WriteQuery>true</WriteQuery>
+      
+          
+      <Query>EXEC dbo.FhirSearchResources ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?;</Query>
+      
+          
+      <QueryParams>[eip_pair:t:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:id:eip_name:{ognl:getAttribute('fhir.SearchId')}:eip_value][eip_pair:identifier:eip_name:{ognl:getAttribute('fhir.SearchIdentifier')}:eip_value][eip_pair:family:eip_name:{ognl:getAttribute('fhir.SearchFamily')}:eip_value][eip_pair:given:eip_name:{ognl:getAttribute('fhir.SearchGiven')}:eip_value][eip_pair:name:eip_name:{ognl:getAttribute('fhir.SearchName')}:eip_value][eip_pair:gender:eip_name:{ognl:getAttribute('fhir.SearchGender')}:eip_value][eip_pair:birthdate:eip_name:{ognl:getAttribute('fhir.SearchBirthdate')}:eip_value][eip_pair:patient:eip_name:{ognl:getAttribute('fhir.SearchPatient')}:eip_value][eip_pair:code:eip_name:{ognl:getAttribute('fhir.SearchCode')}:eip_value][eip_pair:date:eip_name:{ognl:getAttribute('fhir.SearchDate')}:eip_value][eip_pair:status:eip_name:{ognl:getAttribute('fhir.SearchStatus')}:eip_value][eip_pair:category:eip_name:{ognl:getAttribute('fhir.SearchCategory')}:eip_value][eip_pair:class:eip_name:{ognl:getAttribute('fhir.SearchClass')}:eip_value][eip_pair:clinical:eip_name:{ognl:getAttribute('fhir.SearchClinicalStatus')}:eip_value][eip_pair:onset:eip_name:{ognl:getAttribute('fhir.SearchOnsetDate')}:eip_value][eip_pair:active:eip_name:{ognl:getAttribute('fhir.SearchActive')}:eip_value][eip_pair:q:eip_name:{ognl:getAttribute('fhir.SearchQ')}:eip_value]</QueryParams>
+      
+          
+      <UserName>$$sqlserver.username</UserName>
+      
+          
+      <Password>$$sqlserver.password</Password>
+      
+          
+      <UseDataSource>false</UseDataSource>
+      
+          
+      <DataSource/>
+      
+          
+      <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+      
+          
+      <JdbcURL>$$sqlserver.url</JdbcURL>
+      
+          
+      <KeepConnection>false</KeepConnection>
+      
+          
+      <Autocommit>true</Autocommit>
+      
+          
+      <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+      
+          
+      <Timeout>60</Timeout>
+      
+          
+      <RestrictMetaDataToCatalog/>
+      
+          
+      <RestrictMetaDataToSchema/>
+      
+          
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+          
+      <UseSingleOutputStream>true</UseSingleOutputStream>
+      
+          
+      <RefreshHandler>false</RefreshHandler>
+      
+          
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+          
+      <JDBCProperties>null</JDBCProperties>
+      
+          
+      <LogMetadata>false</LogMetadata>
+      
+          
+      <LogSQL>true</LogSQL>
+      
+        
+   </ModuleConfig>
+</Module>
