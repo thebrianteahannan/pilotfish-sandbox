@@ -208,6 +208,28 @@ def build_pdf(images: list[tuple[str, Path]], pdf_path: Path, brand: str):
             )
             c.showPage()
     c.save()
+    scrub_github_secret_false_positives(pdf_path)
+
+
+# GitHub secret scanning matches Vault *service* tokens as s.[A-Za-z0-9]{24}.
+# Compressed image streams in PDFs can collide (false positive). "s." → "s_".
+_VAULT_SERVICE_FP = re.compile(rb"s\.[A-Za-z0-9]{24}")
+
+
+def scrub_github_secret_false_positives(pdf_path: Path) -> int:
+    data = pdf_path.read_bytes()
+    n = 0
+
+    def _repl(m: re.Match[bytes]) -> bytes:
+        nonlocal n
+        n += 1
+        return b"s_" + m.group(0)[2:]
+
+    fixed = _VAULT_SERVICE_FP.sub(_repl, data)
+    if n:
+        pdf_path.write_bytes(fixed)
+        print(f"  scrubbed {n} GitHub Vault-token false positive(s) in {pdf_path.name}")
+    return n
 
 
 def main():
@@ -215,8 +237,8 @@ def main():
     parser.add_argument(
         "--config",
         choices=["compact", "changed", "all"],
-        default="changed",
-        help="Box config mode from the Routes dropdown (default: changed)",
+        default="compact",
+        help="Box config mode from the Routes dropdown (default: compact — safer for git/docs)",
     )
     parser.add_argument(
         "--skip-capture",
