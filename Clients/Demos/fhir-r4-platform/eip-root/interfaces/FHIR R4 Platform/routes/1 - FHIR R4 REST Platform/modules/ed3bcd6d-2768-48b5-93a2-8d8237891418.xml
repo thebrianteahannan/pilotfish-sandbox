@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="ed3bcd6d-2768-48b5-93a2-8d8237891418" name="Soft Delete SQL" type="Database (SQL)" tag="Processor" class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor">
+   <ModuleConfig>
+      <InputFile/>
+      
+          
+      <WriteQuery>true</WriteQuery>
+      
+          
+      <Query>UPDATE dbo.FhirResources SET DeletedAt = SYSUTCDATETIME(), UpdatedAt = SYSUTCDATETIME()
+WHERE ResourceType = ? AND ResourceId = ? AND DeletedAt IS NULL;
+SELECT @@ROWCOUNT AS RowsAffected;</Query>
+      
+          
+      <QueryParams>[eip_pair:t:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:id:eip_name:{ognl:getAttribute('com.pilotfish.ResourceID').toString()}:eip_value]</QueryParams>
+      
+          
+      <UserName>$$sqlserver.username</UserName>
+      
+          
+      <Password>$$sqlserver.password</Password>
+      
+          
+      <UseDataSource>false</UseDataSource>
+      
+          
+      <DataSource/>
+      
+          
+      <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+      
+          
+      <JdbcURL>$$sqlserver.url</JdbcURL>
+      
+          
+      <KeepConnection>false</KeepConnection>
+      
+          
+      <Autocommit>true</Autocommit>
+      
+          
+      <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+      
+          
+      <Timeout>60</Timeout>
+      
+          
+      <RestrictMetaDataToCatalog/>
+      
+          
+      <RestrictMetaDataToSchema/>
+      
+          
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+          
+      <UseSingleOutputStream>true</UseSingleOutputStream>
+      
+          
+      <RefreshHandler>false</RefreshHandler>
+      
+          
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+          
+      <JDBCProperties>null</JDBCProperties>
+      
+          
+      <LogMetadata>false</LogMetadata>
+      
+          
+      <LogSQL>true</LogSQL>
+      
+        
+   </ModuleConfig>
+</Module>

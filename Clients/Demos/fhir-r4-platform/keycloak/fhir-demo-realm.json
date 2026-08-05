@@ -1,0 +1,60 @@
+{
+  "realm": "fhir-demo",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "editUsernameAllowed": false,
+  "roles": {
+    "realm": [
+      { "name": "fhir-write", "description": "May create/update/delete FHIR resources" },
+      { "name": "fhir-read", "description": "May read/search FHIR resources" }
+    ]
+  },
+  "users": [
+    {
+      "username": "fhiruser",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Fhir",
+      "lastName": "Demo",
+      "credentials": [
+        { "type": "password", "value": "FhirDemo1!", "temporary": false }
+      ],
+      "realmRoles": ["fhir-write", "fhir-read"]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "fhir-r4-platform",
+      "name": "FHIR R4 Platform Demo",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "fhir-demo-secret",
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "redirectUris": [
+        "http://localhost:8111/*",
+        "http://127.0.0.1:8111/*"
+      ],
+      "webOrigins": ["+", "http://localhost:8111", "http://127.0.0.1:8111"],
+      "protocol": "openid-connect",
+      "attributes": {
+        "access.token.lifespan": "3600"
+      },
+      "defaultClientScopes": ["web-origins", "acr", "profile", "roles", "email"],
+      "optionalClientScopes": ["address", "phone", "offline_access", "microprofile-jwt"]
+    }
+  ],
+  "clientScopeMappings": {},
+  "scopeMappings": [
+    {
+      "client": "fhir-r4-platform",
+      "roles": ["fhir-write", "fhir-read"]
+    }
+  ]
+}

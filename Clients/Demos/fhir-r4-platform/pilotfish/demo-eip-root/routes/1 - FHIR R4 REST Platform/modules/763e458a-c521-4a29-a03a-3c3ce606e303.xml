@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="763e458a-c521-4a29-a03a-3c3ce606e303" name="Keycloak JWT Auth" type="FhirJwtAuthProcessor" tag="Processor" class="com.pilotfish.eip.modules.fhir.FhirJwtAuthProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <JwksUrl>http://keycloak:8080/realms/fhir-demo/protocol/openid-connect/certs</JwksUrl>
+      
+          
+      <ExpectedIssuer>http://localhost:8112/realms/fhir-demo</ExpectedIssuer>
+      
+          
+      <ExpectedAudience>account</ExpectedAudience>
+      
+          
+      <RequireOnWrites>true</RequireOnWrites>
+      
+        
+   </ModuleConfig>
+</Module>

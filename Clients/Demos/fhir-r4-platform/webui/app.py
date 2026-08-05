@@ -6,6 +6,7 @@ import os
 import re
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime
 from pathlib import Path
@@ -35,7 +36,20 @@ FHIR_PUBLIC_BASE_URL = os.environ.get(
 FHIR_REMOTE_BASE_URL = os.environ.get(
     "FHIR_REMOTE_BASE_URL", "https://hapi.fhir.org/baseR4"
 ).rstrip("/")
-ENV_SETTINGS_FILE = Path(os.environ.get("ENV_SETTINGS_FILE", "/environment-settings.conf"))
+OAUTH_TOKEN_URL = os.environ.get(
+    "OAUTH_TOKEN_URL", "http://keycloak:8080/realms/fhir-demo/protocol/openid-connect/token"
+)
+OAUTH_PUBLIC_TOKEN_URL = os.environ.get(
+    "OAUTH_PUBLIC_TOKEN_URL", "http://localhost:8112/realms/fhir-demo/protocol/openid-connect/token"
+)
+OAUTH_AUTHORIZE_URL = os.environ.get(
+    "OAUTH_AUTHORIZE_URL", "http://localhost:8112/realms/fhir-demo/protocol/openid-connect/auth"
+)
+OAUTH_CLIENT_ID = os.environ.get("OAUTH_CLIENT_ID", "fhir-r4-platform")
+OAUTH_CLIENT_SECRET = os.environ.get("OAUTH_CLIENT_SECRET", "fhir-demo-secret")
+OAUTH_USERNAME = os.environ.get("OAUTH_USERNAME", "fhiruser")
+OAUTH_PASSWORD = os.environ.get("OAUTH_PASSWORD", "FhirDemo1!")
+
 
 RESOURCE_TYPES = [
     "Patient", "Practitioner", "PractitionerRole", "Organization", "Location",
@@ -158,11 +172,19 @@ def list_text_files(directory: Path, pattern: str):
     return out
 
 
-def http_json(method: str, url: str, body: str | None = None, timeout: int = 45) -> dict:
+def http_json(
+    method: str,
+    url: str,
+    body: str | None = None,
+    timeout: int = 45,
+    authorization: str | None = None,
+) -> dict:
     data = None if body is None else body.encode("utf-8")
     headers = {"Accept": "application/fhir+json"}
     if body is not None:
         headers["Content-Type"] = "application/fhir+json"
+    if authorization:
+        headers["Authorization"] = authorization
     req = urllib.request.Request(url, data=data, method=method.upper(), headers=headers)
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
@@ -175,13 +197,23 @@ def http_json(method: str, url: str, body: str | None = None, timeout: int = 45)
         return {"ok": False, "status": 0, "body": "", "url": url, "error": str(exc)}
 
 
-def call_fhir(method: str, path: str, body: str | None = None, proxy: bool = False) -> dict:
+def call_fhir(
+    method: str,
+    path: str,
+    body: str | None = None,
+    proxy: bool = False,
+    bearer: str | None = None,
+) -> dict:
     path = path.lstrip("/")
     if proxy:
         url = f"{FHIR_REMOTE_BASE_URL}/{path}"
     else:
         url = f"{FHIR_BASE_URL}/{path}"
-    return http_json(method, url, body)
+    auth = None
+    if bearer:
+        token = bearer.strip()
+        auth = token if token.lower().startswith("bearer ") else f"Bearer {token}"
+    return http_json(method, url, body, authorization=auth)
 
 
 @app.get("/")
@@ -191,6 +223,8 @@ def index():
         lan_hint=LAN_HINT,
         fhir_public_base=FHIR_PUBLIC_BASE_URL,
         fhir_remote_base=FHIR_REMOTE_BASE_URL,
+        oauth_authorize_url=OAUTH_AUTHORIZE_URL,
+        oauth_token_url=OAUTH_PUBLIC_TOKEN_URL,
         resource_types=RESOURCE_TYPES,
         has_xslt=bool(discover_xslt_files()),
         route_pdf=ROUTE_PDF_NAME,
@@ -271,8 +305,39 @@ def api_fhir_invoke():
             path = f"{path}?{query}"
     else:
         path = rtype
-    result = call_fhir(method, path, raw if method in {"POST", "PUT"} else None, proxy=proxy)
+    bearer = (payload.get("bearer") or payload.get("token") or "").strip()
+    result = call_fhir(
+        method, path, raw if method in {"POST", "PUT"} else None, proxy=proxy, bearer=bearer or None
+    )
     return jsonify(result), (200 if result.get("status") else 502)
+
+
+@app.post("/api/oauth/token")
+def api_oauth_token():
+    """Fetch a demo access token via client_credentials (Keycloak)."""
+    form = urllib.parse.urlencode(
+        {
+            "grant_type": "client_credentials",
+            "client_id": OAUTH_CLIENT_ID,
+            "client_secret": OAUTH_CLIENT_SECRET,
+        }
+    ).encode("utf-8")
+    req = urllib.request.Request(
+        OAUTH_TOKEN_URL,
+        data=form,
+        method="POST",
+        headers={"Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            raw = resp.read().decode("utf-8", errors="replace")
+            data = json.loads(raw)
+            return jsonify({"ok": True, "token": data.get("access_token"), "raw": data})
+    except urllib.error.HTTPError as exc:
+        raw = exc.read().decode("utf-8", errors="replace")
+        return jsonify({"ok": False, "status": exc.code, "error": raw}), 502
+    except Exception as exc:  # noqa: BLE001
+        return jsonify({"ok": False, "error": str(exc)}), 502
 
 
 @app.post("/api/outbound/enqueue")

@@ -71,6 +71,19 @@ document.querySelectorAll("#search-helpers [data-sp]").forEach((el) => {
 });
 syncSearchHelpersVisibility();
 
+document.getElementById("btn-token").addEventListener("click", async () => {
+  const status = document.getElementById("status");
+  status.textContent = "Fetching Keycloak token…";
+  try {
+    const data = await getJson("/api/oauth/token", { method: "POST" });
+    if (!data.ok || !data.token) throw new Error(data.error || "No access_token");
+    document.getElementById("bearer").value = data.token;
+    status.textContent = "Token ready (client_credentials)";
+  } catch (e) {
+    status.textContent = e.message;
+  }
+});
+
 document.getElementById("btn-invoke").addEventListener("click", async () => {
   const status = document.getElementById("status");
   status.textContent = "Calling…";
@@ -89,6 +102,7 @@ document.getElementById("btn-invoke").addEventListener("click", async () => {
       sample: document.getElementById("sample").value,
       body: document.getElementById("body").value,
       proxy: document.getElementById("proxy").checked,
+      bearer: document.getElementById("bearer").value,
     };
     const data = await getJson("/api/fhir/invoke", {
       method: "POST",

@@ -1,15 +1,15 @@
 {
   "resourceType": "CapabilityStatement",
-  "id": "pilotfish-fhir-r4-platform-phase4",
+  "id": "pilotfish-fhir-r4-platform-phase5",
   "url": "http://localhost:8110/eip/rest/fhir/metadata",
-  "version": "0.4.0",
-  "name": "PilotFishFhirR4PlatformPhase4",
-  "title": "PilotFish FHIR R4 Expandable Platform (Phase 4)",
+  "version": "0.5.0",
+  "name": "PilotFishFhirR4PlatformPhase5",
+  "title": "PilotFish FHIR R4 Expandable Platform (Phase 5)",
   "status": "draft",
   "experimental": true,
   "date": "2026-08-05",
   "publisher": "PilotFish Sandbox Demo",
-  "description": "Phase 4 expandable FHIR R4 fa\u00e7ade. CRUD; core-6 token search; Bundle transaction/batch; HAPI FHIR base R4 profile validation on create/update (and Bundle entries) returning HTTP 400 OperationOutcome. Deferred: US Core IG packages, terminology expansion, CapStatement $validate, SMART, Bulk export.",
+  "description": "Phase 5 expandable FHIR R4 fa\u00e7ade. CRUD; token search; Bundle transaction/batch; HAPI base-R4 validation; Keycloak OAuth2 Bearer required on create/update/delete. Deferred: full SMART launch/EHR context, US Core, Bulk export.",
   "kind": "instance",
   "fhirVersion": "4.0.1",
   "format": [
@@ -19,7 +19,7 @@
   "rest": [
     {
       "mode": "server",
-      "documentation": "SQL-backed store with HAPI base-R4 instance validation (errors/fatal) before persist; FhirSearchTokens; FhirExecuteBundle.",
+      "documentation": "SQL-backed FHIR with HAPI validation and Keycloak JWT on write interactions. Read/search/metadata remain open for demo convenience.",
       "resource": [
         {
           "type": "Patient",
@@ -1161,7 +1161,38 @@
           "code": "batch",
           "documentation": "POST Bundle type=batch to /Bundle (per-entry status)."
         }
-      ]
+      ],
+      "security": {
+        "cors": true,
+        "service": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/restful-security-service",
+                "code": "OAuth",
+                "display": "OAuth"
+              }
+            ],
+            "text": "Keycloak OAuth2/OIDC (demo SMART fa\u00e7ade)"
+          }
+        ],
+        "description": "POST/PUT/DELETE require Authorization: Bearer <access_token>. GET metadata/read/search are open in this demo.",
+        "extension": [
+          {
+            "url": "http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris",
+            "extension": [
+              {
+                "url": "authorize",
+                "valueUri": "http://localhost:8112/realms/fhir-demo/protocol/openid-connect/auth"
+              },
+              {
+                "url": "token",
+                "valueUri": "http://localhost:8112/realms/fhir-demo/protocol/openid-connect/token"
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }
