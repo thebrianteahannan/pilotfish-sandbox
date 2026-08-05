@@ -40,7 +40,13 @@ services:
           -P 'PilotFish_Demo1!' \
           -C \
           -i /sql/01_init.sql
-        echo "SQL Server seed complete."
+        /opt/mssql-tools18/bin/sqlcmd \
+          -S sqlserver \
+          -U sa \
+          -P 'PilotFish_Demo1!' \
+          -C \
+          -i /sql/02_phase2_search.sql
+        echo "SQL Server seed complete (Phase 1 + Phase 2 search)."
 
   pilotfish:
     build:

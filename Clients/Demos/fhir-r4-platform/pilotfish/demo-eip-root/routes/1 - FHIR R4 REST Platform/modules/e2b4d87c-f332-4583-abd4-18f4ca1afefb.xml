@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="e2b4d87c-f332-4583-abd4-18f4ca1afefb" name="Map SQL To FHIR JSON" type="XSLT Transformation" tag="Processor" class="com.pilotfish.eip.modules.transform.XSLTProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <XSLTPath>transform-sql-to-resource.xslt</XSLTPath>
+      
+          
+      <CacheXSLTToXML>false</CacheXSLTToXML>
+      
+          
+      <XSLTEngine>Saxon</XSLTEngine>
+      
+          
+      <XSLTParameters>null</XSLTParameters>
+      
+          
+      <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+      
+          
+      <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+      
+        
+   </ModuleConfig>
+</Module>

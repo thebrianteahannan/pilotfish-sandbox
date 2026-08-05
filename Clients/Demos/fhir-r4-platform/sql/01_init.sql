@@ -1,4 +1,5 @@
--- FHIR R4 Expandable Platform (Phase 1)
+-- FHIR R4 Expandable Platform (Phase 1 base schema)
+-- Phase 2 search tokens/procs: see 02_phase2_search.sql (compose runs both).
 IF DB_ID(N'FhirR4PlatformDemo') IS NULL
 BEGIN
   CREATE DATABASE FhirR4PlatformDemo;

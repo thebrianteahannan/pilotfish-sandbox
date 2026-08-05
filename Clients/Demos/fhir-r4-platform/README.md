@@ -1,8 +1,8 @@
-# FHIR R4 Expandable Platform (Phase 1)
+# FHIR R4 Expandable Platform (Phase 2)
 
-Multi-resource **FHIR R4 REST** façade on PilotFish eiPlatform with SQL primary store, CapabilityStatement metadata, simple search, plus an **outbound FHIR client** route.
+Multi-resource **FHIR R4 REST** façade on PilotFish eiPlatform with SQL primary store, CapabilityStatement metadata, **token-indexed search for six core types**, plus an **outbound FHIR client** route.
 
-> This is an expandable platform scaffold — **not** the entire FHIR specification. See `DESIGN.md` for the phased roadmap.
+> Expandable platform scaffold — **not** the entire FHIR specification. See `DESIGN.md`.
 
 ## Quick start
 
@@ -21,17 +21,16 @@ Wait ~60–90s, then open:
 | Metadata | http://192.168.68.52:8110/eip/rest/fhir/metadata |
 | Route PDF | http://192.168.68.52:8111/documents/route-diagrams.pdf |
 
-## What Phase 1 does
+## What it does
 
 1. **Route 1 — FHIR R4 REST Platform** (sync)
    - `POST/GET/PUT/DELETE` for enumerated resource types
-   - `GET /metadata` → CapabilityStatement
-   - `GET /{type}?_id=` / `?q=` → searchset Bundle (demo filters)
-   - Persist to SQL Server + `output/fhir-store/`
-2. **Route 2 — FHIR Outbound Client**
-   - Drop request envelopes into `input/outbound/`
-   - `RESTfulWebServiceTransport` → configurable remote FHIR base
-3. **Web UI** — multi-resource client, search, metadata viewer, proxy toggle (Flask → remote when enabled)
+   - `GET /metadata` → CapabilityStatement (v0.2.0)
+   - Persist to SQL + `output/fhir-store/`; reindex `FhirSearchTokens` on write
+   - **Phase 2 search** (core-6): e.g. `Patient?family=Smith`, `Observation?patient=Patient/pat-alice-001&code=8867-4`
+   - Other types: `_id` + legacy `q` substring on `RawFhir`
+2. **Route 2 — FHIR Outbound Client** — file envelopes → remote FHIR
+3. **Web UI** — multi-resource client, typed search helpers, proxy toggle
 
 ## Ports
 
@@ -44,17 +43,12 @@ Wait ~60–90s, then open:
 ## Smoke
 
 ```bash
-curl -sS http://127.0.0.1:8110/eip/rest/fhir/metadata | head -c 200
+./tools/smoke.sh
 
-curl -sS -D- -H 'Content-Type: application/fhir+json' \
-  --data-binary @samples/Patient_alice.json \
-  http://127.0.0.1:8110/eip/rest/fhir/Patient
-
-curl -sS http://127.0.0.1:8110/eip/rest/fhir/Patient/pat-alice-001
-
-curl -sS 'http://127.0.0.1:8110/eip/rest/fhir/Patient?_id=pat-alice-001'
+curl -sS 'http://127.0.0.1:8110/eip/rest/fhir/Patient?family=Smith'
+curl -sS 'http://127.0.0.1:8110/eip/rest/fhir/Observation?patient=Patient/pat-alice-001&code=8867-4'
 ```
 
 ## Demo only
 
-Shared `sa` password, heuristic JSON checks, simplified search — see `DESIGN.md` Risks.
+Shared `sa` password, heuristic JSON checks, simplified search matching — see `DESIGN.md` Risks.

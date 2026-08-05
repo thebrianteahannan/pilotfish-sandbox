@@ -1,53 +1,1150 @@
 {
   "resourceType": "CapabilityStatement",
-  "id": "pilotfish-fhir-r4-platform-phase1",
+  "id": "pilotfish-fhir-r4-platform-phase2",
   "url": "http://localhost:8110/eip/rest/fhir/metadata",
-  "version": "0.1.0",
-  "name": "PilotFishFhirR4PlatformPhase1",
-  "title": "PilotFish FHIR R4 Expandable Platform (Phase 1)",
+  "version": "0.2.0",
+  "name": "PilotFishFhirR4PlatformPhase2",
+  "title": "PilotFish FHIR R4 Expandable Platform (Phase 2)",
   "status": "draft",
   "experimental": true,
   "date": "2026-08-05",
   "publisher": "PilotFish Sandbox Demo",
-  "description": "Phase 1 expandable FHIR R4 façade. Not a complete FHIR server. Supports CRUD + simple search + metadata for enumerated resource types; soft delete; SQL primary store. Deferred: full search grammar, history, transactions, SMART, Bulk export, profile validation.",
+  "description": "Phase 2 expandable FHIR R4 fa\u00e7ade. CRUD for enumerated types; EAV token search for Patient/Observation/Encounter/Condition/Organization/Practitioner; soft delete; SQL primary store. Still deferred: full search grammar/modifiers/chaining/includes, history, transactions, SMART, Bulk export, profile validation.",
   "kind": "instance",
   "fhirVersion": "4.0.1",
-  "format": ["application/fhir+json", "json"],
-  "rest": [{
-    "mode": "server",
-    "documentation": "SQL-backed generic resource store with OperationOutcome errors.",
-    "resource": [
-      {"type": "Patient", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}], "versioning": "no-version"},
-      {"type": "Practitioner", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "PractitionerRole", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Organization", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Location", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Encounter", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Observation", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Condition", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Procedure", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "AllergyIntolerance", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "MedicationRequest", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Medication", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Immunization", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "DiagnosticReport", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "DocumentReference", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "CarePlan", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "CareTeam", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Goal", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "ServiceRequest", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Coverage", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Claim", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "ExplanationOfBenefit", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Appointment", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Schedule", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Slot", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "RelatedPerson", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Person", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "EpisodeOfCare", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Binary", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Bundle", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]},
-      {"type": "Parameters", "interaction": [{"code": "create"},{"code": "read"},{"code": "update"},{"code": "delete"},{"code": "search-type"}]}
-    ]
-  }]
+  "format": [
+    "application/fhir+json",
+    "json"
+  ],
+  "rest": [
+    {
+      "mode": "server",
+      "documentation": "SQL-backed store with FhirSearchTokens index for core-6 types. Other types support _id and legacy q.",
+      "resource": [
+        {
+          "type": "Patient",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "identifier",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "family",
+              "type": "string",
+              "documentation": "Case-insensitive prefix"
+            },
+            {
+              "name": "given",
+              "type": "string",
+              "documentation": "Case-insensitive prefix"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "documentation": "Contains on indexed name parts"
+            },
+            {
+              "name": "gender",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "birthdate",
+              "type": "date",
+              "documentation": "ISO date prefix match"
+            }
+          ]
+        },
+        {
+          "type": "Practitioner",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "identifier",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "family",
+              "type": "string",
+              "documentation": "Case-insensitive prefix"
+            },
+            {
+              "name": "given",
+              "type": "string",
+              "documentation": "Case-insensitive prefix"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "documentation": "Contains on indexed name parts"
+            }
+          ]
+        },
+        {
+          "type": "PractitionerRole",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Organization",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "identifier",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "documentation": "Contains"
+            },
+            {
+              "name": "active",
+              "type": "token",
+              "documentation": "true|false"
+            }
+          ]
+        },
+        {
+          "type": "Location",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Encounter",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "patient",
+              "type": "reference",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "date",
+              "type": "date",
+              "documentation": "period.start prefix"
+            },
+            {
+              "name": "status",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "class",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            }
+          ]
+        },
+        {
+          "type": "Observation",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "patient",
+              "type": "reference",
+              "documentation": "Patient/id or bare id"
+            },
+            {
+              "name": "code",
+              "type": "token",
+              "documentation": "code or system|code"
+            },
+            {
+              "name": "date",
+              "type": "date",
+              "documentation": "effective* prefix"
+            },
+            {
+              "name": "status",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "category",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            }
+          ]
+        },
+        {
+          "type": "Condition",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "patient",
+              "type": "reference",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "code",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "clinical-status",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "onset-date",
+              "type": "date",
+              "documentation": "onsetDateTime prefix"
+            }
+          ]
+        },
+        {
+          "type": "Procedure",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "AllergyIntolerance",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "MedicationRequest",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Medication",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Immunization",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "DiagnosticReport",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "DocumentReference",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "CarePlan",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "CareTeam",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Goal",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "ServiceRequest",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Coverage",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Claim",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "ExplanationOfBenefit",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Appointment",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Schedule",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Slot",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "RelatedPerson",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Person",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "EpisodeOfCare",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Binary",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Bundle",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        },
+        {
+          "type": "Parameters",
+          "interaction": [
+            {
+              "code": "create"
+            },
+            {
+              "code": "read"
+            },
+            {
+              "code": "update"
+            },
+            {
+              "code": "delete"
+            },
+            {
+              "code": "search-type"
+            }
+          ],
+          "versioning": "no-version",
+          "searchParam": [
+            {
+              "name": "_id",
+              "type": "token",
+              "documentation": "Phase 2 EAV token index. Not full FHIR search grammar."
+            },
+            {
+              "name": "q",
+              "type": "string",
+              "documentation": "Legacy RawFhir substring fallback"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
