@@ -16,7 +16,8 @@ docker compose up -d --build
 | AWS deployment guide | `documents/FHIR_R4_Platform_AWS_Deployment_Guide.pdf` | http://127.0.0.1:8111/documents/aws-deployment-guide.pdf |
 | Route diagrams (technical) | `documents/FHIR_R4_Platform_V2_Route_Diagrams.pdf` | http://127.0.0.1:8111/documents/route-diagrams.pdf |
 | Test plan | `documents/FHIR_R4_Platform_Test_Plan.pdf` | http://127.0.0.1:8111/documents/test-plan.pdf |
-| Test results | `documents/test-results.html` | http://127.0.0.1:8111/documents/test-results.html |
+| Test results (PDF) | `documents/test-results.pdf` | http://127.0.0.1:8111/documents/test-results.pdf |
+| Test results (HTML) | `documents/test-results.html` | http://127.0.0.1:8111/documents/test-results.html |
 
 Regenerate:
 

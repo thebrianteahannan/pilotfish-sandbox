@@ -74,7 +74,7 @@ def build(root: Path, out: Path | None = None) -> Path:
         Paragraph(
             "This plan is the source of truth for automated verification. "
             "Run <b>python3 tools/run_interface_tests.py</b> to execute it and write "
-            "<b>documents/test-results.json</b> + HTML. Update <b>tests/plan.json</b> as "
+            "<b>documents/test-results.json</b>, HTML, and PDF. Update <b>tests/plan.json</b> as "
             "capabilities are added so the PDF and runner stay aligned.",
             styles["body"],
         )

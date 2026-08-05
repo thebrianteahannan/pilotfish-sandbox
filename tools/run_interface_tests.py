@@ -21,6 +21,7 @@ _SANDBOX_TOOLS = Path(__file__).resolve().parent
 if str(_SANDBOX_TOOLS) not in sys.path:
     sys.path.insert(0, str(_SANDBOX_TOOLS))
 
+from export_test_results_pdf import write_from_report  # noqa: E402
 from interface_testlib import find_plan, load_plan, run_plan, write_report  # noqa: E402
 
 
@@ -79,6 +80,11 @@ def run_once(root: Path, wait: bool) -> int:
     print(f"Running {plan_path} …")
     report = run_plan(root, plan, plan_path)
     docs_json, html = write_report(root, report)
+    try:
+        pdf = write_from_report(root, report)
+    except Exception as exc:  # keep JSON/HTML even if reportlab is missing
+        pdf = None
+        print(f"WARNING: could not write test-results.pdf ({exc})")
     s = report.summary
     print(
         f"Results: pass={s.get('pass',0)} fail={s.get('fail',0)} "
@@ -86,6 +92,8 @@ def run_once(root: Path, wait: bool) -> int:
     )
     print("JSON:", docs_json)
     print("HTML:", html)
+    if pdf is not None:
+        print("PDF:", pdf)
     for r in report.results:
         mark = {"pass": "PASS", "fail": "FAIL", "error": "ERR ", "skip": "SKIP"}.get(r["status"], r["status"])
         print(f"  [{mark}] {r['suite']} · {r['name']} — {r['message']}")

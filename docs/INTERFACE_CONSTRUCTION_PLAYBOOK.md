@@ -235,7 +235,7 @@ Create under `Clients/Demos/<slug>/` (or `Clients/<Client>/<slug>/` for client w
     export_route_diagrams.py     # PDF export with --config → documents/
     export_stakeholder_brief.py  # stakeholder Capability Brief PDF → documents/
     export_test_plan_pdf.py      # Test Plan PDF from tests/plan.json
-    run_interface_tests.py       # execute plan → documents/test-results.json|.html
+    run_interface_tests.py       # execute plan → documents/test-results.json|.html|.pdf
     post_up_tests.sh             # compose-up helper: wait + run tests
   tests/
     plan.json                    # living automated test plan (source of truth)
@@ -444,7 +444,7 @@ Minimum bar:
 - [ ] **Route design PDF** written under `documents/` (`--config changed`)
 - [ ] **Stakeholder Capability Brief PDF** written under `documents/` (`tools/export_stakeholder_brief.py`)
 - [ ] **Test Plan PDF** written under `documents/` (`tools/export_test_plan_pdf.py`)
-- [ ] **Automated tests run** (`tools/run_interface_tests.py --wait`) with results in `documents/test-results.json` / `.html`
+- [ ] **Automated tests run** (`tools/run_interface_tests.py --wait`) with results in `documents/test-results.json` / `.html` / `.pdf`
 - [ ] **Browser/LAN PDF URLs** work (HTTP 200, `application/pdf`) for every review PDF (§6.2)
 - [ ] No silent claim of partner-grade validation unless gated
 
@@ -486,6 +486,7 @@ Re-runs when `tests/plan.json`, `DESIGN.md`, routes, samples, SQL, or Web UI sou
 |----------|--------|
 | JSON | `documents/test-results.json` |
 | HTML list | `documents/test-results.html` |
+| PDF (open without browser app) | `documents/test-results.pdf` |
 | Web UI | Tests tab (when present) · `GET /api/v2/tests/results` |
 | Stable PDF alias | `/documents/test-plan.pdf` |
 
