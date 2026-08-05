@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Write JSON" />
+          </Targets>
+          <Condition>
+            <Expression>
+              true()
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="CSV Files">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="Poll CSV Files">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <PollingInterval>10</PollingInterval>
+        <PollingDirectory>$$CSV_INBOUND_DIRECTORY</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction>csv</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>$$CSV_ARCHIVE_DIRECTORY</TargetDirectory>
+        <CompatModeMoved>false</CompatModeMoved>
+        <Tokenizers />
+        <SerializedTransactionsTag>1</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>2</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+        <SynchResponse>false</SynchResponse>
+        <Timeout>60</Timeout>
+        <FileSortingMethod>System Default</FileSortingMethod>
+        <FileSortingDirection>Ascending</FileSortingDirection>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.transform.CSVTransformationProcessor" name="CSV to XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TransformationDirection>CSV to XML</TransformationDirection>
+          <ExecuteTransformation>true</ExecuteTransformation>
+          <Delimiter>,</Delimiter>
+          <OutputQuotes>true</OutputQuotes>
+          <OutputColumnHeaders>true</OutputColumnHeaders>
+          <DetectDelimiter>false</DetectDelimiter>
+          <Columns />
+          <LinesToSkip>0</LinesToSkip>
+          <ColumnsToSuppress />
+          <SuppressEmptyTags>false</SuppressEmptyTags>
+          <IgnoreQuotes>false</IgnoreQuotes>
+          <UseUTF8Tag>false</UseUTF8Tag>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.json.JSONTransformationProcessor" name="XML to JSON">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TransformationDirection>XML to JSON</TransformationDirection>
+          <ExecuteTransformation>true</ExecuteTransformation>
+          <ConverterVersion>2.0</ConverterVersion>
+          <HandleAttributes>true</HandleAttributes>
+          <SkipNS>false</SkipNS>
+          <ExcludeMarkups>false</ExcludeMarkups>
+          <HandlePrefix>false</HandlePrefix>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="JSON Output">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Write JSON" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$JSON_OUTPUT_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:getAttribute('com.pilotfish.FileName')}</FileName>
+        <FileExtension>json</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>

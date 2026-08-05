@@ -1,0 +1,47 @@
+services:
+  pilotfish:
+    build:
+      context: ./pilotfish
+    image: pilotfish-csv-to-json:23R1
+    container_name: pf-csv2json-pilotfish
+    restart: unless-stopped
+    environment:
+      CATALINA_OPTS: "-Xms256M -Xmx1024M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8108:8080"
+    volumes:
+      - ./input:/opt/pilotfish/input
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+
+  webui:
+    build:
+      context: ./webui
+    image: pilotfish-csv2json-webui:latest
+    container_name: pf-csv2json-webui
+    restart: unless-stopped
+    depends_on:
+      pilotfish:
+        condition: service_started
+    environment:
+      WEBUI_PORT: "8109"
+      INBOUND_DIR: /inbound
+      JSON_DIR: /output/json
+      ARCHIVE_DIR: /output/archive
+      SAMPLE_DIR: /samples
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      ROUTE_PDF_NAME: CSV_to_JSON_V2_Route_Diagrams.pdf
+      ENV_SETTINGS_FILE: /environment-settings.conf
+      LAN_HINT: "http://192.168.68.52:8109/"
+      EIP_PUBLIC_URL: "http://192.168.68.52:8108/eip/"
+    ports:
+      - "8109:8109"
+    volumes:
+      - ./input/inbound:/inbound
+      - ./output:/output:ro
+      - ./samples:/samples:ro
+      - ./documents:/documents:ro
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/environment-settings.conf:ro
+      - ./eip-root/interfaces/CSV to JSON/routes:/routes:ro

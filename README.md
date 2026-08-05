@@ -25,3 +25,5 @@ Agents constructing any interface under `Clients/` must follow:
 | Medical Lab HL7 LLP → MEDITECH | `Clients/Demos/medical-lab-hl7-llp/` |
 | Medical Device HL7 → EHR | `Clients/Demos/medical-device-hl7-ehr/` |
 | FHIR Patient Exchange | `Clients/Demos/fhir-patient-exchange/` |
+| EDI 270/271 Eligibility | `Clients/Demos/edi-270-271-eligibility/` |
+| CSV to JSON | `Clients/Demos/csv-to-json/` |
