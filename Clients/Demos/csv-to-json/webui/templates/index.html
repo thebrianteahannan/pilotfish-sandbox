@@ -11,25 +11,21 @@
 </head>
 <body>
   <header>
-    <p class="brand">PilotFish · CSV to JSON Demo</p>
-    <h1>CSV → JSON File Conversion</h1>
-    <p>
-      Drop a CSV into the inbound folder. PilotFish polls, converts CSV→XML→JSON, and writes a
-      <code>.json</code> file to the output folder.
-    </p>
-    <div class="main-tabs" role="tablist" aria-label="App views">
-      <button type="button" class="main-tab active" data-main-tab="demo" role="tab" aria-selected="true">Demo</button>
-      <button type="button" class="main-tab" data-main-tab="routes" role="tab" aria-selected="false">Routes</button>
-      {% if has_xslt %}
-      <button type="button" class="main-tab" data-main-tab="xslt" role="tab" aria-selected="false">XSLT</button>
-      {% endif %}
+    <div class="app-bar">
+      <p class="brand">PilotFish · CSV to JSON Demo</p>
+      <div class="main-tabs" role="tablist" aria-label="App views">
+        <button type="button" class="main-tab active" data-main-tab="demo" role="tab" aria-selected="true">Demo</button>
+        <button type="button" class="main-tab" data-main-tab="routes" role="tab" aria-selected="false">Routes</button>
+        {% if has_xslt %}
+        <button type="button" class="main-tab" data-main-tab="xslt" role="tab" aria-selected="false">XSLT</button>
+        {% endif %}
+        <button type="button" class="main-tab" data-main-tab="info" role="tab" aria-selected="false">Info</button>
+      </div>
     </div>
     <nav class="nav" id="demo-nav">
       <a href="#pipeline">Pipeline</a>
       <a href="#inject">Submit CSV</a>
       <a href="#results">Results</a>
-      <a href="{{ eip_url }}" target="_blank" rel="noreferrer">PilotFish EIP</a>
-      {% if lan_hint %}<a href="{{ lan_hint }}">{{ lan_hint }}</a>{% endif %}
     </nav>
   </header>
 
@@ -104,6 +100,16 @@
     </main>
   </div>
   {% endif %}
+
+  <main id="tab-info" class="panel info-tab" hidden>
+    <h1>CSV → JSON File Conversion</h1>
+    <p class="sub">
+      Drop a CSV into the inbound folder. PilotFish polls, converts CSV→XML→JSON, and writes a
+      <code>.json</code> file to the output folder.
+    </p>
+    {% if lan_hint %}<p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>{% endif %}
+    <p class="sub muted">EIP: <a href="{{ eip_url }}" target="_blank" rel="noreferrer"><code>{{ eip_url }}</code></a></p>
+  </main>
 
   <script src="/static/app.js"></script>
 </body>

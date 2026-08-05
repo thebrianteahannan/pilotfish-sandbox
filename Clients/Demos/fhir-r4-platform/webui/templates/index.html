@@ -8,18 +8,15 @@
 </head>
 <body>
   <header class="top">
-    <div>
+    <div class="app-bar">
       <p class="brand">PilotFish · FHIR R4 Platform (Phase 1)</p>
-      <h1>Expandable FHIR server + outbound client</h1>
-      <p class="sub">Multi-resource CRUD · metadata · simple search · optional remote proxy. Not the entire FHIR spec.</p>
-      {% if lan_hint %}<p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>{% endif %}
-      <p class="sub muted">PF: <code>{{ fhir_public_base }}</code> · Remote: <code>{{ fhir_remote_base }}</code></p>
+      <nav class="tabs" role="tablist">
+        <button type="button" class="tab active" data-tab="demo">Demo</button>
+        <button type="button" class="tab" data-tab="routes">Routes</button>
+        {% if has_xslt %}<button type="button" class="tab" data-tab="xslt">XSLT</button>{% endif %}
+        <button type="button" class="tab" data-tab="info">Info</button>
+      </nav>
     </div>
-    <nav class="tabs" role="tablist">
-      <button type="button" class="tab active" data-tab="demo">Demo</button>
-      <button type="button" class="tab" data-tab="routes">Routes</button>
-      {% if has_xslt %}<button type="button" class="tab" data-tab="xslt">XSLT</button>{% endif %}
-    </nav>
   </header>
 
   <main id="tab-demo" class="panel">
@@ -66,12 +63,6 @@
   <div id="tab-routes" class="routes-tab" hidden>
     <div class="routes-toolbar">
       <label>V2 route <select id="route-select"></select></label>
-      <label>Layout
-        <select id="route-layout">
-          <option value="pipeline" selected>Pipeline</option>
-          <option value="wrap">Wrap grid</option>
-        </select>
-      </label>
       <span id="routes-status" class="muted"></span>
     </div>
     <iframe id="route-viewer-frame" class="route-viewer-frame" title="Route viewer" src="about:blank"></iframe>
@@ -89,6 +80,15 @@
     </div>
   </div>
   {% endif %}
+
+  <main id="tab-info" class="panel info-tab" hidden>
+    <h1>Expandable FHIR server + outbound client</h1>
+    <p class="sub">Multi-resource CRUD · metadata · simple search · optional remote proxy. Not the entire FHIR spec.</p>
+    {% if lan_hint %}<p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>{% endif %}
+    <p class="sub muted">PF: <code>{{ fhir_public_base }}</code></p>
+    <p class="sub muted">Remote: <a href="{{ fhir_remote_base }}" target="_blank" rel="noreferrer"><code>{{ fhir_remote_base }}</code></a></p>
+    <p class="sub muted">See <a href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a> and <code>DESIGN.md</code> for Phase 1 scope and roadmap.</p>
+  </main>
 
   <script src="/static/app.js"></script>
 </body>

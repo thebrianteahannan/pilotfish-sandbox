@@ -86,6 +86,8 @@ function showTab(tab) {
   document.querySelectorAll(".tab").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
   document.getElementById("tab-demo").hidden = tab !== "demo";
   document.getElementById("tab-routes").hidden = tab !== "routes";
+  const info = document.getElementById("tab-info");
+  if (info) info.hidden = tab !== "info";
   const xslt = document.getElementById("tab-xslt");
   if (xslt) xslt.hidden = tab !== "xslt";
   document.body.classList.toggle("routes-mode", tab === "routes" || tab === "xslt");
@@ -98,21 +100,19 @@ let routesLoaded = false;
 async function loadRoutesTab() {
   const select = document.getElementById("route-select");
   const frame = document.getElementById("route-viewer-frame");
-  const layout = document.getElementById("route-layout");
   const status = document.getElementById("routes-status");
+  const layout = "pipeline";
   if (!routesLoaded) {
     const data = await getJson("/api/v2/routes");
     select.innerHTML = (data.routes || []).map((r) => `<option value="${r.id}">${escapeHtml(r.name)}</option>`).join("");
     routesLoaded = true;
-    const reload = () => {
+    select.addEventListener("change", () => {
       if (!select.value) return;
-      frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(select.value)}&mode=docs&layout=${layout.value}&config=changed`;
-    };
-    select.addEventListener("change", reload);
-    layout.addEventListener("change", reload);
+      frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(select.value)}&mode=docs&layout=${layout}&config=changed`;
+    });
   }
   if (select.options.length) {
-    frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(select.value)}&mode=docs&layout=${layout.value}&config=changed`;
+    frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(select.value)}&mode=docs&layout=${layout}&config=changed`;
     status.textContent = `${select.options.length} route(s)`;
   } else status.textContent = "No route.v2.xml yet";
 }

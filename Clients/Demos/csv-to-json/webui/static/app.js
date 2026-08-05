@@ -98,8 +98,11 @@ document.querySelectorAll(".main-tab").forEach((btn) => {
     document.getElementById("tab-routes").hidden = tab !== "routes";
     const xslt = document.getElementById("tab-xslt");
     if (xslt) xslt.hidden = tab !== "xslt";
+    const info = document.getElementById("tab-info");
+    if (info) info.hidden = tab !== "info";
+    document.body.classList.toggle("routes-mode", tab === "routes" || tab === "xslt");
     const nav = document.getElementById("demo-nav");
-    if (nav) nav.style.display = tab === "demo" ? "" : "none";
+    if (nav) nav.hidden = tab !== "demo";
   });
 });
 

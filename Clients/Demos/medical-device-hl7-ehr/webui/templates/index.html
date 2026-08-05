@@ -8,18 +8,17 @@
 </head>
 <body>
   <header class="top">
-    <div>
+    <div class="app-bar">
       <p class="brand">PilotFish · Medical Devices</p>
-      <h1>Device HL7 → EHR</h1>
-      <p class="sub">Case study slice: mocked vitals monitor + CGM → validate → EHR LLP</p>
+      <nav class="tabs" role="tablist">
+        <button type="button" class="tab active" data-tab="demo" aria-selected="true">Demo</button>
+        <button type="button" class="tab" data-tab="routes" aria-selected="false">Routes</button>
+        {% if has_xslt %}
+        <button type="button" class="tab" data-tab="xslt" aria-selected="false">XSLT</button>
+        {% endif %}
+        <button type="button" class="tab" data-tab="info" aria-selected="false">Info</button>
+      </nav>
     </div>
-    <nav class="tabs" role="tablist">
-      <button type="button" class="tab active" data-tab="demo" aria-selected="true">Demo</button>
-      <button type="button" class="tab" data-tab="routes" aria-selected="false">Routes</button>
-      {% if has_xslt %}
-      <button type="button" class="tab" data-tab="xslt" aria-selected="false">XSLT</button>
-      {% endif %}
-    </nav>
   </header>
 
   <main id="tab-demo" class="panel">
@@ -64,12 +63,6 @@
       <label for="route-select">V2 route
         <select id="route-select"></select>
       </label>
-      <label for="route-layout">Layout
-        <select id="route-layout">
-          <option value="pipeline" selected>Pipeline</option>
-          <option value="wrap">Wrap grid</option>
-        </select>
-      </label>
       <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route design PDF</a>
       <a class="btn" href="/static/route-viewer/docs.html?config=changed" target="_blank" rel="noreferrer">All routes (print)</a>
       <span id="routes-status" class="status"></span>
@@ -95,6 +88,11 @@
     </section>
   </div>
   {% endif %}
+
+  <main id="tab-info" class="panel info-tab" hidden>
+    <h1>Device HL7 → EHR</h1>
+    <p class="sub">Case study slice: mocked vitals monitor + CGM → validate → EHR LLP</p>
+  </main>
 
   <script src="/static/app.js"></script>
 </body>

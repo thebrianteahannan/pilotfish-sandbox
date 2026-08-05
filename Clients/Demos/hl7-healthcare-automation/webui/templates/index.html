@@ -11,26 +11,21 @@
 </head>
 <body>
   <header>
-    <p class="brand">PilotFish · HL7 Case Study Demo</p>
-    <h1>HL7 Healthcare Integration Automation</h1>
-    <p>
-      Based on the
-      <a href="{{ case_study_url }}" target="_blank" rel="noreferrer">HL7 Healthcare Integration Automation Platform</a>
-      case study — hospitals send HL7 2.x, PilotFish validates, optionally splits batches, inserts SQL, and forwards to a clearinghouse.
-    </p>
-    <div class="main-tabs" role="tablist" aria-label="App views">
-      <button type="button" class="main-tab active" data-main-tab="demo" role="tab" aria-selected="true">Demo</button>
-      <button type="button" class="main-tab" data-main-tab="routes" role="tab" aria-selected="false">Routes</button>
-      {% if has_xslt %}
-      <button type="button" class="main-tab" data-main-tab="xslt" role="tab" aria-selected="false">XSLT</button>
-      {% endif %}
+    <div class="app-bar">
+      <p class="brand">PilotFish · HL7 Case Study Demo</p>
+      <div class="main-tabs" role="tablist" aria-label="App views">
+        <button type="button" class="main-tab active" data-main-tab="demo" role="tab" aria-selected="true">Demo</button>
+        <button type="button" class="main-tab" data-main-tab="routes" role="tab" aria-selected="false">Routes</button>
+        {% if has_xslt %}
+        <button type="button" class="main-tab" data-main-tab="xslt" role="tab" aria-selected="false">XSLT</button>
+        {% endif %}
+        <button type="button" class="main-tab" data-main-tab="info" role="tab" aria-selected="false">Info</button>
+      </div>
     </div>
     <nav class="nav" id="demo-nav">
       <a href="#pipeline">Pipeline</a>
       <a href="#inject">Submit HL7</a>
       <a href="#results">Results</a>
-      <a href="http://localhost:8096/eip/" target="_blank" rel="noreferrer">PilotFish EIP</a>
-      {% if lan_hint %}<a href="{{ lan_hint }}">{{ lan_hint }}</a>{% endif %}
     </nav>
   </header>
 
@@ -102,12 +97,6 @@
       <label for="route-select">V2 route
         <select id="route-select"></select>
       </label>
-      <label for="route-layout">Layout
-        <select id="route-layout">
-          <option value="pipeline" selected>Pipeline (Listener / Router / Transport)</option>
-          <option value="wrap">Wrap grid</option>
-        </select>
-      </label>
       <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route design PDF</a>
       <a class="btn" href="/static/route-viewer/docs.html?config=changed" target="_blank" rel="noreferrer">All routes (print)</a>
       <span id="routes-status" class="status"></span>
@@ -133,6 +122,17 @@
     </section>
   </div>
   {% endif %}
+
+  <main id="tab-info" class="panel info-tab" hidden>
+    <h1>HL7 Healthcare Integration Automation</h1>
+    <p class="sub">
+      Based on the
+      <a href="{{ case_study_url }}" target="_blank" rel="noreferrer">HL7 Healthcare Integration Automation Platform</a>
+      case study — hospitals send HL7 2.x, PilotFish validates, optionally splits batches, inserts SQL, and forwards to a clearinghouse.
+    </p>
+    {% if lan_hint %}<p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>{% endif %}
+    <p class="sub muted">EIP: <a href="http://localhost:8096/eip/" target="_blank" rel="noreferrer"><code>http://localhost:8096/eip/</code></a></p>
+  </main>
 
   <script src="/static/app.js"></script>
 </body>

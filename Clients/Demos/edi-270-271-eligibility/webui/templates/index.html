@@ -16,22 +16,17 @@
 </head>
 <body>
   <header class="top">
-    <div>
+    <div class="app-bar">
       <p class="brand">PilotFish · EDI 270/271</p>
-      <h1>Clinic eligibility — AAA theater then success</h1>
-      <p class="sub">Build real X12 270 → mock payer 271 → parse benefits / AAA. Orchestrated by this clinic UI.</p>
-      {% if lan_hint %}
-      <p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>
-      {% endif %}
-      <p class="sub muted">EIP: <code>{{ pf_public }}</code> · Payer: <code>{{ payer_public }}</code></p>
+      <nav class="tabs" role="tablist">
+        <button type="button" class="tab active" data-tab="demo" aria-selected="true">Demo</button>
+        <button type="button" class="tab" data-tab="routes" aria-selected="false">Routes</button>
+        {% if has_xslt %}
+        <button type="button" class="tab" data-tab="xslt" aria-selected="false">XSLT</button>
+        {% endif %}
+        <button type="button" class="tab" data-tab="info" aria-selected="false">Info</button>
+      </nav>
     </div>
-    <nav class="tabs" role="tablist">
-      <button type="button" class="tab active" data-tab="demo" aria-selected="true">Demo</button>
-      <button type="button" class="tab" data-tab="routes" aria-selected="false">Routes</button>
-      {% if has_xslt %}
-      <button type="button" class="tab" data-tab="xslt" aria-selected="false">XSLT</button>
-      {% endif %}
-    </nav>
   </header>
 
   <main id="tab-demo" class="panel">
@@ -87,12 +82,6 @@
       <label for="route-select">V2 route
         <select id="route-select"></select>
       </label>
-      <label for="route-layout">Layout
-        <select id="route-layout">
-          <option value="pipeline" selected>Pipeline</option>
-          <option value="wrap">Wrap grid</option>
-        </select>
-      </label>
       <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route design PDF</a>
       <span id="routes-status" class="muted"></span>
     </div>
@@ -111,6 +100,15 @@
     </div>
   </div>
   {% endif %}
+
+  <main id="tab-info" class="panel info-tab" hidden>
+    <h1>Clinic eligibility — AAA theater then success</h1>
+    <p class="sub">Build real X12 270 → mock payer 271 → parse benefits / AAA. Orchestrated by this clinic UI.</p>
+    {% if lan_hint %}
+    <p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>
+    {% endif %}
+    <p class="sub muted">EIP: <code>{{ pf_public }}</code> · Payer: <code>{{ payer_public }}</code></p>
+  </main>
 
   <script>
     window.ELIG_PRESETS = {{ presets | tojson }};
