@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c5eba668-a076-4957-9e51-f07dfb6148c5" name="Detect SQL Hit" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:fhir.FoundRaw:eip_name:normalize-space(string((.//*[upper-case(local-name())='RAWFHIR'])[1])):eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,15 +1,15 @@
 {
   "resourceType": "CapabilityStatement",
-  "id": "pilotfish-fhir-r4-platform-phase3",
+  "id": "pilotfish-fhir-r4-platform-phase4",
   "url": "http://localhost:8110/eip/rest/fhir/metadata",
-  "version": "0.3.0",
-  "name": "PilotFishFhirR4PlatformPhase3",
-  "title": "PilotFish FHIR R4 Expandable Platform (Phase 3)",
+  "version": "0.4.0",
+  "name": "PilotFishFhirR4PlatformPhase4",
+  "title": "PilotFish FHIR R4 Expandable Platform (Phase 4)",
   "status": "draft",
   "experimental": true,
   "date": "2026-08-05",
   "publisher": "PilotFish Sandbox Demo",
-  "description": "Phase 3 expandable FHIR R4 fa\u00e7ade. CRUD; core-6 token search; POST /Bundle with type=transaction (atomic) or batch (per-entry). Deferred: full search grammar, history, profile validation, SMART, Bulk export.",
+  "description": "Phase 4 expandable FHIR R4 fa\u00e7ade. CRUD; core-6 token search; Bundle transaction/batch; HAPI FHIR base R4 profile validation on create/update (and Bundle entries) returning HTTP 400 OperationOutcome. Deferred: US Core IG packages, terminology expansion, CapStatement $validate, SMART, Bulk export.",
   "kind": "instance",
   "fhirVersion": "4.0.1",
   "format": [
@@ -19,7 +19,7 @@
   "rest": [
     {
       "mode": "server",
-      "documentation": "SQL-backed store with FhirSearchTokens and FhirExecuteBundle for transaction/batch.",
+      "documentation": "SQL-backed store with HAPI base-R4 instance validation (errors/fatal) before persist; FhirSearchTokens; FhirExecuteBundle.",
       "resource": [
         {
           "type": "Patient",

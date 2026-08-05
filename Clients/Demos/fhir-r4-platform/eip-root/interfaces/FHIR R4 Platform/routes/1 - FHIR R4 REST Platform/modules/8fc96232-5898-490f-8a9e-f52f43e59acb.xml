@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="8fc96232-5898-490f-8a9e-f52f43e59acb" name="Delete Search Tokens" type="Database (SQL)" tag="Processor" class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor">
+   <ModuleConfig>
+      <InputFile/>
+      
+          
+      <WriteQuery>true</WriteQuery>
+      
+          
+      <Query>DELETE FROM dbo.FhirSearchTokens WHERE ResourceType = ? AND ResourceId = ?; SELECT @@ROWCOUNT AS TokensDeleted;</Query>
+      
+          
+      <QueryParams>[eip_pair:t:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:id:eip_name:{ognl:getAttribute('com.pilotfish.ResourceID').toString()}:eip_value]</QueryParams>
+      
+          
+      <UserName>$$sqlserver.username</UserName>
+      
+          
+      <Password>$$sqlserver.password</Password>
+      
+          
+      <UseDataSource>false</UseDataSource>
+      
+          
+      <DataSource/>
+      
+          
+      <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+      
+          
+      <JdbcURL>$$sqlserver.url</JdbcURL>
+      
+          
+      <KeepConnection>false</KeepConnection>
+      
+          
+      <Autocommit>true</Autocommit>
+      
+          
+      <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+      
+          
+      <Timeout>60</Timeout>
+      
+          
+      <RestrictMetaDataToCatalog/>
+      
+          
+      <RestrictMetaDataToSchema/>
+      
+          
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+          
+      <UseSingleOutputStream>true</UseSingleOutputStream>
+      
+          
+      <RefreshHandler>false</RefreshHandler>
+      
+          
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+          
+      <JDBCProperties>null</JDBCProperties>
+      
+          
+      <LogMetadata>false</LogMetadata>
+      
+          
+      <LogSQL>true</LogSQL>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -56,7 +56,8 @@ services:
 
   pilotfish:
     build:
-      context: ./pilotfish
+      context: .
+      dockerfile: pilotfish/Dockerfile
     image: pilotfish-fhir-r4-platform:23R1
     container_name: pf-fhir-r4-pilotfish
     restart: unless-stopped
