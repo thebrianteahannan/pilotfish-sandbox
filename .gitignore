@@ -11,7 +11,9 @@ logs/
 
 # Large vendor / reference trees (keep local only)
 PilotFish_V2/
-PilotFish_Documentation/
+# Ignore doc copies under PilotFish_Documentation, but keep the external path pointer
+PilotFish_Documentation/*
+!PilotFish_Documentation/DOCUMENTATION_LOCATION.txt
 
 # Large / non-route artifacts
 eip.war*

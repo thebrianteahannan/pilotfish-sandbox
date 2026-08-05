@@ -9,7 +9,7 @@ alwaysApply: false
 When creating, scaffolding, expanding, or design-documenting a PilotFish interface under `Clients/`:
 
 1. **Read and follow** `docs/INTERFACE_CONSTRUCTION_PLAYBOOK.md` end-to-end.
-2. **Choose modules from** `PilotFish_Documentation/` (tracker + deep dives) and `PilotFish_V2/` (`modules.conf` + `com/pilotfish/eip/modules` Java). EIP modules are shared with V1 — use that code to learn FQCNs and config items. Do not invent class names.
+2. **Choose modules from** the external docs project at `/Users/brianhannan/Documents/PilotFish Documentation` (see `PilotFish_Documentation/DOCUMENTATION_LOCATION.txt`; use `Documents/` for tracker + deep dives) and `PilotFish_V2/` (`modules.conf` + `com/pilotfish/eip/modules` Java). EIP modules are shared with V1 — use that code to learn FQCNs and config items. Do not invent class names.
 3. **Assemble runtime as V1** `pilotfish/demo-eip-root/**/route.xml` for `pilotfish-eip:23R1`. Copy a Sandbox demo skeleton when one exists for those classes. **Generate V2** (`route.v2.xml`) for Routes tab / PDF. `PilotFish_V2` is for module + format knowledge — not “author V2-only runtime” unless the user overrides.
 4. **Do not invent** a one-off layout — after module selection, copy the closest demo (`edi-837-snip-sqlserver` or `hl7-healthcare-automation`) and delete unused pieces.
 5. **Before coding:** capture pre-flight answers and create `DESIGN.md` from the playbook §8 template (include chosen FQCNs in the Pipeline table).

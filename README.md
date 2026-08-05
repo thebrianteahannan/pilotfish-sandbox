@@ -11,7 +11,7 @@ Agents constructing any interface under `Clients/` must follow:
 
 **Module / catalog sources (required):**
 
-- [`PilotFish_Documentation/`](PilotFish_Documentation/) — tracker + deep-dive module docs
+- [`PilotFish_Documentation/DOCUMENTATION_LOCATION.txt`](PilotFish_Documentation/DOCUMENTATION_LOCATION.txt) — pointer to the external docs project (`/Users/brianhannan/Documents/PilotFish Documentation`); use `Documents/` there for tracker + deep dives
 - [`PilotFish_V2/`](PilotFish_V2/) — shared EIP module source + `modules.conf` (same modules V1 uses)
 
 (Also enforced via `.cursor/rules/pilotfish-interface-construction.mdc` when working under `Clients/**`.)

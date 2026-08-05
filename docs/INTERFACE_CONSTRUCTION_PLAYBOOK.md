@@ -16,7 +16,7 @@ Cursor agents are **not** formally trained or certified by PilotFish. There is n
 
 | Priority | Source | Use it for |
 |----------|--------|------------|
-| **A** | `PilotFish_Documentation/` | Module **inventory**, UI-type → class mapping, config semantics, deep-dive behavior (see §1.1) |
+| **A** | External docs: `/Users/brianhannan/Documents/PilotFish Documentation` (see `PilotFish_Documentation/DOCUMENTATION_LOCATION.txt`) | Module **inventory**, UI-type → class mapping, config semantics, deep-dive behavior (see §1.1) |
 | **A** | `PilotFish_V2/` (XCS / module Java + `modules.conf`) | **Same EIP module code V1 uses** — FQCNs, `ConfigurationItem` names/defaults, listener/processor/transport behavior (see §1.2) |
 | **B** | Working Sandbox demos under `Clients/**` | Proven **wiring** of those modules into V1 `route.xml` on `pilotfish-eip:23R1` |
 | **B** | This playbook + `.cursor/rules/` | Construction process, V1 vs V2 policy, risks, definition of done |
@@ -24,23 +24,27 @@ Cursor agents are **not** formally trained or certified by PilotFish. There is n
 | **D** | Live smoke tests / `logs/eip.log` | Confirm the chosen module loads on the demo image |
 | **E** | General model knowledge | Only to fill gaps after A–D |
 
-**Important:** V2 does **not** invent a separate module stack. EIP modules (Listeners / Processors / Transports / Routing) are essentially the **same Java modules** whether the route document is classic V1 `route.xml` or V2 `route.v2.xml`. V2 mainly changes **how modules are connected and laid out**. Therefore agents **must use `PilotFish_V2` and `PilotFish_Documentation` to decide which modules exist and how they are configured**, then still **author runtime routes as V1** for this Sandbox’s eiPlatform image unless the user overrides.
+**Important:** V2 does **not** invent a separate module stack. EIP modules (Listeners / Processors / Transports / Routing) are essentially the **same Java modules** whether the route document is classic V1 `route.xml` or V2 `route.v2.xml`. V2 mainly changes **how modules are connected and laid out**. Therefore agents **must use `PilotFish_V2` and the external PilotFish Documentation project to decide which modules exist and how they are configured**, then still **author runtime routes as V1** for this Sandbox’s eiPlatform image unless the user overrides.
 
-### 1.1 `PilotFish_Documentation/` (deep-dive library)
+### 1.1 External PilotFish Documentation (deep-dive library)
 
-Path: `PilotFish_Documentation/`
+Canonical path (separate Cursor project; do **not** copy docs into this Sandbox):
 
-| Path | Role |
+`/Users/brianhannan/Documents/PilotFish Documentation`
+
+Pointer in this repo: `PilotFish_Documentation/DOCUMENTATION_LOCATION.txt`
+
+| Path (under the external project) | Role |
 |------|------|
-| `README.md` | Layout: Listeners / Processors / Transports × version (`XCS`, `23R1.127`, `26R1.11`, …) |
-| `General/Process/PilotFish-Module-Documentation-Tracker.md` (+ PDF if present) | **Master inventory** — UI type, short class name, which versions have deep dives |
-| `Listeners/`, `Processors/`, `Transports/` (`<version>/…`) | Deep-dive config reference for that module |
-| `General/XCS/*` | Framework (threads, transactions) when designing concurrency / TX behavior |
-| `General/Process/*` | How docs were generated — rarely needed for interface build |
+| `Documents/README.md` | Layout: Listeners / Processors / Transports × version (`XCS`, `23R1.127`, `26R1.11`, …) |
+| `Documents/General/Process/PilotFish-Module-Documentation-Tracker.md` (+ PDF if present) | **Master inventory** — UI type, short class name, which versions have deep dives |
+| `Documents/Listeners/`, `Documents/Processors/`, `Documents/Transports/` (`<version>/…`) | Deep-dive config reference for that module |
+| `Documents/General/XCS/*` | Framework (threads, transactions) when designing concurrency / TX behavior |
+| `Documents/General/Process/*` | How docs were generated — rarely needed for interface build |
 
 **How to use when constructing an interface:**
 
-1. Open the **tracker** and find the UI type you need (e.g. Directory / File, HL7 LLP, Database Polling (SQL)).
+1. Open the **tracker** in the external project and find the UI type you need (e.g. Directory / File, HL7 LLP, Database Polling (SQL)).
 2. Note the **class** (`DirectoryListener`, `DatabaseSqlListener`, …) and whether a deep-dive exists for a version close to the runtime image (`pilotfish-eip:23R1` demos → prefer `23R1.*` docs when present; otherwise use `26R1.11` / `XCS` and call out version skew in `DESIGN.md`).
 3. Read the deep-dive for config item names, defaults, and pitfalls **before** inventing XML.
 4. If the tracker lists a module but there is **no** deep-dive yet, fall through to `PilotFish_V2` Java / `modules.conf` (§1.2), then a Sandbox example if any.
@@ -85,7 +89,7 @@ Best source for **end-to-end patterns** that already run in Docker:
 Decision order:
 
 1. **Identify the capability** (directory listen, SQL poll, XSLT, SNIP, HL7 LLP, …).
-2. **`PilotFish_Documentation` tracker** → UI type + class; read deep-dive if present.
+2. **External docs tracker** (`/Users/brianhannan/Documents/PilotFish Documentation/Documents/…`) → UI type + class; read deep-dive if present.
 3. **`PilotFish_V2` `modules.conf` + Java** → confirm FQCN and configuration item XML names.
 4. **Sandbox demo `route.xml`** → copy a working module block when available.
 5. **Smoke test** on the demo EIP image; fix using logs if the class is missing from that WAR (docs/V2 may be newer than `23R1`).
@@ -100,7 +104,7 @@ Decision order:
 | `eip-root/**/route.v2.xml` + `modules/*.xml` | **V2** | Routes tab / docs / PDF — usually **generated** from V1 |
 | `tools/convert_routes_to_v2.py` | V1 → V2 | Keeps `route.xml`; emits diagram graph |
 | `PilotFish_V2/` | Product + **shared module source** | Module catalog & behavior **and** V2 format/editor understanding |
-| `PilotFish_Documentation/` | Deep dives + tracker | Interface creation decisions (which module, which settings) |
+| `/Users/brianhannan/Documents/PilotFish Documentation/Documents/` (see `PilotFish_Documentation/DOCUMENTATION_LOCATION.txt`) | Deep dives + tracker | Interface creation decisions (which module, which settings) |
 
 **Policy:** Use V2 **code** and Documentation to choose and configure modules; still **ship V1 `route.xml` as runtime** and generate V2 for visualization, unless the user explicitly wants native V2 runtime.
 
@@ -110,7 +114,7 @@ Your prompts, corrections, ports, case-study links, and overrides win over defau
 
 ### 5. General model knowledge (not PilotFish training)
 
-Horizontal knowledge (integration patterns, HL7/EDI concepts, Docker, SQL, Flask) — **not** a substitute for `PilotFish_Documentation` or `PilotFish_V2` when picking modules.
+Horizontal knowledge (integration patterns, HL7/EDI concepts, Docker, SQL, Flask) — **not** a substitute for the external PilotFish Documentation project or `PilotFish_V2` when picking modules.
 
 ### 6. External / fetched material (when used)
 
@@ -128,7 +132,7 @@ Public case studies and links you provide; live smoke evidence. Prefer in-repo D
 
 ```text
 Your chat + DESIGN.md
-    → PilotFish_Documentation (tracker + deep dives)
+    → External PilotFish Documentation project (tracker + deep dives)
         → PilotFish_V2 (modules.conf + module Java = same modules as V1)
             → nearest Sandbox demo route.xml (assembly skeleton)
                 → author V1 runtime → convert to V2 for viewer/PDF
@@ -305,7 +309,7 @@ Then run `tools/convert_routes_to_v2.py` (or demo equivalent) so `route.v2.xml` 
 Work in this order unless the user specifies otherwise:
 
 1. **DESIGN.md** filled from §8 (can be draft; must exist before claiming “done”).
-2. **Module selection** via `PilotFish_Documentation` tracker/deep-dives + `PilotFish_V2` (`modules.conf` / module Java). Record chosen FQCNs in DESIGN.md Pipeline table.
+2. **Module selection** via external PilotFish Documentation tracker/deep-dives + `PilotFish_V2` (`modules.conf` / module Java). Record chosen FQCNs in DESIGN.md Pipeline table.
 3. **SQL init + samples** (if applicable).
 4. **environment-settings.conf + compose + Dockerfile** (ports, volumes, heap if SNIP).
 5. **Minimal Route 1** V1 `route.xml` (listener → snapshot/file) green — copy Sandbox skeleton when possible.
