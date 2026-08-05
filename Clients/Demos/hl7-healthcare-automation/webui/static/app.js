@@ -135,9 +135,11 @@ function setMainTab(tab) {
   const demo = document.getElementById("tab-demo");
   const routes = document.getElementById("tab-routes");
   const xslt = document.getElementById("tab-xslt");
+  const info = document.getElementById("tab-info");
   demo.hidden = tab !== "demo";
   routes.hidden = tab !== "routes";
   if (xslt) xslt.hidden = tab !== "xslt";
+  if (info) info.hidden = tab !== "info";
   document.body.classList.toggle("routes-mode", tab === "routes" || tab === "xslt");
   const nav = document.getElementById("demo-nav");
   if (nav) nav.hidden = tab !== "demo";
@@ -160,7 +162,7 @@ function loadRouteFrame(routeId) {
     frame.src = "about:blank";
     return;
   }
-  const layout = document.getElementById("route-layout")?.value || "pipeline";
+  const layout = "pipeline";
   frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(routeId)}&layout=${encodeURIComponent(layout)}&cols=4`;
 }
 
@@ -183,9 +185,6 @@ async function loadRoutesTab() {
       select.appendChild(opt);
     });
     select.addEventListener("change", () => loadRouteFrame(select.value));
-    document.getElementById("route-layout").addEventListener("change", () => {
-      if (select.value) loadRouteFrame(select.value);
-    });
     routesLoaded = true;
     status.textContent = `${list.length} route${list.length === 1 ? "" : "s"}`;
   }

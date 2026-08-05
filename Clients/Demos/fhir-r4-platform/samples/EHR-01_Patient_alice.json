@@ -1,0 +1,41 @@
+{
+  "resourceType": "Patient",
+  "id": "pat-alice-001",
+  "meta": {
+    "versionId": "1",
+    "lastUpdated": "2026-08-03T12:00:00Z",
+    "profile": ["http://hl7.org/fhir/StructureDefinition/Patient"]
+  },
+  "identifier": [
+    {
+      "system": "http://hospital.example.org/mrn",
+      "value": "MRN-10001"
+    }
+  ],
+  "active": true,
+  "name": [
+    {
+      "use": "official",
+      "family": "Anderson",
+      "given": ["Alice", "Marie"]
+    }
+  ],
+  "gender": "female",
+  "birthDate": "1984-03-12",
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "555-0101",
+      "use": "home"
+    }
+  ],
+  "address": [
+    {
+      "use": "home",
+      "line": ["100 Maple Street"],
+      "city": "Metroville",
+      "state": "MA",
+      "postalCode": "02108"
+    }
+  ]
+}

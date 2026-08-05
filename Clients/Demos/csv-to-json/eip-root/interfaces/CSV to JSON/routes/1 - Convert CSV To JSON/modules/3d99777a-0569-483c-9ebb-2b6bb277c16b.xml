@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="3d99777a-0569-483c-9ebb-2b6bb277c16b" name="Poll CSV Files" type="Directory / File" tag="Listener" class="com.pilotfish.eip.modules.file.DirectoryListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <CLIAllowed>false</CLIAllowed>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <FIFOQueueName/>
+      
+        
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      
+        
+      <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      
+        
+      <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+      
+        
+      <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+      
+        
+      <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      
+        
+      <PollingInterval>10</PollingInterval>
+      
+        
+      <PollingDirectory>$$CSV_INBOUND_DIRECTORY</PollingDirectory>
+      
+        
+      <FileNameRestriction/>
+      
+        
+      <FileExtensionRestriction>csv</FileExtensionRestriction>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <PostProcessOperation>Move</PostProcessOperation>
+      
+        
+      <TargetDirectory>$$CSV_ARCHIVE_DIRECTORY</TargetDirectory>
+      
+        
+      <CompatModeMoved>false</CompatModeMoved>
+      
+        
+      <Tokenizers/>
+      
+        
+      <SerializedTransactionsTag>1</SerializedTransactionsTag>
+      
+        
+      <SubFolderIterationTag>false</SubFolderIterationTag>
+      
+        
+      <FullFolderPathRestrictionsTag/>
+      
+        
+      <HiddenFilesTag>false</HiddenFilesTag>
+      
+        
+      <SchedulerStartTag/>
+      
+        
+      <SchedulerEndTag/>
+      
+        
+      <ExcludeDaysTag/>
+      
+        
+      <ExcludeDatesTag/>
+      
+        
+      <TimeZone>System Default</TimeZone>
+      
+        
+      <MinSecondsSinceFileModified>2</MinSecondsSinceFileModified>
+      
+        
+      <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+      
+        
+      <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+      
+        
+      <CombineFiles>false</CombineFiles>
+      
+        
+      <HeaderLines>0</HeaderLines>
+      
+        
+      <SynchResponse>false</SynchResponse>
+      
+        
+      <Timeout>60</Timeout>
+      
+        
+      <FileSortingMethod>System Default</FileSortingMethod>
+      
+        
+      <FileSortingDirection>Ascending</FileSortingDirection>
+      
+      
+   </ModuleConfig>
+</Module>

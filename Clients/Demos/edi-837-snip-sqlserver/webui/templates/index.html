@@ -11,27 +11,21 @@
 </head>
 <body>
   <header>
-    <p class="brand">PilotFish · EDI 837 Demo</p>
-    <h1>SQL Server claims → 837P + SNIP</h1>
-    <p>
-      Poll PENDING claims, map to EDI XML, convert with the
-      <strong>EDI Transformation Module</strong>, validate with
-      <strong>EdiSNIPValidationProcessor</strong> (Types 1–3), and view the
-      SNIP HTML report in the UI.
-    </p>
-    <div class="main-tabs" role="tablist" aria-label="App views">
-      <button type="button" class="main-tab active" data-main-tab="demo" role="tab" aria-selected="true">Demo</button>
-      <button type="button" class="main-tab" data-main-tab="routes" role="tab" aria-selected="false">Routes</button>
-      {% if has_xslt %}
-      <button type="button" class="main-tab" data-main-tab="xslt" role="tab" aria-selected="false">XSLT</button>
-      {% endif %}
+    <div class="app-bar">
+      <p class="brand">PilotFish · EDI 837 Demo</p>
+      <div class="main-tabs" role="tablist" aria-label="App views">
+        <button type="button" class="main-tab active" data-main-tab="demo" role="tab" aria-selected="true">Demo</button>
+        <button type="button" class="main-tab" data-main-tab="routes" role="tab" aria-selected="false">Routes</button>
+        {% if has_xslt %}
+        <button type="button" class="main-tab" data-main-tab="xslt" role="tab" aria-selected="false">XSLT</button>
+        {% endif %}
+        <button type="button" class="main-tab" data-main-tab="info" role="tab" aria-selected="false">Info</button>
+      </div>
     </div>
     <nav class="nav" id="demo-nav">
       <a href="#pipeline">Pipeline</a>
       <a href="#inject">Add Claim</a>
       <a href="#results">EDI / SNIP</a>
-      <a id="eip-link" href="http://localhost:8093/eip/" target="_blank" rel="noreferrer">PilotFish EIP</a>
-      {% if lan_hint %}<a href="{{ lan_hint }}" id="lan-link">{{ lan_hint }}</a>{% endif %}
     </nav>
   </header>
 
@@ -111,12 +105,6 @@
       <label for="route-select">V2 route
         <select id="route-select"></select>
       </label>
-      <label for="route-layout">Layout
-        <select id="route-layout">
-          <option value="pipeline" selected>Pipeline (Listener / Router / Transport)</option>
-          <option value="wrap">Wrap grid</option>
-        </select>
-      </label>
       <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route design PDF</a>
       <a class="btn" id="routes-docs-link" href="/static/route-viewer/docs.html?config=changed" target="_blank" rel="noreferrer">All routes (print)</a>
       <span id="routes-status" class="status"></span>
@@ -142,6 +130,18 @@
     </section>
   </div>
   {% endif %}
+
+  <main id="tab-info" class="panel info-tab" hidden>
+    <h1>SQL Server claims → 837P + SNIP</h1>
+    <p class="sub">
+      Poll PENDING claims, map to EDI XML, convert with the
+      <strong>EDI Transformation Module</strong>, validate with
+      <strong>EdiSNIPValidationProcessor</strong> (Types 1–3), and view the
+      SNIP HTML report in the UI.
+    </p>
+    {% if lan_hint %}<p class="sub">LAN: <a href="{{ lan_hint }}" id="lan-link">{{ lan_hint }}</a></p>{% endif %}
+    <p class="sub muted">EIP: <a id="eip-link" href="http://localhost:8093/eip/" target="_blank" rel="noreferrer"><code>http://localhost:8093/eip/</code></a></p>
+  </main>
 
   <script src="/static/app.js"></script>
 </body>

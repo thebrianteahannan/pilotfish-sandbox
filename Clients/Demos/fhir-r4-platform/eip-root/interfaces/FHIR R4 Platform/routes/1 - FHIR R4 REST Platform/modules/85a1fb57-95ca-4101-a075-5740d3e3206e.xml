@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="85a1fb57-95ca-4101-a075-5740d3e3206e" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="2faa00f6-4ea5-484f-81be-a618755378dd" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="faae21aa-17f1-4736-92f4-1d229a98fed1" name="Rule 1 - Metadata Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="b7be5cd4-104d-438e-ae37-4fa2888277ec" name="Rule 2 - Create Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="b1957dc5-8f2c-45fe-b8a7-d426486ed7ec" name="Rule 3 - Update Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="0566328a-9867-4148-a45b-b3fd21ad2877" name="Rule 4 - Bad Request Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="96cac225-7125-466a-9ea4-803c425d8fa8" name="Rule 5 - Delete Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="6309e3f1-42f9-4ed6-bffc-e5e6e7076d20" name="Rule 6 - Read Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="3a8bc22d-6872-4e53-9761-e303098485dd" name="Rule 7 - Search Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="22065b69-4476-46da-bff1-f0582b7d5bf3" name="Rule 8 - Not Supported Response" type="XPATH">
+               <condition>true()</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

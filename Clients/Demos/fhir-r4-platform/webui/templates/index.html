@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FHIR R4 Expandable Platform</title>
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="app-bar">
+      <p class="brand">PilotFish · FHIR R4 Platform (Phase 1)</p>
+      <nav class="tabs" role="tablist">
+        <button type="button" class="tab active" data-tab="demo">Demo</button>
+        <button type="button" class="tab" data-tab="routes">Routes</button>
+        {% if has_xslt %}<button type="button" class="tab" data-tab="xslt">XSLT</button>{% endif %}
+        <button type="button" class="tab" data-tab="info">Info</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="tab-demo" class="panel">
+    <section class="cardish">
+      <h2>FHIR operations</h2>
+      <div class="form-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;">
+        <label>Method
+          <select id="method">
+            <option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option>
+          </select>
+        </label>
+        <label>Resource type
+          <select id="resourceType">
+            <option value="metadata">metadata</option>
+            {% for t in resource_types %}<option value="{{ t }}" {% if t=='Patient' %}selected{% endif %}>{{ t }}</option>{% endfor %}
+          </select>
+        </label>
+        <label>Id <input id="id" placeholder="pat-alice-001" /></label>
+        <label>Query (search) <input id="query" placeholder="_id=pat-alice-001 or q=Alice" /></label>
+        <label>Sample
+          <select id="sample"><option value="">—</option></select>
+        </label>
+        <label class="auto-refresh"><input type="checkbox" id="proxy" /> Proxy to remote FHIR</label>
+      </div>
+      <label>Body (POST/PUT)
+        <textarea id="body" rows="8" style="width:100%;font-family:ui-monospace,monospace;font-size:12px;"></textarea>
+      </label>
+      <div class="actions">
+        <button type="button" id="btn-invoke" class="btn primary">Invoke</button>
+        <button type="button" id="btn-meta" class="btn">GET metadata</button>
+        <button type="button" id="btn-outbound" class="btn">Enqueue outbound GET (Route 2)</button>
+        <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a>
+      </div>
+      <p id="status" class="status"></p>
+      <pre id="result" class="log">Result…</pre>
+    </section>
+    <section>
+      <h2>SQL store (latest)</h2>
+      <button type="button" id="btn-refresh" class="btn">Refresh</button>
+      <pre id="sql-rows" class="log">—</pre>
+    </section>
+  </main>
+
+  <div id="tab-routes" class="routes-tab" hidden>
+    <div class="routes-toolbar">
+      <label>V2 route <select id="route-select"></select></label>
+      <span id="routes-status" class="muted"></span>
+    </div>
+    <iframe id="route-viewer-frame" class="route-viewer-frame" title="Route viewer" src="about:blank"></iframe>
+  </div>
+
+  {% if has_xslt %}
+  <div id="tab-xslt" class="xslt-tab" hidden>
+    <aside class="xslt-sidebar">
+      <div class="xslt-sidebar-head"><h2>XSLT</h2><span id="xslt-status" class="muted"></span></div>
+      <select id="xslt-select"></select>
+    </aside>
+    <div class="xslt-viewer">
+      <div class="xslt-viewer-head"><span class="xslt-path" id="xslt-path"></span></div>
+      <pre class="xslt-source"><code id="xslt-view"></code></pre>
+    </div>
+  </div>
+  {% endif %}
+
+  <main id="tab-info" class="panel info-tab" hidden>
+    <h1>Expandable FHIR server + outbound client</h1>
+    <p class="sub">Multi-resource CRUD · metadata · simple search · optional remote proxy. Not the entire FHIR spec.</p>
+    {% if lan_hint %}<p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>{% endif %}
+    <p class="sub muted">PF: <code>{{ fhir_public_base }}</code></p>
+    <p class="sub muted">Remote: <a href="{{ fhir_remote_base }}" target="_blank" rel="noreferrer"><code>{{ fhir_remote_base }}</code></a></p>
+    <p class="sub muted">See <a href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a> and <code>DESIGN.md</code> for Phase 1 scope and roadmap.</p>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

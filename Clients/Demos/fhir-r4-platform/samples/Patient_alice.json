@@ -1,0 +1,10 @@
+{
+  "resourceType": "Patient",
+  "id": "pat-alice-001",
+  "meta": { "profile": ["http://hl7.org/fhir/StructureDefinition/Patient"] },
+  "identifier": [{ "system": "urn:oid:1.2.3.4.5.6", "value": "MRN-1001" }],
+  "active": true,
+  "name": [{ "use": "official", "family": "Smith", "given": ["Alice"] }],
+  "gender": "female",
+  "birthDate": "1985-03-12"
+}

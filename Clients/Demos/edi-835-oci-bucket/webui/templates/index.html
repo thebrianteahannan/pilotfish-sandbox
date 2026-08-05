@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDI 835 → OCI Bucket Demo</title>
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="app-bar">
+      <p class="brand">PilotFish · EDI 835 OCI</p>
+      <nav class="tabs" role="tablist">
+        <button type="button" class="tab active" data-tab="demo" aria-selected="true">Demo</button>
+        <button type="button" class="tab" data-tab="routes" aria-selected="false">Routes</button>
+        {% if has_xslt %}
+        <button type="button" class="tab" data-tab="xslt" aria-selected="false">XSLT</button>
+        {% endif %}
+        <button type="button" class="tab" data-tab="info" aria-selected="false">Info</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="tab-demo" class="panel">
+    <section class="cardish">
+      <h2>Drop 835 onto SFTP</h2>
+      <p>Target: <code>{{ sftp }}</code> (real SFTP in Docker)</p>
+      <label>Sample
+        <select id="sample">
+          {% for s in samples %}
+          <option value="{{ s }}">{{ s }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <div class="actions">
+        <button type="button" id="btn-upload" class="btn primary">Upload sample via SFTP</button>
+        <a class="btn" href="/documents/{{ gaps_pdf }}" target="_blank" rel="noreferrer">Gaps / custom modules PDF</a>
+      </div>
+      <pre id="upload-out" class="log">Upload result…</pre>
+      <p id="upload-status" class="status"></p>
+    </section>
+
+    <section>
+      <h2>Pipeline artifacts</h2>
+      <div class="toolbar">
+        <button type="button" id="btn-refresh" class="btn">Refresh now</button>
+        <label class="auto-refresh">
+          <input type="checkbox" id="auto-refresh" checked />
+          Live refresh (every 2s)
+        </label>
+        <span id="refresh-meta" class="muted"></span>
+      </div>
+      <div class="cols">
+        <div>
+          <h3>1. SFTP archive</h3>
+          <div id="list-archive" class="file-list"></div>
+        </div>
+        <div>
+          <h3>2. Staged EDI</h3>
+          <div id="list-staged" class="file-list"></div>
+        </div>
+        <div>
+          <h3>3. JSON objects</h3>
+          <div id="list-json" class="file-list"></div>
+        </div>
+        <div class="oci-live">
+          <h3>4. floci-oci Object Storage <span class="live-badge" id="oci-live-badge">LIVE</span></h3>
+          <p class="muted oci-meta" id="oci-meta">Querying Object Storage API…</p>
+          <div id="list-oci" class="file-list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="tab-routes" class="routes-tab" hidden>
+    <div class="routes-toolbar">
+      <label for="route-select">V2 route
+        <select id="route-select"></select>
+      </label>
+      <a class="btn" href="/documents/EDI835_OCI_V2_Route_Diagrams.pdf" target="_blank" rel="noreferrer">Route design PDF</a>
+      <a class="btn" href="/static/route-viewer/docs.html?config=changed" target="_blank" rel="noreferrer">All routes (print)</a>
+      <span id="routes-status" class="status"></span>
+    </div>
+    <iframe id="route-viewer-frame" class="route-viewer-frame" title="V2 route graph" src="about:blank"></iframe>
+  </div>
+
+  {% if has_xslt %}
+  <div id="tab-xslt" class="routes-tab" hidden>
+    <div class="routes-toolbar">
+      <label for="xslt-select">XSLT
+        <select id="xslt-select"></select>
+      </label>
+      <span id="xslt-status" class="status"></span>
+    </div>
+    <pre id="xslt-view" class="log" style="max-height:70vh;overflow:auto"></pre>
+  </div>
+  {% endif %}
+
+  <main id="tab-info" class="panel info-tab" hidden>
+    <h1>SFTP 835 → ST split → JSON → OCI</h1>
+    <p class="sub">Boss pattern: SFTP poll · fork each ST/Transaction · JSON · Object Storage REST (HTTP until OCI Transport exists)</p>
+    {% if lan_hint %}
+    <p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>
+    {% endif %}
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

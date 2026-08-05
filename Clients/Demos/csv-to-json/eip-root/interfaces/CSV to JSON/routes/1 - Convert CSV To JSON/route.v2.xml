@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="ecd548b9-576f-4e38-9041-8492549fdf19" name="1 - Convert CSV To JSON">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="0c9c7f5c-eba6-45a3-80b6-fade5a835420" moduleId="3d99777a-0569-483c-9ebb-2b6bb277c16b" label="Poll CSV Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="e2f6c035-7df2-4108-8770-bd3f30d3edee" moduleId="5de11db5-e54b-4941-ad12-c902e4e428fb" label="CSV to XML" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="8df289e0-a71d-4c02-88f2-803b1f39d262" moduleId="ac1a5717-94b2-4f8c-8d10-2967b2f360ff" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="72f3b6cf-f416-4fbb-81c7-d754ecada7d3" moduleId="7d67ad48-1a2f-4ea8-81a9-63d88f29dfbb" label="XML to JSON" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="3e74cb68-7cbe-4bf9-a8ce-c72f3a08f9e0" moduleId="45d7d6b8-767a-4c1d-9f44-d24912ac9cc2" label="Write JSON" x="1560.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="b7954bec-7edc-4b7d-b2cd-fad0d7be3b0d" sourceNodeId="0c9c7f5c-eba6-45a3-80b6-fade5a835420" targetNodeId="e2f6c035-7df2-4108-8770-bd3f30d3edee" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="49591ac5-4501-4c36-b3ac-fb9125bfcb95" sourceNodeId="72f3b6cf-f416-4fbb-81c7-d754ecada7d3" targetNodeId="3e74cb68-7cbe-4bf9-a8ce-c72f3a08f9e0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="c84f4251-489d-4f65-889e-efffc6d01e92" sourceNodeId="e2f6c035-7df2-4108-8770-bd3f30d3edee" targetNodeId="8df289e0-a71d-4c02-88f2-803b1f39d262" sourceConnector="right-output" targetConnector="router-input:cf435138-3a6d-4432-93b8-ff5b6a82cf60" condition="true"/>
+      <Connection id="2cc932e6-1ec2-47a2-9e77-ef227f25a741" sourceNodeId="8df289e0-a71d-4c02-88f2-803b1f39d262" targetNodeId="72f3b6cf-f416-4fbb-81c7-d754ecada7d3" sourceConnector="router-output:5e163af6-dbf5-44e7-9427-9e994eef47a8" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets><TransportTarget name="Metadata Response" /></Targets>
+          <Condition><OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'GET' &amp;&amp; 'metadata'.equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName'))</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="Create Response" /></Targets>
+          <Condition><OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'POST' &amp;&amp; getAttribute('fhir.ValidationStatus') == 'PASS'</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="Update Response" /></Targets>
+          <Condition><OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'PUT' &amp;&amp; getAttribute('fhir.ValidationStatus') == 'PASS' &amp;&amp; getAttribute('com.pilotfish.ResourceID') != null &amp;&amp; getAttribute('com.pilotfish.ResourceID').toString().trim().length() &gt; 0</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="Bad Request Response" /></Targets>
+          <Condition><OGNLExpression>(getAttribute('com.pilotfish.HttpMethodName') == 'POST' || getAttribute('com.pilotfish.HttpMethodName') == 'PUT') &amp;&amp; getAttribute('fhir.ValidationStatus') != 'PASS'</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="Delete Response" /></Targets>
+          <Condition><OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'DELETE' &amp;&amp; getAttribute('com.pilotfish.ResourceID') != null &amp;&amp; getAttribute('com.pilotfish.ResourceID').toString().trim().length() &gt; 0</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="Read Response" /></Targets>
+          <Condition><OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'GET' &amp;&amp; getAttribute('com.pilotfish.ResourceID') != null &amp;&amp; getAttribute('com.pilotfish.ResourceID').toString().trim().length() &gt; 0</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="Search Response" /></Targets>
+          <Condition><OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'GET'</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="Not Supported Response" /></Targets>
+          <Condition><OGNLExpression>true</OGNLExpression></Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="FHIR REST Client">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.http.rest.RESTfulWebServiceListener" enabled="true" name="FHIR R4 REST Platform">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <SERVICE_NAME>fhir</SERVICE_NAME>
+        <USER_NAME />
+        <PASSWORD />
+        <POST_SUPPORTED>true</POST_SUPPORTED>
+        <GET_SUPPORTED>true</GET_SUPPORTED>
+        <PUT_SUPPORTED>true</PUT_SUPPORTED>
+        <DELETE_SUPPORTED>true</DELETE_SUPPORTED>
+        <SupportedResources>Patient,Practitioner,PractitionerRole,Organization,Location,Encounter,Observation,Condition,Procedure,AllergyIntolerance,MedicationRequest,Medication,Immunization,DiagnosticReport,DocumentReference,CarePlan,CareTeam,Goal,ServiceRequest,Coverage,Claim,ExplanationOfBenefit,Appointment,Schedule,Slot,RelatedPerson,Person,EpisodeOfCare,Binary,Bundle,Parameters,metadata</SupportedResources>
+        <Timeout>60</Timeout>
+        <RequireSSL>false</RequireSSL>
+        <Synchronous>true</Synchronous>
+        <HTTPHeaders />
+        <UseLegacyTokenParam>false</UseLegacyTokenParam>
+        <WadlFile />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Save Raw Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.RawBody</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor" name="Extract Body ResourceType">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <RegEx>"resourceType"\s*:\s*"([^"]+)"</RegEx>
+          <AttributeName>fhir.BodyResourceType</AttributeName>
+          <MatchGroupNumber>1</MatchGroupNumber>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor" name="Extract Logical Id">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <RegEx>"id"\s*:\s*"([^"]+)"</RegEx>
+          <AttributeName>fhir.LogicalId</AttributeName>
+          <MatchGroupNumber>1</MatchGroupNumber>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Normalize Ids And Validation">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.EffectiveId:eip_name:{ognl:(getAttribute('com.pilotfish.ResourceID') != null &amp;&amp; getAttribute('com.pilotfish.ResourceID').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.ResourceID').toString().trim() : ((getAttribute('fhir.LogicalId') != null) ? getAttribute('fhir.LogicalId').toString().trim() : '')}:eip_value][eip_pair:fhir.ValidationStatus:eip_name:{ognl:(getAttribute('fhir.BodyResourceType') != null &amp;&amp; getAttribute('com.pilotfish.ResourceName') != null &amp;&amp; getAttribute('fhir.BodyResourceType').toString().equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName')) &amp;&amp; getAttribute('fhir.EffectiveId') != null &amp;&amp; getAttribute('fhir.EffectiveId').toString().trim().length() &gt; 0) ? 'PASS' : 'FAIL'}:eip_value][eip_pair:fhir.SearchId:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter._id')}:eip_value][eip_pair:fhir.SearchQ:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.q')}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+
+  <Target icon="" name="Metadata">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Metadata Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="Load CapabilityStatement">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>capability-statement.json</FileName>
+          <PostProcessOperation>Do Nothing</PostProcessOperation>
+          <TargetDirectory/>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.HttpResponseCodeProcessor" name="Metadata Status">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <StatusCode>200 OK</StatusCode>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor" name="Metadata Headers">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <HeaderTable>[eip_pair:Content-Type:eip_name:application/fhir+json:eip_value]</HeaderTable>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="Create">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Create Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Body For Persist">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.RawBody</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write FHIR Store File">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$FHIR_STORE_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('com.pilotfish.ResourceName').toString() + '_' + getAttribute('fhir.EffectiveId').toString() + '.json'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Upsert Resource SQL">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>MERGE dbo.FhirResources AS t
+USING (SELECT ? AS ResourceType, ? AS ResourceId, ? AS RawFhir) AS s
+ON t.ResourceType = s.ResourceType AND t.ResourceId = s.ResourceId
+WHEN MATCHED THEN UPDATE SET RawFhir = s.RawFhir, ValidationStatus = 'PASS', SourceCode = 'REST', Source = 'local', DeletedAt = NULL, UpdatedAt = SYSUTCDATETIME()
+WHEN NOT MATCHED THEN INSERT (SourceCode, ResourceType, ResourceId, PatientId, PatientName, IsBundle, ValidationStatus, SourceFile, RawFhir, Source)
+VALUES ('REST', s.ResourceType, s.ResourceId, '', '', CASE WHEN s.ResourceType = 'Bundle' THEN 1 ELSE 0 END, 'PASS', 'rest-api', s.RawFhir, 'local')
+OUTPUT INSERTED.ResourceRowId AS ResourceRowId;</Query>
+          <QueryParams>[eip_pair:p1:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:p2:eip_name:{ognl:getAttribute('fhir.EffectiveId').toString()}:eip_value][eip_pair:p3:eip_name:{ognl:getAttribute('fhir.RawBody')}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>60</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Body For Response">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.RawBody</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.HttpResponseCodeProcessor" name="Create Status">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <StatusCode>201 Created</StatusCode>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor" name="Create Headers">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <HeaderTable>[eip_pair:Content-Type:eip_name:application/fhir+json:eip_value]</HeaderTable>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor" name="Create Location">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <HeaderTable>[eip_pair:Location:eip_name:{ognl:'/eip/rest/fhir/' + getAttribute('com.pilotfish.ResourceName').toString() + '/' + getAttribute('fhir.EffectiveId').toString()}:eip_value]</HeaderTable>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="Update">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Update Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Body For Update">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.RawBody</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write FHIR Store File Update">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$FHIR_STORE_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('com.pilotfish.ResourceName').toString() + '_' + getAttribute('fhir.EffectiveId').toString() + '.json'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Upsert Resource SQL Update">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>MERGE dbo.FhirResources AS t
+USING (SELECT ? AS ResourceType, ? AS ResourceId, ? AS RawFhir) AS s
+ON t.ResourceType = s.ResourceType AND t.ResourceId = s.ResourceId
+WHEN MATCHED THEN UPDATE SET RawFhir = s.RawFhir, ValidationStatus = 'PASS', SourceCode = 'REST', Source = 'local', DeletedAt = NULL, UpdatedAt = SYSUTCDATETIME()
+WHEN NOT MATCHED THEN INSERT (SourceCode, ResourceType, ResourceId, PatientId, PatientName, IsBundle, ValidationStatus, SourceFile, RawFhir, Source)
+VALUES ('REST', s.ResourceType, s.ResourceId, '', '', CASE WHEN s.ResourceType = 'Bundle' THEN 1 ELSE 0 END, 'PASS', 'rest-api', s.RawFhir, 'local')
+OUTPUT INSERTED.ResourceRowId AS ResourceRowId;</Query>
+          <QueryParams>[eip_pair:p1:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:p2:eip_name:{ognl:getAttribute('fhir.EffectiveId').toString()}:eip_value][eip_pair:p3:eip_name:{ognl:getAttribute('fhir.RawBody')}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>60</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Body For Update Response">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.RawBody</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.HttpResponseCodeProcessor" name="Update Status">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <StatusCode>200 OK</StatusCode>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor" name="Update Headers">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <HeaderTable>[eip_pair:Content-Type:eip_name:application/fhir+json:eip_value]</HeaderTable>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="Read">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Read Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Select Resource SQL">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>SELECT TOP 1 RawFhir FROM dbo.FhirResources WHERE ResourceType = ? AND ResourceId = ? AND DeletedAt IS NULL</Query>
+          <QueryParams>[eip_pair:t:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:id:eip_name:{ognl:getAttribute('com.pilotfish.ResourceID').toString()}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>60</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Detect SQL Hit">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:fhir.FoundRaw:eip_name:normalize-space(string((.//*[upper-case(local-name())='RAWFHIR'])[1])):eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Map SQL To FHIR JSON">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform-sql-to-resource.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Read Status Code">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:com.pilotfish.HTTPResponseCode:eip_name:{ognl:(getAttribute('fhir.FoundRaw') != null &amp;&amp; getAttribute('fhir.FoundRaw').toString().trim().length() &gt; 0) ? '200' : '404'}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor" name="Read Headers">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <HeaderTable>[eip_pair:Content-Type:eip_name:application/fhir+json:eip_value]</HeaderTable>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="Search">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Search Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Search Resources SQL">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>SELECT TOP 50 ResourceType, ResourceId, RawFhir FROM dbo.FhirResources
+WHERE ResourceType = ? AND DeletedAt IS NULL
+AND (? IS NULL OR LTRIM(RTRIM(CAST(? AS NVARCHAR(128)))) = '' OR ResourceId = ?)
+AND (? IS NULL OR LTRIM(RTRIM(CAST(? AS NVARCHAR(200)))) = '' OR RawFhir LIKE '%' + ? + '%')
+ORDER BY UpdatedAt DESC</Query>
+          <QueryParams>[eip_pair:t:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:sid1:eip_name:{ognl:getAttribute('fhir.SearchId')}:eip_value][eip_pair:sid2:eip_name:{ognl:getAttribute('fhir.SearchId')}:eip_value][eip_pair:sid3:eip_name:{ognl:getAttribute('fhir.SearchId')}:eip_value][eip_pair:q1:eip_name:{ognl:getAttribute('fhir.SearchQ')}:eip_value][eip_pair:q2:eip_name:{ognl:getAttribute('fhir.SearchQ')}:eip_value][eip_pair:q3:eip_name:{ognl:getAttribute('fhir.SearchQ')}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>60</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Map SQL To Searchset">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform-sql-to-searchset.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.HttpResponseCodeProcessor" name="Search Status">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <StatusCode>200 OK</StatusCode>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor" name="Search Headers">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <HeaderTable>[eip_pair:Content-Type:eip_name:application/fhir+json:eip_value]</HeaderTable>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="Delete">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Delete Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Soft Delete SQL">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>UPDATE dbo.FhirResources SET DeletedAt = SYSUTCDATETIME(), UpdatedAt = SYSUTCDATETIME()
+WHERE ResourceType = ? AND ResourceId = ? AND DeletedAt IS NULL;
+SELECT @@ROWCOUNT AS RowsAffected;</Query>
+          <QueryParams>[eip_pair:t:eip_name:{ognl:getAttribute('com.pilotfish.ResourceName').toString()}:eip_value][eip_pair:id:eip_name:{ognl:getAttribute('com.pilotfish.ResourceID').toString()}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>60</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Delete Outcome">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform-delete-outcome.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.HttpResponseCodeProcessor" name="Delete Status">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <StatusCode>200 OK</StatusCode>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor" name="Delete Headers">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <HeaderTable>[eip_pair:Content-Type:eip_name:application/fhir+json:eip_value]</HeaderTable>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="Bad Request">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Bad Request Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="Load 400">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>outcomes/operation-outcome-400.json</FileName>
+          <PostProcessOperation>Do Nothing</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.HttpResponseCodeProcessor" name="BadRequest Status">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <StatusCode>400 Bad Request</StatusCode>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor" name="BadRequest Headers">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <HeaderTable>[eip_pair:Content-Type:eip_name:application/fhir+json:eip_value]</HeaderTable>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="Not Supported">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Not Supported Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="Load 501">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>outcomes/operation-outcome-501.json</FileName>
+          <PostProcessOperation>Do Nothing</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.HttpResponseCodeProcessor" name="NotSupported Status">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <StatusCode>501 Not Implemented</StatusCode>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor" name="NotSupported Headers">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <HeaderTable>[eip_pair:Content-Type:eip_name:application/fhir+json:eip_value]</HeaderTable>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
