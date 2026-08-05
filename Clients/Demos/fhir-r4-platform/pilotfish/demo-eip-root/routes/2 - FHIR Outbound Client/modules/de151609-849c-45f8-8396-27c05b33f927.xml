@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="de151609-849c-45f8-8396-27c05b33f927" name="Save Outbound Response Body" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$OUTBOUND_RESPONSE_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:'resp_' + @java.lang.System@currentTimeMillis() + '.json'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

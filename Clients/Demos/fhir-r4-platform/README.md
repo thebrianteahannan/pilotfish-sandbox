@@ -1,6 +1,6 @@
-# FHIR R4 Expandable Platform (Phase 3)
+# FHIR R4 Expandable Platform (Phase 4)
 
-Multi-resource **FHIR R4 REST** façade on PilotFish with SQL primary store, token search (core-6), and **Bundle transaction/batch** execution.
+Multi-resource **FHIR R4 REST** façade on PilotFish with SQL primary store, token search (core-6), Bundle transaction/batch, and **HAPI FHIR base-R4 profile validation**.
 
 > Not the entire FHIR specification — see `DESIGN.md`.
 
@@ -18,21 +18,26 @@ docker compose up -d --build
 | FHIR base | http://127.0.0.1:8110/eip/rest/fhir |
 | Metadata | http://127.0.0.1:8110/eip/rest/fhir/metadata |
 
+## Phase 4 validation
+
+CREATE/UPDATE (and Bundle transaction/batch bodies) run through a custom `FhirProfileValidationProcessor` (HAPI instance validator). Failures return **HTTP 400** with a dynamic **OperationOutcome**.
+
+```bash
+# Expect 400 OperationOutcome (invalid Patient.gender)
+curl -sS -D- -H 'Content-Type: application/fhir+json' \
+  --data-binary @samples/Patient_invalid_gender.json \
+  http://127.0.0.1:8110/eip/rest/fhir/Patient
+```
+
+Rebuilds compile the shaded validator module inside `pilotfish/Dockerfile` (not committed as a fat JAR).
+
 ## Phase 3 Bundles
 
 ```bash
-# Atomic transaction (Patient + Observation)
-curl -sS -D- -H 'Content-Type: application/fhir+json' \
+curl -sS -H 'Content-Type: application/fhir+json' \
   --data-binary @samples/Bundle_transaction_patient_obs.json \
   http://127.0.0.1:8110/eip/rest/fhir/Bundle
-
-# Batch (success + 404 entry)
-curl -sS -H 'Content-Type: application/fhir+json' \
-  --data-binary @samples/Bundle_batch_mixed.json \
-  http://127.0.0.1:8110/eip/rest/fhir/Bundle
 ```
-
-Entry methods supported in demo: `POST`/`PUT` (with `resource.id`), `GET Type/id`, `DELETE Type/id`.
 
 ## Ports
 

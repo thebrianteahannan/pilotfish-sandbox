@@ -32,4 +32,10 @@ echo "$batch" | head -c 260; echo
 echo "$batch" | grep -q 'batch-response' || { echo "FAIL: expected batch-response"; exit 1; }
 echo "$batch" | grep -q '404' || { echo "FAIL: batch should include 404 entry"; exit 1; }
 curl -sf "$BASE/Organization/org-batch-001" | grep -q 'org-batch-001' || { echo "FAIL: batch org not persisted"; exit 1; }
+echo "== invalid Patient gender (expect 400 OperationOutcome) =="
+code="$(curl -s -o /tmp/fhir-bad.json -w '%{http_code}' -H 'Content-Type: application/fhir+json' --data-binary @"$SAMPLES/Patient_invalid_gender.json" "$BASE/Patient")"
+echo "HTTP $code"; head -c 280 /tmp/fhir-bad.json; echo
+[ "$code" = "400" ] || { echo "FAIL: expected HTTP 400 for invalid gender"; exit 1; }
+grep -q 'OperationOutcome' /tmp/fhir-bad.json || { echo "FAIL: expected OperationOutcome body"; exit 1; }
 echo OK
+
