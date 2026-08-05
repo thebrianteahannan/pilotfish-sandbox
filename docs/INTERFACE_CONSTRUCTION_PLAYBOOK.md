@@ -232,17 +232,31 @@ Create under `Clients/Demos/<slug>/` (or `Clients/<Client>/<slug>/` for client w
       route-viewer/              # copy from an existing demo; keep in sync
   tools/
     convert_routes_to_v2.py      # if needed
-    export_route_diagrams.py     # PDF export with --config → documents/
+    export_route_diagrams.py     # PDF: overview (collapsed groups) + detail pages → documents/
     export_stakeholder_brief.py  # stakeholder Capability Brief PDF → documents/
     export_test_plan_pdf.py      # Test Plan PDF from tests/plan.json
+    export_test_results_pdf.py   # (optional wrapper) results PDF helper
     run_interface_tests.py       # execute plan → documents/test-results.json|.html|.pdf
     post_up_tests.sh             # compose-up helper: wait + run tests
+    scrub_pdf_secret_false_positives.py  # optional: clear GitHub Vault FP in PDF binaries
   tests/
     plan.json                    # living automated test plan (source of truth)
   documents/                     # required: route PDF + capability brief + test plan (+ results)
     <Interface>_V2_Route_Diagrams.pdf
   logs/                          # gitignored runtime logs if bind-mounted
 ```
+
+Under each route directory that has a long processor chain, also keep:
+
+```text
+  eip-root/.../routes/<N - Name>/
+    route.xml
+    route.v2.xml
+    modules/*.xml
+    diagram-groups.json          # docs-only Processor Groups (see §6.1b)
+```
+
+Mirror `diagram-groups.json` into `pilotfish/demo-eip-root/routes/<…>/` when that tree is what compose/Web UI mounts (or ensure the Web UI `ROUTES_DIR` mount points at the tree that contains the JSON).
 
 **Source of truth:** runtime behavior = `pilotfish/demo-eip-root`.  
 **Diagrams / Routes tab** = `eip-root` (or a documented sync job).  
@@ -253,6 +267,7 @@ Reference implementations:
 
 - `Clients/Demos/edi-837-snip-sqlserver/` — SQL poll → EIP handoff → fork → EDI + SNIP
 - `Clients/Demos/hl7-healthcare-automation/` — directory listen → validate → router fan-out → SQL + file
+- `Clients/Demos/fhir-r4-platform/` — Call Route auth, docs-only **Processor Groups** (`diagram-groups.json` + overview/detail route PDF)
 
 ---
 
@@ -345,7 +360,7 @@ Work in this order unless the user specifies otherwise:
 7. **Router + transports** with kickout path tested once.
 8. **Web UI** inject/submit + status views matching the demo story.
 9. **V2 convert** into `eip-root` + Routes tab / docs.
-10. **Route design PDF (required):** with Web UI up, run `python3 tools/export_route_diagrams.py --config changed` and write/copy the PDF into **`documents/`** at the interface root (see §6).
+10. **Route design PDF (required):** with Web UI up, author `diagram-groups.json` for long chains (§6.1b), then run `python3 tools/export_route_diagrams.py --config compact` (or `--config changed`) so `documents/` gets an **overview (collapsed groups) + later detail pages** PDF (see §6 / §6.1b).
 10b. **Stakeholder Capability Brief PDF (required):** run `python3 tools/export_stakeholder_brief.py` so `documents/<ShortName>_Capability_Brief.pdf` is generated from `DESIGN.md` + routes (+ CapabilityStatement when FHIR). See §6.1a.
 10c. **Test plan PDF + automated run (required):** maintain `tests/plan.json`, run `python3 tools/export_test_plan_pdf.py` and `python3 tools/run_interface_tests.py --wait` (see §7.1). Update the plan as capabilities are added.
 11. **README.md** (run, ports, smoke commands; link to `documents/*.pdf`).
@@ -371,30 +386,111 @@ Do not refactor unrelated demos. Prefer copying the closest existing demo assemb
 
 When the interface has routes (every new Sandbox interface with a route stack):
 
-1. Copy `webui/static/route-viewer/` from a current demo (keep layout + Box config modes).
+1. Copy `webui/static/route-viewer/` from a **current** demo that already has Processor Groups support (`fhir-r4-platform` is the reference: includes `diagram-groups.js`).
 2. Serve `route.v2.xml` + module XML via `/api/v2/routes…` (mirror existing Flask helpers).
-3. Routes tab: route select, layout dropdown, link to docs.
-4. Docs / print view and `tools/export_route_diagrams.py` must use the same **Box config** modes:
-   - `compact` — names only  
-   - `changed` — non-default values (**default for docs/PDF**)  
+3. Also serve **`GET /api/v2/routes/<route_id>/diagram-groups.json`** (return `{ "groups": [] }` when the file is absent).
+4. Routes tab: route select, layout dropdown, link to docs.
+5. Docs / print view and `tools/export_route_diagrams.py` must use the same **Box config** modes:
+   - `compact` — names only (**preferred default for committed route PDFs**; smaller, fewer secret-scanner false positives)
+   - `changed` — non-default values  
    - `all` — all ModuleConfig values  
-5. Export script: `python3 tools/export_route_diagrams.py --config changed`  
-   Screenshot URL must include `mode=docs&bare=1&config=<mode>`.
-6. PDF and on-screen docs view should show equivalent config detail (same default).
+6. Export script: `python3 tools/export_route_diagrams.py --config compact`  
+   Screenshot URL must include `mode=docs&bare=1&config=<mode>`, and for grouped captures add `groups=1` plus either `collapse=all` (overview) or `group=<id>` (detail) — see §6.1b.
+7. PDF and on-screen docs view should show equivalent config detail (same default).
+8. After writing large route PDFs, optionally run `python3 ../../../tools/scrub_pdf_secret_false_positives.py documents/*.pdf` (or `--demos`) so GitHub does not flag Vault-like false positives in compressed image streams.
 
 ### 6.1 Route design PDF → `documents/` (**required for every new interface**)
 
 Any time you **create a new interface** (or add/change routes enough that diagrams should be refreshed), you **must** generate the route design PDF automatically as part of finishing the work — do not wait for the user to ask.
 
 1. Ensure Web UI is up and V2 routes render.
-2. Run `python3 tools/export_route_diagrams.py --config changed` (default Box config).
-3. Write a **single** PDF under the interface’s **`documents/`** folder (no `_changed` suffix, no second copy):
+2. Author Processor Groups for long chains (§6.1b) before capturing.
+3. Run `python3 tools/export_route_diagrams.py --config compact` (use `--config changed` only when stakeholders need inline config on the detail pages).
+4. Write a **single** PDF under the interface’s **`documents/`** folder (no `_changed` suffix, no second copy):
    - `documents/<ShortName>_V2_Route_Diagrams.pdf`
-4. PDF layout: **no cover page**; green brand header (and route title) on **every** page.
-5. Expose the PDF from the Web UI at `/documents/route-diagrams.pdf` (mount `./documents` read-only; Routes tab link **Route design PDF**).
-6. Mention the PDF path in `README.md` **and** announce browser URLs per §6.2.
+5. PDF layout: **no cover page**; green brand header (and route/section title) on **every** page. Order captures as: short flat routes → **route overview (collapsed groups)** → **one detail section per group** → next route…
+6. Expose the PDF from the Web UI at `/documents/route-diagrams.pdf` (mount `./documents` read-only; Routes tab link **Route design PDF**).
+7. Mention the PDF path in `README.md` **and** announce browser URLs per §6.2.
 
 Skipping the PDF requires the user to opt out explicitly; “optional” is not the default.
+
+### 6.1b Processor Groups for long diagrams (**required when chains are long**)
+
+PilotFish V2 `route.v2.xml` in this Sandbox is a **flat** node graph (no nested Group schema). Do **not** invent runtime Group XML or change V1 `route.xml` just for prettier PDFs.
+
+Instead, every interface with a **long processor chain** uses a **docs-only** grouping layer:
+
+| Piece | Role |
+|-------|------|
+| `diagram-groups.json` next to `route.v2.xml` | Declares logical groups by **processor/transport display labels** |
+| `webui/static/route-viewer/diagram-groups.js` | Collapses or focuses groups in the viewer |
+| URL params | `groups=1&collapse=all` (overview) · `groups=1&group=<id>` (detail) |
+| `export_route_diagrams.py` | Captures **overview first**, then **one screenshot per group** into the same PDF |
+
+**When groups are required**
+
+- Any Source or Target processor list with **≥ 4** processors in a row, **or**
+- Any linear worker route with **≥ 8** processors total.
+
+Short routes (e.g. 1–3 modules) may stay flat with no `diagram-groups.json`.
+
+**Authoring `diagram-groups.json`**
+
+```json
+{
+  "groups": [
+    {
+      "id": "ingress",
+      "title": "Ingress",
+      "description": "Normalize, validate, auth",
+      "labels": ["Save Raw Body", "…", "Call Auth Route"],
+      "transports": ["Optional Sync Response Name"]
+    }
+  ]
+}
+```
+
+Rules:
+
+1. Match nodes by **exact label** (post-module-load name / processor `name=` in V1). Re-run V2 convert then verify labels if rename breaks matches.
+2. Prefer **logical** groups (Ingress, Create, Kickoff, Per-type NDJSON Export, Complete Job) — not one box per single processor.
+3. Put **only processors** in `labels`. List related sync response transports under `transports` so detail pages can show `group → transport` without stuffing the transport into the collapsed box.
+4. Keep groups **≥ 2** members (the viewer skips singleton groups).
+5. Mirror the JSON into whichever tree the Web UI mounts as `ROUTES_DIR` (`eip-root/.../routes` and/or `pilotfish/demo-eip-root/routes`).
+6. Do **not** hand-edit `route.v2.xml` to fake nest nodes — converter will wipe it.
+
+**Viewer / export behavior (must keep working on every new demo)**
+
+1. Copy `diagram-groups.js` + CSS for `.route-node-group` from `fhir-r4-platform` when scaffolding a new Web UI.
+2. Overview capture URL shape:
+
+```text
+/static/route-viewer/index.html?route=<id>&mode=docs&layout=pipeline&bare=1&config=compact&groups=1&collapse=all
+```
+
+3. Detail capture URL shape:
+
+```text
+…&groups=1&group=<group-id>
+```
+
+4. Export list order (example):
+
+```text
+0 — Auth (flat if short)
+1 — REST Platform (Overview)     ← collapse=all
+1 · Ingress                      ← group=ingress
+1 · Create                       ← group=create
+…
+3b — Worker (Overview)
+3b · Per-type NDJSON Export
+3b · Complete Job
+```
+
+5. Collapsed box UX (stakeholder-readable): dashed border, title **Processor Group**, short description, footer like `▸ N processors · see detail page`.
+6. Detail pages start with a **Processor Group · Detail** banner, then the full processor chain (+ transports when listed).
+
+**Reference implementation:** `Clients/Demos/fhir-r4-platform/` (`diagram-groups.json` on routes 1 / 3 / 3b, `export_route_diagrams.py` CAPTURE list, Web UI API).
 
 ### 6.1a Stakeholder Capability Brief PDF → `documents/` (**required for every new interface**)
 
@@ -441,7 +537,8 @@ Minimum bar:
 - [ ] One happy-path sample produces **every** expected side effect (SQL row and/or files)
 - [ ] Kickout / fail path exercised once **or** explicitly marked “not implemented” in DESIGN.md
 - [ ] Routes tab renders `route.v2.xml`
-- [ ] **Route design PDF** written under `documents/` (`--config changed`)
+- [ ] **Processor Groups** authored (`diagram-groups.json`) for every long chain (§6.1b), or N/A documented when all chains are short
+- [ ] **Route design PDF** written under `documents/` with **overview (collapsed groups) + detail pages** (`--config compact` preferred)
 - [ ] **Stakeholder Capability Brief PDF** written under `documents/` (`tools/export_stakeholder_brief.py`)
 - [ ] **Test Plan PDF** written under `documents/` (`tools/export_test_plan_pdf.py`)
 - [ ] **Automated tests run** (`tools/run_interface_tests.py --wait`) with results in `documents/test-results.json` / `.html` / `.pdf`
@@ -627,10 +724,11 @@ An interface construct is done when:
 3. README is enough for a cold start on this machine.  
 4. Runtime config and diagrams agree **or** drift is documented.  
 5. Web/route viewer present when routes are part of the deliverable.  
-6. **Route design PDF** exists under `documents/` (generated with `--config changed`).  
+6. **Route design PDF** exists under `documents/` (overview + group detail pages when §6.1b applies; prefer `--config compact`).  
+6a. **`diagram-groups.json`** present for long processor chains (or N/A if all chains are short).  
 6b. **Stakeholder Capability Brief PDF** exists under `documents/` (generated with `tools/export_stakeholder_brief.py`).  
 6c. **Test Plan PDF** exists under `documents/` and `tests/plan.json` is current.  
-6d. **Automated test run** completed (`run_interface_tests.py`) with results published under `documents/test-results.*` (pass/fail list).  
+6d. **Automated test run** completed (`run_interface_tests.py`) with results published under `documents/test-results.*` (pass/fail list + PDF).  
 7. **LAN URL** is set (`LAN_HINT`) and both localhost + `192.x` URLs are listed when the UI is running (§1.1).  
 8. **Every review PDF** has a working browser link on localhost **and** `192.x` (§6.2), pasted in the agent summary.  
 9. Agent summary lists known limitations in plain language (no compliance theater).
@@ -650,10 +748,13 @@ echo "LAN:   http://${LAN_IP}:<webui-port>/"
 docker compose logs -f pilotfish
 # happy path: drop sample or use Web UI
 ls -la output/*
-python3 tools/export_route_diagrams.py --config changed
+python3 tools/export_route_diagrams.py --config compact
+# Expect overview pages (collapsed Processor Groups) then detail pages per group (§6.1b)
 python3 tools/export_stakeholder_brief.py
 python3 tools/export_test_plan_pdf.py
 ./tools/post_up_tests.sh
+# optional: clear GitHub Vault false positives in PDF binaries
+python3 ../../../tools/scrub_pdf_secret_false_positives.py documents/*.pdf 2>/dev/null || true
 # ensure PDFs are under documents/
 mkdir -p documents && cp -f output/route-diagrams/*Route_Diagrams*.pdf documents/ 2>/dev/null || true
 ls -la documents/
@@ -661,11 +762,13 @@ ls -la documents/
 echo "Route PDF local: http://localhost:<webui-port>/documents/route-diagrams.pdf"
 echo "Brief PDF local: http://localhost:<webui-port>/documents/capability-brief.pdf"
 echo "Test plan local: http://localhost:<webui-port>/documents/test-plan.pdf"
-echo "Results local:   http://localhost:<webui-port>/documents/test-results.html"
+echo "Results PDF:     http://localhost:<webui-port>/documents/test-results.pdf"
+echo "Results HTML:    http://localhost:<webui-port>/documents/test-results.html"
 echo "Route PDF LAN:   http://${LAN_IP}:<webui-port>/documents/route-diagrams.pdf"
 echo "Brief PDF LAN:   http://${LAN_IP}:<webui-port>/documents/capability-brief.pdf"
 echo "Test plan LAN:   http://${LAN_IP}:<webui-port>/documents/test-plan.pdf"
-echo "Results LAN:     http://${LAN_IP}:<webui-port>/documents/test-results.html"
+echo "Results PDF LAN: http://${LAN_IP}:<webui-port>/documents/test-results.pdf"
+echo "Results HTML LAN: http://${LAN_IP}:<webui-port>/documents/test-results.html"
 curl -sS -o /dev/null -w "%{http_code} %{content_type}\n" \
   "http://${LAN_IP}:<webui-port>/documents/route-diagrams.pdf"
 curl -sS -o /dev/null -w "%{http_code} %{content_type}\n" \
