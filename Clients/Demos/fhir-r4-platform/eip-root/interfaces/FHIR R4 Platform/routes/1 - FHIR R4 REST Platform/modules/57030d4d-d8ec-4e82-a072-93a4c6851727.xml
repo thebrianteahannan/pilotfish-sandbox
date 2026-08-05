@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="57030d4d-d8ec-4e82-a072-93a4c6851727" name="Restore Auth Outcome" type="Data Attribute Swapper" tag="Processor" class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.AuthOutcome') != null &amp;&amp; getAttribute('fhir.AuthOutcome').toString().trim().length() &gt; 0}</ExecuteProcessor>
+      
+          
+      <AttributeName>fhir.AuthOutcome</AttributeName>
+      
+          
+      <SAVEOUTTAG>true</SAVEOUTTAG>
+      
+          
+      <SAVEINTAG>false</SAVEINTAG>
+      
+          
+      <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+      
+          
+      <StoreAsStream>false</StoreAsStream>
+      
+        
+   </ModuleConfig>
+</Module>

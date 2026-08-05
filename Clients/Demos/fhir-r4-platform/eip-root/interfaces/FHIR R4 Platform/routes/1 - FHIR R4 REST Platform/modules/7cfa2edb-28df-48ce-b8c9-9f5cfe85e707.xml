@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7cfa2edb-28df-48ce-b8c9-9f5cfe85e707" name="Create Location" type="HTTP Response Headers" tag="Processor" class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <HeaderTable>[eip_pair:Location:eip_name:{ognl:'/eip/rest/fhir/' + getAttribute('com.pilotfish.ResourceName').toString() + '/' + getAttribute('fhir.EffectiveId').toString()}:eip_value]</HeaderTable>
+      
+        
+   </ModuleConfig>
+</Module>

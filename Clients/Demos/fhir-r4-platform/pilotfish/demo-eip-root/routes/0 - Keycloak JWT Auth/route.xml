@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets><TransportTarget name="Skip Auth Response" /></Targets>
+          <Condition><OGNLExpression>getAttribute('fhir.AuthRequired') != 'true'</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="Missing Token Response" /></Targets>
+          <Condition><OGNLExpression>getAttribute('fhir.BearerToken') == null || getAttribute('fhir.BearerToken').toString().trim().length() == 0</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="Introspect Token" /></Targets>
+          <Condition><OGNLExpression>true</OGNLExpression></Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="JWT Auth Callout">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Keycloak JWT Auth.Programmable (Trigger) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes />
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>15:47-15:47</MonitoringTime>
+        <Throttling>false</Throttling>
+        <ThrottlingByAttributes />
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <CallingRoutes/>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Compute Auth Required And Bearer">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.AuthRequired:eip_name:{ognl:(getAttribute('com.pilotfish.HttpMethodName') == 'POST' || getAttribute('com.pilotfish.HttpMethodName') == 'PUT' || getAttribute('com.pilotfish.HttpMethodName') == 'DELETE' || '$export'.equals(getAttribute('com.pilotfish.ResourceName')) || '$export-status'.equals(getAttribute('com.pilotfish.ResourceName')) || '$export-file'.equals(getAttribute('com.pilotfish.ResourceName'))) ? 'true' : 'false'}:eip_value][eip_pair:fhir.BearerToken:eip_name:{ognl:(getAttribute('com.pilotfish.authorization') != null &amp;&amp; getAttribute('com.pilotfish.authorization').toString().toLowerCase().startsWith('bearer ')) ? getAttribute('com.pilotfish.authorization').toString().substring(7).trim() : ''}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+
+  <Target icon="" name="Skip">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Skip Auth Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Auth Status Skip">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.AuthStatus:eip_name:SKIP:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Raw Body Skip">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.RawBody') != null}</ExecuteProcessor>
+          <AttributeName>fhir.RawBody</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="MissingToken">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Missing Token Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Auth Status Missing">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.AuthStatus:eip_name:FAIL:eip_value][eip_pair:fhir.AuthError:eip_name:Missing or invalid Authorization Bearer token for FHIR write.:eip_value][eip_pair:fhir.AuthOutcome:eip_name:{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"login","diagnostics":"Missing or invalid Authorization Bearer token for FHIR write."}]}:eip_value][eip_pair:fhir.ValidationOutcome:eip_name:{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"login","diagnostics":"Missing or invalid Authorization Bearer token for FHIR write."}]}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Raw Body Missing">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.RawBody') != null}</ExecuteProcessor>
+          <AttributeName>fhir.RawBody</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="Introspect">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="Introspect Token" retries="1">
+      <ModuleConfig>
+        <TargetURL>$$fhir.oauth.introspect</TargetURL>
+        <UserName>$$fhir.oauth.client_id</UserName>
+        <Password>$$fhir.oauth.client_secret</Password>
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <PreemptiveAuthentication>true</PreemptiveAuthentication>
+        <FormElement>token</FormElement>
+        <HTTPHeaders>[eip_pair:Accept:eip_name:application/json:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <ProxyPassword />
+        <KeyStoreFilePath />
+        <KeyStoreFileType>NONE</KeyStoreFileType>
+        <KeyStoreFilePassword />
+        <TrustStoreFilePath />
+        <TrustStoreFilePassword />
+        <DisableChunking>false</DisableChunking>
+        <Timeout>30</Timeout>
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <ResponseCodeList />
+        <FormElementEncoding>UTF-8</FormElementEncoding>
+        <UrlParamEncoding>UTF-8</UrlParamEncoding>
+        <ErrorResponseEncoding>UTF-8</ErrorResponseEncoding>
+        <TrustStoreSource>JVM</TrustStoreSource>
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Load Bearer Token As Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.BearerToken</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+    <PostProcessors>
+      <Processor class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor" name="Extract Introspect Active">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <RegEx>"active"\s*:\s*(true|false)</RegEx>
+          <AttributeName>fhir.IntrospectActive</AttributeName>
+          <MatchGroupNumber>1</MatchGroupNumber>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor" name="Extract Introspect Subject">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <RegEx>"(?:preferred_username|sub)"\s*:\s*"([^"]+)"</RegEx>
+          <AttributeName>fhir.AuthSubject</AttributeName>
+          <MatchGroupNumber>1</MatchGroupNumber>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Auth Status From Introspect">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.AuthStatus:eip_name:{ognl:(getAttribute('fhir.IntrospectActive') != null &amp;&amp; 'true'.equalsIgnoreCase(getAttribute('fhir.IntrospectActive').toString())) ? 'PASS' : 'FAIL'}:eip_value][eip_pair:fhir.AuthError:eip_name:{ognl:(getAttribute('fhir.IntrospectActive') != null &amp;&amp; 'true'.equalsIgnoreCase(getAttribute('fhir.IntrospectActive').toString())) ? '' : 'Token inactive or rejected by Keycloak introspection.'}:eip_value][eip_pair:fhir.AuthOutcome:eip_name:{ognl:(getAttribute('fhir.IntrospectActive') != null &amp;&amp; 'true'.equalsIgnoreCase(getAttribute('fhir.IntrospectActive').toString())) ? '' : '{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"login","diagnostics":"Token inactive or rejected by Keycloak introspection."}]}'}:eip_value][eip_pair:fhir.ValidationOutcome:eip_name:{ognl:(getAttribute('fhir.IntrospectActive') != null &amp;&amp; 'true'.equalsIgnoreCase(getAttribute('fhir.IntrospectActive').toString())) ? ((getAttribute('fhir.ValidationOutcome') == null) ? '' : getAttribute('fhir.ValidationOutcome').toString()) : '{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"login","diagnostics":"Token inactive or rejected by Keycloak introspection."}]}'}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Raw Body After Introspect">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.RawBody') != null}</ExecuteProcessor>
+          <AttributeName>fhir.RawBody</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.SynchronousResponseProcessor" name="Sync Reply After Introspect">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener />
+        </ModuleConfig>
+      </Processor>
+    </PostProcessors>
+  </Target>
+</Route>

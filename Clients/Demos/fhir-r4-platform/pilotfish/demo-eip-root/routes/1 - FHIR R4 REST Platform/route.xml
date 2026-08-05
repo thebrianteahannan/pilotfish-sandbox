@@ -125,13 +125,15 @@
           <ExecuteProcessor>true</ExecuteProcessor>
         </ModuleConfig>
       </Processor>
-      <Processor class="com.pilotfish.eip.modules.fhir.FhirJwtAuthProcessor" name="Keycloak JWT Auth">
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Call Keycloak JWT Auth Route">
         <ModuleConfig>
           <ExecuteProcessor>true</ExecuteProcessor>
-          <JwksUrl>http://keycloak:8080/realms/fhir-demo/protocol/openid-connect/certs</JwksUrl>
-          <ExpectedIssuer>http://localhost:8112/realms/fhir-demo</ExpectedIssuer>
-          <ExpectedAudience>account</ExpectedAudience>
-          <RequireOnWrites>true</RequireOnWrites>
+          <Listener>Keycloak JWT Auth.Programmable (Trigger) Listener</Listener>
+          <Synchronous>true</Synchronous>
+          <Timeout>60</Timeout>
+          <LoopCallout>false</LoopCallout>
+          <LoopCondition>true</LoopCondition>
+          <MaxIterations>5</MaxIterations>
         </ModuleConfig>
       </Processor>
     </Processors>

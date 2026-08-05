@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="a6bb4e55-7454-4add-bce8-2623736cd89f" name="Extract Introspect Active" type="RegExIntoTransactionAttributeProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <RegEx>"active"\s*:\s*(true|false)</RegEx>
+      
+          
+      <AttributeName>fhir.IntrospectActive</AttributeName>
+      
+          
+      <MatchGroupNumber>1</MatchGroupNumber>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="a45b8ff4-5190-4a54-93b1-49fe0a35cbd6" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="866eb066-4608-4cca-a771-ed292ecb8787" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="fd73cfd7-a8f8-4e98-ac2b-b30f428e2708" name="Rule 1 - Metadata Response" type="XPATH">
+               <condition>getAttribute('com.pilotfish.HttpMethodName') == 'GET' &amp;&amp; 'metadata'.equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName'))</condition>
+            </output>
+            <output id="34f5d30e-12bb-4ed1-b634-1d75c7c2a6e1" name="Rule 2 - Unauthorized Response" type="XPATH">
+               <condition>(getAttribute('com.pilotfish.HttpMethodName') == 'POST' || getAttribute('com.pilotfish.HttpMethodName') == 'PUT' || getAttribute('com.pilotfish.HttpMethodName') == 'DELETE' || '$export'.equals(getAttribute('com.pilotfish.ResourceName')) || '$export-status'.equals(getAttribute('com.pilotfish.ResourceName')) || '$export-file'.equals(getAttribute('com.pilotfish.ResourceName'))) &amp;&amp; getAttribute('fhir.AuthStatus') != 'PASS'</condition>
+            </output>
+            <output id="735cd9e1-8636-4fc8-a613-d7b42ed605b9" name="Rule 3 - Bulk Export Response" type="XPATH">
+               <condition>getAttribute('com.pilotfish.ResourceName') != null &amp;&amp; ('$export'.equals(getAttribute('com.pilotfish.ResourceName').toString()) || '$export-status'.equals(getAttribute('com.pilotfish.ResourceName').toString()) || '$export-file'.equals(getAttribute('com.pilotfish.ResourceName').toString()))</condition>
+            </output>
+            <output id="ca802440-4079-484d-9910-d0e5b9feafcc" name="Rule 4 - Bundle Execute Response" type="XPATH">
+               <condition>getAttribute('com.pilotfish.HttpMethodName') == 'POST' &amp;&amp; getAttribute('com.pilotfish.ResourceName') != null &amp;&amp; 'Bundle'.equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName').toString()) &amp;&amp; getAttribute('fhir.BundleInteraction') != null &amp;&amp; getAttribute('fhir.BundleInteraction').toString().trim().length() &gt; 0 &amp;&amp; getAttribute('fhir.ProfileValidationStatus') == 'PASS'</condition>
+            </output>
+            <output id="ce41f7d1-e946-44a3-8793-f2f4cd4e305d" name="Rule 5 - Create Response" type="XPATH">
+               <condition>getAttribute('com.pilotfish.HttpMethodName') == 'POST' &amp;&amp; getAttribute('fhir.ValidationStatus') == 'PASS'</condition>
+            </output>
+            <output id="b9092d24-5433-45ae-8e91-a1727d60ff17" name="Rule 6 - Update Response" type="XPATH">
+               <condition>getAttribute('com.pilotfish.HttpMethodName') == 'PUT' &amp;&amp; getAttribute('fhir.ValidationStatus') == 'PASS' &amp;&amp; getAttribute('com.pilotfish.ResourceID') != null &amp;&amp; getAttribute('com.pilotfish.ResourceID').toString().trim().length() &gt; 0</condition>
+            </output>
+            <output id="33910853-7607-40ea-8cd8-79e741a4444f" name="Rule 7 - Bad Request Response" type="XPATH">
+               <condition>(getAttribute('com.pilotfish.HttpMethodName') == 'POST' || getAttribute('com.pilotfish.HttpMethodName') == 'PUT') &amp;&amp; getAttribute('fhir.ValidationStatus') != 'PASS'</condition>
+            </output>
+            <output id="54698537-5239-49df-9a01-7eab5b630071" name="Rule 8 - Delete Response" type="XPATH">
+               <condition>getAttribute('com.pilotfish.HttpMethodName') == 'DELETE' &amp;&amp; getAttribute('com.pilotfish.ResourceID') != null &amp;&amp; getAttribute('com.pilotfish.ResourceID').toString().trim().length() &gt; 0</condition>
+            </output>
+            <output id="483faad7-58a4-446f-b8f3-248b04956f2e" name="Rule 9 - Read Response" type="XPATH">
+               <condition>getAttribute('com.pilotfish.HttpMethodName') == 'GET' &amp;&amp; getAttribute('com.pilotfish.ResourceID') != null &amp;&amp; getAttribute('com.pilotfish.ResourceID').toString().trim().length() &gt; 0</condition>
+            </output>
+            <output id="3070ab58-2c85-4262-813a-1547b5cd311f" name="Rule 10 - Search Response" type="XPATH">
+               <condition>getAttribute('com.pilotfish.HttpMethodName') == 'GET'</condition>
+            </output>
+            <output id="3713d157-f878-451a-b814-b659b811484d" name="Rule 11 - Not Supported Response" type="XPATH">
+               <condition>true</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

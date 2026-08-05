@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="ea97758e-af8a-4f14-a88c-68eab4051f70" name="FHIR R4 REST Platform" type="RESTful Web Service" tag="Listener" class="com.pilotfish.eip.modules.http.rest.RESTfulWebServiceListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <CLIAllowed>false</CLIAllowed>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <FIFOQueueName/>
+      
+        
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      
+        
+      <SERVICE_NAME>fhir</SERVICE_NAME>
+      
+        
+      <USER_NAME/>
+      
+        
+      <PASSWORD/>
+      
+        
+      <POST_SUPPORTED>true</POST_SUPPORTED>
+      
+        
+      <GET_SUPPORTED>true</GET_SUPPORTED>
+      
+        
+      <PUT_SUPPORTED>true</PUT_SUPPORTED>
+      
+        
+      <DELETE_SUPPORTED>true</DELETE_SUPPORTED>
+      
+        
+      <SupportedResources>Patient,Practitioner,PractitionerRole,Organization,Location,Encounter,Observation,Condition,Procedure,AllergyIntolerance,MedicationRequest,Medication,Immunization,DiagnosticReport,DocumentReference,CarePlan,CareTeam,Goal,ServiceRequest,Coverage,Claim,ExplanationOfBenefit,Appointment,Schedule,Slot,RelatedPerson,Person,EpisodeOfCare,Binary,Bundle,Parameters,metadata,$export,$export-status,$export-file</SupportedResources>
+      
+        
+      <Timeout>60</Timeout>
+      
+        
+      <RequireSSL>false</RequireSSL>
+      
+        
+      <Synchronous>true</Synchronous>
+      
+        
+      <HTTPHeaders/>
+      
+        
+      <UseLegacyTokenParam>false</UseLegacyTokenParam>
+      
+        
+      <WadlFile/>
+      
+      
+   </ModuleConfig>
+</Module>

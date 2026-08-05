@@ -283,6 +283,7 @@ Then run `tools/convert_routes_to_v2.py` (or demo equivalent) so `route.v2.xml` 
 
 ### 3.3 Must-design decisions (write into DESIGN.md)
 
+
 1. **When is business state committed?**  
    Never mark work terminal (`PROCESSED` / archived-as-success) before all required side effects succeed — or document that the demo deliberately does claim-before-complete and list it under Risks.
 
@@ -308,6 +309,27 @@ Then run `tools/convert_routes_to_v2.py` (or demo equivalent) so `route.v2.xml` 
 8. **Poison / kickout:**  
    Explicit fail directory or status; don’t Move-to-archive on exception-only paths.
 
+### 3.4 Prefer PilotFish routes/interfaces over custom modules (**default**)
+
+**Bias: build it as a PF route (or callout route) first.** Custom Java modules (`custom-modules/*`, fat JARs into `WEB-INF/lib`) are a **last resort**, not a convenience shortcut.
+
+| Prefer a PF interface/route when… | A custom module may be justified when… |
+|-----------------------------------|----------------------------------------|
+| Stock listeners/processors/transports can assemble the behavior (Call Route, HTTP Post/Form Post, Attribute Population, RegEx, XSLT, SQL, Directory, Sync Response, …) | Crypto/protocol libs or HAPI/third-party APIs cannot be expressed without unreasonable route spaghetti |
+| Behavior is orchestration, auth callouts (e.g. OAuth introspect), mapping, routing, persistence | Performance requires in-process compiled logic that is measured and documented |
+| Another engineer should edit it in eiConsole without a Java rebuild | The PF graph would be so large/confusing that a small module is clearer **and** DESIGN.md records why |
+| Demo honesty improves by showing real PilotFish topology | No stock module exists in the runtime image and no route substitute works after Documentation/`PilotFish_V2` search |
+
+**Required process before adding a custom module:**
+
+1. Search Documentation tracker + `PilotFish_V2` + Sandbox demos for a stock module or callout-route pattern.
+2. Sketch the PF-only design (including a dedicated callout route if mid-pipeline HTTP/auth is needed).
+3. Only if that design is **extremely difficult**, confusing beyond salvage, or impossible on `pilotfish-eip:23R1`, implement a custom module.
+4. Document in `DESIGN.md`: why PF-only was rejected, what the module owns, and how to remove it later if PF catches up.
+5. Keep the custom surface minimal; prefer route-owned wiring around a tiny processor over a mega-module.
+
+**Good example (this Sandbox):** FHIR Keycloak auth was moved from `FhirJwtAuthProcessor` to route `0 - Keycloak JWT Auth` (Call Route + HTTP Post introspection). Validation/Bulk may remain custom while HAPI/Bulk semantics stay hard to express in stock modules alone.
+
 ---
 
 ## 4. Implementation order (agent checklist)
@@ -315,10 +337,10 @@ Then run `tools/convert_routes_to_v2.py` (or demo equivalent) so `route.v2.xml` 
 Work in this order unless the user specifies otherwise:
 
 1. **DESIGN.md** filled from §8 (can be draft; must exist before claiming “done”).
-2. **Module selection** via external PilotFish Documentation tracker/deep-dives + `PilotFish_V2` (`modules.conf` / module Java). Record chosen FQCNs in DESIGN.md Pipeline table.
+2. **Module selection** via external PilotFish Documentation tracker/deep-dives + `PilotFish_V2` (`modules.conf` / module Java). Record chosen FQCNs in DESIGN.md Pipeline table. **Do not invent a custom module** until §3.4 is satisfied.
 3. **SQL init + samples** (if applicable).
 4. **environment-settings.conf + compose + Dockerfile** (ports, volumes, heap if SNIP).
-5. **Minimal Route 1** V1 `route.xml` (listener → snapshot/file) green — copy Sandbox skeleton when possible.
+5. **Minimal Route 1** V1 `route.xml` (listener → snapshot/file) green — copy Sandbox skeleton when possible. Prefer callout routes (Call Route + TriggerableListener) for reusable auth/utility steps.
 6. **Downstream routes / transforms** one stage at a time (still V1 runtime).
 7. **Router + transports** with kickout path tested once.
 8. **Web UI** inject/submit + status views matching the demo story.
@@ -591,6 +613,7 @@ Every interface README must include:
 | Binding Web UI / publish to `127.0.0.1` only | Keep default `0.0.0.0` host publish so LAN devices can connect |
 | Leaving a review PDF only on disk / in git / Drive | Serve via Web UI `/documents/…` and paste LAN browser URL (§6.2) |
 | Relying solely on Google Drive for PDF review | Drive is optional; LAN HTTP link is required even when Drive works |
+| Jumping to a custom Java module for auth, HTTP callouts, mapping, or routing | Prefer PF Call Route / HTTP / Attribute / XSLT first (§3.4); custom only when PF-only is extremely hard |
 
 ---
 

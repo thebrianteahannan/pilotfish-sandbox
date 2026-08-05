@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c2f473be-7f0f-48c7-9a1d-83eb26f306c2" name="Load Bearer Token As Body" type="Data Attribute Swapper" tag="Processor" class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeName>fhir.BearerToken</AttributeName>
+      
+          
+      <SAVEOUTTAG>true</SAVEOUTTAG>
+      
+          
+      <SAVEINTAG>false</SAVEINTAG>
+      
+          
+      <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+      
+          
+      <StoreAsStream>false</StoreAsStream>
+      
+        
+   </ModuleConfig>
+</Module>

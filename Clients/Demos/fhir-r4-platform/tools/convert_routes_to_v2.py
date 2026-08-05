@@ -25,11 +25,15 @@ TYPE_BY_CLASS = {
     "com.pilotfish.eip.modules.core.TriggerableListener": "Programmable (Trigger)",
     "com.pilotfish.eip.modules.http.rest.RESTfulWebServiceListener": "RESTful Web Service",
     "com.pilotfish.eip.modules.http.rest.RESTfulWebServiceTransport": "RESTful Web Service",
+    "com.pilotfish.eip.modules.http.HttpPostTransport": "HTTP Post",
     "com.pilotfish.eip.modules.file.DirectoryListener": "Directory / File",
     "com.pilotfish.eip.modules.file.DirectoryTransport": "Directory / File",
     "com.pilotfish.eip.modules.file.StaticFileProcessor": "Static File",
     "com.pilotfish.eip.modules.db.DatabaseSqlProcessor": "Database (SQL)",
     "com.pilotfish.eip.modules.internal.SynchronousResponseTransport": "Synchronous Response",
+    "com.pilotfish.eip.modules.other.SynchronousResponseProcessor": "Synchronous Response",
+    "com.pilotfish.eip.modules.internal.CallRouteProcessor": "Call Route",
+    "com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor": "Attribute Population",
     "com.pilotfish.eip.modules.file.FileWriteProcessor": "File Writing",
     "com.pilotfish.eip.modules.other.XPathEvaluatorProcessor": "XPath Evaluation",
     "com.pilotfish.eip.modules.transform.XSLTProcessor": "XSLT Transformation",
@@ -78,6 +82,13 @@ def text_of(el: ET.Element | None) -> str:
 
 
 def expression_xpath(condition_el: ET.Element | None) -> str:
+    if condition_el is None:
+        return "true()"
+    ognl = find_child(condition_el, "OGNLExpression")
+    if ognl is not None:
+        text = text_of(ognl)
+        # V2 router ports store an expression string; preserve OGNL for docs honesty.
+        return text or "true()"
     expr = find_child(condition_el, "Expression")
     if expr is None:
         return "true()"
@@ -394,6 +405,16 @@ class Converter:
                         transport.attrib["class"],
                         tname,
                         find_child(transport, "ModuleConfig"),
+                    )
+                )
+            post_wrap = find_child(target, "PostProcessors")
+            for proc in find_all(post_wrap, "Processor"):
+                chain.append(
+                    (
+                        "processor",
+                        proc.attrib["class"],
+                        proc.attrib.get("name") or "PostProcessor",
+                        find_child(proc, "ModuleConfig"),
                     )
                 )
             nodes = self.add_chain(chain, 5, row)

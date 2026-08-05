@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7ecada0d-bea9-4d99-a663-b60aebf5170d" name="Set Auth Status Skip" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.AuthStatus:eip_name:SKIP:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

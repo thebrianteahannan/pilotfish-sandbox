@@ -34,6 +34,7 @@ BRAND = "PILOTFISH  ·  FHIR R4 PLATFORM"
 BASE = "http://127.0.0.1:8111"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 ROUTES = [
+    ("0 — Keycloak JWT Auth", "0-keycloak-jwt-auth", "route0.png"),
     ("1 — FHIR R4 REST Platform", "1-fhir-r4-rest-platform", "route1.png"),
     ("2 — FHIR Outbound Client", "2-fhir-outbound-client", "route2.png"),
 ]
@@ -48,14 +49,17 @@ SLICE_OVERLAP_PX = 48
 # Device scale stays 1: PDF downscales heavily; HiDPI balloons RAM without clarity gain.
 WINDOW_BY_CONFIG = {
     "compact": {
+        "0-keycloak-jwt-auth": (2200, 2800),
         "1-fhir-r4-rest-platform": (2800, 7000),
         "2-fhir-outbound-client": (2000, 1800),
     },
     "changed": {
+        "0-keycloak-jwt-auth": (2400, 3600),
         "1-fhir-r4-rest-platform": (3000, 11000),
         "2-fhir-outbound-client": (2400, 3200),
     },
     "all": {
+        "0-keycloak-jwt-auth": (2600, 4200),
         "1-fhir-r4-rest-platform": (3200, 14000),
         "2-fhir-outbound-client": (2600, 4200),
     },

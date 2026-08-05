@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="a9a4935e-534b-4635-a586-c895e1a73de7" name="Extract Logical Id" type="RegExIntoTransactionAttributeProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <RegEx>"id"\s*:\s*"([^"]+)"</RegEx>
+      
+          
+      <AttributeName>fhir.LogicalId</AttributeName>
+      
+          
+      <MatchGroupNumber>1</MatchGroupNumber>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -13,6 +13,7 @@ Expandable **HL7 FHIR R4** PilotFish platform through **Phase 6 Bulk `$export`**
 | Bundle transaction/batch | Group / Patient compartment export |
 | HAPI base-R4 validation | CapStatement `$validate` |
 | Keycloak Bearer on writes + export | Full SMART EHR launch |
+| **Auth via PF Call Route + Keycloak introspection** (no JWT custom JAR) | Local JWKS/Nimbus custom processor |
 | **Async system `$export` → NDJSON** | Multi-node Bulk, `_since` tombstones |
 
 ## Phase 6 Bulk export
@@ -27,6 +28,14 @@ GET /$export-file/{jobId}?_type=Patient       (Bearer)
 ```
 
 Jobs + files: `/opt/pilotfish/output/bulk-export/{jobId}/` (+ `dbo.FhirExportJobs`).
+
+## Auth (Phase 5 → PF route)
+
+Route `0 - Keycloak JWT Auth` is invoked synchronously from route `1` (`CallRouteProcessor`).
+Protected verbs (POST/PUT/DELETE) and Bulk ops call Keycloak
+`/protocol/openid-connect/token/introspect` with client credentials
+(`$$fhir.oauth.*` in `environment-settings.conf`). Sets `fhir.AuthStatus`
+PASS/FAIL/SKIP for the Unauthorized router rule.
 
 ## Ops
 
