@@ -233,7 +233,8 @@ Create under `Clients/Demos/<slug>/` (or `Clients/<Client>/<slug>/` for client w
   tools/
     convert_routes_to_v2.py      # if needed
     export_route_diagrams.py     # PDF export with --config → documents/
-  documents/                     # required deliverable: route design PDF(s)
+    export_stakeholder_brief.py  # stakeholder Capability Brief PDF → documents/
+  documents/                     # required deliverables: route PDF + capability brief PDF
     <Interface>_V2_Route_Diagrams.pdf
   logs/                          # gitignored runtime logs if bind-mounted
 ```
@@ -318,6 +319,7 @@ Work in this order unless the user specifies otherwise:
 8. **Web UI** inject/submit + status views matching the demo story.
 9. **V2 convert** into `eip-root` + Routes tab / docs.
 10. **Route design PDF (required):** with Web UI up, run `python3 tools/export_route_diagrams.py --config changed` and write/copy the PDF into **`documents/`** at the interface root (see §6).
+10b. **Stakeholder Capability Brief PDF (required):** run `python3 tools/export_stakeholder_brief.py` so `documents/<ShortName>_Capability_Brief.pdf` is generated from `DESIGN.md` + routes (+ CapabilityStatement when FHIR). See §6.1a.
 11. **README.md** (run, ports, smoke commands; link to `documents/*.pdf`).
 12. **Smoke test** (§7) and paste results into the chat (and update DESIGN.md Risks if findings).
 
@@ -366,6 +368,24 @@ Any time you **create a new interface** (or add/change routes enough that diagra
 
 Skipping the PDF requires the user to opt out explicitly; “optional” is not the default.
 
+### 6.1a Stakeholder Capability Brief PDF → `documents/` (**required for every new interface**)
+
+Any time you **create a new interface** (or change scope/capabilities enough that stakeholders should see an update), you **must** generate a higher-level Capability Brief PDF automatically — do not wait for the user to ask. This is the document shared with business / clinical stakeholders; the route diagrams PDF remains the technical wiring view.
+
+1. Ensure `DESIGN.md` is current (purpose, actors, in-scope vs deferred, ops). For FHIR façades, keep `capability-statement.json` aligned with runtime.
+2. Ensure V2 routes exist (`route.v2.xml`) so the brief can summarize each route in plain language.
+3. From the interface root run:
+   - `python3 tools/export_stakeholder_brief.py`
+   - (equivalent) `python3 ../../../tools/export_stakeholder_brief.py --root .` from Sandbox `tools/`
+4. Write a **single** PDF under the interface’s **`documents/`** folder:
+   - `documents/<ShortName>_Capability_Brief.pdf`
+   - Prefer deriving `<ShortName>` from the route-diagrams PDF name (`*_V2_Route_Diagrams.pdf` → `*_Capability_Brief.pdf`).
+5. Content expectations (generator default): executive summary, who it’s for, capabilities, honest boundaries, walkthrough checklist, plain-language how-it-works, security posture, how to see it run, related docs. Prefer **outcome language** over FQCNs.
+6. Expose the PDF from the Web UI (generic `/documents/<file>.pdf` is enough; add a stable alias `/documents/capability-brief.pdf` and an Info/Demo link when the UI has chrome).
+7. Mention the PDF in `README.md` **and** announce browser URLs per §6.2 alongside the route diagrams PDF.
+
+Skipping the Capability Brief requires the user to opt out explicitly.
+
 ### 6.2 Browser / LAN links for every deliverable PDF (**required**)
 
 Whenever an agent produces a PDF the user needs to review (route diagrams, research notes, design write-ups, playbooks for an interface, etc.), **do not leave it as a git-only / Finder-only file**. Drive uploads often break when credentials expire — always provide a **clickable browser link** on the LAN.
@@ -394,6 +414,7 @@ Minimum bar:
 - [ ] Kickout / fail path exercised once **or** explicitly marked “not implemented” in DESIGN.md
 - [ ] Routes tab renders `route.v2.xml`
 - [ ] **Route design PDF** written under `documents/` (`--config changed`)
+- [ ] **Stakeholder Capability Brief PDF** written under `documents/` (`tools/export_stakeholder_brief.py`)
 - [ ] **Browser/LAN PDF URLs** work (HTTP 200, `application/pdf`) for every review PDF (§6.2)
 - [ ] No silent claim of partner-grade validation unless gated
 
@@ -530,6 +551,7 @@ An interface construct is done when:
 4. Runtime config and diagrams agree **or** drift is documented.  
 5. Web/route viewer present when routes are part of the deliverable.  
 6. **Route design PDF** exists under `documents/` (generated with `--config changed`).  
+6b. **Stakeholder Capability Brief PDF** exists under `documents/` (generated with `tools/export_stakeholder_brief.py`).  
 7. **LAN URL** is set (`LAN_HINT`) and both localhost + `192.x` URLs are listed when the UI is running (§1.1).  
 8. **Every review PDF** has a working browser link on localhost **and** `192.x` (§6.2), pasted in the agent summary.  
 9. Agent summary lists known limitations in plain language (no compliance theater).
@@ -550,13 +572,18 @@ docker compose logs -f pilotfish
 # happy path: drop sample or use Web UI
 ls -la output/*
 python3 tools/export_route_diagrams.py --config changed
-# ensure PDF is under documents/ (exporter may write output/route-diagrams/ — copy if needed)
+python3 tools/export_stakeholder_brief.py
+# ensure PDFs are under documents/
 mkdir -p documents && cp -f output/route-diagrams/*Route_Diagrams*.pdf documents/ 2>/dev/null || true
 ls -la documents/
 # always give the user a browser link (Drive optional / flaky)
-echo "PDF local: http://localhost:<webui-port>/documents/route-diagrams.pdf"
-echo "PDF LAN:   http://${LAN_IP}:<webui-port>/documents/route-diagrams.pdf"
+echo "Route PDF local: http://localhost:<webui-port>/documents/route-diagrams.pdf"
+echo "Route PDF LAN:   http://${LAN_IP}:<webui-port>/documents/route-diagrams.pdf"
+echo "Brief PDF local: http://localhost:<webui-port>/documents/capability-brief.pdf"
+echo "Brief PDF LAN:   http://${LAN_IP}:<webui-port>/documents/capability-brief.pdf"
 curl -sS -o /dev/null -w "%{http_code} %{content_type}\n" \
   "http://${LAN_IP}:<webui-port>/documents/route-diagrams.pdf"
+curl -sS -o /dev/null -w "%{http_code} %{content_type}\n" \
+  "http://${LAN_IP}:<webui-port>/documents/capability-brief.pdf"
 docker compose down -v   # destroys DB volume — warn user first
 ```

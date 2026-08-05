@@ -19,6 +19,7 @@ SAMPLE_DIR = Path(os.environ.get("SAMPLE_DIR", "/samples"))
 ROUTES_DIR = Path(os.environ.get("ROUTES_DIR", "/routes"))
 DOCUMENTS_DIR = Path(os.environ.get("DOCUMENTS_DIR", "/documents"))
 ROUTE_PDF_NAME = os.environ.get("ROUTE_PDF_NAME", "DeviceHL7EHR_V2_Route_Diagrams.pdf")
+CAPABILITY_PDF_NAME = os.environ.get("CAPABILITY_PDF_NAME", "DeviceHL7EHR_Capability_Brief.pdf")
 
 START = b"\x0b"
 END = b"\x1c\x0d"
@@ -338,6 +339,17 @@ def route_diagrams_pdf():
         )
     return send_file(path, mimetype="application/pdf", as_attachment=False, download_name=ROUTE_PDF_NAME)
 
+
+
+@app.get("/documents/capability-brief.pdf")
+def capability_pdf_alias():
+    path = DOCUMENTS_DIR / CAPABILITY_PDF_NAME
+    if path.is_file():
+        return send_file(path)
+    return Response(
+        "Capability brief not generated yet. Run: python3 tools/export_stakeholder_brief.py",
+        status=404,
+    )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8101, debug=False)

@@ -27,6 +27,9 @@ ROUTES_DIR = Path(os.environ.get("ROUTES_DIR", "/routes"))
 DOCUMENTS_DIR = Path(os.environ.get("DOCUMENTS_DIR", "/documents"))
 OUTBOUND_DIR = Path(os.environ.get("OUTBOUND_DIR", "/input/outbound"))
 ROUTE_PDF_NAME = os.environ.get("ROUTE_PDF_NAME", "FHIR_R4_Platform_V2_Route_Diagrams.pdf")
+CAPABILITY_PDF_NAME = os.environ.get(
+    "CAPABILITY_PDF_NAME", "FHIR_R4_Platform_Capability_Brief.pdf"
+)
 WEBUI_PORT = int(os.environ.get("WEBUI_PORT", "8111"))
 LAN_HINT = os.environ.get("LAN_HINT", "")
 FHIR_BASE_URL = os.environ.get("FHIR_BASE_URL", "http://pilotfish:8080/eip/rest/fhir").rstrip("/")
@@ -426,6 +429,17 @@ def route_pdf_alias():
     if path.is_file():
         return send_file(path)
     return Response("PDF not generated yet", status=404)
+
+
+@app.get("/documents/capability-brief.pdf")
+def capability_pdf_alias():
+    path = DOCUMENTS_DIR / CAPABILITY_PDF_NAME
+    if path.is_file():
+        return send_file(path)
+    return Response(
+        "Capability brief not generated yet. Run: python3 tools/export_stakeholder_brief.py",
+        status=404,
+    )
 
 
 if __name__ == "__main__":

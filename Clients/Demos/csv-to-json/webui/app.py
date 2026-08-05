@@ -32,6 +32,7 @@ ROUTES_DIR = Path(
 )
 DOCUMENTS_DIR = Path(os.environ.get("DOCUMENTS_DIR", "/documents"))
 ROUTE_PDF_NAME = os.environ.get("ROUTE_PDF_NAME", "CSV_to_JSON_V2_Route_Diagrams.pdf")
+CAPABILITY_PDF_NAME = os.environ.get("CAPABILITY_PDF_NAME", "CSV_to_JSON_Capability_Brief.pdf")
 EIP_PUBLIC_URL = os.environ.get("EIP_PUBLIC_URL", "http://localhost:8108/eip/")
 
 _MODULE_ID = re.compile(
@@ -357,6 +358,17 @@ def route_diagrams_pdf():
         )
     return send_file(path, mimetype="application/pdf", as_attachment=False, download_name=ROUTE_PDF_NAME)
 
+
+
+@app.get("/documents/capability-brief.pdf")
+def capability_pdf_alias():
+    path = DOCUMENTS_DIR / CAPABILITY_PDF_NAME
+    if path.is_file():
+        return send_file(path)
+    return Response(
+        "Capability brief not generated yet. Run: python3 tools/export_stakeholder_brief.py",
+        status=404,
+    )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=WEBUI_PORT, debug=False)

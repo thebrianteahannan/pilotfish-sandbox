@@ -37,6 +37,7 @@ ROUTES_DIR = Path(
 )
 DOCUMENTS_DIR = Path(os.environ.get("DOCUMENTS_DIR", "/documents"))
 ROUTE_PDF_NAME = os.environ.get("ROUTE_PDF_NAME", "FHIR_V2_Route_Diagrams.pdf")
+CAPABILITY_PDF_NAME = os.environ.get("CAPABILITY_PDF_NAME", "FHIR_Capability_Brief.pdf")
 RESEARCH_PDF_NAME = os.environ.get("RESEARCH_PDF_NAME", "FHIR_REST_Interface_Research.pdf")
 WEBUI_PORT = int(os.environ.get("WEBUI_PORT", "8103"))
 # In-compose PilotFish base for server-side proxy calls
@@ -411,6 +412,17 @@ def documents_file(name: str):
     mime = "application/pdf" if path.suffix.lower() == ".pdf" else "application/octet-stream"
     return send_file(path, mimetype=mime, as_attachment=False, download_name=path.name)
 
+
+
+@app.get("/documents/capability-brief.pdf")
+def capability_pdf_alias():
+    path = DOCUMENTS_DIR / CAPABILITY_PDF_NAME
+    if path.is_file():
+        return send_file(path)
+    return Response(
+        "Capability brief not generated yet. Run: python3 tools/export_stakeholder_brief.py",
+        status=404,
+    )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=WEBUI_PORT, debug=False)
