@@ -534,16 +534,24 @@ class Converter:
         print(f"Wrote {self.route_dir / 'route.v2.xml'} + {len(self.modules)} modules")
 
 
+def convert_tree(routes_root: Path, formats: Path, label: str) -> None:
+    formats.mkdir(parents=True, exist_ok=True)
+    if not routes_root.is_dir():
+        print(f"Skip missing routes tree ({label}): {routes_root}")
+        return
+    for route in sorted(routes_root.iterdir()):
+        if not (route / "route.xml").is_file():
+            continue
+        print(f"Converting {label}", route.name)
+        Converter(route, formats).convert()
+
+
 def main():
     demo = Path(__file__).resolve().parents[1]
     iface = demo / "eip-root" / "interfaces" / "FHIR R4 Platform"
-    formats = iface / "formats"
-    formats.mkdir(parents=True, exist_ok=True)
-    for route in sorted((iface / "routes").iterdir()):
-        if not (route / "route.xml").is_file():
-            continue
-        print("Converting", route.name)
-        Converter(route, formats).convert()
+    convert_tree(iface / "routes", iface / "formats", "eip-root")
+    demo_root = demo / "pilotfish" / "demo-eip-root"
+    convert_tree(demo_root / "routes", demo_root / "formats", "demo-eip-root")
 
 
 if __name__ == "__main__":

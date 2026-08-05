@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c21f3ff0-04ed-4181-ab94-bf8a4ccbc3b6" name="Init Worker Attrs" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.PublicBase:eip_name:{ognl:(getAttribute('fhir.PublicBase') == null || getAttribute('fhir.PublicBase').toString().trim().length() == 0) ? 'http://localhost:8110/eip/rest/fhir' : getAttribute('fhir.PublicBase').toString().replaceAll('/+$','')}:eip_value][eip_pair:fhir.BulkOutputEntries:eip_name::eip_value][eip_pair:fhir.StatusJson:eip_name:{ognl:'{"status":"in-progress","request":"' + ((getAttribute('fhir.BulkRequestUrl') == null) ? '' : getAttribute('fhir.BulkRequestUrl').toString().replace("\\","\\\\").replace("\"","\\\"")) + '","transactionTime":"' + @java.time.Instant@now().toString() + '"}'}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets><TransportTarget name="Kickoff Response" /></Targets>
+          <Condition><OGNLExpression>'$export'.equals(getAttribute('com.pilotfish.ResourceName'))</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="Status Response" /></Targets>
+          <Condition><OGNLExpression>'$export-status'.equals(getAttribute('com.pilotfish.ResourceName'))</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="File Found Response" /></Targets>
+          <Condition><OGNLExpression>'$export-file'.equals(getAttribute('com.pilotfish.ResourceName')) &amp;&amp; new java.io.File('/opt/pilotfish/output/bulk-export/' + getAttribute('com.pilotfish.ResourceID') + '/' + ((getAttribute('com.pilotfish.http.parameter._type') != null &amp;&amp; getAttribute('com.pilotfish.http.parameter._type').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.http.parameter._type').toString().trim() : ((getAttribute('com.pilotfish.http.parameter.type') != null &amp;&amp; getAttribute('com.pilotfish.http.parameter.type').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.http.parameter.type').toString().trim() : 'Patient')) + '.ndjson').isFile()</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="File Missing Response" /></Targets>
+          <Condition><OGNLExpression>'$export-file'.equals(getAttribute('com.pilotfish.ResourceName'))</OGNLExpression></Condition>
+        </Rule>
+        <Rule>
+          <Targets><TransportTarget name="Bad Bulk Response" /></Targets>
+          <Condition><OGNLExpression>true</OGNLExpression></Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="Bulk Export Ops">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="FHIR Bulk Export.Programmable (Trigger) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes />
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>15:47-15:47</MonitoringTime>
+        <Throttling>false</Throttling>
+        <ThrottlingByAttributes />
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <CallingRoutes/>
+      </ModuleConfig>
+    </Listener>
+    <Processors />
+  </Source>
+
+  <Target icon="" name="Kickoff">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Kickoff Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Prepare Kickoff Attrs">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.ExportJobId:eip_name:{ognl:@java.util.UUID@randomUUID().toString()}:eip_value][eip_pair:fhir.TypesCsv:eip_name:{ognl:(getAttribute('com.pilotfish.http.parameter._type') != null &amp;&amp; getAttribute('com.pilotfish.http.parameter._type').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.http.parameter._type').toString().trim() : ((getAttribute('com.pilotfish.http.parameter.type') != null &amp;&amp; getAttribute('com.pilotfish.http.parameter.type').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.http.parameter.type').toString().trim() : '')}:eip_value][eip_pair:fhir.PublicBase:eip_name:$$fhir.public.base:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Prepare Kickoff Urls And Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.BulkContentLocation:eip_name:{ognl:getAttribute('fhir.PublicBase').toString().replaceAll('/+$','') + '/$export-status/' + getAttribute('fhir.ExportJobId')}:eip_value][eip_pair:fhir.BulkRequestUrl:eip_name:{ognl:getAttribute('fhir.PublicBase').toString().replaceAll('/+$','') + '/$export' + ((getAttribute('fhir.TypesCsv') != null &amp;&amp; getAttribute('fhir.TypesCsv').toString().trim().length() &gt; 0) ? ('?_type=' + getAttribute('fhir.TypesCsv').toString().trim()) : '')}:eip_value][eip_pair:fhir.BulkHttpStatus:eip_name:202:eip_value][eip_pair:com.pilotfish.HTTPResponseCode:eip_name:202:eip_value][eip_pair:fhir.BulkBody:eip_name:{"resourceType":"OperationOutcome","issue":[{"severity":"information","code":"informational","diagnostics":"Bulk export accepted. Poll Content-Location."}]}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Prepare Accepted Status Json">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.StatusJson:eip_name:{ognl:'{"status":"accepted","request":"' + getAttribute('fhir.BulkRequestUrl').toString().replace("\\","\\\\").replace("\"","\\\"") + '","transactionTime":"' + @java.time.Instant@now().toString() + '"}'}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Insert Export Job">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>INSERT INTO dbo.FhirExportJobs (JobId, Status, RequestUrl, TypesCsv) OUTPUT INSERTED.JobId AS JobId VALUES (?,?,?,?)</Query>
+          <QueryParams>[eip_pair:p1:eip_name:{ognl:getAttribute('fhir.ExportJobId')}:eip_value][eip_pair:p2:eip_name:accepted:eip_value][eip_pair:p3:eip_name:{ognl:getAttribute('fhir.BulkRequestUrl')}:eip_value][eip_pair:p4:eip_name:{ognl:getAttribute('fhir.TypesCsv')}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>60</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Load Status Json Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.StatusJson</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Accepted Status File">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+          <TargetFileName>status.json</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Start Bulk Worker Async">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>FHIR Bulk Export Worker.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+          <LoopCallout>false</LoopCallout>
+          <LoopCondition>true</LoopCondition>
+          <MaxIterations>5</MaxIterations>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Kickoff Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.BulkBody</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="Status">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Status Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Select Export Job Status">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>SELECT Status, OutputManifest, ErrorText FROM dbo.FhirExportJobs WHERE JobId = ?</Query>
+          <QueryParams>[eip_pair:p1:eip_name:{ognl:getAttribute('com.pilotfish.ResourceID')}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>60</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Extract Job Status Columns">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:fhir.JobStatus:eip_name:normalize-space(string((.//*[upper-case(local-name())='STATUS'])[1])):eip_value][eip_pair:fhir.JobManifest:eip_name:string((.//*[upper-case(local-name())='OUTPUTMANIFEST'])[1]):eip_value][eip_pair:fhir.JobError:eip_name:string((.//*[upper-case(local-name())='ERRORTEXT'])[1]):eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Map Job Status To Bulk Response">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.BulkHttpStatus:eip_name:{ognl:(getAttribute('fhir.JobStatus') == null || getAttribute('fhir.JobStatus').toString().trim().length() == 0) ? '404' : ('completed'.equalsIgnoreCase(getAttribute('fhir.JobStatus').toString()) ? '200' : ('error'.equalsIgnoreCase(getAttribute('fhir.JobStatus').toString()) ? '500' : '202'))}:eip_value][eip_pair:com.pilotfish.HTTPResponseCode:eip_name:{ognl:(getAttribute('fhir.JobStatus') == null || getAttribute('fhir.JobStatus').toString().trim().length() == 0) ? '404' : ('completed'.equalsIgnoreCase(getAttribute('fhir.JobStatus').toString()) ? '200' : ('error'.equalsIgnoreCase(getAttribute('fhir.JobStatus').toString()) ? '500' : '202'))}:eip_value][eip_pair:fhir.BulkBody:eip_name:{ognl:(getAttribute('fhir.JobStatus') == null || getAttribute('fhir.JobStatus').toString().trim().length() == 0) ? '{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"not-found","diagnostics":"Unknown export job."}]}' : ('completed'.equalsIgnoreCase(getAttribute('fhir.JobStatus').toString()) ? ((getAttribute('fhir.JobManifest') != null &amp;&amp; getAttribute('fhir.JobManifest').toString().trim().length() &gt; 0) ? getAttribute('fhir.JobManifest').toString() : '{"status":"completed","output":[]}') : ('error'.equalsIgnoreCase(getAttribute('fhir.JobStatus').toString()) ? '{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"exception","diagnostics":"' + ((getAttribute('fhir.JobError') == null || getAttribute('fhir.JobError').toString().trim().length() == 0) ? 'export failed' : getAttribute('fhir.JobError').toString().replace("\\","\\\\").replace("\"","\\\"") ) + '"}]}' : '{"status":"' + getAttribute('fhir.JobStatus').toString() + '"}'))}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Status Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.BulkBody</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="FileFound">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="File Found Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Resolve Export File Path">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.ExportFileType:eip_name:{ognl:(getAttribute('com.pilotfish.http.parameter._type') != null &amp;&amp; getAttribute('com.pilotfish.http.parameter._type').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.http.parameter._type').toString().trim() : ((getAttribute('com.pilotfish.http.parameter.type') != null &amp;&amp; getAttribute('com.pilotfish.http.parameter.type').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.http.parameter.type').toString().trim() : 'Patient')}:eip_value][eip_pair:fhir.ExportFilePath:eip_name:{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('com.pilotfish.ResourceID') + '/' + getAttribute('fhir.ExportFileType') + '.ndjson'}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="Load Ndjson File">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>{ognl:getAttribute('fhir.ExportFilePath')}</FileName>
+          <PostProcessOperation>Do Nothing</PostProcessOperation>
+          <TargetDirectory/>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Capture Ndjson As BulkBody">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.BulkBody</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set File Download Status">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.BulkHttpStatus:eip_name:200:eip_value][eip_pair:com.pilotfish.HTTPResponseCode:eip_name:200:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="FileMissing">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="File Missing Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set File Missing Outcome">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.BulkHttpStatus:eip_name:404:eip_value][eip_pair:com.pilotfish.HTTPResponseCode:eip_name:404:eip_value][eip_pair:fhir.BulkBody:eip_name:{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"not-found","diagnostics":"Export file not found for requested type."}]}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Missing File Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.BulkBody</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+
+  <Target icon="" name="BadBulk">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Bad Bulk Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Bad Bulk Outcome">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.BulkHttpStatus:eip_name:400:eip_value][eip_pair:com.pilotfish.HTTPResponseCode:eip_name:400:eip_value][eip_pair:fhir.BulkBody:eip_name:{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"invalid","diagnostics":"Unsupported bulk operation."}]}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Bad Bulk Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.BulkBody</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>

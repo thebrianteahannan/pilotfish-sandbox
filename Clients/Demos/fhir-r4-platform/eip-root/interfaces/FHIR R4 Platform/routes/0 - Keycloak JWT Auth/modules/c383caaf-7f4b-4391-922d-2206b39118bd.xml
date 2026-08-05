@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c383caaf-7f4b-4391-922d-2206b39118bd" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="64d05452-16e8-4ea5-a47d-e7b77e1b580f" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="f2ba599b-5b2e-4ccf-b1d4-29a9a3b32882" name="Rule 1 - Skip Auth Response" type="XPATH">
+               <condition>getAttribute('fhir.AuthRequired') != 'true'</condition>
+            </output>
+            <output id="fccc9e6b-844a-4508-8db5-d614f428f899" name="Rule 2 - Missing Token Response" type="XPATH">
+               <condition>getAttribute('fhir.BearerToken') == null || getAttribute('fhir.BearerToken').toString().trim().length() == 0</condition>
+            </output>
+            <output id="f7641a13-08c8-48bc-b352-f5b5dd16eab9" name="Rule 3 - Introspect Token" type="XPATH">
+               <condition>true</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

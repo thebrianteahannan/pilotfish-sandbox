@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="9dba37dd-3c43-47be-b520-802d72ee8f9d" name="Write Encounter Ndjson" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.EncounterCount') != null &amp;&amp; getAttribute('fhir.EncounterCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.EncounterCount').toString().trim())}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+      
+          
+      <TargetFileName>Encounter.ndjson</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

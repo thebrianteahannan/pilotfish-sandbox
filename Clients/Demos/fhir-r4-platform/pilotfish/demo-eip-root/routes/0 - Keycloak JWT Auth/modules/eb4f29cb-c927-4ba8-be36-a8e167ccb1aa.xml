@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="eb4f29cb-c927-4ba8-be36-a8e167ccb1aa" name="Introspect Token" type="HTTP Post" tag="Transport" class="com.pilotfish.eip.modules.http.HttpPostTransport">
+   <ModuleConfig>
+      <TargetURL>$$fhir.oauth.introspect</TargetURL>
+      
+        
+      <UserName>$$fhir.oauth.client_id</UserName>
+      
+        
+      <Password>$$fhir.oauth.client_secret</Password>
+      
+        
+      <AUTH_HOST_TAG/>
+      
+        
+      <AUTH_PORT_TAG/>
+      
+        
+      <PreemptiveAuthentication>true</PreemptiveAuthentication>
+      
+        
+      <FormElement>token</FormElement>
+      
+        
+      <HTTPHeaders>[eip_pair:Accept:eip_name:application/json:eip_value]</HTTPHeaders>
+      
+        
+      <useProxy>false</useProxy>
+      
+        
+      <proxyHost>127.0.0.1</proxyHost>
+      
+        
+      <proxyPort>8080</proxyPort>
+      
+        
+      <proxyUsername/>
+      
+        
+      <ProxyPassword/>
+      
+        
+      <KeyStoreFilePath/>
+      
+        
+      <KeyStoreFileType>NONE</KeyStoreFileType>
+      
+        
+      <KeyStoreFilePassword/>
+      
+        
+      <TrustStoreFilePath/>
+      
+        
+      <TrustStoreFilePassword/>
+      
+        
+      <DisableChunking>false</DisableChunking>
+      
+        
+      <Timeout>30</Timeout>
+      
+        
+      <ResponseCodeHandling>Default</ResponseCodeHandling>
+      
+        
+      <ResponseCodeList/>
+      
+        
+      <FormElementEncoding>UTF-8</FormElementEncoding>
+      
+        
+      <UrlParamEncoding>UTF-8</UrlParamEncoding>
+      
+        
+      <ErrorResponseEncoding>UTF-8</ErrorResponseEncoding>
+      
+        
+      <TrustStoreSource>JVM</TrustStoreSource>
+      
+        
+      <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      
+      
+   </ModuleConfig>
+</Module>

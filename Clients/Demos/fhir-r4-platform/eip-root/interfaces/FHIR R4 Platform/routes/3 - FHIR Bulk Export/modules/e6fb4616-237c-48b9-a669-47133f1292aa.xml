@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="e6fb4616-237c-48b9-a669-47133f1292aa" name="Prepare Accepted Status Json" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.StatusJson:eip_name:{ognl:'{"status":"accepted","request":"' + getAttribute('fhir.BulkRequestUrl').toString().replace("\\","\\\\").replace("\"","\\\"") + '","transactionTime":"' + @java.time.Instant@now().toString() + '"}'}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

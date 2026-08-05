@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="f1b6f159-82c6-481f-9d5d-b41cf6037a46" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="facc3567-00be-4e0a-809a-a898e510e7b3" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="08cc3843-85a7-4b87-8060-01d95419ca3b" name="Rule 1 - Kickoff Response" type="XPATH">
+               <condition>'$export'.equals(getAttribute('com.pilotfish.ResourceName'))</condition>
+            </output>
+            <output id="8970a19f-6118-430b-947d-a107ed4b9c3d" name="Rule 2 - Status Response" type="XPATH">
+               <condition>'$export-status'.equals(getAttribute('com.pilotfish.ResourceName'))</condition>
+            </output>
+            <output id="0791188b-b6e1-4c35-acfa-f362f5a49a78" name="Rule 3 - File Found Response" type="XPATH">
+               <condition>'$export-file'.equals(getAttribute('com.pilotfish.ResourceName')) &amp;&amp; new java.io.File('/opt/pilotfish/output/bulk-export/' + getAttribute('com.pilotfish.ResourceID') + '/' + ((getAttribute('com.pilotfish.http.parameter._type') != null &amp;&amp; getAttribute('com.pilotfish.http.parameter._type').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.http.parameter._type').toString().trim() : ((getAttribute('com.pilotfish.http.parameter.type') != null &amp;&amp; getAttribute('com.pilotfish.http.parameter.type').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.http.parameter.type').toString().trim() : 'Patient')) + '.ndjson').isFile()</condition>
+            </output>
+            <output id="d83aa707-4eee-4a12-bc01-d00fcb2a9545" name="Rule 4 - File Missing Response" type="XPATH">
+               <condition>'$export-file'.equals(getAttribute('com.pilotfish.ResourceName'))</condition>
+            </output>
+            <output id="4180f239-6dc5-4527-b9e6-2b83ac26e9a7" name="Rule 5 - Bad Bulk Response" type="XPATH">
+               <condition>true</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

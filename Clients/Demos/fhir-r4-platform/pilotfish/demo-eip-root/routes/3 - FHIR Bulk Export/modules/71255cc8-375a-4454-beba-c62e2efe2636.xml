@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="71255cc8-375a-4454-beba-c62e2efe2636" name="Resolve Export File Path" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.ExportFileType:eip_name:{ognl:(getAttribute('com.pilotfish.http.parameter._type') != null &amp;&amp; getAttribute('com.pilotfish.http.parameter._type').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.http.parameter._type').toString().trim() : ((getAttribute('com.pilotfish.http.parameter.type') != null &amp;&amp; getAttribute('com.pilotfish.http.parameter.type').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.http.parameter.type').toString().trim() : 'Patient')}:eip_value][eip_pair:fhir.ExportFilePath:eip_name:{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('com.pilotfish.ResourceID') + '/' + getAttribute('fhir.ExportFileType') + '.ndjson'}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

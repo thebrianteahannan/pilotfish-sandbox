@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="68e86813-f7ea-474d-af7c-5b4264af25a3" name="Write Accepted Status File" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+      
+          
+      <TargetFileName>status.json</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

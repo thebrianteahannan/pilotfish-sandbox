@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="8f020216-ad84-49bd-b4f4-c3e450a9aee4" name="Write Patient Ndjson" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.PatientCount') != null &amp;&amp; getAttribute('fhir.PatientCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.PatientCount').toString().trim())}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+      
+          
+      <TargetFileName>Patient.ndjson</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

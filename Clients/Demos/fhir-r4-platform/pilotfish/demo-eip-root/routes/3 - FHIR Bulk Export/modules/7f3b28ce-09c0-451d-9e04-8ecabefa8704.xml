@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7f3b28ce-09c0-451d-9e04-8ecabefa8704" name="Insert Export Job" type="Database (SQL)" tag="Processor" class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor">
+   <ModuleConfig>
+      <InputFile/>
+      
+          
+      <WriteQuery>true</WriteQuery>
+      
+          
+      <Query>INSERT INTO dbo.FhirExportJobs (JobId, Status, RequestUrl, TypesCsv) OUTPUT INSERTED.JobId AS JobId VALUES (?,?,?,?)</Query>
+      
+          
+      <QueryParams>[eip_pair:p1:eip_name:{ognl:getAttribute('fhir.ExportJobId')}:eip_value][eip_pair:p2:eip_name:accepted:eip_value][eip_pair:p3:eip_name:{ognl:getAttribute('fhir.BulkRequestUrl')}:eip_value][eip_pair:p4:eip_name:{ognl:getAttribute('fhir.TypesCsv')}:eip_value]</QueryParams>
+      
+          
+      <UserName>$$sqlserver.username</UserName>
+      
+          
+      <Password>$$sqlserver.password</Password>
+      
+          
+      <UseDataSource>false</UseDataSource>
+      
+          
+      <DataSource/>
+      
+          
+      <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+      
+          
+      <JdbcURL>$$sqlserver.url</JdbcURL>
+      
+          
+      <KeepConnection>false</KeepConnection>
+      
+          
+      <Autocommit>true</Autocommit>
+      
+          
+      <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+      
+          
+      <Timeout>60</Timeout>
+      
+          
+      <RestrictMetaDataToCatalog/>
+      
+          
+      <RestrictMetaDataToSchema/>
+      
+          
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+          
+      <UseSingleOutputStream>true</UseSingleOutputStream>
+      
+          
+      <RefreshHandler>false</RefreshHandler>
+      
+          
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+          
+      <JDBCProperties>null</JDBCProperties>
+      
+          
+      <LogMetadata>false</LogMetadata>
+      
+          
+      <LogSQL>true</LogSQL>
+      
+        
+   </ModuleConfig>
+</Module>

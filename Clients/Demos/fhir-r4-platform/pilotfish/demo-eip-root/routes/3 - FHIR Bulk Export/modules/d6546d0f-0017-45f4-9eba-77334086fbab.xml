@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="d6546d0f-0017-45f4-9eba-77334086fbab" name="Prepare Kickoff Urls And Body" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.BulkContentLocation:eip_name:{ognl:getAttribute('fhir.PublicBase').toString().replaceAll('/+$','') + '/$export-status/' + getAttribute('fhir.ExportJobId')}:eip_value][eip_pair:fhir.BulkRequestUrl:eip_name:{ognl:getAttribute('fhir.PublicBase').toString().replaceAll('/+$','') + '/$export' + ((getAttribute('fhir.TypesCsv') != null &amp;&amp; getAttribute('fhir.TypesCsv').toString().trim().length() &gt; 0) ? ('?_type=' + getAttribute('fhir.TypesCsv').toString().trim()) : '')}:eip_value][eip_pair:fhir.BulkHttpStatus:eip_name:202:eip_value][eip_pair:com.pilotfish.HTTPResponseCode:eip_name:202:eip_value][eip_pair:fhir.BulkBody:eip_name:{"resourceType":"OperationOutcome","issue":[{"severity":"information","code":"informational","diagnostics":"Bulk export accepted. Poll Content-Location."}]}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

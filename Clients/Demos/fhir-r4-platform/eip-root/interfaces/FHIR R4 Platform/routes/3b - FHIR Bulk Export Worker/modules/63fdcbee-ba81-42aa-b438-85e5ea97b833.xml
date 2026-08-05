@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="63fdcbee-ba81-42aa-b438-85e5ea97b833" name="Write Condition Ndjson" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.ConditionCount') != null &amp;&amp; getAttribute('fhir.ConditionCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.ConditionCount').toString().trim())}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+      
+          
+      <TargetFileName>Condition.ndjson</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

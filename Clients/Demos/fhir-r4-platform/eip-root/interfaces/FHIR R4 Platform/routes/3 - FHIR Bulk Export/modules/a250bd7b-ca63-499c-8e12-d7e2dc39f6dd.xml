@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="a250bd7b-ca63-499c-8e12-d7e2dc39f6dd" name="Map Job Status To Bulk Response" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.BulkHttpStatus:eip_name:{ognl:(getAttribute('fhir.JobStatus') == null || getAttribute('fhir.JobStatus').toString().trim().length() == 0) ? '404' : ('completed'.equalsIgnoreCase(getAttribute('fhir.JobStatus').toString()) ? '200' : ('error'.equalsIgnoreCase(getAttribute('fhir.JobStatus').toString()) ? '500' : '202'))}:eip_value][eip_pair:com.pilotfish.HTTPResponseCode:eip_name:{ognl:(getAttribute('fhir.JobStatus') == null || getAttribute('fhir.JobStatus').toString().trim().length() == 0) ? '404' : ('completed'.equalsIgnoreCase(getAttribute('fhir.JobStatus').toString()) ? '200' : ('error'.equalsIgnoreCase(getAttribute('fhir.JobStatus').toString()) ? '500' : '202'))}:eip_value][eip_pair:fhir.BulkBody:eip_name:{ognl:(getAttribute('fhir.JobStatus') == null || getAttribute('fhir.JobStatus').toString().trim().length() == 0) ? '{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"not-found","diagnostics":"Unknown export job."}]}' : ('completed'.equalsIgnoreCase(getAttribute('fhir.JobStatus').toString()) ? ((getAttribute('fhir.JobManifest') != null &amp;&amp; getAttribute('fhir.JobManifest').toString().trim().length() &gt; 0) ? getAttribute('fhir.JobManifest').toString() : '{"status":"completed","output":[]}') : ('error'.equalsIgnoreCase(getAttribute('fhir.JobStatus').toString()) ? '{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"exception","diagnostics":"' + ((getAttribute('fhir.JobError') == null || getAttribute('fhir.JobError').toString().trim().length() == 0) ? 'export failed' : getAttribute('fhir.JobError').toString().replace("\\","\\\\").replace("\"","\\\"") ) + '"}]}' : '{"status":"' + getAttribute('fhir.JobStatus').toString() + '"}'))}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

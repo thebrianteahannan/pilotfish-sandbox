@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="b9001b80-d7bc-4889-aa65-0bfa9c2e0b84" name="Write Observation Ndjson" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.ObservationCount') != null &amp;&amp; getAttribute('fhir.ObservationCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.ObservationCount').toString().trim())}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+      
+          
+      <TargetFileName>Observation.ndjson</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

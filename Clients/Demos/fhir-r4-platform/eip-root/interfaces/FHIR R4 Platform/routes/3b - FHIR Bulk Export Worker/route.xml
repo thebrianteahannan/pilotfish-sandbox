@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="600000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets><TransportTarget name="Worker Done" /></Targets>
+          <Condition><Expression>true()<Namespaces /></Expression></Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="Bulk Export Worker">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="FHIR Bulk Export Worker.Programmable (Trigger) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes />
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>15:47-15:47</MonitoringTime>
+        <Throttling>false</Throttling>
+        <ThrottlingByAttributes />
+        <ThrottlingSynchronousTimeout>120</ThrottlingSynchronousTimeout>
+        <CallingRoutes/>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Init Worker Attrs">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.PublicBase:eip_name:{ognl:(getAttribute('fhir.PublicBase') == null || getAttribute('fhir.PublicBase').toString().trim().length() == 0) ? 'http://localhost:8110/eip/rest/fhir' : getAttribute('fhir.PublicBase').toString().replaceAll('/+$','')}:eip_value][eip_pair:fhir.BulkOutputEntries:eip_name::eip_value][eip_pair:fhir.StatusJson:eip_name:{ognl:'{"status":"in-progress","request":"' + ((getAttribute('fhir.BulkRequestUrl') == null) ? '' : getAttribute('fhir.BulkRequestUrl').toString().replace("\\","\\\\").replace("\"","\\\"")) + '","transactionTime":"' + @java.time.Instant@now().toString() + '"}'}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Mark Job In Progress">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>EXEC dbo.FhirBulkUpdateJobStatus ?, 'in-progress', NULL, NULL</Query>
+          <QueryParams>[eip_pair:p1:eip_name:{ognl:getAttribute('fhir.ExportJobId')}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>60</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Load In Progress Status Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.StatusJson</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write In Progress Status File">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+          <TargetFileName>status.json</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Select Ndjson By Job">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>EXEC dbo.FhirBulkSelectNdjsonByJob ?</Query>
+          <QueryParams>[eip_pair:p1:eip_name:{ognl:getAttribute('fhir.ExportJobId')}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>120</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Extract All Type Ndjson Columns">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:fhir.PatientNdjson:eip_name:string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Patient']/following-sibling::*[upper-case(local-name())='NDJSONBODY'][1])):eip_value][eip_pair:fhir.PatientCount:eip_name:normalize-space(string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Patient']/following-sibling::*[upper-case(local-name())='RESOURCECOUNT'][1]))):eip_value][eip_pair:fhir.ObservationNdjson:eip_name:string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Observation']/following-sibling::*[upper-case(local-name())='NDJSONBODY'][1])):eip_value][eip_pair:fhir.ObservationCount:eip_name:normalize-space(string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Observation']/following-sibling::*[upper-case(local-name())='RESOURCECOUNT'][1]))):eip_value][eip_pair:fhir.ConditionNdjson:eip_name:string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Condition']/following-sibling::*[upper-case(local-name())='NDJSONBODY'][1])):eip_value][eip_pair:fhir.ConditionCount:eip_name:normalize-space(string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Condition']/following-sibling::*[upper-case(local-name())='RESOURCECOUNT'][1]))):eip_value][eip_pair:fhir.EncounterNdjson:eip_name:string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Encounter']/following-sibling::*[upper-case(local-name())='NDJSONBODY'][1])):eip_value][eip_pair:fhir.EncounterCount:eip_name:normalize-space(string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Encounter']/following-sibling::*[upper-case(local-name())='RESOURCECOUNT'][1]))):eip_value][eip_pair:fhir.PractitionerNdjson:eip_name:string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Practitioner']/following-sibling::*[upper-case(local-name())='NDJSONBODY'][1])):eip_value][eip_pair:fhir.PractitionerCount:eip_name:normalize-space(string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Practitioner']/following-sibling::*[upper-case(local-name())='RESOURCECOUNT'][1]))):eip_value][eip_pair:fhir.OrganizationNdjson:eip_name:string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Organization']/following-sibling::*[upper-case(local-name())='NDJSONBODY'][1])):eip_value][eip_pair:fhir.OrganizationCount:eip_name:normalize-space(string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Organization']/following-sibling::*[upper-case(local-name())='RESOURCECOUNT'][1]))):eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Load Patient Ndjson">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.PatientCount') != null &amp;&amp; getAttribute('fhir.PatientCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.PatientCount').toString().trim())}</ExecuteProcessor>
+          <AttributeName>fhir.PatientNdjson</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Patient Ndjson">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.PatientCount') != null &amp;&amp; getAttribute('fhir.PatientCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.PatientCount').toString().trim())}</ExecuteProcessor>
+          <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+          <TargetFileName>Patient.ndjson</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Append Patient Output Entry">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.PatientCount') != null &amp;&amp; getAttribute('fhir.PatientCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.PatientCount').toString().trim())}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.BulkOutputEntries:eip_name:{ognl:(getAttribute('fhir.BulkOutputEntries') == null || getAttribute('fhir.BulkOutputEntries').toString().length() == 0) ? ('{"type":"Patient","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Patient","count":' + getAttribute('fhir.PatientCount') + '}') : (getAttribute('fhir.BulkOutputEntries').toString() + ',{"type":"Patient","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Patient","count":' + getAttribute('fhir.PatientCount') + '}')}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Load Observation Ndjson">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.ObservationCount') != null &amp;&amp; getAttribute('fhir.ObservationCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.ObservationCount').toString().trim())}</ExecuteProcessor>
+          <AttributeName>fhir.ObservationNdjson</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Observation Ndjson">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.ObservationCount') != null &amp;&amp; getAttribute('fhir.ObservationCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.ObservationCount').toString().trim())}</ExecuteProcessor>
+          <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+          <TargetFileName>Observation.ndjson</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Append Observation Output Entry">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.ObservationCount') != null &amp;&amp; getAttribute('fhir.ObservationCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.ObservationCount').toString().trim())}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.BulkOutputEntries:eip_name:{ognl:(getAttribute('fhir.BulkOutputEntries') == null || getAttribute('fhir.BulkOutputEntries').toString().length() == 0) ? ('{"type":"Observation","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Observation","count":' + getAttribute('fhir.ObservationCount') + '}') : (getAttribute('fhir.BulkOutputEntries').toString() + ',{"type":"Observation","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Observation","count":' + getAttribute('fhir.ObservationCount') + '}')}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Load Condition Ndjson">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.ConditionCount') != null &amp;&amp; getAttribute('fhir.ConditionCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.ConditionCount').toString().trim())}</ExecuteProcessor>
+          <AttributeName>fhir.ConditionNdjson</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Condition Ndjson">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.ConditionCount') != null &amp;&amp; getAttribute('fhir.ConditionCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.ConditionCount').toString().trim())}</ExecuteProcessor>
+          <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+          <TargetFileName>Condition.ndjson</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Append Condition Output Entry">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.ConditionCount') != null &amp;&amp; getAttribute('fhir.ConditionCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.ConditionCount').toString().trim())}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.BulkOutputEntries:eip_name:{ognl:(getAttribute('fhir.BulkOutputEntries') == null || getAttribute('fhir.BulkOutputEntries').toString().length() == 0) ? ('{"type":"Condition","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Condition","count":' + getAttribute('fhir.ConditionCount') + '}') : (getAttribute('fhir.BulkOutputEntries').toString() + ',{"type":"Condition","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Condition","count":' + getAttribute('fhir.ConditionCount') + '}')}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Load Encounter Ndjson">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.EncounterCount') != null &amp;&amp; getAttribute('fhir.EncounterCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.EncounterCount').toString().trim())}</ExecuteProcessor>
+          <AttributeName>fhir.EncounterNdjson</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Encounter Ndjson">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.EncounterCount') != null &amp;&amp; getAttribute('fhir.EncounterCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.EncounterCount').toString().trim())}</ExecuteProcessor>
+          <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+          <TargetFileName>Encounter.ndjson</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Append Encounter Output Entry">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.EncounterCount') != null &amp;&amp; getAttribute('fhir.EncounterCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.EncounterCount').toString().trim())}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.BulkOutputEntries:eip_name:{ognl:(getAttribute('fhir.BulkOutputEntries') == null || getAttribute('fhir.BulkOutputEntries').toString().length() == 0) ? ('{"type":"Encounter","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Encounter","count":' + getAttribute('fhir.EncounterCount') + '}') : (getAttribute('fhir.BulkOutputEntries').toString() + ',{"type":"Encounter","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Encounter","count":' + getAttribute('fhir.EncounterCount') + '}')}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Load Practitioner Ndjson">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.PractitionerCount') != null &amp;&amp; getAttribute('fhir.PractitionerCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.PractitionerCount').toString().trim())}</ExecuteProcessor>
+          <AttributeName>fhir.PractitionerNdjson</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Practitioner Ndjson">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.PractitionerCount') != null &amp;&amp; getAttribute('fhir.PractitionerCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.PractitionerCount').toString().trim())}</ExecuteProcessor>
+          <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+          <TargetFileName>Practitioner.ndjson</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Append Practitioner Output Entry">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.PractitionerCount') != null &amp;&amp; getAttribute('fhir.PractitionerCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.PractitionerCount').toString().trim())}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.BulkOutputEntries:eip_name:{ognl:(getAttribute('fhir.BulkOutputEntries') == null || getAttribute('fhir.BulkOutputEntries').toString().length() == 0) ? ('{"type":"Practitioner","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Practitioner","count":' + getAttribute('fhir.PractitionerCount') + '}') : (getAttribute('fhir.BulkOutputEntries').toString() + ',{"type":"Practitioner","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Practitioner","count":' + getAttribute('fhir.PractitionerCount') + '}')}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Load Organization Ndjson">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.OrganizationCount') != null &amp;&amp; getAttribute('fhir.OrganizationCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.OrganizationCount').toString().trim())}</ExecuteProcessor>
+          <AttributeName>fhir.OrganizationNdjson</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Organization Ndjson">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.OrganizationCount') != null &amp;&amp; getAttribute('fhir.OrganizationCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.OrganizationCount').toString().trim())}</ExecuteProcessor>
+          <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+          <TargetFileName>Organization.ndjson</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Append Organization Output Entry">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('fhir.OrganizationCount') != null &amp;&amp; getAttribute('fhir.OrganizationCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.OrganizationCount').toString().trim())}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.BulkOutputEntries:eip_name:{ognl:(getAttribute('fhir.BulkOutputEntries') == null || getAttribute('fhir.BulkOutputEntries').toString().length() == 0) ? ('{"type":"Organization","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Organization","count":' + getAttribute('fhir.OrganizationCount') + '}') : (getAttribute('fhir.BulkOutputEntries').toString() + ',{"type":"Organization","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Organization","count":' + getAttribute('fhir.OrganizationCount') + '}')}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Build Completed Manifest">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.JobManifest:eip_name:{ognl:'{"transactionTime":"' + @java.time.Instant@now().toString() + '","request":"' + ((getAttribute('fhir.BulkRequestUrl') == null) ? '' : getAttribute('fhir.BulkRequestUrl').toString().replace("\\","\\\\").replace("\"","\\\"")) + '","requiresAccessToken":true,"output":[' + ((getAttribute('fhir.BulkOutputEntries') == null) ? '' : getAttribute('fhir.BulkOutputEntries').toString()) + '],"error":[]}'}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Load Manifest Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.JobManifest</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Manifest Json">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+          <TargetFileName>manifest.json</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Completed Status File">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+          <TargetFileName>status.json</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Mark Job Completed">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>EXEC dbo.FhirBulkUpdateJobStatus ?, 'completed', ?, NULL</Query>
+          <QueryParams>[eip_pair:p1:eip_name:{ognl:getAttribute('fhir.ExportJobId')}:eip_value][eip_pair:p2:eip_name:{ognl:getAttribute('fhir.JobManifest')}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>60</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Worker Done Marker Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:fhir.WorkerDone:eip_name:ok:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Load Worker Done Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>fhir.WorkerDone</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+
+  <Target icon="" name="Done">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Worker Done" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+        <FileName>worker.done</FileName>
+        <FileExtension />
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors />
+  </Target>
+</Route>

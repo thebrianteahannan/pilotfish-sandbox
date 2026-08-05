@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="20e7a1e4-c8f7-4605-8b94-443b7b8ec6f5" name="Restore Body For Update Response" type="Data Attribute Swapper" tag="Processor" class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeName>fhir.RawBody</AttributeName>
+      
+          
+      <SAVEOUTTAG>true</SAVEOUTTAG>
+      
+          
+      <SAVEINTAG>false</SAVEINTAG>
+      
+          
+      <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+      
+          
+      <StoreAsStream>false</StoreAsStream>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="bb5b2dd6-b0f0-4c01-bfc5-0176268cb19c" name="3b - FHIR Bulk Export Worker">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="600000"/>
+   <Nodes>
+      <Node id="b99f0ba4-ad75-48dd-8626-dd75195c94c2" moduleId="a33facde-e5f3-4665-b422-d2608c688dd5" label="FHIR Bulk Export Worker.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="b6f847b9-f063-43bf-9fe0-5a4be568cff3" moduleId="c21f3ff0-04ed-4181-ab94-bf8a4ccbc3b6" label="Init Worker Attrs" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="ff60a58b-c641-4d20-85df-ede3717d26b9" moduleId="b6d901af-de84-47f6-9be4-bc38d2088695" label="Mark Job In Progress" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="464b9c36-24e4-46eb-bb24-a4a26332a321" moduleId="ccad0c73-cb84-4784-8e04-cab3732e04fa" label="Load In Progress Status Body" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="cd36b1e3-6215-49b7-a57d-926ec83649e7" moduleId="a056bbb8-7e3d-4d4c-b0f9-5cd0f5dc6cb7" label="Write In Progress Status File" x="1040.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="36a68f26-6cc2-4bff-a4ba-c086b04fceeb" moduleId="fdc11739-ff41-4144-bba8-408ff0444980" label="Select Ndjson By Job" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="19127d56-fe68-4d24-9534-23348851a8c9" moduleId="dd9a62a8-a2b6-40a0-8c1c-5a0d60d1324f" label="Extract All Type Ndjson Columns" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="a0b987bb-9f78-4f25-989c-d64bd81d48d2" moduleId="247a8a28-3dee-491f-b0aa-ef079878b5fd" label="Load Patient Ndjson" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="202b81be-edb3-4494-82c9-ac0124108a0f" moduleId="8f020216-ad84-49bd-b4f4-c3e450a9aee4" label="Write Patient Ndjson" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="b5110876-46a4-4255-95ff-5cdfbeb69c9a" moduleId="81eafea9-802b-4b35-9e11-4d5f68089be0" label="Append Patient Output Entry" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="385b9e6b-5478-40cf-b388-f383962235a1" moduleId="5caeba51-34ce-4665-8180-09d912ee08dc" label="Load Observation Ndjson" x="2600.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="5f76f977-e733-418f-8954-e23d064eec3b" moduleId="2c923bf0-722e-435b-82f5-03dc1f65089f" label="Write Observation Ndjson" x="2860.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="7a9bc7f8-950e-4d30-aa48-7539e789faa0" moduleId="483917ca-d0c6-4238-a354-f93133f0ac12" label="Append Observation Output Entry" x="3120.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="f4ac3be6-15d8-4cb1-8a99-ab198f42d1bc" moduleId="3891d819-f95b-4667-985f-ba986d5ad6ae" label="Load Condition Ndjson" x="3380.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="02344a4a-847b-4294-acef-30897d434274" moduleId="63fdcbee-ba81-42aa-b438-85e5ea97b833" label="Write Condition Ndjson" x="3640.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="d2df197f-93db-4fb8-a7c7-73243eabb58a" moduleId="e7979b29-bb43-4b77-93a6-839ee8b331a7" label="Append Condition Output Entry" x="3900.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="2034c9ef-8ca3-4c8a-b937-20db661b2fed" moduleId="3373e44b-0d1c-462f-9685-32a7d6c30808" label="Load Encounter Ndjson" x="4160.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="b57cef21-e6df-4e7e-adce-94eb5053fda7" moduleId="bb6f54a1-1c43-4ebd-acb7-6b8f3ec4fa37" label="Write Encounter Ndjson" x="4420.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="827a1b92-7f6d-4da2-b96a-0dd93c7e4380" moduleId="93928279-4ac2-4e72-862e-66400659cedc" label="Append Encounter Output Entry" x="4680.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="a435cd7a-9ab2-4241-b85e-cd2e18d41c5f" moduleId="f95aac4a-c063-4d29-b081-9c409b08388d" label="Load Practitioner Ndjson" x="4940.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="1b49ec91-e36a-4a95-a146-06e1a08c4cd5" moduleId="e8355176-47a1-4ab6-bbda-29996bb2f0ae" label="Write Practitioner Ndjson" x="5200.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="919ea54b-92d1-491d-9d4f-fca93aeb1162" moduleId="522d2f36-65b8-408b-80c7-7251af2d4921" label="Append Practitioner Output Entry" x="5460.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="048419bf-d1f2-4712-88c9-830ba3ede177" moduleId="f5ee417a-1d66-4cb4-980b-a24b442ccb3f" label="Load Organization Ndjson" x="5720.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="dc6afa08-4c5d-422b-8826-c2401c052d0d" moduleId="5cad679a-0b2d-4ced-a6f4-46d1d01a83bb" label="Write Organization Ndjson" x="5980.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="8d10dab4-7980-4aa4-a174-4f75f392b17d" moduleId="0cb7d7e0-f968-4771-a792-862ab6185565" label="Append Organization Output Entry" x="6240.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="63d952fd-79be-4d76-9923-717f2f9c052c" moduleId="c338e022-7227-4702-9cda-4a4bf924e429" label="Build Completed Manifest" x="6500.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="b2f161a9-7812-48da-9a22-a42fc5e5c246" moduleId="ef5f88da-86ef-428b-9626-b5f08af93dba" label="Load Manifest Body" x="6760.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="51fe465e-f265-4545-802e-9d119fff9c16" moduleId="99ac47a0-d374-4997-b3a5-e1fdda2d3d76" label="Write Manifest Json" x="7020.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="4d032f60-7b7e-4444-890b-bf759962c899" moduleId="c17f5468-1799-4a90-a785-d1e9fd999250" label="Write Completed Status File" x="7280.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="98e0020a-e3f0-45fe-bbb0-21f1a3c5c315" moduleId="8223b6a3-58ce-4eb6-afed-8140b249aaab" label="Mark Job Completed" x="7540.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="beb3d652-8939-48a9-92bc-1d6931147b8b" moduleId="c9eb60ae-93ce-4068-890c-4ac9e0deed51" label="Worker Done Marker Body" x="7800.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="a8b5cb29-e39c-4e62-9404-5d0e50bb2ad8" moduleId="0875992e-4359-4352-b9f1-a2a27e2d5028" label="Load Worker Done Body" x="8060.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="24bf1da4-e2a7-4941-aa62-27016c76374b" moduleId="80afb354-92cc-4149-addc-77bc879f9543" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="f6407f66-5283-41fe-9ab2-ce7946010196" moduleId="fab8b991-52b7-401f-83c1-5aae0572391c" label="Worker Done" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="88b138ff-c6f4-4e4e-9f62-2257b4ed7633" sourceNodeId="b99f0ba4-ad75-48dd-8626-dd75195c94c2" targetNodeId="b6f847b9-f063-43bf-9fe0-5a4be568cff3" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="37831cc7-1fc0-423d-bac4-7eafdcfb3cb9" sourceNodeId="b6f847b9-f063-43bf-9fe0-5a4be568cff3" targetNodeId="ff60a58b-c641-4d20-85df-ede3717d26b9" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="7b4c4e37-50f8-42d8-97be-6e7003610862" sourceNodeId="ff60a58b-c641-4d20-85df-ede3717d26b9" targetNodeId="464b9c36-24e4-46eb-bb24-a4a26332a321" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="aadbe1a3-ca85-401b-8cc9-cc0d7b821909" sourceNodeId="464b9c36-24e4-46eb-bb24-a4a26332a321" targetNodeId="cd36b1e3-6215-49b7-a57d-926ec83649e7" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="0d704f84-25f3-4cf5-a876-7320c9a4b56d" sourceNodeId="cd36b1e3-6215-49b7-a57d-926ec83649e7" targetNodeId="36a68f26-6cc2-4bff-a4ba-c086b04fceeb" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="5c600333-249c-4895-a603-02cb30145cd4" sourceNodeId="36a68f26-6cc2-4bff-a4ba-c086b04fceeb" targetNodeId="19127d56-fe68-4d24-9534-23348851a8c9" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="4843f711-1517-4d81-8b73-2de6ac2a7d2d" sourceNodeId="19127d56-fe68-4d24-9534-23348851a8c9" targetNodeId="a0b987bb-9f78-4f25-989c-d64bd81d48d2" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="58e9ffb9-e09c-468d-a793-f3f1b273a77c" sourceNodeId="a0b987bb-9f78-4f25-989c-d64bd81d48d2" targetNodeId="202b81be-edb3-4494-82c9-ac0124108a0f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="afc419b3-7660-49f5-9073-2e323aab4dfb" sourceNodeId="202b81be-edb3-4494-82c9-ac0124108a0f" targetNodeId="b5110876-46a4-4255-95ff-5cdfbeb69c9a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="de7e338a-052f-4cac-b15a-a569f0727911" sourceNodeId="b5110876-46a4-4255-95ff-5cdfbeb69c9a" targetNodeId="385b9e6b-5478-40cf-b388-f383962235a1" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="ee3ecee3-3c22-4fe9-b994-93cf045d2cb4" sourceNodeId="385b9e6b-5478-40cf-b388-f383962235a1" targetNodeId="5f76f977-e733-418f-8954-e23d064eec3b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="71419e32-0234-4ffb-ac69-9f26dc678294" sourceNodeId="5f76f977-e733-418f-8954-e23d064eec3b" targetNodeId="7a9bc7f8-950e-4d30-aa48-7539e789faa0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="a101b402-231e-4217-af3b-308482ccedd8" sourceNodeId="7a9bc7f8-950e-4d30-aa48-7539e789faa0" targetNodeId="f4ac3be6-15d8-4cb1-8a99-ab198f42d1bc" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="611c18e1-e79e-4362-9118-60c684ea5fe7" sourceNodeId="f4ac3be6-15d8-4cb1-8a99-ab198f42d1bc" targetNodeId="02344a4a-847b-4294-acef-30897d434274" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="6c439d22-a25d-4b26-ae75-8aa81a07bc5b" sourceNodeId="02344a4a-847b-4294-acef-30897d434274" targetNodeId="d2df197f-93db-4fb8-a7c7-73243eabb58a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="cd9ebecb-79f1-4d40-b35a-84ccda8620d9" sourceNodeId="d2df197f-93db-4fb8-a7c7-73243eabb58a" targetNodeId="2034c9ef-8ca3-4c8a-b937-20db661b2fed" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="941025b5-129b-4c65-817f-cac913b8bb8f" sourceNodeId="2034c9ef-8ca3-4c8a-b937-20db661b2fed" targetNodeId="b57cef21-e6df-4e7e-adce-94eb5053fda7" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="5ce37f24-cfb0-4c8c-8ed5-02fddea326ad" sourceNodeId="b57cef21-e6df-4e7e-adce-94eb5053fda7" targetNodeId="827a1b92-7f6d-4da2-b96a-0dd93c7e4380" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="2fc3b182-9d34-4a6a-baa1-c857f631754f" sourceNodeId="827a1b92-7f6d-4da2-b96a-0dd93c7e4380" targetNodeId="a435cd7a-9ab2-4241-b85e-cd2e18d41c5f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="13b6bb0f-2505-4628-becd-36bae6bc15fa" sourceNodeId="a435cd7a-9ab2-4241-b85e-cd2e18d41c5f" targetNodeId="1b49ec91-e36a-4a95-a146-06e1a08c4cd5" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="16d39250-c130-4ae3-9df9-b867707b6ac7" sourceNodeId="1b49ec91-e36a-4a95-a146-06e1a08c4cd5" targetNodeId="919ea54b-92d1-491d-9d4f-fca93aeb1162" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="c5776615-0539-4f9e-bdbe-06ccd9822303" sourceNodeId="919ea54b-92d1-491d-9d4f-fca93aeb1162" targetNodeId="048419bf-d1f2-4712-88c9-830ba3ede177" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="9552d187-0bfc-4426-a629-98d95e4cdbf0" sourceNodeId="048419bf-d1f2-4712-88c9-830ba3ede177" targetNodeId="dc6afa08-4c5d-422b-8826-c2401c052d0d" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="a756ce7a-36ff-4e0d-add7-03cee15d9195" sourceNodeId="dc6afa08-4c5d-422b-8826-c2401c052d0d" targetNodeId="8d10dab4-7980-4aa4-a174-4f75f392b17d" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="5751164d-7f64-4b95-b06b-da3b014bd254" sourceNodeId="8d10dab4-7980-4aa4-a174-4f75f392b17d" targetNodeId="63d952fd-79be-4d76-9923-717f2f9c052c" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="ad8cfda3-bf8c-47c1-8c19-3778e4e4cee4" sourceNodeId="63d952fd-79be-4d76-9923-717f2f9c052c" targetNodeId="b2f161a9-7812-48da-9a22-a42fc5e5c246" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="dce9ec57-26a9-4478-93ee-5698fbb971f6" sourceNodeId="b2f161a9-7812-48da-9a22-a42fc5e5c246" targetNodeId="51fe465e-f265-4545-802e-9d119fff9c16" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="13839146-16d3-4057-a8de-44f3f1f2c550" sourceNodeId="51fe465e-f265-4545-802e-9d119fff9c16" targetNodeId="4d032f60-7b7e-4444-890b-bf759962c899" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="b6f34f2e-c03e-4b4d-8110-02c655ddf5d2" sourceNodeId="4d032f60-7b7e-4444-890b-bf759962c899" targetNodeId="98e0020a-e3f0-45fe-bbb0-21f1a3c5c315" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="f1fd1fb2-89fa-4fd4-81b9-34481689f6eb" sourceNodeId="98e0020a-e3f0-45fe-bbb0-21f1a3c5c315" targetNodeId="beb3d652-8939-48a9-92bc-1d6931147b8b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="9abbe6b3-7e97-4fb4-a0cd-5470784dff8a" sourceNodeId="beb3d652-8939-48a9-92bc-1d6931147b8b" targetNodeId="a8b5cb29-e39c-4e62-9404-5d0e50bb2ad8" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="840a5f5b-af7f-4ed8-8336-2e59031f98f1" sourceNodeId="a8b5cb29-e39c-4e62-9404-5d0e50bb2ad8" targetNodeId="24bf1da4-e2a7-4941-aa62-27016c76374b" sourceConnector="right-output" targetConnector="router-input:7e9a865c-47d6-4bc8-b3c2-6abacbbbdbaa" condition="true"/>
+      <Connection id="7d943370-4f4f-4fb1-871d-299ab6624fad" sourceNodeId="24bf1da4-e2a7-4941-aa62-27016c76374b" targetNodeId="f6407f66-5283-41fe-9ab2-ce7946010196" sourceConnector="router-output:0c9f2f2f-19bb-45e1-9baf-f19e29095316" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="a7cfab44-9f9a-47d5-b26f-e665bca9baab" name="Restore Validation Outcome" type="Data Attribute Swapper" tag="Processor" class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.ValidationOutcome') != null &amp;&amp; getAttribute('fhir.ValidationOutcome').toString().trim().length() &gt; 0}</ExecuteProcessor>
+      
+          
+      <AttributeName>fhir.ValidationOutcome</AttributeName>
+      
+          
+      <SAVEOUTTAG>true</SAVEOUTTAG>
+      
+          
+      <SAVEINTAG>false</SAVEINTAG>
+      
+          
+      <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+      
+          
+      <StoreAsStream>false</StoreAsStream>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -171,14 +171,15 @@
     <FormatProfile name="Relay (System Format)" />
     <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Bulk Export Response" retries="1" />
     <Processors>
-      <Processor class="com.pilotfish.eip.modules.fhir.FhirBulkExportProcessor" name="Run Bulk Export Op">
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Call FHIR Bulk Export Route">
         <ModuleConfig>
           <ExecuteProcessor>true</ExecuteProcessor>
-          <JdbcUrl>$$sqlserver.url</JdbcUrl>
-          <JdbcUser>$$sqlserver.username</JdbcUser>
-          <JdbcPassword>$$sqlserver.password</JdbcPassword>
-          <ExportDirectory>/opt/pilotfish/output/bulk-export</ExportDirectory>
-          <PublicFhirBase>http://localhost:8110/eip/rest/fhir</PublicFhirBase>
+          <Listener>FHIR Bulk Export.Programmable (Trigger) Listener</Listener>
+          <Synchronous>true</Synchronous>
+          <Timeout>60</Timeout>
+          <LoopCallout>false</LoopCallout>
+          <LoopCondition>true</LoopCondition>
+          <MaxIterations>5</MaxIterations>
         </ModuleConfig>
       </Processor>
       <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Bulk Body">

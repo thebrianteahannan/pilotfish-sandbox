@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="6f5d035e-1939-49d3-bca4-b8e5e30ce875" name="Append Encounter Output Entry" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.EncounterCount') != null &amp;&amp; getAttribute('fhir.EncounterCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.EncounterCount').toString().trim())}</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.BulkOutputEntries:eip_name:{ognl:(getAttribute('fhir.BulkOutputEntries') == null || getAttribute('fhir.BulkOutputEntries').toString().length() == 0) ? ('{"type":"Encounter","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Encounter","count":' + getAttribute('fhir.EncounterCount') + '}') : (getAttribute('fhir.BulkOutputEntries').toString() + ',{"type":"Encounter","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Encounter","count":' + getAttribute('fhir.EncounterCount') + '}')}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

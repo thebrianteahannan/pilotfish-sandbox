@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="3891d819-f95b-4667-985f-ba986d5ad6ae" name="Load Condition Ndjson" type="Data Attribute Swapper" tag="Processor" class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.ConditionCount') != null &amp;&amp; getAttribute('fhir.ConditionCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.ConditionCount').toString().trim())}</ExecuteProcessor>
+      
+          
+      <AttributeName>fhir.ConditionNdjson</AttributeName>
+      
+          
+      <SAVEOUTTAG>true</SAVEOUTTAG>
+      
+          
+      <SAVEINTAG>false</SAVEINTAG>
+      
+          
+      <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+      
+          
+      <StoreAsStream>false</StoreAsStream>
+      
+        
+   </ModuleConfig>
+</Module>

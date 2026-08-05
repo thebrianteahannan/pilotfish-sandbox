@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="1b3d2f2e-c8b3-4d1b-9330-9fc0430cfa02" name="Set Bundle HTTP Status" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:com.pilotfish.HTTPResponseCode:eip_name:{ognl:(getAttribute('fhir.BundleHttpStatus') != null &amp;&amp; getAttribute('fhir.BundleHttpStatus').toString().trim().length() &gt; 0) ? getAttribute('fhir.BundleHttpStatus').toString().trim() : '200'}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

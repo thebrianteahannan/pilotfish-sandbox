@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="319bb061-1763-4d80-b2e4-c416ae7c6e1d" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="2863d8e9-9649-4662-ba05-a6de572dffd5" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="1e8d4659-14ea-4dfe-a9fb-f1e0a77ee22f" name="Rule 1 - Worker Done" type="XPATH">
+               <condition>true()</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

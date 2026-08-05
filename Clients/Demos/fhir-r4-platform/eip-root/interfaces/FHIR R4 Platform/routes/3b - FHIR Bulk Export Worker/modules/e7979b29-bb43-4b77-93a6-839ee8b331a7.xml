@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="e7979b29-bb43-4b77-93a6-839ee8b331a7" name="Append Condition Output Entry" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.ConditionCount') != null &amp;&amp; getAttribute('fhir.ConditionCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.ConditionCount').toString().trim())}</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.BulkOutputEntries:eip_name:{ognl:(getAttribute('fhir.BulkOutputEntries') == null || getAttribute('fhir.BulkOutputEntries').toString().length() == 0) ? ('{"type":"Condition","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Condition","count":' + getAttribute('fhir.ConditionCount') + '}') : (getAttribute('fhir.BulkOutputEntries').toString() + ',{"type":"Condition","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Condition","count":' + getAttribute('fhir.ConditionCount') + '}')}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

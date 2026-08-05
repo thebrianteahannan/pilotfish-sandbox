@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="b14a9ff0-47ee-4bf5-bfdf-bf069d8cc674" name="Load Ndjson File" type="Static File" tag="Processor" class="com.pilotfish.eip.modules.file.StaticFileProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <FileName>{ognl:getAttribute('fhir.ExportFilePath')}</FileName>
+      
+          
+      <PostProcessOperation>Do Nothing</PostProcessOperation>
+      
+          
+      <TargetDirectory/>
+      
+        
+   </ModuleConfig>
+</Module>

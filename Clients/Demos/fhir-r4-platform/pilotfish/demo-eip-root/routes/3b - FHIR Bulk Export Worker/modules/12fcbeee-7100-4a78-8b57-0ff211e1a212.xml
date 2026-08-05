@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="12fcbeee-7100-4a78-8b57-0ff211e1a212" name="Load Encounter Ndjson" type="Data Attribute Swapper" tag="Processor" class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.EncounterCount') != null &amp;&amp; getAttribute('fhir.EncounterCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.EncounterCount').toString().trim())}</ExecuteProcessor>
+      
+          
+      <AttributeName>fhir.EncounterNdjson</AttributeName>
+      
+          
+      <SAVEOUTTAG>true</SAVEOUTTAG>
+      
+          
+      <SAVEINTAG>false</SAVEINTAG>
+      
+          
+      <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+      
+          
+      <StoreAsStream>false</StoreAsStream>
+      
+        
+   </ModuleConfig>
+</Module>

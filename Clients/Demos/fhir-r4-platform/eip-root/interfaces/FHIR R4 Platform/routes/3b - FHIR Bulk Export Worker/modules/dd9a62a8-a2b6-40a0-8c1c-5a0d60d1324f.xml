@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="dd9a62a8-a2b6-40a0-8c1c-5a0d60d1324f" name="Extract All Type Ndjson Columns" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:fhir.PatientNdjson:eip_name:string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Patient']/following-sibling::*[upper-case(local-name())='NDJSONBODY'][1])):eip_value][eip_pair:fhir.PatientCount:eip_name:normalize-space(string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Patient']/following-sibling::*[upper-case(local-name())='RESOURCECOUNT'][1]))):eip_value][eip_pair:fhir.ObservationNdjson:eip_name:string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Observation']/following-sibling::*[upper-case(local-name())='NDJSONBODY'][1])):eip_value][eip_pair:fhir.ObservationCount:eip_name:normalize-space(string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Observation']/following-sibling::*[upper-case(local-name())='RESOURCECOUNT'][1]))):eip_value][eip_pair:fhir.ConditionNdjson:eip_name:string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Condition']/following-sibling::*[upper-case(local-name())='NDJSONBODY'][1])):eip_value][eip_pair:fhir.ConditionCount:eip_name:normalize-space(string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Condition']/following-sibling::*[upper-case(local-name())='RESOURCECOUNT'][1]))):eip_value][eip_pair:fhir.EncounterNdjson:eip_name:string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Encounter']/following-sibling::*[upper-case(local-name())='NDJSONBODY'][1])):eip_value][eip_pair:fhir.EncounterCount:eip_name:normalize-space(string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Encounter']/following-sibling::*[upper-case(local-name())='RESOURCECOUNT'][1]))):eip_value][eip_pair:fhir.PractitionerNdjson:eip_name:string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Practitioner']/following-sibling::*[upper-case(local-name())='NDJSONBODY'][1])):eip_value][eip_pair:fhir.PractitionerCount:eip_name:normalize-space(string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Practitioner']/following-sibling::*[upper-case(local-name())='RESOURCECOUNT'][1]))):eip_value][eip_pair:fhir.OrganizationNdjson:eip_name:string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Organization']/following-sibling::*[upper-case(local-name())='NDJSONBODY'][1])):eip_value][eip_pair:fhir.OrganizationCount:eip_name:normalize-space(string((.//*[upper-case(local-name())='RESOURCETYPE' and normalize-space(.)='Organization']/following-sibling::*[upper-case(local-name())='RESOURCECOUNT'][1]))):eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>

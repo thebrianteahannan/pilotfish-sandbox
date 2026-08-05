@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="b67c56eb-0b3a-45fc-8623-a942c382e870" name="Set Bad Bulk Outcome" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.BulkHttpStatus:eip_name:400:eip_value][eip_pair:com.pilotfish.HTTPResponseCode:eip_name:400:eip_value][eip_pair:fhir.BulkBody:eip_name:{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"invalid","diagnostics":"Unsupported bulk operation."}]}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="b0476e89-20e3-467c-9ed7-e5bec904bb2a" name="0 - Keycloak JWT Auth">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="9a37bddd-546e-4eef-abf6-9d9fadb9af60" moduleId="a3eaba0a-75fa-4624-a4fe-078d041359b0" label="Keycloak JWT Auth.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="d7166b18-ad2a-4dba-9c2a-db25033229be" moduleId="3cafb429-7349-4fd7-ad5f-9b48d3d233e0" label="Compute Auth Required And Bearer" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="e16ab317-e9b2-4bea-b745-ec47675b8cb9" moduleId="c916bb71-1f41-4189-9856-61edca132020" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="96.0"/>
+      <Node id="68535b35-c1d1-4455-ab95-99cb30aa8c3c" moduleId="2c82b4ce-cede-4391-b0a4-416c43611bef" label="Set Auth Status Skip" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="e086ffd9-aa96-4b13-ac89-b44bf6720e5f" moduleId="025ba289-047f-4261-a6c7-63e538df5619" label="Restore Raw Body Skip" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="8cf3622d-675a-4d6c-b97f-1b62067f3870" moduleId="0eae048a-5a91-40be-a5b8-b98913087608" label="Skip Auth Response" x="1820.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="b79f310c-ec49-467f-a7d9-ee28b7da9b25" moduleId="718337e6-cec4-4f9f-afcf-ec8b3a9bdd1f" label="Set Auth Status Missing" x="1300.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="63719fd6-22c1-402a-bb7c-deb2d319fb4f" moduleId="9056f221-9d25-4a62-bf4f-1c03445c3303" label="Restore Raw Body Missing" x="1560.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="f3f315c6-94ed-4fab-9d63-f21e40b67179" moduleId="20e207c5-1c4e-4711-96c3-1fd23ae52601" label="Missing Token Response" x="1820.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="1f1e95e3-df78-4b8e-8738-45c2c0db06c4" moduleId="83365e5e-a4a4-410d-b027-7a6274885df7" label="Load Bearer Token As Body" x="1300.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="dbe55317-dfb2-4f82-bf1b-fb831ccb9fc2" moduleId="eb4f29cb-c927-4ba8-be36-a8e167ccb1aa" label="Introspect Token" x="1560.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="7ba77ad5-5642-47eb-916f-c3e39401a609" moduleId="c109e9f1-259c-4c86-9e1a-6e7547601eca" label="Extract Introspect Active" x="1820.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="460050d7-add9-4c82-88c7-50303faf48f8" moduleId="575600f2-4669-4dfe-8851-8bc327d2ef1c" label="Extract Introspect Subject" x="2080.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="dd3bdca0-9c8c-4326-8e13-39633f4c0f5b" moduleId="b04a6a88-d8c5-4d5f-986f-d6175a32486f" label="Set Auth Status From Introspect" x="2340.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="df4d7dc6-cdc7-42a5-ba81-8911961333a8" moduleId="ca7d3141-b14d-4dfa-b25e-613332b955cb" label="Restore Raw Body After Introspect" x="2600.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="d970651b-b077-4265-9ece-dbecbfbebd44" moduleId="ac1c8786-db22-48f0-96ca-606581111800" label="Sync Reply After Introspect" x="2860.0" y="280.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="cb895d59-509d-4720-8940-f186b689a5cc" sourceNodeId="9a37bddd-546e-4eef-abf6-9d9fadb9af60" targetNodeId="d7166b18-ad2a-4dba-9c2a-db25033229be" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="574ada1b-8088-4825-b5eb-758f592d7720" sourceNodeId="68535b35-c1d1-4455-ab95-99cb30aa8c3c" targetNodeId="e086ffd9-aa96-4b13-ac89-b44bf6720e5f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="8543fde3-739e-45ab-b175-869939e7a679" sourceNodeId="e086ffd9-aa96-4b13-ac89-b44bf6720e5f" targetNodeId="8cf3622d-675a-4d6c-b97f-1b62067f3870" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="a941a133-cffb-4dec-a70d-912f13736271" sourceNodeId="b79f310c-ec49-467f-a7d9-ee28b7da9b25" targetNodeId="63719fd6-22c1-402a-bb7c-deb2d319fb4f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="950cc53d-f148-4c58-b98a-db4c23208ec8" sourceNodeId="63719fd6-22c1-402a-bb7c-deb2d319fb4f" targetNodeId="f3f315c6-94ed-4fab-9d63-f21e40b67179" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="54a30665-7041-4d1a-a471-721894dc4092" sourceNodeId="1f1e95e3-df78-4b8e-8738-45c2c0db06c4" targetNodeId="dbe55317-dfb2-4f82-bf1b-fb831ccb9fc2" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="6167e6a1-d327-438d-83db-8c359077ceca" sourceNodeId="dbe55317-dfb2-4f82-bf1b-fb831ccb9fc2" targetNodeId="7ba77ad5-5642-47eb-916f-c3e39401a609" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="8a1a61ae-f58f-41c7-8554-a76d82e800e9" sourceNodeId="7ba77ad5-5642-47eb-916f-c3e39401a609" targetNodeId="460050d7-add9-4c82-88c7-50303faf48f8" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="bf002a44-6994-4ffc-8050-65005cb4a764" sourceNodeId="460050d7-add9-4c82-88c7-50303faf48f8" targetNodeId="dd3bdca0-9c8c-4326-8e13-39633f4c0f5b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="9168ac06-8010-4c98-837b-9357a0711775" sourceNodeId="dd3bdca0-9c8c-4326-8e13-39633f4c0f5b" targetNodeId="df4d7dc6-cdc7-42a5-ba81-8911961333a8" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="511c822b-b525-4aa6-8978-4c7f87f2f83e" sourceNodeId="df4d7dc6-cdc7-42a5-ba81-8911961333a8" targetNodeId="d970651b-b077-4265-9ece-dbecbfbebd44" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="b7617a92-3e9f-4c29-89d2-ce22790bedd7" sourceNodeId="d7166b18-ad2a-4dba-9c2a-db25033229be" targetNodeId="e16ab317-e9b2-4bea-b745-ec47675b8cb9" sourceConnector="right-output" targetConnector="router-input:244e9471-f4bc-4286-bc7f-e3e2db9328be" condition="true"/>
+      <Connection id="bd711c53-14ea-419b-bcca-f4f53b84eb92" sourceNodeId="e16ab317-e9b2-4bea-b745-ec47675b8cb9" targetNodeId="68535b35-c1d1-4455-ab95-99cb30aa8c3c" sourceConnector="router-output:eca16338-913c-4fc2-8a79-6be4f830bae4" targetConnector="left-input" condition="true"/>
+      <Connection id="7deaba4b-40a1-454c-9f76-2f0c9d7004c0" sourceNodeId="e16ab317-e9b2-4bea-b745-ec47675b8cb9" targetNodeId="b79f310c-ec49-467f-a7d9-ee28b7da9b25" sourceConnector="router-output:dc4dae61-4b8b-452a-9060-60229b38ddd0" targetConnector="left-input" condition="true"/>
+      <Connection id="bff45387-8554-45fc-9d7d-cd4ace375707" sourceNodeId="e16ab317-e9b2-4bea-b745-ec47675b8cb9" targetNodeId="1f1e95e3-df78-4b8e-8738-45c2c0db06c4" sourceConnector="router-output:ab68a086-4bcb-4c04-991e-c66d71e677bf" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

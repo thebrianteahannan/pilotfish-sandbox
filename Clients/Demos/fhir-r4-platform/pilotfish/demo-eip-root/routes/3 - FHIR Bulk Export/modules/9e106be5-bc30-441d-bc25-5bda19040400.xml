@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="9e106be5-bc30-441d-bc25-5bda19040400" name="Set File Missing Outcome" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.BulkHttpStatus:eip_name:404:eip_value][eip_pair:com.pilotfish.HTTPResponseCode:eip_name:404:eip_value][eip_pair:fhir.BulkBody:eip_name:{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"not-found","diagnostics":"Export file not found for requested type."}]}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

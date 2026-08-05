@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="2657aa63-e5b8-4254-acd3-15ec2620fb8e" name="Prepare Kickoff Attrs" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.ExportJobId:eip_name:{ognl:@java.util.UUID@randomUUID().toString()}:eip_value][eip_pair:fhir.TypesCsv:eip_name:{ognl:(getAttribute('com.pilotfish.http.parameter._type') != null &amp;&amp; getAttribute('com.pilotfish.http.parameter._type').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.http.parameter._type').toString().trim() : ((getAttribute('com.pilotfish.http.parameter.type') != null &amp;&amp; getAttribute('com.pilotfish.http.parameter.type').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.http.parameter.type').toString().trim() : '')}:eip_value][eip_pair:fhir.PublicBase:eip_name:$$fhir.public.base:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="06b74e9e-243f-487d-8b51-88a2b3a9e2ec" name="Write Organization Ndjson" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.OrganizationCount') != null &amp;&amp; getAttribute('fhir.OrganizationCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.OrganizationCount').toString().trim())}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+      
+          
+      <TargetFileName>Organization.ndjson</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

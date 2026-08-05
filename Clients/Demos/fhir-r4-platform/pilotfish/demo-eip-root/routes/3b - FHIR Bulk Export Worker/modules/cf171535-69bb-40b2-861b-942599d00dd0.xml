@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="cf171535-69bb-40b2-861b-942599d00dd0" name="Append Organization Output Entry" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.OrganizationCount') != null &amp;&amp; getAttribute('fhir.OrganizationCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.OrganizationCount').toString().trim())}</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.BulkOutputEntries:eip_name:{ognl:(getAttribute('fhir.BulkOutputEntries') == null || getAttribute('fhir.BulkOutputEntries').toString().length() == 0) ? ('{"type":"Organization","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Organization","count":' + getAttribute('fhir.OrganizationCount') + '}') : (getAttribute('fhir.BulkOutputEntries').toString() + ',{"type":"Organization","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Organization","count":' + getAttribute('fhir.OrganizationCount') + '}')}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

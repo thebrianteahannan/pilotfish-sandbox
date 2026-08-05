@@ -58,7 +58,13 @@ services:
           -P 'PilotFish_Demo1!' \
           -C \
           -i /sql/04_phase6_bulk.sql
-        echo "SQL Server seed complete (Phase 1–6)."
+        /opt/mssql-tools18/bin/sqlcmd \
+          -S sqlserver \
+          -U sa \
+          -P 'PilotFish_Demo1!' \
+          -C \
+          -i /sql/05_phase6_bulk_pf.sql
+        echo "SQL Server seed complete (Phase 1–6 PF Bulk)."
 
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.5

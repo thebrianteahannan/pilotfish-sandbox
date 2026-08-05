@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="b04a6a88-d8c5-4d5f-986f-d6175a32486f" name="Set Auth Status From Introspect" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.AuthStatus:eip_name:{ognl:(getAttribute('fhir.IntrospectActive') != null &amp;&amp; 'true'.equalsIgnoreCase(getAttribute('fhir.IntrospectActive').toString())) ? 'PASS' : 'FAIL'}:eip_value][eip_pair:fhir.AuthError:eip_name:{ognl:(getAttribute('fhir.IntrospectActive') != null &amp;&amp; 'true'.equalsIgnoreCase(getAttribute('fhir.IntrospectActive').toString())) ? '' : 'Token inactive or rejected by Keycloak introspection.'}:eip_value][eip_pair:fhir.AuthOutcome:eip_name:{ognl:(getAttribute('fhir.IntrospectActive') != null &amp;&amp; 'true'.equalsIgnoreCase(getAttribute('fhir.IntrospectActive').toString())) ? '' : '{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"login","diagnostics":"Token inactive or rejected by Keycloak introspection."}]}'}:eip_value][eip_pair:fhir.ValidationOutcome:eip_name:{ognl:(getAttribute('fhir.IntrospectActive') != null &amp;&amp; 'true'.equalsIgnoreCase(getAttribute('fhir.IntrospectActive').toString())) ? ((getAttribute('fhir.ValidationOutcome') == null) ? '' : getAttribute('fhir.ValidationOutcome').toString()) : '{"resourceType":"OperationOutcome","issue":[{"severity":"error","code":"login","diagnostics":"Token inactive or rejected by Keycloak introspection."}]}'}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

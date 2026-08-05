@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="f95aac4a-c063-4d29-b081-9c409b08388d" name="Load Practitioner Ndjson" type="Data Attribute Swapper" tag="Processor" class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.PractitionerCount') != null &amp;&amp; getAttribute('fhir.PractitionerCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.PractitionerCount').toString().trim())}</ExecuteProcessor>
+      
+          
+      <AttributeName>fhir.PractitionerNdjson</AttributeName>
+      
+          
+      <SAVEOUTTAG>true</SAVEOUTTAG>
+      
+          
+      <SAVEINTAG>false</SAVEINTAG>
+      
+          
+      <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+      
+          
+      <StoreAsStream>false</StoreAsStream>
+      
+        
+   </ModuleConfig>
+</Module>

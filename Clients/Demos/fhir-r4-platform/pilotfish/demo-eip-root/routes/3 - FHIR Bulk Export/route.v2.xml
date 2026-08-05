@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="b843c635-00dd-4573-a6c3-c95155579105" name="3 - FHIR Bulk Export">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="465834a1-541c-4569-9c97-76d7abf0f565" moduleId="c1b6c5b0-43c3-4c21-bf0b-5f2a920330cf" label="FHIR Bulk Export.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="939f1f80-eb16-4ca7-a5cd-12282dd1ded6" moduleId="7da5a63b-137a-41d5-8edd-26d4f87075b5" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="144.0"/>
+      <Node id="0a722691-68aa-4eae-b325-d7281b4b2cec" moduleId="e17f2da0-b202-4a0c-ba59-1a778a785479" label="Prepare Kickoff Attrs" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="ab955b7d-9154-43da-a779-a1af44e9fbe1" moduleId="d6546d0f-0017-45f4-9eba-77334086fbab" label="Prepare Kickoff Urls And Body" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="4e0ddacd-de99-434b-a636-f68ca5e41ac6" moduleId="9d0b576c-46bb-4be4-ab4b-87c8ec4e0812" label="Prepare Accepted Status Json" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="1cffcff2-d5dc-47a7-bec9-4a01acb5af75" moduleId="7f3b28ce-09c0-451d-9e04-8ecabefa8704" label="Insert Export Job" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="63285b32-7317-4022-92ae-c3f58e1e8e4a" moduleId="2edc5611-1f80-4e58-ba9d-23bd63ffe876" label="Load Status Json Body" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="b90f5831-f621-462f-90e1-f23b103f76c1" moduleId="aea5adbc-12b8-4867-820f-4a8c233858eb" label="Write Accepted Status File" x="2600.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="b89a76c2-4674-48e2-9202-1fa04710ab73" moduleId="c59691f6-635a-4e1e-b5d6-ec12c6a573ff" label="Start Bulk Worker Async" x="2860.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="2526af61-1555-4ff6-bf27-810467d26965" moduleId="ebe8dfec-7f95-42b7-a7f4-0f5c8e1e3ee3" label="Restore Kickoff Body" x="3120.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="5e353785-1df5-410d-bd31-727199bdfae4" moduleId="4726b4e3-4fda-4080-abfb-2821eedcaa01" label="Kickoff Response" x="3380.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="2af59922-c1a1-4121-bbd3-99de5563c857" moduleId="d1a82330-efa5-4768-bf0f-b8a0d6e7b5db" label="Select Export Job Status" x="1300.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="f35aed34-f958-4587-923e-c44c92781383" moduleId="e0860ede-6710-4f7e-8d4e-9458fdf7e4f3" label="Extract Job Status Columns" x="1560.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="401b906e-0268-442c-8513-60ab9ffadfed" moduleId="f81241c3-6979-4011-a036-fd7438c439eb" label="Map Job Status To Bulk Response" x="1820.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="10778cc1-e95a-489f-b2f1-173e2ee0dcf7" moduleId="07fee0e3-dfd5-4533-8bda-e080e3c82197" label="Restore Status Body" x="2080.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="e40ef1a6-06e8-460f-b286-b2687ce63078" moduleId="5535778f-b5c7-4b69-8b47-2abbf39bee17" label="Status Response" x="2340.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="1fa74d44-fc90-4715-802f-4b54bba24159" moduleId="71255cc8-375a-4454-beba-c62e2efe2636" label="Resolve Export File Path" x="1300.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="15cba7ba-256d-4415-88f2-af06ac5dd6ac" moduleId="dc80240c-2e76-42ae-8bd5-385dfbcf6fad" label="Load Ndjson File" x="1560.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="48d08343-4885-43cd-a5b6-e4af810c8c78" moduleId="c70b1639-b323-47c2-b915-5cab2b99265f" label="Capture Ndjson As BulkBody" x="1820.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="39833355-4ac4-4b12-93ad-c4728fbfa56b" moduleId="4f8c6d8a-c021-43b0-bfff-7a1ca7d93e7e" label="Set File Download Status" x="2080.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="602a6f22-f864-4748-9172-a84b9c1a8791" moduleId="db3b15dd-de6d-404d-9738-b820367dfc2a" label="File Found Response" x="2340.0" y="280.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="1c8f0f29-c366-4c21-b9dd-9da8a732bbf4" moduleId="9e106be5-bc30-441d-bc25-5bda19040400" label="Set File Missing Outcome" x="1300.0" y="420.0" width="180.0" height="64.0"/>
+      <Node id="f2aea3fb-6553-4d21-a727-57f95c5a625c" moduleId="9cda3021-f562-4781-b0e7-dc8f8453ca64" label="Restore Missing File Body" x="1560.0" y="420.0" width="180.0" height="64.0"/>
+      <Node id="699cc59f-4424-4991-a895-359ea9ddb39f" moduleId="01a3574f-0a0d-4593-af5b-8f0960e4fc40" label="File Missing Response" x="1820.0" y="420.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="579843ba-d2cf-4e07-9282-9a22d06d2b74" moduleId="b388969c-4ae3-4fd4-8623-8401f75fcd7a" label="Set Bad Bulk Outcome" x="1300.0" y="560.0" width="180.0" height="64.0"/>
+      <Node id="9b3e09b4-1e46-4fc1-aa74-3fa44aae0c9e" moduleId="b36a0527-27d5-4917-a480-53b0ed82f7f5" label="Restore Bad Bulk Body" x="1560.0" y="560.0" width="180.0" height="64.0"/>
+      <Node id="18f89b49-c8e1-4a52-9502-59e5a14a6924" moduleId="04005dc5-f186-4718-af65-2817e4a61e4e" label="Bad Bulk Response" x="1820.0" y="560.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="527a5a3b-4481-4cb2-90c2-82ccdad459d7" sourceNodeId="0a722691-68aa-4eae-b325-d7281b4b2cec" targetNodeId="ab955b7d-9154-43da-a779-a1af44e9fbe1" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="eba63a04-338f-416b-aacd-dfde10e39b4b" sourceNodeId="ab955b7d-9154-43da-a779-a1af44e9fbe1" targetNodeId="4e0ddacd-de99-434b-a636-f68ca5e41ac6" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="25705610-98f7-4126-b50a-bb31076d749a" sourceNodeId="4e0ddacd-de99-434b-a636-f68ca5e41ac6" targetNodeId="1cffcff2-d5dc-47a7-bec9-4a01acb5af75" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="537a1e72-f687-43bf-a22c-2b1554c7df3b" sourceNodeId="1cffcff2-d5dc-47a7-bec9-4a01acb5af75" targetNodeId="63285b32-7317-4022-92ae-c3f58e1e8e4a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="d969601e-c387-4a5a-b8fb-3be9fa51a2a3" sourceNodeId="63285b32-7317-4022-92ae-c3f58e1e8e4a" targetNodeId="b90f5831-f621-462f-90e1-f23b103f76c1" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="c88027d9-43ce-4bc8-9dca-6bee3272d7e6" sourceNodeId="b90f5831-f621-462f-90e1-f23b103f76c1" targetNodeId="b89a76c2-4674-48e2-9202-1fa04710ab73" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="d972ad39-8336-4f46-9f52-4e836e44c10d" sourceNodeId="b89a76c2-4674-48e2-9202-1fa04710ab73" targetNodeId="2526af61-1555-4ff6-bf27-810467d26965" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="ab5d916e-4918-4d22-a8c2-3b177be776c4" sourceNodeId="2526af61-1555-4ff6-bf27-810467d26965" targetNodeId="5e353785-1df5-410d-bd31-727199bdfae4" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="435309fb-1de2-4348-9686-2fc4147e29a4" sourceNodeId="2af59922-c1a1-4121-bbd3-99de5563c857" targetNodeId="f35aed34-f958-4587-923e-c44c92781383" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="de17e8b6-78f9-4dae-974e-9d3bc7be776e" sourceNodeId="f35aed34-f958-4587-923e-c44c92781383" targetNodeId="401b906e-0268-442c-8513-60ab9ffadfed" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="d02a3415-951f-4849-9105-26ad6680afcd" sourceNodeId="401b906e-0268-442c-8513-60ab9ffadfed" targetNodeId="10778cc1-e95a-489f-b2f1-173e2ee0dcf7" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="a90fad6b-5672-4d56-876c-56ebfba2b03e" sourceNodeId="10778cc1-e95a-489f-b2f1-173e2ee0dcf7" targetNodeId="e40ef1a6-06e8-460f-b286-b2687ce63078" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="a0ed6a67-83b1-44a1-bfba-016c043e25b9" sourceNodeId="1fa74d44-fc90-4715-802f-4b54bba24159" targetNodeId="15cba7ba-256d-4415-88f2-af06ac5dd6ac" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="870ccc9e-88ca-4daa-8a2a-39a328df20c6" sourceNodeId="15cba7ba-256d-4415-88f2-af06ac5dd6ac" targetNodeId="48d08343-4885-43cd-a5b6-e4af810c8c78" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="9eb3455f-6382-45c6-9640-635b6947b67a" sourceNodeId="48d08343-4885-43cd-a5b6-e4af810c8c78" targetNodeId="39833355-4ac4-4b12-93ad-c4728fbfa56b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="c48ad810-d10c-4601-8600-88d20680887d" sourceNodeId="39833355-4ac4-4b12-93ad-c4728fbfa56b" targetNodeId="602a6f22-f864-4748-9172-a84b9c1a8791" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="ab7b3124-03f2-4be8-9278-d6a3a942ace5" sourceNodeId="1c8f0f29-c366-4c21-b9dd-9da8a732bbf4" targetNodeId="f2aea3fb-6553-4d21-a727-57f95c5a625c" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="61ec79ee-1c6d-4a24-81e0-914f1ab5efc7" sourceNodeId="f2aea3fb-6553-4d21-a727-57f95c5a625c" targetNodeId="699cc59f-4424-4991-a895-359ea9ddb39f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="062b2194-c066-4180-9fa4-dc985cd59532" sourceNodeId="579843ba-d2cf-4e07-9282-9a22d06d2b74" targetNodeId="9b3e09b4-1e46-4fc1-aa74-3fa44aae0c9e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="afa86f79-1d30-499a-ae1c-857a03644f2a" sourceNodeId="9b3e09b4-1e46-4fc1-aa74-3fa44aae0c9e" targetNodeId="18f89b49-c8e1-4a52-9502-59e5a14a6924" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="ea54e4ef-973c-4af3-a06b-592a98e85973" sourceNodeId="465834a1-541c-4569-9c97-76d7abf0f565" targetNodeId="939f1f80-eb16-4ca7-a5cd-12282dd1ded6" sourceConnector="right-output" targetConnector="router-input:cc0c1e5e-3c6a-46eb-b008-65e88dafbdd6" condition="true"/>
+      <Connection id="1b1377cd-8cea-408e-b2a1-70c6b60cf749" sourceNodeId="939f1f80-eb16-4ca7-a5cd-12282dd1ded6" targetNodeId="0a722691-68aa-4eae-b325-d7281b4b2cec" sourceConnector="router-output:4807d602-fc72-46ab-a9c1-b3f505d3975d" targetConnector="left-input" condition="true"/>
+      <Connection id="371f4832-dbf1-45fe-93a8-e691cff4dc77" sourceNodeId="939f1f80-eb16-4ca7-a5cd-12282dd1ded6" targetNodeId="2af59922-c1a1-4121-bbd3-99de5563c857" sourceConnector="router-output:d412ed1c-4ca3-4a7c-bd53-8c332f7ee47d" targetConnector="left-input" condition="true"/>
+      <Connection id="70e54577-9808-4c63-bf86-06e8e2073dcd" sourceNodeId="939f1f80-eb16-4ca7-a5cd-12282dd1ded6" targetNodeId="1fa74d44-fc90-4715-802f-4b54bba24159" sourceConnector="router-output:f8b472b9-b166-4db2-991a-eff388c8cc0a" targetConnector="left-input" condition="true"/>
+      <Connection id="8a057cd5-9714-4633-b584-2630a824a039" sourceNodeId="939f1f80-eb16-4ca7-a5cd-12282dd1ded6" targetNodeId="1c8f0f29-c366-4c21-b9dd-9da8a732bbf4" sourceConnector="router-output:d4b3020b-51c5-4b31-b554-8ad474776619" targetConnector="left-input" condition="true"/>
+      <Connection id="75a62c7b-cccc-435f-ba0e-2df1823c4dcb" sourceNodeId="939f1f80-eb16-4ca7-a5cd-12282dd1ded6" targetNodeId="579843ba-d2cf-4e07-9282-9a22d06d2b74" sourceConnector="router-output:67679436-d664-4918-8b07-c20a7d00a477" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

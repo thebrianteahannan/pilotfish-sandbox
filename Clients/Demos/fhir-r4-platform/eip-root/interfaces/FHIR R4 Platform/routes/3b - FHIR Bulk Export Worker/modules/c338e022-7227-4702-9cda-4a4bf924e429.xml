@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c338e022-7227-4702-9cda-4a4bf924e429" name="Build Completed Manifest" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.JobManifest:eip_name:{ognl:'{"transactionTime":"' + @java.time.Instant@now().toString() + '","request":"' + ((getAttribute('fhir.BulkRequestUrl') == null) ? '' : getAttribute('fhir.BulkRequestUrl').toString().replace("\\","\\\\").replace("\"","\\\"")) + '","requiresAccessToken":true,"output":[' + ((getAttribute('fhir.BulkOutputEntries') == null) ? '' : getAttribute('fhir.BulkOutputEntries').toString()) + '],"error":[]}'}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

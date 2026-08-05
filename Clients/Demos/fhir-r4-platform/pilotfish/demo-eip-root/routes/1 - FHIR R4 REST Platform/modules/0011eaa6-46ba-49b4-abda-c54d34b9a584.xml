@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="0011eaa6-46ba-49b4-abda-c54d34b9a584" name="Unauthorized Headers" type="HTTP Response Headers" tag="Processor" class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <HeaderTable>[eip_pair:Content-Type:eip_name:application/fhir+json:eip_value][eip_pair:WWW-Authenticate:eip_name:Bearer realm="fhir-demo":eip_value]</HeaderTable>
+      
+        
+   </ModuleConfig>
+</Module>

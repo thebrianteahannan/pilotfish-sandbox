@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="e8355176-47a1-4ab6-bbda-29996bb2f0ae" name="Write Practitioner Ndjson" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.PractitionerCount') != null &amp;&amp; getAttribute('fhir.PractitionerCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.PractitionerCount').toString().trim())}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>{ognl:'/opt/pilotfish/output/bulk-export/' + getAttribute('fhir.ExportJobId')}</TargetDirectory>
+      
+          
+      <TargetFileName>Practitioner.ndjson</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="483917ca-d0c6-4238-a354-f93133f0ac12" name="Append Observation Output Entry" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('fhir.ObservationCount') != null &amp;&amp; getAttribute('fhir.ObservationCount').toString().trim().length() &gt; 0 &amp;&amp; !'0'.equals(getAttribute('fhir.ObservationCount').toString().trim())}</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.BulkOutputEntries:eip_name:{ognl:(getAttribute('fhir.BulkOutputEntries') == null || getAttribute('fhir.BulkOutputEntries').toString().length() == 0) ? ('{"type":"Observation","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Observation","count":' + getAttribute('fhir.ObservationCount') + '}') : (getAttribute('fhir.BulkOutputEntries').toString() + ',{"type":"Observation","url":"' + getAttribute('fhir.PublicBase') + '/$export-file/' + getAttribute('fhir.ExportJobId') + '?_type=Observation","count":' + getAttribute('fhir.ObservationCount') + '}')}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

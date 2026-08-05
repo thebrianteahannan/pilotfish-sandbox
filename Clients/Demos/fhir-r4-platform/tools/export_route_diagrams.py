@@ -37,6 +37,8 @@ ROUTES = [
     ("0 — Keycloak JWT Auth", "0-keycloak-jwt-auth", "route0.png"),
     ("1 — FHIR R4 REST Platform", "1-fhir-r4-rest-platform", "route1.png"),
     ("2 — FHIR Outbound Client", "2-fhir-outbound-client", "route2.png"),
+    ("3 — FHIR Bulk Export", "3-fhir-bulk-export", "route3.png"),
+    ("3b — FHIR Bulk Export Worker", "3b-fhir-bulk-export-worker", "route3b.png"),
 ]
 MARGIN = 0.28 * inch
 # Single compact brand+title row
@@ -52,16 +54,22 @@ WINDOW_BY_CONFIG = {
         "0-keycloak-jwt-auth": (2200, 2800),
         "1-fhir-r4-rest-platform": (2800, 7000),
         "2-fhir-outbound-client": (2000, 1800),
+        "3-fhir-bulk-export": (2400, 3600),
+        "3b-fhir-bulk-export-worker": (2400, 5000),
     },
     "changed": {
         "0-keycloak-jwt-auth": (2400, 3600),
         "1-fhir-r4-rest-platform": (3000, 11000),
         "2-fhir-outbound-client": (2400, 3200),
+        "3-fhir-bulk-export": (2600, 4800),
+        "3b-fhir-bulk-export-worker": (2800, 9000),
     },
     "all": {
         "0-keycloak-jwt-auth": (2600, 4200),
         "1-fhir-r4-rest-platform": (3200, 14000),
         "2-fhir-outbound-client": (2600, 4200),
+        "3-fhir-bulk-export": (2800, 5600),
+        "3b-fhir-bulk-export-worker": (3000, 11000),
     },
 }
 

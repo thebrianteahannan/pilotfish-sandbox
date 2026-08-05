@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="e0860ede-6710-4f7e-8d4e-9458fdf7e4f3" name="Extract Job Status Columns" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:fhir.JobStatus:eip_name:normalize-space(string((.//*[upper-case(local-name())='STATUS'])[1])):eip_value][eip_pair:fhir.JobManifest:eip_name:string((.//*[upper-case(local-name())='OUTPUTMANIFEST'])[1]):eip_value][eip_pair:fhir.JobError:eip_name:string((.//*[upper-case(local-name())='ERRORTEXT'])[1]):eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>
