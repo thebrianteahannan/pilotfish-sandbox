@@ -1,36 +1,38 @@
-# FHIR R4 Expandable Platform (Phase 2)
+# FHIR R4 Expandable Platform (Phase 3)
 
-Multi-resource **FHIR R4 REST** façade on PilotFish eiPlatform with SQL primary store, CapabilityStatement metadata, **token-indexed search for six core types**, plus an **outbound FHIR client** route.
+Multi-resource **FHIR R4 REST** façade on PilotFish with SQL primary store, token search (core-6), and **Bundle transaction/batch** execution.
 
-> Expandable platform scaffold — **not** the entire FHIR specification. See `DESIGN.md`.
+> Not the entire FHIR specification — see `DESIGN.md`.
 
 ## Quick start
 
 ```bash
 cd "Clients/Demos/fhir-r4-platform"
 docker compose up -d --build
+./tools/smoke.sh
 ```
-
-Wait ~60–90s, then open:
 
 | Where | URL |
 |-------|-----|
-| Web UI (localhost) | http://127.0.0.1:8111/ |
-| Web UI (LAN) | http://192.168.68.52:8111/ |
-| FHIR base (LAN) | http://192.168.68.52:8110/eip/rest/fhir |
-| Metadata | http://192.168.68.52:8110/eip/rest/fhir/metadata |
-| Route PDF | http://192.168.68.52:8111/documents/route-diagrams.pdf |
+| Web UI | http://127.0.0.1:8111/ |
+| FHIR base | http://127.0.0.1:8110/eip/rest/fhir |
+| Metadata | http://127.0.0.1:8110/eip/rest/fhir/metadata |
 
-## What it does
+## Phase 3 Bundles
 
-1. **Route 1 — FHIR R4 REST Platform** (sync)
-   - `POST/GET/PUT/DELETE` for enumerated resource types
-   - `GET /metadata` → CapabilityStatement (v0.2.0)
-   - Persist to SQL + `output/fhir-store/`; reindex `FhirSearchTokens` on write
-   - **Phase 2 search** (core-6): e.g. `Patient?family=Smith`, `Observation?patient=Patient/pat-alice-001&code=8867-4`
-   - Other types: `_id` + legacy `q` substring on `RawFhir`
-2. **Route 2 — FHIR Outbound Client** — file envelopes → remote FHIR
-3. **Web UI** — multi-resource client, typed search helpers, proxy toggle
+```bash
+# Atomic transaction (Patient + Observation)
+curl -sS -D- -H 'Content-Type: application/fhir+json' \
+  --data-binary @samples/Bundle_transaction_patient_obs.json \
+  http://127.0.0.1:8110/eip/rest/fhir/Bundle
+
+# Batch (success + 404 entry)
+curl -sS -H 'Content-Type: application/fhir+json' \
+  --data-binary @samples/Bundle_batch_mixed.json \
+  http://127.0.0.1:8110/eip/rest/fhir/Bundle
+```
+
+Entry methods supported in demo: `POST`/`PUT` (with `resource.id`), `GET Type/id`, `DELETE Type/id`.
 
 ## Ports
 
@@ -39,16 +41,3 @@ Wait ~60–90s, then open:
 | SQL Server | 14338 |
 | PilotFish EIP | 8110 |
 | Web UI | 8111 |
-
-## Smoke
-
-```bash
-./tools/smoke.sh
-
-curl -sS 'http://127.0.0.1:8110/eip/rest/fhir/Patient?family=Smith'
-curl -sS 'http://127.0.0.1:8110/eip/rest/fhir/Observation?patient=Patient/pat-alice-001&code=8867-4'
-```
-
-## Demo only
-
-Shared `sa` password, heuristic JSON checks, simplified search matching — see `DESIGN.md` Risks.

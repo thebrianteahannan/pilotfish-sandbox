@@ -1,0 +1,31 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:patient-1",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-txn-001",
+        "active": true,
+        "name": [{ "family": "Txn", "given": ["Terry"] }],
+        "gender": "male",
+        "birthDate": "1990-01-01"
+      },
+      "request": { "method": "POST", "url": "Patient" }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-1",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-txn-001",
+        "status": "final",
+        "code": { "coding": [{ "system": "http://loinc.org", "code": "8867-4", "display": "Heart rate" }] },
+        "subject": { "reference": "Patient/pat-txn-001" },
+        "effectiveDateTime": "2026-08-05T12:00:00Z",
+        "valueQuantity": { "value": 70, "unit": "beats/minute", "system": "http://unitsofmeasure.org", "code": "/min" }
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    }
+  ]
+}

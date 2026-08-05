@@ -1,15 +1,15 @@
 {
   "resourceType": "CapabilityStatement",
-  "id": "pilotfish-fhir-r4-platform-phase2",
+  "id": "pilotfish-fhir-r4-platform-phase3",
   "url": "http://localhost:8110/eip/rest/fhir/metadata",
-  "version": "0.2.0",
-  "name": "PilotFishFhirR4PlatformPhase2",
-  "title": "PilotFish FHIR R4 Expandable Platform (Phase 2)",
+  "version": "0.3.0",
+  "name": "PilotFishFhirR4PlatformPhase3",
+  "title": "PilotFish FHIR R4 Expandable Platform (Phase 3)",
   "status": "draft",
   "experimental": true,
   "date": "2026-08-05",
   "publisher": "PilotFish Sandbox Demo",
-  "description": "Phase 2 expandable FHIR R4 fa\u00e7ade. CRUD for enumerated types; EAV token search for Patient/Observation/Encounter/Condition/Organization/Practitioner; soft delete; SQL primary store. Still deferred: full search grammar/modifiers/chaining/includes, history, transactions, SMART, Bulk export, profile validation.",
+  "description": "Phase 3 expandable FHIR R4 fa\u00e7ade. CRUD; core-6 token search; POST /Bundle with type=transaction (atomic) or batch (per-entry). Deferred: full search grammar, history, profile validation, SMART, Bulk export.",
   "kind": "instance",
   "fhirVersion": "4.0.1",
   "format": [
@@ -19,7 +19,7 @@
   "rest": [
     {
       "mode": "server",
-      "documentation": "SQL-backed store with FhirSearchTokens index for core-6 types. Other types support _id and legacy q.",
+      "documentation": "SQL-backed store with FhirSearchTokens and FhirExecuteBundle for transaction/batch.",
       "resource": [
         {
           "type": "Patient",
@@ -1109,6 +1109,13 @@
               "type": "string",
               "documentation": "Legacy RawFhir substring fallback"
             }
+          ],
+          "operation": [
+            {
+              "name": "transaction-or-batch",
+              "definition": "http://hl7.org/fhir/OperationDefinition/None",
+              "documentation": "When Bundle.type is transaction|batch, POST /Bundle executes entries instead of storing the Bundle resource."
+            }
           ]
         },
         {
@@ -1143,6 +1150,16 @@
               "documentation": "Legacy RawFhir substring fallback"
             }
           ]
+        }
+      ],
+      "interaction": [
+        {
+          "code": "transaction",
+          "documentation": "POST Bundle type=transaction to /Bundle (atomic SQL)."
+        },
+        {
+          "code": "batch",
+          "documentation": "POST Bundle type=batch to /Bundle (per-entry status)."
         }
       ]
     }

@@ -121,6 +121,24 @@ document.getElementById("btn-outbound").addEventListener("click", async () => {
   }
 });
 
+document.getElementById("btn-txn").addEventListener("click", async () => {
+  const status = document.getElementById("status");
+  try {
+    const data = await getJson("/api/samples");
+    const f = (data.files || []).find((x) => x.name === "Bundle_transaction_patient_obs.json");
+    if (!f) throw new Error("Bundle_transaction_patient_obs.json not found");
+    document.getElementById("method").value = "POST";
+    document.getElementById("resourceType").value = "Bundle";
+    document.getElementById("id").value = "";
+    document.getElementById("query").value = "";
+    document.getElementById("body").value = f.content || "";
+    document.getElementById("sample").value = f.name;
+    status.textContent = "Loaded transaction Bundle sample — click Invoke";
+  } catch (e) {
+    status.textContent = e.message;
+  }
+});
+
 function showTab(tab) {
   document.querySelectorAll(".tab").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
   document.getElementById("tab-demo").hidden = tab !== "demo";
