@@ -35,44 +35,154 @@ BRAND = "PILOTFISH  ·  FHIR R4 PLATFORM"
 BASE = "http://127.0.0.1:8111"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 ROUTES = [
-    ("0 — Keycloak JWT Auth", "0-keycloak-jwt-auth", "route0.png"),
-    ("1 — FHIR R4 REST Platform", "1-fhir-r4-rest-platform", "route1.png"),
-    ("2 — FHIR Outbound Client", "2-fhir-outbound-client", "route2.png"),
-    ("3 — FHIR Bulk Export", "3-fhir-bulk-export", "route3.png"),
-    ("3b — FHIR Bulk Export Worker", "3b-fhir-bulk-export-worker", "route3b.png"),
+    # Short routes — full flat diagram (no groups)
+    {
+        "title": "0 — Keycloak JWT Auth",
+        "route": "0-keycloak-jwt-auth",
+        "file": "route0.png",
+        "window": {"compact": (2200, 2800), "changed": (2400, 3600), "all": (2600, 4200)},
+    },
+    {
+        "title": "2 — FHIR Outbound Client",
+        "route": "2-fhir-outbound-client",
+        "file": "route2.png",
+        "window": {"compact": (2000, 1800), "changed": (2400, 3200), "all": (2600, 4200)},
+    },
+    # Route 1 — overview (collapsed groups) then detail pages
+    {
+        "title": "1 — FHIR R4 REST Platform (Overview)",
+        "route": "1-fhir-r4-rest-platform",
+        "file": "route1-overview.png",
+        "collapse": "all",
+        "window": {"compact": (2400, 3200), "changed": (2600, 3600), "all": (2800, 4000)},
+    },
+    {
+        "title": "1 · Ingress",
+        "route": "1-fhir-r4-rest-platform",
+        "file": "route1-ingress.png",
+        "group": "ingress",
+        "window": {"compact": (2200, 2600), "changed": (2400, 4200), "all": (2600, 5200)},
+    },
+    {
+        "title": "1 · Create",
+        "route": "1-fhir-r4-rest-platform",
+        "file": "route1-create.png",
+        "group": "create",
+        "window": {"compact": (2200, 2800), "changed": (2400, 4800), "all": (2600, 6000)},
+    },
+    {
+        "title": "1 · Update",
+        "route": "1-fhir-r4-rest-platform",
+        "file": "route1-update.png",
+        "group": "update",
+        "window": {"compact": (2200, 2600), "changed": (2400, 4400), "all": (2600, 5600)},
+    },
+    {
+        "title": "1 · Bundle Execute",
+        "route": "1-fhir-r4-rest-platform",
+        "file": "route1-bundle.png",
+        "group": "bundle",
+        "window": {"compact": (2200, 2400), "changed": (2400, 4000), "all": (2600, 5000)},
+    },
+    {
+        "title": "1 · Read",
+        "route": "1-fhir-r4-rest-platform",
+        "file": "route1-read.png",
+        "group": "read",
+        "window": {"compact": (2200, 2200), "changed": (2400, 3600), "all": (2600, 4400)},
+    },
+    {
+        "title": "1 · Search",
+        "route": "1-fhir-r4-rest-platform",
+        "file": "route1-search.png",
+        "group": "search",
+        "window": {"compact": (2200, 2000), "changed": (2400, 3200), "all": (2600, 4000)},
+    },
+    {
+        "title": "1 · Delete",
+        "route": "1-fhir-r4-rest-platform",
+        "file": "route1-delete.png",
+        "group": "delete",
+        "window": {"compact": (2200, 2200), "changed": (2400, 3600), "all": (2600, 4400)},
+    },
+    {
+        "title": "1 · Bulk Export Callout",
+        "route": "1-fhir-r4-rest-platform",
+        "file": "route1-bulk.png",
+        "group": "bulk-export",
+        "window": {"compact": (2200, 1800), "changed": (2400, 2800), "all": (2600, 3400)},
+    },
+    # Route 3
+    {
+        "title": "3 — FHIR Bulk Export (Overview)",
+        "route": "3-fhir-bulk-export",
+        "file": "route3-overview.png",
+        "collapse": "all",
+        "window": {"compact": (2200, 2400), "changed": (2400, 2800), "all": (2600, 3200)},
+    },
+    {
+        "title": "3 · Kickoff $export",
+        "route": "3-fhir-bulk-export",
+        "file": "route3-kickoff.png",
+        "group": "kickoff",
+        "window": {"compact": (2200, 2800), "changed": (2400, 4200), "all": (2600, 5200)},
+    },
+    {
+        "title": "3 · Export Status",
+        "route": "3-fhir-bulk-export",
+        "file": "route3-status.png",
+        "group": "status",
+        "window": {"compact": (2200, 2200), "changed": (2400, 3400), "all": (2600, 4200)},
+    },
+    {
+        "title": "3 · NDJSON Download",
+        "route": "3-fhir-bulk-export",
+        "file": "route3-file.png",
+        "group": "file-found",
+        "window": {"compact": (2200, 2200), "changed": (2400, 3400), "all": (2600, 4200)},
+    },
+    # Route 3b
+    {
+        "title": "3b — FHIR Bulk Export Worker (Overview)",
+        "route": "3b-fhir-bulk-export-worker",
+        "file": "route3b-overview.png",
+        "collapse": "all",
+        "window": {"compact": (2200, 2200), "changed": (2400, 2600), "all": (2600, 3000)},
+    },
+    {
+        "title": "3b · Worker Init",
+        "route": "3b-fhir-bulk-export-worker",
+        "file": "route3b-init.png",
+        "group": "worker-init",
+        "window": {"compact": (2200, 2000), "changed": (2400, 3200), "all": (2600, 4000)},
+    },
+    {
+        "title": "3b · Select NDJSON",
+        "route": "3b-fhir-bulk-export-worker",
+        "file": "route3b-select.png",
+        "group": "select-ndjson",
+        "window": {"compact": (2200, 1800), "changed": (2400, 2800), "all": (2600, 3400)},
+    },
+    {
+        "title": "3b · Per-type NDJSON Export",
+        "route": "3b-fhir-bulk-export-worker",
+        "file": "route3b-export.png",
+        "group": "export-ndjson",
+        "window": {"compact": (2200, 4200), "changed": (2400, 7000), "all": (2600, 9000)},
+    },
+    {
+        "title": "3b · Complete Job",
+        "route": "3b-fhir-bulk-export-worker",
+        "file": "route3b-complete.png",
+        "group": "complete-job",
+        "window": {"compact": (2200, 2600), "changed": (2400, 4200), "all": (2600, 5200)},
+    },
 ]
 MARGIN = 0.28 * inch
 # Single compact brand+title row
 HEADER_H = 0.36 * inch
 # Small overlap between vertical slices so connectors aren't lost at the tear line
 SLICE_OVERLAP_PX = 48
-
-# Window chrome size grows when inline config is shown.
-# Heights are generous so docs-mode full pipelines (Phases 3–6) aren't viewport-clipped.
-# Device scale stays 1: PDF downscales heavily; HiDPI balloons RAM without clarity gain.
-WINDOW_BY_CONFIG = {
-    "compact": {
-        "0-keycloak-jwt-auth": (2200, 2800),
-        "1-fhir-r4-rest-platform": (2800, 7000),
-        "2-fhir-outbound-client": (2000, 1800),
-        "3-fhir-bulk-export": (2400, 3600),
-        "3b-fhir-bulk-export-worker": (2400, 5000),
-    },
-    "changed": {
-        "0-keycloak-jwt-auth": (2400, 3600),
-        "1-fhir-r4-rest-platform": (3000, 11000),
-        "2-fhir-outbound-client": (2400, 3200),
-        "3-fhir-bulk-export": (2600, 4800),
-        "3b-fhir-bulk-export-worker": (2800, 9000),
-    },
-    "all": {
-        "0-keycloak-jwt-auth": (2600, 4200),
-        "1-fhir-r4-rest-platform": (3200, 14000),
-        "2-fhir-outbound-client": (2600, 4200),
-        "3-fhir-bulk-export": (2800, 5600),
-        "3b-fhir-bulk-export-worker": (3000, 11000),
-    },
-}
 
 
 def wait_health(timeout=30):
@@ -87,11 +197,21 @@ def wait_health(timeout=30):
     raise SystemExit("Web UI not reachable on :8111")
 
 
-def shot(route_id: str, dest: Path, size: tuple[int, int], config: str):
-    url = (
-        f"{BASE}/static/route-viewer/index.html"
-        f"?route={route_id}&mode=docs&layout=pipeline&bare=1&config={config}"
-    )
+def shot(route_id: str, dest: Path, size: tuple[int, int], config: str, *, collapse: str = "", group: str = ""):
+    qs = [
+        f"route={route_id}",
+        "mode=docs",
+        "layout=pipeline",
+        "bare=1",
+        f"config={config}",
+    ]
+    if collapse or group:
+        qs.append("groups=1")
+    if collapse:
+        qs.append(f"collapse={collapse}")
+    if group:
+        qs.append(f"group={group}")
+    url = f"{BASE}/static/route-viewer/index.html?{'&'.join(qs)}"
     cmd = [
         CHROME,
         "--headless=new",
@@ -280,19 +400,29 @@ def main():
     images = []
     if not args.skip_capture:
         wait_health()
-        sizes = WINDOW_BY_CONFIG[config]
-        for title, rid, name in ROUTES:
+        for entry in ROUTES:
+            title = entry["title"]
+            rid = entry["route"]
+            name = entry["file"]
             dest = SHOTS / name
-            size = sizes.get(rid, (2200, 4000))
-            print(f"Capturing {title} (config={config}, window={size[0]}x{size[1]})")
-            shot(rid, dest, size, config)
+            size = entry.get("window", {}).get(config) or (2200, 4000)
+            collapse = entry.get("collapse") or ""
+            group = entry.get("group") or ""
+            extra = ""
+            if collapse:
+                extra = f", collapse={collapse}"
+            elif group:
+                extra = f", group={group}"
+            print(f"Capturing {title} (config={config}, window={size[0]}x{size[1]}{extra})")
+            shot(rid, dest, size, config, collapse=collapse, group=group)
             trimmed = trim_diagram(Image.open(dest))
             trimmed.save(dest)
             print(f"  cropped -> {trimmed.size[0]}x{trimmed.size[1]}")
             images.append((title, dest))
     else:
-        for title, rid, name in ROUTES:
-            dest = SHOTS / name
+        for entry in ROUTES:
+            title = entry["title"]
+            dest = SHOTS / entry["file"]
             if not dest.exists():
                 raise SystemExit(f"Missing {dest}; run without --skip-capture")
             print(f"Using existing {dest} ({Image.open(dest).size})")

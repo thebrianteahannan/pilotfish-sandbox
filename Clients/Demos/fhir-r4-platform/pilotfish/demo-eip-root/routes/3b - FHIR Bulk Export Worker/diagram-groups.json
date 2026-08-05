@@ -1,0 +1,61 @@
+{
+  "groups": [
+    {
+      "id": "worker-init",
+      "title": "Worker Init",
+      "description": "Mark job in-progress + status.json",
+      "labels": [
+        "Init Worker Attrs",
+        "Mark Job In Progress",
+        "Load In Progress Status Body",
+        "Write In Progress Status File"
+      ]
+    },
+    {
+      "id": "select-ndjson",
+      "title": "Select NDJSON",
+      "description": "SQL STRING_AGG by ResourceType",
+      "labels": ["Select Ndjson By Job", "Extract All Type Ndjson Columns"]
+    },
+    {
+      "id": "export-ndjson",
+      "title": "Per-type NDJSON Export",
+      "description": "Patient…Organization FileWrite + output entries",
+      "labels": [
+        "Load Patient Ndjson",
+        "Write Patient Ndjson",
+        "Append Patient Output Entry",
+        "Load Observation Ndjson",
+        "Write Observation Ndjson",
+        "Append Observation Output Entry",
+        "Load Condition Ndjson",
+        "Write Condition Ndjson",
+        "Append Condition Output Entry",
+        "Load Encounter Ndjson",
+        "Write Encounter Ndjson",
+        "Append Encounter Output Entry",
+        "Load Practitioner Ndjson",
+        "Write Practitioner Ndjson",
+        "Append Practitioner Output Entry",
+        "Load Organization Ndjson",
+        "Write Organization Ndjson",
+        "Append Organization Output Entry"
+      ]
+    },
+    {
+      "id": "complete-job",
+      "title": "Complete Job",
+      "description": "Manifest + SQL completed + done marker",
+      "labels": [
+        "Build Completed Manifest",
+        "Load Manifest Body",
+        "Write Manifest Json",
+        "Write Completed Status File",
+        "Mark Job Completed",
+        "Worker Done Marker Body",
+        "Load Worker Done Body"
+      ],
+      "transports": ["Worker Done"]
+    }
+  ]
+}

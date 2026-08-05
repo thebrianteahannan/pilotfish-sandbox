@@ -377,6 +377,26 @@ def api_v2_route_xml(route_id: str):
     return Response((d / "route.v2.xml").read_text(encoding="utf-8", errors="replace"), mimetype="application/xml")
 
 
+@app.get("/api/v2/routes/<route_id>/diagram-groups.json")
+def api_v2_diagram_groups(route_id: str):
+    """Optional docs-only Processor Group definitions for route diagrams."""
+    d = resolve_route_dir(route_id)
+    if not d:
+        return Response("Not found", status=404)
+    path = d / "diagram-groups.json"
+    if not path.is_file():
+        return jsonify({"ok": True, "groups": []})
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return jsonify({"ok": False, "groups": [], "message": "Invalid diagram-groups.json"}), 500
+    if not isinstance(data, dict):
+        data = {"groups": data if isinstance(data, list) else []}
+    data.setdefault("ok", True)
+    data.setdefault("groups", [])
+    return jsonify(data)
+
+
 @app.get("/api/v2/routes/<route_id>/modules/<module_id>.xml")
 def api_v2_module_xml(route_id: str, module_id: str):
     if not _MODULE_ID.match(module_id):

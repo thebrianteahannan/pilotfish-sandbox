@@ -26,6 +26,7 @@ python3 tools/export_stakeholder_brief.py
 python3 tools/export_fhir_expert_critique_pdf.py
 python3 tools/export_fhir_aws_deploy_pdf.py
 python3 tools/export_route_diagrams.py --config compact
+# Overview pages collapse Processor Groups; following pages expand each group.
 python3 tools/export_test_plan_pdf.py
 python3 tools/run_interface_tests.py --wait
 # or after compose:

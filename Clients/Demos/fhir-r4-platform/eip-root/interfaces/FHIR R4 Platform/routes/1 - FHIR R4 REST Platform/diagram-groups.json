@@ -1,0 +1,141 @@
+{
+  "groups": [
+    {
+      "id": "ingress",
+      "title": "Ingress",
+      "description": "Normalize body, validate profile, Keycloak auth",
+      "labels": [
+        "Save Raw Body",
+        "Extract Body ResourceType",
+        "Extract Logical Id",
+        "Extract Bundle Interaction",
+        "Normalize Ids And Validation",
+        "HAPI FHIR Profile Validation",
+        "Call Keycloak JWT Auth Route"
+      ]
+    },
+    {
+      "id": "metadata",
+      "title": "Metadata",
+      "description": "CapabilityStatement response",
+      "labels": ["Load CapabilityStatement", "Metadata Status", "Metadata Headers"],
+      "transports": ["Metadata Response"]
+    },
+    {
+      "id": "bulk-export",
+      "title": "Bulk Export Callout",
+      "description": "Sync CallRoute → Bulk Ops",
+      "labels": ["Call FHIR Bulk Export Route", "Restore Bulk Body", "Bulk Headers"],
+      "transports": ["Bulk Export Response"]
+    },
+    {
+      "id": "bundle",
+      "title": "Bundle Execute",
+      "description": "Transaction / batch Bundle",
+      "labels": [
+        "Restore Bundle Body",
+        "Execute Bundle SQL",
+        "Extract Bundle Status",
+        "Map Bundle SQL To JSON",
+        "Set Bundle HTTP Status",
+        "Bundle Headers"
+      ],
+      "transports": ["Bundle Execute Response"]
+    },
+    {
+      "id": "create",
+      "title": "Create",
+      "description": "Persist + reindex + 201 Location",
+      "labels": [
+        "Restore Body For Persist",
+        "Write FHIR Store File",
+        "Upsert Resource SQL",
+        "Reindex Search Tokens",
+        "Restore Body For Response",
+        "Create Status",
+        "Create Headers",
+        "Create Location"
+      ],
+      "transports": ["Create Response"]
+    },
+    {
+      "id": "update",
+      "title": "Update",
+      "description": "Upsert + reindex + 200",
+      "labels": [
+        "Restore Body For Update",
+        "Write FHIR Store File Update",
+        "Upsert Resource SQL Update",
+        "Reindex Search Tokens Update",
+        "Restore Body For Update Response",
+        "Update Status",
+        "Update Headers"
+      ],
+      "transports": ["Update Response"]
+    },
+    {
+      "id": "read",
+      "title": "Read",
+      "description": "SQL select → FHIR JSON",
+      "labels": [
+        "Select Resource SQL",
+        "Detect SQL Hit",
+        "Map SQL To FHIR JSON",
+        "Set Read Status Code",
+        "Read Headers"
+      ],
+      "transports": ["Read Response"]
+    },
+    {
+      "id": "search",
+      "title": "Search",
+      "description": "Token search → searchset Bundle",
+      "labels": ["Search Resources SQL", "Map SQL To Searchset", "Search Status", "Search Headers"],
+      "transports": ["Search Response"]
+    },
+    {
+      "id": "delete",
+      "title": "Delete",
+      "description": "Soft delete + outcome",
+      "labels": [
+        "Soft Delete SQL",
+        "Delete Search Tokens",
+        "Delete Outcome",
+        "Delete Status",
+        "Delete Headers"
+      ],
+      "transports": ["Delete Response"]
+    },
+    {
+      "id": "unauthorized",
+      "title": "Unauthorized",
+      "description": "401 OperationOutcome",
+      "labels": [
+        "Load 401 Fallback",
+        "Restore Auth Outcome",
+        "Unauthorized Status",
+        "Unauthorized Headers"
+      ],
+      "transports": ["Unauthorized Response"]
+    },
+    {
+      "id": "bad-request",
+      "title": "Bad Request",
+      "description": "400 validation outcome",
+      "labels": [
+        "Load 400 Fallback",
+        "Restore Validation Outcome",
+        "BadRequest Status",
+        "BadRequest Headers"
+      ],
+      "transports": ["Bad Request Response"]
+    },
+    {
+      "id": "not-supported",
+      "title": "Not Supported",
+      "description": "501 fallback",
+      "labels": ["Load 501", "NotSupported Status", "NotSupported Headers"],
+      "transports": ["Not Supported Response"]
+    }
+  ]
+}

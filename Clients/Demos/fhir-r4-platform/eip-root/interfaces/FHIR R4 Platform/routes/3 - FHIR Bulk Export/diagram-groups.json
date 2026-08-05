@@ -1,0 +1,58 @@
+{
+  "groups": [
+    {
+      "id": "kickoff",
+      "title": "Kickoff $export",
+      "description": "Accept job, write status, start worker",
+      "labels": [
+        "Prepare Kickoff Attrs",
+        "Prepare Kickoff Urls And Body",
+        "Prepare Accepted Status Json",
+        "Insert Export Job",
+        "Load Status Json Body",
+        "Write Accepted Status File",
+        "Start Bulk Worker Async",
+        "Restore Kickoff Body"
+      ],
+      "transports": ["Kickoff Response"]
+    },
+    {
+      "id": "status",
+      "title": "Export Status",
+      "description": "Poll job → 202 / 200 manifest",
+      "labels": [
+        "Select Export Job Status",
+        "Extract Job Status Columns",
+        "Map Job Status To Bulk Response",
+        "Restore Status Body"
+      ],
+      "transports": ["Status Response"]
+    },
+    {
+      "id": "file-found",
+      "title": "NDJSON Download",
+      "description": "Serve {type}.ndjson",
+      "labels": [
+        "Resolve Export File Path",
+        "Load Ndjson File",
+        "Capture Ndjson As BulkBody",
+        "Set File Download Status"
+      ],
+      "transports": ["File Found Response"]
+    },
+    {
+      "id": "file-missing",
+      "title": "NDJSON Missing",
+      "description": "404 OperationOutcome",
+      "labels": ["Set File Missing Outcome", "Restore Missing File Body"],
+      "transports": ["File Missing Response"]
+    },
+    {
+      "id": "bad-bulk",
+      "title": "Bad Bulk Op",
+      "description": "Unsupported bulk ResourceName",
+      "labels": ["Set Bad Bulk Outcome", "Restore Bad Bulk Body"],
+      "transports": ["Bad Bulk Response"]
+    }
+  ]
+}
