@@ -202,8 +202,11 @@ body.routes-mode .nav { display: none; }
 .routes-tab {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 4.75rem);
-  min-height: 420px;
+  height: auto;
+  min-height: calc(100vh - 4.75rem);
+  max-height: none;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: 0 0.75rem 0.5rem;
   gap: 0.45rem;
 }
@@ -231,13 +234,13 @@ body.routes-mode .nav { display: none; }
 }
 #route-viewer-frame,
 .route-viewer-frame {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 6.5rem);
+  min-height: calc(100vh - 6.5rem);
   border: 1px solid var(--line);
   border-radius: 12px;
   background: #e8edf5;
-  min-height: 0;
 }
 
 @media (max-width: 960px) {

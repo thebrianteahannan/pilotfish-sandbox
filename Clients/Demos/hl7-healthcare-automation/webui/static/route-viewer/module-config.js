@@ -509,11 +509,11 @@
     });
     if (!shown.length) lineUnits = 1;
     return {
-      width: hasOgnl ? 400 : 340,
+      width: hasOgnl ? 420 : 360,
       height:
-        76 +
-        lineUnits * 13 +
-        (entries.length > 14 ? 16 : 0) +
+        84 +
+        lineUnits * 18 +
+        (entries.length > 14 ? 18 : 0) +
         (entries.length === 0 ? 8 : 0),
       rows: lineUnits,
     };

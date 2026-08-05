@@ -146,7 +146,24 @@ document.querySelectorAll(".tab").forEach((btn) => btn.addEventListener("click",
 let routesLoaded = false;
 let activeRouteId = "";
 
+
+function bindRouteViewerResize() {
+  if (window.__routeViewerResizeBound) return;
+  window.__routeViewerResizeBound = true;
+  window.addEventListener("message", (ev) => {
+    const data = ev.data || {};
+    if (data.type !== "route-viewer-size") return;
+    const frame = document.getElementById("route-viewer-frame");
+    if (!frame || !data.height) return;
+    const minH = Math.max(360, Math.floor(window.innerHeight - 120));
+    const h = Math.max(Math.ceil(data.height), minH);
+    frame.style.height = `${h}px`;
+    frame.style.minHeight = `${h}px`;
+  });
+}
+
 async function loadRoutesTab() {
+  bindRouteViewerResize();
   const status = document.getElementById("routes-status");
   const select = document.getElementById("route-select");
   const frame = document.getElementById("route-viewer-frame");
@@ -159,11 +176,15 @@ async function loadRoutesTab() {
     routesLoaded = true;
     select.addEventListener("change", () => {
       activeRouteId = select.value;
+      frame.style.height = "";
+      frame.style.minHeight = "";
       frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(activeRouteId)}&mode=docs&layout=${layout}&config=changed`;
     });
   }
   if (select.options.length) {
     activeRouteId = select.value;
+    frame.style.height = "";
+    frame.style.minHeight = "";
     frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(activeRouteId)}&mode=docs&layout=${layout}&config=changed`;
     status.textContent = `${select.options.length} route(s)`;
   } else {

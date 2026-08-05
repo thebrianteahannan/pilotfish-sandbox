@@ -87,6 +87,21 @@ document.getElementById("refresh-btn").addEventListener("click", () => {
   refresh().catch((err) => setStatus(err.message, true));
 });
 
+function bindRouteViewerResize() {
+  if (window.__routeViewerResizeBound) return;
+  window.__routeViewerResizeBound = true;
+  window.addEventListener("message", (ev) => {
+    const data = ev.data || {};
+    if (data.type !== "route-viewer-size") return;
+    const frame = document.getElementById("route-viewer-frame");
+    if (!frame || !data.height) return;
+    const minH = Math.max(360, Math.floor(window.innerHeight - 120));
+    const h = Math.max(Math.ceil(data.height), minH);
+    frame.style.height = `${h}px`;
+    frame.style.minHeight = `${h}px`;
+  });
+}
+
 document.querySelectorAll(".main-tab").forEach((btn) => {
   btn.addEventListener("click", () => {
     const tab = btn.dataset.mainTab;
@@ -103,8 +118,19 @@ document.querySelectorAll(".main-tab").forEach((btn) => {
     document.body.classList.toggle("routes-mode", tab === "routes" || tab === "xslt");
     const nav = document.getElementById("demo-nav");
     if (nav) nav.hidden = tab !== "demo";
+    if (tab === "routes") {
+      bindRouteViewerResize();
+      const frame = document.getElementById("route-viewer-frame");
+      if (frame && (!frame.dataset.docsSrc || frame.src.includes("about:blank"))) {
+        frame.style.height = "";
+        frame.style.minHeight = "";
+        frame.src = "/static/route-viewer/index.html?mode=docs&layout=pipeline&config=changed";
+        frame.dataset.docsSrc = "1";
+      }
+    }
   });
 });
 
+bindRouteViewerResize();
 loadSamples().catch(console.error);
 refresh().catch(console.error);

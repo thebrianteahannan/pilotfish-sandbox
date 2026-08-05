@@ -53,7 +53,10 @@
     locator: document.getElementById("minimap-locator"),
   };
 
-  if (docsMode) document.body.classList.add("docs-mode");
+  if (docsMode) {
+    document.documentElement.classList.add("docs-mode");
+    document.body.classList.add("docs-mode");
+  }
   if (docsMode && params.get("bare") === "1") document.body.classList.add("docs-bare");
 
   function fallbackKind(label, inboundCount) {
@@ -504,6 +507,89 @@
     el.config.innerHTML = window.RouteModuleConfig.renderSummary(mod, state.route.name, n);
   }
 
+  /** Prevent remasure→relayout feedback loops for tall docs pipelines. */
+  let docsMeasurePass = 0;
+
+  function applyDocsWorldSize(worldW, worldH) {
+    el.world.style.width = `${worldW}px`;
+    el.world.style.height = `${worldH}px`;
+    el.nodesLayer.style.width = el.world.style.width;
+    el.nodesLayer.style.height = el.world.style.height;
+    el.svg.setAttribute("width", worldW);
+    el.svg.setAttribute("height", worldH);
+    el.svg.style.width = el.world.style.width;
+    el.svg.style.height = el.world.style.height;
+    el.editor.style.height = `${worldH}px`;
+    el.editor.style.minHeight = `${worldH}px`;
+    const container = document.querySelector(".route-graph-container");
+    if (container) {
+      container.style.height = `${worldH}px`;
+      container.style.minHeight = `${worldH}px`;
+    }
+    document.documentElement.style.height = "auto";
+    document.documentElement.style.overflow = "visible";
+    document.body.style.height = "auto";
+    document.body.style.overflow = "visible";
+    notifyParentSize(worldW, worldH);
+  }
+
+  /**
+   * Inline config estimates can undershoot OGNL/SQL rows. Unlock height, measure
+   * real painted size, bump node.height, then relayout once so columns don't overlap.
+   */
+  function measureAndExpandDocsLayout(worldW, worldH) {
+    if (!docsMode || docsMeasurePass > 0) {
+      applyDocsWorldSize(worldW, worldH);
+      return;
+    }
+    requestAnimationFrame(() => {
+      let grew = false;
+      el.nodesLayer.querySelectorAll(".route-node").forEach((nodeEl) => {
+        const n = state.nodes.get(nodeEl.dataset.id);
+        if (!n) return;
+        const lockedH = nodeEl.style.height;
+        const lockedW = nodeEl.style.width;
+        nodeEl.style.height = "auto";
+        nodeEl.style.overflow = "visible";
+        const measuredH = Math.ceil(nodeEl.scrollHeight);
+        const measuredW = Math.ceil(Math.max(nodeEl.scrollWidth, nodeEl.getBoundingClientRect().width));
+        nodeEl.style.height = lockedH;
+        nodeEl.style.width = lockedW;
+        nodeEl.style.overflow = "";
+        if (measuredH > n.height + 2) {
+          n.height = measuredH;
+          grew = true;
+        }
+        if (measuredW > n.width + 2) {
+          n.width = measuredW;
+          grew = true;
+        }
+      });
+
+      if (grew) {
+        docsMeasurePass = 1;
+        if (layoutMode === "pipeline") {
+          autoLayoutPipeline(state.route, { keepSizes: true });
+        } else if (layoutMode === "wrap") {
+          autoLayoutWrap(state.route, COLS, { keepSizes: true });
+        }
+        state.nodes = new Map(state.route.nodes.map((n) => [n.id, n]));
+        renderNodes();
+        renderConnections();
+        return;
+      }
+
+      // Even without size changes, grow world to any painted overflow past estimates.
+      let maxBottom = worldH;
+      let maxRight = worldW;
+      el.nodesLayer.querySelectorAll(".route-node").forEach((nodeEl) => {
+        maxBottom = Math.max(maxBottom, nodeEl.offsetTop + nodeEl.offsetHeight + PAD);
+        maxRight = Math.max(maxRight, nodeEl.offsetLeft + nodeEl.offsetWidth + PAD);
+      });
+      applyDocsWorldSize(Math.max(worldW, maxRight), Math.max(worldH, maxBottom));
+    });
+  }
+
   function renderNodes() {
     const b = bounds(state.route.nodes);
     const offsetX = -b.minX + PAD;
@@ -568,22 +654,18 @@
     });
 
     if (docsMode) {
-      el.editor.style.height = `${worldH}px`;
-      el.editor.style.minHeight = `${worldH}px`;
-      const container = document.querySelector(".route-graph-container");
-      if (container) {
-        container.style.height = `${worldH}px`;
-        container.style.minHeight = `${worldH}px`;
+      if (docsMeasurePass > 0) {
+        applyDocsWorldSize(worldW, worldH);
+      } else {
+        measureAndExpandDocsLayout(worldW, worldH);
       }
-      document.documentElement.style.height = "auto";
-      document.body.style.height = "auto";
-      notifyParentSize(worldW, worldH);
     }
   }
 
   function notifyParentSize(worldW, worldH) {
     const top = document.querySelector(".topbar");
-    const h = worldH + (top ? top.offsetHeight : 40) + 8;
+    const topH = top ? Math.max(top.offsetHeight, top.scrollHeight) : 40;
+    const h = Math.ceil(worldH + topH + 16);
     window.parent.postMessage(
       { type: "route-viewer-size", route: routeKey, width: worldW, height: h },
       "*"
@@ -709,6 +791,7 @@
 
   function relayout() {
     if (!state.route) return;
+    docsMeasurePass = 0;
     if (layoutMode === "pipeline") {
       autoLayoutPipeline(state.route, { keepSizes: true });
     } else if (layoutMode === "wrap") {

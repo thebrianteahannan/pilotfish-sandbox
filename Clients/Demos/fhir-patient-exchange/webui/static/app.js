@@ -192,16 +192,36 @@ function setMainTab(tab) {
 }
 
 function loadRouteFrame(routeId) {
+  bindRouteViewerResize();
   const frame = document.getElementById("route-viewer-frame");
   if (!routeId) {
     frame.src = "about:blank";
     return;
   }
   const layout = "pipeline";
-  frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(routeId)}&layout=${encodeURIComponent(layout)}&cols=4`;
+  frame.style.height = "";
+  frame.style.minHeight = "";
+  frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(routeId)}&mode=docs&layout=${encodeURIComponent(layout)}&cols=4`;
+}
+
+
+function bindRouteViewerResize() {
+  if (window.__routeViewerResizeBound) return;
+  window.__routeViewerResizeBound = true;
+  window.addEventListener("message", (ev) => {
+    const data = ev.data || {};
+    if (data.type !== "route-viewer-size") return;
+    const frame = document.getElementById("route-viewer-frame");
+    if (!frame || !data.height) return;
+    const minH = Math.max(360, Math.floor(window.innerHeight - 120));
+    const h = Math.max(Math.ceil(data.height), minH);
+    frame.style.height = `${h}px`;
+    frame.style.minHeight = `${h}px`;
+  });
 }
 
 async function loadRoutesTab() {
+  bindRouteViewerResize();
   const status = document.getElementById("routes-status");
   const select = document.getElementById("route-select");
   if (!routesLoaded) {

@@ -40,14 +40,19 @@ body {
 }
 
 /* Document / screenshot / PDF mode: expand to content, hide chrome */
+html.docs-mode,
 body.docs-mode {
   height: auto !important;
   min-height: 0;
+  overflow: visible !important;
+}
+body.docs-mode {
   background: #ffffff;
 }
 body.docs-mode .app {
   display: block;
   height: auto !important;
+  overflow: visible !important;
 }
 body.docs-mode .workspace {
   display: block;

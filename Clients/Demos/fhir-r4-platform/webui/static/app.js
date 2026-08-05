@@ -168,21 +168,42 @@ function showTab(tab) {
 document.querySelectorAll(".tab").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
 
 let routesLoaded = false;
+
+function bindRouteViewerResize() {
+  if (window.__routeViewerResizeBound) return;
+  window.__routeViewerResizeBound = true;
+  window.addEventListener("message", (ev) => {
+    const data = ev.data || {};
+    if (data.type !== "route-viewer-size") return;
+    const frame = document.getElementById("route-viewer-frame");
+    if (!frame || !data.height) return;
+    const minH = Math.max(360, Math.floor(window.innerHeight - 120));
+    const h = Math.max(Math.ceil(data.height), minH);
+    frame.style.height = `${h}px`;
+    frame.style.minHeight = `${h}px`;
+  });
+}
+
 async function loadRoutesTab() {
   const select = document.getElementById("route-select");
   const frame = document.getElementById("route-viewer-frame");
   const status = document.getElementById("routes-status");
   const layout = "pipeline";
+  bindRouteViewerResize();
   if (!routesLoaded) {
     const data = await getJson("/api/v2/routes");
     select.innerHTML = (data.routes || []).map((r) => `<option value="${r.id}">${escapeHtml(r.name)}</option>`).join("");
     routesLoaded = true;
     select.addEventListener("change", () => {
       if (!select.value) return;
+      frame.style.height = "";
+      frame.style.minHeight = "";
       frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(select.value)}&mode=docs&layout=${layout}&config=changed`;
     });
   }
   if (select.options.length) {
+    frame.style.height = "";
+    frame.style.minHeight = "";
     frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(select.value)}&mode=docs&layout=${layout}&config=changed`;
     status.textContent = `${select.options.length} route(s)`;
   } else status.textContent = "No route.v2.xml yet";
