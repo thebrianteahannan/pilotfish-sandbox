@@ -71,6 +71,7 @@
         <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a>
         <a class="btn" href="/documents/capability-brief.pdf" target="_blank" rel="noreferrer">Capability Brief</a>
         <a class="btn" href="/documents/expert-due-diligence.pdf" target="_blank" rel="noreferrer">Expert Due Diligence</a>
+        <a class="btn" href="/documents/aws-deployment-guide.pdf" target="_blank" rel="noreferrer">AWS Deploy Guide</a>
       </div>
       <p id="status" class="status"></p>
       <pre id="result" class="log">Result…</pre>
@@ -135,7 +136,7 @@
     {% if lan_hint %}<p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>{% endif %}
     <p class="sub muted">PF: <code>{{ fhir_public_base }}</code></p>
     <p class="sub muted">Remote: <a href="{{ fhir_remote_base }}" target="_blank" rel="noreferrer"><code>{{ fhir_remote_base }}</code></a></p>
-    <p class="sub muted">See <a href="/documents/capability-brief.pdf" target="_blank" rel="noreferrer">Capability Brief</a> (stakeholder), <a href="/documents/expert-due-diligence.pdf" target="_blank" rel="noreferrer">Expert Due Diligence</a> (hard FHIR-server questions), <a href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a> (technical), and <code>DESIGN.md</code> for Phase 6 scope and roadmap. Keycloak: <code>{{ oauth_token_url }}</code></p>
+    <p class="sub muted">See <a href="/documents/capability-brief.pdf" target="_blank" rel="noreferrer">Capability Brief</a> (stakeholder), <a href="/documents/expert-due-diligence.pdf" target="_blank" rel="noreferrer">Expert Due Diligence</a> (hard FHIR-server questions), <a href="/documents/aws-deployment-guide.pdf" target="_blank" rel="noreferrer">AWS Deploy Guide</a> (real environment), <a href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a> (technical), and <code>DESIGN.md</code> for Phase 6 scope and roadmap. Keycloak: <code>{{ oauth_token_url }}</code></p>
   </main>
 
   <script src="/static/app.js"></script>

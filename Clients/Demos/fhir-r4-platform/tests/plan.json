@@ -264,6 +264,13 @@
           "expect": { "status": 200 }
         },
         {
+          "id": "aws-deployment-guide-pdf",
+          "name": "AWS Deployment Guide PDF served",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/documents/aws-deployment-guide.pdf" },
+          "expect": { "status": 200 }
+        },
+        {
           "id": "route-pdf",
           "name": "Route diagrams PDF served",
           "type": "http",
