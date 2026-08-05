@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="33bc5f5e-2c7f-4acf-9680-fcb580eefa93" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="57dcd3c3-fa95-4bf0-8d45-524ebcdebc97" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="b5b4510d-6d29-4c57-9519-5713d5d5c26a" name="Rule 1 - Post 270 To Payer" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="966bb325-4632-450c-bbd4-d098e6c8b342" name="Rule 2 - Method Not Allowed" type="XPATH">
+               <condition>true()</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

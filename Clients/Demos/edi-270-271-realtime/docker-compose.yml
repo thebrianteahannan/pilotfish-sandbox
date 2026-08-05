@@ -1,0 +1,57 @@
+services:
+  mock-payer:
+    build:
+      context: ./mock-payer
+    image: pilotfish-edi270rt-mock-payer:latest
+    container_name: pf-edi270rt-mock-payer
+    restart: unless-stopped
+    ports:
+      - "8211:8210"
+
+  pilotfish:
+    build:
+      context: ./pilotfish
+    image: pilotfish-edi270-271-realtime:23R1
+    container_name: pf-edi270rt-pilotfish
+    restart: unless-stopped
+    depends_on:
+      - mock-payer
+    environment:
+      CATALINA_OPTS: "-Xms512M -Xmx2048M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8120:8080"
+    volumes:
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+
+  webui:
+    build:
+      context: ./webui
+    image: pilotfish-edi270rt-webui:latest
+    container_name: pf-edi270rt-webui
+    restart: unless-stopped
+    depends_on:
+      - pilotfish
+      - mock-payer
+    environment:
+      WEBUI_PORT: "8121"
+      OUTPUT_DIR: /output
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      ROUTE_PDF_NAME: EDI270_271_Realtime_V2_Route_Diagrams.pdf
+      DIFF_PDF_NAME: EDI270_271_Orig_vs_Realtime_Differences.pdf
+      CAPABILITY_PDF_NAME: EDI270_271_Realtime_Capability_Brief.pdf
+      ENV_SETTINGS_FILE: /environment-settings.conf
+      LAN_HINT: "http://192.168.68.52:8121/"
+      PF_ELIGIBILITY_BASE_URL: "http://pilotfish:8080/eip/rest/eligibility"
+      PF_PUBLIC_BASE_URL: "http://192.168.68.52:8120/eip/rest/eligibility"
+      MOCK_PAYER_PUBLIC_URL: "http://192.168.68.52:8211/x12/270"
+      DEMO_MODE: "realtime"
+    ports:
+      - "8121:8121"
+    volumes:
+      - ./output:/output:ro
+      - ./documents:/documents:ro
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/environment-settings.conf:ro
+      - ./eip-root/interfaces/EDI 270 271 Realtime/routes:/routes:ro
