@@ -1,0 +1,79 @@
+{
+  "interface": "CSV to JSON",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/csv-to-json",
+  "started_at": "2026-08-05T14:24:39.308930+00:00",
+  "finished_at": "2026-08-05T14:24:39.399389+00:00",
+  "summary": {
+    "pass": 5,
+    "fail": 2,
+    "skip": 0,
+    "error": 0,
+    "total": 7
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 22,
+      "message": "UI OK (http://127.0.0.1:8109/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 18,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 12,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "drop-sample",
+      "name": "Copy sample CSV into inbound",
+      "suite": "Convert sample",
+      "status": "pass",
+      "duration_ms": 24,
+      "message": "ok",
+      "detail": ""
+    },
+    {
+      "id": "json-out",
+      "name": "JSON output appears",
+      "suite": "Convert sample",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/csv-to-json/output/json/SAMPLE-01_patients.json",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF",
+      "suite": "Documents",
+      "status": "fail",
+      "duration_ms": 6,
+      "message": "expected HTTP 200, got 404",
+      "detail": "Route design PDF not found. Run: python3 tools/export_route_diagrams.py --config changed"
+    },
+    {
+      "id": "brief-pdf",
+      "name": "Capability Brief PDF",
+      "suite": "Documents",
+      "status": "fail",
+      "duration_ms": 4,
+      "message": "expected HTTP 200, got 404",
+      "detail": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>\n"
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/csv-to-json/tests/plan.json"
+}

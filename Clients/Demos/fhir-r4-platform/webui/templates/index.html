@@ -14,6 +14,7 @@
         <button type="button" class="tab active" data-tab="demo">Demo</button>
         <button type="button" class="tab" data-tab="routes">Routes</button>
         {% if has_xslt %}<button type="button" class="tab" data-tab="xslt">XSLT</button>{% endif %}
+        <button type="button" class="tab" data-tab="tests">Tests</button>
         <button type="button" class="tab" data-tab="info">Info</button>
       </nav>
     </div>
@@ -100,6 +101,31 @@
     </div>
   </div>
   {% endif %}
+
+  <main id="tab-tests" class="panel tests-tab" hidden>
+    <div class="tests-toolbar">
+      <h2 style="margin:0;">Interface tests</h2>
+      <button type="button" id="btn-tests-refresh" class="btn">Refresh results</button>
+      <a class="btn" href="/documents/test-plan.pdf" target="_blank" rel="noreferrer">Test Plan PDF</a>
+      <a class="btn" href="/documents/test-results.html" target="_blank" rel="noreferrer">Results HTML</a>
+      <span id="tests-summary" class="muted">No results yet</span>
+    </div>
+    <p class="muted" style="margin:.35rem 0 .75rem;">
+      Run on the demo host (not inside Docker):
+      <code>python3 tools/run_interface_tests.py --wait</code>
+      · watch mode: <code>python3 tools/run_interface_tests.py --watch</code>
+    </p>
+    <div class="table-wrap">
+      <table id="tests-table">
+        <thead>
+          <tr><th>Status</th><th>Suite</th><th>Test</th><th>Message</th><th>ms</th></tr>
+        </thead>
+        <tbody id="tests-body">
+          <tr><td colspan="5" class="muted">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
 
   <main id="tab-info" class="panel info-tab" hidden>
     <h1>Expandable FHIR server + outbound client</h1>

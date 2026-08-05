@@ -30,6 +30,8 @@ ROUTE_PDF_NAME = os.environ.get("ROUTE_PDF_NAME", "FHIR_R4_Platform_V2_Route_Dia
 CAPABILITY_PDF_NAME = os.environ.get(
     "CAPABILITY_PDF_NAME", "FHIR_R4_Platform_Capability_Brief.pdf"
 )
+TEST_PLAN_PDF_NAME = os.environ.get("TEST_PLAN_PDF_NAME", "FHIR_R4_Platform_Test_Plan.pdf")
+TEST_RESULTS_NAME = os.environ.get("TEST_RESULTS_NAME", "test-results.json")
 WEBUI_PORT = int(os.environ.get("WEBUI_PORT", "8111"))
 LAN_HINT = os.environ.get("LAN_HINT", "")
 FHIR_BASE_URL = os.environ.get("FHIR_BASE_URL", "http://pilotfish:8080/eip/rest/fhir").rstrip("/")
@@ -440,6 +442,35 @@ def capability_pdf_alias():
         "Capability brief not generated yet. Run: python3 tools/export_stakeholder_brief.py",
         status=404,
     )
+
+
+@app.get("/documents/test-plan.pdf")
+def test_plan_pdf_alias():
+    path = DOCUMENTS_DIR / TEST_PLAN_PDF_NAME
+    if path.is_file():
+        return send_file(path)
+    return Response(
+        "Test plan PDF not generated yet. Run: python3 tools/export_test_plan_pdf.py",
+        status=404,
+    )
+
+
+@app.get("/api/v2/tests/results")
+def tests_results():
+    path = DOCUMENTS_DIR / TEST_RESULTS_NAME
+    if not path.is_file():
+        return jsonify(
+            {
+                "ok": False,
+                "message": "No results yet. On the host run: python3 tools/run_interface_tests.py --wait",
+            }
+        )
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return jsonify({"ok": False, "message": "test-results.json is invalid JSON"}), 500
+    data["ok"] = True
+    return jsonify(data)
 
 
 if __name__ == "__main__":

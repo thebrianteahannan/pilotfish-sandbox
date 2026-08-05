@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "interface": "EDI 835 OCI Bucket",
+  "description": "SFTP 835 poll \u2192 archive/stage \u2192 ST split JSON \u2192 OCI object storage.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8105",
+    "eip": "http://127.0.0.1:8104/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8105/",
+    "http://127.0.0.1:4599/_floci-oci/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": {
+            "url": "{webui}/"
+          },
+          "expect": {
+            "status": 200
+          }
+        },
+        {
+          "id": "status",
+          "name": "Status API",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "{webui}/api/status"
+          },
+          "expect": {
+            "status": 200
+          }
+        },
+        {
+          "id": "oci",
+          "name": "floci OCI health",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "http://127.0.0.1:4599/_floci-oci/health"
+          },
+          "expect": {
+            "status": 200
+          }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "{webui}/api/v2/routes"
+          },
+          "expect": {
+            "status": 200,
+            "contains": [
+              "routes"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

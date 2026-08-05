@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "interface": "HL7 Healthcare Automation",
+  "description": "Directory HL7 ingest \u2192 validate \u2192 SQL + clearinghouse fan-out.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8097",
+    "eip": "http://127.0.0.1:8096/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8097/",
+    "http://127.0.0.1:8097/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": {
+            "url": "{webui}/"
+          },
+          "expect": {
+            "status": 200
+          }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "{webui}/api/health"
+          },
+          "expect": {
+            "status": 200
+          }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "{webui}/api/v2/routes"
+          },
+          "expect": {
+            "status": 200,
+            "contains": [
+              "routes"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+{
+  "version": 1,
+  "interface": "FHIR R4 Expandable Platform",
+  "short_name": "FHIR_R4_Platform",
+  "description": "Automated verification for Phase 1–6: metadata, OAuth write protection, CRUD/search, Bundle transaction/batch, Bulk $export, validation failures, Web UI chrome, and stakeholder documents.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8111",
+    "fhir": "http://127.0.0.1:8110/eip/rest/fhir",
+    "token": "http://127.0.0.1:8112/realms/fhir-demo/protocol/openid-connect/token",
+    "eip": "http://127.0.0.1:8110/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8111/",
+    "http://127.0.0.1:8110/eip/rest/fhir/metadata",
+    "http://127.0.0.1:8112/realms/fhir-demo"
+  ],
+  "wait_timeout_sec": 120,
+  "auth": {
+    "client_credentials": {
+      "client_id": "fhir-r4-platform",
+      "client_secret": "fhir-demo-secret"
+    }
+  },
+  "suites": [
+    {
+      "id": "platform",
+      "name": "Platform health",
+      "description": "Core services are reachable before functional checks.",
+      "tests": [
+        {
+          "id": "webui-home",
+          "name": "Web UI home loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["FHIR", "PilotFish"] }
+        },
+        {
+          "id": "metadata",
+          "name": "FHIR CapabilityStatement metadata",
+          "type": "http",
+          "request": { "method": "GET", "url": "{fhir}/metadata" },
+          "expect": { "status": 200, "contains": ["CapabilityStatement", "Patient"] }
+        },
+        {
+          "id": "keycloak-realm",
+          "name": "Keycloak realm endpoint responds",
+          "type": "http",
+          "request": { "method": "GET", "url": "http://127.0.0.1:8112/realms/fhir-demo" },
+          "expect": { "status": 200, "contains": ["fhir-demo"] }
+        }
+      ]
+    },
+    {
+      "id": "auth",
+      "name": "Authorization",
+      "tests": [
+        {
+          "id": "unauth-create",
+          "name": "Unauthenticated Patient create returns 401",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{fhir}/Patient",
+            "headers": { "Content-Type": "application/fhir+json" },
+            "body_file": "samples/Patient_alice.json"
+          },
+          "expect": { "status": 401 }
+        },
+        {
+          "id": "fetch-token",
+          "name": "Fetch Keycloak client_credentials token",
+          "type": "oauth",
+          "request": {
+            "token_url": "{token}",
+            "client_id": "{auth_client_id}",
+            "client_secret": "{auth_client_secret}"
+          },
+          "store_as": "token"
+        }
+      ]
+    },
+    {
+      "id": "crud-search",
+      "name": "CRUD & search",
+      "tests": [
+        {
+          "id": "create-patient",
+          "name": "Create Patient with Bearer",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{fhir}/Patient",
+            "headers": { "Content-Type": "application/fhir+json" },
+            "body_file": "samples/Patient_alice.json",
+            "auth_bearer_var": "token"
+          },
+          "expect": { "status_in": [200, 201], "contains": ["Patient", "pat-alice-001"] }
+        },
+        {
+          "id": "read-patient",
+          "name": "Read Patient pat-alice-001",
+          "type": "http",
+          "request": { "method": "GET", "url": "{fhir}/Patient/pat-alice-001" },
+          "expect": { "status": 200, "contains": ["pat-alice-001"] }
+        },
+        {
+          "id": "search-family",
+          "name": "Search Patient family=Smith",
+          "type": "http",
+          "request": { "method": "GET", "url": "{fhir}/Patient?family=Smith" },
+          "expect": { "status": 200, "regex": ["\"total\"\\s*:\\s*[1-9]"] }
+        },
+        {
+          "id": "create-obs",
+          "name": "Create Observation",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{fhir}/Observation",
+            "headers": { "Content-Type": "application/fhir+json" },
+            "body_file": "samples/Observation_heart_rate.json",
+            "auth_bearer_var": "token"
+          },
+          "expect": { "status_in": [200, 201], "contains": ["Observation"] }
+        },
+        {
+          "id": "search-obs",
+          "name": "Search Observation by patient+code",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "{fhir}/Observation?patient=Patient/pat-alice-001&code=8867-4"
+          },
+          "expect": { "status": 200, "contains": ["obs-hr-001"] }
+        }
+      ]
+    },
+    {
+      "id": "bundle",
+      "name": "Bundle transaction/batch",
+      "tests": [
+        {
+          "id": "txn-bundle",
+          "name": "Transaction Bundle persists entries",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{fhir}/Bundle",
+            "headers": { "Content-Type": "application/fhir+json" },
+            "body_file": "samples/Bundle_transaction_patient_obs.json",
+            "auth_bearer_var": "token"
+          },
+          "expect": { "status": 200, "contains": ["transaction-response", "pat-txn-001"] }
+        },
+        {
+          "id": "txn-readback",
+          "name": "Transaction Patient readable",
+          "type": "http",
+          "request": { "method": "GET", "url": "{fhir}/Patient/pat-txn-001" },
+          "expect": { "status": 200, "contains": ["pat-txn-001"] }
+        },
+        {
+          "id": "batch-bundle",
+          "name": "Batch Bundle returns per-entry statuses",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{fhir}/Bundle",
+            "headers": { "Content-Type": "application/fhir+json" },
+            "body_file": "samples/Bundle_batch_mixed.json",
+            "auth_bearer_var": "token"
+          },
+          "expect": { "status": 200, "contains": ["batch-response", "404"] }
+        },
+        {
+          "id": "batch-org",
+          "name": "Batch Organization persisted",
+          "type": "http",
+          "request": { "method": "GET", "url": "{fhir}/Organization/org-batch-001" },
+          "expect": { "status": 200, "contains": ["org-batch-001"] }
+        }
+      ]
+    },
+    {
+      "id": "bulk",
+      "name": "Bulk $export",
+      "tests": [
+        {
+          "id": "export-kickoff",
+          "name": "$export returns 202 + Content-Location",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "{fhir}/$export?_type=Patient,Observation",
+            "auth_bearer_var": "token"
+          },
+          "expect": { "status": 202 },
+          "store": { "header": "content-location", "as": "export_job", "basename": true }
+        },
+        {
+          "id": "export-status",
+          "name": "$export-status eventually includes output",
+          "type": "wait",
+          "wait": {
+            "url": "{fhir}/$export-status/{export_job}",
+            "timeout_sec": 45,
+            "interval_sec": 1,
+            "status_in": [200, 202],
+            "contains": ["output"],
+            "auth_bearer_var": "token"
+          }
+        }
+      ]
+    },
+    {
+      "id": "validation",
+      "name": "Validation",
+      "tests": [
+        {
+          "id": "invalid-gender",
+          "name": "Invalid Patient gender returns 400",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{fhir}/Patient",
+            "headers": { "Content-Type": "application/fhir+json" },
+            "body_file": "samples/Patient_invalid_gender.json",
+            "auth_bearer_var": "token"
+          },
+          "expect": { "status": 400, "contains": ["OperationOutcome"] }
+        }
+      ]
+    },
+    {
+      "id": "ui-docs",
+      "name": "Web UI & documents",
+      "tests": [
+        {
+          "id": "ui-routes-api",
+          "name": "Routes API lists V2 routes",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["routes"] }
+        },
+        {
+          "id": "ui-chrome",
+          "name": "Demo UI exposes FHIR ops controls",
+          "type": "ui",
+          "ui": { "url": "{webui}/", "use_chrome": true },
+          "expect": { "status": 200, "contains": ["Fetch Keycloak token", "Invoke"] }
+        },
+        {
+          "id": "capability-brief-pdf",
+          "name": "Capability Brief PDF served",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/documents/capability-brief.pdf" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "route-pdf",
+          "name": "Route diagrams PDF served",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/documents/route-diagrams.pdf" },
+          "expect": { "status": 200 }
+        }
+      ]
+    }
+  ]
+}

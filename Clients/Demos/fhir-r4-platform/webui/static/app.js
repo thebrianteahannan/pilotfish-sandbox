@@ -159,13 +159,56 @@ function showTab(tab) {
   document.getElementById("tab-routes").hidden = tab !== "routes";
   const info = document.getElementById("tab-info");
   if (info) info.hidden = tab !== "info";
+  const tests = document.getElementById("tab-tests");
+  if (tests) tests.hidden = tab !== "tests";
   const xslt = document.getElementById("tab-xslt");
   if (xslt) xslt.hidden = tab !== "xslt";
   document.body.classList.toggle("routes-mode", tab === "routes" || tab === "xslt");
   if (tab === "routes") loadRoutesTab().catch((e) => (document.getElementById("routes-status").textContent = e.message));
   if (tab === "xslt") loadXsltTab().catch(() => {});
+  if (tab === "tests") loadTestsTab().catch((e) => {
+    const s = document.getElementById("tests-summary");
+    if (s) s.textContent = e.message;
+  });
 }
 document.querySelectorAll(".tab").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
+
+async function loadTestsTab() {
+  const body = document.getElementById("tests-body");
+  const summary = document.getElementById("tests-summary");
+  if (!body) return;
+  const data = await getJson("/api/v2/tests/results");
+  if (!data.ok) {
+    body.innerHTML = `<tr><td colspan="5" class="muted">${escapeHtml(data.message || "No results")}</td></tr>`;
+    if (summary) summary.textContent = data.message || "No results yet";
+    return;
+  }
+  const s = data.summary || {};
+  if (summary) {
+    summary.textContent = `pass ${s.pass || 0} · fail ${s.fail || 0} · error ${s.error || 0} · skip ${s.skip || 0} · ${data.finished_at || ""}`;
+  }
+  const rows = (data.results || []).map((r) => {
+    const st = escapeHtml(r.status || "");
+    return `<tr class="test-${st}">
+      <td><strong>${st.toUpperCase()}</strong></td>
+      <td>${escapeHtml(r.suite || "")}</td>
+      <td>${escapeHtml(r.name || "")}</td>
+      <td>${escapeHtml(r.message || "")}</td>
+      <td>${escapeHtml(String(r.duration_ms ?? ""))}</td>
+    </tr>`;
+  });
+  body.innerHTML = rows.join("") || `<tr><td colspan="5" class="muted">Empty result set</td></tr>`;
+}
+
+const btnTestsRefresh = document.getElementById("btn-tests-refresh");
+if (btnTestsRefresh) {
+  btnTestsRefresh.addEventListener("click", () => {
+    loadTestsTab().catch((e) => {
+      const s = document.getElementById("tests-summary");
+      if (s) s.textContent = e.message;
+    });
+  });
+}
 
 let routesLoaded = false;
 

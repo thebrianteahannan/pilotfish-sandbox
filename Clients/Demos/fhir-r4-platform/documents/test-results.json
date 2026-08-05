@@ -1,0 +1,205 @@
+{
+  "interface": "FHIR R4 Expandable Platform",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/fhir-r4-platform",
+  "started_at": "2026-08-05T14:23:05.706273+00:00",
+  "finished_at": "2026-08-05T14:23:13.517399+00:00",
+  "summary": {
+    "pass": 21,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 21
+  },
+  "results": [
+    {
+      "id": "webui-home",
+      "name": "Web UI home loads",
+      "suite": "Platform health",
+      "status": "pass",
+      "duration_ms": 27,
+      "message": "UI OK (http://127.0.0.1:8111/)",
+      "detail": ""
+    },
+    {
+      "id": "metadata",
+      "name": "FHIR CapabilityStatement metadata",
+      "suite": "Platform health",
+      "status": "pass",
+      "duration_ms": 71,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "keycloak-realm",
+      "name": "Keycloak realm endpoint responds",
+      "suite": "Platform health",
+      "status": "pass",
+      "duration_ms": 3,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "unauth-create",
+      "name": "Unauthenticated Patient create returns 401",
+      "suite": "Authorization",
+      "status": "pass",
+      "duration_ms": 2305,
+      "message": "HTTP 401",
+      "detail": ""
+    },
+    {
+      "id": "fetch-token",
+      "name": "Fetch Keycloak client_credentials token",
+      "suite": "Authorization",
+      "status": "pass",
+      "duration_ms": 43,
+      "message": "token acquired",
+      "detail": ""
+    },
+    {
+      "id": "create-patient",
+      "name": "Create Patient with Bearer",
+      "suite": "CRUD & search",
+      "status": "pass",
+      "duration_ms": 1778,
+      "message": "HTTP 201",
+      "detail": ""
+    },
+    {
+      "id": "read-patient",
+      "name": "Read Patient pat-alice-001",
+      "suite": "CRUD & search",
+      "status": "pass",
+      "duration_ms": 834,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "search-family",
+      "name": "Search Patient family=Smith",
+      "suite": "CRUD & search",
+      "status": "pass",
+      "duration_ms": 589,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "create-obs",
+      "name": "Create Observation",
+      "suite": "CRUD & search",
+      "status": "pass",
+      "duration_ms": 220,
+      "message": "HTTP 201",
+      "detail": ""
+    },
+    {
+      "id": "search-obs",
+      "name": "Search Observation by patient+code",
+      "suite": "CRUD & search",
+      "status": "pass",
+      "duration_ms": 40,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "txn-bundle",
+      "name": "Transaction Bundle persists entries",
+      "suite": "Bundle transaction/batch",
+      "status": "pass",
+      "duration_ms": 560,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "txn-readback",
+      "name": "Transaction Patient readable",
+      "suite": "Bundle transaction/batch",
+      "status": "pass",
+      "duration_ms": 39,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "batch-bundle",
+      "name": "Batch Bundle returns per-entry statuses",
+      "suite": "Bundle transaction/batch",
+      "status": "pass",
+      "duration_ms": 60,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "batch-org",
+      "name": "Batch Organization persisted",
+      "suite": "Bundle transaction/batch",
+      "status": "pass",
+      "duration_ms": 34,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "export-kickoff",
+      "name": "$export returns 202 + Content-Location",
+      "suite": "Bulk $export",
+      "status": "pass",
+      "duration_ms": 28,
+      "message": "HTTP 202",
+      "detail": ""
+    },
+    {
+      "id": "export-status",
+      "name": "$export-status eventually includes output",
+      "suite": "Bulk $export",
+      "status": "pass",
+      "duration_ms": 1066,
+      "message": "HTTP 200: {\"transactionTime\":\"2026-08-05T14:23:12.370432551Z\",\"request\":\"http://localhost:8110/eip/rest/fhir/$export?_type=Patient,Observation\",\"requiresAccessToken\":true,\"output\":[{\"type\":\"",
+      "detail": ""
+    },
+    {
+      "id": "invalid-gender",
+      "name": "Invalid Patient gender returns 400",
+      "suite": "Validation",
+      "status": "pass",
+      "duration_ms": 71,
+      "message": "HTTP 400",
+      "detail": ""
+    },
+    {
+      "id": "ui-routes-api",
+      "name": "Routes API lists V2 routes",
+      "suite": "Web UI & documents",
+      "status": "pass",
+      "duration_ms": 5,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "ui-chrome",
+      "name": "Demo UI exposes FHIR ops controls",
+      "suite": "Web UI & documents",
+      "status": "pass",
+      "duration_ms": 11,
+      "message": "UI OK (http://127.0.0.1:8111/)",
+      "detail": ""
+    },
+    {
+      "id": "capability-brief-pdf",
+      "name": "Capability Brief PDF served",
+      "suite": "Web UI & documents",
+      "status": "pass",
+      "duration_ms": 3,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route diagrams PDF served",
+      "suite": "Web UI & documents",
+      "status": "pass",
+      "duration_ms": 12,
+      "message": "HTTP 200",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/fhir-r4-platform/tests/plan.json"
+}

@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/><title>Test results — FHIR R4 Expandable Platform</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:1.5rem;background:#0b1c33;color:#e8eef8}
+h1{font-size:1.25rem} .sum span{margin-right:1rem;font-weight:700}
+table{border-collapse:collapse;width:100%;margin-top:1rem}
+th,td{border-bottom:1px solid #2a4466;padding:.45rem .5rem;text-align:left;vertical-align:top}
+tr.pass td:first-child{color:#3dd68c} tr.fail td:first-child,tr.error td:first-child{color:#ff6b6b}
+tr.skip td:first-child{color:#f0a202}
+</style></head><body>
+<h1>Test results — FHIR R4 Expandable Platform</h1>
+<p class="sum">
+<span>pass 21</span>
+<span>fail 0</span>
+<span>error 0</span>
+<span>skip 0</span>
+<span>total 21</span>
+</p>
+<p>Finished 2026-08-05T14:23:13.517399+00:00</p>
+<table><thead><tr><th>Status</th><th>Suite</th><th>Test</th><th>Message</th><th>Time</th></tr></thead>
+<tbody>
+<tr class='pass'><td>PASS</td><td>Platform health</td><td>Web UI home loads</td><td>UI OK (http://127.0.0.1:8111/)</td><td>27ms</td></tr><tr class='pass'><td>PASS</td><td>Platform health</td><td>FHIR CapabilityStatement metadata</td><td>HTTP 200</td><td>71ms</td></tr><tr class='pass'><td>PASS</td><td>Platform health</td><td>Keycloak realm endpoint responds</td><td>HTTP 200</td><td>3ms</td></tr><tr class='pass'><td>PASS</td><td>Authorization</td><td>Unauthenticated Patient create returns 401</td><td>HTTP 401</td><td>2305ms</td></tr><tr class='pass'><td>PASS</td><td>Authorization</td><td>Fetch Keycloak client_credentials token</td><td>token acquired</td><td>43ms</td></tr><tr class='pass'><td>PASS</td><td>CRUD &amp; search</td><td>Create Patient with Bearer</td><td>HTTP 201</td><td>1778ms</td></tr><tr class='pass'><td>PASS</td><td>CRUD &amp; search</td><td>Read Patient pat-alice-001</td><td>HTTP 200</td><td>834ms</td></tr><tr class='pass'><td>PASS</td><td>CRUD &amp; search</td><td>Search Patient family=Smith</td><td>HTTP 200</td><td>589ms</td></tr><tr class='pass'><td>PASS</td><td>CRUD &amp; search</td><td>Create Observation</td><td>HTTP 201</td><td>220ms</td></tr><tr class='pass'><td>PASS</td><td>CRUD &amp; search</td><td>Search Observation by patient+code</td><td>HTTP 200</td><td>40ms</td></tr><tr class='pass'><td>PASS</td><td>Bundle transaction/batch</td><td>Transaction Bundle persists entries</td><td>HTTP 200</td><td>560ms</td></tr><tr class='pass'><td>PASS</td><td>Bundle transaction/batch</td><td>Transaction Patient readable</td><td>HTTP 200</td><td>39ms</td></tr><tr class='pass'><td>PASS</td><td>Bundle transaction/batch</td><td>Batch Bundle returns per-entry statuses</td><td>HTTP 200</td><td>60ms</td></tr><tr class='pass'><td>PASS</td><td>Bundle transaction/batch</td><td>Batch Organization persisted</td><td>HTTP 200</td><td>34ms</td></tr><tr class='pass'><td>PASS</td><td>Bulk $export</td><td>$export returns 202 + Content-Location</td><td>HTTP 202</td><td>28ms</td></tr><tr class='pass'><td>PASS</td><td>Bulk $export</td><td>$export-status eventually includes output</td><td>HTTP 200: {&quot;transactionTime&quot;:&quot;2026-08-05T14:23:12.370432551Z&quot;,&quot;request&quot;:&quot;http://localhost:8110/eip/rest/fhir/$export?_type=Patient,Observation&quot;,&quot;requiresAccessToken&quot;:true,&quot;output&quot;:[{&quot;type&quot;:&quot;</td><td>1066ms</td></tr><tr class='pass'><td>PASS</td><td>Validation</td><td>Invalid Patient gender returns 400</td><td>HTTP 400</td><td>71ms</td></tr><tr class='pass'><td>PASS</td><td>Web UI &amp; documents</td><td>Routes API lists V2 routes</td><td>HTTP 200</td><td>5ms</td></tr><tr class='pass'><td>PASS</td><td>Web UI &amp; documents</td><td>Demo UI exposes FHIR ops controls</td><td>UI OK (http://127.0.0.1:8111/)</td><td>11ms</td></tr><tr class='pass'><td>PASS</td><td>Web UI &amp; documents</td><td>Capability Brief PDF served</td><td>HTTP 200</td><td>3ms</td></tr><tr class='pass'><td>PASS</td><td>Web UI &amp; documents</td><td>Route diagrams PDF served</td><td>HTTP 200</td><td>12ms</td></tr>
+</tbody></table>
+</body></html>

@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "interface": "Medical Lab HL7 LLP",
+  "description": "Lab ORU over MLLP \u2192 validate \u2192 MEDITECH outbound path.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8099",
+    "eip": "http://127.0.0.1:8098/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8099/",
+    "http://127.0.0.1:8099/api/status"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": {
+            "url": "{webui}/"
+          },
+          "expect": {
+            "status": 200
+          }
+        },
+        {
+          "id": "status",
+          "name": "Status API",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "{webui}/api/status"
+          },
+          "expect": {
+            "status": 200
+          }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "{webui}/api/v2/routes"
+          },
+          "expect": {
+            "status": 200,
+            "contains": [
+              "routes"
+            ]
+          }
+        },
+        {
+          "id": "sample-exists",
+          "name": "Lab glucose sample present",
+          "type": "file",
+          "file": {
+            "path": "samples/LAB_ORU_R01_glucose.hl7",
+            "exists": true
+          }
+        }
+      ]
+    }
+  ]
+}

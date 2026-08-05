@@ -190,7 +190,19 @@ th { color: var(--muted); font-weight: 600; }
 }
 body.routes-mode header { max-width: none; padding-bottom: 0.25rem; }
 body.routes-mode .nav { display: none; }
-#tab-routes[hidden], #tab-demo[hidden], #tab-xslt[hidden], #tab-info[hidden] { display: none !important; }
+#tab-routes[hidden], #tab-demo[hidden], #tab-xslt[hidden], #tab-info[hidden], #tab-tests[hidden] { display: none !important; }
+.tests-tab { padding: 0.75rem 1rem 1.25rem; }
+.tests-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.35rem;
+}
+#tests-table tr.test-pass strong { color: #3dd68c; }
+#tests-table tr.test-fail strong,
+#tests-table tr.test-error strong { color: #ff6b6b; }
+#tests-table tr.test-skip strong { color: #f0a202; }
 .routes-tab {
   display: flex;
   flex-direction: column;

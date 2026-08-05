@@ -234,7 +234,12 @@ Create under `Clients/Demos/<slug>/` (or `Clients/<Client>/<slug>/` for client w
     convert_routes_to_v2.py      # if needed
     export_route_diagrams.py     # PDF export with --config → documents/
     export_stakeholder_brief.py  # stakeholder Capability Brief PDF → documents/
-  documents/                     # required deliverables: route PDF + capability brief PDF
+    export_test_plan_pdf.py      # Test Plan PDF from tests/plan.json
+    run_interface_tests.py       # execute plan → documents/test-results.json|.html
+    post_up_tests.sh             # compose-up helper: wait + run tests
+  tests/
+    plan.json                    # living automated test plan (source of truth)
+  documents/                     # required: route PDF + capability brief + test plan (+ results)
     <Interface>_V2_Route_Diagrams.pdf
   logs/                          # gitignored runtime logs if bind-mounted
 ```
@@ -320,8 +325,9 @@ Work in this order unless the user specifies otherwise:
 9. **V2 convert** into `eip-root` + Routes tab / docs.
 10. **Route design PDF (required):** with Web UI up, run `python3 tools/export_route_diagrams.py --config changed` and write/copy the PDF into **`documents/`** at the interface root (see §6).
 10b. **Stakeholder Capability Brief PDF (required):** run `python3 tools/export_stakeholder_brief.py` so `documents/<ShortName>_Capability_Brief.pdf` is generated from `DESIGN.md` + routes (+ CapabilityStatement when FHIR). See §6.1a.
+10c. **Test plan PDF + automated run (required):** maintain `tests/plan.json`, run `python3 tools/export_test_plan_pdf.py` and `python3 tools/run_interface_tests.py --wait` (see §7.1). Update the plan as capabilities are added.
 11. **README.md** (run, ports, smoke commands; link to `documents/*.pdf`).
-12. **Smoke test** (§7) and paste results into the chat (and update DESIGN.md Risks if findings).
+12. **Smoke / automated tests** (§7 / §7.1) and paste pass/fail summary into the chat (and update DESIGN.md Risks if findings).
 
 Do not refactor unrelated demos. Prefer copying the closest existing demo assembly after modules are chosen from Documentation/V2.
 
@@ -415,10 +421,57 @@ Minimum bar:
 - [ ] Routes tab renders `route.v2.xml`
 - [ ] **Route design PDF** written under `documents/` (`--config changed`)
 - [ ] **Stakeholder Capability Brief PDF** written under `documents/` (`tools/export_stakeholder_brief.py`)
+- [ ] **Test Plan PDF** written under `documents/` (`tools/export_test_plan_pdf.py`)
+- [ ] **Automated tests run** (`tools/run_interface_tests.py --wait`) with results in `documents/test-results.json` / `.html`
 - [ ] **Browser/LAN PDF URLs** work (HTTP 200, `application/pdf`) for every review PDF (§6.2)
 - [ ] No silent claim of partner-grade validation unless gated
 
 Record: ports, sample used, output paths, LAN PDF links, and any known failures (e.g. SNIP noise).
+
+### 7.1 Living test plan + automated runner (**required for every new interface**)
+
+Every interface keeps a machine-readable plan and generates a Test Plan PDF next to the other `documents/` deliverables. The same plan is executed on the host so stakeholders and agents see an easy pass/fail list.
+
+**Source of truth:** `tests/plan.json` (JSON). Update this file **as features are built** — new capability ⇒ new suite/test entries in the same PR/change set.
+
+**Generate the PDF (required when creating/changing an interface):**
+
+```bash
+python3 tools/export_test_plan_pdf.py
+# → documents/<ShortName>_Test_Plan.pdf
+```
+
+**Run the tests (required before done; also after meaningful route/DESIGN/sample changes):**
+
+```bash
+docker compose up -d --build
+./tools/post_up_tests.sh
+# or:
+python3 tools/run_interface_tests.py --wait
+```
+
+**Watch mode (recommended while actively building):**
+
+```bash
+python3 tools/run_interface_tests.py --watch
+```
+
+Re-runs when `tests/plan.json`, `DESIGN.md`, routes, samples, SQL, or Web UI sources change.
+
+**Results (easy list):**
+
+| Artifact | Where |
+|----------|--------|
+| JSON | `documents/test-results.json` |
+| HTML list | `documents/test-results.html` |
+| Web UI | Tests tab (when present) · `GET /api/v2/tests/results` |
+| Stable PDF alias | `/documents/test-plan.pdf` |
+
+Announce browser URLs per §6.2 for the Test Plan PDF and results HTML.
+
+**Compose hook:** after every `docker compose up -d --build` for an interface under construction, run `./tools/post_up_tests.sh` (waits for health URLs from the plan, exports the Test Plan PDF if needed, runs tests). Do not claim “done” with failing tests unless the user explicitly accepts them and DESIGN.md Risks records why.
+
+**Test types supported by the shared runner** (`tools/interface_testlib.py`): `http`, `oauth`, `wait`, `file`, `ui` (HTTP + optional Chrome dump-dom), `shell`.
 
 ---
 
@@ -552,6 +605,8 @@ An interface construct is done when:
 5. Web/route viewer present when routes are part of the deliverable.  
 6. **Route design PDF** exists under `documents/` (generated with `--config changed`).  
 6b. **Stakeholder Capability Brief PDF** exists under `documents/` (generated with `tools/export_stakeholder_brief.py`).  
+6c. **Test Plan PDF** exists under `documents/` and `tests/plan.json` is current.  
+6d. **Automated test run** completed (`run_interface_tests.py`) with results published under `documents/test-results.*` (pass/fail list).  
 7. **LAN URL** is set (`LAN_HINT`) and both localhost + `192.x` URLs are listed when the UI is running (§1.1).  
 8. **Every review PDF** has a working browser link on localhost **and** `192.x` (§6.2), pasted in the agent summary.  
 9. Agent summary lists known limitations in plain language (no compliance theater).
@@ -573,17 +628,25 @@ docker compose logs -f pilotfish
 ls -la output/*
 python3 tools/export_route_diagrams.py --config changed
 python3 tools/export_stakeholder_brief.py
+python3 tools/export_test_plan_pdf.py
+./tools/post_up_tests.sh
 # ensure PDFs are under documents/
 mkdir -p documents && cp -f output/route-diagrams/*Route_Diagrams*.pdf documents/ 2>/dev/null || true
 ls -la documents/
 # always give the user a browser link (Drive optional / flaky)
 echo "Route PDF local: http://localhost:<webui-port>/documents/route-diagrams.pdf"
-echo "Route PDF LAN:   http://${LAN_IP}:<webui-port>/documents/route-diagrams.pdf"
 echo "Brief PDF local: http://localhost:<webui-port>/documents/capability-brief.pdf"
+echo "Test plan local: http://localhost:<webui-port>/documents/test-plan.pdf"
+echo "Results local:   http://localhost:<webui-port>/documents/test-results.html"
+echo "Route PDF LAN:   http://${LAN_IP}:<webui-port>/documents/route-diagrams.pdf"
 echo "Brief PDF LAN:   http://${LAN_IP}:<webui-port>/documents/capability-brief.pdf"
+echo "Test plan LAN:   http://${LAN_IP}:<webui-port>/documents/test-plan.pdf"
+echo "Results LAN:     http://${LAN_IP}:<webui-port>/documents/test-results.html"
 curl -sS -o /dev/null -w "%{http_code} %{content_type}\n" \
   "http://${LAN_IP}:<webui-port>/documents/route-diagrams.pdf"
 curl -sS -o /dev/null -w "%{http_code} %{content_type}\n" \
   "http://${LAN_IP}:<webui-port>/documents/capability-brief.pdf"
+curl -sS -o /dev/null -w "%{http_code} %{content_type}\n" \
+  "http://${LAN_IP}:<webui-port>/documents/test-plan.pdf"
 docker compose down -v   # destroys DB volume — warn user first
 ```
