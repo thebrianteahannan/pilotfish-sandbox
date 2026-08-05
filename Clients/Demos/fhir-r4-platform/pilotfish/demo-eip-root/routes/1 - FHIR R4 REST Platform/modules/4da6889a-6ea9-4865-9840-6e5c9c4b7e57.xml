@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="4da6889a-6ea9-4865-9840-6e5c9c4b7e57" name="Write FHIR Store File Update" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$FHIR_STORE_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('com.pilotfish.ResourceName').toString() + '_' + getAttribute('fhir.EffectiveId').toString() + '.json'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="cc040a5e-dd12-480f-a9b6-2ff15e8d113a" name="Normalize Ids And Validation" type="TransactionAttributePopulationProcessor" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:fhir.EffectiveId:eip_name:{ognl:(getAttribute('com.pilotfish.ResourceID') != null &amp;&amp; getAttribute('com.pilotfish.ResourceID').toString().trim().length() &gt; 0) ? getAttribute('com.pilotfish.ResourceID').toString().trim() : ((getAttribute('fhir.LogicalId') != null) ? getAttribute('fhir.LogicalId').toString().trim() : '')}:eip_value][eip_pair:fhir.ValidationStatus:eip_name:{ognl:(getAttribute('fhir.BodyResourceType') != null &amp;&amp; getAttribute('com.pilotfish.ResourceName') != null &amp;&amp; getAttribute('fhir.BodyResourceType').toString().equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName')) &amp;&amp; getAttribute('fhir.EffectiveId') != null &amp;&amp; getAttribute('fhir.EffectiveId').toString().trim().length() &gt; 0) ? 'PASS' : 'FAIL'}:eip_value][eip_pair:fhir.SearchId:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter._id')}:eip_value][eip_pair:fhir.SearchQ:eip_name:{ognl:getAttribute('com.pilotfish.http.parameter.q')}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

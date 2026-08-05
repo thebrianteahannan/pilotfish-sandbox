@@ -26,4 +26,5 @@ Agents constructing any interface under `Clients/` must follow:
 | Medical Device HL7 → EHR | `Clients/Demos/medical-device-hl7-ehr/` |
 | FHIR Patient Exchange | `Clients/Demos/fhir-patient-exchange/` |
 | EDI 270/271 Eligibility | `Clients/Demos/edi-270-271-eligibility/` |
+| FHIR R4 Expandable Platform | `Clients/Demos/fhir-r4-platform/` |
 | CSV to JSON | `Clients/Demos/csv-to-json/` |
