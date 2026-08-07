@@ -1,14 +1,14 @@
 {
   "interface": "EDI 837 Claim Scrub",
   "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/edi-837-claim-scrub",
-  "started_at": "2026-08-07T18:22:30.750039+00:00",
-  "finished_at": "2026-08-07T18:22:30.810040+00:00",
+  "started_at": "2026-08-07T18:27:31.156777+00:00",
+  "finished_at": "2026-08-07T18:27:31.250754+00:00",
   "summary": {
-    "pass": 8,
+    "pass": 9,
     "fail": 0,
     "skip": 0,
     "error": 0,
-    "total": 8
+    "total": 9
   },
   "results": [
     {
@@ -16,7 +16,7 @@
       "name": "Web UI loads",
       "suite": "Health",
       "status": "pass",
-      "duration_ms": 8,
+      "duration_ms": 9,
       "message": "UI OK (http://127.0.0.1:8115/)",
       "detail": ""
     },
@@ -25,7 +25,7 @@
       "name": "API health",
       "suite": "Health",
       "status": "pass",
-      "duration_ms": 14,
+      "duration_ms": 10,
       "message": "HTTP 200",
       "detail": ""
     },
@@ -43,7 +43,7 @@
       "name": "Claims API",
       "suite": "Health",
       "status": "pass",
-      "duration_ms": 12,
+      "duration_ms": 20,
       "message": "HTTP 200",
       "detail": ""
     },
@@ -61,7 +61,16 @@
       "name": "Payer rules seeded",
       "suite": "Health",
       "status": "pass",
-      "duration_ms": 12,
+      "duration_ms": 11,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "snip-html-report",
+      "name": "SNIP report returns real HTML (not escaped XML)",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 22,
       "message": "HTTP 200",
       "detail": ""
     },
@@ -70,7 +79,7 @@
       "name": "Test results PDF serves",
       "suite": "Review PDFs",
       "status": "pass",
-      "duration_ms": 2,
+      "duration_ms": 4,
       "message": "HTTP 200",
       "detail": ""
     },
@@ -79,7 +88,7 @@
       "name": "Capability brief alias",
       "suite": "Review PDFs",
       "status": "pass",
-      "duration_ms": 1,
+      "duration_ms": 6,
       "message": "HTTP 200",
       "detail": ""
     }

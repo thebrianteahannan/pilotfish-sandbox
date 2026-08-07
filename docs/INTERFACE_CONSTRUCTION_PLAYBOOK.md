@@ -671,6 +671,28 @@ Whenever an agent produces a PDF the user needs to review (route diagrams, resea
 
 **Anti-pattern:** “PDF is at `documents/Foo.pdf` in the repo” with no running HTTP URL the user can open from a phone or tablet.
 
+### 6.3 SNIP HTML validation report in the Web UI (**required when demos write SNIP XML**)
+
+When a demo writes SNIP results (`output/snip/*_snip.xml` or similar), the Web UI **must** show a rendered **HTML** report on the “HTML report” tab — not raw / escaped SNIP XML.
+
+**Reference implementation:** `Clients/Demos/edi-837-snip-sqlserver/webui/` (`snip_report.py`, `xslt/*.xslt`, `/api/snip-report`, iframe `#snip-html`).
+
+| Piece | Role |
+|-------|------|
+| `webui/xslt/{transform,normalize,sort,merge,html}.xslt` | PilotFish 14a SNIP Validations Report pipeline |
+| `webui/snip_report.py` → `build_snip_html(snip_xml, edi_text)` | Saxon transforms; **both args are strings** |
+| `GET /api/snip-report?name=…` | Resolves matching `.edi`, reads file **text**, returns `text/html` |
+| UI | File list + tabs: iframe for HTML, `<pre>` for Raw XML only |
+
+**Hard rules:**
+
+1. Pass **EDI wire text** (`edi_path.read_text(...)`) into `build_snip_html` — **never** a `pathlib.Path` (that fails the transform and used to dump escaped XML into the iframe).  
+2. On failure, `fallback_html("Report failed: …")` with a short error — **never** dump the SNIP XML body into the fallback page.  
+3. Dockerfile must `COPY xslt/ xslt/` (and Saxon via `requirements.txt`).  
+4. Smoke: `curl` `/api/snip-report?name=<file>` and confirm the body starts with HTML (`<!DOCTYPE` / `<html`) and is **not** escaped `&lt;EdiValidationResults`. Add a `tests/plan.json` assertion when the demo ships SNIP.
+
+Copy the SNIP report stack from `edi-837-snip-sqlserver` (or another demo that already passes this check) rather than reimplementing.
+
 ---
 
 ## 7. Smoke test (required before “done”)
@@ -855,6 +877,7 @@ Every interface README must include:
 | Announcing only `localhost` after spin-up | Also set `LAN_HINT` + list `http://192.x.x.x:<port>/` (§1.1) |
 | Binding Web UI / publish to `127.0.0.1` only | Keep default `0.0.0.0` host publish so LAN devices can connect |
 | Leaving a review PDF only on disk / in git / Drive | Serve via Web UI `/documents/…` and paste LAN browser URL (§6.2) |
+| SNIP “HTML report” tab showing raw/escaped `EdiValidationResults` XML | `/api/snip-report` must pass **EDI text** into `build_snip_html`; iframe shows real HTML (§6.3) |
 | Relying solely on Google Drive for PDF review | Drive is optional; LAN HTTP link is required even when Drive works |
 | Jumping to a custom Java module for auth, HTTP callouts, mapping, or routing | Prefer PF Call Route / HTTP / Attribute / XSLT first (§3.4); custom only when PF-only is extremely hard |
 | Hardcoding X12 (`ISA*…`) or HL7 (`MSH|…`) as text in XSLT | XSLT → PilotFish EDI/HL7 XML → `EDITransformationProcessor` / `HL7TransformationProcessor` (§3.5) |

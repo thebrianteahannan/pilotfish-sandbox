@@ -97,6 +97,20 @@
               "66783JJT"
             ]
           }
+        },
+        {
+          "id": "snip-html-report",
+          "name": "SNIP report returns real HTML (not escaped XML)",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "{webui}/api/snip-report?name=5001_CLM-5001_snip.xml"
+          },
+          "expect": {
+            "status": 200,
+            "contains": ["<html", "</html>"],
+            "not_contains": ["&lt;EdiValidationResults"]
+          }
         }
       ]
     },

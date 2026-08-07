@@ -299,19 +299,39 @@ def api_payer_rules():
 
 @app.get("/api/snip-report")
 def api_snip_report():
+    """HTML report via the 14a EDI SNIP Validations Report XSLT pipeline."""
     name = (request.args.get("name") or "").strip()
-    if not _SAFE_NAME.match(name):
-        return Response("Invalid name", status=400)
-    path = SNIP_DIR / name
-    if not path.is_file():
-        return Response("Not found", status=404)
-    xml = path.read_text(encoding="utf-8", errors="replace")
-    edi_path = snip_to_edi_path(name)
+    if not name or not _SAFE_NAME.match(name) or name.startswith("_"):
+        return Response(
+            fallback_html("Invalid SNIP file name."),
+            mimetype="text/html; charset=utf-8",
+            status=400,
+        )
+    snip_path = SNIP_DIR / name
+    if not snip_path.is_file():
+        return Response(
+            fallback_html(f"SNIP file not found: {name}"),
+            mimetype="text/html; charset=utf-8",
+            status=404,
+        )
     try:
-        html = build_snip_html(xml, edi_path)
-    except Exception:  # noqa: BLE001
-        html = fallback_html(xml)
-    return Response(html, mimetype="text/html; charset=utf-8")
+        snip_xml = snip_path.read_text(encoding="utf-8", errors="replace")
+        edi_path = snip_to_edi_path(name)
+        if not edi_path:
+            return Response(
+                fallback_html(f"Matching EDI file not found for {name}."),
+                mimetype="text/html; charset=utf-8",
+                status=404,
+            )
+        edi_text = edi_path.read_text(encoding="utf-8", errors="replace")
+        html = build_snip_html(snip_xml, edi_text)
+        return Response(html, mimetype="text/html; charset=utf-8")
+    except Exception as exc:  # noqa: BLE001
+        return Response(
+            fallback_html(f"Report failed: {exc}"),
+            mimetype="text/html; charset=utf-8",
+            status=500,
+        )
 
 
 @app.get("/api/v2/routes")
