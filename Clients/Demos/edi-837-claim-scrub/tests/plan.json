@@ -108,8 +108,30 @@
           },
           "expect": {
             "status": 200,
-            "contains": ["<html", "</html>"],
-            "not_contains": ["&lt;EdiValidationResults"]
+            "contains": [
+              "<html",
+              "</html>"
+            ],
+            "not_contains": [
+              "&lt;EdiValidationResults"
+            ]
+          }
+        },
+        {
+          "id": "build-timing",
+          "name": "Build timing API",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "{webui}/api/build-timing"
+          },
+          "expect": {
+            "status": 200,
+            "contains": [
+              "duration_minutes",
+              "phases",
+              "edi-837-claim-scrub"
+            ]
           }
         }
       ]

@@ -1,14 +1,14 @@
 {
   "interface": "EDI 837 Claim Scrub",
   "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/edi-837-claim-scrub",
-  "started_at": "2026-08-07T18:27:31.156777+00:00",
-  "finished_at": "2026-08-07T18:27:31.250754+00:00",
+  "started_at": "2026-08-07T18:41:16.960668+00:00",
+  "finished_at": "2026-08-07T18:41:17.062510+00:00",
   "summary": {
-    "pass": 9,
+    "pass": 10,
     "fail": 0,
     "skip": 0,
     "error": 0,
-    "total": 9
+    "total": 10
   },
   "results": [
     {
@@ -16,7 +16,7 @@
       "name": "Web UI loads",
       "suite": "Health",
       "status": "pass",
-      "duration_ms": 9,
+      "duration_ms": 12,
       "message": "UI OK (http://127.0.0.1:8115/)",
       "detail": ""
     },
@@ -25,7 +25,7 @@
       "name": "API health",
       "suite": "Health",
       "status": "pass",
-      "duration_ms": 10,
+      "duration_ms": 18,
       "message": "HTTP 200",
       "detail": ""
     },
@@ -34,7 +34,7 @@
       "name": "Routes API",
       "suite": "Health",
       "status": "pass",
-      "duration_ms": 3,
+      "duration_ms": 2,
       "message": "HTTP 200",
       "detail": ""
     },
@@ -43,7 +43,7 @@
       "name": "Claims API",
       "suite": "Health",
       "status": "pass",
-      "duration_ms": 20,
+      "duration_ms": 11,
       "message": "HTTP 200",
       "detail": ""
     },
@@ -52,7 +52,7 @@
       "name": "Kickouts API",
       "suite": "Health",
       "status": "pass",
-      "duration_ms": 3,
+      "duration_ms": 5,
       "message": "HTTP 200",
       "detail": ""
     },
@@ -70,7 +70,16 @@
       "name": "SNIP report returns real HTML (not escaped XML)",
       "suite": "Health",
       "status": "pass",
-      "duration_ms": 22,
+      "duration_ms": 27,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "build-timing",
+      "name": "Build timing API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
       "message": "HTTP 200",
       "detail": ""
     },
@@ -79,7 +88,7 @@
       "name": "Test results PDF serves",
       "suite": "Review PDFs",
       "status": "pass",
-      "duration_ms": 4,
+      "duration_ms": 3,
       "message": "HTTP 200",
       "detail": ""
     },
@@ -88,7 +97,7 @@
       "name": "Capability brief alias",
       "suite": "Review PDFs",
       "status": "pass",
-      "duration_ms": 6,
+      "duration_ms": 5,
       "message": "HTTP 200",
       "detail": ""
     }

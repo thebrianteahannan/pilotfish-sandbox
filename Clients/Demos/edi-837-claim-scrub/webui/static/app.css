@@ -223,7 +223,7 @@ body.routes-mode header {
   padding-bottom: 0.25rem;
 }
 body.routes-mode .nav { display: none; }
-#tab-routes[hidden], #tab-demo[hidden], #tab-xslt[hidden], #tab-info[hidden] { display: none !important; }
+#tab-routes[hidden], #tab-demo[hidden], #tab-xslt[hidden], #tab-timing[hidden], #tab-info[hidden] { display: none !important; }
 .routes-tab {
   display: flex;
   flex-direction: column;
@@ -378,5 +378,106 @@ body.routes-mode #tab-xslt:not([hidden]) { display: flex; }
 .xslt-source code {
   font: inherit;
   color: inherit;
+}
+
+.timing-main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem 2rem;
+}
+.timing-panel .row-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.timing-actions { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+.timing-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  padding: 1rem 0 1.25rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 1.1rem;
+}
+.timing-kicker {
+  margin: 0 0 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.timing-duration {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  line-height: 1;
+  font-weight: 700;
+}
+.timing-duration span {
+  font-size: 1rem;
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--muted);
+  margin-left: 0.35rem;
+}
+.timing-facts {
+  margin: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+.timing-facts div {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+.timing-facts dt {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.timing-facts dd { margin: 0; word-break: break-word; }
+.timing-block { margin: 0 0 1.25rem; }
+.timing-block h3 {
+  margin: 0 0 0.55rem;
+  font-family: var(--display);
+  font-size: 1.15rem;
+}
+.timing-block ul, .timing-slow {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+.timing-block li, .timing-slow li { margin: 0.3rem 0; }
+.timing-phase { margin: 0 0 0.85rem; }
+.timing-phase-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+.timing-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: #dce6ef;
+  overflow: hidden;
+}
+.timing-bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #1f9d74);
+  border-radius: inherit;
+}
+.timing-phase-sub { font-size: 0.82rem; margin-top: 0.25rem; }
+.timing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+@media (max-width: 760px) {
+  .timing-hero { grid-template-columns: 1fr; }
+  .timing-facts div { grid-template-columns: 1fr; gap: 0.1rem; }
 }
 

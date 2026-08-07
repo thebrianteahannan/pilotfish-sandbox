@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 import re
 import time
@@ -392,6 +393,20 @@ def api_wait_edi(claim_id: int):
             )
         time.sleep(2)
     return jsonify({"ok": False, "error": "Timed out waiting for scrub result"}), 504
+
+
+@app.get("/api/build-timing")
+def api_build_timing():
+    """Serve documents/build-timing.json for the Timing tab."""
+    for base in (DOCUMENTS_DIR, Path(__file__).resolve().parent.parent / "documents"):
+        path = base / "build-timing.json"
+        if path.is_file():
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except Exception as exc:  # noqa: BLE001
+                return jsonify({"ok": False, "error": f"Invalid JSON: {exc}"}), 500
+            return jsonify({"ok": True, "path": str(path), "timing": data})
+    return jsonify({"ok": False, "error": "documents/build-timing.json not found"}), 404
 
 
 register_docs_and_v2(

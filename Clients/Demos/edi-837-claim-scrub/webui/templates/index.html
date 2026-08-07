@@ -19,6 +19,7 @@
         {% if has_xslt %}
         <button type="button" class="main-tab" data-main-tab="xslt" role="tab" aria-selected="false">XSLT</button>
         {% endif %}
+        <button type="button" class="main-tab" data-main-tab="timing" role="tab" aria-selected="false">Timing</button>
         <button type="button" class="main-tab" data-main-tab="info" role="tab" aria-selected="false">Info</button>
       </div>
     </div>
@@ -168,6 +169,23 @@
     </section>
   </div>
   {% endif %}
+
+  <div id="tab-timing" hidden>
+    <main class="timing-main">
+      <section class="panel timing-panel">
+        <div class="row-head">
+          <h2>Build timing</h2>
+          <div class="timing-actions">
+            <button type="button" class="btn" id="timing-refresh-btn">Refresh</button>
+            <a class="btn" href="/documents/build-timing.json" target="_blank" rel="noopener">Raw JSON</a>
+          </div>
+        </div>
+        <p class="section-lead">End-to-end construction time from first request to completion (<code>documents/build-timing.json</code>).</p>
+        <p id="timing-status" class="status muted"></p>
+        <div id="timing-root" class="timing-root" aria-live="polite"></div>
+      </section>
+    </main>
+  </div>
 
   <div id="tab-info" hidden>
     <main>
