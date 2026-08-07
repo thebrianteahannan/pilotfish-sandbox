@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pizza, Wings, and Salads | Jet's Pizza</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="Jet's Pizza home">
+        <span class="brand-jets">Jet's</span>
+        <span class="brand-pizza">Pizza</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#menu">Menu</a>
+        <a href="#locations">Locations</a>
+        <a href="#rewards">Rewards</a>
+        <a href="#detroit">Detroit-Style</a>
+        <a href="#franchise">Franchise</a>
+      </nav>
+      <div class="header-actions">
+        <button type="button" class="btn btn-ghost" data-action="find">Find a Jet's</button>
+        <button type="button" class="btn btn-order" data-action="order">Order Now</button>
+      </div>
+      <button type="button" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-media" role="img" aria-label="Detroit-style Ultimate Pepperoni pizza"></div>
+      <div class="hero-scrim"></div>
+      <div class="hero-copy">
+        <p class="hero-kicker">Shredded, Bold &amp; Traditional</p>
+        <h1 id="hero-title" class="brand-hero">Jet's</h1>
+        <p class="hero-headline">Ultimate Pepperoni</p>
+        <p class="hero-sub">Crispy square crust. Cheese to the edge. Respect the Crunch&reg;.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-order btn-lg" href="#menu">See Menu</a>
+          <a class="btn btn-outline btn-lg" href="#order">Start Order</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="promo promo-wings" id="menu" aria-labelledby="wings-title">
+      <div class="promo-media wings-media"></div>
+      <div class="promo-body">
+        <span class="badge">New</span>
+        <h2 id="wings-title">Wing Sauces</h2>
+        <p>Try our newest Wing Sauces &mdash; Sweet Teriyaki &amp; Garlic Parmesan &mdash; available for a limited time.</p>
+        <a class="btn btn-order" href="#order">Order Now</a>
+      </div>
+    </section>
+
+    <section class="promo promo-slice" id="locations" aria-labelledby="slice-title">
+      <div class="promo-body">
+        <h2 id="slice-title">Respect the Crunch&reg;</h2>
+        <p>Stop in &amp; fuel up for lunch with the Jet's Slice Combo. Available all day. 2 Large Detroit-Style Slices with premium mozzarella or pepperoni &amp; your choice of a 20oz Coca-Cola product.</p>
+        <a class="btn btn-order" href="#order">Order Now</a>
+      </div>
+      <div class="promo-media slice-media"></div>
+    </section>
+
+    <section class="band rewards" id="rewards" aria-labelledby="rewards-title">
+      <div class="band-inner">
+        <p class="band-kicker">Earn Points and Get Rewarded</p>
+        <h2 id="rewards-title">Jet's Rewards</h2>
+        <p>Join free, earn on every order, and unlock free pizza, wings, and more.</p>
+        <a class="btn btn-outline-light" href="#rewards">Learn more</a>
+      </div>
+    </section>
+
+    <section class="promo promo-detroit" id="detroit" aria-labelledby="detroit-title">
+      <div class="promo-media detroit-media"></div>
+      <div class="promo-body">
+        <h2 id="detroit-title">Jet's Detroit-Style 101</h2>
+        <p>Hand-pressed dough. Signature steel pans. Caramelized cheese edges. Learn what makes Jet's the world's best Detroit-Style pizza.</p>
+        <a class="btn btn-order" href="#detroit">Learn More</a>
+      </div>
+    </section>
+
+    <section class="merch" aria-labelledby="merch-title">
+      <div class="merch-inner">
+        <h2 id="merch-title">Gear up with Jet's</h2>
+        <p>Hats, tees, and more for fans who Respect the Crunch&reg;.</p>
+        <div class="merch-grid">
+          <article class="merch-item">
+            <div class="merch-img merch-hat"></div>
+            <h3>Jet's Cap</h3>
+          </article>
+          <article class="merch-item">
+            <div class="merch-img merch-tee"></div>
+            <h3>Crunch Tee</h3>
+          </article>
+          <article class="merch-item">
+            <div class="merch-img merch-hoodie"></div>
+            <h3>Detroit Hoodie</h3>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="franchise" id="franchise" aria-labelledby="franchise-title">
+      <div class="franchise-inner">
+        <h2 id="franchise-title">Start a Franchise</h2>
+        <p>Bring Jet's Detroit-Style pizza to your community.</p>
+        <a class="btn btn-order btn-lg" href="#franchise">Learn About Franchising</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="brand brand-footer" href="#top">
+        <span class="brand-jets">Jet's</span>
+        <span class="brand-pizza">Pizza</span>
+      </a>
+      <ul class="footer-links">
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#locations">Locations</a></li>
+        <li><a href="#rewards">Rewards</a></li>
+        <li><a href="#detroit">Detroit-Style 101</a></li>
+        <li><a href="#franchise">Franchise</a></li>
+      </ul>
+      <p class="footer-note">Demo clone for local preview — not affiliated with Jet's America, Inc.</p>
+      <a class="back-top" href="#top">Back to top</a>
+    </div>
+  </footer>
+
+  <div class="order-drawer" id="order" hidden>
+    <div class="drawer-panel" role="dialog" aria-labelledby="order-title">
+      <button type="button" class="drawer-close" aria-label="Close">&times;</button>
+      <h2 id="order-title">Start Your Order</h2>
+      <p>Choose carryout or delivery to find your nearest Jet's.</p>
+      <div class="drawer-actions">
+        <button type="button" class="btn btn-order">Carryout</button>
+        <button type="button" class="btn btn-outline">Delivery</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
