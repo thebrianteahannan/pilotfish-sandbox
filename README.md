@@ -6,8 +6,10 @@ Local PilotFish eiPlatform demos and client interface work.
 
 Agents constructing any interface under `Clients/` must follow:
 
-- Markdown: [docs/INTERFACE_CONSTRUCTION_PLAYBOOK.md](docs/INTERFACE_CONSTRUCTION_PLAYBOOK.md)
+- Markdown: [docs/INTERFACE_CONSTRUCTION_PLAYBOOK.md](docs/INTERFACE_CONSTRUCTION_PLAYBOOK.md) (**authoritative**; regenerate PDF when practical)
 - PDF: [docs/INTERFACE_CONSTRUCTION_PLAYBOOK.pdf](docs/INTERFACE_CONSTRUCTION_PLAYBOOK.pdf)
+- Build timing: `documents/build-timing.json` per demo (§4.1; schema `docs/templates/build-timing.example.json`)
+- Demo Docker inventory: `python3 tools/list_sandbox_demo_docker.py` (§5.1)
 
 **Module / catalog sources (required):**
 
