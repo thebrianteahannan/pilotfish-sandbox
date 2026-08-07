@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Hand Off Claims" />
+          </Targets>
+          <Condition>
+            <Expression>
+              count(//CLAIM | //Claim) &gt; 0
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="SQL Server Claims">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.db.DatabaseSqlListener" enabled="true" name="Poll SQL Server Claims">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <PollingInterval>15</PollingInterval>
+        <InputFile>SelectClaimsSQL.xml</InputFile>
+        <WriteQuery>false</WriteQuery>
+        <Query />
+        <QueryParams />
+        <UserName>$$sqlserver.username</UserName>
+        <Password>$$sqlserver.password</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+        <JdbcURL>$$sqlserver.url</JdbcURL>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <BatchSensitive>false</BatchSensitive>
+        <Timeout>120</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema />
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <UseSingleOutputStream>true</UseSingleOutputStream>
+        <RefreshHandler>false</RefreshHandler>
+        <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+        <JDBCProperties>null</JDBCProperties>
+        <LogMetadata>false</LogMetadata>
+        <LogSQL>true</LogSQL>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Raw Claims Snapshot">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$CLAIM_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>raw_pending_claims.xml</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="Claim Batch">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Hand Off Claims" retries="1">
+      <ModuleConfig>
+        <ServiceName>Scrub Claim And Route.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>

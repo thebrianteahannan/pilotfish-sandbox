@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="766b595b-48a1-40f8-ab87-0ec6b9c1961d" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="a789cc7d-14f5-4689-b6c0-dcd326f76974" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="217c84a0-8ac6-4c65-8509-e8397c42222e" name="Rule 1 - No-Op Complete" type="XPATH">
+               <condition>count(.//CLAIMID | .//ClaimId) &gt; 0 and string-length(normalize-space(string((.//CLAIMID | .//ClaimId)[1]))) &gt; 0</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

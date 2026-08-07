@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="0afb6603-8a28-4584-98f9-0acb8bbf2832" name="EDI SNIP Validation (Types 1-3)" type="EDI SNIP Validation" tag="Processor" class="com.pilotfish.eip.modules.transform.edi.EdiSNIPValidationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+      
+          
+      <SnipVersion>005010X222A1</SnipVersion>
+      
+          
+      <EdiDocumentType>837</EdiDocumentType>
+      
+          
+      <SnipStats>true</SnipStats>
+      
+          
+      <Snip1Validation>true</Snip1Validation>
+      
+          
+      <Snip2Validation>true</Snip2Validation>
+      
+          
+      <Snip3Validation>true</Snip3Validation>
+      
+          
+      <Snip4Validation>false</Snip4Validation>
+      
+          
+      <Snip5Validation>false</Snip5Validation>
+      
+          
+      <Snip7Validation>false</Snip7Validation>
+      
+          
+      <UseTransactionData>true</UseTransactionData>
+      
+          
+      <SnipFriendlyNames>false</SnipFriendlyNames>
+      
+          
+      <SnipStopOnError>false</SnipStopOnError>
+      
+        
+   </ModuleConfig>
+</Module>

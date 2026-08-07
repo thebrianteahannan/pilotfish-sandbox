@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="72ed1305-95ee-4fbb-bd60-b3f0fdd81223" name="Write 837 EDI File" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$EDI_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('ClaimFileBase') + '.edi'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

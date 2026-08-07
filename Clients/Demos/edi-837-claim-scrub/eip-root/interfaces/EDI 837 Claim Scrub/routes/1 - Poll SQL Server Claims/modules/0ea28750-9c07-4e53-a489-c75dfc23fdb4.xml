@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="0ea28750-9c07-4e53-a489-c75dfc23fdb4" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="c5fd3b64-2e79-43e0-b6a6-c906f46a5529" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="e57e669c-88ec-40b0-a3b0-985b328474ee" name="Rule 1 - Hand Off Claims" type="XPATH">
+               <condition>count(//CLAIM | //Claim) &gt; 0</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

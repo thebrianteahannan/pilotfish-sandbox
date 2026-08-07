@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDI 837 Claim Scrub — Pre-clearinghouse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+  <header>
+    <div class="app-bar">
+      <p class="brand">PilotFish · EDI 837 Claim Scrub</p>
+      <div class="main-tabs" role="tablist" aria-label="App views">
+        <button type="button" class="main-tab active" data-main-tab="demo" role="tab" aria-selected="true">Demo</button>
+        <button type="button" class="main-tab" data-main-tab="routes" role="tab" aria-selected="false">Routes</button>
+        {% if has_xslt %}
+        <button type="button" class="main-tab" data-main-tab="xslt" role="tab" aria-selected="false">XSLT</button>
+        {% endif %}
+        <button type="button" class="main-tab" data-main-tab="info" role="tab" aria-selected="false">Info</button>
+      </div>
+    </div>
+    <nav class="nav" id="demo-nav">
+      <a href="#pipeline">Pipeline</a>
+      <a href="#inject">Add Claim</a>
+      <a href="#rules">Payer edits</a>
+      <a href="#kickouts">Kickouts</a>
+      <a href="#results">Clean EDI / SNIP</a>
+    </nav>
+  </header>
+
+  <div id="tab-demo">
+    <main>
+      <section class="panel" id="pipeline">
+        <h2>Claims rejection reduction before clearinghouse</h2>
+        <p class="section-lead">SQL claims → payer-profile edits (referring NPI / POS) → kickout work queue <em>or</em> clean 837 + SNIP outbound. Edit outcomes logged to BI files.</p>
+        <div class="pipeline">
+          <div class="pipe-node db"><strong>SQL Server</strong><span>Claims + PayerEditRules<br/><code>Edi837ClaimScrub</code></span></div>
+          <div class="pipe-node r1"><strong>Route 1</strong><span>Poll PENDING<br/>hand off batch</span></div>
+          <div class="pipe-node r2"><strong>Route 2</strong><span>Payer edits<br/>router</span></div>
+          <div class="pipe-node out"><strong>Buckets</strong><span>kickouts/ · bi/<br/>edi/ + snip/</span></div>
+        </div>
+      </section>
+
+      <section class="panel" id="inject">
+        <h2>Add a claim</h2>
+        <p class="section-lead">Inserts PENDING. Use AHLIC without referring NPI or POS 99 to force a kickout.</p>
+        <form id="claim-form" class="form-grid">
+          <label>Patient
+            <select name="patientId" id="patientId">
+              {% for pid, p in patients.items() %}
+              <option value="{{ pid }}">{{ p.label }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>Payer
+            <select name="payerId">
+              <option value="66783JJT">AHLIC (requires referring NPI; POS 11/12)</option>
+              <option value="MDCAID01">MEDICAID MD (POS 11/21/22)</option>
+            </select>
+          </label>
+          <label>Place of service
+            <input name="placeOfService" value="11" maxlength="2" />
+          </label>
+          <label>Referring NPI
+            <input name="referringNpi" placeholder="required for AHLIC" value="1679576722" />
+          </label>
+          <label>Procedure
+            <input name="procedureCode" value="99213" />
+          </label>
+          <label>Amount
+            <input name="claimAmount" type="number" step="0.01" value="140.55" />
+          </label>
+          <label>Diagnosis
+            <input name="diagnosisCode" value="J06.9" />
+          </label>
+          <label class="wide">Notes
+            <input name="notes" value="Injected from LAN web UI" />
+          </label>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary" id="submit-btn">Submit claim</button>
+            <span id="status" class="status"></span>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" id="rules">
+        <div class="row-head">
+          <h2>Synthetic payer edit table</h2>
+          <button type="button" class="btn" id="refresh-rules-btn">Refresh</button>
+        </div>
+        <div id="rules-table" class="table-wrap">(loading…)</div>
+      </section>
+
+      <section class="panel" id="kickouts">
+        <div class="row-head">
+          <h2>Kickout work queue</h2>
+          <button type="button" class="btn" id="refresh-kick-btn">Refresh</button>
+        </div>
+        <p class="section-lead">Human-readable reject decisions held before clearinghouse leave.</p>
+        <div class="split">
+          <div>
+            <div id="kickout-list" class="file-list"></div>
+          </div>
+          <div>
+            <pre id="kickout-view" class="viewer">(none yet)</pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="results">
+        <div class="row-head">
+          <h2>Clean EDI &amp; SNIP</h2>
+          <button type="button" class="btn" id="refresh-btn">Refresh</button>
+        </div>
+        <div class="split">
+          <div>
+            <h3>837 EDI (clean only)</h3>
+            <div id="edi-list" class="file-list"></div>
+            <pre id="edi-view" class="viewer"></pre>
+          </div>
+          <div>
+            <h3>SNIP reports</h3>
+            <div id="snip-list" class="file-list"></div>
+            <div class="snip-tabs">
+              <button type="button" class="btn snip-tab active" data-tab="html">HTML report</button>
+              <button type="button" class="btn snip-tab" data-tab="raw">Raw XML</button>
+            </div>
+            <iframe id="snip-html" class="snip-frame" title="SNIP HTML validation report"></iframe>
+            <pre id="snip-view" class="viewer snip-raw" hidden></pre>
+          </div>
+        </div>
+        <h3>Claims in SQL Server</h3>
+        <div id="claims-table" class="table-wrap"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="tab-routes" hidden>
+    <main>
+      <section class="panel">
+        <div class="row-head">
+          <h2>Routes</h2>
+          <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noopener">Route design PDF</a>
+        </div>
+        <iframe id="route-viewer-frame" title="Route viewer" src="/static/route-viewer/index.html?mode=docs&amp;layout=pipeline&amp;config=compact&amp;groups=1&amp;collapse=all" style="width:100%;min-height:720px;border:0;background:#0b1220"></iframe>
+      </section>
+    </main>
+  </div>
+
+  {% if has_xslt %}
+  <div id="tab-xslt" hidden>
+    <main>
+      <section class="panel">
+        <h2>XSLT</h2>
+        <div id="xslt-list" class="file-list"></div>
+        <pre id="xslt-view" class="viewer"></pre>
+      </section>
+    </main>
+  </div>
+  {% endif %}
+
+  <div id="tab-info" hidden>
+    <main>
+      <section class="panel">
+        <h2>Info &amp; review PDFs</h2>
+        <ul>
+          <li>Demo only — synthetic payer edits before clearinghouse.</li>
+          <li>EIP: <a href="{{ eip_url }}" target="_blank" rel="noopener">{{ eip_url }}</a></li>
+          {% if lan_hint %}<li>LAN UI: <a href="{{ lan_hint }}" target="_blank" rel="noopener">{{ lan_hint }}</a></li>{% endif %}
+          <li><a href="/documents/capability-brief.pdf" target="_blank" rel="noopener">Capability brief PDF</a></li>
+          <li><a href="/documents/route-diagrams.pdf" target="_blank" rel="noopener">Route diagrams PDF</a></li>
+          <li><a href="/documents/test-plan.pdf" target="_blank" rel="noopener">Test plan PDF</a></li>
+          <li><a href="/documents/test-results.pdf" target="_blank" rel="noopener"><strong>Test results PDF</strong></a>
+            <span class="muted"> — also <a href="/documents/{{ test_results_pdf }}" target="_blank" rel="noopener">{{ test_results_pdf }}</a></span>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
