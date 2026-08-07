@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XCSData>
+	<blank />
+	<TXLifeRequest>
+		<TransRefGUID>4A2768F9-F0DD-A56B-D751-39D595B6270F</TransRefGUID>
+		<TransType tc="1122">Requirement Notification Transmittal</TransType>
+		<TransExeDate>2016-10-26</TransExeDate>
+		<TransExeTime>05:07:44</TransExeTime>
+		<TransMode tc="2">Original</TransMode>
+		<TestIndicator tc="1">True</TestIndicator>
+		<OLifE xmlns:ns2="http://ACORD.org/Standards/Life/2">
+			<SourceInfo>
+				<SourceInfoName>CRL-Plus</SourceInfoName>
+				<SourceInfoDescription>Email : INSURANCECS@CRLCORP.COM</SourceInfoDescription>
+				<SourceInfoComment>Phone : 8558507587</SourceInfoComment>
+			</SourceInfo>
+			<Holding id="HOLD_1">
+				<HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+				<Policy CarrierPartyID="PARTY_PRU_1" id="POLICY_1">
+					<PolNumber>V8556626</PolNumber>
+					<CarrierCode>97195</CarrierCode>
+					<ProductType tc="" />
+					<Life>
+						<FaceAmt />
+						<TotalRiskAmt>600000</TotalRiskAmt>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>200053</TrackingID>
+						<ApplicationJurisdiction tc="37">NY</ApplicationJurisdiction>
+						<PrefLanguage tc="" />
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="PARTY_INS_1" FulfillerPartyID="PARTY_VEND_1" RequesterPartyID="PARTY_PRU_1">
+						<CarrierOrderNum>1835736</CarrierOrderNum>
+						<ReqCode tc="137">Conduct Tele-Interview</ReqCode>
+						<RequirementInfoUniqueID>0029V85566260005736</RequirementInfoUniqueID>
+						<ReqStatus tc="7">Received</ReqStatus>
+						<RequestedDate>2017-02-09</RequestedDate>
+						<StatusDate>2016-10-26</StatusDate>
+						<ReleasePartyOrgCode>PRUX</ReleasePartyOrgCode>
+						<RequirementAcctNum>70544</RequirementAcctNum>
+						<RequirementDetails />
+						<ProviderOrderNum>70213</ProviderOrderNum>
+						<OrderReceivedDate>2016-10-26</OrderReceivedDate>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S70</ProviderEventCode>
+							<StatusEventDate>2016-10-26</StatusEventDate>
+							<StatusEventTime>04:45:04-05:00</StatusEventTime>
+							<StatusEventDetail>Scheduled Appointment: 02/09/2017 at 06:00 PM  until 09:00 PM ,' America/Chicago',' Central Time Zone</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S85</ProviderEventCode>
+							<StatusEventDate>2016-10-26</StatusEventDate>
+							<StatusEventTime>04:45:04-05:00</StatusEventTime>
+							<StatusEventDetail>Service - 102618- ORDERED APPLICATION</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S79</ProviderEventCode>
+							<StatusEventDate>2016-10-26</StatusEventDate>
+							<StatusEventTime>04:45:04-05:00</StatusEventTime>
+							<StatusEventDetail>Order Received</StatusEventDetail>
+						</StatusEvent>
+					</RequirementInfo>
+				</Policy>
+			</Holding>
+			<Party id="PARTY_PRU_1">
+				<PartyTypeCode tc="2">Organization</PartyTypeCode>
+				<GovtID />
+				<Organization>
+					<AbbrName />
+				</Organization>
+				<FullName>PRUCO LIFE INSURANCE COMPANY OF NEW JERSEY</FullName>
+			</Party>
+			<Party id="PARTY_VEND_1">
+				<PartyTypeCode tc="2">Organization</PartyTypeCode>
+				<GovtID />
+				<Organization>
+					<AbbrName />
+				</Organization>
+				<FullName>CRL-Plus</FullName>
+			</Party>
+			<Party id="PARTY_INS_1">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID />
+				<Person>
+					<FirstName>JOHN</FirstName>
+					<MiddleName>W</MiddleName>
+					<LastName>SMITH</LastName>
+					<Occupation />
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1943-02-15</BirthDate>
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="" />
+				</Person>
+				<FullName />
+				<Address>
+					<AddressTypeCode tc="1">Home</AddressTypeCode>
+					<Line1>South Street</Line1>
+					<Line2>Mall Lane Apt 101</Line2>
+					<City>NEW YORK</City>
+					<AddressState>NY</AddressState>
+					<AddressStateTC tc="37">NY</AddressStateTC>
+					<Zip>10001</Zip>
+					<PreventOverrideInd tc="" />
+				</Address>
+				<Address>
+					<AddressTypeCode tc="26">Billing Mailing</AddressTypeCode>
+					<Line1>South Street</Line1>
+					<Line2>Mall Lane Apt 101</Line2>
+					<City>NEW YORK</City>
+					<AddressState>NY</AddressState>
+					<AddressStateTC tc="37">NY</AddressStateTC>
+					<Zip>10001</Zip>
+					<PreventOverrideInd tc="" />
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>978</AreaCode>
+					<DialNumber>4565566</DialNumber>
+					<Ext />
+					<PrefPhone tc="1">True</PrefPhone>
+					<BestTimeToCallTo>19:00:00</BestTimeToCallTo>
+				</Phone>
+			</Party>
+			<Party id="PARTY_AGCY_1">
+				<PartyTypeCode tc="2">Organziation</PartyTypeCode>
+				<GovtID />
+				<Organization>
+					<AbbrName />
+				</Organization>
+				<FullName />
+				<Phone>
+					<PhoneTypeCode tc="2">Business</PhoneTypeCode>
+					<AreaCode>800</AreaCode>
+					<DialNumber>7821388</DialNumber>
+					<Ext />
+					<PrefPhone tc="0">False</PrefPhone>
+				</Phone>
+			</Party>
+			<Party id="PARTY_AGT_1">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID />
+				<Person>
+					<FirstName />
+					<MiddleName />
+					<LastName />
+					<Occupation />
+					<Gender tc="" />
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="" />
+				</Person>
+				<FullName>UNKNOWN</FullName>
+			</Party>
+			<Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_VEND_1" id="REL_2">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="90">Paramed Company</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_INS_1" id="REL_3">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="32">Insured</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_AGCY_1" id="REL_4">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="182">Writing Agency</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_AGT_1" id="REL_5">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="37">Primary Writing Agent</RelationRoleCode>
+			</Relation>
+			<Party id="Party_Fulfiller_1">
+				<FullName>CRL-Plus</FullName>
+				<PartyTypeCode tc="2">Company</PartyTypeCode>
+				<Organization>
+					<DBA>CRL-Plus</DBA>
+				</Organization>
+			</Party>
+			<Relation OriginatingObjectID="PARTY_INS_1" RelatedObjectID="Party_Fulfiller_1" id="Relation_Fulfiller_1">
+				<RelationRoleCode tc="99">Fulfills</RelationRoleCode>
+			</Relation>
+		</OLifE>
+	</TXLifeRequest>
+</XCSData>
+

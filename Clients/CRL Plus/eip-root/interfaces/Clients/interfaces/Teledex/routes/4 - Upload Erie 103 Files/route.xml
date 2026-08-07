@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" name="TDEX.4 - Upload Erie 103 Files Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>true</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <PollingInterval>600</PollingInterval>
+        <PollingDirectory>{ognl:#properties.get('TeledexStagingDirectory')+"/103"}</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction />
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Delete</PostProcessOperation>
+        <TargetDirectory />
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="TDEX.4 - set archive.dir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>{ognl:#properties.get('archive.dir')+"/TELEDEX/"+new java.text.SimpleDateFormat('yyyy-MM/MMddHHmm').format(new java.util.Date())}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileOperationProcessor" name="TDEX.4 - create archive.dir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>{ognl:getAttribute('archive.dir')}</FileName>
+          <Overwrite>false</Overwrite>
+          <ExceptionOnFailure>false</ExceptionOnFailure>
+          <PostProcessOperation>Create Folder</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="TDEX.4 - save to archive dir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:getAttribute('archive.dir')}</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('com.pilotfish.FileName')+"."+getAttribute('com.pilotfish.FileExtension')}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.ftp.FTPTransport" name="TDEX.4 - SFTP Transport" retries="40" retryDelayMs="15000">
+      <ModuleConfig>
+        <FTPTransportType>Encrypted FTP (SSH/SFTP)</FTPTransportType>
+        <Host>$$TeledexDBFSFTPHost</Host>
+        <Port>22</Port>
+        <TargetDirectory>$$TeledexDBFSFTPDirectory</TargetDirectory>
+        <FileName>{ognl:getAttribute('com.pilotfish.FileName')}</FileName>
+        <FileExtension>{ognl:getAttribute('com.pilotfish.FileExtension')}</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <Timeout>300</Timeout>
+        <Sftp_SocketTimeout>300</Sftp_SocketTimeout>
+        <RetryConnection>true</RetryConnection>
+        <RetryDelay>15</RetryDelay>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private (P)</Protection>
+        <FileType>Binary</FileType>
+        <AppendToFile>false</AppendToFile>
+        <Overwrite>false</Overwrite>
+        <CheckForFileAfterWriting>false</CheckForFileAfterWriting>
+        <FAIL_ON_FALSE_RESULT>true</FAIL_ON_FALSE_RESULT>
+        <WriteFromHome>false</WriteFromHome>
+        <UserName>$$TeledexDBFSFTPUsername</UserName>
+        <Password>$$TeledexDBFSFTPPassword</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

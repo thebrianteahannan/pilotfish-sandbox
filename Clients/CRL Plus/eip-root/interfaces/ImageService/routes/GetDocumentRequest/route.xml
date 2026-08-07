@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2026-04-24T10:35:17-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Image Service File Handling" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>useFileService</Name>
+              <Operator>=</Operator>
+              <Value>true</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="ImageService.MissingAttachment" />
+          </Targets>
+          <Condition>
+            <Or>
+              <Attribute>
+                <Name>CRL_DRAWER_NAME</Name>
+                <Operator>=</Operator>
+                <Value>SFTP</Value>
+              </Attribute>
+              <Attribute>
+                <Name>CRL_DRAWER_NAME</Name>
+                <Operator>=</Operator>
+                <Value>SFTP FOLDER</Value>
+              </Attribute>
+            </Or>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="ImageService.Bypass Image Service For Testing" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>bypassImageService</Name>
+              <Operator>=</Operator>
+              <Value>true</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="ImageService.ImageAccessRequest.HTTP Post Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="GetDocumentRequest">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ImageService.set fileService Fix">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>useFileService</AttributeName>
+          <Expression>false</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="ImageService.ImageAccessRequest.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:CRL_DOCUMENT_ID:eip_name:/RESULTS/TRANSACTIONATTACHMENT/ATTACHMENT/CRLDOCUMENTID[not(@id) and string-length(../CRLDRAWERNAME) &gt; 0]:eip_value][eip_pair:CRL_FILENAME:eip_name:/RESULTS/TRANSACTIONATTACHMENT/ATTACHMENT/CRLFILENAME[../CRLDOCUMENTID[not(@id) and string-length(../CRLDRAWERNAME) &gt; 0]]:eip_value][eip_pair:CRL_ATTACHMENT_ID:eip_name:/RESULTS/TRANSACTIONATTACHMENT/ATTACHMENT/ATTACHMENTID[../CRLDOCUMENTID[not(@id) and string-length(../CRLDRAWERNAME) &gt; 0]]:eip_value][eip_pair:CRL_DRAWER_NAME:eip_name:/RESULTS/TRANSACTIONATTACHMENT/ATTACHMENT/CRLDRAWERNAME[../CRLDOCUMENTID[not(@id) and string-length(../CRLDRAWERNAME) &gt; 0]]:eip_value]</XPathExpressions>
+          <Namespaces>null</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="ImageService.ImageAccessRequest.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>transactionData</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ImageService.set bypassImageService">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>bypassImageService</AttributeName>
+          <Expression>$$bypass.image.service</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="getFolderProperty">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>folderPropertySpecification</AttributeName>
+          <Expression>$$image.large.staging.dir</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SkipWebservice">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:new java.io.File(getAttribute('folderPropertySpecification') + +'/' + getAttribute('CRL_FILENAME')).exists()}</ExecuteProcessor>
+          <AttributeName>useFileService</AttributeName>
+          <Expression>true</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="RetrieveImage">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('useFileService').equals('true')}</ExecuteProcessor>
+          <FileName>{ognl:getAttribute('folderPropertySpecification') + '/' + getAttribute('CRL_FILENAME')}</FileName>
+          <PostProcessOperation>Do Nothing</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.PDFToTIFFProcessor" name="ReencodeImage">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('useFileService').equals('true') &amp;&amp; getAttribute('sourceClient') != 'LADDER'}</ExecuteProcessor>
+          <MIMEType>image/tiff</MIMEType>
+          <ImageCompression>Group 4 (CCITT4)</ImageCompression>
+          <UseCustomDpi>true</UseCustomDpi>
+          <Dpi>$$image.tiff.dpi</Dpi>
+          <LittleEndian>true</LittleEndian>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.Base64OutputProcessor" name="Base64EncodeImage">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('useFileService').equals('true')}</ExecuteProcessor>
+          <IsLineSeparated>false</IsLineSeparated>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetAttributeDocumentType">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('useFileService').equals('true')}</ExecuteProcessor>
+          <AttributeName>GetDocumentMimeType</AttributeName>
+          <Expression>tiff</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="setAttributeFilename">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('useFileService').equals('true')}</ExecuteProcessor>
+          <AttributeName>GetDocumentOriginalFileName</AttributeName>
+          <Expression>{ognl:getAttribute('CRL_FILENAME')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="StoreImage">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('useFileService').equals('true')}</ExecuteProcessor>
+          <AttributeName>{ognl:'ImageID.' + getAttribute('CRL_ATTACHMENT_ID')}</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="RetrieveTransaction">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('useFileService').equals('true')}</ExecuteProcessor>
+          <AttributeName>transactionData</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="RetrieveAttachment" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="ImageService.ImageAccessRequest.HTTP Post Transport" retries="1">
+      <ModuleConfig>
+        <TargetURL>$$imagews.request.url</TargetURL>
+        <UserName />
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password />
+        <PreemptiveAuthentication>false</PreemptiveAuthentication>
+        <ResponseListener>GetDocumentResponse</ResponseListener>
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>300000</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <SynchronizationKey />
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <SpecifyTLS>false</SpecifyTLS>
+        <TLSVersion>TLSv1.1</TLSVersion>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ImageService.GetDocumentRequest.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>ImageService.GetDocumentRequest</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="ImageService.GetDocumentRequest.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="ImageService.Bypass Image Service For Testing" retries="1">
+      <ModuleConfig>
+        <ServiceName>GetDocumentResponse</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="ImageService.Get sample response">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>sample-response.xml</FileName>
+          <PostProcessOperation>Do Nothing</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="InsertInlineAttachmentFromFile" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Image Service File Handling" retries="1">
+      <ModuleConfig>
+        <ServiceName>UseFileDocumentResponse</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="ImageService.MissingAttachment" retries="1">
+      <ModuleConfig>
+        <ServiceName>Update Status Inbound</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ImageService.GetDocumentRequest.Clear Statuses">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>statuses</AttributeName>
+          <Expression>&lt;XCSData /&gt;</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ImageService.GetDocumentRequest.set awaitingAttachments">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.statustype</AttributeName>
+          <Expression>awaitingAttachments</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

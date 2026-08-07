@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/static/app.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css" />
   <link rel="stylesheet" href="/static/code-highlight.css" />
+  <link rel="stylesheet" href="/static/timing-tab.css" />
 </head>
 <body>
   <header>
@@ -21,6 +22,7 @@
         {% if has_xslt %}
         <button type="button" class="main-tab" data-main-tab="xslt" role="tab" aria-selected="false">XSLT</button>
         {% endif %}
+        <button type="button" class="main-tab" data-main-tab="timing" role="tab" aria-selected="false">Timing</button>
         <button type="button" class="main-tab" data-main-tab="info" role="tab" aria-selected="false">Info</button>
       </div>
     </div>
@@ -124,24 +126,17 @@
   </div>
   {% endif %}
 
-  <div id="tab-info" hidden>
-    <main>
-      <section class="panel">
-        <h2>Info</h2>
-        <ul>
-          <li>Demo only — synthetic 835 + Open AR.</li>
-          <li>EIP: <a href="{{ eip_url }}" target="_blank" rel="noopener">{{ eip_url }}</a></li>
-          {% if lan_hint %}<li>LAN UI: <a href="{{ lan_hint }}" target="_blank" rel="noopener">{{ lan_hint }}</a></li>{% endif %}
-          <li><a href="/documents/capability-brief.pdf" target="_blank" rel="noopener">Capability brief PDF</a></li>
-          <li><a href="/documents/route-diagrams.pdf" target="_blank" rel="noopener">Route diagrams PDF</a></li>
-        </ul>
-      </section>
-    </main>
-  </div>
+  <!-- TIMING_TAB_STANDARD:START -->
+  {% include 'partials/timing_tab.html' %}
+  <!-- TIMING_TAB_STANDARD:END -->
+  <!-- INFO_TAB_STANDARD:START -->
+  {% include 'partials/info_tab.html' %}
+  <!-- INFO_TAB_STANDARD:END -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
   <script src="/static/code-highlight.js"></script>
   <script src="/static/app.js"></script>
+  <script src="/static/timing-tab.js"></script>
 </body>
 </html>

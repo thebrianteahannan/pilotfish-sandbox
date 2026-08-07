@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.other.XPathValueProcessor"
+        id="215bcded-ee89-41cb-8794-17cdf204342e"
+        name="Get CRL Doc"
+        tag="Processor"
+        type="XPath Value Retrieval"
+        version="2.0">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      <ForkingXPath>//*[local-name()='OrderData']</ForkingXPath>
+      <TreatAsXML>false</TreatAsXML>
+      <OverrideCharEncoding>true</OverrideCharEncoding>
+      <CharEncoding>UTF-8</CharEncoding>
+      <Namespaces></Namespaces>
+      <Namespace>http://crlcorp.com/DocumentService</Namespace>
+      <XPath1Compatibility>true</XPath1Compatibility>
+   </ModuleConfig>
+</Module>

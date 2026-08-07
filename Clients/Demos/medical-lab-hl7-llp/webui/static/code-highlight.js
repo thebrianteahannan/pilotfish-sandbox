@@ -1,5 +1,8 @@
 /* Sandbox Web UI: highlight XML / XSLT in <pre.viewer>, #xslt-code, #xslt-view, etc.
  * Load after highlight.js; before or after app.js. Observes text updates automatically.
+ *
+ * Avoids an infinite MutationObserver ↔ hljs.highlightElement feedback loop by
+ * fingerprinting textContent and disconnecting the observer while highlighting.
  */
 (function () {
   const SELECTORS = [
@@ -19,6 +22,8 @@
     "#val-view",
     "pre.log",
   ].join(",");
+
+  const OBSERVE_OPTS = { childList: true, characterData: true, subtree: true };
 
   function ensureCode(el) {
     if (!el) return null;
@@ -44,14 +49,31 @@
     const text = code.textContent || "";
     if (!text.trim() || text.trim() === "(none yet)" || text.trim() === "(empty)") {
       code.classList.remove("hljs");
+      delete code.dataset.hlSrc;
       return;
     }
+    // Skip re-entry only when span markup is still present. Setting textContent
+    // keeps .hljs + hlSrc but destroys spans — must re-highlight in that case.
+    if (
+      code.dataset.hlSrc === text &&
+      code.classList.contains("hljs") &&
+      code.childElementCount > 0
+    ) {
+      return;
+    }
+
     code.classList.add("language-xml");
     delete code.dataset.highlighted;
+
+    const obs = el.__hlObs;
+    if (obs) obs.disconnect();
     try {
       window.hljs.highlightElement(code);
+      code.dataset.hlSrc = text;
     } catch (_) {
       /* leave plain text */
+    } finally {
+      if (obs) obs.observe(el, OBSERVE_OPTS);
     }
   }
 
@@ -62,10 +84,17 @@
   function watch(el) {
     if (!el || el.dataset.hlWatched === "1") return;
     el.dataset.hlWatched = "1";
+    let scheduled = false;
     const obs = new MutationObserver(() => {
-      window.requestAnimationFrame(() => highlightEl(el));
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(() => {
+        scheduled = false;
+        highlightEl(el);
+      });
     });
-    obs.observe(el, { childList: true, characterData: true, subtree: true });
+    el.__hlObs = obs;
+    obs.observe(el, OBSERVE_OPTS);
   }
 
   function boot() {
@@ -95,6 +124,7 @@
       if (!el) return;
       const code = ensureCode(el);
       if (!code) return;
+      delete code.dataset.hlSrc;
       code.textContent = text == null ? "" : String(text);
       highlightEl(el.tagName === "CODE" ? el.parentElement || el : el);
     },

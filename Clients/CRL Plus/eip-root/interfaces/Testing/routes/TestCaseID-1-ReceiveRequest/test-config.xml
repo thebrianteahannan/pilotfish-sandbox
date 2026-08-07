@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestConfigurations>
+   <TestConfig name="test">
+      <AlternateDataSource>From Text</AlternateDataSource>
+      <StartingText>&lt;Query&gt;&lt;TransRefGUIDPattern&gt;CRL-TEST-____-TI&lt;/TransRefGUIDPattern&gt;&lt;/Query&gt;</StartingText>
+      <Stage>
+         <Identifier>transform@listener=Testing.TestCaseID-1-ReceiveRequest.HTTP Post Listener</Identifier>
+         <IsStart>true</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>forking@listener=Testing.TestCaseID-1-ReceiveRequest.HTTP Post Listener</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>routing</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>xslt@transport=Testing.TestCaseID-1-ReceiveRequest.Database SQL Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=Testing.TestCaseID-1-ReceiveRequest.Database SQL Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=Testing.TestCaseID-1-ReceiveRequest.Database SQL Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=Testing.TestCaseID-1-ReceiveRequest.Database SQL Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=InvalidRequest</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=InvalidRequest</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=InvalidRequest,processor=Testing.TestCaseID-1-SetInvalidReponse</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=InvalidRequest,processor=Testing.TestCaseID-1-Set invalid data</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=InvalidRequest</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+   </TestConfig>
+</TestConfigurations>

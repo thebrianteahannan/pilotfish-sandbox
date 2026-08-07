@@ -140,6 +140,8 @@ function setMainTab(tab) {
   routes.hidden = tab !== "routes";
   if (xslt) xslt.hidden = tab !== "xslt";
   if (info) info.hidden = tab !== "info";
+  const timing = document.getElementById("tab-timing");
+  if (timing) timing.hidden = tab !== "timing";
   document.body.classList.toggle("routes-mode", tab === "routes" || tab === "xslt");
   const nav = document.getElementById("demo-nav");
   if (nav) nav.hidden = tab !== "demo";

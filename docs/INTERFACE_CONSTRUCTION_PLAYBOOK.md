@@ -433,7 +433,7 @@ Work in this order unless the user specifies otherwise:
 5. **Minimal Route 1** V1 `route.xml` (listener → snapshot/file) green — copy Sandbox skeleton when possible. Prefer callout routes (Call Route + TriggerableListener) for reusable auth/utility steps.
 6. **Downstream routes / transforms** one stage at a time (still V1 runtime).
 7. **Router + transports** with kickout path tested once.
-8. **Web UI** inject/submit + status views matching the demo story.
+8. **Web UI** inject/submit + status views matching the demo story, including the standard **Info** tab (§6.5) with PDF aliases and the **Timing** tab (§6.6).
 9. **V2 convert** into `eip-root` + Routes tab / docs.
 10. **Route design PDF (required):** with Web UI up, author `diagram-groups.json` for long chains (§6.1b), then run `python3 tools/export_route_diagrams.py --config compact` (or `--config changed`) so `documents/` gets an **overview (collapsed groups) + later detail pages** PDF (see §6 / §6.1b).
 10b. **Stakeholder Capability Brief PDF (required):** run `python3 tools/export_stakeholder_brief.py` so `documents/<ShortName>_Capability_Brief.pdf` is generated from `DESIGN.md` + routes (+ CapabilityStatement when FHIR). See §6.1a.
@@ -704,6 +704,78 @@ When the Web UI shows XML or XSLT source (XSLT tab, kickout/decision viewers, SN
 
 Load Highlight.js (XML) + those assets in `templates/index.html` **before** `app.js`. The helper auto-highlights common viewers (`#xslt-code`, `#xslt-view`, `pre.viewer`, `#snip-view`, …) when content changes — no per-view rewrite required.
 
+### 6.5 Info tab — review PDFs, ports, and story (**required**)
+
+Every Sandbox demo Web UI **must** expose an **Info** tab (or equivalent top-level view) with the same layout family used by `edi-837-snip-sqlserver`:
+
+1. Title + short blurb (what the demo does)  
+2. **Info & review PDFs** list: demo-only note, EIP URL, LAN UI URL, and links to  
+   `/documents/capability-brief.pdf`, `/documents/route-diagrams.pdf`, `/documents/test-plan.pdf`, `/documents/test-results.pdf`  
+   (plus optional demo-specific PDF links)  
+3. **Ports** table/list (host ports from compose)  
+4. Optional extra sections (e.g. SNIP levels) when DESIGN.md warrants them  
+
+**Shared assets / wiring:**
+
+| Piece | Path |
+|-------|------|
+| Jinja partial | `Clients/Demos/_shared/webui/templates/partials/info_tab.html` → copy to each demo’s `webui/templates/partials/` |
+| Document aliases | `Clients/Demos/_shared/webui/document_routes.py` → copy to each demo’s `webui/` and call `ensure_document_routes(...)` (idempotent; skips existing rules) |
+| Apply / refresh | `python3 tools/apply_info_tab_standard.py` (optional `--demo <name>`) — updates metadata-driven blurbs, ports, includes, and bootstrap |
+
+In `index.html`:
+
+```jinja
+<!-- INFO_TAB_STANDARD:START -->
+{% include 'partials/info_tab.html' %}
+<!-- INFO_TAB_STANDARD:END -->
+```
+
+Flask must provide context (`info_title`, `info_blurb`, `info_note`, `eip_url`, `lan_hint`, `info_ports`, `test_results_pdf`, optional `info_extra_links` / `info_extra_sections`). Prefer a `@app.context_processor` so every page gets them.
+
+**Hard rules:**
+
+1. Do not ship an Info tab that is only LAN/EIP URLs.  
+2. PDF aliases must return `application/pdf` when the file exists under `documents/` (§6.2).  
+3. New demos: copy the partial + `document_routes.py` (or re-run the apply script) before claiming Web UI done.  
+4. After changing shared partial / `document_routes.py`, re-run `tools/apply_info_tab_standard.py` (or sync copies) so demos stay aligned.
+
+**Reference:** `edi-837-snip-sqlserver` (Info chrome + SNIP levels section) and `edi-837-claim-scrub` (review PDF list).
+
+### 6.6 Timing tab — build-timing viewer (**required**)
+
+Every Sandbox demo Web UI **must** expose a **Timing** tab that loads `documents/build-timing.json` via `GET /api/build-timing`.
+
+1. Tab chrome next to Info (`data-main-tab="timing"` or `data-tab="timing"`).  
+2. Content from the shared partial (`#tab-timing` / `#timing-root`).  
+3. Empty state is allowed when the JSON is missing — show how to copy `docs/templates/build-timing.example.json` (do not invent fake durations).  
+4. When present, show duration hero, phases with bars, slowest phases, bottlenecks, speedup ideas, and Docker-at-completion (§4.1).
+
+**Shared assets / wiring:**
+
+| Piece | Path |
+|-------|------|
+| Jinja partial | `Clients/Demos/_shared/webui/templates/partials/timing_tab.html` |
+| CSS / JS | `Clients/Demos/_shared/webui/static/timing-tab.{css,js}` (load CSS in `<head>`; JS **after** `app.js`) |
+| API | `ensure_build_timing_api(app, documents_dir)` in `document_routes.py` (Dockerfile must `COPY document_routes.py`) |
+| Apply / refresh | `python3 tools/apply_timing_tab_standard.py` (optional `--demo <name>`) |
+
+In `index.html`:
+
+```jinja
+<!-- TIMING_TAB_STANDARD:START -->
+{% include 'partials/timing_tab.html' %}
+<!-- TIMING_TAB_STANDARD:END -->
+```
+
+**Hard rules:**
+
+1. Do not leave Timing only on one “reference” demo — all demos with a Web UI get the tab.  
+2. Prefer completing `build-timing.json` during the build (§4.1); the tab still ships without it.  
+3. After changing shared Timing assets, re-run `tools/apply_timing_tab_standard.py`.
+
+**Reference:** `edi-837-claim-scrub` (filled JSON) and any demo’s empty-state copy.
+
 ---
 
 ## 7. Smoke test (required before “done”)
@@ -719,6 +791,8 @@ Minimum bar:
 - [ ] **Stakeholder Capability Brief PDF** written under `documents/` (`tools/export_stakeholder_brief.py`)
 - [ ] **Test Plan PDF** written under `documents/` (`tools/export_test_plan_pdf.py`)
 - [ ] **Automated tests run** (`tools/run_interface_tests.py --wait`) with results in `documents/test-results.json` / `.html` / `.pdf`
+- [ ] **Info tab** shows blurb, EIP/LAN, capability/route/test-plan/test-results PDF links, and ports (§6.5)
+- [ ] **Timing tab** loads (empty-state OK) or renders `documents/build-timing.json` (§6.6)
 - [ ] **Browser/LAN PDF URLs** work (HTTP 200, `application/pdf`) for every review PDF (§6.2)
 - [ ] No silent claim of partner-grade validation unless gated
 

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000" version="1.0">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Incoming Routes Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <MustContainString />
+        <MustNotContainString />
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="From Normalization">
+    <FormatProfile name="Normalized 121 to AIG Order Confirmation" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="AIG Success Response Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>11:53-11:53</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <CallingRoutes />
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="RestoreOriginal121">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AmericanGeneral.2 - AIGP ACORD 121 Order Confirmation.Processor2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:SuccessOrFailure:eip_name:Success:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>Success</Expression>
+          <AttributeName>SuccessOrFailure</AttributeName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Normailzed 121to AIG Failure Response" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="AIG Failure Response Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>11:53-11:53</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <CallingRoutes />
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Get TransRefGUID">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute("com.pilotfish.crl.original.txt")!=null &amp;&amp; getAttribute("com.pilotfish.crl.original.txt").length()&gt;20}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:TransRefGUID:eip_name:{ognl:#text = getAttribute("com.pilotfish.crl.original.txt"), #start = #text.indexOf("TransRefGUID&gt;") + "TransRefGUID&gt;".length(), #end = #text.indexOf("&lt;", #start), (#start&gt;0 &amp;&amp; #end&gt;#start) ? #text.substring(#start, #end) : ""}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>{ognl:#text = getAttribute("com.pilotfish.crl.original.txt"), #start = #text.indexOf("TransRefGUID&gt;") + "TransRefGUID&gt;".length(), #end = #text.indexOf("&lt;", #start), (#start&gt;0 &amp;&amp; #end&gt;#start) ? #text.substring(#start, #end) : ""}</Expression>
+          <AttributeName>TransRefGUID</AttributeName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="SetErrorTransactionAttributes">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:error.exceptionMessage:eip_name://err:exceptionMessage:eip_value][eip_pair:error.rootExceptionMessage:eip_name://err:rootExceptionMessage:eip_value][eip_pair:error.exceptionTrace:eip_name://err:exceptionTrace:eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>[eip_pair:err:eip_name:http://www.pilotfishtechnology.com/eip/RouteErrorReport:eip_value]</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>true</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="RestoreOriginalText">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute("com.pilotfish.crl.original.txt")!=null &amp;&amp; getAttribute("com.pilotfish.crl.original.txt").length()&gt;20}</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AmericanGeneral.2 - AIGP ACORD 121 Order Confirmation.Processor2-Copy-2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:SuccessOrFailure:eip_name:Failure:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>Failure</Expression>
+          <AttributeName>SuccessOrFailure</AttributeName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="Response to Client">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="AmericanGeneral.AIG ACORD 121 Order Confirmation.Synchronous Response Transport" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetArchiveDir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:archive.dir:eip_name:$$archive.dir:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>$$archive.dir</Expression>
+          <AttributeName>archive.dir</AttributeName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetArchiveSubDir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:archive.dir:eip_name:{ognl:getAttribute("archive.dir")+"/"+getAttribute("sourceClient")+"/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>{ognl:getAttribute("archive.dir")+"/"+getAttribute("sourceClient")+"/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}</Expression>
+          <AttributeName>archive.dir</AttributeName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileOperationProcessor" name="CreateArchiveSubdir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>{ognl:getAttribute("archive.dir")}</FileName>
+          <Overwrite>false</Overwrite>
+          <ExceptionOnFailure>false</ExceptionOnFailure>
+          <PostProcessOperation>Create Folder</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="ArchiveResponseFile">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:getAttribute("archive.dir")}</TargetDirectory>
+          <TargetFileName>{ognl:"121Response-" + new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID() +".xml"}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AmericanGeneral.2 - AIGP ACORD 121 Order Confirmation.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:RouteName:eip_name:{ognl:getAttribute('sourceClient') + '-' + getAttribute('com.pilotfish.FileName') + '-121OrderConfirmation-' + getAttribute('SuccessOrFailure')}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>{ognl:getAttribute('sourceClient') + '-' + getAttribute('com.pilotfish.FileName') + '-121OrderConfirmation-' + getAttribute('SuccessOrFailure')}</Expression>
+          <AttributeName>RouteName</AttributeName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="AmericanGeneral.2 - AIGP ACORD 121 Order Confirmation.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+          <LoopCallout>false</LoopCallout>
+          <LoopCondition>true</LoopCondition>
+          <MaxIterations>5</MaxIterations>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>

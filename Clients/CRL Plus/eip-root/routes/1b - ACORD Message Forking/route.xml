@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2025-08-19T12:35:25-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="ACORD 103" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('acordDoctype')!=null &amp;&amp; getAttribute('acordDoctype').toString().equals('103')</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="ACORD 121" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="ACORD Forking" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="ACORD Forking Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Capture UserAuthRequest">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:UserAuthRequest:eip_name:/a:TXLife/a:UserAuthRequest:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:a:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor" name="Capture Before TXLifeRequest">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <RegEx>(?s)(^.*?)(&lt;[^&gt;]*TXLifeRequest)</RegEx>
+          <AttributeName>xmlBeforeTXLifeRequest</AttributeName>
+          <MatchGroupNumber>1</MatchGroupNumber>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor" name="Capture After TXLifeRequest">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <RegEx>(?s)(.*)(&lt;/[^&gt;]*TXLifeRequest&gt;)(.*?)$</RegEx>
+          <AttributeName>xmlAfterTXLifeRequest</AttributeName>
+          <MatchGroupNumber>3</MatchGroupNumber>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="To Route #2">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="ACORD 103" retries="1">
+      <ModuleConfig>
+        <ServiceName>Listener 103</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="Restore TXLife 103 Element">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:^&lt;\?[^?]*\?&gt;:eip_name:{ognl:@java.util.regex.Matcher@quoteReplacement(getAttribute('xmlBeforeTXLifeRequest'))}:eip_value][eip_pair:(.)$:eip_name:{ognl:'$1'+@java.util.regex.Matcher@quoteReplacement(getAttribute('xmlAfterTXLifeRequest'))}:eip_value]</REGEX_TABLE_TAG>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Save forked original 103">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="To Route #3">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="ACORD 121" retries="1">
+      <ModuleConfig>
+        <ServiceName>Non-standard 121</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="Restore TXLife 121 Element">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:^&lt;\?[^?]*\?&gt;:eip_name:{ognl:@java.util.regex.Matcher@quoteReplacement(getAttribute('xmlBeforeTXLifeRequest'))}:eip_value][eip_pair:(.)$:eip_name:{ognl:'$1'+@java.util.regex.Matcher@quoteReplacement(getAttribute('xmlAfterTXLifeRequest'))}:eip_value]</REGEX_TABLE_TAG>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Save forked original 121">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

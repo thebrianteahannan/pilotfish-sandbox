@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="ROOT.5 - Insert Order.Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Incoming Routes Listener</ErrorListenerName>
+        <IncludeData>false</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <MustContainString />
+        <MustNotContainString />
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Normalized 121 to SQLXML" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="8 - Insert Order.Programmable (Java) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Set transactionData">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>transactionData</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="Directory Listener - Rerun SQLXML">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <PollingInterval>30</PollingInterval>
+        <PollingDirectory>$$incoming.sqlxml.input.dir</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction />
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Delete</PostProcessOperation>
+        <TargetDirectory />
+        <CompatModeMoved>true</CompatModeMoved>
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Restore transactionData">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:transactionData:eip_name://NORMALIZED_TXT:eip_value][eip_pair:sourceClient:eip_name://PF_SOURCE_CLIENT:eip_value]</XPathExpressions>
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>true</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.db.DatabaseSqlTransport" name="5 - Insert Order.Database SQL Transport Transport" retries="2" retryDelayMs="60000">
+      <ModuleConfig>
+        <InputFile />
+        <WriteQuery>false</WriteQuery>
+        <Query />
+        <QueryParams />
+        <UserName>$$db.username</UserName>
+        <Password>$$db.password</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$db.driver</JdbcDriver>
+        <JdbcURL>$$db.url</JdbcURL>
+        <KeepConnection>false</KeepConnection>
+        <Autocommit>false</Autocommit>
+        <EnableTimeout>false</EnableTimeout>
+        <Timeout>300</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema>$$db.username</RestrictMetaDataToSchema>
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <CallbackListenerName>9 - Insert Order Callback.Programmable (Java) Listener</CallbackListenerName>
+        <UseSingleOutputStream>false</UseSingleOutputStream>
+        <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+        <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+        <JDBCProperties>null</JDBCProperties>
+        <UseConnectionPooling>false</UseConnectionPooling>
+        <PermittedDBConnections>5</PermittedDBConnections>
+        <LogMetadata>false</LogMetadata>
+        <LogSQL>true</LogSQL>
+        <UseJdbcTyping>false</UseJdbcTyping>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileOperationProcessor" name="ROOT.5 - Create failedsql.dir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>$$incoming.sqlxml.failed.dir</FileName>
+          <Overwrite>false</Overwrite>
+          <ExceptionOnFailure>false</ExceptionOnFailure>
+          <PostProcessOperation>Create Folder</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ROOT.5 - set sqlxml.stage.filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>sqlxml.filename</AttributeName>
+          <Expression>{ognl:getAttribute("sourceClient") + new java.text.SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) +#transaction.getOriginatingTransactionID() + '.xml'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="ROOT.5 - Save SQLXML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$incoming.sqlxml.failed.dir</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute("sqlxml.filename")}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.stream.StreamNormalizerProcessor" name="character encoding">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <BufferSize>512</BufferSize>
+          <CharacterEncoding>UTF-8</CharacterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="5 - Insert Order - Captures Route Name for Call Route">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>{ognl:getAttribute('sourceClient') + '-' + getAttribute('com.pilotfish.FileName') + '-InsertOrder'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="5 - Insert Order - Captures Call Route">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+    <PostProcessors>
+      <Processor class="com.pilotfish.eip.modules.file.FileOperationProcessor" name="ROOT.5 - Delete sqlxml file">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>{ognl:#properties.get('incoming.sqlxml.failed.dir') + '/' + getAttribute('sqlxml.filename')}</FileName>
+          <Overwrite>false</Overwrite>
+          <ExceptionOnFailure>false</ExceptionOnFailure>
+          <PostProcessOperation>Delete</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+    </PostProcessors>
+  </Target>
+</Route>
+

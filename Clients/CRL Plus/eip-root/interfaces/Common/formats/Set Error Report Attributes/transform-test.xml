@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<err:errorReport xmlns:err="http://www.pilotfishtechnology.com/eip/RouteErrorReport">
+	<err:transactionID>34</err:transactionID>
+	<err:errorStage>Transport</err:errorStage>
+	<err:errorComponent>Attachment to CRL Image Server</err:errorComponent>
+	<err:errorRoute>StoreDocumentRequest</err:errorRoute>
+	<err:errorInterface>ImageService</err:errorInterface>
+	<err:exceptionClass>com.pilotfish.eip.EIPException</err:exceptionClass>
+	<err:exceptionMessage>Error in HTTP Transport</err:exceptionMessage>
+	<err:rootExceptionMessage>imagews.test.crl.crlcorp.com</err:rootExceptionMessage>
+	<err:exceptionTrace>com.pilotfish.eip.EIPException: Error in HTTP Transport
+	at com.pilotfish.eip.modules.http.HttpPostTransport.sendData(HttpPostTransport.java:172)
+	at com.pilotfish.eip.transact.stages.TransportStage.executeNormally(TransportStage.java:252)
+	at com.pilotfish.eip.transact.stages.TransportStage.process(TransportStage.java:66)
+	at com.pilotfish.eip.transact.StageHandler.process(StageHandler.java:80)
+	at com.pilotfish.eip.server.ntm.transact.StageTransactionRunner.runStage(StageTransactionRunner.java:121)
+	at com.pilotfish.eip.server.ntm.transact.StageTransactionRunner.run(StageTransactionRunner.java:64)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: com.pilotfish.eip.EIPException: Could not complete HTTP Post
+	at com.pilotfish.eip.modules.http.HttpPostTransport.executeTransport(HttpPostTransport.java:396)
+	at com.pilotfish.eip.modules.http.HttpPostTransport.sendData(HttpPostTransport.java:170)
+	... 8 more
+Caused by: java.net.UnknownHostException: imagews.test.crl.crlcorp.com
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:184)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at sun.security.ssl.SSLSocketImpl.connect(SSLSocketImpl.java:649)
+	at sun.security.ssl.SSLSocketImpl.&lt;init&gt;(SSLSocketImpl.java:454)
+	at sun.security.ssl.SSLSocketFactoryImpl.createSocket(SSLSocketFactoryImpl.java:153)
+	at org.apache.commons.httpclient.protocol.SSLProtocolSocketFactory.createSocket(SSLProtocolSocketFactory.java:81)
+	at org.apache.commons.httpclient.protocol.SSLProtocolSocketFactory.createSocket(SSLProtocolSocketFactory.java:126)
+	at org.apache.commons.httpclient.HttpConnection.open(HttpConnection.java:706)
+	at org.apache.commons.httpclient.HttpMethodDirector.executeWithRetry(HttpMethodDirector.java:386)
+	at org.apache.commons.httpclient.HttpMethodDirector.executeMethod(HttpMethodDirector.java:170)
+	at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:396)
+	at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:324)
+	at com.pilotfish.eip.modules.http.HttpPostTransport.executeTransport(HttpPostTransport.java:340)
+	... 9 more</err:exceptionTrace>
+	<err:transactionData ContentType="text" />
+	<err:transactionAttributes name="inboundClient">PACT</err:transactionAttributes>
+	<err:transactionAttributes name="FileSize">250765</err:transactionAttributes>
+	<err:transactionAttributes name="sourceClient">PACT</err:transactionAttributes>
+	<err:transactionAttributes name="numAttachments">1.0</err:transactionAttributes>
+	<err:transactionAttributes name="PollingCycleID">1</err:transactionAttributes>
+	<err:transactionAttributes name="PollingCycleSize">1</err:transactionAttributes>
+	<err:transactionAttributes name="RelativeSourceFolderPath" />
+	<err:transactionAttributes name="transactionData">&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;ns2:TXLife xmlns:ns2="http://ACORD.org/Standards/Life/2" Version=""&gt;&lt;ns2:UserAuthRequest&gt;&lt;ns2:UserLoginName&gt;PACT&lt;/ns2:UserLoginName&gt;&lt;ns2:UserPswd&gt;&lt;ns2:CryptPswd&gt;PL47@vB$wJ653&lt;/ns2:CryptPswd&gt;&lt;ns2:CryptType&gt;NONE&lt;/ns2:CryptType&gt;&lt;ns2:Pswd/&gt;&lt;/ns2:UserPswd&gt;&lt;ns2:UserDate&gt;2015-02-19&lt;/ns2:UserDate&gt;&lt;ns2:UserTime&gt;11:06:04&lt;/ns2:UserTime&gt;&lt;ns2:VendorApp&gt;&lt;ns2:VendorName VendorCode=""/&gt;&lt;ns2:AppName&gt;MRAS AIS&lt;/ns2:AppName&gt;&lt;ns2:AppVer&gt;4.7.0&lt;/ns2:AppVer&gt;&lt;/ns2:VendorApp&gt;&lt;/ns2:UserAuthRequest&gt;&lt;ns2:TXLifeRequest PrimaryObj="HoldingType_1"&gt;&lt;ns2:TransRefGUID&gt;67B9B8EE-14BA-33B9-1073-C880EC83CD49&lt;/ns2:TransRefGUID&gt;&lt;ns2:TransType tc="121"&gt;General Requirement Order Request&lt;/ns2:TransType&gt;&lt;ns2:TransExeDate&gt;2015-02-19&lt;/ns2:TransExeDate&gt;&lt;ns2:TransExeTime&gt;11:06:04&lt;/ns2:TransExeTime&gt;&lt;ns2:TransMode tc="2"&gt;Originial&lt;/ns2:TransMode&gt;&lt;ns2:TestIndicator tc="1"&gt;YES&lt;/ns2:TestIndicator&gt;&lt;ns2:OLifE&gt;&lt;ns2:SourceInfo&gt;&lt;ns2:CreationDate&gt;2015-02-19&lt;/ns2:CreationDate&gt;&lt;ns2:CreationTime&gt;11:06:04&lt;/ns2:CreationTime&gt;&lt;ns2:SourceInfoName&gt;MRAS AIS&lt;/ns2:SourceInfoName&gt;&lt;ns2:SourceInfoDescription&gt;MRAS AIS v.4.7.0&lt;/ns2:SourceInfoDescription&gt;&lt;/ns2:SourceInfo&gt;&lt;ns2:Holding id="HoldingType_1"&gt;&lt;ns2:HoldingTypeCode tc="2"&gt;Policy&lt;/ns2:HoldingTypeCode&gt;&lt;ns2:Policy CarrierPartyID="PartyType_1" id="PolicyType_1"&gt;&lt;ns2:PolNumber&gt;AT10105710&lt;/ns2:PolNumber&gt;&lt;ns2:LineOfBusiness tc=""/&gt;&lt;ns2:ProductType tc=""/&gt;&lt;ns2:ProductCode/&gt;&lt;ns2:CarrierCode&gt;CCode&lt;/ns2:CarrierCode&gt;&lt;ns2:PlanName/&gt;&lt;ns2:PolicyStatus tc=""/&gt;&lt;ns2:PolicyValue/&gt;&lt;ns2:PaymentMode tc=""/&gt;&lt;ns2:PaymentMethod tc=""/&gt;&lt;ns2:Life&gt;&lt;ns2:InitialPremAmt/&gt;&lt;ns2:FaceAmt&gt;6000000.000000&lt;/ns2:FaceAmt&gt;&lt;ns2:Coverage id="CoverageType_1"&gt;&lt;ns2:PlanName/&gt;&lt;ns2:ShortName/&gt;&lt;ns2:LifeCovStatus tc=""/&gt;&lt;ns2:LifeCovTypeCode tc=""/&gt;&lt;ns2:IndicatorCode tc=""/&gt;&lt;ns2:CurrentAmt&gt;6000000.000000&lt;/ns2:CurrentAmt&gt;&lt;ns2:LifeParticipant id="" PartyID=""&gt;&lt;ns2:LifeParticipantRoleCode tc=""/&gt;&lt;/ns2:LifeParticipant&gt;&lt;/ns2:Coverage&gt;&lt;/ns2:Life&gt;&lt;ns2:ApplicationInfo&gt;&lt;ns2:TrackingID&gt;2015-02-18-13.23.43.679080C01-1_life_1_APS_1&lt;/ns2:TrackingID&gt;&lt;ns2:ApplicationJurisdiction tc=""/&gt;&lt;ns2:SignedDate/&gt;&lt;ns2:PrefLanguage tc=""/&gt;&lt;/ns2:ApplicationInfo&gt;&lt;ns2:RequirementInfo AppliesToPartyID="PartyType_2_life_1" id="RequirementInfoType_1"&gt;&lt;ns2:ReqCode tc="11"/&gt;&lt;ns2:RequirementInfoUniqueID&gt;2015-02-18-13.23.43.679080C01-1_life_1_APS_1&lt;/ns2:RequirementInfoUniqueID&gt;&lt;ns2:RequestedDate&gt;2015-02-19&lt;/ns2:RequestedDate&gt;&lt;ns2:RequestedScheduleDate/&gt;&lt;ns2:RequestedScheduleTimeStart/&gt;&lt;ns2:ReleasePartyOrgCode&gt;PACT&lt;/ns2:ReleasePartyOrgCode&gt;&lt;ns2:RequirementAcctNum&gt;78748&lt;/ns2:RequirementAcctNum&gt;&lt;ns2:CarrierOrderNum/&gt;&lt;ns2:RequirementInfoKey&gt;2015-02-18-13.23.43.679080C01-1_life_1_APS_1&lt;/ns2:RequirementInfoKey&gt;&lt;ns2:RequirementDetails/&gt;&lt;/ns2:RequirementInfo&gt;&lt;/ns2:Policy&gt;&lt;ns2:Attachment&gt;&lt;ns2:AttachmentBasicType tc=""/&gt;&lt;ns2:Description&gt;001284805019.TIF&lt;/ns2:Description&gt;&lt;ns2:AttachmentData&gt;==&lt;/ns2:AttachmentData&gt;&lt;ns2:AttachmentType tc="1"/&gt;&lt;ns2:MimeType/&gt;&lt;ns2:TransferEncodingTypeString&gt;base64&lt;/ns2:TransferEncodingTypeString&gt;&lt;ns2:TransferEncodingTypeTC tc=""/&gt;&lt;ns2:AttachmentLocation tc="1"/&gt;&lt;/ns2:Attachment&gt;&lt;/ns2:Holding&gt;&lt;ns2:Party id="PartyType_1"&gt;&lt;ns2:PartyTypeCode tc="2"&gt;Organization&lt;/ns2:PartyTypeCode&gt;&lt;ns2:GovtID/&gt;&lt;ns2:Organization&gt;&lt;ns2:AbbrName&gt;InsCom&lt;/ns2:AbbrName&gt;&lt;/ns2:Organization&gt;&lt;ns2:FullName&gt;Insurance Company&lt;/ns2:FullName&gt;&lt;ns2:Address&gt;&lt;ns2:AddressTypeCode tc=""/&gt;&lt;ns2:Line1&gt;Address Line 1&lt;/ns2:Line1&gt;&lt;ns2:Line2&gt;Address Line 2&lt;/ns2:Line2&gt;&lt;ns2:City&gt;City&lt;/ns2:City&gt;&lt;ns2:AddressState/&gt;&lt;ns2:AddressStateTC tc=""/&gt;&lt;ns2:Zip/&gt;&lt;ns2:PreventOverrideInd tc=""/&gt;&lt;/ns2:Address&gt;&lt;ns2:Phone&gt;&lt;ns2:PhoneTypeCode tc=""/&gt;&lt;ns2:AreaCode&gt;1&lt;/ns2:AreaCode&gt;&lt;ns2:DialNumber&gt;1234567&lt;/ns2:DialNumber&gt;&lt;/ns2:Phone&gt;&lt;ns2:ResidenceState tc=""/&gt;&lt;ns2:ResidenceCountry tc=""/&gt;&lt;/ns2:Party&gt;&lt;ns2:Party id="PartyType_2_life_1"&gt;&lt;ns2:PartyTypeCode tc="1"&gt;Person&lt;/ns2:PartyTypeCode&gt;&lt;ns2:GovtID&gt;123456789&lt;/ns2:GovtID&gt;&lt;ns2:Person&gt;&lt;ns2:FirstName&gt;PLQAone&lt;/ns2:FirstName&gt;&lt;ns2:MiddleName/&gt;&lt;ns2:LastName&gt;lastone&lt;/ns2:LastName&gt;&lt;ns2:Occupation/&gt;&lt;ns2:Gender tc="1"&gt;Male&lt;/ns2:Gender&gt;&lt;ns2:BirthDate&gt;1949-10-10&lt;/ns2:BirthDate&gt;&lt;ns2:Citizenship tc=""/&gt;&lt;ns2:BirthCountry tc=""/&gt;&lt;ns2:BirthJurisdictionTC tc=""/&gt;&lt;ns2:Prefix/&gt;&lt;/ns2:Person&gt;&lt;ns2:FullName/&gt;&lt;ns2:Address&gt;&lt;ns2:AddressTypeCode tc=""/&gt;&lt;ns2:Line1&gt;aliso&lt;/ns2:Line1&gt;&lt;ns2:Line2/&gt;&lt;ns2:City&gt;aliso&lt;/ns2:City&gt;&lt;ns2:AddressState/&gt;&lt;ns2:AddressStateTC tc="6"/&gt;&lt;ns2:Zip&gt;92656&lt;/ns2:Zip&gt;&lt;ns2:PreventOverrideInd tc=""/&gt;&lt;/ns2:Address&gt;&lt;ns2:Phone&gt;&lt;ns2:PhoneTypeCode tc="1"/&gt;&lt;ns2:AreaCode&gt;123&lt;/ns2:AreaCode&gt;&lt;ns2:DialNumber&gt;456-7899&lt;/ns2:DialNumber&gt;&lt;ns2:PrefPhone tc="1"&gt;YES&lt;/ns2:PrefPhone&gt;&lt;/ns2:Phone&gt;&lt;ns2:ResidenceState tc=""/&gt;&lt;ns2:ResidenceCountry tc=""/&gt;&lt;/ns2:Party&gt;&lt;ns2:Party id="PartyType_3_APS_1"&gt;&lt;ns2:PartyTypeCode tc="1"&gt;Person&lt;/ns2:PartyTypeCode&gt;&lt;ns2:GovtID/&gt;&lt;ns2:FullName&gt;Dr.bob&lt;/ns2:FullName&gt;&lt;ns2:Address&gt;&lt;ns2:AddressTypeCode tc=""/&gt;&lt;ns2:Line1/&gt;&lt;ns2:Line2/&gt;&lt;ns2:City&gt;aliso&lt;/ns2:City&gt;&lt;ns2:AddressState/&gt;&lt;ns2:AddressStateTC tc="6"/&gt;&lt;ns2:Zip&gt;92656&lt;/ns2:Zip&gt;&lt;ns2:PreventOverrideInd tc=""/&gt;&lt;/ns2:Address&gt;&lt;ns2:Phone&gt;&lt;ns2:PhoneTypeCode tc=""/&gt;&lt;ns2:AreaCode/&gt;&lt;ns2:DialNumber/&gt;&lt;/ns2:Phone&gt;&lt;ns2:ResidenceState tc=""/&gt;&lt;ns2:ResidenceCountry tc=""/&gt;&lt;/ns2:Party&gt;&lt;ns2:Relation id="RelationType_1" RelatedObjectID="PartyType_1" OriginatingObjectID="HoldingType_1"&gt;&lt;ns2:OriginatingObjectType tc="4"/&gt;&lt;ns2:RelatedObjectType tc="6"/&gt;&lt;ns2:RelationRoleCode tc="87"/&gt;&lt;/ns2:Relation&gt;&lt;ns2:Relation id="RelationType_2" RelatedObjectID="PartyType_2_life_1" OriginatingObjectID="HoldingType_1"&gt;&lt;ns2:OriginatingObjectType tc="4"/&gt;&lt;ns2:RelatedObjectType tc="6"/&gt;&lt;ns2:RelationRoleCode tc="32"/&gt;&lt;/ns2:Relation&gt;&lt;ns2:Relation id="RelationType_3" RelatedObjectID="PartyType_3_APS_1" OriginatingObjectID="HoldingType_1"&gt;&lt;ns2:OriginatingObjectType tc="4"/&gt;&lt;ns2:RelatedObjectType tc="6"/&gt;&lt;ns2:RelationRoleCode tc="41"/&gt;&lt;/ns2:Relation&gt;&lt;/ns2:OLifE&gt;&lt;/ns2:TXLifeRequest&gt;&lt;/ns2:TXLife&gt;</err:transactionAttributes>
+	<err:transactionAttributes name="joinKey">Attachment to CRL Image Server</err:transactionAttributes>
+	<err:transactionAttributes name="docStart">&lt;?xml</err:transactionAttributes>
+	<err:transactionAttributes name="crl.original.txt">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&#xD;
+&lt;TXLife xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.20.02.xsd"&#xD;
+	xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;&#xD;
+	&lt;UserAuthRequest&gt;&#xD;
+		&lt;UserLoginName&gt;PACT&lt;/UserLoginName&gt;&#xD;
+		&lt;UserPswd&gt;&#xD;
+			&lt;CryptType&gt;NONE&lt;/CryptType&gt;&#xD;
+			&lt;CryptPswd&gt;PL47@vB$wJ653&lt;/CryptPswd&gt;&#xD;
+		&lt;/UserPswd&gt;&#xD;
+		&lt;UserDate&gt;2015-02-19&lt;/UserDate&gt;&#xD;
+		&lt;UserTime&gt;11:06:04&lt;/UserTime&gt;&#xD;
+		&lt;VendorApp&gt;&#xD;
+			&lt;AppName&gt;MRAS AIS&lt;/AppName&gt;&#xD;
+			&lt;AppVer&gt;4.7.0&lt;/AppVer&gt;&#xD;
+		&lt;/VendorApp&gt;&#xD;
+	&lt;/UserAuthRequest&gt;&#xD;
+	&lt;TXLifeRequest&gt;&#xD;
+		&lt;TransRefGUID&gt;67B9B8EE-14BA-33B9-1073-C880EC83CD49&lt;/TransRefGUID&gt;&#xD;
+		&lt;TransType tc="121"&gt;General Requirement Order Request&lt;/TransType&gt;&#xD;
+		&lt;TransExeDate&gt;2015-02-19&lt;/TransExeDate&gt;&#xD;
+		&lt;TransExeTime&gt;11:06:04&lt;/TransExeTime&gt;&#xD;
+		&lt;TransMode tc="2"&gt;Original&lt;/TransMode&gt;&#xD;
+		&lt;TestIndicator tc="1"&gt;YES&lt;/TestIndicator&gt;&#xD;
+		&lt;OLifE&gt;&#xD;
+			&lt;SourceInfo&gt;&#xD;
+				&lt;CreationDate&gt;2015-02-19&lt;/CreationDate&gt;&#xD;
+				&lt;CreationTime&gt;11:06:04&lt;/CreationTime&gt;&#xD;
+				&lt;SourceInfoName&gt;MRAS AIS&lt;/SourceInfoName&gt;&#xD;
+				&lt;SourceInfoDescription&gt;MRAS AIS v.4.7.0&lt;/SourceInfoDescription&gt;&#xD;
+			&lt;/SourceInfo&gt;&#xD;
+			&lt;Holding id="HoldingType_1"&gt;&#xD;
+				&lt;HoldingTypeCode tc="2"&gt;Policy&lt;/HoldingTypeCode&gt;&#xD;
+				&lt;Policy CarrierPartyID="PartyType_1" id="PolicyType_1"&gt;&#xD;
+					&lt;PolNumber&gt;AT10105710&lt;/PolNumber&gt;&#xD;
+					&lt;CarrierCode&gt;CCode&lt;/CarrierCode&gt;&#xD;
+					&lt;Life&gt;&#xD;
+						&lt;FaceAmt&gt;6000000.000000&lt;/FaceAmt&gt;&#xD;
+						&lt;Coverage id="CoverageType_1"&gt;&#xD;
+							&lt;CurrentAmt&gt;6000000.000000&lt;/CurrentAmt&gt;&#xD;
+						&lt;/Coverage&gt;&#xD;
+					&lt;/Life&gt;&#xD;
+					&lt;ApplicationInfo&gt;&#xD;
+						&lt;TrackingID&gt;2015-02-18-13.23.43.679080C01-1_life_1_APS_1&lt;/TrackingID&gt;&#xD;
+					&lt;/ApplicationInfo&gt;&#xD;
+					&lt;RequirementInfo AppliesToPartyID="PartyType_2_life_1"&#xD;
+						id="RequirementInfoType_1"&gt;&#xD;
+						&lt;ReqCode tc="11" /&gt;&#xD;
+						&lt;RequirementInfoKey&gt;2015-02-18-13.23.43.679080C01-1_life_1_APS_1&lt;/RequirementInfoKey&gt;&#xD;
+						&lt;RequirementInfoUniqueID&gt;2015-02-18-13.23.43.679080C01-1_life_1_APS_1&lt;/RequirementInfoUniqueID&gt;&#xD;
+						&lt;RequestedDate&gt;2015-02-19&lt;/RequestedDate&gt;&#xD;
+						&lt;ReleasePartyOrgCode&gt;PACT&lt;/ReleasePartyOrgCode&gt;&#xD;
+						&lt;RequirementAcctNum&gt;78748&lt;/RequirementAcctNum&gt;&#xD;
+					&lt;/RequirementInfo&gt;&#xD;
+				&lt;/Policy&gt;&#xD;
+				&lt;Attachment&gt;&#xD;
+					&lt;Description&gt;001284805019.TIF&lt;/Description&gt;&#xD;
+					&lt;AttachmentData tc="1"&gt;==&lt;/AttachmentData&gt;&#xD;
+					&lt;AttachmentType tc="1" /&gt;&#xD;
+					&lt;TransferEncodingTypeString&gt;base64&lt;/TransferEncodingTypeString&gt;&#xD;
+					&lt;AttachmentLocation tc="1" /&gt;&#xD;
+				&lt;/Attachment&gt;&#xD;
+			&lt;/Holding&gt;&#xD;
+			&lt;Party id="PartyType_1"&gt;&#xD;
+				&lt;PartyTypeCode tc="2"&gt;Organization&lt;/PartyTypeCode&gt;&#xD;
+				&lt;FullName&gt;Insurance Company&lt;/FullName&gt;&#xD;
+				&lt;Organization&gt;&#xD;
+					&lt;AbbrName&gt;InsCom&lt;/AbbrName&gt;&#xD;
+				&lt;/Organization&gt;&#xD;
+				&lt;Address&gt;&#xD;
+					&lt;Line1&gt;Address Line 1&lt;/Line1&gt;&#xD;
+					&lt;Line2&gt;Address Line 2&lt;/Line2&gt;&#xD;
+					&lt;City&gt;City&lt;/City&gt;&#xD;
+					&lt;AddressCountry&gt;Country&lt;/AddressCountry&gt;&#xD;
+				&lt;/Address&gt;&#xD;
+				&lt;Phone&gt;&#xD;
+					&lt;CountryCode&gt;+1&lt;/CountryCode&gt;&#xD;
+					&lt;AreaCode&gt;1&lt;/AreaCode&gt;&#xD;
+					&lt;DialNumber&gt;1234567&lt;/DialNumber&gt;&#xD;
+				&lt;/Phone&gt;&#xD;
+				&lt;EMailAddress /&gt;&#xD;
+			&lt;/Party&gt;&#xD;
+			&lt;Relation RelatedObjectID="PartyType_1" OriginatingObjectID="HoldingType_1"&#xD;
+				id="RelationType_1"&gt;&#xD;
+				&lt;OriginatingObjectType tc="4" /&gt;&#xD;
+				&lt;RelatedObjectType tc="6" /&gt;&#xD;
+				&lt;RelationRoleCode tc="87" /&gt;&#xD;
+			&lt;/Relation&gt;&#xD;
+			&lt;Party id="PartyType_2_life_1"&gt;&#xD;
+				&lt;PartyTypeCode tc="1"&gt;Person&lt;/PartyTypeCode&gt;&#xD;
+				&lt;GovtID&gt;123456789&lt;/GovtID&gt;&#xD;
+				&lt;Person id="PersonType_1"&gt;&#xD;
+					&lt;FirstName&gt;PLQAone&lt;/FirstName&gt;&#xD;
+					&lt;LastName&gt;lastone&lt;/LastName&gt;&#xD;
+					&lt;Gender tc="1"&gt;Male&lt;/Gender&gt;&#xD;
+					&lt;BirthDate&gt;1949-10-10&lt;/BirthDate&gt;&#xD;
+				&lt;/Person&gt;&#xD;
+				&lt;Address&gt;&#xD;
+					&lt;Line1&gt;aliso&lt;/Line1&gt;&#xD;
+					&lt;City&gt;aliso&lt;/City&gt;&#xD;
+					&lt;AddressStateTC tc="6" /&gt;&#xD;
+					&lt;Zip&gt;92656&lt;/Zip&gt;&#xD;
+					&lt;AddressCountryTC tc="1" /&gt;&#xD;
+				&lt;/Address&gt;&#xD;
+				&lt;Phone&gt;&#xD;
+					&lt;PhoneTypeCode tc="1" /&gt;&#xD;
+					&lt;AreaCode&gt;123&lt;/AreaCode&gt;&#xD;
+					&lt;DialNumber&gt;456-7899&lt;/DialNumber&gt;&#xD;
+					&lt;PrefPhone tc="1"&gt;YES&lt;/PrefPhone&gt;&#xD;
+				&lt;/Phone&gt;&#xD;
+			&lt;/Party&gt;&#xD;
+			&lt;Relation RelatedObjectID="PartyType_2_life_1"&#xD;
+				OriginatingObjectID="HoldingType_1" id="RelationType_2"&gt;&#xD;
+				&lt;OriginatingObjectType tc="4" /&gt;&#xD;
+				&lt;RelatedObjectType tc="6" /&gt;&#xD;
+				&lt;RelationRoleCode tc="32" /&gt;&#xD;
+			&lt;/Relation&gt;&#xD;
+			&lt;Party id="PartyType_3_APS_1"&gt;&#xD;
+				&lt;PartyTypeCode tc="1"&gt;Person&lt;/PartyTypeCode&gt;&#xD;
+				&lt;FullName&gt;Dr.bob&lt;/FullName&gt;&#xD;
+				&lt;Address&gt;&#xD;
+					&lt;Line1&gt;&lt;/Line1&gt;&#xD;
+					&lt;Line2&gt;&lt;/Line2&gt;&#xD;
+					&lt;City&gt;aliso&lt;/City&gt;&#xD;
+					&lt;AddressStateTC tc="6" /&gt;&#xD;
+					&lt;Zip&gt;92656&lt;/Zip&gt;&#xD;
+					&lt;AddressCountryTC tc="1" /&gt;&#xD;
+				&lt;/Address&gt;&#xD;
+				&lt;Phone /&gt;&#xD;
+			&lt;/Party&gt;&#xD;
+			&lt;Relation RelatedObjectID="PartyType_3_APS_1"&#xD;
+				OriginatingObjectID="HoldingType_1" id="RelationType_3"&gt;&#xD;
+				&lt;OriginatingObjectType tc="4" /&gt;&#xD;
+				&lt;RelatedObjectType tc="6" /&gt;&#xD;
+				&lt;RelationRoleCode tc="41" /&gt;&#xD;
+			&lt;/Relation&gt;&#xD;
+		&lt;/OLifE&gt;&#xD;
+	&lt;/TXLifeRequest&gt;&#xD;
+&lt;/TXLife&gt;</err:transactionAttributes>
+	<err:transactionAttributes name="SourceFile">/Users/mikehazelwood/pilotfish/CRLplus/eip-root/data/in/PACT/PACT02192015140604597.XML</err:transactionAttributes>
+	<err:transactionAttributes name="acordDoctype">121</err:transactionAttributes>
+	<err:transactionAttributes name="eip.OriginatingTransactionID">7</err:transactionAttributes>
+	<err:transactionAttributes name="isNailba">false</err:transactionAttributes>
+	<err:transactionAttributes name="eip.OriginatingTransactionCreationTime">2015-07-10 02:58:14:079</err:transactionAttributes>
+	<err:transactionAttributes name="FileName">PACT02192015140604597</err:transactionAttributes>
+	<err:transactionAttributes name="guid">67B9B8EE-14BA-33B9-1073-C880EC83CD49</err:transactionAttributes>
+	<err:transactionAttributes name="eip.TransactionCreationTime">2015-07-10 02:58:15:348</err:transactionAttributes>
+	<err:transactionAttributes name="FileExtension">XML</err:transactionAttributes>
+</err:errorReport>
+

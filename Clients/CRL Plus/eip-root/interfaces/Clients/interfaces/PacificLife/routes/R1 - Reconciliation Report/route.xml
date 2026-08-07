@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.db.DatabaseSqlListener" name="PACT.R1 - Database Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <PollingInterval>1200</PollingInterval>
+        <InputFile>sql.xml</InputFile>
+        <UserName>$$db.username</UserName>
+        <Password>$$db.password</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$db.driver</JdbcDriver>
+        <JdbcURL>$$db.url</JdbcURL>
+        <SchedulerStartTag>M0W0D1H5m0</SchedulerStartTag>
+        <SchedulerEndTag>M0W0D1H5m15</SchedulerEndTag>
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <BatchSensitive>false</BatchSensitive>
+        <Timeout>600</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema>CRL_INSIGHT_TO_PFISH</RestrictMetaDataToSchema>
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <UseSingleOutputStream>true</UseSingleOutputStream>
+        <RefreshHandler>false</RefreshHandler>
+        <JDBCProperties>null</JDBCProperties>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="PACT.R1 - Replace tabs">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:\t:eip_name: :eip_value][eip_pair:":eip_name:':eip_value]</REGEX_TABLE_TAG>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target name="System Unnamed">
+    <FormatProfile name="GenerateReconciliationReport" />
+    <Transport class="com.pilotfish.eip.modules.file.ftp.FTPTransport" name="PACT.R1 - SFTP Delivery" retries="10" retryDelayMs="60000">
+      <ModuleConfig>
+        <FTPTransportType>Encrypted FTP (JSCH SSH/SFTP)</FTPTransportType>
+        <Host>$$PacificLifeReconReportSftpHost</Host>
+        <Port>22</Port>
+        <TargetDirectory>$$PacificLifeReconReportSftpDir</TargetDirectory>
+        <FileName>{ognl:getAttribute('report.filename')}</FileName>
+        <FileExtension>csv</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <Timeout>300</Timeout>
+        <Sftp_SocketTimeout>300</Sftp_SocketTimeout>
+        <RetryConnection>true</RetryConnection>
+        <RetryDelay>15</RetryDelay>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private (P)</Protection>
+        <FileType>Binary</FileType>
+        <AppendToFile>false</AppendToFile>
+        <Overwrite>false</Overwrite>
+        <CheckForFileAfterWriting>false</CheckForFileAfterWriting>
+        <FAIL_ON_FALSE_RESULT>true</FAIL_ON_FALSE_RESULT>
+        <WriteFromHome>false</WriteFromHome>
+        <UserName>$$PacificLifeReconReportSftpUser</UserName>
+        <Password>$$PacificLifeReconReportSftpPass</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="PACT.R1 - Remove quotes">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:":eip_name::eip_value]</REGEX_TABLE_TAG>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PACT.R1 - Set report.filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>report.filename</AttributeName>
+          <Expression>{ognl:'crl_plus_sys_recon_'+new java.text.SimpleDateFormat('MMddyyyy').format(new java.util.Date())}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="PACT.R1 - Create local archive of report">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:#properties.get('archive.dir')+'/PACT/'+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('report.filename')+'.csv'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

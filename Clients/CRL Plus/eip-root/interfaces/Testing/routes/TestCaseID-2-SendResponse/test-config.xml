@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestConfigurations>
+   <TestConfig name="test">
+      <AlternateDataSource>From Text</AlternateDataSource>
+      <StartingText>&lt;RESULTS&gt;&#xD;
+	&lt;RECORD&gt;&#xD;
+		&lt;MAXTRANSREFGUID&gt;CRL-TEST-1083-TI&lt;/MAXTRANSREFGUID&gt;&#xD;
+	&lt;/RECORD&gt;&#xD;
+&lt;/RESULTS&gt;&#xD;
+</StartingText>
+      <Stage>
+         <Identifier>transform@listener=Testing.TestCaseID-2-SendResponse Listener</Identifier>
+         <IsStart>true</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+         <TransactionAttributes>
+            <Attribute key="TransRefPattern" value="CRL-TEST-____-TI"/>
+         </TransactionAttributes>
+      </Stage>
+      <Stage>
+         <Identifier>forking@listener=Testing.TestCaseID-2-SendResponse Listener</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>routing</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=RecordFound</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=RecordFound</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=RecordFound,processor=Testing.TestCaseID-2-SendResponse.Processor</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=RecordFound,processor=Testing.TestCaseID-2-calculate-next-id</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=RecordFound,processor=Testing.TestCaseID-2-SendResponse.Processor1</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=RecordFound</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=NoRecordsFound</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=NoRecordsFound</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=NoRecordsFound,processor=Testing.TestCaseID-2-Set startingID</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=NoRecordsFound,processor=Testing.TestCaseID-2-set reponse</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=NoRecordsFound</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+   </TestConfig>
+</TestConfigurations>

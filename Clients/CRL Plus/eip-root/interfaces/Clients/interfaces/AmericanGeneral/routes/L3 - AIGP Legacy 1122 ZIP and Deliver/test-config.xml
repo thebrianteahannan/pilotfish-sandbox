@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestConfigurations>
+   <TestConfig name="Test1">
+      <AlternateDataSource>From Text</AlternateDataSource>
+      <StartingText>THIS IS JUST A TEST</StartingText>
+      <Stage>
+         <Identifier>transport@transport=AmericanGeneral.L3 - AIGP Legacy 1122 ZIP and Deliver.FTP / SFTP Transport</Identifier>
+         <IsStart>true</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>true</IsEnd>
+         <IsSkipping>false</IsSkipping>
+         <TransactionAttributes>
+            <Attribute name="zip.filename">AGIM20240319133357950</Attribute>
+         </TransactionAttributes>
+      </Stage>
+      <Stage>
+         <Identifier>processor@listener=AIGP.L3 - Directory Zip Listener,processor=AIGP.L3 - Call next route</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+   </TestConfig>
+</TestConfigurations>

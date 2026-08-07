@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="aramos@pilotfishtechnology.com" LastModificationTime="2017-04-04T07:05:29-07:00" ModifiedBy="aramos@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>true</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.file.ftp.FTPListener" enabled="true" name="Doanload Prphan Image Files">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <FTPListenerType>Encrypted FTP (SSH/SFTP)</FTPListenerType>
+        <Host>$$TeledexFTPHost</Host>
+        <Port>22</Port>
+        <PollingInterval>1800</PollingInterval>
+        <PollingDirectory>$$TeledexFTPOutgoingDirectory</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction>IMQ,imq,XML,xml</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <FilenameIsMvsDsn>false</FilenameIsMvsDsn>
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <Timeout>300</Timeout>
+        <Sftp_SocketTimeout>300</Sftp_SocketTimeout>
+        <RetryConnection>true</RetryConnection>
+        <RetryDelay>15</RetryDelay>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private (P)</Protection>
+        <FileType>Binary</FileType>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <UseChangeDirectoryCommand>false</UseChangeDirectoryCommand>
+        <ReconnectAfterBytes>52428800</ReconnectAfterBytes>
+        <CacheType>File Cache</CacheType>
+        <PostProcessOperation>Delete</PostProcessOperation>
+        <TargetDirectory />
+        <UserName>$$TeledexFTPUsername</UserName>
+        <Password>$$TeledexFTPPassword</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <CheckFTPPermissions>true</CheckFTPPermissions>
+        <CheckPreviouslyProcessed>true</CheckPreviouslyProcessed>
+        <CheckWriteInProgress>true</CheckWriteInProgress>
+        <SchedulerStartTag>M0W0D1H1m0</SchedulerStartTag>
+        <SchedulerEndTag>M0W0D1H1m5</SchedulerEndTag>
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Image Server Cleanup.Set file name attribute">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>TempFileName</AttributeName>
+          <Expression>{ognl:getAttribute('com.pilotfish.FileName')+"."+getAttribute('com.pilotfish.FileExtension')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.Base64OutputProcessor" name="Image Server Cleanup.Base64 encode file data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <IsLineSeparated>false</IsLineSeparated>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Image Server Cleanup.Stored file data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>TempFileData</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Image Server Cleanup.Set Temp XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>TempFileXML</AttributeName>
+          <Expression>&lt;File encoding="base64" name="[FILENAME]" path=""&gt;[FILEDATA]&lt;/File&gt;</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Image Server Cleanup.Load TempXML into transaction data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>TempFileXML</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="Image Server Cleanup.Set TempXML data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:\[FILEDATA\]:eip_name:{ognl:@java.util.regex.Matcher@quoteReplacement(getAttribute('TempFileData'))}:eip_value][eip_pair:\[FILENAME\]:eip_name:{ognl:@java.util.regex.Matcher@quoteReplacement(getAttribute('TempFileName'))}:eip_value]</REGEX_TABLE_TAG>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.OrchestrationTransport" name="Send file to Zip process" retries="1">
+      <ModuleConfig>
+        <EventType>ImageServerZip</EventType>
+        <StoreTransactionsInMemory>false</StoreTransactionsInMemory>
+        <ProcessInstanceID>{ognl:getAttribute('com.pilotfish.PollingCycleID')}</ProcessInstanceID>
+        <ProcessComponentID>File</ProcessComponentID>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

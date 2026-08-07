@@ -1,0 +1,3852 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns3="http://www.w3.org/1999/xhtml" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" elementFormDefault="qualified" targetNamespace="http://www.w3.org/1999/xhtml">
+			<xsd:element name="script">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">script statements, which may include CDATA sections</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>script statements, which may include CDATA sections</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="charset" type="ns3:Charset" />
+							<xsd:attribute name="type" type="ns3:ContentType" use="required" />
+							<xsd:attribute name="src" type="ns3:URI" />
+							<xsd:attribute name="defer" type="ns3:script_defer_attribute_type" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="style">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">style info, which may include CDATA sections</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>style info, which may include CDATA sections</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:style_dir_attribute_type" />
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="type" type="ns3:ContentType" use="required" />
+							<xsd:attribute name="media" type="ns3:MediaDesc" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="meta">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">generic metainformation</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>generic metainformation</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:meta_dir_attribute_type" />
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="http-equiv" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+							<xsd:attribute name="content" type="xsd:string" use="required" />
+							<xsd:attribute name="scheme" type="xsd:string" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="link">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">Relationship values can be used in principle:
+
+      a) for document specific toolbars/menus when used
+         with the link element in document head e.g.
+           start, contents, previous, next, index, end, help
+      b) to link to a separate style sheet (rel="stylesheet")
+      c) to make a link to a script (rel="script")
+      d) by stylesheets to control how collections of
+         html nodes are rendered into printed documents
+      e) to make a link to a printable version of this document
+         e.g. a PostScript or PDF version (rel="alternate" media="print")</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>Relationship values can be used in principle:
+
+      a) for document specific toolbars/menus when used
+         with the link element in document head e.g.
+           start, contents, previous, next, index, end, help
+      b) to link to a separate style sheet (rel="stylesheet")
+      c) to make a link to a script (rel="script")
+      d) by stylesheets to control how collections of
+         html nodes are rendered into printed documents
+      e) to make a link to a printable version of this document
+         e.g. a PostScript or PDF version (rel="alternate" media="print")</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:link_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="charset" type="ns3:Charset" />
+							<xsd:attribute name="href" type="ns3:URI" />
+							<xsd:attribute name="hreflang" type="ns3:LanguageCode" />
+							<xsd:attribute name="type" type="ns3:ContentType" />
+							<xsd:attribute name="rel" type="ns3:LinkTypes" />
+							<xsd:attribute name="rev" type="ns3:LinkTypes" />
+							<xsd:attribute name="media" type="ns3:MediaDesc" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="param">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">param is used to supply a named property value.
+      In XML it would seem natural to follow RDF and support an
+      abbreviated syntax where the param elements are replaced
+      by attribute value pairs on the object start tag.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>param is used to supply a named property value.
+      In XML it would seem natural to follow RDF and support an
+      abbreviated syntax where the param elements are replaced
+      by attribute value pairs on the object start tag.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="name" type="xsd:string" />
+							<xsd:attribute name="value" type="xsd:string" />
+							<xsd:attribute name="valuetype" type="ns3:param_valuetype_attribute_type" />
+							<xsd:attribute name="type" type="ns3:ContentType" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="p">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:p_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="h1">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:h1_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="h2">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:h2_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="h3">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:h3_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="h4">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:h4_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="h5">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:h5_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="h6">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:h6_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="div">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">generic language/style container</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>generic language/style container</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Flow">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:div_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="li">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">list item</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>list item</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Flow">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:li_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ul">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">Unordered list</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>Unordered list</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="1" ref="ns3:li" />
+					</xsd:sequence>
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="class" type="xsd:NMTOKENS" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:sequence_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ol">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">Ordered (numbered) list</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>Ordered (numbered) list</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="1" ref="ns3:li" />
+					</xsd:sequence>
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="class" type="xsd:NMTOKENS" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:sequence_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="dt">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:dt_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="dd">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Flow">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:dd_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="dl">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dt" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dd" />
+					</xsd:choice>
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="class" type="xsd:NMTOKENS" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:choice_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="pre">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">content is "Inline" excluding "img|object|big|small|sub|sup"</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>content is "Inline" excluding "img|object|big|small|sub|sup"</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:pre.content">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:pre_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="hr">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:hr_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="blockquote">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Block">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:blockquote_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="cite" type="ns3:URI" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="address">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">information on author</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>information on author</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:address_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="legend">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">fieldset label</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>fieldset label</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:legend_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="accesskey" type="ns3:Character" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="caption">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:caption_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="col">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">col elements define the alignment properties for cells in
+      one or more columns.
+
+      The width attribute specifies the width of the columns, e.g.
+
+          width=64        width in screen pixels
+          width=0.5*      relative width of 0.5
+
+      The span attribute causes the attributes of one
+      col element to apply to more than one column.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>col elements define the alignment properties for cells in
+      one or more columns.
+
+      The width attribute specifies the width of the columns, e.g.
+
+          width=64        width in screen pixels
+          width=0.5*      relative width of 0.5
+
+      The span attribute causes the attributes of one
+      col element to apply to more than one column.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:col_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="span" type="ns3:Number" />
+							<xsd:attribute name="width" type="ns3:MultiLength" />
+							<xsd:attribute name="align" type="ns3:col_align_attribute_type" />
+							<xsd:attribute name="char" type="ns3:Character" />
+							<xsd:attribute name="charoff" type="ns3:Length" />
+							<xsd:attribute name="valign" type="ns3:col_valign_attribute_type" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="colgroup">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">colgroup groups a set of col elements. It allows you to group
+      several semantically related columns together.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>colgroup groups a set of col elements. It allows you to group
+      several semantically related columns together.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" ref="ns3:col" />
+					</xsd:sequence>
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="class" type="xsd:NMTOKENS" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:sequence_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+					<xsd:attribute name="span" type="ns3:Number" />
+					<xsd:attribute name="width" type="ns3:MultiLength" />
+					<xsd:attribute name="align" type="ns3:sequence_align_attribute_type" />
+					<xsd:attribute name="char" type="ns3:Character" />
+					<xsd:attribute name="charoff" type="ns3:Length" />
+					<xsd:attribute name="valign" type="ns3:sequence_valign_attribute_type" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="th">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Flow">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:th_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="abbr" type="ns3:Text" />
+							<xsd:attribute name="axis" type="xsd:string" />
+							<xsd:attribute name="headers" type="xsd:IDREFS" />
+							<xsd:attribute name="scope" type="ns3:Scope" />
+							<xsd:attribute name="rowspan" type="ns3:Number" />
+							<xsd:attribute name="colspan" type="ns3:Number" />
+							<xsd:attribute name="align" type="ns3:th_align_attribute_type" />
+							<xsd:attribute name="char" type="ns3:Character" />
+							<xsd:attribute name="charoff" type="ns3:Length" />
+							<xsd:attribute name="valign" type="ns3:th_valign_attribute_type" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="td">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Flow">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:td_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="abbr" type="ns3:Text" />
+							<xsd:attribute name="axis" type="xsd:string" />
+							<xsd:attribute name="headers" type="xsd:IDREFS" />
+							<xsd:attribute name="scope" type="ns3:Scope" />
+							<xsd:attribute name="rowspan" type="ns3:Number" />
+							<xsd:attribute name="colspan" type="ns3:Number" />
+							<xsd:attribute name="align" type="ns3:td_align_attribute_type" />
+							<xsd:attribute name="char" type="ns3:Character" />
+							<xsd:attribute name="charoff" type="ns3:Length" />
+							<xsd:attribute name="valign" type="ns3:td_valign_attribute_type" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="tr">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:th" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:td" />
+					</xsd:choice>
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="class" type="xsd:NMTOKENS" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:choice_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+					<xsd:attribute name="align" type="ns3:choice_align_attribute_type" />
+					<xsd:attribute name="char" type="ns3:Character" />
+					<xsd:attribute name="charoff" type="ns3:Length" />
+					<xsd:attribute name="valign" type="ns3:choice_valign_attribute_type" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="thead">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="1" ref="ns3:tr" />
+					</xsd:sequence>
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="class" type="xsd:NMTOKENS" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:sequence_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+					<xsd:attribute name="align" type="ns3:sequence_align_attribute_type" />
+					<xsd:attribute name="char" type="ns3:Character" />
+					<xsd:attribute name="charoff" type="ns3:Length" />
+					<xsd:attribute name="valign" type="ns3:sequence_valign_attribute_type" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="tfoot">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="1" ref="ns3:tr" />
+					</xsd:sequence>
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="class" type="xsd:NMTOKENS" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:sequence_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+					<xsd:attribute name="align" type="ns3:sequence_align_attribute_type" />
+					<xsd:attribute name="char" type="ns3:Character" />
+					<xsd:attribute name="charoff" type="ns3:Length" />
+					<xsd:attribute name="valign" type="ns3:sequence_valign_attribute_type" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="tbody">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="1" ref="ns3:tr" />
+					</xsd:sequence>
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="class" type="xsd:NMTOKENS" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:sequence_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+					<xsd:attribute name="align" type="ns3:sequence_align_attribute_type" />
+					<xsd:attribute name="char" type="ns3:Character" />
+					<xsd:attribute name="charoff" type="ns3:Length" />
+					<xsd:attribute name="valign" type="ns3:sequence_valign_attribute_type" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="table">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="0" ref="ns3:caption" />
+						<xsd:choice>
+							<xsd:element maxOccurs="unbounded" minOccurs="0" ref="ns3:col" />
+							<xsd:element maxOccurs="unbounded" minOccurs="0" ref="ns3:colgroup" />
+						</xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="0" ref="ns3:thead" />
+						<xsd:element maxOccurs="1" minOccurs="0" ref="ns3:tfoot" />
+						<xsd:choice>
+							<xsd:element maxOccurs="unbounded" minOccurs="1" ref="ns3:tbody" />
+							<xsd:element maxOccurs="unbounded" minOccurs="1" ref="ns3:tr" />
+						</xsd:choice>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="class" type="xsd:NMTOKENS" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:choice_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+					<xsd:attribute name="summary" type="ns3:Text" />
+					<xsd:attribute name="width" type="ns3:Length" />
+					<xsd:attribute name="border" type="ns3:Pixels" />
+					<xsd:attribute name="frame" type="ns3:TFrame" />
+					<xsd:attribute name="rules" type="ns3:TRules" />
+					<xsd:attribute name="cellspacing" type="ns3:Length" />
+					<xsd:attribute name="cellpadding" type="ns3:Length" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="form">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ns3:form.content">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:form_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="action" type="ns3:URI" use="required" />
+							<xsd:attribute name="method" type="ns3:form_method_attribute_type" />
+							<xsd:attribute name="enctype" type="ns3:ContentType" />
+							<xsd:attribute name="onsubmit" type="ns3:Script" />
+							<xsd:attribute name="onreset" type="ns3:Script" />
+							<xsd:attribute name="accept" type="ns3:ContentTypes" />
+							<xsd:attribute name="accept-charset" type="ns3:Charsets" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="a">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">content is "Inline" except that anchors shouldn't be nested</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>content is "Inline" except that anchors shouldn't be nested</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:a.content">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:a_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="accesskey" type="ns3:Character" />
+							<xsd:attribute name="tabindex" type="ns3:tabindexNumber" />
+							<xsd:attribute name="onfocus" type="ns3:Script" />
+							<xsd:attribute name="onblur" type="ns3:Script" />
+							<xsd:attribute name="charset" type="ns3:Charset" />
+							<xsd:attribute name="type" type="ns3:ContentType" />
+							<xsd:attribute name="name" type="xsd:NMTOKEN" />
+							<xsd:attribute name="href" type="ns3:URI" />
+							<xsd:attribute name="hreflang" type="ns3:LanguageCode" />
+							<xsd:attribute name="rel" type="ns3:LinkTypes" />
+							<xsd:attribute name="rev" type="ns3:LinkTypes" />
+							<xsd:attribute name="shape" type="ns3:Shape" />
+							<xsd:attribute name="coords" type="ns3:Coords" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="br">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">forced line break</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>forced line break</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="span">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">generic language/style container</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>generic language/style container</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:span_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="bdo">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">I18N BiDi over-ride</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>I18N BiDi over-ride</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:bdo_dir_attribute_type" use="required" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="noscript">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">alternate content container for non script-based rendering</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>alternate content container for non script-based rendering</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Block">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:noscript_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ins">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Flow">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:ins_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="cite" type="ns3:URI" />
+							<xsd:attribute name="datetime" type="ns3:Datetime" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="del">
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Flow">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:del_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="cite" type="ns3:URI" />
+							<xsd:attribute name="datetime" type="ns3:Datetime" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="area">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:area_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="accesskey" type="ns3:Character" />
+							<xsd:attribute name="tabindex" type="ns3:tabindexNumber" />
+							<xsd:attribute name="onfocus" type="ns3:Script" />
+							<xsd:attribute name="onblur" type="ns3:Script" />
+							<xsd:attribute name="shape" type="ns3:Shape" />
+							<xsd:attribute name="coords" type="ns3:Coords" />
+							<xsd:attribute name="href" type="ns3:URI" />
+							<xsd:attribute name="nohref" type="ns3:area_nohref_attribute_type" />
+							<xsd:attribute name="alt" type="ns3:Text" use="required" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="map">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:p" />
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h1" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h2" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h3" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h4" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h5" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h6" />
+								</xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:div" />
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ul" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ol" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dl" />
+								</xsd:choice>
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:pre" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:hr" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:blockquote" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:address" />
+								</xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:fieldset" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:table" />
+							</xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:form" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:noscript" />
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ins" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:del" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+								</xsd:choice>
+							</xsd:choice>
+						</xsd:choice>
+						<xsd:element maxOccurs="unbounded" minOccurs="1" ref="ns3:area" />
+					</xsd:choice>
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:choice_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+					<xsd:attribute name="id" type="xsd:ID" use="required" />
+					<xsd:attribute name="class" type="xsd:string" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="name" type="xsd:NMTOKEN" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="img">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:img_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="src" type="ns3:URI" use="required" />
+							<xsd:attribute name="alt" type="ns3:Text" use="required" />
+							<xsd:attribute name="longdesc" type="ns3:URI" />
+							<xsd:attribute name="height" type="ns3:Length" />
+							<xsd:attribute name="width" type="ns3:Length" />
+							<xsd:attribute name="usemap" type="ns3:URI">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">usemap points to a map element which may be in this document
+          or an external document, although the latter is not widely supported</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:documentation>usemap points to a map element which may be in this document
+          or an external document, although the latter is not widely supported</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="ismap" type="ns3:img_ismap_attribute_type" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="tt">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">fixed pitch font</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>fixed pitch font</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:tt_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="i">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">italic font</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>italic font</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:i_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="b">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">bold font</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>bold font</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:b_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="big">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">bigger font</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>bigger font</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:big_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="small">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">smaller font</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>smaller font</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:small_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="em">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">emphasis</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>emphasis</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:em_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="strong">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">strong emphasis</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>strong emphasis</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:strong_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="dfn">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">definitional</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>definitional</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:dfn_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="code">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">program code</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>program code</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:code_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="q">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">inlined quote</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>inlined quote</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:q_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="cite" type="ns3:URI" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="samp">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">sample</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>sample</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:samp_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="kbd">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">something user would type</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>something user would type</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:kbd_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="var">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">variable</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>variable</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:var_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="cite">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">citation</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>citation</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:cite_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="abbr">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">abbreviation</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>abbreviation</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:abbr_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="acronym">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">acronym</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>acronym</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:acronym_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="sub">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">subscript</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>subscript</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:sub_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="sup">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">superscript</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>superscript</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:sup_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="input">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">form control</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>form control</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:input_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="accesskey" type="ns3:Character" />
+							<xsd:attribute name="tabindex" type="ns3:tabindexNumber" />
+							<xsd:attribute name="onfocus" type="ns3:Script" />
+							<xsd:attribute name="onblur" type="ns3:Script" />
+							<xsd:attribute name="type" type="ns3:InputType" />
+							<xsd:attribute name="name" type="xsd:string">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">the name attribute is required for all but submit &amp; reset</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:documentation>the name attribute is required for all but submit &amp; reset</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="value" type="xsd:string" />
+							<xsd:attribute name="checked" type="ns3:input_checked_attribute_type" />
+							<xsd:attribute name="disabled" type="ns3:input_disabled_attribute_type" />
+							<xsd:attribute name="readonly" type="ns3:input_readonly_attribute_type" />
+							<xsd:attribute name="size" type="xsd:string" />
+							<xsd:attribute name="maxlength" type="ns3:Number" />
+							<xsd:attribute name="src" type="ns3:URI" />
+							<xsd:attribute name="alt" type="xsd:string" />
+							<xsd:attribute name="usemap" type="ns3:URI" />
+							<xsd:attribute name="onselect" type="ns3:Script" />
+							<xsd:attribute name="onchange" type="ns3:Script" />
+							<xsd:attribute name="accept" type="ns3:ContentTypes" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="option">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">selectable choice</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>selectable choice</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:option_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="selected" type="ns3:option_selected_attribute_type" />
+							<xsd:attribute name="disabled" type="ns3:option_disabled_attribute_type" />
+							<xsd:attribute name="label" type="ns3:Text" />
+							<xsd:attribute name="value" type="xsd:string" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="optgroup">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">option group</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>option group</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="1" ref="ns3:option" />
+					</xsd:sequence>
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="class" type="xsd:NMTOKENS" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:sequence_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+					<xsd:attribute name="disabled" type="ns3:sequence_disabled_attribute_type" />
+					<xsd:attribute name="label" type="ns3:Text" use="required" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="select">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">option selector</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>option selector</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:optgroup" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:option" />
+					</xsd:choice>
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="class" type="xsd:NMTOKENS" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:choice_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+					<xsd:attribute name="name" type="xsd:string" />
+					<xsd:attribute name="size" type="ns3:Number" />
+					<xsd:attribute name="multiple" type="ns3:choice_multiple_attribute_type" />
+					<xsd:attribute name="disabled" type="ns3:choice_disabled_attribute_type" />
+					<xsd:attribute name="tabindex" type="ns3:tabindexNumber" />
+					<xsd:attribute name="onfocus" type="ns3:Script" />
+					<xsd:attribute name="onblur" type="ns3:Script" />
+					<xsd:attribute name="onchange" type="ns3:Script" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="textarea">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">multi-line text field</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>multi-line text field</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:textarea_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="accesskey" type="ns3:Character" />
+							<xsd:attribute name="tabindex" type="ns3:tabindexNumber" />
+							<xsd:attribute name="onfocus" type="ns3:Script" />
+							<xsd:attribute name="onblur" type="ns3:Script" />
+							<xsd:attribute name="name" type="xsd:string" />
+							<xsd:attribute name="rows" type="ns3:Number" use="required" />
+							<xsd:attribute name="cols" type="ns3:Number" use="required" />
+							<xsd:attribute name="disabled" type="ns3:textarea_disabled_attribute_type" />
+							<xsd:attribute name="readonly" type="ns3:textarea_readonly_attribute_type" />
+							<xsd:attribute name="onselect" type="ns3:Script" />
+							<xsd:attribute name="onchange" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="label">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">Each label must not contain more than ONE field
+      Label elements shouldn't be nested.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>Each label must not contain more than ONE field
+      Label elements shouldn't be nested.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Inline">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:label_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="for" type="xsd:IDREF" />
+							<xsd:attribute name="accesskey" type="ns3:Character" />
+							<xsd:attribute name="onfocus" type="ns3:Script" />
+							<xsd:attribute name="onblur" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="button">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">Content is "Flow" excluding a, form and form controls</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>Content is "Flow" excluding a, form and form controls</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:complexContent>
+						<xsd:extension base="ns3:button.content">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:button_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="accesskey" type="ns3:Character" />
+							<xsd:attribute name="tabindex" type="ns3:tabindexNumber" />
+							<xsd:attribute name="onfocus" type="ns3:Script" />
+							<xsd:attribute name="onblur" type="ns3:Script" />
+							<xsd:attribute name="name" type="xsd:string" />
+							<xsd:attribute name="value" type="xsd:string" />
+							<xsd:attribute name="type" type="ns3:button_type_attribute_type" />
+							<xsd:attribute name="disabled" type="ns3:button_disabled_attribute_type" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="fieldset">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The fieldset element is used to group form fields.
+      Only one legend element should occur in the content
+      and if present should only be preceded by whitespace.
+
+      NOTE: this content model is different from the XHTML 1.0 DTD,
+      closer to the intended content model in HTML4 DTD</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>The fieldset element is used to group form fields.
+      Only one legend element should occur in the content
+      and if present should only be preceded by whitespace.
+
+      NOTE: this content model is different from the XHTML 1.0 DTD,
+      closer to the intended content model in HTML4 DTD</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:legend" />
+						<xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:p" />
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h1" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h2" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h3" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h4" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h5" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h6" />
+								</xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:div" />
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ul" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ol" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dl" />
+								</xsd:choice>
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:pre" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:hr" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:blockquote" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:address" />
+								</xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:fieldset" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:table" />
+							</xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:form" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:a" />
+								<xsd:choice>
+									<xsd:choice>
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:br" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:span" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:bdo" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:map" />
+									</xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:object" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:img" />
+								</xsd:choice>
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:tt" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:i" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:b" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:big" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:small" />
+								</xsd:choice>
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:em" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:strong" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dfn" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:code" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:q" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:samp" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:kbd" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:var" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:cite" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:abbr" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:acronym" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sub" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sup" />
+								</xsd:choice>
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:input" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:select" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:textarea" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:label" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:button" />
+								</xsd:choice>
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:noscript" />
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ins" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:del" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+								</xsd:choice>
+							</xsd:choice>
+						</xsd:choice>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="class" type="xsd:NMTOKENS" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:choice_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="object">
+				<xsd:complexType mixed="true">
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:param" />
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:p" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h1" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h2" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h3" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h4" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h5" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h6" />
+							</xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:div" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ul" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ol" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dl" />
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:pre" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:hr" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:blockquote" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:address" />
+							</xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:fieldset" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:table" />
+						</xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:form" />
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:a" />
+							<xsd:choice>
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:br" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:span" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:bdo" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:map" />
+								</xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:object" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:img" />
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:tt" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:i" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:b" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:big" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:small" />
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:em" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:strong" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dfn" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:code" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:q" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:samp" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:kbd" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:var" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:cite" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:abbr" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:acronym" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sub" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sup" />
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:input" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:select" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:textarea" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:label" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:button" />
+							</xsd:choice>
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:noscript" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ins" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:del" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+							</xsd:choice>
+						</xsd:choice>
+					</xsd:choice>
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="class" type="xsd:NMTOKENS" />
+					<xsd:attribute name="style" type="ns3:StyleSheet" />
+					<xsd:attribute name="title" type="ns3:Text" />
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:choice_dir_attribute_type" />
+					<xsd:attribute name="onclick" type="ns3:Script" />
+					<xsd:attribute name="ondblclick" type="ns3:Script" />
+					<xsd:attribute name="onmousedown" type="ns3:Script" />
+					<xsd:attribute name="onmouseup" type="ns3:Script" />
+					<xsd:attribute name="onmouseover" type="ns3:Script" />
+					<xsd:attribute name="onmousemove" type="ns3:Script" />
+					<xsd:attribute name="onmouseout" type="ns3:Script" />
+					<xsd:attribute name="onkeypress" type="ns3:Script" />
+					<xsd:attribute name="onkeydown" type="ns3:Script" />
+					<xsd:attribute name="onkeyup" type="ns3:Script" />
+					<xsd:attribute name="declare" type="ns3:choice_declare_attribute_type" />
+					<xsd:attribute name="classid" type="ns3:URI" />
+					<xsd:attribute name="codebase" type="ns3:URI" />
+					<xsd:attribute name="data" type="ns3:URI" />
+					<xsd:attribute name="type" type="ns3:ContentType" />
+					<xsd:attribute name="codetype" type="ns3:ContentType" />
+					<xsd:attribute name="archive" type="ns3:UriList" />
+					<xsd:attribute name="standby" type="ns3:Text" />
+					<xsd:attribute name="height" type="ns3:Length" />
+					<xsd:attribute name="width" type="ns3:Length" />
+					<xsd:attribute name="usemap" type="ns3:URI" />
+					<xsd:attribute name="name" type="xsd:NMTOKEN" />
+					<xsd:attribute name="tabindex" type="ns3:tabindexNumber" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="title">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The title element is not considered part of the flow of text.
+      It should be displayed, for example as the page header or
+      window title. Exactly one title is required per document.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>The title element is not considered part of the flow of text.
+      It should be displayed, for example as the page header or
+      window title. Exactly one title is required per document.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType mixed="true">
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:title_dir_attribute_type" />
+							<xsd:attribute name="id" type="xsd:ID" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="base">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">document base URI</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>document base URI</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="href" type="ns3:URI" use="required" />
+							<xsd:attribute name="id" type="xsd:ID" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="head">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">content model is "head.misc" combined with a single
+      title and an optional base element in any order</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>content model is "head.misc" combined with a single
+      title and an optional base element in any order</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:style" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:meta" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:link" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:object" />
+							</xsd:choice>
+						</xsd:sequence>
+						<xsd:choice>
+							<xsd:sequence>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:title" />
+								<xsd:sequence>
+									<xsd:choice>
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:style" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:meta" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:link" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:object" />
+									</xsd:choice>
+								</xsd:sequence>
+								<xsd:sequence>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:base" />
+									<xsd:sequence>
+										<xsd:choice>
+											<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+											<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:style" />
+											<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:meta" />
+											<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:link" />
+											<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:object" />
+										</xsd:choice>
+									</xsd:sequence>
+								</xsd:sequence>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:base" />
+								<xsd:sequence>
+									<xsd:choice>
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:style" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:meta" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:link" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:object" />
+									</xsd:choice>
+								</xsd:sequence>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:title" />
+								<xsd:sequence>
+									<xsd:choice>
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:style" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:meta" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:link" />
+										<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:object" />
+									</xsd:choice>
+								</xsd:sequence>
+							</xsd:sequence>
+						</xsd:choice>
+					</xsd:sequence>
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:choice_dir_attribute_type" />
+					<xsd:attribute name="id" type="xsd:ID" />
+					<xsd:attribute name="profile" type="ns3:URI" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="body">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ns3:Block">
+							<xsd:attribute name="id" type="xsd:ID" />
+							<xsd:attribute name="class" type="xsd:NMTOKENS" />
+							<xsd:attribute name="style" type="ns3:StyleSheet" />
+							<xsd:attribute name="title" type="ns3:Text" />
+							<xsd:attribute name="lang" type="ns3:LanguageCode" />
+							<xsd:attribute ref="xml:lang" />
+							<xsd:attribute name="dir" type="ns3:body_dir_attribute_type" />
+							<xsd:attribute name="onclick" type="ns3:Script" />
+							<xsd:attribute name="ondblclick" type="ns3:Script" />
+							<xsd:attribute name="onmousedown" type="ns3:Script" />
+							<xsd:attribute name="onmouseup" type="ns3:Script" />
+							<xsd:attribute name="onmouseover" type="ns3:Script" />
+							<xsd:attribute name="onmousemove" type="ns3:Script" />
+							<xsd:attribute name="onmouseout" type="ns3:Script" />
+							<xsd:attribute name="onkeypress" type="ns3:Script" />
+							<xsd:attribute name="onkeydown" type="ns3:Script" />
+							<xsd:attribute name="onkeyup" type="ns3:Script" />
+							<xsd:attribute name="onload" type="ns3:Script" />
+							<xsd:attribute name="onunload" type="ns3:Script" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="html">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:head" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:body" />
+					</xsd:sequence>
+					<xsd:attribute name="lang" type="ns3:LanguageCode" />
+					<xsd:attribute ref="xml:lang" />
+					<xsd:attribute name="dir" type="ns3:sequence_dir_attribute_type" />
+					<xsd:attribute name="id" type="xsd:ID" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:simpleType name="LinkTypes">
+				<xsd:annotation>
+					<xsd:documentation>space-separated list of link types</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:NMTOKENS" />
+			</xsd:simpleType>
+			<xsd:simpleType name="col_valign_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="top" />
+					<xsd:enumeration value="middle" />
+					<xsd:enumeration value="bottom" />
+					<xsd:enumeration value="baseline" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="Text">
+				<xsd:annotation>
+					<xsd:documentation>used for titles etc.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string" />
+			</xsd:simpleType>
+			<xsd:complexType mixed="true" name="button.content">
+				<xsd:annotation>
+					<xsd:documentation>button uses "Flow" but excludes a, form and form controls</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:p" />
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h1" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h2" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h3" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h4" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h5" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h6" />
+						</xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:div" />
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ul" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ol" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dl" />
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:pre" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:hr" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:blockquote" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:address" />
+						</xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:table" />
+						<xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:br" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:span" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:bdo" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:map" />
+							</xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:object" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:img" />
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:tt" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:i" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:b" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:big" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:small" />
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:em" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:strong" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dfn" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:code" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:q" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:samp" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:kbd" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:var" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:cite" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:abbr" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:acronym" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sub" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sup" />
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:noscript" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ins" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:del" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+							</xsd:choice>
+						</xsd:choice>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="td_valign_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="top" />
+					<xsd:enumeration value="middle" />
+					<xsd:enumeration value="bottom" />
+					<xsd:enumeration value="baseline" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="p_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="kbd_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="MediaDesc">
+				<xsd:annotation>
+					<xsd:documentation>single or comma-separated list of media descriptors</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[^,]+(,\s*[^,]+)*" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="bdo_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="h3_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="img_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="code_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="div_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="param_valuetype_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="data" />
+					<xsd:enumeration value="ref" />
+					<xsd:enumeration value="object" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType mixed="true" name="Flow">
+				<xsd:annotation>
+					<xsd:documentation>"Flow" mixes block and inline and is used for list items etc.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:p" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h1" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h2" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h3" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h4" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h5" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h6" />
+							</xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:div" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ul" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ol" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dl" />
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:pre" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:hr" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:blockquote" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:address" />
+							</xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:fieldset" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:table" />
+						</xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:form" />
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:a" />
+							<xsd:choice>
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:br" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:span" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:bdo" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:map" />
+								</xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:object" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:img" />
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:tt" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:i" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:b" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:big" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:small" />
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:em" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:strong" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dfn" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:code" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:q" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:samp" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:kbd" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:var" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:cite" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:abbr" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:acronym" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sub" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sup" />
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:input" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:select" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:textarea" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:label" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:button" />
+							</xsd:choice>
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:noscript" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ins" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:del" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+							</xsd:choice>
+						</xsd:choice>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="tt_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="Length">
+				<xsd:annotation>
+					<xsd:documentation>nn for pixels or nn% for percentage length</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[-+]?(\d+|\d+(\.\d+)?%)" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="td_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="input_checked_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="checked" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="meta_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="Character">
+				<xsd:annotation>
+					<xsd:documentation>a single character, as per section 2.2 of [XML]</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:length fixed="true" value="1" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="button_disabled_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="disabled" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="label_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="samp_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="input_disabled_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="disabled" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="input_readonly_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="readonly" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="area_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="Coords">
+				<xsd:annotation>
+					<xsd:documentation>comma separated list of lengths</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[-+]?(\d+|\d+(\.\d+)?%)(,\s*[-+]?(\d+|\d+(\.\d+)?%))*" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="del_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="th_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="noscript_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="UriList">
+				<xsd:annotation>
+					<xsd:documentation>a space separated list of Uniform Resource Identifiers</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string" />
+			</xsd:simpleType>
+			<xsd:simpleType name="em_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="Charset">
+				<xsd:annotation>
+					<xsd:documentation>a character encoding, as per [RFC2045]</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string" />
+			</xsd:simpleType>
+			<xsd:simpleType name="small_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="button_type_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="button" />
+					<xsd:enumeration value="submit" />
+					<xsd:enumeration value="reset" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="span_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="button_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="img_ismap_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ismap" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="h6_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType mixed="true" name="pre.content">
+				<xsd:annotation>
+					<xsd:documentation>pre uses "Inline" excluding big, small, sup or sup</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:a" />
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:tt" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:i" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:b" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:big" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:small" />
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:em" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:strong" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dfn" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:code" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:q" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:samp" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:kbd" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:var" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:cite" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:abbr" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:acronym" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sub" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sup" />
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:br" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:span" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:bdo" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:map" />
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ins" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:del" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:input" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:select" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:textarea" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:label" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:button" />
+						</xsd:choice>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="h4_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="caption_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="Charsets">
+				<xsd:annotation>
+					<xsd:documentation>a space separated list of character encodings, as per [RFC2045]</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string" />
+			</xsd:simpleType>
+			<xsd:simpleType name="area_nohref_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="nohref" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="Number">
+				<xsd:annotation>
+					<xsd:documentation>one or more digits</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:nonNegativeInteger">
+					<xsd:pattern value="[0-9]+" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="MultiLength">
+				<xsd:annotation>
+					<xsd:documentation>pixel, percentage, or relative</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[-+]?(\d+|\d+(\.\d+)?%)|[1-9]?(\d+)?\*" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="body_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="h2_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="Pixels">
+				<xsd:annotation>
+					<xsd:documentation>integer representing length in pixels</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:nonNegativeInteger" />
+			</xsd:simpleType>
+			<xsd:simpleType name="choice_multiple_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="multiple" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="th_align_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="left" />
+					<xsd:enumeration value="center" />
+					<xsd:enumeration value="right" />
+					<xsd:enumeration value="justify" />
+					<xsd:enumeration value="char" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="th_valign_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="top" />
+					<xsd:enumeration value="middle" />
+					<xsd:enumeration value="bottom" />
+					<xsd:enumeration value="baseline" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="form_method_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="get" />
+					<xsd:enumeration value="post" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="cite_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="choice_disabled_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="disabled" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="choice_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="address_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="legend_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="Script">
+				<xsd:annotation>
+					<xsd:documentation>script expression</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string" />
+			</xsd:simpleType>
+			<xsd:simpleType name="form_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="TRules">
+				<xsd:annotation>
+					<xsd:documentation>The rules attribute defines which rules to draw between cells:
+
+      If rules is absent then assume:
+          "none" if border is absent or border="0" otherwise "all"</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="none" />
+					<xsd:enumeration value="groups" />
+					<xsd:enumeration value="rows" />
+					<xsd:enumeration value="cols" />
+					<xsd:enumeration value="all" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="h5_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="textarea_readonly_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="readonly" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="ContentType">
+				<xsd:annotation>
+					<xsd:documentation>media type, as per [RFC2045]</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string" />
+			</xsd:simpleType>
+			<xsd:simpleType name="style_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="sub_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="acronym_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType mixed="true" name="Inline">
+				<xsd:annotation>
+					<xsd:documentation>"Inline" covers inline or "text-level" elements</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:a" />
+							<xsd:choice>
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:br" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:span" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:bdo" />
+									<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:map" />
+								</xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:object" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:img" />
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:tt" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:i" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:b" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:big" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:small" />
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:em" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:strong" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dfn" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:code" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:q" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:samp" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:kbd" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:var" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:cite" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:abbr" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:acronym" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sub" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sup" />
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:input" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:select" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:textarea" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:label" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:button" />
+							</xsd:choice>
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ins" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:del" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+						</xsd:choice>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="choice_align_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="left" />
+					<xsd:enumeration value="center" />
+					<xsd:enumeration value="right" />
+					<xsd:enumeration value="justify" />
+					<xsd:enumeration value="char" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="link_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="h1_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="hr_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="Shape">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="rect" />
+					<xsd:enumeration value="circle" />
+					<xsd:enumeration value="poly" />
+					<xsd:enumeration value="default" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="strong_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="textarea_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="var_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="col_align_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="left" />
+					<xsd:enumeration value="center" />
+					<xsd:enumeration value="right" />
+					<xsd:enumeration value="justify" />
+					<xsd:enumeration value="char" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="form.content">
+				<xsd:annotation>
+					<xsd:documentation>form uses "Block" excluding form</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:p" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h1" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h2" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h3" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h4" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h5" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h6" />
+							</xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:div" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ul" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ol" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dl" />
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:pre" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:hr" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:blockquote" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:address" />
+							</xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:fieldset" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:table" />
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:noscript" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ins" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:del" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+							</xsd:choice>
+						</xsd:choice>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="dd_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="Block">
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:p" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h1" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h2" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h3" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h4" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h5" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:h6" />
+							</xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:div" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ul" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ol" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dl" />
+							</xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:pre" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:hr" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:blockquote" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:address" />
+							</xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:fieldset" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:table" />
+						</xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:form" />
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:noscript" />
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ins" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:del" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+							</xsd:choice>
+						</xsd:choice>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="abbr_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="TFrame">
+				<xsd:annotation>
+					<xsd:documentation>The border attribute sets the thickness of the frame around the
+      table. The default units are screen pixels.
+
+      The frame attribute specifies which parts of the frame around
+      the table should be rendered. The values are not the same as
+      CALS to avoid a name clash with the valign attribute.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="void" />
+					<xsd:enumeration value="above" />
+					<xsd:enumeration value="below" />
+					<xsd:enumeration value="hsides" />
+					<xsd:enumeration value="lhs" />
+					<xsd:enumeration value="rhs" />
+					<xsd:enumeration value="vsides" />
+					<xsd:enumeration value="box" />
+					<xsd:enumeration value="border" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="URI">
+				<xsd:annotation>
+					<xsd:documentation>a Uniform Resource Identifier, see [RFC2396]</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:anyURI" />
+			</xsd:simpleType>
+			<xsd:simpleType name="InputType">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="text" />
+					<xsd:enumeration value="password" />
+					<xsd:enumeration value="checkbox" />
+					<xsd:enumeration value="radio" />
+					<xsd:enumeration value="submit" />
+					<xsd:enumeration value="reset" />
+					<xsd:enumeration value="file" />
+					<xsd:enumeration value="hidden" />
+					<xsd:enumeration value="image" />
+					<xsd:enumeration value="button" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="big_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType mixed="true" name="a.content">
+				<xsd:annotation>
+					<xsd:documentation>a elements use "Inline" excluding a</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:choice>
+							<xsd:choice>
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:br" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:span" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:bdo" />
+								<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:map" />
+							</xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:object" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:img" />
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:tt" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:i" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:b" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:big" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:small" />
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:em" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:strong" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:dfn" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:code" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:q" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:samp" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:kbd" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:var" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:cite" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:abbr" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:acronym" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sub" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:sup" />
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:input" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:select" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:textarea" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:label" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:button" />
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:ins" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:del" />
+							<xsd:element maxOccurs="1" minOccurs="1" ref="ns3:script" />
+						</xsd:choice>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="sequence_valign_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="top" />
+					<xsd:enumeration value="middle" />
+					<xsd:enumeration value="bottom" />
+					<xsd:enumeration value="baseline" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="dfn_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="sequence_align_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="left" />
+					<xsd:enumeration value="center" />
+					<xsd:enumeration value="right" />
+					<xsd:enumeration value="justify" />
+					<xsd:enumeration value="char" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="option_selected_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="selected" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="dt_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="option_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="choice_declare_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="declare" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="blockquote_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="ins_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="Scope">
+				<xsd:annotation>
+					<xsd:documentation>Scope is simpler than headers attribute for common tables</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="row" />
+					<xsd:enumeration value="col" />
+					<xsd:enumeration value="rowgroup" />
+					<xsd:enumeration value="colgroup" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="Datetime">
+				<xsd:annotation>
+					<xsd:documentation>date and time information. ISO date format</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:dateTime" />
+			</xsd:simpleType>
+			<xsd:simpleType name="title_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="choice_valign_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="top" />
+					<xsd:enumeration value="middle" />
+					<xsd:enumeration value="bottom" />
+					<xsd:enumeration value="baseline" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="pre_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="q_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="sequence_disabled_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="disabled" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="textarea_disabled_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="disabled" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="script_defer_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="defer" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="option_disabled_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="disabled" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="sequence_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="LanguageCode">
+				<xsd:annotation>
+					<xsd:documentation>a language code, as per [RFC3066]</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:language" />
+			</xsd:simpleType>
+			<xsd:simpleType name="ContentTypes">
+				<xsd:annotation>
+					<xsd:documentation>comma-separated list of media types, as per [RFC2045]</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string" />
+			</xsd:simpleType>
+			<xsd:simpleType name="b_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="sup_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="a_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="col_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="li_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="i_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="StyleSheet">
+				<xsd:annotation>
+					<xsd:documentation>style sheet data</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string" />
+			</xsd:simpleType>
+			<xsd:simpleType name="td_align_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="left" />
+					<xsd:enumeration value="center" />
+					<xsd:enumeration value="right" />
+					<xsd:enumeration value="justify" />
+					<xsd:enumeration value="char" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="tabindexNumber">
+				<xsd:annotation>
+					<xsd:documentation>tabindex attribute specifies the position of the current element
+      in the tabbing order for the current document. This value must be
+      a number between 0 and 32767. User agents should ignore leading zeros.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="ns3:Number">
+					<xsd:maxInclusive value="32767" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="input_dir_attribute_type">
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="ltr" />
+					<xsd:enumeration value="rtl" />
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="http://www.w3.org/2001/XMLSchema" />
+	</formatBuilderData>
+</formatWrapper>
+

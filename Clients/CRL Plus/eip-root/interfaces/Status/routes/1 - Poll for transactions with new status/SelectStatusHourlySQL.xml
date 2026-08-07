@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLXML xmlns="http://pilotfish.sqlxml" xmlns:ta="xalan://com.pilotfish.eip.TransactionAttributes" xmlns:td="xalan://com.pilotfish.eip.TransactionData">
+	<Assign name="pf_processing_key" exp="#key = new java.text.SimpleDateFormat('yyyy-MM-dd-HH-mm-ss').format(new java.util.Date()), #txData.getAttributes().setAttribute('pf_processing_key', #key), #key"/>
+	<Execute>
+		<SQL>
+			UPDATE CRLTRANSACTION T 
+			SET T.PF_PROCESSING_KEY = ?
+			WHERE ((
+				T.LAST_MODIFIED_DATE &gt; T.CREATED_DATE
+				AND T.ORDER_COMPLETE_DATE IS NULL
+				AND (
+					T.LAST_STATUS_DELIVERED_DATE IS NULL
+					OR T.LAST_STATUS_DELIVERED_DATE &lt; T.LAST_MODIFIED_DATE
+				)
+			) OR (
+				T.ORDER_COMPLETE_DATE IS NOT NULL
+				AND (
+					T.FINAL_RESULT_DELIVERED_DATE IS NULL
+					OR T.FINAL_RESULT_DELIVERED_DATE &lt; T.ORDER_COMPLETE_DATE
+				)
+			)) 
+			AND (
+				T.FINAL_RESULT_STAGED_DATE IS NULL
+				OR
+				T.FINAL_RESULT_STAGED_DATE &lt; T.LAST_MODIFIED_DATE
+			)
+			AND (
+				T.PF_PROCESSING_KEY IS NULL
+				OR
+				(sysdate - to_date(PF_PROCESSING_KEY, 'YYYY-MM-DD-HH24-MI_SS')) &gt;= (4.0 / 24.0)
+			)
+			AND T.PF_SOURCE_CLIENT IN ('ELFP')
+		</SQL>
+		<Params>ognl:#pf_processing_key</Params>
+	</Execute>
+	<Execute into="results" as="transaction">
+		<SQL>
+			SELECT
+				DISTINCT(T.TRANSACTION_ID),
+				T.LAST_MODIFIED_DATE,
+				T.ORDER_COMPLETE_DATE,
+				T.PF_SOURCE_CLIENT,
+				B.PF_BATCH_ID
+			FROM
+				CRLTRANSACTION T LEFT JOIN BATCH B ON (T.PF_SOURCE_CLIENT = B.PF_SOURCE_CLIENT)
+			WHERE T.PF_PROCESSING_KEY = ?
+			AND T.PF_SOURCE_CLIENT IN ('ELFP')
+		</SQL>
+		<Params>ognl:#pf_processing_key</Params>
+	</Execute>
+	<XMLOut var="results" />
+</SQLXML>

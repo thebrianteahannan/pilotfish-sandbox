@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="us-ascii" standalone="yes"?>
+<bo:TXLife xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ACORD.org/Standards/Life/2" Version="2.23.00" xmlns:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.23.00.xsd" xmlns:bo="http://ACORD.org/Standards/Life/2">
+                <bo:UserAuthRequest>
+                                <bo:VendorApp>
+                                                <bo:VendorName VendorCode="84">Hooper Holmes, Inc.</bo:VendorName>
+                                                <bo:AppName>Winimage</bo:AppName>
+                                                <bo:AppVer>2.5</bo:AppVer>
+                                </bo:VendorApp>
+                                <bo:OLifEExtension VendorCode="220" ExtensionCode="6778">
+                                                <bo:DellTransRefGUID>{$DELLTRANSREFGUID}</bo:DellTransRefGUID>
+                                                <bo:CompanyNumber>2A</bo:CompanyNumber>
+                                </bo:OLifEExtension>
+                </bo:UserAuthRequest>
+                <bo:TXLifeRequest PrimaryObjectID="Holding_Primary">
+                                <bo:TransRefGUID>{$TRANSREFGUID}</bo:TransRefGUID>
+                                <bo:TransType tc="103">New Business Submission</bo:TransType>
+                                <bo:TransExeDate>{$CURRDATE}</bo:TransExeDate>
+                                <bo:TransExeTime>{$CURRTIME}</bo:TransExeTime>
+                                <bo:OLifE>
+                                                <bo:SourceInfo>
+                                                                <bo:CreationDate>{$CURRDATE}</bo:CreationDate>
+                                                                <bo:CreationTime>{$CURRTIME}</bo:CreationTime>
+                                                                <bo:SourceInfoName>Hooper Holmes, Inc.</bo:SourceInfoName>
+                                                </bo:SourceInfo>
+                                                <bo:Holding id="Holding_Primary">
+                                                                <bo:Policy>
+                                                                                <bo:PolNumber>{$POLICY}</bo:PolNumber>
+                                                                                <bo:ProductCode>Term</bo:ProductCode>
+                                                                                <bo:CarrierCode>5340</bo:CarrierCode>
+                                                                                <bo:PlanName>{$PLAN_NAME.DESC}</bo:PlanName>
+                                                                                <bo:PolicyStatus tc="56">Reentry Pending</bo:PolicyStatus>
+{if exists REPLACE_TYPE}
+                {if exists REPLACE_TYPE.DESC}<bo:ReplacementType tc="9">Internal Replacement</bo:ReplacementType>{/if exists REPLACE_TYPE.DESC}
+                {if notexists REPLACE_TYPE.DESC}<bo:ReplacementType tc="3">External Replacement</bo:ReplacementType>{/if notexists REPLACE_TYPE.DESC}
+{/if exists REPLACE_TYPE}
+{if notexists REPLACE_TYPE}<bo:ReplacementType tc="0">Unknown</bo:ReplacementType>{/if notexists REPLACE_TYPE}
+                                                                                <bo:PaymentMode tc="{$PAYMENT_MODE.TC}">{$PAYMENT_MODE.DESC}</bo:PaymentMode>
+{if exists PAYMENT_METHOD}                                                                   <bo:PaymentMethod tc="{$PAYMENT_METHOD.TC}">{$PAYMENT_METHOD.DESC}</bo:PaymentMethod>{/if exists PAYMENT_METHOD}
+{if exists ACCOUNT_NUMBER}                                                                  <bo:AccountNumber>{$ACCOUNT_NUMBER}</bo:AccountNumber>{/if exists ACCOUNT_NUMBER}
+{if exists ROUTING_NUMBER}                                                                   <bo:RoutingNumber>{$ROUTING_NUMBER}</bo:RoutingNumber>{/if exists ROUTING_NUMBER}
+{if exists CHECKING_ACCOUNT}                                                                                <bo:BankAcctType tc="{$CHECKING_ACCOUNT.TC}">{$CHECKING_ACCOUNT}</bo:BankAcctType>{/if exists CHECKING_ACCOUNT}
+{if exists PAYMENT_DRAFT_DAY}                                                                             <bo:PaymentDraftDay>{$PAYMENT_DRAFT_DAY}</bo:PaymentDraftDay>{/if exists PAYMENT_DRAFT_DAY}
+                                                                                <bo:Life>
+                                                                                                <bo:QualPlanType tc="1">Non-Qualified</bo:QualPlanType>
+                                                                                                <bo:Coverage>
+                                                                                                                <bo:PlanName>{$PLAN_NAME.DESC}</bo:PlanName>
+                                                                                                                <bo:IndicatorCode tc="1">Base</bo:IndicatorCode>
+{if exists DEATH_BENEFIT_OPT_TYPE.TC}                                                                                                              <bo:DeathBenefitOptType tc="{$DEATH_BENEFIT_OPT_TYPE.TC}">{$DEATH_BENEFIT_OPT_TYPE.DESC}</bo:DeathBenefitOptType>{/if exists DEATH_BENEFIT_OPT_TYPE.TC}
+                                                                                                                <bo:CurrentAmt>{$POL_AMT}</bo:CurrentAmt>
+{if exists PREMIUM_PERIOD.DESC}                                                                                                          <bo:LevelPremiumPeriod>{$PREMIUM_PERIOD.DESC}</bo:LevelPremiumPeriod>{/if exists PREMIUM_PERIOD.DESC}
+                                                                                                                <bo:CovOption>
+                                                                                                                                <bo:PlanName>Accelerated Death Benefit</bo:PlanName>
+                                                                                                                </bo:CovOption>
+{if exists WP.TC}
+                                                                                                                <bo:CovOption>
+                                                                                                                                <bo:PlanName>Waiver of Premium</bo:PlanName>
+                                                                                                                </bo:CovOption>
+{/if exists WP.TC}
+                                                                                                                <bo:LifeParticipant id="LifeParticipant_PrimaryInsured" PartyID="Party_PrimaryInsured">
+                                                                                                                                <bo:LifeParticipantRoleCode tc="1">Primary Insured</bo:LifeParticipantRoleCode>
+                                                                                                                </bo:LifeParticipant>
+                                                                                                                <bo:LifeParticipant id="LifeParticipant_PrimaryAgent" PartyID="Party_PrimaryAgent">
+                                                                                                                                <bo:LifeParticipantRoleCode tc="15">Primary Agent</bo:LifeParticipantRoleCode>
+                                                                                                                </bo:LifeParticipant>
+                                                                                                                <bo:LifeParticipant id="LifeParticipant_Owner" PartyID="Party_Owner">
+                                                                                                                                <bo:LifeParticipantRoleCode tc="18">Owner</bo:LifeParticipantRoleCode>
+                                                                                                                </bo:LifeParticipant>
+                                                                                                                <bo:LifeParticipant id="LifeParticipant_Payor" PartyID="Party_Payor">
+                                                                                                                                <bo:LifeParticipantRoleCode tc="12">Payor</bo:LifeParticipantRoleCode>
+                                                                                                                </bo:LifeParticipant>
+{if exists PRIBEN_SHARE}                                            
+                                                                                                                <bo:LifeParticipant id="LifeParticipant_PrimaryBene" DataRep="Partial" PartyID="Party_PrimaryBene">
+                                                                                                                                <bo:LifeParticipantRoleCode tc="7">Beneficiary - Primary</bo:LifeParticipantRoleCode>
+                                                                                                                                <bo:BeneficiaryPercentDistribution>{$PRIBEN_SHARE}</bo:BeneficiaryPercentDistribution>
+                                                                                                                </bo:LifeParticipant>
+{/if exists PRIBEN_SHARE}          
+{begin PRIBEN_LOOP}
+                                                                                                                <bo:LifeParticipant id="LifeParticipant_PrimaryBene_{$ID}" DataRep="Partial" PartyID="Party_PrimaryBene_{$ID}">
+                                                                                                                                <bo:LifeParticipantRoleCode tc="7">Beneficiary - Primary</bo:LifeParticipantRoleCode>
+                                                                                                                                <bo:BeneficiaryPercentDistribution>{$PRIBEN_LOOP_SHARE}</bo:BeneficiaryPercentDistribution>
+                                                                                                                </bo:LifeParticipant>
+{/begin PRIBEN_LOOP}
+{if exists CONTBEN_SHARE}                                       
+                                                                                                                <bo:LifeParticipant id="LifeParticipant_ContingentBene" DataRep="Partial" PartyID="Party_ContingentBene">
+                                                                                                                                <bo:LifeParticipantRoleCode tc="9">Beneficiary - Contingent</bo:LifeParticipantRoleCode>
+                                                                                                                                <bo:BeneficiaryPercentDistribution>{$CONTBEN_SHARE}</bo:BeneficiaryPercentDistribution>
+                                                                                                                </bo:LifeParticipant>
+{/if exists CONTBEN_SHARE}     
+{begin CONTBEN_LOOP}
+                                                                                                                <bo:LifeParticipant id="LifeParticipant_ContingentBene_{$ID}" DataRep="Partial" PartyID="Party_ContingentBene_{$ID}">
+                                                                                                                                <bo:LifeParticipantRoleCode tc="9">Beneficiary - Contingent</bo:LifeParticipantRoleCode>
+                                                                                                                                <bo:BeneficiaryPercentDistribution>{$CONTBEN_LOOP_SHARE}</bo:BeneficiaryPercentDistribution>
+                                                                                                                </bo:LifeParticipant>
+{/begin CONTBEN_LOOP}
+                                                                                                                </bo:Coverage>
+{if exists CHILD_NUMBER_UNITS}                                                                                                           
+                                                                                                                <bo:Coverage>
+                                                                                                                                <bo:PlanName>Childrens Term Insurance</bo:PlanName>
+                                                                                                                                <bo:IndicatorCode tc="2">Rider</bo:IndicatorCode>
+                                                                                                                                <bo:IntialNumberOfUnits>{$CHILD_NUMBER_UNITS}</bo:IntialNumberOfUnits>
+{begin CHILD_RIDER}
+                                                                                                                                <bo:LifeParticipant id="LifeParticipant_OtherInsured_CTI_{$ID}" PartyID="Party_OtherInsured_CTI_{$ID}">
+                                                                                                                                                <bo:LifeParticipantRoleCode tc="2">Other Insured</bo:LifeParticipantRoleCode>
+                                                                                                                                </bo:LifeParticipant>
+{/begin CHILD_RIDER}
+                                                                                                                </bo:Coverage>
+{/if exists CHILD_NUMBER_UNITS}                                                                                         
+                                                                                </bo:Life>
+                                                                                <bo:ApplicationInfo>
+                                                                                                <bo:TrackingID>{$TRACKING_ID}</bo:TrackingID>
+                                                                                                <bo:ApplicationJurisdiction tc="{$JURISDICTION.TC}">{$JURISDICTION}</bo:ApplicationJurisdiction>
+                                                                                                <bo:SignatureInfo>
+                                                                                                                <bo:SignatureRoleCode tc="1">Primary Insured</bo:SignatureRoleCode>
+                                                                                                                <bo:SignatureDate>{$BR_COMPDT}</bo:SignatureDate>
+                                                                                                                <bo:SignatureState tc="{$JURISDICTION.TC}">{$JURISDICTION}</bo:SignatureState>
+                                                                                                                <bo:SignatureOK tc="1">True</bo:SignatureOK>
+                                                                                                </bo:SignatureInfo>
+                                                                                                <bo:SignatureInfo>
+                                                                                                                <bo:SignatureRoleCode tc="15">Primary Agent</bo:SignatureRoleCode>
+                                                                                                                <bo:SignatureDate>{$BR_ORDER_RECEIVED_DATE}</bo:SignatureDate>
+                                                                                                                <bo:SignatureState tc="{$JURISDICTION.TC}">{$JURISDICTION}</bo:SignatureState>
+                                                                                                                <bo:SignatureOK tc="1">True</bo:SignatureOK>
+                                                                                                </bo:SignatureInfo>
+                                                                                </bo:ApplicationInfo>
+                                                                                <bo:RequirementInfo id="Req1" AppliesToPartyID="Party_PrimaryInsured">
+                                                                                                <bo:ReqCode tc="137">Tele-Interview</bo:ReqCode>
+                                                                                                <bo:RequestedDate>{$CURRDATE}</bo:RequestedDate>
+                                                                                                <bo:ReleasePartyOrgCode>ELFP</bo:ReleasePartyOrgCode>
+                                                                                                <bo:RequirementAcctNum>71661</bo:RequirementAcctNum>
+                                                                                </bo:RequirementInfo>
+                                                                </bo:Policy>
+{if exists MULTIPLE_POLICY}
+                                                                <bo:Attachment>
+                                                                                <bo:Description>{$MULTIPLE_POLICY}</bo:Description>
+                                                                                <bo:AttachmentType tc="2">Comment</bo:AttachmentType>
+                                                                </bo:Attachment>
+{/if exists MULTIPLE_POLICY}
+                                                </bo:Holding>                  
+                                                <bo:Party id="Party_PrimaryInsured">
+                                                                <bo:PartyTypeCode tc="1">Person</bo:PartyTypeCode>
+                                                                {if exists APP_GovID}
+                                                                <bo:GovtID>{$APP_GovID}</bo:GovtID>
+                                                                <bo:GovtIDTC tc="1">Social Security Number US</bo:GovtIDTC>
+                                                                {/if exists APP_GovID}
+                                                                <bo:Person DataRep="Partial">
+                                                                                <bo:FirstName>{$APP_FName}</bo:FirstName>
+                                                                                <bo:LastName>{$APP_LName}</bo:LastName>
+                                                                                <bo:Gender tc="{$APP_GENDER.TC}">{$APP_GENDER.DESC}</bo:Gender>
+                                                                                {if exists APP_DOB}<bo:BirthDate>{$APP_DOB}</bo:BirthDate>{/if exists APP_DOB}
+                                                                                {if exists APP_HEIGHT}
+                                                                                <bo:Height2>
+                                                                                                <bo:MeasureUnits tc="2">US System Standard</bo:MeasureUnits>
+                                                                                                <bo:MeasureValue>{$APP_HEIGHT:'height'}</bo:MeasureValue>
+                                                                                </bo:Height2>
+                                                                                {/if exists APP_HEIGHT}
+                                                                                {if exists APP_WEIGHT}
+                                                                                <bo:Weight2>
+                                                                                                <bo:MeasureUnits tc="2">US System Standard</bo:MeasureUnits>
+                                                                                                <bo:MeasureValue>{$APP_WEIGHT}</bo:MeasureValue>
+                                                                                </bo:Weight2>
+                                                                                {/if exists APP_WEIGHT}
+                                                                                <bo:BirthJurisdictionTC tc="{$APP_BIRTHPL.TC}">{$APP_BIRTHPL}</bo:BirthJurisdictionTC>
+                                                                </bo:Person>
+
+                                                                <bo:Address id="APP_ADDRESS">
+                                                                                <bo:Line1>{$APP_Address_Line1}</bo:Line1>
+                                                                                <bo:City>{$APP_Address_City}</bo:City>
+                                                                                <bo:AddressStateTC tc="{$APP_Address_St.TC}">{$APP_Address_St}</bo:AddressStateTC>
+                                                                                <bo:Zip>{$APP_Address_Zip}</bo:Zip>
+                                                                </bo:Address>
+
+                                                                {if exists APP_HPhone}
+                                                                <bo:Phone id="APP_HPhone">
+                                                                                <bo:PhoneTypeCode tc="1">Home</bo:PhoneTypeCode>
+                                                                                <bo:AreaCode>{$APP_HPhone_ACode}</bo:AreaCode>
+                                                                                <bo:DialNumber>{$APP_HPhone}</bo:DialNumber>
+                                                                </bo:Phone>
+                                                                {/if exists APP_HPhone}
+
+                                                                {if exists APP_CPhone}
+                                                                <bo:Phone id="APP_CPhone">
+                                                                                <bo:PhoneTypeCode tc="12">Mobile</bo:PhoneTypeCode>
+                                                                                <bo:AreaCode>{$APP_CPhone_ACode}</bo:AreaCode>
+                                                                                <bo:DialNumber>{$APP_CPhone}</bo:DialNumber>
+                                                                </bo:Phone>
+                                                                {/if exists APP_CPhone}
+
+                                                                {if exists APP_WPhone}
+                                                                <bo:Phone id="APP_WPhone">
+                                                                                <bo:PhoneTypeCode tc="2">Business</bo:PhoneTypeCode>
+                                                                                <bo:AreaCode>{$APP_WPhone_ACode}</bo:AreaCode>
+                                                                                <bo:DialNumber>{$APP_WPhone}</bo:DialNumber>
+                                                                </bo:Phone>
+                                                                {/if exists APP_WPhone}
+
+
+                                                                <bo:EMailAddress>
+                                                                {if exists APP_EMAIL}<bo:AddrLine>{$APP_EMAIL}</bo:AddrLine>{/if exists APP_EMAIL}
+                                                                                <bo:OLifEExtension VendorCode="84">
+                                                                                                {if exists APP_OPTIN}<bo:eDeliveryOptIn>{$APP_OPTIN}</bo:eDeliveryOptIn>{/if exists APP_OPTIN}
+                                                                                                {if notexists APP_OPTIN}<bo:eDeliveryOptIn>NN</bo:eDeliveryOptIn>{/if notexists APP_OPTIN}
+                                                                                </bo:OLifEExtension>
+                                                                </bo:EMailAddress>
+                                                </bo:Party>
+{begin CHILD_RIDER}
+                                                <bo:Party id="Party_OtherInsured_CTI_{$ID}">
+                                                                <bo:PartyTypeCode tc="1">Person</bo:PartyTypeCode>
+                                                                <bo:GovtID>{$CHILD_RIDER_SSN}</bo:GovtID>
+                                                                <bo:GovtIDTC tc="1">Social Security Number US</bo:GovtIDTC>
+                                                                <bo:Person>
+{if exists CHILD_RIDER_FNAME}                                                                                <bo:FirstName>{$CHILD_RIDER_FNAME}</bo:FirstName>{/if exists CHILD_RIDER_FNAME}
+{if exists CHILD_RIDER_LNAME}                                                                                <bo:LastName>{$CHILD_RIDER_LNAME}</bo:LastName>{/if exists CHILD_RIDER_LNAME}
+                                                                                <bo:Gender tc="{$CHILD_RIDER_GENDER.TC}">{$CHILD_RIDER_GENDER.DESC}</bo:Gender>
+{if exists CHILD_RIDER_DOB}                                                                      <bo:BirthDate>{$CHILD_RIDER_DOB}</bo:BirthDate>{/if exists CHILD_RIDER_DOB}
+                                                                                <bo:Height2>
+                                                                                                <bo:MeasureUnits tc="2">US System Standard</bo:MeasureUnits>
+                                                                                                <bo:MeasureValue>{$CHILD_RIDER_HEIGHT}</bo:MeasureValue>
+                                                                                </bo:Height2>
+                                                                                <bo:Weight2>
+                                                                                                <bo:MeasureUnits tc="2">US System Standard</bo:MeasureUnits>
+                                                                                                <bo:MeasureValue>{$CHILD_RIDER_WEIGHT}</bo:MeasureValue>
+                                                                                </bo:Weight2>
+                                                                                <bo:BirthJurisdictionTC tc="{$CHILD_RIDER_SOB.TC}">{$CHILD_RIDER_SOB.DESC}</bo:BirthJurisdictionTC>
+                                                                </bo:Person>
+                                                </bo:Party>
+{/begin CHILD_RIDER}
+{if exists OWNER}
+                                                <bo:Party id="Party_Owner">
+                                                                <bo:PartyTypeCode tc="1">Person</bo:PartyTypeCode>
+{if exists OWNER_SOC}
+                                                                <bo:GovtID>{$OWNER_SOC}</bo:GovtID>
+                                                                <bo:GovtIDTC tc="1">Social Security Number US</bo:GovtIDTC>
+{/if exists OWNER_SOC}              
+                                                                <bo:Person DataRep="Partial">
+                                                                                <bo:FirstName>{$OWNER_FNAME}</bo:FirstName>
+                                                                                {if exists OWNER_MNAME}<bo:MiddleName>{$OWNER_MNAME}</bo:MiddleName>{/if exists OWNER_MNAME}
+                                                                                <bo:LastName>{$OWNER_LNAME}</bo:LastName>
+                                                                                {if exists OWNER_DOB}<bo:BirthDate>{$OWNER_DOB}</bo:BirthDate>{/if exists OWNER_DOB}
+                                                                </bo:Person>
+                                                                <bo:Address>
+                                                                                <bo:Line1>{$OWNER_ADDR}</bo:Line1>
+                                                                                <bo:City>{$OWNER_ADDR_CITY}</bo:City>
+                                                                                <bo:AddressStateTC tc="{$OWNER_ADDR_ST.TC}">{$OWNER_ADDR_ST}</bo:AddressStateTC>
+                                                                                <bo:Zip>{$OWNER_ADDR_ZIP}</bo:Zip>
+                                                                </bo:Address>
+                                                                <bo:EMailAddress>
+                                                                {if exists OWNER_EMAIL}<bo:AddrLine>{$OWNER_EMAIL}</bo:AddrLine>{/if exists OWNER_EMAIL}
+                                                                                <bo:OLifEExtension>
+                                                                                                <bo:eDeliveryOptIn>{$OWNER_OPTIN}</bo:eDeliveryOptIn>
+                                                                                </bo:OLifEExtension>
+                                                                </bo:EMailAddress>                     
+                                                </bo:Party>
+{if notexists PAYOR}
+                                                <bo:Party id="Party_Payor">
+                                                                <bo:PartyTypeCode tc="1">Person</bo:PartyTypeCode>
+{if exists OWNER_SOC}
+                                                                <bo:GovtID>{$OWNER_SOC}</bo:GovtID>
+                                                                <bo:GovtIDTC tc="1">Social Security Number US</bo:GovtIDTC>
+{/if exists OWNER_SOC}
+                                                                <bo:Person DataRep="Partial">
+                                                                                <bo:FirstName>{$OWNER_FNAME}</bo:FirstName>
+                                                                                {if exists OWNER_MNAME}<bo:MiddleName>{$OWNER_MNAME}</bo:MiddleName>{/if exists OWNER_MNAME}
+                                                                                <bo:LastName>{$OWNER_LNAME}</bo:LastName>
+                                                                                {if exists OWNER_DOB}<bo:BirthDate>{$OWNER_DOB}</bo:BirthDate>{/if exists OWNER_DOB}
+                                                                </bo:Person>
+                                                                <bo:Address>
+                                                                                <bo:Line1>{$OWNER_ADDR}</bo:Line1>
+                                                                                <bo:City>{$OWNER_ADDR_CITY}</bo:City>
+                                                                                <bo:AddressStateTC tc="{$OWNER_ADDR_ST.TC}">{$OWNER_ADDR_ST}</bo:AddressStateTC>
+                                                                                <bo:Zip>{$OWNER_ADDR_ZIP}</bo:Zip>
+                                                                </bo:Address>
+                                                                <bo:EMailAddress>
+                                                                {if exists OWNER_EMAIL}<bo:AddrLine>{$OWNER_EMAIL}</bo:AddrLine>{/if exists OWNER_EMAIL}
+                                                                                <bo:OLifEExtension>
+                                                                                                <bo:eDeliveryOptIn>{$OWNER_OPTIN}</bo:eDeliveryOptIn>
+                                                                                </bo:OLifEExtension>
+                                                                </bo:EMailAddress>                                     
+                                                </bo:Party>
+{/if notexists PAYOR}                                                    
+{/if exists OWNER}      
+                                                <bo:Party id="Party_PrimaryAgent">
+                                                                <bo:PartyTypeCode tc="1">Person</bo:PartyTypeCode>
+                                                                <bo:Person>
+                                                                                <bo:FirstName>{$AGENT_FNAME}</bo:FirstName>
+                                                                                <bo:LastName>{$AGENT_LNAME}</bo:LastName>
+                                                                </bo:Person>
+                                                                <bo:Producer>
+                                                                                <bo:CarrierAppointment>
+                                                                                                <bo:CompanyProducerID>{$AGENT_CD}</bo:CompanyProducerID>
+                                                                                </bo:CarrierAppointment>
+                                                                </bo:Producer>
+                                                </bo:Party>
+
+{if exists PRIBEN_FNAME}
+                                                <bo:Party id="Party_PrimaryBene">
+                                                                <bo:PartyTypeCode tc="{$PRIBEN_TYPE.TC}">{$PRIBEN_TYPE.DESC}</bo:PartyTypeCode>
+                                                                <bo:GovtID>{$PRIBEN_SSN}</bo:GovtID>
+                                                                <bo:GovtIDTC tc="{$PRIBEN_SSN_TYPE.TC}">{$PRIBEN_SSN_TYPE.DESC}</bo:GovtIDTC>               
+                                                                <bo:Person>
+                                                                                <bo:FirstName>{$PRIBEN_FNAME}</bo:FirstName>
+                                                                                {if exists PRIBEN_LNAME}<bo:LastName>{$PRIBEN_LNAME}</bo:LastName>{/if exists PRIBEN_LNAME}
+                                                                                {if exists PRIBEN_DOB}<bo:BirthDate>{$PRIBEN_DOB}</bo:BirthDate>{/if exists PRIBEN_DOB}
+                                                                </bo:Person>                                                                   
+                                                </bo:Party>
+{/if exists PRIBEN_FNAME}
+{begin PRIBEN_LOOP}
+                                                <bo:Party id="Party_PrimaryBene_{$ID}">
+                                                                <bo:PartyTypeCode tc="{$PRIBEN_LOOP_TYPE.TC}">{$PRIBEN_LOOP_TYPE.DESC}</bo:PartyTypeCode>
+                                                                <bo:GovtID>{$PRIBEN_LOOP_SSN}</bo:GovtID>
+                                                                <bo:GovtIDTC tc="{$PRIBEN_LOOP_SSN_TYPE.TC}">{$PRIBEN_LOOP_SSN_TYPE.DESC}</bo:GovtIDTC>           
+                                                                <bo:Person>
+                                                                                {if exists PRIBEN_LOOP_FNAME}<bo:FirstName>{$PRIBEN_LOOP_FNAME}</bo:FirstName>{/if exists PRIBEN_LOOP_FNAME}
+                                                                                {if exists PRIBEN_LOOP_LNAME}<bo:LastName>{$PRIBEN_LOOP_LNAME}</bo:LastName>{/if exists PRIBEN_LOOP_LNAME}
+                                                                                {if exists PRIBEN_LOOP_DOB}<bo:BirthDate>{$PRIBEN_LOOP_DOB}</bo:BirthDate>{/if exists PRIBEN_LOOP_DOB}
+                                                                </bo:Person>                                                                   
+                                                </bo:Party>
+{/begin PRIBEN_LOOP}
+{if exists CONTBEN_FNAME}
+                                                <bo:Party id="Party_ContingentBene">
+                                                                <bo:PartyTypeCode tc="{$CONTBEN_TYPE.TC}">{$CONTBEN_TYPE.DESC}</bo:PartyTypeCode>
+                                                                <bo:GovtID>{$CONTBEN_SSN}</bo:GovtID>
+                                                                <bo:GovtIDTC tc="{$CONTBEN_SSN_TYPE.TC}">{$CONTBEN_SSN_TYPE.DESC}</bo:GovtIDTC>             
+                                                                <bo:Person>
+                                                                                <bo:FirstName>{$CONTBEN_FNAME}</bo:FirstName>
+                                                                                {if exists CONTBEN_LNAME}<bo:LastName>{$CONTBEN_LNAME}</bo:LastName>{/if exists CONTBEN_LNAME}
+                                                                                {if exists CONTBEN_DOB}<bo:BirthDate>{$CONTBEN_DOB}</bo:BirthDate>{/if exists CONTBEN_DOB}
+                                                                </bo:Person>                                                                   
+                                                </bo:Party>
+{/if exists CONTBEN_FNAME}
+{begin CONTBEN_LOOP}
+                                                <bo:Party id="Party_ContingentBene_{$ID}">
+                                                                <bo:PartyTypeCode tc="{$CONTBEN_LOOP_TYPE.TC}">{$CONTBEN_LOOP_TYPE.DESC}</bo:PartyTypeCode>
+                                                                <bo:GovtID>{$CONTBEN_LOOP_SSN}</bo:GovtID>
+                                                                <bo:GovtIDTC tc="{$CONTBEN_LOOP_SSN_TYPE.TC}">{$CONTBEN_LOOP_SSN_TYPE.DESC}</bo:GovtIDTC> 
+                                                                <bo:Person>
+                                                                                {if exists CONTBEN_LOOP_FNAME}<bo:FirstName>{$CONTBEN_LOOP_FNAME}</bo:FirstName>{/if exists CONTBEN_LOOP_FNAME}
+                                                                                {if exists CONTBEN_LOOP_LNAME}<bo:LastName>{$CONTBEN_LOOP_LNAME}</bo:LastName>{/if exists CONTBEN_LOOP_LNAME}
+                                                                                {if exists CONTBEN_LOOP_DOB}<bo:BirthDate>{$CONTBEN_LOOP_DOB}</bo:BirthDate>{/if exists CONTBEN_LOOP_DOB}
+                                                                </bo:Person>                                                                   
+                                                </bo:Party>
+{/begin CONTBEN_LOOP}
+
+{begin CHILD_RIDER}
+                                                <bo:Relation id="Relation_OtherInsuredCTI{$ID}ToPrimaryInsured" OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_OtherInsured_CTI_{$ID}">
+                                                                <bo:OriginatingObjectType tc="6">Party</bo:OriginatingObjectType>
+                                                                <bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+                                                                <bo:RelationRoleCode tc="{$CHILD_RIDER_RELAT.TC}">{$CHILD_RIDER_RELAT.DESC}</bo:RelationRoleCode>
+                                                </bo:Relation>
+{/begin CHILD_RIDER}                   
+                                                <bo:Relation id="Relation_OwnerToHolding" OriginatingObjectID="Holding_Primary" RelatedObjectID="Party_Owner">
+                                                                <bo:OriginatingObjectType tc="4">Holding</bo:OriginatingObjectType>
+                                                                <bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+                                                                <bo:RelationRoleCode tc="8">Owner</bo:RelationRoleCode>
+                                                </bo:Relation>
+{if exists OWNER_ROLE}                                              
+                                                <bo:Relation id="Relation_OwnerToPrimaryInsured" OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_Owner">
+                                                                <bo:OriginatingObjectType tc="6">Party</bo:OriginatingObjectType>
+                                                                <bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+                                                                <bo:RelationRoleCode tc="{$OWNER_ROLE.TC}">{$OWNER_ROLE.DESC}</bo:RelationRoleCode>
+                                                                <bo:RelationDescription tc="{$OWNER_RELAT.TC}">{$OWNER_RELAT.DESC}</bo:RelationDescription>
+                                                </bo:Relation>
+{/if exists OWNER_ROLE}
+{if exists PRIBEN_FNAME}
+                                                <bo:Relation id="Relation_PrimaryBeneToPrimaryInsured" OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_PrimaryBene">
+                                                                <bo:OriginatingObjectType tc="6">Party</bo:OriginatingObjectType>
+                                                                <bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+                                                                <bo:RelationRoleCode tc="{$PRIBEN_ROLE.TC}">{$PRIBEN_ROLE.DESC}</bo:RelationRoleCode>
+                                                </bo:Relation>
+{/if exists PRIBEN_FNAME}
+{begin PRIBEN_LOOP}
+                                                <bo:Relation id="Relation_PrimaryBene{$ID}ToPrimaryInsured" OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_PrimaryBene_{$ID}">
+                                                                <bo:OriginatingObjectType tc="6">Party</bo:OriginatingObjectType>
+                                                                <bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+                                                                <bo:RelationRoleCode tc="{$PRIBEN_LOOP_ROLE.TC}">{$PRIBEN_LOOP_ROLE.DESC}</bo:RelationRoleCode>
+                                                </bo:Relation>
+{/begin PRIBEN_LOOP}                
+{if exists CONTBEN_FNAME}
+                                                <bo:Relation id="Relation_ContingentBeneToPrimaryInsured" OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_ContingentBene">
+                                                                <bo:OriginatingObjectType tc="6">Party</bo:OriginatingObjectType>
+                                                                <bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+                                                                <bo:RelationRoleCode tc="{$CONTBEN_ROLE.TC}">{$CONTBEN_ROLE.DESC}</bo:RelationRoleCode>
+                                                </bo:Relation>
+{/if exists CONTBEN_FNAME}
+{begin CONTBEN_LOOP}
+                                                <bo:Relation id="Relation_ContingentBene{$ID}ToPrimaryInsured" OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_ContingentBene_{$ID}">
+                                                                <bo:OriginatingObjectType tc="6">Party</bo:OriginatingObjectType>
+                                                                <bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+                                                                <bo:RelationRoleCode tc="{$CONTBEN_LOOP_ROLE.TC}">{$CONTBEN_LOOP_ROLE.DESC}</bo:RelationRoleCode>
+                                                </bo:Relation>
+{/begin CONTBEN_LOOP}
+                                                <bo:Relation OriginatingObjectID="Holding_Primary" RelatedObjectID="TermAppGen-GV" id="Relation_TermAppGen-GV">
+                                                                <bo:OriginatingObjectType tc="4">Holding</bo:OriginatingObjectType>
+                                                                <bo:RelatedObjectType tc="101">Form Instance</bo:RelatedObjectType>
+                                                                <bo:RelationRoleCode tc="107">Form For</bo:RelationRoleCode>
+                                                </bo:Relation>
+                                                <bo:FormInstance id="TermAppGen-GV">
+                                                                <bo:FormName>TermAppGen-GV</bo:FormName>
+                                                                <bo:FormResponse>
+                                                                                <bo:QuestionNumber>ChildInsuredCitizenship</bo:QuestionNumber>
+                                                                                {if exists CHILD_INSURED_CITIZENSHIP}<bo:ResponseCode>{$CHILD_INSURED_CITIZENSHIP.TC}</bo:ResponseCode>{/if exists CHILD_INSURED_CITIZENSHIP}
+                                                                                {if notexists CHILD_INSURED_CITIZENSHIP}<bo:ResponseCode>2</bo:ResponseCode>{/if notexists CHILD_INSURED_CITIZENSHIP}
+                                                                </bo:FormResponse>
+                                                                <bo:FormResponse>
+                                                                                <bo:QuestionNumber>PrimaryInsuredCitizenship</bo:QuestionNumber>
+                                                                                <bo:ResponseCode>{$APP_INSURED_CITIZENSHIP.TC}</bo:ResponseCode>
+                                                                </bo:FormResponse>
+                                                                <bo:Attachment>
+                                                                                <bo:AttachmentData>[encoded file]</bo:AttachmentData>
+                                                                                <bo:ImageType tc="3">TIF</bo:ImageType>
+                                                                </bo:Attachment>
+                                                </bo:FormInstance>
+
+                                </bo:OLifE>
+                </bo:TXLifeRequest>
+</bo:TXLife>                                                                          

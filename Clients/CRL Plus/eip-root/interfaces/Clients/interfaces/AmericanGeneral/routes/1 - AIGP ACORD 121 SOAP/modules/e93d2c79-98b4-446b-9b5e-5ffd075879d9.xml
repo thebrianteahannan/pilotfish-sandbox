@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.internal.CallRouteProcessor"
+        id="e93d2c79-98b4-446b-9b5e-5ffd075879d9"
+        name="AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor1"
+        tag="Processor"
+        type="Call Route"
+        version="2.0">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+      <Synchronous>false</Synchronous>
+      <Timeout>60</Timeout>
+      <LoopCallout>false</LoopCallout>
+      <LoopCondition>true</LoopCondition>
+      <MaxIterations>5</MaxIterations>
+   </ModuleConfig>
+</Module>

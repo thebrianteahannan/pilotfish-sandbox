@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Link FlownetNum to DocID" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>Incoming103_Response_DocID</Name>
+              <Operator>exists</Operator>
+              <Value />
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Retry loading incoming 103 file" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('Retry.Count')&lt;8</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Exceeded Retries" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" name="Loading Incoming 103 SOAP Response">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>true</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Erie.T2 - Extract Doc ID from Response-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:Incoming103_Response_DocID:eip_name:/SOAP-ENV:Envelope/SOAP-ENV:Body/ns2:StoreDocumentResponse/ns2:DocumentId:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:SOAP-ENV:eip_name:http://schemas.xmlsoap.org/soap/envelope/:eip_value][eip_pair:ns2:eip_name:http://crlcorp.com/schema/DocumentRequest:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Link FlownetNum to DocID" retries="1">
+      <ModuleConfig>
+        <ServiceName>Link FlownetNum to DocID Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Erie.T2 - Archive file upload SOAP response">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:#properties.get('archive.dir') +"/"+getAttribute('sourceClient')+"/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())+"/ImageUpload"}</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('Incoming103_Filename')+"-"+getAttribute('Incoming103_FlownetOrderNum')+"-ImageServer-Upload-Response-" + new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(new java.util.Date()) + "-Success.xml"}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileOperationProcessor" name="Erie.T2 - Archive uploaded 103 file">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>{ognl:#properties.get('processing.dir') + "/"+getAttribute('sourceClient')+"/" + getAttribute('Incoming103_Filename')}</FileName>
+          <Overwrite>false</Overwrite>
+          <ExceptionOnFailure>true</ExceptionOnFailure>
+          <PostProcessOperation>Move</PostProcessOperation>
+          <TargetDirectory>{ognl:#properties.get('archive.dir') + "/"+getAttribute('sourceClient')+"/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())+"/ImageUpload"}</TargetDirectory>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.PauseProcessor" name="Erie.T2 - Pause">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Period>30</Period>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Retry loading incoming 103 file" retries="1">
+      <ModuleConfig>
+        <ServiceName>ELFP Retry loading 103 file</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.PauseProcessor" name="Erie.T2 - Wait before retry">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Period>60</Period>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Erie.T2 - Archive file upload SOAP response-Fail">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:#properties.get('archive.dir') +"/"+getAttribute('sourceClient')+"/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())+"/ImageUpload"}</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('Incoming103_Filename')+"-"+getAttribute('Incoming103_FlownetOrderNum')+"-ImageServer-Upload-Response-" + new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(new java.util.Date()) + "-Fail.xml"}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.email.EmailTransport" name="Exceeded Retries" retries="1">
+      <ModuleConfig>
+        <Host>$$mail.server</Host>
+        <UserName />
+        <Password />
+        <Port>25</Port>
+        <SSLEnabled>false</SSLEnabled>
+        <StartTLS>false</StartTLS>
+        <SendFrom>$$mail.errors.from</SendFrom>
+        <ReplyTo />
+        <SendTo>$$mail.errors.to</SendTo>
+        <Subject>{ognl:'ELFP - Failed to load incoming 103 file on ' + #properties.get('crl.environment') + '. Incoming file: ' + getAttribute('Incoming103_Filename')}</Subject>
+        <DataInAttachment>false</DataInAttachment>
+        <AttachmentFilename>data.dat</AttachmentFilename>
+        <MIMEType>text/plain</MIMEType>
+        <ENCRYPT_MESSAGE>false</ENCRYPT_MESSAGE>
+        <DNS_FIND_CERT>false</DNS_FIND_CERT>
+        <PathToCertificate />
+        <SIGN_MESSAGE>false</SIGN_MESSAGE>
+        <PathToPemFile />
+        <PrivateKeyName />
+        <PrivateKeyPassword />
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Erie.T2 - Archive file upload SOAP response-Fail-2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:#properties.get('archive.dir') +"/"+getAttribute('sourceClient')+"/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())+"/ImageUpload"}</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('Incoming103_Filename')+"-"+getAttribute('Incoming103_FlownetOrderNum')+"-ImageServer-Upload-Response-" + new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(new java.util.Date()) + "-Fail.xml"}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

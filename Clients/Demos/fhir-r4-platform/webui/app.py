@@ -523,5 +523,69 @@ def tests_results():
     return jsonify(data)
 
 
+
+# INFO_TAB_STANDARD_BOOTSTRAP
+try:
+    from document_routes import ensure_document_routes
+except ImportError:
+    ensure_document_routes = None  # type: ignore
+
+_INFO_TAB_CTX = {
+    "info_title": 'FHIR R4 platform',
+    "info_blurb": 'Multi-resource FHIR R4 REST platform on eiPlatform with Call Route auth, capability statement, and SQL-backed resources.',
+    "info_note": 'Demo only — FHIR R4 REST platform façade.',
+    "eip_url": 'http://localhost:8112/eip/',
+    "lan_hint": "",
+    "info_ports": [
+        {"label": "SQL Server", "value": "14338"},
+        {"label": "PilotFish EIP", "value": "8112"},
+        {"label": "Demo Web UI", "value": "8111"}
+    ],
+    "info_extra_links": [{'href': '/documents/FHIR_R4_Platform_AWS_Deployment_Guide.pdf', 'label': 'AWS deployment guide PDF'}, {'href': '/documents/FHIR_R4_Platform_Expert_Due_Diligence.pdf', 'label': 'Expert due diligence PDF'}],
+    "info_extra_sections": [],
+    "test_results_pdf": 'FHIR_R4_Platform_Test_Results.pdf',
+}
+
+@app.context_processor
+def _info_tab_standard_context():
+    import os as _os
+    ctx = dict(_INFO_TAB_CTX)
+    eip = _os.environ.get("EIP_PUBLIC_URL")
+    if eip:
+        ctx["eip_url"] = eip
+    lan = _os.environ.get("LAN_HINT", "")
+    if lan:
+        ctx["lan_hint"] = lan
+    return ctx
+
+if ensure_document_routes is not None:
+    from pathlib import Path as _Path
+    import os as _os
+    _docs_dir = _Path(_os.environ.get("DOCUMENTS_DIR", "/documents"))
+    ensure_document_routes(
+        app,
+        _docs_dir,
+        route_pdf_name='FHIR_R4_Platform_V2_Route_Diagrams.pdf',
+        capability_pdf_name='FHIR_R4_Platform_Capability_Brief.pdf',
+        test_plan_pdf_name='FHIR_R4_Platform_Test_Plan.pdf',
+        test_results_pdf_name='FHIR_R4_Platform_Test_Results.pdf',
+    )
+# END INFO_TAB_STANDARD_BOOTSTRAP
+
+
+# TIMING_TAB_API_BOOTSTRAP
+try:
+    from document_routes import ensure_build_timing_api
+except ImportError:
+    ensure_build_timing_api = None  # type: ignore
+if ensure_build_timing_api is not None:
+    from pathlib import Path as _PathTiming
+    import os as _os_timing
+    ensure_build_timing_api(
+        app,
+        _PathTiming(_os_timing.environ.get("DOCUMENTS_DIR", "/documents")),
+    )
+# END TIMING_TAB_API_BOOTSTRAP
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=WEBUI_PORT, debug=False)

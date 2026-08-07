@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2017-03-23T13:43:56-04:00" ModifiedBy="aramos@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="POST Status Update" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //ns1:StatusEvent  and not(//ns1:RequirementInfo[count(ns1:StatusEvent)=1 and ns1:Attachment])
+              <Namespaces>
+                <Namespace name="ns1">http://ACORD.org/Standards/Life/2</Namespace>
+              </Namespaces>
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Generate 103" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>completedButNotReported</Name>
+                <Operator>=</Operator>
+                <Value>true</Value>
+              </Attribute>
+              <Attribute>
+                <Name>NumAttachments</Name>
+                <Operator>!=</Operator>
+                <Value>0.0</Value>
+              </Attribute>
+              <Attribute>
+                <Name>TeledexDb_DontConnect</Name>
+                <Operator>!=</Operator>
+                <Value>true</Value>
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Awaiting Attachments" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>NumAttachments</Name>
+                <Operator>=</Operator>
+                <Value>0.0</Value>
+              </Attribute>
+              <Attribute>
+                <Name>completedButNotReported</Name>
+                <Operator>=</Operator>
+                <Value>true</Value>
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Ignore empty status" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="Status Interface">
+    <FormatProfile name="ELFP Status Party" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="ELFP Status Update">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathInsertionProcessor" name="Erie.2 - ELFP 1122 Status Update.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:originalText:eip_name:/ns2:TXLife:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:ns2:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEscapingProcessor" name="Erie.2 - Unescape original text">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XPath>/ns2:TXLife/ns2:data</XPath>
+          <Direction>Unescape</Direction>
+          <Namespaces>[eip_pair:ns2:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Erie.2 - Extract ReqStatus">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:ReqStatus:eip_name:/ns1:TXLife/ns1:TXLifeRequest/ns1:OLifE/ns1:Holding/ns1:Policy/ns1:RequirementInfo/ns1:ReqStatus/@tc:eip_value][eip_pair:ReleasePartyOrgCode:eip_name:/ns1:TXLife/ns1:TXLifeRequest/ns1:OLifE/ns1:Holding/ns1:Policy/ns1:RequirementInfo/ns1:ReleasePartyOrgCode:eip_value][eip_pair:NumAttachments:eip_name:count(//ns1:AttachmentData):eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:ns1:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.2 - Set completedButNotReported">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>completedButNotReported</AttributeName>
+          <Expression>{ognl:#completed=getAttribute('com.pilotfish.crl.ordercompletedate'),#reported=getAttribute('finalResultsDeliveredDate'),#reqstatus=getAttribute('ReqStatus'),(#completed!=null &amp;&amp; #reported==null &amp;&amp; #reqstatus=='11')?"true":"false"}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.2 - Set BypassAttribute">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>TeledexDb_DontConnect</AttributeName>
+          <Expression>{ognl:"true".equals(#properties.get('TeledexDb_DontConnect'))}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Erie.2B - Call 2_1 Route-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:!"true".equals(#properties.get('TeledexDb_DontConnect'))}</ExecuteProcessor>
+          <Listener>Retrieve Remote_ID and Remote_NO Listener</Listener>
+          <Synchronous>true</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="ELFP.3">
+    <FormatProfile name="1122 Cleanup" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="POST Status Update" retries="1">
+      <ModuleConfig>
+        <ServiceName>ELFP.3 - Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.2 - Set com.pilotfish.crl.statustype">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.statustype</AttributeName>
+          <Expression>status</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="ELFP.2 Swap In Statuses">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#statusIDForAttachment=getAttribute('statusIDForAttachment'),(#statusIDForAttachment!=null &amp;&amp; #statusIDForAttachment!='')}</ExecuteProcessor>
+          <AttributeName>statuses</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="ELFP.2 - Remove Status For Attachment">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#statusIDForAttachment=getAttribute('statusIDForAttachment'),(#statusIDForAttachment!=null &amp;&amp; #statusIDForAttachment!='')}</ExecuteProcessor>
+          <XSLTPath>DeleteStatusForAttachment.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTVersion>1.0</XSLTVersion>
+          <XSLTEngine>Xalan (Interpreted)</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="ELFP.2 Swap Out Status">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#statusIDForAttachment=getAttribute('statusIDForAttachment'),(#statusIDForAttachment!=null &amp;&amp; #statusIDForAttachment!='')}</ExecuteProcessor>
+          <AttributeName>statuses</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Generate 103" retries="1">
+      <ModuleConfig>
+        <ServiceName>Start outgoing 103 generation</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Awaiting Attachments" retries="1">
+      <ModuleConfig>
+        <ServiceName>Update Status Inbound</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ELFP.2-Clear statuses">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>statuses</AttributeName>
+          <Expression>&lt;XCSData /&gt;</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ELFP.2-set awaitingAttachments">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.statustype</AttributeName>
+          <Expression>awaitingAttachments</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Ignore empty status" retries="1">
+      <ModuleConfig>
+        <ServiceName>Update Status Inbound</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Description>&lt;p&gt;
+      Implementation Note:
+    &lt;/p&gt;
+    &lt;p&gt;
+      For Erie we deliver ACORD 1122 messages as statuses are added to the 
+      order. We also send an ACORD 103 containing an image attachment when the 
+      order is completed. We need to send the completed 1122 a few minutes 
+      before we send the 103. So the first time this route is called after the 
+      order is completed we generate and deliver the 1122. We then mark all of 
+      the statuses as being delivered except for the status associated with 
+      the attachment. The route is called again and we deliver the 103 and 
+      update the database to show that everything was delivered.
+    &lt;/p&gt;
+    &lt;p&gt;
+      There are several changes that were made for this.
+    &lt;/p&gt;
+    &lt;ol&gt;
+      &lt;li&gt;
+        The second route in the Status interface is setting an attribute 
+        called statusIDForAttachment which contains the StatusID associated 
+        with an attachment (For Erie we are only receiving one attachment for 
+        the order.)
+      &lt;/li&gt;
+      &lt;li&gt;
+        The routing rules in this route generate an 1122 if there are statuses 
+        unless there is just one status and an attachment.  Otherwise we 
+        generate the 103.
+      &lt;/li&gt;
+      &lt;li&gt;
+        Processors on the &amp;quot;POST Status Update&amp;quot; transport remove the status 
+        associated with the attachment from the list of statuses that we will 
+        mark delivered.  Another processor set the statusType so that we do 
+        not set the final_results_delivered_date
+      &lt;/li&gt;
+      &lt;li&gt;
+        The 103 transport works as usual delivering the last status and the 
+        attachment.
+      &lt;/li&gt;
+    &lt;/ol&gt;</Description>
+</Route>
+

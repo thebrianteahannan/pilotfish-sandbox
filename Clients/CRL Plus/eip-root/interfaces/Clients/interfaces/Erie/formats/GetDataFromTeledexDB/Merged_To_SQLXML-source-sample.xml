@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenerationData_103>
+	<Data_103>
+		<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="2.23.00" xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.23.00.xsd">
+			<UserAuthRequest>
+				<UserLoginName>iPipeline</UserLoginName>
+				<UserPswd>
+					<CryptType>NONE</CryptType>
+				</UserPswd>
+				<VendorApp>
+					<VendorName VendorCode="220">iPipeline</VendorName>
+					<AppName>iGo Forms</AppName>
+				</VendorApp>
+				<OLifEExtension ExtensionCode="6778" VendorCode="220">
+					<DellTransRefGUID>c8cb2ab5-9943-4170-9a74-083e01045d5f</DellTransRefGUID>
+					<CompanyNumber>2A</CompanyNumber>
+				</OLifEExtension>
+			</UserAuthRequest>
+			<TXLifeRequest PrimaryObjectID="Holding_Primary">
+				<TransRefGUID>84ffc0ac-72e0-4cb7-a3ff-ffcfd114fe79</TransRefGUID>
+				<TransType tc="103">New Business Submission</TransType>
+				<TransExeDate>2017-01-24</TransExeDate>
+				<TransExeTime>10:05:40</TransExeTime>
+				<OLifE>
+					<SourceInfo>
+						<CreationDate>2017-01-18</CreationDate>
+						<CreationTime>00:00:00</CreationTime>
+						<SourceInfoName>IPIPELINE</SourceInfoName>
+					</SourceInfo>
+					<Holding id="Holding_Primary">
+						<CurrencyTypeCode tc="840">USD</CurrencyTypeCode>
+						<Policy>
+							<PolNumber>PF580256</PolNumber>
+							<ProductCode>Term</ProductCode>
+							<CarrierCode>5340</CarrierCode>
+							<PlanName>Term</PlanName>
+							<PolicyStatus tc="8">Pending</PolicyStatus>
+							<ReplacementType tc="3">External Replacement</ReplacementType>
+							<PaymentMode tc="4">Chek-matic</PaymentMode>
+							<PaymentAmt>28.48</PaymentAmt>
+							<PaymentMethod tc="7">Chek-matic</PaymentMethod>
+							<AccountNumber>9999999999999</AccountNumber>
+							<RoutingNumber>241075726</RoutingNumber>
+							<BankAcctType tc="2">Checking</BankAcctType>
+							<Life>
+								<QualPlanType tc="1">Non-Qualified</QualPlanType>
+								<FaceAmt>250000</FaceAmt>
+								<Coverage>
+									<PlanName>Term</PlanName>
+									<IndicatorCode tc="1">Base</IndicatorCode>
+									<CurrentAmt>250000</CurrentAmt>
+									<LevelPremiumPeriod>30</LevelPremiumPeriod>
+									<CovOption>
+										<PlanName>Accelerated Death Benefit</PlanName>
+									</CovOption>
+									<LifeParticipant PartyID="Party_PrimaryInsured" id="LifeParticipant_PrimaryInsured">
+										<LifeParticipantRoleCode tc="1">Primary Insured</LifeParticipantRoleCode>
+									</LifeParticipant>
+									<LifeParticipant PartyID="Party_Payor" id="LifeParticipant_Payor">
+										<LifeParticipantRoleCode tc="12">Payor</LifeParticipantRoleCode>
+									</LifeParticipant>
+									<LifeParticipant PartyID="Party_PrimaryAgent" id="LifeParticipant_PrimaryAgent">
+										<LifeParticipantRoleCode tc="15">Primary Agent</LifeParticipantRoleCode>
+									</LifeParticipant>
+								</Coverage>
+							</Life>
+							<ApplicationInfo>
+								<TrackingID>PFffc0ac-72e0-4cb7-a3ff-ffcfd114fe79</TrackingID>
+								<ApplicationJurisdiction tc="41">OH</ApplicationJurisdiction>
+								<SignatureInfo>
+									<SignatureRoleCode tc="1">Primary Insured</SignatureRoleCode>
+									<SignatureDate>2017-01-24</SignatureDate>
+									<SignatureState tc="41">OH</SignatureState>
+									<SignatureOK tc="1">True</SignatureOK>
+								</SignatureInfo>
+								<SignatureInfo>
+									<SignatureRoleCode tc="15">Primary Agent</SignatureRoleCode>
+									<SignatureDate>2017-01-24</SignatureDate>
+									<SignatureState tc="41">OH</SignatureState>
+									<SignatureOK tc="1">True</SignatureOK>
+								</SignatureInfo>
+							</ApplicationInfo>
+							<RequirementInfo AppliesToPartyID="Party_PrimaryInsured" id="Req1">
+								<ReqCode tc="137">Tele-Interview</ReqCode>
+								<RequestedDate>2017-01-24</RequestedDate>
+								<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+								<RequirementAcctNum>71661</RequirementAcctNum>
+								<OLifEExtension VendorCode="220">
+									<TestIndicator tc="1">True</TestIndicator>
+								</OLifEExtension>
+							</RequirementInfo>
+							<RequirementInfo AppliesToPartyID="Party_PrimaryInsured" id="Req2">
+								<ReqCode tc="535">Diagnose</ReqCode>
+								<RequestedDate>2017-01-24</RequestedDate>
+								<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+								<RequirementAcctNum>71661</RequirementAcctNum>
+								<OLifEExtension VendorCode="220">
+									<TestIndicator tc="1">True</TestIndicator>
+								</OLifEExtension>
+							</RequirementInfo>
+						</Policy>
+						<Attachment>
+							<Description>Multiple Policy? NO Are select rates being applied for?  </Description>
+							<AttachmentType tc="2">Comment</AttachmentType>
+						</Attachment>
+					</Holding>
+					<Party id="Party_PrimaryInsured">
+						<PartyTypeCode tc="1">Person</PartyTypeCode>
+						<GovtID>123456789</GovtID>
+						<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+						<Person DataRep="Partial">
+							<FirstName>JOHN</FirstName>
+							<LastName>DOE</LastName>
+							<Occupation />
+							<Gender tc="1">Male</Gender>
+							<BirthDate>1950-01-01</BirthDate>
+							<Height2>
+								<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+								<MeasureValue>36</MeasureValue>
+							</Height2>
+							<Weight2>
+								<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+								<MeasureValue>40</MeasureValue>
+							</Weight2>
+							<BirthJurisdictionTC tc="40">Romania</BirthJurisdictionTC>
+						</Person>
+						<Address>
+							<Line1>943 1st Avenue</Line1>
+							<City>New York</City>
+							<AddressStateTC tc="37" />
+							<Zip>10022</Zip>
+						</Address>
+						<Phone>
+							<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+							<AreaCode>216</AreaCode>
+							<DialNumber>5551234</DialNumber>
+						</Phone>
+						<EMailAddress>
+							<AddrLine>john.doe@aol.com</AddrLine>
+							<OLifEExtension VendorCode="220">
+								<eDeliveryOptIn>NN</eDeliveryOptIn>
+							</OLifEExtension>
+						</EMailAddress>
+						<Risk />
+					</Party>
+					<Party id="Party_Owner">
+						<PartyTypeCode tc="1">Person</PartyTypeCode>
+						<GovtID />
+						<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+						<Person DataRep="Partial">
+							<FirstName />
+							<LastName>Doe</LastName>
+							<Occupation />
+							<Gender tc="1">Male</Gender>
+							<BirthDate>1950-01-01</BirthDate>
+							<Height2>
+								<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+								<MeasureValue>36</MeasureValue>
+							</Height2>
+							<Weight2>
+								<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+								<MeasureValue>40</MeasureValue>
+							</Weight2>
+							<BirthJurisdictionTC tc="40">Romania</BirthJurisdictionTC>
+						</Person>
+						<Address>
+							<Line1>943 1st Avenue</Line1>
+							<City>New York</City>
+							<AddressStateTC tc="37" />
+							<Zip>10022</Zip>
+						</Address>
+						<Phone>
+							<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+							<AreaCode>216</AreaCode>
+							<DialNumber>5551234</DialNumber>
+						</Phone>
+						<EMailAddress>
+							<AddrLine>john.doe@aol.com</AddrLine>
+							<OLifEExtension VendorCode="220">
+								<eDeliveryOptIn>NN</eDeliveryOptIn>
+							</OLifEExtension>
+						</EMailAddress>
+						<Risk />
+					</Party>
+					<Relation OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_Owner" id="Relation_OwnerToPrimaryInsured">
+						<OriginatingObjectType tc="6">Party</OriginatingObjectType>
+						<RelatedObjectType tc="6">Party</RelatedObjectType>
+						<RelationRoleCode tc="168">Self</RelationRoleCode>
+						<RelationDescription tc="91">Self</RelationDescription>
+					</Relation>
+					<Party id="Party_Payor">
+						<PartyTypeCode tc="1">Person</PartyTypeCode>
+						<GovtID />
+						<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+						<Person DataRep="Partial">
+							<FirstName />
+							<LastName>Doe</LastName>
+							<Occupation />
+							<Gender tc="1">Male</Gender>
+							<BirthDate>1950-01-01</BirthDate>
+							<Height2>
+								<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+								<MeasureValue>36</MeasureValue>
+							</Height2>
+							<Weight2>
+								<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+								<MeasureValue>40</MeasureValue>
+							</Weight2>
+							<BirthJurisdictionTC tc="40">Romania</BirthJurisdictionTC>
+						</Person>
+						<Address>
+							<Line1>943 1st Avenue</Line1>
+							<City>New York</City>
+							<AddressStateTC tc="37" />
+							<Zip>10022</Zip>
+						</Address>
+						<Phone>
+							<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+							<AreaCode>216</AreaCode>
+							<DialNumber>5551234</DialNumber>
+						</Phone>
+						<EMailAddress>
+							<AddrLine>john.doe@aol.com</AddrLine>
+							<OLifEExtension VendorCode="220">
+								<eDeliveryOptIn>NN</eDeliveryOptIn>
+							</OLifEExtension>
+						</EMailAddress>
+						<Risk />
+					</Party>
+					<Relation OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_Payor" id="Relation_PayorToPrimaryInsured">
+						<OriginatingObjectType tc="6">Party</OriginatingObjectType>
+						<RelatedObjectType tc="6">Party</RelatedObjectType>
+						<RelationRoleCode tc="168">Self</RelationRoleCode>
+						<RelationDescription tc="91">Self</RelationDescription>
+					</Relation>
+					<Party id="Party_PrimaryAgent">
+						<PartyTypeCode tc="1">Person</PartyTypeCode>
+						<Person>
+							<FirstName>Raymond Halter</FirstName>
+							<LastName>Raymond Halter</LastName>
+						</Person>
+						<Producer>
+							<CarrierAppointment>
+								<CompanyProducerID>GG3276</CompanyProducerID>
+							</CarrierAppointment>
+						</Producer>
+						<EMailAddress>
+							<EMailType tc="1">Business</EMailType>
+							<AddrLine>john.doe@aol.com</AddrLine>
+						</EMailAddress>
+					</Party>
+				</OLifE>
+			</TXLifeRequest>
+		</TXLife>
+	</Data_103>
+	<Data_1122>
+		<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<UserAuthRequest>
+				<UserLoginName />
+				<UserPswd>
+					<CryptType>NONE</CryptType>
+					<CryptPswd />
+				</UserPswd>
+				<UserDate>2017-01-25</UserDate>
+				<UserTime>14:00:15-06:00</UserTime>
+				<VendorApp>
+					<VendorName VendorCode="118">CRL-Plus</VendorName>
+					<AppName>XMLPROC</AppName>
+					<AppVer>1.0.0</AppVer>
+				</VendorApp>
+			</UserAuthRequest>
+			<TXLifeRequest>
+				<TransRefGUID>1EA8EB45-3B90-5A0E-2C71-910ADD51EC68</TransRefGUID>
+				<TransType tc="1122">Requirement Notification Transmittal</TransType>
+				<TransExeDate>2017-01-25</TransExeDate>
+				<TransExeTime>14:00:15</TransExeTime>
+				<TransMode tc="2">Original</TransMode>
+				<TestIndicator tc="0">False</TestIndicator>
+				<OLifE>
+					<SourceInfo>
+						<SourceInfoName>CRL-Plus</SourceInfoName>
+						<SourceInfoDescription>Email : INSURANCECS@CRLCORP.COM</SourceInfoDescription>
+						<SourceInfoComment>Phone : 8558507587</SourceInfoComment>
+					</SourceInfo>
+					<Holding id="Holding_Primary">
+						<HoldingTypeCode tc="" />
+						<Policy>
+							<PolNumber>PF580256</PolNumber>
+							<CarrierCode>5340</CarrierCode>
+							<ProductType tc="" />
+							<Life>
+								<FaceAmt>250000</FaceAmt>
+								<Coverage id="">
+									<PlanName>Term</PlanName>
+									<ShortName />
+									<LifeCovStatus tc="" />
+									<LifeCovTypeCode tc="" />
+									<IndicatorCode tc="1">Base</IndicatorCode>
+									<CurrentAmt>250000</CurrentAmt>
+									<LifeParticipant PartyID="Party_PrimaryInsured" id="LifeParticipant_PrimaryInsured">
+										<LifeParticipantRoleCode tc="1">Primary Insured</LifeParticipantRoleCode>
+									</LifeParticipant>
+								</Coverage>
+							</Life>
+							<ApplicationInfo>
+								<TrackingID>PFffc0ac-72e0-4cb7-a3ff-ffcfd114fe79</TrackingID>
+								<ApplicationJurisdiction tc="41">OH</ApplicationJurisdiction>
+								<PrefLanguage tc="" />
+							</ApplicationInfo>
+							<RequirementInfo AppliesToPartyID="Party_PrimaryInsured">
+								<CarrierOrderNum />
+								<ReqCode tc="137">Tele-Interview</ReqCode>
+								<RequirementInfoUniqueID />
+								<ReqStatus tc="11">Completed</ReqStatus>
+								<RequestedDate>2017-01-24 00:00:00.0</RequestedDate>
+								<StatusDate>2017-01-25</StatusDate>
+								<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+								<RequirementAcctNum>71661</RequirementAcctNum>
+								<RequirementDetails />
+								<ProviderOrderNum>99999</ProviderOrderNum>
+								<OrderReceivedDate>2017-01-25</OrderReceivedDate>
+								<StatusEvent>
+									<StatusEventCode tc="2147483647" />
+									<ProviderEventCode>460</ProviderEventCode>
+									<StatusEventDate>2017-01-25</StatusEventDate>
+									<StatusEventTime>13:46:35-06:00</StatusEventTime>
+									<StatusEventDetail>Medical Records received from facility</StatusEventDetail>
+								</StatusEvent>
+								<StatusEvent>
+									<StatusEventCode tc="2147483647" />
+									<ProviderEventCode>S83</ProviderEventCode>
+									<StatusEventDate>2017-01-25</StatusEventDate>
+									<StatusEventTime>13:46:35-06:00</StatusEventTime>
+									<StatusEventDetail>Scheduled Follow Up: 01/24/2017 at 04:06 PM  until 04:06 PM ,' America/Chicago',' Central Time Zone</StatusEventDetail>
+								</StatusEvent>
+								<StatusEvent>
+									<StatusEventCode tc="2147483647" />
+									<ProviderEventCode>S67</ProviderEventCode>
+									<StatusEventDate>2017-01-25</StatusEventDate>
+									<StatusEventTime>13:46:35-06:00</StatusEventTime>
+									<StatusEventDetail>Service Line Completed</StatusEventDetail>
+								</StatusEvent>
+								<StatusEvent>
+									<StatusEventCode tc="2147483647" />
+									<ProviderEventCode>S66</ProviderEventCode>
+									<StatusEventDate>2017-01-25</StatusEventDate>
+									<StatusEventTime>13:46:35-06:00</StatusEventTime>
+									<StatusEventDetail>Attachment Sent to Client</StatusEventDetail>
+								</StatusEvent>
+								<Attachment>
+									<Description>8b788c1f-6c37-4436-a6cd-a98d416e4c6e</Description>
+									<FileName>00003046.tif</FileName>
+									<AttachmentData>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</AttachmentData>
+									<MimeTypeTC>image/tiff</MimeTypeTC>
+									<AttachmentType tc="167">OLI_ATTACH_APSREPORT</AttachmentType>
+									<TransferEncodingTypeString>OLI_ENCODE_BASE64</TransferEncodingTypeString>
+									<AttachmentLocation tc="1" />
+									<AttachmentBasicType tc="2">Image</AttachmentBasicType>
+									<TransferEncodingTypeTC tc="4" />
+								</Attachment>
+							</RequirementInfo>
+							<RequirementInfo AppliesToPartyID="Party_PrimaryInsured">
+								<CarrierOrderNum />
+								<ReqCode tc="535">Diagnose</ReqCode>
+								<RequirementInfoUniqueID />
+								<ReqStatus />
+								<RequestedDate>2017-01-24 00:00:00.0</RequestedDate>
+								<StatusDate />
+								<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+								<RequirementAcctNum>71661</RequirementAcctNum>
+								<RequirementDetails />
+								<ProviderOrderNum>99999</ProviderOrderNum>
+								<OrderReceivedDate>2017-01-25</OrderReceivedDate>
+							</RequirementInfo>
+						</Policy>
+					</Holding>
+					<Party id="Party_PrimaryInsured">
+						<PartyTypeCode tc="1">Person</PartyTypeCode>
+						<FullName />
+						<GovtID>123456789</GovtID>
+						<Person>
+							<FirstName>JOHN</FirstName>
+							<MiddleName />
+							<LastName>DOE</LastName>
+							<Occupation />
+							<Gender tc="1">Male</Gender>
+							<BirthDate>1950-01-01</BirthDate>
+							<Citizenship tc="" />
+							<BirthCountry tc="" />
+							<BirthJurisdictionTC tc="40">Romania</BirthJurisdictionTC>
+						</Person>
+						<Address>
+							<AddressTypeCode tc="1">Residence</AddressTypeCode>
+							<Line1>943 1st Avenue</Line1>
+							<Line2 />
+							<City>New York</City>
+							<AddressState>NY</AddressState>
+							<AddressStateTC tc="37">NY</AddressStateTC>
+							<Zip>10022</Zip>
+							<PreventOverrideInd tc="" />
+						</Address>
+						<Phone>
+							<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+							<AreaCode>216</AreaCode>
+							<DialNumber>5551234</DialNumber>
+							<Ext />
+						</Phone>
+						<EMailAddress>
+							<AddrLine>john.doe@aol.com</AddrLine>
+						</EMailAddress>
+					</Party>
+					<Party id="Party_Owner">
+						<PartyTypeCode tc="1">Person</PartyTypeCode>
+						<FullName />
+						<GovtID />
+						<Person>
+							<FirstName />
+							<MiddleName />
+							<LastName>Doe</LastName>
+							<Occupation />
+							<Gender tc="1">Male</Gender>
+							<BirthDate>1950-01-01</BirthDate>
+							<Citizenship tc="" />
+							<BirthCountry tc="" />
+							<BirthJurisdictionTC tc="40">Romania</BirthJurisdictionTC>
+						</Person>
+						<Address>
+							<AddressTypeCode tc="1">Residence</AddressTypeCode>
+							<Line1>943 1st Avenue</Line1>
+							<Line2 />
+							<City>New York</City>
+							<AddressState>NY</AddressState>
+							<AddressStateTC tc="37">NY</AddressStateTC>
+							<Zip>10022</Zip>
+							<PreventOverrideInd tc="" />
+						</Address>
+						<Phone>
+							<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+							<AreaCode>216</AreaCode>
+							<DialNumber>5551234</DialNumber>
+							<Ext />
+						</Phone>
+						<EMailAddress>
+							<AddrLine>john.doe@aol.com</AddrLine>
+						</EMailAddress>
+					</Party>
+					<Party id="Party_Payor">
+						<PartyTypeCode tc="1">Person</PartyTypeCode>
+						<FullName />
+						<GovtID />
+						<Person>
+							<FirstName />
+							<MiddleName />
+							<LastName>Doe</LastName>
+							<Occupation />
+							<Gender tc="1">Male</Gender>
+							<BirthDate>1950-01-01</BirthDate>
+							<Citizenship tc="" />
+							<BirthCountry tc="" />
+							<BirthJurisdictionTC tc="40">Romania</BirthJurisdictionTC>
+						</Person>
+						<Address>
+							<AddressTypeCode tc="1">Residence</AddressTypeCode>
+							<Line1>943 1st Avenue</Line1>
+							<Line2 />
+							<City>New York</City>
+							<AddressState>NY</AddressState>
+							<AddressStateTC tc="37">NY</AddressStateTC>
+							<Zip>10022</Zip>
+							<PreventOverrideInd tc="" />
+						</Address>
+						<Phone>
+							<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+							<AreaCode>216</AreaCode>
+							<DialNumber>5551234</DialNumber>
+							<Ext />
+						</Phone>
+						<EMailAddress>
+							<AddrLine>john.doe@aol.com</AddrLine>
+						</EMailAddress>
+					</Party>
+					<Party id="Party_PrimaryAgent">
+						<PartyTypeCode tc="1">Person</PartyTypeCode>
+						<FullName />
+						<GovtID />
+						<Person>
+							<FirstName>Raymond Halter</FirstName>
+							<MiddleName />
+							<LastName>Raymond Halter</LastName>
+							<Occupation />
+							<Gender tc="" />
+							<Citizenship tc="" />
+							<BirthCountry tc="" />
+							<BirthJurisdictionTC tc="" />
+						</Person>
+						<EMailAddress>
+							<AddrLine>john.doe@aol.com</AddrLine>
+						</EMailAddress>
+					</Party>
+					<Relation OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_Owner" id="Relation_OwnerToPrimaryInsured">
+						<OriginatingObjectType tc="6">Party</OriginatingObjectType>
+						<RelatedObjectType tc="6">Party</RelatedObjectType>
+						<RelationRoleCode tc="168">Self</RelationRoleCode>
+					</Relation>
+					<Relation OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_Payor" id="Relation_PayorToPrimaryInsured">
+						<OriginatingObjectType tc="6">Party</OriginatingObjectType>
+						<RelatedObjectType tc="6">Party</RelatedObjectType>
+						<RelationRoleCode tc="168">Self</RelationRoleCode>
+					</Relation>
+					<ns1:Party xmlns:ns1="http://ACORD.org/Standards/Life/2" id="Party_Requester_1">
+						<ns1:PartyTypeCode tc="2">Company</ns1:PartyTypeCode>
+						<ns1:FullName>ERIE 103 PRODUCTION</ns1:FullName>
+						<ns1:Organization>
+							<ns1:DBA>ERIE 103 PRODUCTION</ns1:DBA>
+						</ns1:Organization>
+					</ns1:Party>
+					<ns1:Party xmlns:ns1="http://ACORD.org/Standards/Life/2" id="Party_Fulfiller_1">
+						<ns1:PartyTypeCode tc="2">Company</ns1:PartyTypeCode>
+						<ns1:FullName>Hooper Holmes</ns1:FullName>
+						<ns1:Organization>
+							<ns1:DBA>Hooper Holmes</ns1:DBA>
+						</ns1:Organization>
+					</ns1:Party>
+					<ns1:Relation xmlns:ns1="http://ACORD.org/Standards/Life/2" OriginatingObjectID="Party_1" RelatedObjectID="Party_Requester_1" id="Relation_Requester_1">
+						<ns1:RelationRoleCode tc="97">Requestor</ns1:RelationRoleCode>
+					</ns1:Relation>
+					<ns1:Relation xmlns:ns1="http://ACORD.org/Standards/Life/2" OriginatingObjectID="Party_1" RelatedObjectID="Party_Fulfiller_1" id="Relation_Fulfiller_1">
+						<ns1:RelationRoleCode tc="99">Fulfills</ns1:RelationRoleCode>
+					</ns1:Relation>
+				</OLifE>
+			</TXLifeRequest>
+		</TXLife>
+	</Data_1122>
+	<TeledexDBData>[TeledexData]</TeledexDBData>
+</GenerationData_103>
+

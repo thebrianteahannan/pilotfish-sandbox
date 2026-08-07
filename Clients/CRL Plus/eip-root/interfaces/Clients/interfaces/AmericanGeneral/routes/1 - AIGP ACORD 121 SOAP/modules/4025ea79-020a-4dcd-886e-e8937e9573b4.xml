@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor"
+        id="4025ea79-020a-4dcd-886e-e8937e9573b4"
+        name="AIG1-validate creds"
+        tag="Processor"
+        type="Transaction Attribute Population"
+        version="2.0">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      <AttributePairs>[eip_pair:Acord123.ValidCredentials:eip_name:{ognl:#userID=getAttribute('username'),#pass=getAttribute('password'),#expectedUser=#properties.get('AIGIncomingAuthUser'),#expectedPass=#properties.get('AIGIncomingAuthPass'),((#expectedUser == #userID ) &amp;&amp; (#expectedPass == #pass)) ? "true" : "false"}:eip_value]</AttributePairs>
+      <AttributeScope>Transaction</AttributeScope>
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      <Expression>{ognl:#userID=getAttribute('username'),#pass=getAttribute('password'),#expectedUser=#properties.get('AIGIncomingAuthUser'),#expectedPass=#properties.get('AIGIncomingAuthPass'),((#expectedUser == #userID ) &amp;&amp; (#expectedPass == #pass)) ? "true" : "false"}</Expression>
+      <AttributeName>Acord123.ValidCredentials</AttributeName>
+   </ModuleConfig>
+</Module>

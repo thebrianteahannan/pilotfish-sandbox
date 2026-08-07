@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="2.28.00" xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.28.00enum.XSD">
+	<TXLifeRequest PrimaryObjectID="HOLD_1">
+		<TransRefGUID>L684601611520055</TransRefGUID>
+		<TransType tc="121">General Requirement Order Request</TransType>
+		<TransSubType tc="12100">General Requirement Order Request</TransSubType>
+		<TransExeDate>2016-08-03</TransExeDate>
+		<TransExeTime>04:36:26</TransExeTime>
+		<TransMode tc="2">Original</TransMode>
+		<TestIndicator tc="1">Yes</TestIndicator>
+		<OLifE>
+			<SourceInfo>
+				<CreationDate>2016-08-03</CreationDate>
+				<SourceInfoName>Pru</SourceInfoName>
+			</SourceInfo>
+			<Holding id="HOLD_1">
+				<HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+				<HoldingForm tc="1">Individual</HoldingForm>
+				<Policy CarrierPartyID="PARTY_PRU_1" id="POLICY_1">
+					<PolNumber>L6846016</PolNumber>
+					<CarrierCode>79227</CarrierCode>
+					<Life>
+						<TotalRiskAmt>350000</TotalRiskAmt>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>190320</TrackingID>
+						<ApplicationJurisdiction tc="6">CA</ApplicationJurisdiction>
+						<Territory>15</Territory>
+						<CaseOrgCode>PXB</CaseOrgCode>
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="PARTY_INS_1" FulfillerPartyID="PARTY_VEND_1" RequesterPartyID="PARTY_PRU_1">
+						<ReqCode tc="137">Conduct Tele-Interview</ReqCode>
+						<RequirementInfoSysKey>0029L68460169588</RequirementInfoSysKey>
+						<RequirementInfoUniqueID>0029L68460160009588</RequirementInfoUniqueID>
+						<RequestedDate>2016-10-21</RequestedDate>
+						<ScheduledDate>2016-11-01</ScheduledDate>
+						<RequestedScheduleTimeStart>11:00:00</RequestedScheduleTimeStart>
+						<ReleasePartyOrgCode>PRUX</ReleasePartyOrgCode>
+						<AppliesToPartyType tc="32">Primary</AppliesToPartyType>
+						<RequirementAcctNum>70544</RequirementAcctNum>
+						<CarrierOrderNum>1749588</CarrierOrderNum>
+						<LanguageInterpreterNeeded tc="0">False</LanguageInterpreterNeeded>
+					</RequirementInfo>
+				</Policy>
+			</Holding>
+			<Party id="PARTY_PRU_1">
+				<PartyTypeCode tc="2">Organization</PartyTypeCode>
+				<FullName>PRUCO LIFE INSURANCE COMPANY OF ARIZONA</FullName>
+				<Organization>
+					<OrgCode>00</OrgCode>
+				</Organization>
+				<Carrier>
+					<CarrierCode>79227</CarrierCode>
+					<NAICCode>79227</NAICCode>
+				</Carrier>
+			</Party>
+			<Party id="PARTY_VEND_1">
+				<PartyTypeCode tc="2">Organization</PartyTypeCode>
+				<FullName>CRL-Plus</FullName>
+				<Organization>
+					<OrgCode>00</OrgCode>
+				</Organization>
+			</Party>
+			<Party id="PARTY_INS_1">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<Person>
+					<FirstName>JOHN</FirstName>
+					<LastName>SMITH</LastName>
+					<Occupation />
+					<Gender tc="1">M</Gender>
+					<BirthDate>1980-08-08</BirthDate>
+					<DriversLicenseNum>L1234567</DriversLicenseNum>
+					<DriversLicenseState tc="6">CA</DriversLicenseState>
+				</Person>
+				<Address>
+					<AddressTypeCode tc="1">Home</AddressTypeCode>
+					<Line1>123 main st</Line1>
+					<City>OAKLAND</City>
+					<AddressStateTC tc="6">CA</AddressStateTC>
+					<Zip>94607</Zip>
+				</Address>
+				<Address>
+					<AddressTypeCode tc="26">Billing Mailing</AddressTypeCode>
+					<Line1>123 main st</Line1>
+					<City>OAKLAND</City>
+					<AddressStateTC tc="6">CA</AddressStateTC>
+					<Zip>94607</Zip>
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="2">Business</PhoneTypeCode>
+					<AreaCode>546</AreaCode>
+					<DialNumber>5465465</DialNumber>
+					<PrefPhone tc="0">false</PrefPhone>
+				</Phone>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>849</AreaCode>
+					<DialNumber>4565465</DialNumber>
+					<PrefPhone tc="1">true</PrefPhone>
+					<BestTimeToCallTo>11:00:00</BestTimeToCallTo>
+				</Phone>
+			</Party>
+			<Party id="PARTY_AGCY_1">
+				<PartyTypeCode tc="2">Organziation</PartyTypeCode>
+				<Organization>
+					<OrgCode>KAWX</OrgCode>
+				</Organization>
+				<Phone>
+					<AreaCode>800</AreaCode>
+					<DialNumber>7821388</DialNumber>
+					<PrefPhone tc="0">false</PrefPhone>
+				</Phone>
+				<Producer>
+					<CarrierAppointment>
+						<AppointmentCategory>7</AppointmentCategory>
+					</CarrierAppointment>
+				</Producer>
+			</Party>
+			<Party id="PARTY_AGT_1">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName>UNKNOWN</FullName>
+				<Person>
+					<FirstName />
+				</Person>
+			</Party>
+			<Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_VEND_1" id="REL_2">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="90">Vendor</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_INS_1" id="REL_3">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="32">Insured</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_AGCY_1" id="REL_4">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="182" />
+			</Relation>
+			<Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_AGT_1" id="REL_5">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="37">Agent</RelationRoleCode>
+			</Relation>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>
+

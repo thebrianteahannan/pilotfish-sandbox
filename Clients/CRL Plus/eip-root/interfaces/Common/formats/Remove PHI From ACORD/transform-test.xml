@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.10.00.XSD">
+	<UserAuthRequest>
+		<UserLoginName>IPipeline</UserLoginName>
+		<VendorApp>
+			<VendorName VendorCode="220">IPipeLine</VendorName>
+			<AppName>E-App</AppName>
+			<AppVer>1.0</AppVer>
+		</VendorApp>
+	</UserAuthRequest>
+	<TXLifeRequest PrimaryObjectID="Application_Holding">
+		<TransRefGUID>3e5484db-0a74-4acc-a1ba-77f2bff01222</TransRefGUID>
+		<TransType tc="121">Requirement Order</TransType>
+		<TransExeDate>2015-10-29</TransExeDate>
+		<TransExeTime>10:14:24</TransExeTime>
+		<TransMode tc="2" />
+		<NoResponseOK tc="0">False</NoResponseOK>
+		<OLifE>
+			<SourceInfo>
+				<CreationDate>2015-10-29</CreationDate>
+				<CreationTime>10:14:24</CreationTime>
+				<SourceInfoName>IPipeLine</SourceInfoName>
+			</SourceInfo>
+			<Holding id="Application_Holding">
+				<HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+				<HoldingStatus tc="3">Proposed</HoldingStatus>
+				<HoldingForm tc="1">Individual</HoldingForm>
+				<Policy CarrierPartyID="Party_Carrier" id="Party_Carrier">
+					<PolNumber>AXA003661</PolNumber>
+					<LineOfBusiness tc="1">Life</LineOfBusiness>
+					<ProductType tc="2">TERM</ProductType>
+					<ProductCode>5593</ProductCode>
+					<CarrierCode>AXA Equitable</CarrierCode>
+					<PlanName>Level Term 20 Series 151X</PlanName>
+					<PolicyStatus tc="12">Proposed</PolicyStatus>
+					<Jurisdiction tc="45">PA</Jurisdiction>
+					<Life>
+						<FaceAmt>1000000</FaceAmt>
+						<Coverage>
+							<LifeParticipant PartyID="Party_PrimaryInsured">
+								<LifeParticipantRoleCode tc="1">Primary Insured</LifeParticipantRoleCode>
+							</LifeParticipant>
+						</Coverage>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>3e5484db-0a74-4acc-a1ba-77f2bff01222</TrackingID>
+						<ApplicationJurisdiction tc="45">PA</ApplicationJurisdiction>
+						<SubmissionDate>2015-10-29</SubmissionDate>
+						<ApplicationCollectionDate>2015-10-29</ApplicationCollectionDate>
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="Party_PrimaryInsured" RequesterPartyID="Party_Carrier" id="Req_1">
+						<ReqCode tc="137">Conduct Tele-Interview</ReqCode>
+						<ReqStatus tc="2">Submitted</ReqStatus>
+						<RequestedDate>2015-10-29</RequestedDate>
+						<ReleasePartyOrgCode>PPLN</ReleasePartyOrgCode>
+						<RequirementAcctNum>71711</RequirementAcctNum>
+					</RequirementInfo>
+					<RequirementInfo AppliesToPartyID="Party_PrimaryInsured" RequesterPartyID="Party_Carrier" id="Req_2">
+						<ReqCode tc="535">Diagnose</ReqCode>
+						<ReqStatus tc="2">Submitted</ReqStatus>
+						<RequestedDate>2015-10-29</RequestedDate>
+						<ReleasePartyOrgCode>PPLN</ReleasePartyOrgCode>
+						<RequirementAcctNum>71711</RequirementAcctNum>
+					</RequirementInfo>
+				</Policy>
+				<Attachment>
+					<AttachmentData>Standard Non-Tobacco User</AttachmentData>
+					<AttachmentType tc="2">Comment</AttachmentType>
+				</Attachment>
+			</Holding>
+			<Party id="Party_PrimaryInsured">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName>Mr Kevin PoliticianTest</FullName>
+				<GovtID>111113883</GovtID>
+				<GovtIDTC tc="1" />
+				<Person>
+					<FirstName>Kevin</FirstName>
+					<LastName>PoliticianTest</LastName>
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1959-08-03</BirthDate>
+					<SmokerStat tc="1">Non-Smoker</SmokerStat>
+				</Person>
+				<Address>
+					<AddressTypeCode tc="1">Residence</AddressTypeCode>
+					<Line1>642 West Road</Line1>
+					<Line2>Apt 232</Line2>
+					<City>Harleysville</City>
+					<AddressState>PA</AddressState>
+					<AddressStateTC tc="45">PA</AddressStateTC>
+					<Zip>19438-____</Zip>
+					<AddressCountryTC tc="1">USA</AddressCountryTC>
+					<PrefAddr tc="1">1</PrefAddr>
+				</Address>
+				<Address>
+					<AddressTypeCode tc="2147483647">Contact Address</AddressTypeCode>
+					<Line1>642 West Road</Line1>
+					<City>Harleysville</City>
+					<AddressState>PA</AddressState>
+					<AddressStateTC tc="45">PA</AddressStateTC>
+					<Zip>19438-____</Zip>
+					<AddressCountryTC tc="1">USA</AddressCountryTC>
+					<PrefAddr tc="1">1</PrefAddr>
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>555</AreaCode>
+					<DialNumber>9990210</DialNumber>
+				</Phone>
+				<Phone>
+					<PhoneTypeCode tc="2147483647">Contact Phone</PhoneTypeCode>
+					<AreaCode>555</AreaCode>
+					<DialNumber>9990210</DialNumber>
+				</Phone>
+			</Party>
+			<Party id="Party_WA_1">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<PartySysKey>3030</PartySysKey>
+				<FullName>Eric Callahan</FullName>
+				<GovtID>7566</GovtID>
+				<GovtIDTC tc="1">SSN</GovtIDTC>
+				<Person>
+					<FirstName />
+					<LastName />
+				</Person>
+				<Phone>
+					<PhoneTypeCode tc="2">Business</PhoneTypeCode>
+					<AreaCode>666</AreaCode>
+					<DialNumber>7333097</DialNumber>
+				</Phone>
+				<Producer>
+					<CarrierAppointment>
+						<CompanyProducerID>102143</CompanyProducerID>
+						<CarrierCode>AXA</CarrierCode>
+					</CarrierAppointment>
+				</Producer>
+				<EMailAddress>
+					<EMailType tc="1">Business</EMailType>
+					<AddrLine>Eric.Callahan@axa-advisors.com</AddrLine>
+				</EMailAddress>
+			</Party>
+			<Party id="Party_WAgency">
+				<PartyTypeCode tc="2">Organization</PartyTypeCode>
+				<PartySysKey>3030</PartySysKey>
+				<FullName>Karr Barth 102143</FullName>
+				<Organization>
+					<OrgCodeFunction tc="1">Sales</OrgCodeFunction>
+				</Organization>
+				<Producer>
+					<CarrierAppointment>
+						<CompanyProducerID>102143</CompanyProducerID>
+						<CarrierCode>AXA</CarrierCode>
+						<CarrierApptTypeCode tc="4">Agency</CarrierApptTypeCode>
+					</CarrierAppointment>
+				</Producer>
+			</Party>
+			<Relation OriginatingObjectID="Application_Holding" RelatedObjectID="Party_PrimaryInsured" id="Relation_PrimaryInsured">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="32">Insured</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Application_Holding" RelatedObjectID="Party_WA_1" id="Relation_WritingAgent_1">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="37">Primary Agent</RelationRoleCode>
+				<InterestPercent>25</InterestPercent>
+			</Relation>
+			<Relation OriginatingObjectID="Application_Holding" RelatedObjectID="Party_WAgency" id="Relation_WritingAgency">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="182">Agency</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Application_Holding" RelatedObjectID="Party_Carrier" id="Relation_Carrier">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="87">Carrier</RelationRoleCode>
+			</Relation>
+			<FormInstance id="FormInstance_App">
+				<FormName>Application For Life Insurance</FormName>
+			</FormInstance>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>
+

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bo:TXLife xmlns:bo="http://ACORD.org/Standards/Life/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.10.00.XSD">
+	<bo:UserAuthRequest>
+		<bo:UserLoginName>AIGP</bo:UserLoginName>
+		<bo:UserPswd>
+			<bo:CryptPswd>NONE</bo:CryptPswd>
+		</bo:UserPswd>
+		<bo:UserDate>2017-01-19</bo:UserDate>
+		<bo:UserTime>15:06:54-06:00</bo:UserTime>
+		<bo:VendorApp>
+			<bo:VendorName VendorCode="84">Hooper Holmes, Inc.</bo:VendorName>
+			<bo:AppName>XMLProc</bo:AppName>
+			<bo:AppVer>1.0</bo:AppVer>
+		</bo:VendorApp>
+	</bo:UserAuthRequest>
+	<bo:TXLifeRequest>
+		<bo:TransRefGUID>b40865d3-51c6-49ac-91c0-7731417e2305</bo:TransRefGUID>
+		<bo:TransType tc="121">General Requirement Order Request</bo:TransType>
+		<bo:TransExeDate>2017-01-19</bo:TransExeDate>
+		<bo:TransExeTime>15:06:54-06:00</bo:TransExeTime>
+		<bo:TestIndicator tc="0">No</bo:TestIndicator>
+		<bo:OLifEExtension ExtensionCode="1000" VendorCode="118">
+			<bo:TeledexOrderNumber>596646</bo:TeledexOrderNumber>
+		</bo:OLifEExtension>
+		<bo:OLifE>
+			<bo:Holding id="Hold2">
+				<bo:HoldingTypeCode tc="2">Policy</bo:HoldingTypeCode>
+				<bo:Policy>
+					<bo:PolNumber>UME800779L</bo:PolNumber>
+					<bo:ProductType tc="0">L</bo:ProductType>
+					<bo:Life>
+						<bo:FaceAmt>$50,0000</bo:FaceAmt>
+					</bo:Life>
+					<bo:ApplicationInfo>
+						<bo:TrackingID>857-77-0948195-7183718</bo:TrackingID>
+					</bo:ApplicationInfo>
+					<bo:RequirementInfo>
+						<bo:ReqCode tc="139">Prepare Inspection Report</bo:ReqCode>
+						<bo:RequestedDate>2017-01-19</bo:RequestedDate>
+						<bo:ReleasePartyOrgCode>ELFP</bo:ReleasePartyOrgCode>
+						<bo:RequirementAcctNum>1063</bo:RequirementAcctNum>
+					</bo:RequirementInfo>
+				</bo:Policy>
+				<bo:Attachment>
+					<bo:Description>Please provide 71IR/EMST only and for a cause
+
+This is another test
+
+.",</bo:Description>
+					<bo:AttachmentType tc="2">Comment</bo:AttachmentType>
+				</bo:Attachment>
+			</bo:Holding>
+			<bo:Party id="Party1_2">
+				<bo:PartyTypeCode tc="1">Person</bo:PartyTypeCode>
+				<bo:GovtID>474304878</bo:GovtID>
+				<bo:GovtIDTC tc="1">Social Security Number US</bo:GovtIDTC>
+				<bo:Person>
+					<bo:FirstName>MELVIN</bo:FirstName>
+					<bo:LastName>WOJAHN</bo:LastName>
+					<bo:Occupation>RETIRED</bo:Occupation>
+					<bo:BirthDate>1930-01-21</bo:BirthDate>
+					<bo:DriversLicenseNum>8902066271711</bo:DriversLicenseNum>
+					<bo:DriversLicenseState tc="28">MN</bo:DriversLicenseState>
+				</bo:Person>
+				<bo:Address>
+					<bo:AddressTypeCode tc="1">Residence</bo:AddressTypeCode>
+					<bo:Line1>35677 US HIGHWAY 71</bo:Line1>
+					<bo:City>WINDOM</bo:City>
+					<bo:AddressState>MN</bo:AddressState>
+					<bo:Zip>56101</bo:Zip>
+				</bo:Address>
+				<bo:Phone>
+					<bo:PhoneTypeCode tc="1">Home</bo:PhoneTypeCode>
+					<bo:AreaCode>(507)</bo:AreaCode>
+					<bo:DialNumber>822-5583</bo:DialNumber>
+				</bo:Phone>
+			</bo:Party>
+			<bo:Party id="Party2_2">
+				<bo:PartyTypeCode tc="2">Organization</bo:PartyTypeCode>
+				<bo:FullName>RETIRED</bo:FullName>
+				<bo:Organization>
+					<bo:AbbrName>RETIRED</bo:AbbrName>
+				</bo:Organization>
+				<bo:Address>
+					<bo:AddressTypeCode tc="2">Business</bo:AddressTypeCode>
+					<bo:Line1>35677 US HIGHWAY 71</bo:Line1>
+					<bo:City>WINDOM</bo:City>
+					<bo:AddressState>MN</bo:AddressState>
+					<bo:Zip>00000</bo:Zip>
+				</bo:Address>
+				<bo:Phone>
+					<bo:PhoneTypeCode tc="2">Business</bo:PhoneTypeCode>
+					<bo:AreaCode>000()  -</bo:AreaCode>
+					<bo:DialNumber>0000000</bo:DialNumber>
+				</bo:Phone>
+			</bo:Party>
+			<bo:Party id="Party3_2">
+				<bo:PartyTypeCode tc="1">Person</bo:PartyTypeCode>
+				<bo:Person>
+					<bo:FirstName>MICHAEL</bo:FirstName>
+					<bo:LastName>WOJAHN</bo:LastName>
+				</bo:Person>
+			</bo:Party>
+			<bo:Relation OriginatingObjectID="Hold2" RelatedObjectID="Party1_2" id="Relation1_2">
+				<bo:OriginatingObjectType tc="4">Holding</bo:OriginatingObjectType>
+				<bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+				<bo:RelationRoleCode tc="32">Insured</bo:RelationRoleCode>
+			</bo:Relation>
+			<bo:Relation OriginatingObjectID="Hold2" RelatedObjectID="Party2_2" id="Relation2_2">
+				<bo:OriginatingObjectType tc="4">Holding</bo:OriginatingObjectType>
+				<bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+				<bo:RelationRoleCode tc="7">Employer</bo:RelationRoleCode>
+				<bo:NameFromRelatedObject>RETIRED</bo:NameFromRelatedObject>
+			</bo:Relation>
+			<bo:Relation OriginatingObjectID="Hold2" RelatedObjectID="Party3_2" id="Relation3_2">
+				<bo:OriginatingObjectType tc="4">Holding</bo:OriginatingObjectType>
+				<bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+				<bo:RelationRoleCode tc="34">Beneficiary</bo:RelationRoleCode>
+				<bo:RelationDescription tc="0">Son (s)</bo:RelationDescription>
+				<bo:NameFromRelatedObject>WOJAHN</bo:NameFromRelatedObject>
+			</bo:Relation>
+		</bo:OLifE>
+	</bo:TXLifeRequest>
+</bo:TXLife>
+

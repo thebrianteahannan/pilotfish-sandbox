@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" name="Outgoing-To-SFTP Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.ftp.FTPTransport" name="Outgoing-To-SFTP.FTP Transport" retries="1">
+      <ModuleConfig>
+        <FTPTransportType>Encrypted FTP (SSH/SFTP)</FTPTransportType>
+        <Host>$$sftp.hostname</Host>
+        <UserName>$$sftp.username</UserName>
+        <Password>$$sftp.password</Password>
+        <Port>22</Port>
+        <Timeout>2147483647</Timeout>
+        <KeepConnection>false</KeepConnection>
+        <Overwrite>false</Overwrite>
+        <UsePassiveMode>true</UsePassiveMode>
+        <CheckForFileAfterWriting>false</CheckForFileAfterWriting>
+        <FAIL_ON_FALSE_RESULT>true</FAIL_ON_FALSE_RESULT>
+        <TargetDirectory>$$sftp.output.directory</TargetDirectory>
+        <FileName>{ognl:getAttribute('com.pilotfish.FileName')}</FileName>
+        <FileExtension>{ognl:getAttribute('com.pilotfish.FileExtension')}</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <FileType>Binary</FileType>
+        <Protection>Private (P)</Protection>
+        <KeyAuthentication>false</KeyAuthentication>
+        <Sftp_SocketTimeout>0</Sftp_SocketTimeout>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <TrustStoreFilePath />
+        <TrustStoreFilePassword />
+        <TrustStoreFileType />
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

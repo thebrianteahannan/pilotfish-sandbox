@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2017-03-30T14:37:24-04:00" ModifiedBy="aramos@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Erie.2A - Start Outgoing 103 Generation.Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>false</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Start outgoing 103 generation">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Erie.2A - Count attachments-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:multipleAttachments:eip_name:count(//ns2:Attachment/ns2:AttachmentData)&gt;1:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:ns2:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Erie.2A - Merge Attachments-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('multipleAttachments')!=null &amp;&amp; getAttribute('multipleAttachments')}</ExecuteProcessor>
+          <Listener>Combine TIFF Attachments Listener</Listener>
+          <Synchronous>true</Synchronous>
+          <Timeout>3600</Timeout>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.2A - Set merged XML template">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>TempXML</AttributeName>
+          <Expression>&lt;GenerationData_103&gt;&lt;Data_103&gt;[103Data]&lt;/Data_103&gt;&lt;Data_1122&gt;[1122Data]&lt;/Data_1122&gt;&lt;TeledexDBData&gt;[TeledexData]&lt;/TeledexDBData&gt;&lt;/GenerationData_103&gt;</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Erie.2A - Store 1122 in attribute">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>XML_1122Data</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Erie.2A - Set transaction data to temp XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>TempXML</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="Erie.2A - Add 1122 data to temp xml">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:\[103Data\]:eip_name:{ognl:@java.util.regex.Matcher@quoteReplacement(getAttribute('originalText'))}:eip_value][eip_pair:\[1122Data\]:eip_name:{ognl:@java.util.regex.Matcher@quoteReplacement(getAttribute('XML_1122Data'))}:eip_value][eip_pair:&lt;\?xml[^&lt;]*\?&gt;:eip_name::eip_value]</REGEX_TABLE_TAG>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Erie.2A - Save TempXML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>TempXML</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="GetDataFromTeledexDB" />
+    <Transport class="com.pilotfish.eip.modules.db.DatabaseSqlTransport" name="Get Data from Teledex DB" retries="1">
+      <ModuleConfig>
+        <InputFile />
+        <WriteQuery>false</WriteQuery>
+        <Query />
+        <QueryParams />
+        <UserName>$$TeledexDbUsername</UserName>
+        <Password>$$TeledexDbPassword</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$TeledexDbDriver</JdbcDriver>
+        <JdbcURL>$$TeledexDbURL</JdbcURL>
+        <KeepConnection>false</KeepConnection>
+        <Autocommit>false</Autocommit>
+        <Timeout>600</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema />
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <CallbackListenerName>Insert Compiled Data Listener</CallbackListenerName>
+        <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+        <JDBCProperties>null</JDBCProperties>
+        <UseConnectionPooling>false</UseConnectionPooling>
+        <PermittedDBConnections>5</PermittedDBConnections>
+        <LogMetadata>false</LogMetadata>
+        <LogSQL>false</LogSQL>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

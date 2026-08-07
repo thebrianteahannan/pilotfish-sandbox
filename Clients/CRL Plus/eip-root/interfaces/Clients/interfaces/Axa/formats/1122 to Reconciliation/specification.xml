@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xtr:TransRoot xmlns:xtr="http://www.pilotfishtechnology.com/XCS/TransformEngine" xmlns:ff="http://www.pilotfishtechnology.com/XCS/TransformEngine/FlatFile">
+	<xtr:HandlerConfig>
+		<xtr:Builder>com.pilotfish.eip.transform.flatfile.RecordDeserializer</xtr:Builder>
+		<xtr:Serializer>com.pilotfish.eip.transform.flatfile.RecordSerializer</xtr:Serializer>
+	</xtr:HandlerConfig>
+	<xtr:Initialization>
+		<xtr:Record delimiter="\r\n" style="delimited" />
+		<xtr:Field delimiter="," style="delimited" />
+		<xtr:Direction selected="ToXML" />
+	</xtr:Initialization>
+	<xtr:ModuleRegistry />
+	<xtr:RecordSegment delimiter="\r\n" name="XCSRecord">
+		<xtr:Field delimiter="," name="TransRefGUID">
+			<ff:Start>1</ff:Start>
+			<ff:End>1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="CompanyProducerID">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="DOB">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="FirstName">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="LastName">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="PolNumber">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="DateTimeSent">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="WHOLESALE">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="EXAM">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+</xtr:TransRoot>
+

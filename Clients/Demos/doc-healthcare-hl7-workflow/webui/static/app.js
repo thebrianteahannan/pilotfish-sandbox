@@ -234,6 +234,22 @@ document.addEventListener("DOMContentLoaded", () => {
   syncPresetChildren();
   document.getElementById("event-form").addEventListener("submit", addEvent);
   document.getElementById("refresh-hl7").addEventListener("click", refreshRecentHl7);
+  document.querySelectorAll(".main-tab").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const tab = btn.dataset.mainTab;
+      document.querySelectorAll(".main-tab").forEach((b) => {
+        const on = b.dataset.mainTab === tab;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      const demo = document.getElementById("tab-demo");
+      const info = document.getElementById("tab-info");
+      if (demo) demo.hidden = tab !== "demo";
+      if (info) info.hidden = tab !== "info";
+      const nav = document.getElementById("demo-nav");
+      if (nav) nav.hidden = tab !== "demo";
+    });
+  });
   refreshHealth().catch(() => {});
   refreshEvents();
   refreshRecentHl7();

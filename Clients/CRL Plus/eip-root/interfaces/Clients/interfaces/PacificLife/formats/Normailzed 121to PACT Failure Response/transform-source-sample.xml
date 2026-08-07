@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><err:errorReport xmlns:err="http://www.pilotfishtechnology.com/eip/RouteErrorReport">
+  <err:transactionID>279</err:transactionID>
+  <err:errorStage>Processor</err:errorStage>
+  <err:errorComponent>SetAcordAttributes</err:errorComponent>
+  <err:errorRoute>1 - Doctype Discovery</err:errorRoute>
+  <err:errorInterface/>
+  <err:exceptionClass>com.pilotfish.eip.EIPException</err:exceptionClass>
+  <err:exceptionMessage>Could not parse data</err:exceptionMessage>
+  <err:rootExceptionMessage>The processing instruction target matching "[xX][mM][lL]" is not allowed.</err:rootExceptionMessage>
+  <err:exceptionTrace>com.pilotfish.eip.EIPException: Could not parse data
+	at com.pilotfish.eip.modules.other.XPathEvaluatorProcessor.processData(XPathEvaluatorProcessor.java:100)
+	at com.pilotfish.eip.transact.stages.ProcessorStage.process(ProcessorStage.java:44)
+	at com.pilotfish.eip.transact.StageHandler.process(StageHandler.java:99)
+	at com.pilotfish.eip.server.ntm.transact.StageTransactionRunner.runStage(StageTransactionRunner.java:130)
+	at com.pilotfish.eip.server.ntm.transact.StageTransactionRunner.run(StageTransactionRunner.java:72)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: org.xml.sax.SAXParseException; lineNumber: 2; columnNumber: 6; The processing instruction target matching "[xX][mM][lL]" is not allowed.
+	at org.apache.xerces.parsers.DOMParser.parse(Unknown Source)
+	at com.pilotfish.utils.XMLUtil.getNodeList(XMLUtil.java:593)
+	at com.pilotfish.eip.modules.other.XPathEvaluatorProcessor.processData(XPathEvaluatorProcessor.java:65)
+	... 7 more</err:exceptionTrace>
+  <err:transactionData ContentType="text"/>
+  <err:transactionAttributes name="Accept">*/*</err:transactionAttributes>
+  <err:transactionAttributes name="Content-Type">application/x-www-form-urlencoded</err:transactionAttributes>
+  <err:transactionAttributes name="eip.OriginatingTransactionCreationTime">2015-09-25 12:31:13:397</err:transactionAttributes>
+  <err:transactionAttributes name="Origin">chrome-extension://hgmloofddffdnphfgcellkdfbfbjeloo</err:transactionAttributes>
+  <err:transactionAttributes name="User-Agent">Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.99 Safari/537.36</err:transactionAttributes>
+  <err:transactionAttributes name="eip.OriginatingTransactionID">10</err:transactionAttributes>
+  <err:transactionAttributes name="password">60303ae22b998861bce3b28f33eec1be758a213c86c93c076dbe9f558c11c752</err:transactionAttributes>
+  <err:transactionAttributes name="ServerName">localhost</err:transactionAttributes>
+  <err:transactionAttributes name="sourceClient">PACT</err:transactionAttributes>
+  <err:transactionAttributes name="Accept-Encoding">gzip, deflate</err:transactionAttributes>
+  <err:transactionAttributes name="username">test2</err:transactionAttributes>
+  <err:transactionAttributes name="Locale">en_US</err:transactionAttributes>
+  <err:transactionAttributes name="Connection">keep-alive</err:transactionAttributes>
+  <err:transactionAttributes name="Content-Length">8968</err:transactionAttributes>
+  <err:transactionAttributes name="docStart">&lt;?xml</err:transactionAttributes>
+  <err:transactionAttributes name="Host">localhost:8443</err:transactionAttributes>
+  <err:transactionAttributes name="Accept-Language">en-US,en;q=0.8</err:transactionAttributes>
+  <err:transactionAttributes name="eip.TransactionCreationTime">2015-09-25 12:31:13:550</err:transactionAttributes>
+  <err:transactionAttributes name="RequestURL">http://localhost:8443/http-post/pact</err:transactionAttributes>
+  <err:transactionAttributes name="RemoteHost">0:0:0:0:0:0:0:1</err:transactionAttributes>
+  <err:transactionAttributes name="isNailba">false</err:transactionAttributes>
+  <err:transactionAttributes name="archive.dir">C:/Pilotfish/archive/PACT</err:transactionAttributes>
+  <err:transactionAttributes name="crl.original.txt">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;TXLife xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.20.02.xsd"
+        xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+    &lt;UserAuthRequest&gt;
+        &lt;UserLoginName&gt;PACP&lt;/UserLoginName&gt;
+        &lt;UserPswd&gt;
+            &lt;CryptType&gt;NONE&lt;/CryptType&gt;
+            &lt;CryptPswd&gt;PL47@vB$Wj653&lt;/CryptPswd&gt;
+        &lt;/UserPswd&gt;
+        &lt;UserDate&gt;2014-10-31&lt;/UserDate&gt;
+        &lt;UserTime&gt;10:47:07&lt;/UserTime&gt;
+        &lt;VendorApp&gt;
+            &lt;AppName&gt;MRAS AIS&lt;/AppName&gt;
+            &lt;AppVer&gt;4.7.0&lt;/AppVer&gt;
+        &lt;/VendorApp&gt;
+    &lt;/UserAuthRequest&gt;
+    &lt;TXLifeRequest&gt;
+        &lt;TransRefGUID&gt;9D5B01C4-1496-7516-2004-C4A3DC683CD4&lt;/TransRefGUID&gt;
+        &lt;TransType tc="121"&gt;General Requirement Order Request&lt;/TransType&gt;
+        &lt;TransExeDate&gt;2014-10-31&lt;/TransExeDate&gt;
+        &lt;TransExeTime&gt;10:47:07&lt;/TransExeTime&gt;
+        &lt;TransMode tc="2"&gt;Original&lt;/TransMode&gt;
+        &lt;TestIndicator tc="0"&gt;NO&lt;/TestIndicator&gt;
+        &lt;OLifE&gt;
+            &lt;SourceInfo&gt;
+                &lt;CreationDate&gt;2014-10-31&lt;/CreationDate&gt;
+                &lt;CreationTime&gt;10:47:07&lt;/CreationTime&gt;
+                &lt;SourceInfoName&gt;MRAS AIS&lt;/SourceInfoName&gt;
+                &lt;SourceInfoDescription&gt;MRAS AIS v.4.7.0&lt;/SourceInfoDescription&gt;
+            &lt;/SourceInfo&gt;
+            &lt;Holding id="HoldingType_1"&gt;
+                &lt;HoldingTypeCode tc="2"&gt;Policy&lt;/HoldingTypeCode&gt;
+                &lt;Policy CarrierPartyID="PartyType_1" id="PolicyType_1"&gt;
+                    &lt;PolNumber&gt;AT10090670&lt;/PolNumber&gt;
+                    &lt;CarrierCode&gt;CCode&lt;/CarrierCode&gt;
+                    &lt;Life&gt;
+                        &lt;FaceAmt&gt;2000000.000000&lt;/FaceAmt&gt;
+                        &lt;Coverage id="CoverageType_1"&gt;
+                            &lt;CurrentAmt&gt;2000000.000000&lt;/CurrentAmt&gt;
+                        &lt;/Coverage&gt;
+                    &lt;/Life&gt;
+                    &lt;ApplicationInfo&gt;
+                        &lt;TrackingID&gt;2014-10-02-10.43.59.385940C01-1_life_1_APS_1&lt;/TrackingID&gt;
+                    &lt;/ApplicationInfo&gt;
+                    &lt;RequirementInfo AppliesToPartyID="PartyType_2_life_1" id="RequirementInfoType_1"&gt;
+                        &lt;ReqCode tc="11"/&gt;
+                        &lt;RequirementInfoKey&gt;2014-10-02-10.43.59.385940C01-1_life_1_APS_1&lt;/RequirementInfoKey&gt;
+                        &lt;RequirementInfoUniqueID&gt;2014-10-02-10.43.59.385940C01-1_life_1_APS_1&lt;/RequirementInfoUniqueID&gt;
+                        &lt;RequestedDate&gt;2014-10-31&lt;/RequestedDate&gt;
+                        &lt;ReleasePartyOrgCode&gt;PACP&lt;/ReleasePartyOrgCode&gt;
+                        &lt;RequirementAcctNum&gt;78748&lt;/RequirementAcctNum&gt;
+                    &lt;/RequirementInfo&gt;
+                &lt;/Policy&gt;
+                &lt;Attachment&gt;
+                    &lt;Description&gt;001929166237.TIF&lt;/Description&gt;
+                    &lt;AttachmentData tc="1"&gt;=&lt;/AttachmentData&gt;
+                    &lt;AttachmentType tc="1"/&gt;
+                    &lt;TransferEncodingTypeString&gt;base64&lt;/TransferEncodingTypeString&gt;
+                    &lt;AttachmentLocation tc="1"/&gt;
+                &lt;/Attachment&gt;
+            &lt;/Holding&gt;
+            &lt;Party id="PartyType_1"&gt;
+                &lt;PartyTypeCode tc="2"&gt;Organization&lt;/PartyTypeCode&gt;
+                &lt;FullName&gt;Pacific Life Insurance&lt;/FullName&gt;
+                &lt;Organization&gt;
+                    &lt;AbbrName&gt;PacLife&lt;/AbbrName&gt;
+                &lt;/Organization&gt;
+                &lt;Address&gt;
+                    &lt;Line1&gt;45 Enterprise&lt;/Line1&gt;
+                    &lt;Line2&gt;California&lt;/Line2&gt;
+                    &lt;City&gt;Aliso Viejo&lt;/City&gt;
+                    &lt;AddressCountry&gt;USA&lt;/AddressCountry&gt;
+                &lt;/Address&gt;
+                &lt;Phone&gt;
+                    &lt;CountryCode&gt;+1&lt;/CountryCode&gt;
+                    &lt;AreaCode&gt;877&lt;/AreaCode&gt;
+                    &lt;DialNumber&gt;4412357&lt;/DialNumber&gt;
+                &lt;/Phone&gt;
+                &lt;EMailAddress/&gt;
+            &lt;/Party&gt;
+            &lt;Relation RelatedObjectID="PartyType_1" OriginatingObjectID="HoldingType_1" id="RelationType_1"&gt;
+                &lt;OriginatingObjectType tc="4"/&gt;
+                &lt;RelatedObjectType tc="6"/&gt;
+                &lt;RelationRoleCode tc="87"/&gt;
+            &lt;/Relation&gt;
+            &lt;Party id="PartyType_2_life_1"&gt;
+                &lt;PartyTypeCode tc="1"&gt;Person&lt;/PartyTypeCode&gt;
+                &lt;GovtID&gt;284586931&lt;/GovtID&gt;
+                &lt;Person id="PersonType_1"&gt;
+                    &lt;FirstName&gt;Pilot&lt;/FirstName&gt;
+                    &lt;LastName&gt;POC&lt;/LastName&gt;
+                    &lt;Gender tc="1"&gt;Male&lt;/Gender&gt;
+                    &lt;BirthDate&gt;1999-09-22&lt;/BirthDate&gt;
+                &lt;/Person&gt;
+                &lt;Address&gt;
+                    &lt;Line1&gt;10 Main&lt;/Line1&gt;
+                    &lt;City&gt;Dana Point&lt;/City&gt;
+                    &lt;AddressStateTC tc="6"/&gt;
+                    &lt;Zip&gt;92629&lt;/Zip&gt;
+                    &lt;AddressCountryTC tc="1"/&gt;
+                &lt;/Address&gt;
+                &lt;Phone&gt;
+                    &lt;PhoneTypeCode tc="1"/&gt;
+                    &lt;AreaCode&gt;999&lt;/AreaCode&gt;
+                    &lt;DialNumber&gt;999-9999&lt;/DialNumber&gt;
+                    &lt;PrefPhone tc="1"&gt;YES&lt;/PrefPhone&gt;
+                &lt;/Phone&gt;
+                &lt;Risk&gt;
+                    &lt;MedicalExam&gt;
+                        &lt;LabSlipTicketNum&gt;00999999&lt;/LabSlipTicketNum&gt;
+                    &lt;/MedicalExam&gt;
+                &lt;/Risk&gt;
+            &lt;/Party&gt;
+            &lt;Relation RelatedObjectID="PartyType_2_life_1" OriginatingObjectID="HoldingType_1" id="RelationType_2"&gt;
+                &lt;OriginatingObjectType tc="4"/&gt;
+                &lt;RelatedObjectType tc="6"/&gt;
+                &lt;RelationRoleCode tc="32"/&gt;
+            &lt;/Relation&gt;
+            &lt;Party id="PartyType_3_APS_1"&gt;
+                &lt;PartyTypeCode tc="1"&gt;Person&lt;/PartyTypeCode&gt;
+                &lt;FullName&gt;Edward Smith&lt;/FullName&gt;
+                &lt;Address&gt;
+                    &lt;Line1&gt;3 Arch Professional Bldg&lt;/Line1&gt;
+                    &lt;Line2&gt;32322 Coast Highway Ste B&lt;/Line2&gt;
+                    &lt;City&gt;Laguna Beach&lt;/City&gt;
+                    &lt;AddressStateTC tc="6"/&gt;
+                    &lt;Zip&gt;92651&lt;/Zip&gt;
+                    &lt;AddressCountryTC tc="1"/&gt;
+                &lt;/Address&gt;
+                &lt;Phone&gt;
+                    &lt;PhoneTypeCode tc="2"/&gt;
+                    &lt;AreaCode&gt;999&lt;/AreaCode&gt;
+                    &lt;DialNumber&gt;9999999&lt;/DialNumber&gt;
+                    &lt;PrefPhone tc="1"&gt;YES&lt;/PrefPhone&gt;
+                &lt;/Phone&gt;
+            &lt;/Party&gt;
+            &lt;Relation RelatedObjectID="PartyType_3_APS_1" OriginatingObjectID="HoldingType_1" id="RelationType_3"&gt;
+                &lt;OriginatingObjectType tc="4"/&gt;
+                &lt;RelatedObjectType tc="6"/&gt;
+                &lt;RelationRoleCode tc="41"/&gt;
+            &lt;/Relation&gt;
+        &lt;/OLifE&gt;
+    &lt;/TXLifeRequest&gt;
+&lt;/TXLife&gt;</err:transactionAttributes>
+  <err:transactionAttributes name="RequestPath">pact</err:transactionAttributes>
+  <err:transactionAttributes name="FileName">null</err:transactionAttributes>
+  <err:transactionAttributes name="ServerPort">8443</err:transactionAttributes>
+  <err:transactionAttributes name="Protocol">HTTP/1.1</err:transactionAttributes>
+  <err:transactionAttributes name="RemoteAddr">0:0:0:0:0:0:0:1</err:transactionAttributes>
+  <err:transactionAttributes name="joinKey">Doctype Route</err:transactionAttributes>
+  <err:transactionAttributes name="inboundClient">PACT</err:transactionAttributes>
+  <err:transactionAttributes name="Synchronous">true</err:transactionAttributes>
+  <err:transactionAttributes name="acordDoctype">unknown</err:transactionAttributes>
+</err:errorReport><!--pf.PACT.201509268-123113.000.incoming.10-->

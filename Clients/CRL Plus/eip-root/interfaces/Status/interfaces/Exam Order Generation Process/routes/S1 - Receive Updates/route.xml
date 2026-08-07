@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2026-04-17T08:20:19-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source icon="" name="APPS Portamedic">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.http.SoapHttpPostListener" enabled="true" name="Exam Order Generation Process.S1 - Receive Updates.SOAP Web Service Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <RequestPath>exam-response</RequestPath>
+        <Timeout>600</Timeout>
+        <TimeoutHandlingMechanism>Send timeout message</TimeoutHandlingMechanism>
+        <Synchronous>true</Synchronous>
+        <RequireSSL>false</RequireSSL>
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <WsdlFile>ORDER.WSDL</WsdlFile>
+        <WsdlContentType>application/wsdl+xml</WsdlContentType>
+        <ValidateAtListenerLevel>false</ValidateAtListenerLevel>
+        <USE_BASIC_AUTH>true</USE_BASIC_AUTH>
+        <AUTH_FILE>auth.txt</AUTH_FILE>
+        <REALM>PilotFish</REALM>
+        <AdditionalResources />
+        <SoapVersion>Autodetect SOAP Version</SoapVersion>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Exam Order Generation Process.S1 - Receive Updates.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>Status.Exam Order Generation Process.S1 - Receive Updates - SOAP Update</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Exam Order Generation Process.S1 - Receive Updates.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="Local Archive Dir">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Exam Order Generation Process.S1 - Receive Updates.Directory Transport" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:#properties.get('archive.dir')+'/exam-response/'+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}</TargetDirectory>
+        <FileName>{ognl:new java.text.SimpleDateFormat('yyyy-MM-dd-HH-mm-ss-SSS').format(new java.util.Date())}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Create New</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+        <OutputFilePath>false</OutputFilePath>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Response">
+    <FormatProfile name="SoapUpdateToResponse" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="EO.S1 - Sync Response" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Exam Order Generation Process.S1 - Receive Updates.Processor2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>Status.Exam Order Generation Process.S1 - Receive Updates - Response</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Exam Order Generation Process.S1 - Receive Updates.Processor3">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

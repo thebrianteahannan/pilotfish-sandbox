@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PoolsConfig>
+  <Pool BaseThreadCount="1" ExpirationTimeout="10000" IdleTimeout="500" MaxThreadCount="1" QueueSize="-1" name="TDEX.4.SFTP">
+    <Stage Route="4 - Upload Erie 103 Files" System="System Unnamed" name="TDEX.4 - SFTP Transport" type="Transport" />
+  </Pool>
+  <Pool BaseThreadCount="1" ExpirationTimeout="10000" IdleTimeout="500" MaxThreadCount="1" QueueSize="-1" name="TDEX.4.Every">
+    <Stage Route="4 - Upload Erie 103 Files" System="" name="" type="Every" />
+  </Pool>
+</PoolsConfig>
+

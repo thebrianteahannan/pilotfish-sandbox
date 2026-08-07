@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://ACORD.org/Standards/Life/2" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://ACORD.org/Standards/Life/2">
+			<xsd:element name="TXLife">
+				<xsd:complexType>
+					<xsd:sequence />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="UserAuthRequest" type="ns1:UserAuthRequest_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="TXLifeRequest">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="TransRefGUID" type="xsd:string" />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="TransType">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="TransExeDate" type="xsd:string" />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="TransExeTime" type="xsd:string" />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="OLifE" type="ns1:OLifE_type" />
+							<xsd:attribute form="unqualified" name="PrimaryObjectID" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:attribute form="unqualified" name="Version" type="xsd:string" />
+					<xsd:attribute ref="xsi:schemaLocation" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="Address_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Line1" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="City" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="AddressStateTC">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Zip" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ApplicationInfo_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="TrackingID" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="ApplicationJurisdiction">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="unbounded" minOccurs="1" name="SignatureInfo" type="ns1:SignatureInfo_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Coverage_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="PlanName" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="IndicatorCode">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="CurrentAmt" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="LevelPremiumPeriod" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="CovOption" type="ns1:CovOption_type" />
+					<xsd:element form="qualified" maxOccurs="unbounded" minOccurs="1" name="LifeParticipant">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="LifeParticipantRoleCode">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:attribute form="unqualified" name="PartyID" type="xsd:string" />
+							<xsd:attribute form="unqualified" name="id" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Policy_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="PolNumber" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="ProductCode" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="CarrierCode" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="PlanName" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="PolicyStatus">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="ReplacementType">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="PaymentMode">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="PaymentAmt" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="PaymentMethod">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="AccountNumber" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="RoutingNumber" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="BankAcctType">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Life" type="ns1:Life_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="ApplicationInfo" type="ns1:ApplicationInfo_type" />
+					<xsd:element form="qualified" maxOccurs="unbounded" minOccurs="1" name="RequirementInfo">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="ReqCode">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="RequestedDate" type="xsd:string" />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="ReleasePartyOrgCode" type="xsd:string" />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="RequirementAcctNum" type="xsd:string" />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="OLifEExtension">
+								<xsd:complexType>
+									<xsd:sequence />
+									<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="TestIndicator">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:attribute form="unqualified" name="VendorCode" type="xsd:string" />
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:attribute form="unqualified" name="AppliesToPartyID" type="xsd:string" />
+							<xsd:attribute form="unqualified" name="id" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="SignatureInfo_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="SignatureRoleCode">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="SignatureDate" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="SignatureState">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="SignatureOK">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="SourceInfo_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="CreationDate" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="CreationTime" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="SourceInfoName" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="CovOption_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="PlanName" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="VendorApp_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="VendorName">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="VendorCode" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="AppName" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="EMailAddress_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="AddrLine" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="OLifEExtension">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="eDeliveryOptIn" type="xsd:string" />
+							<xsd:attribute form="unqualified" name="VendorCode" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="EMailType">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="CarrierAppointment_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="CompanyProducerID" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Life_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="QualPlanType">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="FaceAmt" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Coverage" type="ns1:Coverage_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Producer_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="CarrierAppointment" type="ns1:CarrierAppointment_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Phone_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="PhoneTypeCode">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="AreaCode" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="DialNumber" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Height2_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="MeasureUnits">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="MeasureValue" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Weight2_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="MeasureUnits">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="MeasureValue" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="UserAuthRequest_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="UserLoginName" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="UserPswd" type="ns1:UserPswd_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="VendorApp" type="ns1:VendorApp_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="OLifEExtension">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="DellTransRefGUID" type="xsd:string" />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="CompanyNumber" type="xsd:string" />
+							<xsd:attribute form="unqualified" name="ExtensionCode" type="xsd:string" />
+							<xsd:attribute form="unqualified" name="VendorCode" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="UserPswd_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="CryptType" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Attachment_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Description" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="AttachmentType">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="OLifE_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="SourceInfo" type="ns1:SourceInfo_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Holding">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="CurrencyTypeCode">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Policy" type="ns1:Policy_type" />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Attachment" type="ns1:Attachment_type" />
+							<xsd:attribute form="unqualified" name="id" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="unbounded" minOccurs="1" name="Party">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="PartyTypeCode">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="GovtID" type="xsd:string" />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="GovtIDTC">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Person">
+								<xsd:complexType>
+									<xsd:sequence />
+									<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="FirstName" type="xsd:string" />
+									<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="LastName" type="xsd:string" />
+									<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Occupation" type="xsd:string" />
+									<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Gender">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="BirthDate" type="xsd:string" />
+									<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Height2" type="ns1:Height2_type" />
+									<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Weight2" type="ns1:Weight2_type" />
+									<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="BirthJurisdictionTC">
+										<xsd:complexType>
+											<xsd:simpleContent>
+												<xsd:extension base="xsd:string">
+													<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+												</xsd:extension>
+											</xsd:simpleContent>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:attribute form="unqualified" name="DataRep" type="xsd:string" />
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Address" type="ns1:Address_type" />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Phone" type="ns1:Phone_type" />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="EMailAddress" type="ns1:EMailAddress_type" />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Risk" type="xsd:string" />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Producer" type="ns1:Producer_type" />
+							<xsd:attribute form="unqualified" name="id" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="unbounded" minOccurs="1" name="Relation">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="OriginatingObjectType">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="RelatedObjectType">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="RelationRoleCode">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="RelationDescription">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:attribute form="unqualified" name="OriginatingObjectID" type="xsd:string" />
+							<xsd:attribute form="unqualified" name="RelatedObjectID" type="xsd:string" />
+							<xsd:attribute form="unqualified" name="id" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://www.w3.org/2001/XMLSchema-instance">
+			<xsd:attribute name="schemaLocation" type="xsd:string" />
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

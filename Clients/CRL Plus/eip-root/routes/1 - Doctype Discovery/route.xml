@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2025-08-19T12:35:16-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Nailba Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('isNailba').toString().equals('true')</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="ACORD Batch Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('acordBatchSize') &gt; 1.1 and (getAttribute('acordDoctype').toString().equals('103') or getAttribute('acordDoctype').toString().equals('121'))</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="ACORD 103 Single" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('acordDoctype').toString().equals('103')</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="ACORD 121 Single" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('acordDoctype').toString().equals('121')</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Handle Unknown Doc Type" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="ROOT.1 - Doctype Discovery.Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Incoming Routes Listener</ErrorListenerName>
+        <IncludeData>false</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="Doc Source Route">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Source Document Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetArchiveDir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>$$archive.dir</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetArchiveSubDir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>{ognl:getAttribute("archive.dir")+"/"+getAttribute("sourceClient")+"/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileOperationProcessor" name="CreateArchiveSubdir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>{ognl:getAttribute("archive.dir")}</FileName>
+          <Overwrite>false</Overwrite>
+          <ExceptionOnFailure>false</ExceptionOnFailure>
+          <PostProcessOperation>Create Folder</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="ArchiveIncomingFile">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:getAttribute("archive.dir")}</TargetDirectory>
+          <TargetFileName>{ognl:"incoming-" + new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID() + ((getAttribute("com.pilotfish.FileName")==null) ? "" : "-"+getAttribute("com.pilotfish.FileName"))+"."+ ((getAttribute("com.pilotfish.FileExtension")==null) ? "txt" : getAttribute("com.pilotfish.FileExtension"))}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.stream.StreamNormalizerProcessor" name="ROOT.1 - Fix encoding">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <BufferSize>512</BufferSize>
+          <CharacterEncoding>UTF-8</CharacterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="Remove CDATA wrapper">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:(?s)^\s*&lt;!\[CDATA\[(.*)\]\]&gt;\s*$:eip_name:$1:eip_value]</REGEX_TABLE_TAG>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Set original txt">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="trim whitespace">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <Expression>{ognl:getAttribute('com.pilotfish.crl.original.txt').toString().trim()}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Trimmed text to Data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.PeekProcessor" name="Set docStart">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>docStart</AttributeName>
+          <PeekLength>6</PeekLength>
+          <PeekCharset>UTF-8</PeekCharset>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set isNailba">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>isNailba</AttributeName>
+          <Expression>{ognl:getAttribute('docStart').toString().startsWith('$$HDR')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetDefaultAcordDocType">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>acordDoctype</AttributeName>
+          <Expression>unknown</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="SetAcordAttributes">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('isNailba').toString().equals('false')}</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:acordDoctype:eip_name://acord:TransType/@tc:eip_value][eip_pair:acordBatchSize:eip_name:count(//acord:TXLifeRequest):eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="To Nailba Forking">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Nailba Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>NAILBA 800 Forking Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="To ACORD Forking">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="ACORD Batch Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>ACORD Forking Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="To ACORD 103">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="ACORD 103 Single" retries="1">
+      <ModuleConfig>
+        <ServiceName>Listener 103</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="To ACORD 121">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="ACORD 121 Single" retries="1">
+      <ModuleConfig>
+        <ServiceName>Non-standard 121</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Error Route">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Handle Unknown Doc Type" retries="1">
+      <ModuleConfig>
+        <ServiceName>Error On Incoming Routes Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set transactionData">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>transactionData</AttributeName>
+          <Expression>{ognl:getAttribute('com.pilotfish.crl.original.txt')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set error.subdir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>error.subdir</AttributeName>
+          <Expression>{ognl:'unknown-doc-type-'+getAttribute('sourceClient')+'-'+(new java.text.SimpleDateFormat('YYYYMMDD-HHmmss.SSS').format(new java.util.Date()))}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="DocType Load Error File">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>error.xml</FileName>
+          <PostProcessOperation>Do Nothing</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Description>&lt;h1&gt;
+      Document Type Discovery
+    &lt;/h1&gt;
+    &lt;h2&gt;
+      Overview:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The Document Type Discovery route expects an inbound document to be in 
+      one of the following formats: Nailba, Acord-103, or Acord-121. This 
+      route identifies the document type and relays the document to the 
+      correct route listener for further processing. If one of the three 
+      document types is not detected, an error condition arises.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Source System:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The sources that call this route are the Web Service to Inbound and SFTP 
+      to Inbound routes.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Listener:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The listener is a Programmable Listner and must be called from a 
+      previous route in which a transaction containing the document in 
+      question originates. First, the listener peeks at the first few 
+      characters of the incoming stream to determine if it is a Nailba 
+      document. Consequently, the attribute &amp;quot;isNailba&amp;quot; is set accordingly. If 
+      it is not Nailba, then, using XPath, the Acord document type is 
+      attempted to be read and stored in the &amp;quot;acordDoctype&amp;quot; attribute.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Source Transform:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      Relay
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Route:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      A set of routing rules determines the correct Target Transport for the 
+      transaction. Using the two attributes &amp;quot;isNailba&amp;quot; and &amp;quot;acordDoctype&amp;quot;, the 
+      router will forward the transaction to one of the following Transports: 
+      Nailba Transport, 103 Transport, or 121 Transport. If no conditions are 
+      met, the default Error Transport is called for further handling.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Target Transform:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      Relay
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Transport(s):
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The Nailba and 103 Transport will call the corresponding Listener of the 
+      Incoming to Standard 121 route in which the document is transformed to a 
+      non-normalized 121 format for further processing. The 121 Transport will 
+      call the listener of the 121 Normalization route.
+    &lt;/p&gt;</Description>
+</Route>
+

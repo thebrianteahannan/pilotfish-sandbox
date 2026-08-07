@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2021-10-14T09:21:08-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="true">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Save Error Report" />
+            <TransportTarget name="Send Error Email" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>ErrorListener</Name>
+              <Operator>=</Operator>
+              <Value>incoming</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Save Error Report" />
+            <TransportTarget name="Send Error Email" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>ErrorListener</Name>
+              <Operator>=</Operator>
+              <Value>outgoing</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Save Original Text" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>com.pilotfish.crl.original.txt</Name>
+              <Operator>exists</Operator>
+              <Value />
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Save Transaction Data" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>error.already.reported</Name>
+                <Operator>does not exist</Operator>
+                <Value />
+              </Attribute>
+              <Attribute>
+                <Name>transactionData</Name>
+                <Operator>exists</Operator>
+                <Value />
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Call PACT Failure Response" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.eip.synchronousResponseTicket</Name>
+                <Operator>exists</Operator>
+                <Value />
+              </Attribute>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>=</Operator>
+                <Value>PACT</Value>
+              </Attribute>
+              <Attribute>
+                <Name>error.already.reported</Name>
+                <Operator>does not exist</Operator>
+                <Value />
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Call PRUX Failure Response" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.eip.synchronousResponseTicket</Name>
+                <Operator>exists</Operator>
+                <Value />
+              </Attribute>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>=</Operator>
+                <Value>PRUX</Value>
+              </Attribute>
+              <Attribute>
+                <Name>error.already.reported</Name>
+                <Operator>does not exist</Operator>
+                <Value />
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Call AIE Failure Response" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.eip.synchronousResponseTicket</Name>
+                <Operator>exists</Operator>
+                <Value>true</Value>
+              </Attribute>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>=</Operator>
+                <Value>AIE</Value>
+              </Attribute>
+              <Attribute>
+                <Name>error.already.reported</Name>
+                <Operator>does not exist</Operator>
+                <Value />
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Call AIG Failure Response" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.eip.synchronousResponseTicket</Name>
+                <Operator>exists</Operator>
+                <Value />
+              </Attribute>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>=</Operator>
+                <Value>AIGP</Value>
+              </Attribute>
+              <Attribute>
+                <Name>error.already.reported</Name>
+                <Operator>does not exist</Operator>
+                <Value />
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Call LadderLife Failure Response" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.eip.synchronousResponseTicket</Name>
+                <Operator>exists</Operator>
+                <Value />
+              </Attribute>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>=</Operator>
+                <Value>LADDER</Value>
+              </Attribute>
+              <Attribute>
+                <Name>error.already.reported</Name>
+                <Operator>does not exist</Operator>
+                <Value />
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Call ELFP Failure Response" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.eip.synchronousResponseTicket</Name>
+                <Operator>exists</Operator>
+                <Value />
+              </Attribute>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>=</Operator>
+                <Value>ELFP</Value>
+              </Attribute>
+              <Attribute>
+                <Name>error.already.reported</Name>
+                <Operator>does not exist</Operator>
+                <Value />
+              </Attribute>
+              <Attribute>
+                <Name>defaultSourceInfoName</Name>
+                <Operator>!=</Operator>
+                <Value>STONERIVER</Value>
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Call ELFP-SR Failure Response" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.eip.synchronousResponseTicket</Name>
+                <Operator>exists</Operator>
+                <Value />
+              </Attribute>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>=</Operator>
+                <Value>ELFP</Value>
+              </Attribute>
+              <Attribute>
+                <Name>error.already.reported</Name>
+                <Operator>does not exist</Operator>
+                <Value />
+              </Attribute>
+              <Attribute>
+                <Name>defaultSourceInfoName</Name>
+                <Operator>=</Operator>
+                <Value>STONERIVER</Value>
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Call TDEX Failure Response" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.eip.synchronousResponseTicket</Name>
+                <Operator>exists</Operator>
+                <Value />
+              </Attribute>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>=</Operator>
+                <Value>TDEX</Value>
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Call AIG Legacy Failure Response" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.eip.synchronousResponseTicket</Name>
+                <Operator>exists</Operator>
+                <Value />
+              </Attribute>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>=</Operator>
+                <Value>AIGL</Value>
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Call AXA Failure Response" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.eip.synchronousResponseTicket</Name>
+                <Operator>exists</Operator>
+                <Value />
+              </Attribute>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>=</Operator>
+                <Value>AXA</Value>
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Fallback Error Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Fallback Error Listener</ErrorListenerName>
+        <IncludeData>false</IncludeData>
+        <IncludeAttributes>false</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="Routes for Incoming Messages">
+    <FormatProfile name="Set Error Report Attributes" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Error On Incoming Routes Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetIncomingCustomerName">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>CustomerName</AttributeName>
+          <Expression>{ognl:getAttribute('sourceClient')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetErrorListenerToIncoming">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>ErrorListener</AttributeName>
+          <Expression>incoming</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Incoming error.dir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>error.dir</AttributeName>
+          <Expression>$$error.dir</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="SetIncomingCustomerIfListenerError">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('sourceClient')==null}</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:CustomerName:eip_name://err:errorInterface:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:err:eip_name:http://www.pilotfishtechnology.com/eip/RouteErrorReport:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetHostName">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.hostname</AttributeName>
+          <Expression>{ognl:@java.net.InetAddress@getLocalHost().getHostName()}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set already reported">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('error.triggered')!=null}</ExecuteProcessor>
+          <AttributeName>error.already.reported</AttributeName>
+          <Expression>true</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set error.triggered">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>error.triggered</AttributeName>
+          <Expression>true</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set crl.env">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>crl.environment</AttributeName>
+          <Expression>$$crl.environment</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="" name="Routes for Outgoing Messages">
+    <FormatProfile name="Set Error Report Attributes" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Error On Outgoing Routes">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetOutgoingCustomerName">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>CustomerName</AttributeName>
+          <Expression>{ognl:getAttribute('sourceClient')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetErrorListenerToOutgoing">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>ErrorListener</AttributeName>
+          <Expression>outgoing</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Outgoing error.dir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>error.dir</AttributeName>
+          <Expression>$$error.dir</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetHostname2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.hostname</AttributeName>
+          <Expression>{ognl:@java.net.InetAddress@getLocalHost().getHostName()}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set error.already.reported">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('error.triggered')!=null}</ExecuteProcessor>
+          <AttributeName>error.already.reported</AttributeName>
+          <Expression>true</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set error.triggered attr">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>error.triggered</AttributeName>
+          <Expression>true</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set crl.env2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>crl.environment</AttributeName>
+          <Expression>$$crl.environment</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="Email Server">
+    <FormatProfile name="CreateErrorBody" />
+    <Transport class="com.pilotfish.eip.modules.email.EmailTransport" name="Send Error Email" retries="1">
+      <ModuleConfig>
+        <Host>$$mail.server</Host>
+        <UserName />
+        <Password />
+        <Port>25</Port>
+        <SSLEnabled>false</SSLEnabled>
+        <StartTLS>false</StartTLS>
+        <SendFrom>$$mail.errors.from</SendFrom>
+        <ReplyTo />
+        <SendTo>$$mail.errors.to</SendTo>
+        <SendCC />
+        <SendBCC />
+        <Subject>{ognl:'PilotFish Error '+getAttribute('crl.environment')+' - '+getAttribute('error.subdir')}</Subject>
+        <DataInAttachment>false</DataInAttachment>
+        <AttachmentFilename>data.dat</AttachmentFilename>
+        <MIMEType>text/plain</MIMEType>
+        <AttachmentsTable />
+        <ENCRYPT_MESSAGE>false</ENCRYPT_MESSAGE>
+        <DNS_FIND_CERT>false</DNS_FIND_CERT>
+        <PathToCertificate />
+        <SIGN_MESSAGE>false</SIGN_MESSAGE>
+        <PathToPemFile />
+        <PrivateKeyName />
+        <PrivateKeyPassword />
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="File System">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Save Error Report" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:"C:/Pilotfish/errors/" + getAttribute('error.subdir')}</TargetDirectory>
+        <FileName>error-report</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>false</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+        <OutputFilePath>false</OutputFilePath>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetErrorReportDir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>error.report.dir</AttributeName>
+          <Expression>{ognl:@com.pilotfish.eip.config.EnvironmentConfigReader@getValue(#transaction,null,"error.dir") + "/" + getAttribute('error.subdir')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="File System">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Save Transaction Data" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:getAttribute('error.dir') + '/' + getAttribute('error.subdir')}</TargetDirectory>
+        <FileName>transaction-data</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>false</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+        <OutputFilePath>false</OutputFilePath>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Common.ErrorRoute.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>transactionData</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+    <PostProcessors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Save allAttributes">
+        <ModuleConfig>
+          <ExecuteProcessor>false</ExecuteProcessor>
+          <AttributeName>allAttributes</AttributeName>
+          <Expression>{ognl:#dir=getAttribute('error.dir') + '/' + getAttribute('error.subdir'),#file=new java.io.File(#dir,'transaction.attributes'),@com.pilotfish.utils.FileUtils@writeAttributesToFile(#file,#transaction.getAttributes())}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set allAttributes">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>allAttributes</AttributeName>
+          <Expression>{ognl:#transaction.getAttributes().getAttributes().toString()}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Load allAttributes">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>allAttributes</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write all attributes">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:getAttribute('error.dir') + '/' + getAttribute('error.subdir')}</TargetDirectory>
+          <TargetFileName>transaction-attributes.txt</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </PostProcessors>
+  </Target>
+  <Target icon="" name="File System">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Save Original Text" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:"C:/Pilotfish/errors/" + getAttribute('error.subdir')}</TargetDirectory>
+        <FileName>original</FileName>
+        <FileExtension>txt</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>false</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+        <OutputFilePath>false</OutputFilePath>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Common.ErrorRoute.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="AIE Failure Response">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Call AIE Failure Response" retries="1">
+      <ModuleConfig>
+        <ServiceName>AIE 121 Failure Response Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="PACT Failure Response">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Call PACT Failure Response" retries="1">
+      <ModuleConfig>
+        <ServiceName>PACT Failure Response Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="PRUX Failure Response">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Call PRUX Failure Response" retries="1">
+      <ModuleConfig>
+        <ServiceName>PRUX Failure Response Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="AIG Failure Response">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Call AIG Failure Response" retries="1">
+      <ModuleConfig>
+        <ServiceName>AIG Failure Response Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="LADDER Failure Response">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Call LadderLife Failure Response" retries="1">
+      <ModuleConfig>
+        <ServiceName>LL 121 Failure Response Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="ELFP Failure Response">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Call ELFP Failure Response" retries="1">
+      <ModuleConfig>
+        <ServiceName>ELFP Failure Response Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="TDEX Failure Response">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Call TDEX Failure Response" retries="1">
+      <ModuleConfig>
+        <ServiceName>Teledex Failure Response Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="AIG Legacy Failure Response">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Call AIG Legacy Failure Response" retries="1">
+      <ModuleConfig>
+        <ServiceName>AIGL Failure Response Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="AXA Failure Response">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Call AXA Failure Response" retries="1">
+      <ModuleConfig>
+        <ServiceName>AXA Failure Response Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="ELFP-StoneRiver Failure Response">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Call ELFP-SR Failure Response" retries="1">
+      <ModuleConfig>
+        <ServiceName>ELFP-SR Failure Response</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="FGLI Failure Response">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Call FGLI Failure Response" retries="1">
+      <ModuleConfig>
+        <ServiceName>FGLI Resonant 121 Failure Response Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

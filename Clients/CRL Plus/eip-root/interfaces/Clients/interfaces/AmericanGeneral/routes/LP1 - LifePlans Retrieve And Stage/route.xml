@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="aramos@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="LifePlans - Stage Index/Image Files" />
+          </Targets>
+          <Condition>
+            <Expression>
+              /FileName
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <MustContainString />
+        <MustNotContainString />
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Fork LifePlans Files" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.internal.NullListener" enabled="true" name="Retrieve LifePlans Image (tif) and Index (idx) files - Null Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>$$AIGLifePlansSFTPDisable</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <PollingInterval>900</PollingInterval>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.ftp.JschListingProcessor" name="LifePlans - Retrieve FTP listing">
+        <ModuleConfig>
+          <Host>$$AIGLifePlansSFTPHost</Host>
+          <Port>22</Port>
+          <Timeout>300</Timeout>
+          <SocketTimeout>300</SocketTimeout>
+          <UserName>$$AIGLifePlansSFTPUsername</UserName>
+          <Password>$$AIGLifePlansSFTPPassword</Password>
+          <TargetDirectory>$$AIGLifePlansSFTPDirectory</TargetDirectory>
+          <UseChangeDirectoryCommand>false</UseChangeDirectoryCommand>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="LifePlans - Filter for pairs">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Xalan (Interpreted)</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+          <XSLTVersion>1.0</XSLTVersion>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="LifePlans - Stage Index/Image Files" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$AIGLegacyStagingDirectory</TargetDirectory>
+        <FileName>{ognl:@org.apache.commons.io.FilenameUtils@getBaseName(getAttribute('com.AmericanGeneral.LifePlans.FileName'))}</FileName>
+        <FileExtension>{ognl:@org.apache.commons.io.FilenameUtils@getExtension(getAttribute('com.AmericanGeneral.LifePlans.FileName'))}</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Create New</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+        <OutputFilePath>false</OutputFilePath>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="LifePlans - Populate FileName Attribute">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:com.AmericanGeneral.LifePlans.FileName:eip_name:/FileName:eip_value]</XPathExpressions>
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>true</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.ftp.JschSingleFileProcessor" name="LifePlans Retrieve and Stage Single File">
+        <ModuleConfig>
+          <Host>$$AIGLifePlansSFTPHost</Host>
+          <Port>22</Port>
+          <Timeout>300</Timeout>
+          <SocketTimeout>0</SocketTimeout>
+          <UserName>$$AIGLifePlansSFTPUsername</UserName>
+          <Password>$$AIGLifePlansSFTPPassword</Password>
+          <TargetDirectory>$$AIGLifePlansSFTPDirectory</TargetDirectory>
+          <FileName>{ognl:getAttribute('com.AmericanGeneral.LifePlans.FileName')}</FileName>
+          <PostProcessOperation>Delete</PostProcessOperation>
+          <MoveToDir />
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>AmericanGeneral.LP1 - LifePlans Retrieve And Stage</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="AmericanGeneral.LP1 - LifePlans Retrieve And Stage.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bo:TXLife xmlns:bo="http://ACORD.org/Standards/Life/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.10.00.XSD">
+	<bo:UserAuthRequest>
+		<bo:UserLoginName>AIGI</bo:UserLoginName>
+		<bo:UserPswd>
+			<bo:CryptPswd>NONE</bo:CryptPswd>
+		</bo:UserPswd>
+		<bo:UserDate>2014-07-21</bo:UserDate>
+		<bo:UserTime>16:04:53-05:00</bo:UserTime>
+		<bo:VendorApp>
+			<bo:VendorName VendorCode="118">CRL-PLUS, Inc.</bo:VendorName>
+			<bo:AppName>XMLProc</bo:AppName>
+			<bo:AppVer>1.0</bo:AppVer>
+		</bo:VendorApp>
+	</bo:UserAuthRequest>
+	<bo:TXLifeRequest>
+		<bo:TransRefGUID>7449cc72-204d-49f0-a28b-f5c555f4a4c4</bo:TransRefGUID>
+		<bo:TransType tc="121">General Requirement Order Request</bo:TransType>
+		<bo:TransExeDate>2014-07-21</bo:TransExeDate>
+		<bo:TransExeTime>16:04:53-05:00</bo:TransExeTime>
+		<bo:TestIndicator tc="1">Yes</bo:TestIndicator>
+		<bo:OLifE>
+			<bo:Holding id="Hold2">
+				<bo:HoldingTypeCode tc="2">Policy</bo:HoldingTypeCode>
+				<bo:Policy>
+					<bo:PolNumber>REGIRUSL02</bo:PolNumber>
+					<bo:ProductType tc="0">L</bo:ProductType>
+					<bo:Life>
+						<bo:FaceAmt>125000</bo:FaceAmt>
+					</bo:Life>
+					<bo:ApplicationInfo>
+						<bo:TrackingID>777-76-6661156-8414153</bo:TrackingID>
+					</bo:ApplicationInfo>
+					<bo:RequirementInfo>
+						<bo:ReqCode tc="139">Prepare Inspection Report</bo:ReqCode>
+						<bo:RequestedDate>2014-07-21</bo:RequestedDate>
+						<bo:ReleasePartyOrgCode>AIGI</bo:ReleasePartyOrgCode>
+						<bo:RequirementAcctNum>89817</bo:RequirementAcctNum>
+					</bo:RequirementInfo>
+					<bo:RequirementInfo>
+						<bo:ReqCode tc="334">Financial Credit Check</bo:ReqCode>
+						<bo:RequestedDate>2014-07-21</bo:RequestedDate>
+						<bo:ReleasePartyOrgCode>AIGI</bo:ReleasePartyOrgCode>
+						<bo:RequirementAcctNum>89817</bo:RequirementAcctNum>
+					</bo:RequirementInfo>
+				</bo:Policy>
+				<bo:Attachment>
+					<bo:Description>test of comments made Special attention</bo:Description>
+					<bo:AttachmentType tc="2">Comment</bo:AttachmentType>
+				</bo:Attachment>
+			</bo:Holding>
+			<bo:Party id="Party1_2">
+				<bo:PartyTypeCode tc="1">Person</bo:PartyTypeCode>
+				<bo:GovtID>222334444</bo:GovtID>
+				<bo:GovtIDTC tc="1">Social Security Number US</bo:GovtIDTC>
+				<bo:Person>
+					<bo:FirstName>BOBBY</bo:FirstName>
+					<bo:LastName>TESTCASEB</bo:LastName>
+					<bo:Occupation>Manager</bo:Occupation>
+					<bo:MarStat tc="3">Divorced</bo:MarStat>
+					<bo:Gender tc="2">F</bo:Gender>
+					<bo:BirthDate>1972-02-02</bo:BirthDate>
+					<bo:DriversLicenseNum>334455</bo:DriversLicenseNum>
+					<bo:DriversLicenseState tc="51">TX</bo:DriversLicenseState>
+				</bo:Person>
+				<bo:Address>
+					<bo:AddressTypeCode tc="1">Residence</bo:AddressTypeCode>
+					<bo:Line1>10 Monroe St</bo:Line1>
+					<bo:City>Houston</bo:City>
+					<bo:AddressState>TX</bo:AddressState>
+					<bo:Zip>77000</bo:Zip>
+				</bo:Address>
+				<bo:Phone>
+					<bo:AreaCode>713</bo:AreaCode>
+					<bo:DialNumber />
+				</bo:Phone>
+			</bo:Party>
+			<bo:Party id="Party2_2">
+				<bo:PartyTypeCode tc="2">Organization</bo:PartyTypeCode>
+				<bo:FullName>Target Co</bo:FullName>
+				<bo:Organization>
+					<bo:AbbrName>Target Co</bo:AbbrName>
+				</bo:Organization>
+				<bo:Address>
+					<bo:AddressTypeCode tc="2">Business</bo:AddressTypeCode>
+					<bo:Line1>25 Dolly Ln</bo:Line1>
+					<bo:Line2>Suite 100</bo:Line2>
+					<bo:City>Houston</bo:City>
+					<bo:AddressState>TX</bo:AddressState>
+					<bo:Zip>77018</bo:Zip>
+				</bo:Address>
+				<bo:Phone>
+					<bo:PhoneTypeCode tc="2">Business</bo:PhoneTypeCode>
+					<bo:AreaCode>713</bo:AreaCode>
+					<bo:DialNumber>8311000</bo:DialNumber>
+				</bo:Phone>
+			</bo:Party>
+			<bo:Party id="Party3_2">
+				<bo:PartyTypeCode tc="1">Person</bo:PartyTypeCode>
+				<bo:Person>
+					<bo:FirstName>Bob</bo:FirstName>
+					<bo:LastName>Best</bo:LastName>
+				</bo:Person>
+			</bo:Party>
+			<bo:Party id="Party4_2">
+				<bo:PartyTypeCode tc="1">Person</bo:PartyTypeCode>
+				<bo:FullName>Sam Jones</bo:FullName>
+				<bo:Person>
+					<bo:FirstName>Sam</bo:FirstName>
+					<bo:LastName>Jones</bo:LastName>
+				</bo:Person>
+				<bo:Phone>
+					<bo:PhoneTypeCode tc="2">Business</bo:PhoneTypeCode>
+					<bo:AreaCode>888</bo:AreaCode>
+					<bo:DialNumber>5121000</bo:DialNumber>
+				</bo:Phone>
+			</bo:Party>
+			<bo:Party id="Party5_2">
+				<bo:PartyTypeCode tc="2">Organization</bo:PartyTypeCode>
+				<bo:FullName>Jones Agency</bo:FullName>
+				<bo:Organization>
+					<bo:AbbrName>Jones Agency</bo:AbbrName>
+				</bo:Organization>
+				<bo:Phone>
+					<bo:PhoneTypeCode tc="2">Business</bo:PhoneTypeCode>
+					<bo:AreaCode>888</bo:AreaCode>
+					<bo:DialNumber>5121000</bo:DialNumber>
+				</bo:Phone>
+			</bo:Party>
+			<bo:Relation OriginatingObjectID="Hold2" RelatedObjectID="Party1_2" id="Relation1_2">
+				<bo:OriginatingObjectType tc="4">Holding</bo:OriginatingObjectType>
+				<bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+				<bo:RelationRoleCode tc="32">Insured</bo:RelationRoleCode>
+			</bo:Relation>
+			<bo:Relation OriginatingObjectID="Hold2" RelatedObjectID="Party2_2" id="Relation2_2">
+				<bo:OriginatingObjectType tc="4">Holding</bo:OriginatingObjectType>
+				<bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+				<bo:RelationRoleCode tc="7">Employer</bo:RelationRoleCode>
+				<bo:NameFromRelatedObject>Target Co</bo:NameFromRelatedObject>
+			</bo:Relation>
+			<bo:Relation OriginatingObjectID="Hold2" RelatedObjectID="Party3_2" id="Relation3_2">
+				<bo:OriginatingObjectType tc="4">Holding</bo:OriginatingObjectType>
+				<bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+				<bo:RelationRoleCode tc="34">Beneficiary</bo:RelationRoleCode>
+				<bo:RelationDescription tc="0">Father</bo:RelationDescription>
+				<bo:NameFromRelatedObject>Best</bo:NameFromRelatedObject>
+			</bo:Relation>
+			<bo:Relation OriginatingObjectID="Hold2" RelatedObjectID="Party4_2" id="Relation4_2">
+				<bo:OriginatingObjectType tc="4">Holding</bo:OriginatingObjectType>
+				<bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+				<bo:RelationRoleCode tc="182">Writing Agency</bo:RelationRoleCode>
+				<bo:NameFromRelatedObject>Sam Jones</bo:NameFromRelatedObject>
+			</bo:Relation>
+			<bo:Relation OriginatingObjectID="Hold2" RelatedObjectID="Party5_2" id="Relation5_2">
+				<bo:OriginatingObjectType tc="4">Holding</bo:OriginatingObjectType>
+				<bo:RelatedObjectType tc="6">Party</bo:RelatedObjectType>
+				<bo:RelationRoleCode tc="37">Primary Writing Agent</bo:RelationRoleCode>
+				<bo:NameFromRelatedObject>Jones Agency</bo:NameFromRelatedObject>
+			</bo:Relation>
+		</bo:OLifE>
+	</bo:TXLifeRequest>
+</bo:TXLife>
+

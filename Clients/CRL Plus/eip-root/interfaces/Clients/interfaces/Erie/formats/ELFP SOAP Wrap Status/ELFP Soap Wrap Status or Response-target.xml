@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://www.dell.com" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" elementFormDefault="qualified">
+			<xsd:element name="Format">
+				<xsd:complexType>
+					<xsd:sequence />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="GetHost" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="GetHostResponse" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="GetVersion" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="GetVersionResponse" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="NoteProcessor" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="NoteProcessorResponse" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="TXlifeProcessor" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="TXlifeProcessorResponse" />
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://www.dell.com" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="https://www.dell.com">
+			<xsd:element name="GetHost">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string" />
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetHostResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="0" name="GetHostResult" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetVersion">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string" />
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetVersionResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="0" name="GetVersionResult" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="NoteProcessor">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="0" name="XML" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="NoteProcessorResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="0" name="NoteProcessorResult" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="TXlifeProcessor">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="0" name="XML" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="TXlifeProcessorResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="0" name="TXlifeProcessorResult" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

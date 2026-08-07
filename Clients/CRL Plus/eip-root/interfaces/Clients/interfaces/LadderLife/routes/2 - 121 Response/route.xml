@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="LL.OrderReceived.SyncResponse.ToSender" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('com.pilotfish.eip.synchronousResponseTicket') != null ? true : false</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="LL.2 - 121 Response.Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Incoming Routes Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source name="From Route - LL.1 - 121 Incoming">
+    <FormatProfile name="Generate 121 Sync Response" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" name="LL 121 Response Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Source name="System Unnamed">
+    <FormatProfile name="Generate 121 Failure Sync Response" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" name="LL 121 Failure Response Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target name="Back To 121 Sender">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="LL.OrderReceived.SyncResponse.ToSender" retries="1" />
+  </Target>
+  <Description>&lt;p&gt;
+      &lt;b&gt;*Note:&lt;/b&gt; only send a sync response if there is something to send a 
+      sync response back to ... meaning if the 121 message was sent into the 
+      system from a directory listsener instead of an HTTP Post, then there 
+      would be no where to send the sync response back to.
+    &lt;/p&gt;</Description>
+</Route>
+

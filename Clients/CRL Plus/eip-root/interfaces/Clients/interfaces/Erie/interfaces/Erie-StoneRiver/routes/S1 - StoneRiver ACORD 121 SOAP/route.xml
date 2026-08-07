@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2018-05-25T10:57:19-04:00" ModifiedBy="ar.pftest@gmail.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="StoneRiver to Holding Directory" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>ErieHoldIncomingOrder</Name>
+              <Operator>=</Operator>
+              <Value>true</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="StoneRiver to Teledex and FlowNet" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Incoming Routes Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <MustContainString />
+        <MustNotContainString />
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="StoneRiver Incoming">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.http.HttpPostListener" enabled="true" name="StoneRiver 121 HTTP Post Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <RequestPath>/erie</RequestPath>
+        <Timeout>600</Timeout>
+        <TimeoutHandlingMechanism>Send timeout message</TimeoutHandlingMechanism>
+        <Synchronous>true</Synchronous>
+        <RequireSSL>false</RequireSSL>
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <WsdlFile>ORDER.WSDL</WsdlFile>
+        <WsdlContentType>application/wsdl+xml</WsdlContentType>
+        <ValidateAtListenerLevel>false</ValidateAtListenerLevel>
+        <USE_BASIC_AUTH>true</USE_BASIC_AUTH>
+        <AUTH_FILE>$$ErieIncomingAuthFile</AUTH_FILE>
+        <REALM>PilotFish</REALM>
+        <AdditionalResources />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="Erie-StoneRiver - Remove External Entities">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:&lt;!ENTITY[^&gt;]*&gt;:eip_name::eip_value][eip_pair:&lt;!DOCTYPE[^&gt;]*&gt;:eip_name::eip_value][eip_pair:&lt;!ENTITY:eip_name:&lt;!--:eip_value][eip_pair:&lt;!DOCTYPE:eip_name:&lt;!--:eip_value]</REGEX_TABLE_TAG>
+          <PostProcessOptions>Replace all \n with newlines</PostProcessOptions>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathValueProcessor" name="Erie.S1 - Get CRL Doc">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Namespace>http://crlcorp.com/DocumentService</Namespace>
+          <ForkingXPath>//*[local-name()='OrderData']</ForkingXPath>
+          <TreatAsXML>false</TreatAsXML>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.S1 - set sourceClient">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>sourceClient</AttributeName>
+          <Expression>ELFP</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor" name="Erie.S1 - set FileName">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <RegEx>&lt;(\w+:)?PolNumber&gt;(.*?)&lt;/(\w+:)?PolNumber&gt;</RegEx>
+          <AttributeName>com.pilotfish.FileName</AttributeName>
+          <MatchGroupNumber>2</MatchGroupNumber>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.S1 - set ErieHoldIncomingOrder">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>ErieHoldIncomingOrder</AttributeName>
+          <Expression>$$ErieHoldIncomingOrder</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Erie.S1 - set original.received.order">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>original.received.order</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="" name="Test Dir">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="StoneRiver 121 Directory Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <PollingInterval>30</PollingInterval>
+        <PollingDirectory>{ognl:@com.pilotfish.eip.config.EnvironmentConfigReader@getValue(#transaction,null,"inputDir") + "/ERIE"}</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction />
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Delete</PostProcessOperation>
+        <TargetDirectory />
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.S1 - set sourceClient-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>sourceClient</AttributeName>
+          <Expression>ELFP</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor" name="Erie.S1 - set FileName-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <RegEx>&lt;(\w+:)?PolNumber&gt;(.*?)&lt;/(\w+:)?PolNumber&gt;</RegEx>
+          <AttributeName>com.pilotfish.FileName</AttributeName>
+          <MatchGroupNumber>2</MatchGroupNumber>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Erie.S1 - set original.received.order-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>original.received.order</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="To FlowNet">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="StoneRiver to FlowNet" retries="1">
+      <ModuleConfig>
+        <ServiceName>Source Document Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.S1 - set defaultSourceInfoName 2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>defaultSourceInfoName</AttributeName>
+          <Expression>STONERIVER</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.S1 - set defaultSourceInfoDescr 2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>defaultSourceInfoDescr</AttributeName>
+          <Expression>Erie-StoneRiver</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="To Teledex and FlowNet">
+    <FormatProfile name="StoneRiver 121 to 103" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="StoneRiver to Teledex and FlowNet" retries="1">
+      <ModuleConfig>
+        <ServiceName>Teledex.1 - Incoming Order Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.S1 - set defaultSourceInfoName">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>defaultSourceInfoName</AttributeName>
+          <Expression>STONERIVER</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.S1 - set defaultSourceInfoDescr">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>defaultSourceInfoDescr</AttributeName>
+          <Expression>Erie-StoneRiver</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Holding Directory">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="StoneRiver to Holding Directory" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileOperationProcessor" name="ELFP.S1 - Create holding dir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>C:\Pilotfish\staging\holding-ERIE</FileName>
+          <Overwrite>false</Overwrite>
+          <ExceptionOnFailure>false</ExceptionOnFailure>
+          <PostProcessOperation>Create Folder</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="ELFP.S1 - Save to holding directory">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>C:\Pilotfish\staging\holding-ERIE</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('com.pilotfish.FileName')+new java.text.SimpleDateFormat('-yyyy-MM-dd-HH-mm-ss-SSS').format(new java.util.Date())}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="ELFP.S1 - Load success response">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>success-response.xml</FileName>
+          <PostProcessOperation>Do Nothing</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

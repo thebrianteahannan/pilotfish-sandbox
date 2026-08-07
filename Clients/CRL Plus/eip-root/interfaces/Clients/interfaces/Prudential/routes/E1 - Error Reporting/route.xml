@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.db.DatabaseSqlListener" name="PRUX Validation Error Polling DB Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <PollingInterval>1200</PollingInterval>
+        <InputFile>sql.xml</InputFile>
+        <UserName>$$db.username</UserName>
+        <Password>$$db.password</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$db.driver</JdbcDriver>
+        <JdbcURL>$$db.url</JdbcURL>
+        <SchedulerStartTag>M0W0D1H23m25</SchedulerStartTag>
+        <SchedulerEndTag>M0W0D1H23m30</SchedulerEndTag>
+        <ExcludeDaysTag>Sat,Sun</ExcludeDaysTag>
+        <ExcludeDatesTag>2016-11-24,2016-12-26,2017-01-02,2017-01-16,2017-02-20,2017-05-29,2017-07-04,2017-09-04,2017-11-23,2017-12-25</ExcludeDatesTag>
+        <TimeZone>US/Central</TimeZone>
+        <BatchSensitive>false</BatchSensitive>
+        <Timeout>600</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema>CRL_INSIGHT_TO_PFISH</RestrictMetaDataToSchema>
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <UseSingleOutputStream>true</UseSingleOutputStream>
+        <RefreshHandler>false</RefreshHandler>
+        <JDBCProperties>null</JDBCProperties>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target name="System Unnamed">
+    <FormatProfile name="ErrorReportExcelFormatting" />
+    <Transport class="com.pilotfish.eip.modules.email.EmailTransport" name="PRUX Error Report Email Delivery" retries="1">
+      <ModuleConfig>
+        <Host>$$mail.server</Host>
+        <UserName />
+        <Password />
+        <Port>25</Port>
+        <SSLEnabled>false</SSLEnabled>
+        <StartTLS>false</StartTLS>
+        <SendFrom>$$mail.errors.from</SendFrom>
+        <ReplyTo />
+        <SendTo>$$mail.errors.to.prudential</SendTo>
+        <Subject>{ognl:getAttribute('com.crl.prudential.error.EmailSubject')+' ('+@com.pilotfish.eip.config.EnvironmentConfigReader@getValue(#transaction,null,"crl.environment")+')'}</Subject>
+        <DataInAttachment>true</DataInAttachment>
+        <AttachmentFilename>Errors.xlsx</AttachmentFilename>
+        <MIMEType>text/html</MIMEType>
+        <ENCRYPT_MESSAGE>false</ENCRYPT_MESSAGE>
+        <DNS_FIND_CERT>false</DNS_FIND_CERT>
+        <PathToCertificate />
+        <SIGN_MESSAGE>false</SIGN_MESSAGE>
+        <PathToPemFile />
+        <PrivateKeyName />
+        <PrivateKeyPassword />
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

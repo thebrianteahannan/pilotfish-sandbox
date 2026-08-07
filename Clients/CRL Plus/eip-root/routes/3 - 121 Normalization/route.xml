@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Incoming Routes Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <MustContainString />
+        <MustNotContainString />
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="From Doc Source">
+    <FormatProfile name="121-to-Standard-121" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Non-standard 121">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ROOT.3 - 121 Normalization.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RelationRoleCodeTabularMappingsFilePath</AttributeName>
+          <Expression>{ognl:@com.pilotfish.eip.config.EnvironmentConfigReader@getValue(#transaction,null,"ACORD_RoleRelationCodes_FilePath")}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="Parse Attachments">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Store Attachments" retries="1">
+      <ModuleConfig>
+        <ServiceName>Parse Attachment Loop</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="3 - 121 Normalization - Capture Route Name for Call Route">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>{ognl:getAttribute('sourceClient') + '-' + getAttribute('com.pilotfish.FileName') + '-121Normalization'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="3 - 121 Normalization - Capture Call Route">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Description>&lt;h1&gt;
+      121 Normalization
+    &lt;/h1&gt;
+    &lt;h2&gt;
+      Overview:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The 121 Normalization route listens for a non-normalized Acord 121 
+      document format and applies XSLT to transform it into a normalized 
+      format able to be read by CRL's inhouse information systems.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Source:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The two possible sources for this route are the Document Type Discovery 
+      route, in the case of Acord 121, or the Incoming to Standard 121, in the 
+      case of Acord 103 or Nailba.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Listener:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      A programmable listener is called from a previous route containing a 
+      non-normalized Acord 121 document in the transaciton body. The listener 
+      forwards the transaction to the Acord 121 Attachments route to strip any 
+      inline attachments prior to any transformation taking place.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Source Transform:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The document is transformed into a normalized Acord 121 format by 
+      appying the &amp;quot;ToStandard121.xslt&amp;quot; style sheet.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Target Transform:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The transaction is relayed to the Target transport that will include 
+      output to a CRL in-house system.
+    &lt;/p&gt;</Description>
+</Route>
+

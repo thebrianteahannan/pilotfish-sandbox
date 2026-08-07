@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.http.SoapHttpPostListener"
+        id="3dd5b10a-73b6-4738-a094-6577a875593f"
+        name="AmericanGeneral"
+        tag="Listener"
+        type="SOAP Web Service"
+        version="2.0">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      <CLIAllowed>false</CLIAllowed>
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      <FIFOQueueName></FIFOQueueName>
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      <CheckInactivity>false</CheckInactivity>
+      <InactivityTransactionCount>1</InactivityTransactionCount>
+      <InactivityPolling>500</InactivityPolling>
+      <MonitoringTime>11:53-11:53</MonitoringTime>
+      <InactivityExcludedDays></InactivityExcludedDays>
+      <InactivityIncludeErrors>false</InactivityIncludeErrors>
+      <ThrottlingMode>None</ThrottlingMode>
+      <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+      <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+      <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+      <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+      <RequestPath>aigp</RequestPath>
+      <Timeout>600</Timeout>
+      <TimeoutHandlingMechanism>Send timeout message</TimeoutHandlingMechanism>
+      <Synchronous>true</Synchronous>
+      <RequireSSL>false</RequireSSL>
+      <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+      <WsdlFile>ORDER.WSDL</WsdlFile>
+      <WsdlContentType>application/wsdl+xml</WsdlContentType>
+      <ValidateAtListenerLevel>false</ValidateAtListenerLevel>
+      <USE_BASIC_AUTH>false</USE_BASIC_AUTH>
+      <AUTH_FILE>auth.txt</AUTH_FILE>
+      <REALM>PilotFish</REALM>
+      <AdditionalResources></AdditionalResources>
+      <SoapVersion>Autodetect SOAP Version</SoapVersion>
+      <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+      <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+      <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+      <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+   </ModuleConfig>
+</Module>

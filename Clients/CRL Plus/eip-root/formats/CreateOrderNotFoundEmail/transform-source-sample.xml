@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:TXLife xmlns:ns2="http://ACORD.org/Standards/Life/2" Version="">
+	<ns2:UserAuthRequest>
+		<ns2:UserLoginName>PACLIFE</ns2:UserLoginName>
+		<ns2:UserPswd>
+			<ns2:CryptPswd>PAcMras150727!</ns2:CryptPswd>
+			<ns2:CryptType>NONE</ns2:CryptType>
+			<ns2:Pswd />
+		</ns2:UserPswd>
+		<ns2:UserDate>2016-03-15</ns2:UserDate>
+		<ns2:UserTime>10:18:24</ns2:UserTime>
+		<ns2:VendorApp>
+			<ns2:VendorName VendorCode="" />
+			<ns2:AppName>MRAS AIS</ns2:AppName>
+			<ns2:AppVer>4.10.0</ns2:AppVer>
+		</ns2:VendorApp>
+	</ns2:UserAuthRequest>
+	<ns2:TXLifeRequest PrimaryObj="HoldingType_1">
+		<ns2:TransRefGUID>1659C651-537B-4924-13E2-BE818D83CD49</ns2:TransRefGUID>
+		<ns2:TransType tc="121">General Requirement Order Request</ns2:TransType>
+		<ns2:TransExeDate />
+		<ns2:TransExeTime />
+		<ns2:TransMode tc="2">Original</ns2:TransMode>
+		<ns2:TestIndicator tc="1">YES</ns2:TestIndicator>
+		<ns2:OLifE>
+			<ns2:SourceInfo>
+				<ns2:CreationDate>2016-03-15</ns2:CreationDate>
+				<ns2:CreationTime>10:18:24</ns2:CreationTime>
+				<ns2:SourceInfoName>MRAS AIS</ns2:SourceInfoName>
+				<ns2:SourceInfoDescription />
+			</ns2:SourceInfo>
+			<ns2:Holding id="HoldingType_1">
+				<ns2:HoldingTypeCode tc="2">Policy</ns2:HoldingTypeCode>
+				<ns2:Policy CarrierPartyID="PartyType_1" id="PolicyType_1">
+					<ns2:PolNumber>AT10192050pf</ns2:PolNumber>
+					<ns2:LineOfBusiness tc="1">Life</ns2:LineOfBusiness>
+					<ns2:ProductType tc="" />
+					<ns2:ProductCode />
+					<ns2:CarrierCode>CCode</ns2:CarrierCode>
+					<ns2:PlanName />
+					<ns2:PolicyStatus tc="" />
+					<ns2:PolicyValue />
+					<ns2:PaymentMode tc="" />
+					<ns2:PaymentMethod tc="" />
+					<ns2:Life>
+						<ns2:InitialPremAmt />
+						<ns2:FaceAmt>230000.000000</ns2:FaceAmt>
+						<ns2:Coverage id="CoverageType_1">
+							<ns2:PlanName />
+							<ns2:ShortName />
+							<ns2:LifeCovStatus tc="" />
+							<ns2:LifeCovTypeCode tc="" />
+							<ns2:IndicatorCode tc="" />
+							<ns2:CurrentAmt>230000.000000</ns2:CurrentAmt>
+							<ns2:LifeParticipant PartyID="" id="">
+								<ns2:LifeParticipantRoleCode tc="" />
+							</ns2:LifeParticipant>
+						</ns2:Coverage>
+					</ns2:Life>
+					<ns2:ApplicationInfo>
+						<ns2:TrackingID>2016-02-26-02.54.17.646340C01-1_life_1_TI_1</ns2:TrackingID>
+						<ns2:ApplicationJurisdiction tc="" />
+						<ns2:SignedDate />
+						<ns2:PrefLanguage tc="" />
+					</ns2:ApplicationInfo>
+					<ns2:RequirementInfo AppliesToPartyID="PartyType_2_life_1" id="RequirementInfoType_1">
+						<ns2:ReqCode tc="137">Conduct Tele-Interview</ns2:ReqCode>
+						<ns2:RequirementInfoUniqueID>2016-02-26-02.54.17.646340C01-1_life_1_TI_1</ns2:RequirementInfoUniqueID>
+						<ns2:RequestedDate>2016-03-15</ns2:RequestedDate>
+						<ns2:RequestedScheduleDate />
+						<ns2:RequestedScheduleTimeStart />
+						<ns2:ReleasePartyOrgCode>PACT</ns2:ReleasePartyOrgCode>
+						<ns2:RequirementAcctNum>71648</ns2:RequirementAcctNum>
+						<ns2:CarrierOrderNum>test</ns2:CarrierOrderNum>
+						<ns2:RequirementInfoKey>2016-02-26-02.54.17.646340C01-1_life_1_TI_1</ns2:RequirementInfoKey>
+						<ns2:RequirementDetails />
+					</ns2:RequirementInfo>
+				</ns2:Policy>
+			</ns2:Holding>
+			<ns2:Party id="PartyType_1">
+				<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+				<ns2:GovtID />
+				<ns2:Organization>
+					<ns2:AbbrName>InsCom</ns2:AbbrName>
+				</ns2:Organization>
+				<ns2:FullName>Insurance Company</ns2:FullName>
+				<ns2:Address>
+					<ns2:AddressTypeCode tc="2">Business</ns2:AddressTypeCode>
+					<ns2:Line1>Address Line 1</ns2:Line1>
+					<ns2:Line2>Address Line 2</ns2:Line2>
+					<ns2:City>City</ns2:City>
+					<ns2:AddressState>UN</ns2:AddressState>
+					<ns2:AddressStateTC tc="0">UN</ns2:AddressStateTC>
+					<ns2:Zip />
+					<ns2:PreventOverrideInd tc="" />
+				</ns2:Address>
+				<ns2:Phone>
+					<ns2:PhoneTypeCode tc="2" />
+					<ns2:AreaCode>1</ns2:AreaCode>
+					<ns2:DialNumber>1234567</ns2:DialNumber>
+					<ns2:Ext />
+				</ns2:Phone>
+				<ns2:ResidenceState tc="" />
+				<ns2:ResidenceCountry tc="" />
+			</ns2:Party>
+			<ns2:Party id="PartyType_2_life_1">
+				<ns2:PartyTypeCode tc="1">Person</ns2:PartyTypeCode>
+				<ns2:GovtID>030000000</ns2:GovtID>
+				<ns2:Person>
+					<ns2:FirstName>FLOW</ns2:FirstName>
+					<ns2:MiddleName />
+					<ns2:LastName>CRLTESTK</ns2:LastName>
+					<ns2:Occupation />
+					<ns2:Gender tc="1">Male</ns2:Gender>
+					<ns2:BirthDate>1982-10-15</ns2:BirthDate>
+					<ns2:Citizenship tc="" />
+					<ns2:BirthCountry tc="" />
+					<ns2:BirthJurisdictionTC tc="" />
+					<ns2:Prefix />
+				</ns2:Person>
+				<ns2:FullName />
+				<ns2:Address>
+					<ns2:AddressTypeCode tc="1">Residence</ns2:AddressTypeCode>
+					<ns2:Line1>30 Mortensen Avenue</ns2:Line1>
+					<ns2:Line2 />
+					<ns2:City>Sacramento</ns2:City>
+					<ns2:AddressState>IA</ns2:AddressState>
+					<ns2:AddressStateTC tc="19">IA</ns2:AddressStateTC>
+					<ns2:Zip>11111</ns2:Zip>
+					<ns2:PreventOverrideInd tc="" />
+				</ns2:Address>
+				<ns2:Phone>
+					<ns2:PhoneTypeCode tc="1" />
+					<ns2:AreaCode>111</ns2:AreaCode>
+					<ns2:DialNumber>222-3334</ns2:DialNumber>
+					<ns2:Ext />
+				</ns2:Phone>
+				<ns2:ResidenceState tc="" />
+				<ns2:ResidenceCountry tc="" />
+			</ns2:Party>
+			<ns2:Relation OriginatingObjectID="HoldingType_1" RelatedObjectID="PartyType_1" id="RelationType_1">
+				<ns2:OriginatingObjectType tc="4" />
+				<ns2:RelatedObjectType tc="6" />
+				<ns2:RelationRoleCode tc="87" />
+			</ns2:Relation>
+			<ns2:Relation OriginatingObjectID="HoldingType_1" RelatedObjectID="PartyType_2_life_1" id="RelationType_2">
+				<ns2:OriginatingObjectType tc="4" />
+				<ns2:RelatedObjectType tc="6" />
+				<ns2:RelationRoleCode tc="32" />
+			</ns2:Relation>
+		</ns2:OLifE>
+	</ns2:TXLifeRequest>
+</ns2:TXLife>
+

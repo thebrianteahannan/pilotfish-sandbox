@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PoolsConfig>
+  <Pool BaseThreadCount="1" ExpirationTimeout="10000" IdleTimeout="500" MaxThreadCount="1" QueueSize="-1" name="PacificLife.3.SFTP">
+    <Stage Route="3 - PACT ACORD 1122 Status or Result POST" System="" name="Upload Test Status" type="Transport" />
+  </Pool>
+  <Pool BaseThreadCount="5" ExpirationTimeout="10000" IdleTimeout="500" MaxThreadCount="20" QueueSize="-1" name="PacificLife.3.Any">
+    <Stage Route="3 - PACT ACORD 1122 Status or Result POST" System="" name="" type="Any" />
+  </Pool>
+</PoolsConfig>
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor"
+        id="ea25aee3-8f90-46e4-97de-13a2a6bac061"
+        name="AIG.1 - set FileName-Copy-1"
+        tag="Processor"
+        type="RegEx Into Transaction Attribute"
+        version="2.0">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      <RegEx>&lt;PolNumber&gt;(.*)&lt;/PolNumber&gt;</RegEx>
+      <AttributeName>com.pilotfish.FileName</AttributeName>
+      <MatchGroupNumber>1</MatchGroupNumber>
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:err="http://www.pilotfishtechnology.com/eip/RouteErrorReport" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="http://www.pilotfishtechnology.com/eip/RouteErrorReport">
+			<xsd:element name="errorReport">
+				<xsd:complexType>
+					<xsd:sequence />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="transactionID" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="errorStage" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="errorComponent" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="0" name="errorRoute" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="0" name="errorInterface" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="0" name="exceptionClass" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="0" name="exceptionMessage" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="0" name="exceptionTrace" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="0" name="transactionData" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="10000" minOccurs="0" name="transactionAttributes">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="name" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

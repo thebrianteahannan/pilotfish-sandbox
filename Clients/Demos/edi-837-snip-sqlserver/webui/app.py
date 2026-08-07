@@ -35,6 +35,9 @@ ROUTES_DIR = Path(
 DOCUMENTS_DIR = Path(os.environ.get("DOCUMENTS_DIR", "/documents"))
 ROUTE_PDF_NAME = os.environ.get("ROUTE_PDF_NAME", "EDI837_V2_Route_Diagrams.pdf")
 CAPABILITY_PDF_NAME = os.environ.get("CAPABILITY_PDF_NAME", "EDI837_Capability_Brief.pdf")
+TEST_PLAN_PDF_NAME = os.environ.get("TEST_PLAN_PDF_NAME", "EDI837_Test_Plan.pdf")
+TEST_RESULTS_PDF_NAME = os.environ.get("TEST_RESULTS_PDF_NAME", "EDI837_Test_Results.pdf")
+EIP_PUBLIC_URL = os.environ.get("EIP_PUBLIC_URL", "http://localhost:8093/eip/")
 
 PATIENTS = {
     "PAT-1001": {"label": "CUNNINGHAM, BOB (PAT-1001)", "provider": "PRV-01"},
@@ -147,7 +150,9 @@ def index():
         "index.html",
         patients=PATIENTS,
         lan_hint=os.environ.get("LAN_HINT", ""),
+        eip_url=EIP_PUBLIC_URL,
         has_xslt=bool(discover_xslt_files()),
+        test_results_pdf=TEST_RESULTS_PDF_NAME,
     )
 
 
@@ -512,11 +517,118 @@ def route_diagrams_pdf():
 def capability_pdf_alias():
     path = DOCUMENTS_DIR / CAPABILITY_PDF_NAME
     if path.is_file():
-        return send_file(path)
+        return send_file(path, mimetype="application/pdf", as_attachment=False)
+    local = Path(__file__).resolve().parent.parent / "documents" / CAPABILITY_PDF_NAME
+    if local.is_file():
+        return send_file(local, mimetype="application/pdf", as_attachment=False)
     return Response(
         "Capability brief not generated yet. Run: python3 tools/export_stakeholder_brief.py",
         status=404,
     )
+
+
+@app.get("/documents/test-plan.pdf")
+def test_plan_pdf_alias():
+    for base in (DOCUMENTS_DIR, Path(__file__).resolve().parent.parent / "documents"):
+        path = base / TEST_PLAN_PDF_NAME
+        if path.is_file():
+            return send_file(path, mimetype="application/pdf", as_attachment=False)
+    return Response(
+        "Test plan PDF not found. Run: python3 tools/export_test_plan_pdf.py",
+        status=404,
+    )
+
+
+@app.get("/documents/test-results.pdf")
+def test_results_pdf_alias():
+    for base in (DOCUMENTS_DIR, Path(__file__).resolve().parent.parent / "documents"):
+        for name in (TEST_RESULTS_PDF_NAME, "test-results.pdf"):
+            path = base / name
+            if path.is_file():
+                return send_file(
+                    path, mimetype="application/pdf", as_attachment=False, download_name=name
+                )
+    return Response(
+        "Test results PDF not found yet. Run: python3 tools/run_interface_tests.py --wait",
+        status=404,
+    )
+
+
+@app.get("/documents/<path:name>")
+def documents_file(name: str):
+    safe = Path(name).name
+    if safe != name or ".." in name or "/" in name or "\\" in name:
+        return Response("Invalid document name", status=400)
+    for base in (DOCUMENTS_DIR, Path(__file__).resolve().parent.parent / "documents"):
+        path = base / safe
+        if path.is_file():
+            return send_file(path, as_attachment=False)
+    return Response(f"Document not found: {safe}", status=404)
+
+
+
+# INFO_TAB_STANDARD_BOOTSTRAP
+try:
+    from document_routes import ensure_document_routes
+except ImportError:
+    ensure_document_routes = None  # type: ignore
+
+_INFO_TAB_CTX = {
+    "info_title": 'SQL Server claims → 837P + SNIP',
+    "info_blurb": 'Poll PENDING claims, map to EDI XML, convert with the <strong>EDI Transformation Module</strong>, validate with <strong>EdiSNIPValidationProcessor</strong> (Types 1–3 at runtime), and view the SNIP HTML report in the UI.',
+    "info_note": 'Demo only — SQL → 837P + SNIP Types 1–3. Types 4–7 + <code>snip7-demo-rules.xml</code> are ready when <code>EDISNIP</code> is licensed.',
+    "eip_url": 'http://localhost:8093/eip/',
+    "lan_hint": "",
+    "info_ports": [
+        {"label": "SQL Server", "value": "14335"},
+        {"label": "PilotFish EIP", "value": "8093"},
+        {"label": "Demo Web UI", "value": "8095"}
+    ],
+    "info_extra_links": [],
+    "info_extra_sections": [{'title': 'SNIP levels (this demo)', 'items': ['Types 1–3 — <strong>on</strong> (integrity, HIPAA requirements, balancing)', 'Type 4 — off until <code>EDISNIP</code> (inter-segment)', 'Type 5 — off until <code>EDISNIP</code> (external code sets)', 'Types 6–7 — off until <code>EDISNIP</code>; rule file <code>snip7-demo-rules.xml</code> (demo: POS ≠ 99)'], 'note': 'Sandbox <code>pflicense.key</code> lacks <code>EDISNIP</code>. Enabling Types 4–7 aborts SNIP and leaves reports empty — so runtime stays on Types 1–3.'}],
+    "test_results_pdf": 'EDI837_Test_Results.pdf',
+}
+
+@app.context_processor
+def _info_tab_standard_context():
+    import os as _os
+    ctx = dict(_INFO_TAB_CTX)
+    eip = _os.environ.get("EIP_PUBLIC_URL")
+    if eip:
+        ctx["eip_url"] = eip
+    lan = _os.environ.get("LAN_HINT", "")
+    if lan:
+        ctx["lan_hint"] = lan
+    return ctx
+
+if ensure_document_routes is not None:
+    from pathlib import Path as _Path
+    import os as _os
+    _docs_dir = _Path(_os.environ.get("DOCUMENTS_DIR", "/documents"))
+    ensure_document_routes(
+        app,
+        _docs_dir,
+        route_pdf_name='EDI837_V2_Route_Diagrams.pdf',
+        capability_pdf_name='EDI837_Capability_Brief.pdf',
+        test_plan_pdf_name='EDI837_Test_Plan.pdf',
+        test_results_pdf_name='EDI837_Test_Results.pdf',
+    )
+# END INFO_TAB_STANDARD_BOOTSTRAP
+
+
+# TIMING_TAB_API_BOOTSTRAP
+try:
+    from document_routes import ensure_build_timing_api
+except ImportError:
+    ensure_build_timing_api = None  # type: ignore
+if ensure_build_timing_api is not None:
+    from pathlib import Path as _PathTiming
+    import os as _os_timing
+    ensure_build_timing_api(
+        app,
+        _PathTiming(_os_timing.environ.get("DOCUMENTS_DIR", "/documents")),
+    )
+# END TIMING_TAB_API_BOOTSTRAP
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8095, debug=False)

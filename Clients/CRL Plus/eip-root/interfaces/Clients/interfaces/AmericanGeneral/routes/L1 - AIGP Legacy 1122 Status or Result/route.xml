@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="AIGP.L1 - Ignore Statuses" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('reqAcctNum') != null &amp;&amp; getAttribute('reqAcctNum') &gt;= "1056" &amp;&amp; getAttribute('reqAcctNum') &lt;= "1063"</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="AIGP.L1 - Ignore Statuses" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('com.pilotfish.crl.statustype')!=null and getAttribute('com.pilotfish.crl.statustype').toString().equalsIgnoreCase('status')</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="AIGP.L1 - Ignore Statuses" />
+            <TransportTarget name="AIGP.L1 - Upload Completed 1122" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('modetc')!=null and getAttribute('modetc').toString().equals('6') and getAttribute('completedButNotReported').equals('true')</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="AIGP.L1 Awaiting Attachments" />
+          </Targets>
+          <Condition>
+            <And>
+              <Expression>
+                //ns1:RequirementInfo[ns1:ReqStatus/@tc=11 and ns1:StatusEvent and not(ns1:Attachment/ns1:FileName)]
+                <Namespaces>
+                  <Namespace name="ns1">http://ACORD.org/Standards/Life/2</Namespace>
+                </Namespaces>
+              </Expression>
+              <Attribute>
+                <Name>completedButNotReported</Name>
+                <Operator>=</Operator>
+                <Value>true</Value>
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="AIGP.L1 - Call Next Route" />
+            <TransportTarget name="AIGP.L1 - Upload Completed 1122" />
+          </Targets>
+          <Condition>
+            <And>
+              <Expression>
+                //ns1:RequirementInfo[ns1:ReqStatus/@tc=11 and ns1:StatusEvent and ns1:Attachment/ns1:FileName]
+                <Namespaces>
+                  <Namespace name="ns1">http://ACORD.org/Standards/Life/2</Namespace>
+                </Namespaces>
+              </Expression>
+              <Attribute>
+                <Name>hasCompletedDate</Name>
+                <Operator>=</Operator>
+                <Value>true</Value>
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="AIGP.L1 - Ignore Statuses" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>false</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <MustContainString />
+        <MustNotContainString />
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="AIGP.L1 - 1122 Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIGP.L1 - set completedButNotReported">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>completedButNotReported</AttributeName>
+          <Expression>{ognl:#completed=getAttribute('com.pilotfish.crl.ordercompletedate'),#reported=getAttribute('finalResultsDeliveredDate'),(#completed!=null &amp;&amp; #reported==null)?"true":"false"}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIGP.L1 - set hasCompletedDate">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>hasCompletedDate</AttributeName>
+          <Expression>{ognl:(getAttribute('com.pilotfish.crl.ordercompletedate') != null) ? "true" : "false"}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="AIG.L2">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="AIGP.L1 - Call Next Route" retries="1">
+      <ModuleConfig>
+        <ServiceName>AIG.L2 - Staging Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="FlowNet Database">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="AIGP.L1 - Ignore Statuses" retries="1">
+      <ModuleConfig>
+        <ServiceName>Update Status Inbound</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="SFTP">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.ftp.FTPTransport" name="AIGP.L1 - Upload Completed 1122" retries="1">
+      <ModuleConfig>
+        <FTPTransportType>Encrypted FTP (JSCH SSH/SFTP)</FTPTransportType>
+        <Host>$$AIGLegacy1122FTPHost</Host>
+        <Port>22</Port>
+        <TargetDirectory>$$AIGLegacy1122FTPDirectory</TargetDirectory>
+        <FileName>{ognl:"ACORD1122-AIG-a" + getAttribute('reqAcctNum')+'-f'+getAttribute('flownetOrderNumber')+'-t'+getAttribute('teledexOrderNumber') + new java.text.SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID()}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <Timeout>300</Timeout>
+        <Sftp_SocketTimeout>0</Sftp_SocketTimeout>
+        <RetryConnection>false</RetryConnection>
+        <RetryDelay>1</RetryDelay>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private (P)</Protection>
+        <FileType>Binary</FileType>
+        <AppendToFile>false</AppendToFile>
+        <Overwrite>false</Overwrite>
+        <CheckForFileAfterWriting>false</CheckForFileAfterWriting>
+        <FAIL_ON_FALSE_RESULT>true</FAIL_ON_FALSE_RESULT>
+        <WriteFromHome>false</WriteFromHome>
+        <UserName>$$AIGLegacy1122FTPUsername</UserName>
+        <Password>$$AIGLegacy1122FTPPassword</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="FlowNet Database">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="AIGP.L1 Awaiting Attachments" retries="1">
+      <ModuleConfig>
+        <ServiceName>Update Status Inbound</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIGP.L1-Clear statuses">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>statuses</AttributeName>
+          <Expression>&lt;XCSData /&gt;</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIGP.L1-set awaitingAttachments">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.statustype</AttributeName>
+          <Expression>awaitingAttachments</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

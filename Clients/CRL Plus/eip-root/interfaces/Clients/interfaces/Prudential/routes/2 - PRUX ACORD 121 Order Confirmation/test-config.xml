@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestConfigurations>
+   <TestConfig name="ImageSaveError">
+      <Stage>
+         <Identifier>processor@transport=PRUX ACORD 121 Order Confirmation.Synchronous Response,processor=Get TransRefGUID</Identifier>
+         <IsStart file="C:\Pilotfish\eip-root\debug-trace\Clients.PacificLife.2 - PACT ACORD 121 Order Confirmation\4925 26194\1 - Listener - PACT Failure Response Listener.trace">true</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+         <TransactionAttributes>
+            <Attribute key="com.pilotfish.Host" value="172.18.6.87:8443"/>
+            <Attribute key="com.pilotfish.RemoteAddr" value="192.168.152.51"/>
+            <Attribute key="com.pilotfish.X-Forwarded-Server" value="plus-intg-test.crlcorp.com"/>
+            <Attribute key="com.pilotfish.eip.synchronousResponseTicket"
+                       value="com.pilotfish.eip.SynchronousResponseTicket@17ecc33c"/>
+            <Attribute key="com.pilotfish.X-Forwarded-Host" value="plus-intg-test.crlcorp.com"/>
+            <Attribute key="defaultSourceInfoDescr" value="Pacific Life"/>
+            <Attribute key="docStart" value="&lt;?xml "/>
+            <Attribute key="com.pilotfish.crl.original.txt"
+                       value="&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; standalone=&#34;yes&#34;?&gt;&#xA;&lt;TXLife xsi:schemaLocation=&#34;http://ACORD.org/Standards/Life/2 TXLife2.20.02.xsd&#34; xmlns=&#34;http://ACORD.org/Standards/Life/2&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34;&gt;&#xA;&#x9;&lt;UserAuthRequest&gt;&#xA;&#x9;&#x9;&lt;UserLoginName&gt;PACLIFE&lt;/UserLoginName&gt;&#xA;&#x9;&#x9;&lt;UserPswd&gt;&#xA;&#x9;&#x9;&#x9;&lt;CryptType&gt;NONE&lt;/CryptType&gt;&#xA;&#x9;&#x9;&#x9;&lt;CryptPswd&gt;PAcMras150727!&lt;/CryptPswd&gt;&#xA;&#x9;&#x9;&lt;/UserPswd&gt;&#xA;&#x9;&#x9;&lt;UserDate&gt;2016-03-18&lt;/UserDate&gt;&#xA;&#x9;&#x9;&lt;UserTime&gt;09:59:04&lt;/UserTime&gt;&#xA;&#x9;&#x9;&lt;VendorApp&gt;&#xA;&#x9;&#x9;&#x9;&lt;AppName&gt;MRAS AIS&lt;/AppName&gt;&#xA;&#x9;&#x9;&#x9;&lt;AppVer&gt;4.10.0&lt;/AppVer&gt;&#xA;&#x9;&#x9;&lt;/VendorApp&gt;&#xA;&#x9;&lt;/UserAuthRequest&gt;&#xA;&#x9;&lt;TXLifeRequest&gt;&#xA;&#x9;&#x9;&lt;TransRefGUID&gt;MIKE-B625079C-1538-AAA8-47B6-F92EE8583CD4&lt;/TransRefGUID&gt;&#xA;&#x9;&#x9;&lt;TransType tc=&#34;121&#34;&gt;General Requirement Order Request&lt;/TransType&gt;&#xA;&#x9;&#x9;&lt;TransMode tc=&#34;2&#34;&gt;Original&lt;/TransMode&gt;&#xA;&#x9;&#x9;&lt;TestIndicator tc=&#34;1&#34;&gt;YES&lt;/TestIndicator&gt;&#xA;&#x9;&#x9;&lt;OLifE&gt;&#xA;&#x9;&#x9;&#x9;&lt;SourceInfo&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;CreationDate&gt;2016-03-18&lt;/CreationDate&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;CreationTime&gt;09:59:04&lt;/CreationTime&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;SourceInfoName&gt;MRAS AIS&lt;/SourceInfoName&gt;&#xA;&#x9;&#x9;&#x9;&lt;/SourceInfo&gt;&#xA;&#x9;&#x9;&#x9;&lt;Holding id=&#34;HoldingType_1&#34;&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;HoldingTypeCode tc=&#34;2&#34;&gt;Policy&lt;/HoldingTypeCode&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;Policy id=&#34;PolicyType_1&#34; CarrierPartyID=&#34;PartyType_1&#34;&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;PolNumber&gt;MIKE-AU10022660&lt;/PolNumber&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;CarrierCode&gt;CCode&lt;/CarrierCode&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;Life&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;FaceAmt&gt;150000.000000&lt;/FaceAmt&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;Coverage id=&#34;CoverageType_1&#34;&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;CurrentAmt&gt;150000.000000&lt;/CurrentAmt&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;/Coverage&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;/Life&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;ApplicationInfo&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;TrackingID&gt;MIKE-2016-03-17-09.18.22.752520C01-1_life_1_APS_3&lt;/TrackingID&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;/ApplicationInfo&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;RequirementInfo id=&#34;RequirementInfoType_1&#34; AppliesToPartyID=&#34;PartyType_2_life_1&#34;&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;ReqCode tc=&#34;11&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;RequirementInfoKey&gt;MIKE-2016-03-17-09.18.22.752520C01-1_life_1_APS_3&lt;/RequirementInfoKey&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;RequirementInfoUniqueID&gt;MIKE-2016-03-17-09.18.22.752520C01-1_life_1_APS_3&lt;/RequirementInfoUniqueID&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;RequestedDate&gt;2016-03-18&lt;/RequestedDate&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;ReleasePartyOrgCode&gt;PACT&lt;/ReleasePartyOrgCode&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;RequirementAcctNum&gt;78748&lt;/RequirementAcctNum&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;/RequirementInfo&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;/Policy&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;Attachment&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;Description&gt;test instructions on manually ordered APS for Pharma results&lt;/Description&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;AttachmentData/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;AttachmentType tc=&#34;2&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;/Attachment&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;Attachment&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;Description&gt;992057935261.TIF&lt;/Description&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;AttachmentData tc=&#34;1&#34;&gt;IRGJROKRWLReMRmNRuOR2PR+QSGRSOSSWTSeUSmVSuWS2XS==&lt;/AttachmentData&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;AttachmentType tc=&#34;1&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;TransferEncodingTypeString&gt;base64&lt;/TransferEncodingTypeString&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;AttachmentLocation tc=&#34;1&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;/Attachment&gt;&#xA;&#x9;&#x9;&#x9;&lt;/Holding&gt;&#xA;&#x9;&#x9;&#x9;&lt;Party id=&#34;PartyType_1&#34;&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;PartyTypeCode tc=&#34;2&#34;&gt;Organization&lt;/PartyTypeCode&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;FullName&gt;Insurance Company&lt;/FullName&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;Organization&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;AbbrName&gt;InsCom&lt;/AbbrName&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;/Organization&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;Address&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;Line1&gt;Address Line 1&lt;/Line1&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;Line2&gt;Address Line 2&lt;/Line2&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;City&gt;City&lt;/City&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;AddressCountry&gt;Country&lt;/AddressCountry&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;/Address&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;Phone&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;PhoneTypeCode tc=&#34;2&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;CountryCode&gt;+1&lt;/CountryCode&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;AreaCode&gt;1&lt;/AreaCode&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;DialNumber&gt;1234567&lt;/DialNumber&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;/Phone&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;EMailAddress/&gt;&#xA;&#x9;&#x9;&#x9;&lt;/Party&gt;&#xA;&#x9;&#x9;&#x9;&lt;Relation id=&#34;RelationType_1&#34; OriginatingObjectID=&#34;HoldingType_1&#34; RelatedObjectID=&#34;PartyType_1&#34;&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;OriginatingObjectType tc=&#34;4&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;RelatedObjectType tc=&#34;6&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;RelationRoleCode tc=&#34;87&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&lt;/Relation&gt;&#xA;&#x9;&#x9;&#x9;&lt;Party id=&#34;PartyType_2_life_1&#34;&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;PartyTypeCode tc=&#34;1&#34;&gt;Person&lt;/PartyTypeCode&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;GovtID&gt;030000000&lt;/GovtID&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;Person id=&#34;PersonType_1&#34;&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;FirstName&gt;FLOW&lt;/FirstName&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;LastName&gt;CRLTESTD-two&lt;/LastName&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;Gender tc=&#34;1&#34;&gt;Male&lt;/Gender&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;BirthDate&gt;1944-08-23&lt;/BirthDate&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;/Person&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;Address&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;Line1&gt;45 Enterprise, Apt 112&lt;/Line1&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;City&gt;Aliso Viejo&lt;/City&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;AddressStateTC tc=&#34;6&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;Zip&gt;92688&lt;/Zip&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;AddressCountryTC tc=&#34;1&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;/Address&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;Phone&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;PhoneTypeCode tc=&#34;1&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;AreaCode&gt;111&lt;/AreaCode&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;DialNumber&gt;222-3334&lt;/DialNumber&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;/Phone&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;Risk&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;MedicalExam&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;LabSlipTicketNum&gt;8030269354&lt;/LabSlipTicketNum&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;/MedicalExam&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;/Risk&gt;&#xA;&#x9;&#x9;&#x9;&lt;/Party&gt;&#xA;&#x9;&#x9;&#x9;&lt;Relation id=&#34;RelationType_2&#34; OriginatingObjectID=&#34;HoldingType_1&#34; RelatedObjectID=&#34;PartyType_2_life_1&#34;&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;OriginatingObjectType tc=&#34;4&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;RelatedObjectType tc=&#34;6&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;RelationRoleCode tc=&#34;32&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&lt;/Relation&gt;&#xA;&#x9;&#x9;&#x9;&lt;Party id=&#34;PartyType_3_APS_3&#34;&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;PartyTypeCode tc=&#34;1&#34;&gt;Person&lt;/PartyTypeCode&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;FullName&gt;BRENT BERNSTEIN&lt;/FullName&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;Address&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;Line1&gt;303 WEST BROAD STREET&lt;/Line1&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;Line2/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;City&gt;BETHLEHEM&lt;/City&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;AddressStateTC tc=&#34;45&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;Zip&gt;18018&lt;/Zip&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;AddressCountryTC tc=&#34;1&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;/Address&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;Phone/&gt;&#xA;&#x9;&#x9;&#x9;&lt;/Party&gt;&#xA;&#x9;&#x9;&#x9;&lt;Relation id=&#34;RelationType_3&#34; OriginatingObjectID=&#34;HoldingType_1&#34; RelatedObjectID=&#34;PartyType_3_APS_3&#34;&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;OriginatingObjectType tc=&#34;4&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;RelatedObjectType tc=&#34;6&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&lt;RelationRoleCode tc=&#34;41&#34;/&gt;&#xA;&#x9;&#x9;&#x9;&lt;/Relation&gt;&#xA;&#x9;&#x9;&lt;/OLifE&gt;&#xA;&#x9;&lt;/TXLifeRequest&gt;&#xA;&lt;/TXLife&gt;"/>
+            <Attribute key="ErrorListener" value="incoming"/>
+            <Attribute key="password" value="PL47@vB$wJ653"/>
+            <Attribute key="com.pilotfish.hostname" value="ntpfish-tvl1"/>
+            <Attribute key="com.pilotfish.eip.OriginatingTransactionCreationTime"
+                       value="2016-05-05 01:22:38:275"/>
+            <Attribute key="com.pilotfish.Synchronous" value="true"/>
+            <Attribute key="com.pilotfish.Content-Type" value="text/xml;charset=UTF-8"/>
+            <Attribute key="com.pilotfish.eip.transactionHistory"
+                       value="com.pilotfish.eip.transact.TransactionHistory@36212921"/>
+            <Attribute key="sourceClient" value="PACT"/>
+            <Attribute key="com.pilotfish.X-Forwarded-For" value="172.18.6.87"/>
+            <Attribute key="com.pilotfish.eip.modules.http.HTTPPostTransport.HTTPResponseCode"
+                       value="500"/>
+            <Attribute key="com.pilotfish.joinKey" value="Call PACT Failure Response"/>
+            <Attribute key="com.pilotfish.SOAPAction"
+                       value="&#34;http://crlcorp.com/DocumentService/SubmitOrderData&#34;"/>
+            <Attribute key="bypassImageService" value=""/>
+            <Attribute key="acordDoctype" value="121"/>
+            <Attribute key="error.dir" value="C:/Pilotfish/errors"/>
+            <Attribute key="com.pilotfish.eip.currentPathKey" value="java.lang.Object@7a499a51"/>
+            <Attribute key="guid" value="MIKE-B625079C-1538-AAA8-47B6-F92EE8583CD4"/>
+            <Attribute key="error.subdir" value="pf.PACT.201605126-132238.000.incoming.4920"/>
+            <Attribute key="acordBatchSize" value="1.0"/>
+            <Attribute key="defaultSourceInfoName" value="PACT"/>
+            <Attribute key="inboundClient" value="PACT"/>
+            <Attribute key="com.pilotfish.Accept-Encoding" value="gzip,deflate"/>
+            <Attribute key="com.pilotfish.Content-Length" value="7171"/>
+            <Attribute key="com.pilotfish.FileName" value="null"/>
+            <Attribute key="CustomerName" value="PACT"/>
+            <Attribute key="archive.dir" value="C:/Pilotfish/archive/PACT"/>
+            <Attribute key="com.pilotfish.RequestURL" value="http://172.18.6.87:8443/http-post/pact"/>
+            <Attribute key="numAttachments" value="2.0"/>
+            <Attribute key="Acord123.ValidCredentials" value="true"/>
+            <Attribute key="com.pilotfish.RequestPath" value="pact"/>
+            <Attribute key="transactionData"
+                       value="&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;&lt;ns2:TXLife xmlns:ns2=&#34;http://ACORD.org/Standards/Life/2&#34; Version=&#34;&#34;&gt;&lt;ns2:UserAuthRequest&gt;&lt;ns2:UserLoginName&gt;PACLIFE&lt;/ns2:UserLoginName&gt;&lt;ns2:UserPswd&gt;&lt;ns2:CryptPswd&gt;PAcMras150727!&lt;/ns2:CryptPswd&gt;&lt;ns2:CryptType&gt;NONE&lt;/ns2:CryptType&gt;&lt;ns2:Pswd/&gt;&lt;/ns2:UserPswd&gt;&lt;ns2:UserDate&gt;2016-03-18&lt;/ns2:UserDate&gt;&lt;ns2:UserTime&gt;09:59:04&lt;/ns2:UserTime&gt;&lt;ns2:VendorApp&gt;&lt;ns2:VendorName VendorCode=&#34;&#34;/&gt;&lt;ns2:AppName&gt;MRAS AIS&lt;/ns2:AppName&gt;&lt;ns2:AppVer&gt;4.10.0&lt;/ns2:AppVer&gt;&lt;/ns2:VendorApp&gt;&lt;/ns2:UserAuthRequest&gt;&lt;ns2:TXLifeRequest PrimaryObj=&#34;HoldingType_1&#34;&gt;&lt;ns2:TransRefGUID&gt;MIKE-B625079C-1538-AAA8-47B6-F92EE8583CD4&lt;/ns2:TransRefGUID&gt;&lt;ns2:TransType tc=&#34;121&#34;&gt;General Requirement Order Request&lt;/ns2:TransType&gt;&lt;ns2:TransExeDate/&gt;&lt;ns2:TransExeTime/&gt;&lt;ns2:TransMode tc=&#34;2&#34;&gt;Original&lt;/ns2:TransMode&gt;&lt;ns2:TestIndicator tc=&#34;1&#34;&gt;YES&lt;/ns2:TestIndicator&gt;&lt;ns2:OLifE&gt;&lt;ns2:SourceInfo&gt;&lt;ns2:CreationDate&gt;2016-03-18&lt;/ns2:CreationDate&gt;&lt;ns2:CreationTime&gt;09:59:04&lt;/ns2:CreationTime&gt;&lt;ns2:SourceInfoName&gt;MRAS AIS&lt;/ns2:SourceInfoName&gt;&lt;ns2:SourceInfoDescription/&gt;&lt;/ns2:SourceInfo&gt;&lt;ns2:Holding id=&#34;HoldingType_1&#34;&gt;&lt;ns2:HoldingTypeCode tc=&#34;2&#34;&gt;Policy&lt;/ns2:HoldingTypeCode&gt;&lt;ns2:Policy CarrierPartyID=&#34;PartyType_1&#34; id=&#34;PolicyType_1&#34;&gt;&lt;ns2:PolNumber&gt;MIKE-AU10022660&lt;/ns2:PolNumber&gt;&lt;ns2:LineOfBusiness tc=&#34;1&#34;&gt;Life&lt;/ns2:LineOfBusiness&gt;&lt;ns2:ProductType tc=&#34;&#34;/&gt;&lt;ns2:ProductCode/&gt;&lt;ns2:CarrierCode&gt;CCode&lt;/ns2:CarrierCode&gt;&lt;ns2:PlanName/&gt;&lt;ns2:PolicyStatus tc=&#34;&#34;/&gt;&lt;ns2:PolicyValue/&gt;&lt;ns2:PaymentMode tc=&#34;&#34;/&gt;&lt;ns2:PaymentMethod tc=&#34;&#34;/&gt;&lt;ns2:Life&gt;&lt;ns2:InitialPremAmt/&gt;&lt;ns2:FaceAmt&gt;150000.000000&lt;/ns2:FaceAmt&gt;&lt;ns2:Coverage id=&#34;CoverageType_1&#34;&gt;&lt;ns2:PlanName/&gt;&lt;ns2:ShortName/&gt;&lt;ns2:LifeCovStatus tc=&#34;&#34;/&gt;&lt;ns2:LifeCovTypeCode tc=&#34;&#34;/&gt;&lt;ns2:IndicatorCode tc=&#34;&#34;/&gt;&lt;ns2:CurrentAmt&gt;150000.000000&lt;/ns2:CurrentAmt&gt;&lt;ns2:LifeParticipant id=&#34;&#34; PartyID=&#34;&#34;&gt;&lt;ns2:LifeParticipantRoleCode tc=&#34;&#34;/&gt;&lt;/ns2:LifeParticipant&gt;&lt;/ns2:Coverage&gt;&lt;/ns2:Life&gt;&lt;ns2:ApplicationInfo&gt;&lt;ns2:TrackingID&gt;MIKE-2016-03-17-09.18.22.752520C01-1_life_1_APS_3&lt;/ns2:TrackingID&gt;&lt;ns2:ApplicationJurisdiction tc=&#34;&#34;/&gt;&lt;ns2:SignedDate/&gt;&lt;ns2:PrefLanguage tc=&#34;&#34;/&gt;&lt;/ns2:ApplicationInfo&gt;&lt;ns2:RequirementInfo AppliesToPartyID=&#34;PartyType_2_life_1&#34; id=&#34;RequirementInfoType_1&#34;&gt;&lt;ns2:ReqCode tc=&#34;11&#34;&gt;Obtain Attending Physician Statement&lt;/ns2:ReqCode&gt;&lt;ns2:RequirementInfoUniqueID&gt;MIKE-2016-03-17-09.18.22.752520C01-1_life_1_APS_3&lt;/ns2:RequirementInfoUniqueID&gt;&lt;ns2:RequestedDate&gt;2016-03-18&lt;/ns2:RequestedDate&gt;&lt;ns2:RequestedScheduleDate/&gt;&lt;ns2:RequestedScheduleTimeStart/&gt;&lt;ns2:ReleasePartyOrgCode&gt;PACT&lt;/ns2:ReleasePartyOrgCode&gt;&lt;ns2:RequirementAcctNum&gt;78748&lt;/ns2:RequirementAcctNum&gt;&lt;ns2:CarrierOrderNum/&gt;&lt;ns2:RequirementInfoKey&gt;MIKE-2016-03-17-09.18.22.752520C01-1_life_1_APS_3&lt;/ns2:RequirementInfoKey&gt;&lt;ns2:RequirementDetails/&gt;&lt;/ns2:RequirementInfo&gt;&lt;/ns2:Policy&gt;&lt;ns2:Attachment&gt;&lt;ns2:AttachmentBasicType tc=&#34;&#34;/&gt;&lt;ns2:Description&gt;test instructions on manually ordered APS for Pharma results&lt;/ns2:Description&gt;&lt;ns2:AttachmentType tc=&#34;2&#34;&gt;Comment/Remark&lt;/ns2:AttachmentType&gt;&lt;ns2:MimeType/&gt;&lt;ns2:TransferEncodingTypeString/&gt;&lt;ns2:TransferEncodingTypeTC tc=&#34;&#34;/&gt;&lt;ns2:AttachmentLocation tc=&#34;&#34;/&gt;&lt;/ns2:Attachment&gt;&lt;ns2:Attachment&gt;&lt;ns2:AttachmentBasicType tc=&#34;&#34;/&gt;&lt;ns2:Description&gt;992057935261.TIF&lt;/ns2:Description&gt;&lt;ns2:AttachmentData&gt;IRGJROKRWLReMRmNRuOR2PR+QSGRSOSSWTSeUSmVSuWS2XS==&lt;/ns2:AttachmentData&gt;&lt;ns2:AttachmentType tc=&#34;1&#34;&gt;Document&lt;/ns2:AttachmentType&gt;&lt;ns2:MimeType/&gt;&lt;ns2:TransferEncodingTypeString&gt;base64&lt;/ns2:TransferEncodingTypeString&gt;&lt;ns2:TransferEncodingTypeTC tc=&#34;&#34;/&gt;&lt;ns2:AttachmentLocation tc=&#34;1&#34;/&gt;&lt;/ns2:Attachment&gt;&lt;/ns2:Holding&gt;&lt;ns2:Party id=&#34;PartyType_1&#34;&gt;&lt;ns2:PartyTypeCode tc=&#34;2&#34;&gt;Organization&lt;/ns2:PartyTypeCode&gt;&lt;ns2:GovtID/&gt;&lt;ns2:Organization&gt;&lt;ns2:AbbrName&gt;InsCom&lt;/ns2:AbbrName&gt;&lt;/ns2:Organization&gt;&lt;ns2:FullName&gt;Insurance Company&lt;/ns2:FullName&gt;&lt;ns2:Address&gt;&lt;ns2:AddressTypeCode tc=&#34;2&#34;&gt;Business&lt;/ns2:AddressTypeCode&gt;&lt;ns2:Line1&gt;Address Line 1&lt;/ns2:Line1&gt;&lt;ns2:Line2&gt;Address Line 2&lt;/ns2:Line2&gt;&lt;ns2:City&gt;City&lt;/ns2:City&gt;&lt;ns2:AddressState&gt;UN&lt;/ns2:AddressState&gt;&lt;ns2:AddressStateTC tc=&#34;0&#34;&gt;UN&lt;/ns2:AddressStateTC&gt;&lt;ns2:Zip/&gt;&lt;ns2:PreventOverrideInd tc=&#34;&#34;/&gt;&lt;/ns2:Address&gt;&lt;ns2:Phone&gt;&lt;ns2:PhoneTypeCode tc=&#34;2&#34;/&gt;&lt;ns2:AreaCode&gt;1&lt;/ns2:AreaCode&gt;&lt;ns2:DialNumber&gt;1234567&lt;/ns2:DialNumber&gt;&lt;ns2:Ext/&gt;&lt;/ns2:Phone&gt;&lt;ns2:ResidenceState tc=&#34;&#34;/&gt;&lt;ns2:ResidenceCountry tc=&#34;&#34;/&gt;&lt;/ns2:Party&gt;&lt;ns2:Party id=&#34;PartyType_2_life_1&#34;&gt;&lt;ns2:PartyTypeCode tc=&#34;1&#34;&gt;Person&lt;/ns2:PartyTypeCode&gt;&lt;ns2:GovtID&gt;030000000&lt;/ns2:GovtID&gt;&lt;ns2:Person&gt;&lt;ns2:FirstName&gt;FLOW&lt;/ns2:FirstName&gt;&lt;ns2:MiddleName/&gt;&lt;ns2:LastName&gt;CRLTESTD-two&lt;/ns2:LastName&gt;&lt;ns2:Occupation/&gt;&lt;ns2:Gender tc=&#34;1&#34;&gt;Male&lt;/ns2:Gender&gt;&lt;ns2:BirthDate&gt;1944-08-23&lt;/ns2:BirthDate&gt;&lt;ns2:Citizenship tc=&#34;&#34;/&gt;&lt;ns2:BirthCountry tc=&#34;&#34;/&gt;&lt;ns2:BirthJurisdictionTC tc=&#34;&#34;/&gt;&lt;ns2:Prefix/&gt;&lt;/ns2:Person&gt;&lt;ns2:FullName/&gt;&lt;ns2:Address&gt;&lt;ns2:AddressTypeCode tc=&#34;1&#34;&gt;Residence&lt;/ns2:AddressTypeCode&gt;&lt;ns2:Line1&gt;45 Enterprise, Apt 112&lt;/ns2:Line1&gt;&lt;ns2:Line2/&gt;&lt;ns2:City&gt;Aliso Viejo&lt;/ns2:City&gt;&lt;ns2:AddressState&gt;CA&lt;/ns2:AddressState&gt;&lt;ns2:AddressStateTC tc=&#34;6&#34;&gt;CA&lt;/ns2:AddressStateTC&gt;&lt;ns2:Zip&gt;92688&lt;/ns2:Zip&gt;&lt;ns2:PreventOverrideInd tc=&#34;&#34;/&gt;&lt;/ns2:Address&gt;&lt;ns2:Phone&gt;&lt;ns2:PhoneTypeCode tc=&#34;1&#34;/&gt;&lt;ns2:AreaCode&gt;111&lt;/ns2:AreaCode&gt;&lt;ns2:DialNumber&gt;222-3334&lt;/ns2:DialNumber&gt;&lt;ns2:Ext/&gt;&lt;/ns2:Phone&gt;&lt;ns2:ResidenceState tc=&#34;&#34;/&gt;&lt;ns2:ResidenceCountry tc=&#34;&#34;/&gt;&lt;/ns2:Party&gt;&lt;ns2:Party id=&#34;PartyType_3_APS_3&#34;&gt;&lt;ns2:PartyTypeCode tc=&#34;1&#34;&gt;Person&lt;/ns2:PartyTypeCode&gt;&lt;ns2:GovtID/&gt;&lt;ns2:FullName&gt;BRENT BERNSTEIN&lt;/ns2:FullName&gt;&lt;ns2:Address&gt;&lt;ns2:AddressTypeCode tc=&#34;0&#34;&gt;Unknown&lt;/ns2:AddressTypeCode&gt;&lt;ns2:Line1&gt;303 WEST BROAD STREET&lt;/ns2:Line1&gt;&lt;ns2:Line2/&gt;&lt;ns2:City&gt;BETHLEHEM&lt;/ns2:City&gt;&lt;ns2:AddressState&gt;PA&lt;/ns2:AddressState&gt;&lt;ns2:AddressStateTC tc=&#34;45&#34;&gt;PA&lt;/ns2:AddressStateTC&gt;&lt;ns2:Zip&gt;18018&lt;/ns2:Zip&gt;&lt;ns2:PreventOverrideInd tc=&#34;&#34;/&gt;&lt;/ns2:Address&gt;&lt;ns2:Phone&gt;&lt;ns2:PhoneTypeCode tc=&#34;&#34;/&gt;&lt;ns2:AreaCode/&gt;&lt;ns2:DialNumber/&gt;&lt;ns2:Ext/&gt;&lt;/ns2:Phone&gt;&lt;ns2:ResidenceState tc=&#34;&#34;/&gt;&lt;ns2:ResidenceCountry tc=&#34;&#34;/&gt;&lt;/ns2:Party&gt;&lt;ns2:Relation id=&#34;RelationType_1&#34; RelatedObjectID=&#34;PartyType_1&#34; OriginatingObjectID=&#34;HoldingType_1&#34;&gt;&lt;ns2:OriginatingObjectType tc=&#34;4&#34;/&gt;&lt;ns2:RelatedObjectType tc=&#34;6&#34;/&gt;&lt;ns2:RelationRoleCode tc=&#34;87&#34;/&gt;&lt;/ns2:Relation&gt;&lt;ns2:Relation id=&#34;RelationType_2&#34; RelatedObjectID=&#34;PartyType_2_life_1&#34; OriginatingObjectID=&#34;HoldingType_1&#34;&gt;&lt;ns2:OriginatingObjectType tc=&#34;4&#34;/&gt;&lt;ns2:RelatedObjectType tc=&#34;6&#34;/&gt;&lt;ns2:RelationRoleCode tc=&#34;32&#34;/&gt;&lt;/ns2:Relation&gt;&lt;ns2:Relation id=&#34;RelationType_3&#34; RelatedObjectID=&#34;PartyType_3_APS_3&#34; OriginatingObjectID=&#34;HoldingType_1&#34;&gt;&lt;ns2:OriginatingObjectType tc=&#34;4&#34;/&gt;&lt;ns2:RelatedObjectType tc=&#34;6&#34;/&gt;&lt;ns2:RelationRoleCode tc=&#34;41&#34;/&gt;&lt;/ns2:Relation&gt;&lt;/ns2:OLifE&gt;&lt;/ns2:TXLifeRequest&gt;&lt;/ns2:TXLife&gt;"/>
+            <Attribute key="timeZoneConversion" value="2"/>
+            <Attribute key="com.pilotfish.Protocol" value="HTTP/1.1"/>
+            <Attribute key="com.pilotfish.ServerPort" value="8443"/>
+            <Attribute key="com.pilotfish.xsltFileName" value="transform.xslt"/>
+            <Attribute key="com.pilotfish.eip.OriginatingTransactionID" value="4920"/>
+            <Attribute key="com.pilotfish.Connection" value="Keep-Alive"/>
+            <Attribute key="isNailba" value="false"/>
+            <Attribute key="com.pilotfish.ServerName" value="172.18.6.87"/>
+            <Attribute key="com.pilotfish.eip.TransactionCreationTime" value="2016-05-05 01:22:38:802"/>
+            <Attribute key="com.pilotfish.Locale" value="en_US"/>
+            <Attribute key="com.pilotfish.User-Agent" value="Apache-HttpClient/4.1.1 (java 1.5)"/>
+            <Attribute key="com.pilotfish.RemoteHost" value="192.168.152.51"/>
+            <Attribute key="username" value="PACT"/>
+         </TransactionAttributes>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=PRUX ACORD 121 Order Confirmation.Synchronous Response,processor=SetErrorTransactionAttributes</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=PRUX ACORD 121 Order Confirmation.Synchronous Response,processor=RestoreOriginalText</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@listener=PRUX Failure Response Listener</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>forking@listener=PRUX Failure Response Listener</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>xslt@listener=PRUX Failure Response Listener</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>routing</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=PRUX ACORD 121 Order Confirmation.Synchronous Response</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=PRUX ACORD 121 Order Confirmation.Synchronous Response</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=PRUX ACORD 121 Order Confirmation.Synchronous Response</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+   </TestConfig>
+</TestConfigurations>

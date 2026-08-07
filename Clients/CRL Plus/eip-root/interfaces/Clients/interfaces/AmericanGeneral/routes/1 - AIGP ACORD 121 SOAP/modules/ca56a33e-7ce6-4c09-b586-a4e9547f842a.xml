@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.other.RegExProcessor"
+        id="ca56a33e-7ce6-4c09-b586-a4e9547f842a"
+        name="AIG.1 - Remove CDATA wrapper"
+        tag="Processor"
+        type="Regular Expression (RegEx)"
+        version="2.0">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      <UseDefaultEncoding>false</UseDefaultEncoding>
+      <Encoding>UTF-8</Encoding>
+      <REGEX_TABLE_TAG>[eip_pair:(?s)^\s*&lt;!\[CDATA\[(.*)\]\]&gt;\s*$:eip_name:$1:eip_value]</REGEX_TABLE_TAG>
+      <PostProcessOptions>Replace all \n with newlines</PostProcessOptions>
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2026-03-27T11:52:44-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Bypass Image Server For Testing" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>bypassImageService</Name>
+              <Operator>=</Operator>
+              <Value>true</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Attachment to CRL Image Server" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Incoming Routes Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="Inbound 121 Order">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Parse Attachments">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="ROOT.Import.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:guid:eip_name://acord:TransRefGUID:eip_value][eip_pair:numAttachments:eip_name:count(//acord:Attachment):eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>true</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="ROOT.6 - Acord-121-Attachments.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>transactionData</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set bypassImageService">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>bypassImageService</AttributeName>
+          <Expression>$$bypass.image.service</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="Image WS">
+    <FormatProfile name="ParseFirstAttachment" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="Attachment to CRL Image Server" retries="1">
+      <ModuleConfig>
+        <TargetURL>$$imagews.store.url</TargetURL>
+        <UserName />
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password />
+        <PreemptiveAuthentication>false</PreemptiveAuthentication>
+        <ResponseListener>Incoming SOAP Response</ResponseListener>
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>60000</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <SynchronizationKey />
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <SpecifyTLS>false</SpecifyTLS>
+        <TLSVersion>TLSv1.1</TLSVersion>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <ValidateHostname>false</ValidateHostname>
+        <ErrorResponseEncoding>UTF-8</ErrorResponseEncoding>
+        <TrustSelfSignedCerts>false</TrustSelfSignedCerts>
+        <DisableChunking>false</DisableChunking>
+        <FormElementEncoding>UTF-8</FormElementEncoding>
+        <UrlParamEncoding>UTF-8</UrlParamEncoding>
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ImageService.StoreDocumentResponse.Processor-Copy-2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>{ognl:getAttribute('sourceClient') + '-' + getAttribute('com.pilotfish.FileName') + '-StoreDocumentRequest'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="ImageService - StoreDocumentResponse - Capture Call Route-Copy-2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Bypass Image Server For Testing" retries="1">
+      <ModuleConfig>
+        <ServiceName>Incoming SOAP Response</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="Load Sample Store Image Response">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>sample-response.xml</FileName>
+          <PostProcessOperation>Do Nothing</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Description>&lt;h1&gt;
+      AcordFormAttachment
+    &lt;/h1&gt;
+    &lt;p&gt;
+      This route parses an Accord XML document and separates out individual 
+      Base64 encoded attachments, saving them to individual files in an output 
+      directory.
+    &lt;/p&gt;
+    &lt;h2&gt;
+      &lt;b&gt;Listener:&lt;/b&gt;
+    &lt;/h2&gt;
+    &lt;p&gt;
+      &lt;b&gt;Sets a parameter, &amp;quot;guid&amp;quot;, that contains the TransRefGUID associated 
+      with the document being processed. &lt;/b&gt;
+    &lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        Programmable Listener
+      &lt;/li&gt;
+      &lt;li&gt;
+        Inbound from Incoming-121-For-APS-Order
+      &lt;/li&gt;
+      &lt;li&gt;
+        Processor: XPath Eval - set guid //ns:TransRefGUID (the unique ID 
+        associated with the &lt;u&gt;entire&lt;/u&gt; document)
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;h2&gt;
+      &lt;b&gt;Source Transform:&lt;/b&gt;
+    &lt;/h2&gt;
+    &lt;p&gt;
+      &lt;b&gt;Executes XPath Forking upon each eval. of //ns:Attachment, the 
+      enclosing tag of attachment data (if any)&lt;/b&gt;
+    &lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        Format Profile:
+      &lt;/li&gt;
+      &lt;li&gt;
+        No Transformation
+      &lt;/li&gt;
+      &lt;li&gt;
+        Forking: XPath Fork on eval. of //ns:Attachment
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;h2&gt;
+      &lt;b&gt;Route:&lt;/b&gt;
+    &lt;/h2&gt;
+    &lt;p&gt;
+      Discard transaction if TransferEncodingTypeString is not base64 or if 
+      the length of the attachment is 0.
+    &lt;/p&gt;
+    &lt;h2&gt;
+      &lt;b&gt;Target Transform:&lt;/b&gt;
+    &lt;/h2&gt;
+    &lt;p&gt;
+      &lt;b&gt;Relay Target Transform&lt;/b&gt;
+    &lt;/p&gt;
+    &lt;h2&gt;
+      &lt;b&gt;Transport:&lt;/b&gt;
+    &lt;/h2&gt;
+    &lt;p&gt;
+      &lt;b&gt;Sets the attributes fileName and fileExtension for use in the output 
+      filename. Retrives the Base64 body of the attachment. Decodes the Base64 
+      to ASCII for output file. Writes an output file for each transaction 
+      containing an attachment.&lt;/b&gt;
+    &lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        Processor1: XPath Eval. - fileName = 
+        //accord:Description[substring-before(.,'.')], fileExtension = 
+        //accord:Description[substring-after(.,'.')]
+      &lt;/li&gt;
+      &lt;li&gt;
+        Processor2: Sets the body of the transaction to the XPath evaluation 
+        //AttachmentData.
+      &lt;/li&gt;
+      &lt;li&gt;
+        Processor3: Decodes the Base64 transaction body to an ASCII string.
+      &lt;/li&gt;
+      &lt;li&gt;
+        Writes out a file that contains the decoded attachment data and sets 
+        the file extension relative to the mimeType)
+      &lt;/li&gt;
+      &lt;li&gt;
+        Target Filename: getAttribute('guid') - getAttribute('fileName') File 
+        Extension: getAttribute('fileExtension')
+      &lt;/li&gt;
+    &lt;/ul&gt;</Description>
+</Route>
+

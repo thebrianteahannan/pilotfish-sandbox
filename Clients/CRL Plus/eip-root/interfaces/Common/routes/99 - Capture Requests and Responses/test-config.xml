@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestConfigurations>
+   <TestConfig name="Store Image - TEST">
+      <AlternateDataSource>From Text</AlternateDataSource>
+      <StartingText>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#xD;
+&lt;Routes&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;2 - GenLab Preanalytical Get Order&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;GetOrderTypeWebService&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;2a - GenLab Preanalytical Get Order Response&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;GetOrderTypeWebServiceResponse&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;5 - ACORD FTP Delivery&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;ILSAcordWebservice&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;5a - ACORD FTP Delivery Response&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;ILSAcordWebserviceResponse&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;6 - ILS DE Queue Insert&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;ILSDEQueueInsertWebService&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;6a - ILS DE Queue Insert Response&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;ILSDEQueueInsertWebServiceResponse&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;7 - GenLab Preanalytical Create Order&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;CreateOrderWebService&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;7a - GenLab Preanalytical Create Order Response&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;CreateOrderWebServiceResponse&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;Reporting - End Message&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;ReportingEndMessageWebService&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;Reporting - End Message Response&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;ReportingEndMessageWebServiceResponse&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;Reporting - New Message&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;ReportingNewMessageWebService&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;Reporting - New Message Response&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;ReportingNewMessageWebServiceResponse&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;Reporting - New Message - Asynchronous Update&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;ReportingNewMessageUpdateWebService&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;1 - Query for Existing Image&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;QueryForExistingImageWebService&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;2 - Query Response&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;QueryForExistingImageWebServiceResponse&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;2a - Delete Existing Image&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;DeleteExistingImageWebService&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;3 - Store Image&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;StoreImageWebService&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;4 - Store Image Response&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;StoreImageWebServiceResponse&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+&lt;/Routes&gt;&#xD;
+&#xD;
+</StartingText>
+      <Stage>
+         <Identifier>processor@transport=ElectronicOrderInterface.99 - Capture Requests and Responses.Directory / File Transport,processor=Get the file name from the route name using the XML created from the XSLT mapping</Identifier>
+         <IsStart>true</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>true</IsEnd>
+         <IsSkipping>false</IsSkipping>
+         <TransactionAttributes>
+            <Attribute name="RouteName">3 - Store Image</Attribute>
+         </TransactionAttributes>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=ElectronicOrderInterface.99 - Capture Requests and Responses.Directory / File Transport,processor=Swap the data saved back in so we can write it to disk</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=ElectronicOrderInterface.99 - Capture Requests and Responses.Directory / File Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+   </TestConfig>
+   <TestConfig name="TestMappings-XPath">
+      <AlternateDataSource>From Text</AlternateDataSource>
+      <StartingText>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#xD;
+&lt;Routes&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;2 - GenLab Preanalytical Get Order&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;GetOrderTypeWebService&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;2 - GenLab Preanalytical Get Order Response&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;GetOrderTypeWebServiceResponse&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;5 - ACORD FTP Delivery&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;ILSAcordWebservice&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;5 - ACORD FTP Delivery Response&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;ILSAcordWebserviceResponse&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;6 - ILS DE Queue Insert&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;ILSDEQueueInsertWebService&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;6 - ILS DE Queue Insert Response&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;ILSDEQueueInsertWebServiceResponse&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;7 - GenLab Preanalytical Create Order&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;CreateOrderWebService&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+	&lt;Route&gt;&#xD;
+		&lt;RouteName&gt;7 - GenLab Preanalytical Create Order Response&lt;/RouteName&gt;&#xD;
+		&lt;FileName&gt;CreateOrderWebServiceResponse&lt;/FileName&gt;&#xD;
+	&lt;/Route&gt;&#xD;
+&lt;/Routes&gt;&#xD;
+&#xD;
+</StartingText>
+      <Stage>
+         <Identifier>processor@transport=ElectronicOrderInterface.99 - Capture Requests and Responses.Directory / File Transport,processor=Get the file name from the route name using the XML created from the XSLT mapping</Identifier>
+         <IsStart>true</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>true</IsEnd>
+         <IsSkipping>false</IsSkipping>
+         <TransactionAttributes>
+            <Attribute name="RouteName">2 - GenLab Preanalytical Get Order</Attribute>
+         </TransactionAttributes>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=ElectronicOrderInterface.99 - Capture Requests and Responses.Directory / File Transport,processor=Swap the data saved back in so we can write it to disk</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=ElectronicOrderInterface.99 - Capture Requests and Responses.Directory / File Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+   </TestConfig>
+</TestConfigurations>

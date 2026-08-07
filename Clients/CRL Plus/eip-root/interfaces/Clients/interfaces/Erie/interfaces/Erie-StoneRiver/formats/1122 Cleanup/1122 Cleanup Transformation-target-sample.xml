@@ -1,0 +1,95 @@
+<?xml version="1.0" standalone="no"?>
+<TXLife xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://ACORD.org/Standards/Life/2"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.23.00.xsd">
+     <UserAuthRequest>
+          <UserLoginName></UserLoginName>
+          <UserPswd>
+               <CryptType>NONE</CryptType>
+               <Pswd></Pswd>
+          </UserPswd>
+          <VendorApp>
+          <VendorName VendorCode="84">Portamedic</VendorName>
+          <AppName>XMLPROC</AppName>
+          <AppVer>1.0.0</AppVer>
+          </VendorApp>
+     </UserAuthRequest>
+     <TXLifeRequest>
+          <!-- New GUID generated for each status transmittal -->
+          <TransRefGUID>A0E9BAA1-538B-42ED-8416-71B219D0DA8F</TransRefGUID>
+          <TransType tc="1122">General Requirements Result Transmittal</TransType>
+          <TransExeDate>2015-03-18</TransExeDate>
+          <TransExeTime>11:01:03-05:00</TransExeTime>
+          <OLifE>
+               <SourceInfo>
+                    <SourceInfoName>Branch : 994 KANSAS TELEDEX SERV</SourceInfoName>
+                    <SourceInfoDescription>Email : TELEDEX@HOOPERHOLMES.COM</SourceInfoDescription>
+                    <SourceInfoComment>Phone : 8006953926</SourceInfoComment>
+               </SourceInfo>
+               <Holding id="Holding_1">
+                    <HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+                    <Policy>
+                         <PolNumber>LI509620</PolNumber>
+                              <Life>
+                                   <FaceAmt>150000</FaceAmt>
+                              </Life>
+                              <ApplicationInfo>
+                                   <TrackingID>2A0F8D9B-76E7-4265-B14B-097BAE8DFF1F</TrackingID>
+                              </ApplicationInfo>
+                              <RequirementInfo AppliesToPartyID="Party_1" RequesterPartyID="Party_Requester_1" FulfillerPartyID="Party_Fulfiller_1">
+                                        <ReqCode tc="137">Tele-Interview</ReqCode>
+                                        <RequirementDetails>Tele-Interview</RequirementDetails>
+                                        <ReqStatus tc="7">Received</ReqStatus>
+                                        <RequestedDate>2015-03-16</RequestedDate>
+                                        <ReceivedAtLocationDate>2015-03-18</ReceivedAtLocationDate>
+                                        <StatusDate>2015-03-18</StatusDate>
+                                        <ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+                                        <RequirementAcctNum>73038</RequirementAcctNum>
+                                        <ProviderOrderNum>994542940</ProviderOrderNum>
+                                        <OrderReceivedDate>2015-03-18</OrderReceivedDate>
+                                        <StatusEvent>
+                                             <StatusEventCode tc="2147483647">Others</StatusEventCode>
+                                             <ProviderEventCode>S79</ProviderEventCode>
+                                             <StatusEventDate>2015-03-18</StatusEventDate>
+                                             <StatusEventTime>10:57:35-05:00</StatusEventTime>
+                                             <StatusEventDetail>Received Order on: 03/18/15</StatusEventDetail>
+                                        </StatusEvent>
+                              </RequirementInfo>
+                    </Policy>
+               </Holding>
+               <Party id="Party_1">
+                    <FullName>PETER TEST</FullName>
+                    <GovtID>787091111</GovtID>
+                    <ResidenceState tc="45">Pennsylvania</ResidenceState>
+                    <ResidenceCountry tc="1">United States of America</ResidenceCountry>
+                              <Person>
+                                   <FirstName>PETER</FirstName>
+                                   <LastName>TEST</LastName>
+                                   <BirthDate>1990-10-11</BirthDate>
+                                   <Age>25</Age>
+                              </Person>
+               </Party>
+               <Party id="Party_Requester_1">
+                    <PartyTypeCode tc="2">Company</PartyTypeCode>
+                    <FullName>ERIE 103 PRODUCTION</FullName>
+                    <Organization>
+                         <DBA>ERIE 103 PRODUCTION</DBA>
+                    </Organization>
+               </Party>
+               <Party id="Party_Fulfiller_1">
+                    <PartyTypeCode tc="2">Company</PartyTypeCode>
+                    <FullName>Hooper Holmes</FullName>
+                    <Organization>
+                                        <DBA>Hooper Holmes</DBA>
+                    </Organization>
+               </Party>
+               <Relation id="Relation_1" OriginatingObjectID="Holding_1" RelatedObjectID="Party_1">
+                    <RelationRoleCode tc="32">Insured</RelationRoleCode>
+               </Relation>
+               <Relation id="Relation_Requester_1" OriginatingObjectID="Party_1" RelatedObjectID="Party_Requester_1">
+                    <RelationRoleCode tc="97">Requestor</RelationRoleCode>
+               </Relation>
+               <Relation id="Relation_Fulfiller_1" OriginatingObjectID="Party_1" RelatedObjectID="Party_Fulfiller_1">
+                    <RelationRoleCode tc="99">Fulfills</RelationRoleCode>
+               </Relation>
+          </OLifE>
+     </TXLifeRequest>
+</TXLife>

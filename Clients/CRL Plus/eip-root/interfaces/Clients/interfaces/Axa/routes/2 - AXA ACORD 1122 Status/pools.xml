@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PoolsConfig>
+  <Pool BaseThreadCount="1" ExpirationTimeout="10000" IdleTimeout="500" MaxThreadCount="1" QueueSize="-1" name="AXA.2.SFTP">
+    <Stage Route="2 - AXA ACORD 1122 Status" System="System Unnamed" name="AXA.2 - Load 1122 to SFTP" type="Transport" />
+  </Pool>
+  <Pool BaseThreadCount="1" ExpirationTimeout="10000" IdleTimeout="500" MaxThreadCount="1" QueueSize="-1" name="AXA.2.Every">
+    <Stage Route="2 - AXA ACORD 1122 Status" System="" name="" type="Every" />
+  </Pool>
+</PoolsConfig>
+

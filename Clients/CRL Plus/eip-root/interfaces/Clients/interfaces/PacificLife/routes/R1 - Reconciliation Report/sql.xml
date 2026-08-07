@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLXML xmlns="http://pilotfish.sqlxml">
+	<Execute into="results" as="result">
+	<!--
+		<SQL>select p.polnumber as PolicyNum, t.FLOWNET_ORDER_NUM as OrderNumber, 
+case r.req_acct_num when '78748' then 'APS' when '78746' then 'APS' else 'TI' END as Requirement_Type, 
+to_char(t.created_date, 'MM-DD-YYYY') as Date_Opened, r.UNIQUEID as UniqueID,'CRL_PLUS' as Company,
+(select FULLNAME from PARTY y, RELATION n where n.ORIGINATING_POLICY_ID=p.POLICY_ID and y.PARTY_ID=n.RELATED_PARTY_ID and n.ROLECODE_TC=41) as Additonal_Info
+from CRLTRANSACTION t inner join POLICY p on t.TRANSACTION_ID=p.TRANSACTION_ID inner join REQ_INFO r on r.POLICY_ID=p.POLICY_ID
+where t.PF_SOURCE_CLIENT='PACT' and r.REQ_STATUS in ('Received','Pending')
+and t.TESTINDICATOR<>2 and t.mode_tc<>6 and r.UNIQUEID like '201%'
+order by p.POLNUMBER</SQL>
+	-->
+		<SQL>select p.polnumber as PolicyNum, t.FLOWNET_ORDER_NUM as OrderNumber, 
+case r.req_acct_num when '78748' then 'APS' when '78746' then 'APS' else 'TI' END as Requirement_Type, 
+to_char(t.created_date, 'MM-DD-YYYY') as Date_Opened, r.UNIQUEID as UniqueID,'CRL_PLUS' as Company,
+(select FULLNAME from PARTY y, RELATION n where n.ORIGINATING_POLICY_ID=p.POLICY_ID and y.PARTY_ID=n.RELATED_PARTY_ID and n.ROLECODE_TC=41) as Additonal_Info
+from CRLTRANSACTION t inner join POLICY p on t.TRANSACTION_ID=p.TRANSACTION_ID inner join REQ_INFO r on r.POLICY_ID=p.POLICY_ID
+where r.REQ_INFO_ID = (select max(ri.REQ_INFO_ID) from REQ_INFO ri where ri.POLICY_ID = p.POLICY_ID)
+and t.PF_SOURCE_CLIENT='PACT' and r.REQ_STATUS in ('Received','Pending')
+and t.TESTINDICATOR&lt;&gt;2 and t.mode_tc&lt;&gt;6 and r.UNIQUEID like '20%' and t.FLOWNET_ORDER_NUM &lt;&gt; 'INVALID'
+and r.REQ_INFO_ID not in (select s.REQ_INFO_ID from STATUS s where s.PROVIDER_EVENT_CODE in ('S78','S76','S82'))
+and p.POLICY_ID not in (select h.POLICY_ID from REQ_INFO_HIS h where h.REQ_STATUS='Completed')
+and t.FLOWNET_ORDER_NUM not in ('78660')
+order by p.POLNUMBER</SQL>
+	</Execute>
+	<XMLOut var="results" />
+</SQLXML>

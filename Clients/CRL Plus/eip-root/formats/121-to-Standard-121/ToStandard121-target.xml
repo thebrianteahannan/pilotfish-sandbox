@@ -1,0 +1,1377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://ACORD.org/Standards/Life/2" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ACORD.org/Standards/Life/2">
+			<xsd:element name="TXLife">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="UserAuthRequest" type="ns2:UserAuthRequest_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="TXLifeRequest" type="ns2:TXLifeRequest_element_type" />
+					</xsd:sequence>
+					<xsd:attribute name="Version" type="xsd:string" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="PrefPhone1_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="MedicalExam_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="LabSlipTicketNum" type="ns2:LabSlipTicketNum_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="InterestPercent_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="100" />
+					<xsd:enumeration value="100" />
+					<xsd:enumeration value="25" />
+					<xsd:enumeration value="25" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="ProductCode_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="MLT 10" />
+					<xsd:enumeration value="MLT 10" />
+					<xsd:enumeration value="5593" />
+					<xsd:enumeration value="5593" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="Address_element_type">
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" name="AddressTypeCode" type="ns2:AddressTypeCode_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="Line1" type="xsd:string" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="Line2" type="ns2:Line2_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="City" type="xsd:string" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="AddressState" type="ns2:AddressState_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="AddressStateTC" type="ns2:AddressStateTC_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="Zip" type="xsd:string" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="PrefAddr" type="ns2:PrefAddr_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="AddressCountryTC" type="ns2:AddressCountryTC_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="0" name="StartDate" type="xsd:string" />
+						<xsd:element maxOccurs="1" minOccurs="0" name="PreventOverrideInd" type="ns2:PreventOverrideInd_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="0" name="AddressCountry" type="ns2:AddressCountry_element_type" />
+					</xsd:choice>
+				</xsd:sequence>
+				<xsd:attribute name="id" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:complexType name="Relation_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="OriginatingObjectType" type="ns2:OriginatingObjectType_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="RelatedObjectType" type="ns2:RelatedObjectType_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="RelationRoleCode" type="ns2:RelationRoleCode_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="RelationDescription" type="ns2:RelationDescription_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="NameFromRelatedObject" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="InterestPercent" type="ns2:InterestPercent_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="PartyTypeCode" type="ns2:PartyTypeCode1_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="GovtID" type="ns2:GovtID1_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="Person" type="ns2:Person1_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="Address" type="ns2:Address1_element_type" />
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Phone" type="ns2:Phone1_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="Risk" type="ns2:Risk_element_type" />
+				</xsd:sequence>
+				<xsd:attribute name="id" type="xsd:string" />
+				<xsd:attribute name="OriginatingObjectID" type="xsd:string" />
+				<xsd:attribute name="RelatedObjectID" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:simpleType name="Pswd_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Pjn5#eBBq191$m" />
+					<xsd:enumeration value="Pjn5#eBBq191$m" />
+					<xsd:enumeration value="5090pflm" />
+					<xsd:enumeration value="5090pflm" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="DriversLicenseNum_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="334455" />
+					<xsd:enumeration value="334455" />
+					<xsd:enumeration value="98765" />
+					<xsd:enumeration value="98765" />
+					<xsd:enumeration value="555386506" />
+					<xsd:enumeration value="555386506" />
+					<xsd:enumeration value="8883583" />
+					<xsd:enumeration value="8883583" />
+					<xsd:enumeration value="99965432" />
+					<xsd:enumeration value="99965432" />
+					<xsd:enumeration value="1234598765" />
+					<xsd:enumeration value="1234598765" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="PartyTypeCode1_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="TransferEncodingTypeTC_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="AppName_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="XMLProc" />
+					<xsd:enumeration value="XMLProc" />
+					<xsd:enumeration value="AppName" />
+					<xsd:enumeration value="AppName" />
+					<xsd:enumeration value="CAS" />
+					<xsd:enumeration value="CAS" />
+					<xsd:enumeration value="MRAS AIS" />
+					<xsd:enumeration value="MRAS AIS" />
+					<xsd:enumeration value="E-App" />
+					<xsd:enumeration value="E-App" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="AddressStateTC1_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="Producer_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="CarrierAppointment" type="ns2:CarrierAppointment_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="SmokerStat_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="AddressState_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="TX" />
+					<xsd:enumeration value="TX" />
+					<xsd:enumeration value="NY" />
+					<xsd:enumeration value="NY" />
+					<xsd:enumeration value="NC" />
+					<xsd:enumeration value="NC" />
+					<xsd:enumeration value="" />
+					<xsd:enumeration value="" />
+					<xsd:enumeration value="LA" />
+					<xsd:enumeration value="LA" />
+					<xsd:enumeration value="IL" />
+					<xsd:enumeration value="IL" />
+					<xsd:enumeration value="CA" />
+					<xsd:enumeration value="CA" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="AddrLine_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="lou.costello@yahoo.com" />
+					<xsd:enumeration value="lou.costello@yahoo.com" />
+					<xsd:enumeration value="ample@yahoo.com" />
+					<xsd:enumeration value="ample@yahoo.com" />
+					<xsd:enumeration value="donnie.delatte@gmail.com" />
+					<xsd:enumeration value="donnie.delatte@gmail.com" />
+					<xsd:enumeration value="tomjones@YAHOO.COM" />
+					<xsd:enumeration value="tomjones@YAHOO.COM" />
+					<xsd:enumeration value="sally.field@axa-advisors.com" />
+					<xsd:enumeration value="sally.field@axa-advisors.com" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="BirthCountry_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="DriversLicenseState_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="DivType_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="UserAuthRequest_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="UserLoginName" type="ns2:UserLoginName_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="UserPswd" type="ns2:UserPswd_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="UserDate" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="UserTime" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="VendorApp" type="ns2:VendorApp_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="GovtIDStat_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="TransType_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="LastName_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Cox" />
+					<xsd:enumeration value="Cox" />
+					<xsd:enumeration value="SNMMMMTESTCASEAA" />
+					<xsd:enumeration value="SNMMMMTESTCASEAA" />
+					<xsd:enumeration value="POC" />
+					<xsd:enumeration value="POC" />
+					<xsd:enumeration value="TESTNBR" />
+					<xsd:enumeration value="TESTNBR" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="RelationRoleCode_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="Policy_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="PolNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="LineOfBusiness" type="ns2:LineOfBusiness_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="ProductType" type="ns2:ProductType_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="ProductCode" type="ns2:ProductCode_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="CarrierCode" type="ns2:CarrierCode_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="PlanName" type="ns2:PlanName_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="PolicyStatus" type="ns2:PolicyStatus_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="PolicyValue" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="PaymentMode" type="ns2:PaymentMode_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="PaymentMethod" type="ns2:PaymentMethod_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="Jurisdiction" type="ns2:Jurisdiction_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Life" type="ns2:Life_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ApplicationInfo" type="ns2:ApplicationInfo_element_type" />
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="RequirementInfo" type="ns2:RequirementInfo_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="KeyedValue" type="ns2:KeyedValue_element_type" />
+				</xsd:sequence>
+				<xsd:attribute name="CarrierPartyID" type="xsd:string" />
+				<xsd:attribute name="id" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:simpleType name="FirstName_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Courtney" />
+					<xsd:enumeration value="Courtney" />
+					<xsd:enumeration value="fsdf" />
+					<xsd:enumeration value="fsdf" />
+					<xsd:enumeration value="Pilot" />
+					<xsd:enumeration value="Pilot" />
+					<xsd:enumeration value="QUICKTEST" />
+					<xsd:enumeration value="QUICKTEST" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="IssueGender_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="Phone1_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="PhoneTypeCode" type="ns2:PhoneTypeCode1_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="AreaCode" type="ns2:AreaCode_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="DialNumber" type="ns2:DialNumber_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="PrefPhone" type="ns2:PrefPhone1_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="LoanIntType_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="PolicyStatus_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="LabSlipTicketNum_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="00999999" />
+					<xsd:enumeration value="00999999" />
+					<xsd:enumeration value="8030099225" />
+					<xsd:enumeration value="8030099225" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="CurrentAmt_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="4246.18" />
+					<xsd:enumeration value="4246.18" />
+					<xsd:enumeration value="250000" />
+					<xsd:enumeration value="250000" />
+					<xsd:enumeration value="500000" />
+					<xsd:enumeration value="500000" />
+					<xsd:enumeration value="250000.000000" />
+					<xsd:enumeration value="250000.000000" />
+					<xsd:enumeration value="176000.000000" />
+					<xsd:enumeration value="176000.000000" />
+					<xsd:enumeration value="2000000.000000" />
+					<xsd:enumeration value="2000000.000000" />
+					<xsd:enumeration value="350000.000000" />
+					<xsd:enumeration value="350000.000000" />
+					<xsd:enumeration value="0.000000" />
+					<xsd:enumeration value="0.000000" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="PrefLanguage_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="Occupation_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Manager" />
+					<xsd:enumeration value="Manager" />
+					<xsd:enumeration value="retired" />
+					<xsd:enumeration value="retired" />
+					<xsd:enumeration value="Owner" />
+					<xsd:enumeration value="Owner" />
+					<xsd:enumeration value="MANAGER" />
+					<xsd:enumeration value="MANAGER" />
+					<xsd:enumeration value="Other" />
+					<xsd:enumeration value="Other" />
+					<xsd:enumeration value="POLICE OFFICER" />
+					<xsd:enumeration value="POLICE OFFICER" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="VendorApp_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="VendorName" type="ns2:VendorName_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="AppName" type="ns2:AppName_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="AppVer" type="ns2:AppVer_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="HoldingStatus_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="ResidenceCountry_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="DialNumber_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="777-2420" />
+					<xsd:enumeration value="777-2420" />
+					<xsd:enumeration value="796-0878" />
+					<xsd:enumeration value="796-0878" />
+					<xsd:enumeration value="999-9999" />
+					<xsd:enumeration value="999-9999" />
+					<xsd:enumeration value="222-2222" />
+					<xsd:enumeration value="222-2222" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="ReqStatus_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="Person1_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="FirstName" type="ns2:FirstName_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="LastName" type="ns2:LastName_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Gender" type="ns2:Gender1_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="BirthDate" type="ns2:BirthDate1_element_type" />
+				</xsd:sequence>
+				<xsd:attribute name="id" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:complexType name="Gender_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="CarrierAppointment_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="CompanyProducerID" type="ns2:CompanyProducerID_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="CarrierCode" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="CarrierApptTypeCode" type="ns2:CarrierApptTypeCode_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="SignedDate_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="2014-10-14" />
+					<xsd:enumeration value="2014-10-14" />
+					<xsd:enumeration value="2014-11-14" />
+					<xsd:enumeration value="2014-11-14" />
+					<xsd:enumeration value="2014-10-23" />
+					<xsd:enumeration value="2014-10-23" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="SmokerStat1_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="OLifE_element_type">
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" name="SourceInfo" type="ns2:SourceInfo_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="Holding" type="ns2:Holding_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="Party" type="ns2:Party_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="Relation" type="ns2:Relation_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="FormInstance" type="ns2:FormInstance_element_type" />
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="AddressCountryTC1_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="DeathBenefitOptType_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="GovtIDTC_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="Phone_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="PhoneTypeCode" type="ns2:PhoneTypeCode_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="CountryCode" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="AreaCode" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="DialNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="PrefPhone" type="ns2:PrefPhone_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="BestTimeToCallFrom" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="BestTimeToCallTo" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="StartDate" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ApplicationJurisdiction_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="Party_element_type">
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" name="PartyTypeCode" type="ns2:PartyTypeCode_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="GovtID" type="ns2:GovtID_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="GovtIDTC" type="ns2:GovtIDTC_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="Person" type="ns2:Person_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="FullName" type="xsd:string" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="Organization" type="ns2:Organization_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="Address" type="ns2:Address_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="Phone" type="ns2:Phone_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="Producer" type="ns2:Producer_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="EMailAddress" type="ns2:EMailAddress_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="ResidenceState" type="ns2:ResidenceState_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="ResidenceCountry" type="ns2:ResidenceCountry_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="GovtIDStat" type="ns2:GovtIDStat_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="PartySysKey" type="xsd:string" />
+					</xsd:choice>
+				</xsd:sequence>
+				<xsd:attribute name="id" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:complexType name="LifeCovTypeCode_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="ProductType_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="AddressCountryTC_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="ReqCode_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="AddressStateTC_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="RelatedObjectType_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="PrefPhone_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="HoldingTypeCode_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="Address1_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Line1" type="ns2:Line1_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="City" type="ns2:City_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="AddressStateTC" type="ns2:AddressStateTC1_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Zip" type="ns2:Zip_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="AddressCountryTC" type="ns2:AddressCountryTC1_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PartyTypeCode_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="EMailType_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="TestIndicator_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="GovtID_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="222334444" />
+					<xsd:enumeration value="222334444" />
+					<xsd:enumeration value="443332222" />
+					<xsd:enumeration value="443332222" />
+					<xsd:enumeration value="130925367" />
+					<xsd:enumeration value="130925367" />
+					<xsd:enumeration value="123456789" />
+					<xsd:enumeration value="123456789" />
+					<xsd:enumeration value="306780801" />
+					<xsd:enumeration value="306780801" />
+					<xsd:enumeration value="33345438" />
+					<xsd:enumeration value="33345438" />
+					<xsd:enumeration value="3456789" />
+					<xsd:enumeration value="3456789" />
+					<xsd:enumeration value="9994321" />
+					<xsd:enumeration value="9994321" />
+					<xsd:enumeration value="9899" />
+					<xsd:enumeration value="9899" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="Gender1_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="Person_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="FirstName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="MiddleName" type="ns2:MiddleName_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="LastName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="Occupation" type="ns2:Occupation_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="MarStat" type="ns2:MarStat_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="Gender" type="ns2:Gender_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="BirthDate" type="ns2:BirthDate_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="Age" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="Citizenship" type="ns2:Citizenship_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="DriversLicenseNum" type="ns2:DriversLicenseNum_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="DriversLicenseState" type="ns2:DriversLicenseState_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="BirthCountry" type="ns2:BirthCountry_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="BirthJurisdictionTC" type="ns2:BirthJurisdictionTC_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="Prefix" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="EstSalary" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="NetIncomeAmt" type="ns2:NetIncomeAmt_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="SmokerStat" type="ns2:SmokerStat1_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PaymentMode_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="RelationDescription_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="MiddleName_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="A" />
+					<xsd:enumeration value="A" />
+					<xsd:enumeration value="P" />
+					<xsd:enumeration value="P" />
+					<xsd:enumeration value="W" />
+					<xsd:enumeration value="W" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="SourceInfoDescription_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Description" />
+					<xsd:enumeration value="Description" />
+					<xsd:enumeration value="MetLifeIns" />
+					<xsd:enumeration value="MetLifeIns" />
+					<xsd:enumeration value="MRAS AIS v.4.7.0" />
+					<xsd:enumeration value="MRAS AIS v.4.7.0" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="TransMode_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="PrefEMailAddr_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="Life_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="QualPlanType" type="ns2:QualPlanType_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="InitialPremAmt" type="ns2:InitialPremAmt_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="FaceAmt" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="LoanIntType" type="ns2:LoanIntType_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="DivType" type="ns2:DivType_element_type" />
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Coverage" type="ns2:Coverage_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="KeyedValue_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="KeyName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="KeyValue" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="CreationTime_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="02:09:06" />
+					<xsd:enumeration value="02:09:06" />
+					<xsd:enumeration value="12:01:02" />
+					<xsd:enumeration value="12:01:02" />
+					<xsd:enumeration value="07:30:24" />
+					<xsd:enumeration value="07:30:24" />
+					<xsd:enumeration value="14:50:15" />
+					<xsd:enumeration value="14:50:15" />
+					<xsd:enumeration value="00:40:59" />
+					<xsd:enumeration value="00:40:59" />
+					<xsd:enumeration value="10:47:07" />
+					<xsd:enumeration value="10:47:07" />
+					<xsd:enumeration value="14:13:55" />
+					<xsd:enumeration value="14:13:55" />
+					<xsd:enumeration value="13:37:31" />
+					<xsd:enumeration value="13:37:31" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="AddressTypeCode_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType mixed="true" name="Organization_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="AbbrName" type="ns2:AbbrName_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="OrgCodeFunction" type="ns2:OrgCodeFunction_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="AttachmentData_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="Line2_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Suite 100" />
+					<xsd:enumeration value="Suite 100" />
+					<xsd:enumeration value="Ste 406" />
+					<xsd:enumeration value="Ste 406" />
+					<xsd:enumeration value="" />
+					<xsd:enumeration value="" />
+					<xsd:enumeration value="California" />
+					<xsd:enumeration value="California" />
+					<xsd:enumeration value="Address Line 2" />
+					<xsd:enumeration value="Address Line 2" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="GovtID1_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="600044244" />
+					<xsd:enumeration value="600044244" />
+					<xsd:enumeration value="098796070" />
+					<xsd:enumeration value="098796070" />
+					<xsd:enumeration value="284586931" />
+					<xsd:enumeration value="284586931" />
+					<xsd:enumeration value="030000000" />
+					<xsd:enumeration value="030000000" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="MarStat_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="PlanName1_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="20ROPFULL" />
+					<xsd:enumeration value="20ROPFULL" />
+					<xsd:enumeration value="Base Plan for MLT 10" />
+					<xsd:enumeration value="Base Plan for MLT 10" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="PaymentMethod_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="SourceInfo_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="CreationDate" type="ns2:CreationDate_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="CreationTime" type="ns2:CreationTime_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="SourceInfoName" type="ns2:SourceInfoName_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="SourceInfoDescription" type="ns2:SourceInfoDescription_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="OrgCodeFunction_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="AttachmentLocation_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="Zip_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="53548" />
+					<xsd:enumeration value="53548" />
+					<xsd:enumeration value="89768" />
+					<xsd:enumeration value="89768" />
+					<xsd:enumeration value="92629" />
+					<xsd:enumeration value="92629" />
+					<xsd:enumeration value="12321" />
+					<xsd:enumeration value="12321" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="ApplicationInfo_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="TrackingID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="ApplicationJurisdiction" type="ns2:ApplicationJurisdiction_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="SignedDate" type="ns2:SignedDate_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="PrefLanguage" type="ns2:PrefLanguage_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="SubmissionDate" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="ApplicationCollectionDate" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Attachment_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="AttachmentBasicType" type="ns2:AttachmentBasicType_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="Description" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="AttachmentData" type="ns2:AttachmentData_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="AttachmentType" type="ns2:AttachmentType_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="MimeType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="TransferEncodingTypeString" type="ns2:TransferEncodingTypeString_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="TransferEncodingTypeTC" type="ns2:TransferEncodingTypeTC_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="AttachmentLocation" type="ns2:AttachmentLocation_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="BirthJurisdictionTC_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="VendorName_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="VendorCode" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="AbbrName_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Target Co" />
+					<xsd:enumeration value="Target Co" />
+					<xsd:enumeration value="Jones Agency" />
+					<xsd:enumeration value="Jones Agency" />
+					<xsd:enumeration value="Haliburton Inc" />
+					<xsd:enumeration value="Haliburton Inc" />
+					<xsd:enumeration value="Moon Agency" />
+					<xsd:enumeration value="Moon Agency" />
+					<xsd:enumeration value="retired" />
+					<xsd:enumeration value="retired" />
+					<xsd:enumeration value="Blues Brothers" />
+					<xsd:enumeration value="Blues Brothers" />
+					<xsd:enumeration value="LIMO CAB LLC" />
+					<xsd:enumeration value="LIMO CAB LLC" />
+					<xsd:enumeration value="PacLife" />
+					<xsd:enumeration value="PacLife" />
+					<xsd:enumeration value="InsCom" />
+					<xsd:enumeration value="InsCom" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="AttachmentType_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="Risk_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="MedicalExam" type="ns2:MedicalExam_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="LifeCovStatus_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="OriginatingObjectType_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="UserLoginName_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="AIGI" />
+					<xsd:enumeration value="AIGI" />
+					<xsd:enumeration value="AIGP" />
+					<xsd:enumeration value="AIGP" />
+					<xsd:enumeration value="500169" />
+					<xsd:enumeration value="500169" />
+					<xsd:enumeration value="METD" />
+					<xsd:enumeration value="METD" />
+					<xsd:enumeration value="MLFP" />
+					<xsd:enumeration value="MLFP" />
+					<xsd:enumeration value="PACP" />
+					<xsd:enumeration value="PACP" />
+					<xsd:enumeration value="PACT" />
+					<xsd:enumeration value="PACT" />
+					<xsd:enumeration value="IPipeline" />
+					<xsd:enumeration value="IPipeline" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="TXLifeRequest_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransRefGUID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransType" type="ns2:TransType_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransExeDate" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransExeTime" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="TransMode" type="ns2:TransMode_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="TestIndicator" type="ns2:TestIndicator_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="NoResponseOK" type="ns2:NoResponseOK_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OLifE" type="ns2:OLifE_element_type" />
+				</xsd:sequence>
+				<xsd:attribute name="PrimaryObjectID" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:complexType name="RequirementInfo_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReqCode" type="ns2:ReqCode_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="RequirementInfoKey" type="ns2:RequirementInfoKey_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="RequirementInfoUniqueID" type="ns2:RequirementInfoUniqueID_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="ReqStatus" type="ns2:ReqStatus_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="RequestedDate" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="RequestedScheduleDate" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="RequestedScheduleTimeStart" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReleasePartyOrgCode" type="ns2:ReleasePartyOrgCode_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="RequirementAcctNum" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="ProviderOrderNum" type="xsd:string" />
+				</xsd:sequence>
+				<xsd:attribute name="AppliesToParticipantID" type="xsd:string" />
+				<xsd:attribute name="AppliesToPartyID" type="xsd:string" />
+				<xsd:attribute name="FulfillerPartyID" type="xsd:string" />
+				<xsd:attribute name="RequesterPartyID" type="xsd:string" />
+				<xsd:attribute name="id" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:simpleType name="Line1_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="116 Ridge Creek Dr" />
+					<xsd:enumeration value="116 Ridge Creek Dr" />
+					<xsd:enumeration value="street" />
+					<xsd:enumeration value="street" />
+					<xsd:enumeration value="10 Main" />
+					<xsd:enumeration value="10 Main" />
+					<xsd:enumeration value="123 test st" />
+					<xsd:enumeration value="123 test st" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="HoldingForm_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="CarrierCode_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="UFFL" />
+					<xsd:enumeration value="UFFL" />
+					<xsd:enumeration value="MLIUSA" />
+					<xsd:enumeration value="MLIUSA" />
+					<xsd:enumeration value="MUSA" />
+					<xsd:enumeration value="MUSA" />
+					<xsd:enumeration value="CCode" />
+					<xsd:enumeration value="CCode" />
+					<xsd:enumeration value="AXA Equitable" />
+					<xsd:enumeration value="AXA Equitable" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="SourceInfoName_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Portamedic" />
+					<xsd:enumeration value="Portamedic" />
+					<xsd:enumeration value="MLI" />
+					<xsd:enumeration value="MLI" />
+					<xsd:enumeration value="MRAS AIS" />
+					<xsd:enumeration value="MRAS AIS" />
+					<xsd:enumeration value="IPipeLine" />
+					<xsd:enumeration value="IPipeLine" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="ResidenceState_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="Citizenship_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="IndicatorCode_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="AreaCode_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="908" />
+					<xsd:enumeration value="908" />
+					<xsd:enumeration value="786" />
+					<xsd:enumeration value="786" />
+					<xsd:enumeration value="999" />
+					<xsd:enumeration value="999" />
+					<xsd:enumeration value="123" />
+					<xsd:enumeration value="123" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="CreationDate_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="2014-10-16" />
+					<xsd:enumeration value="2014-10-16" />
+					<xsd:enumeration value="2014-11-14" />
+					<xsd:enumeration value="2014-11-14" />
+					<xsd:enumeration value="2014-11-12" />
+					<xsd:enumeration value="2014-11-12" />
+					<xsd:enumeration value="2014-11-13" />
+					<xsd:enumeration value="2014-11-13" />
+					<xsd:enumeration value="2014-08-05" />
+					<xsd:enumeration value="2014-08-05" />
+					<xsd:enumeration value="2014-10-31" />
+					<xsd:enumeration value="2014-10-31" />
+					<xsd:enumeration value="2014-12-01" />
+					<xsd:enumeration value="2014-12-01" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType mixed="true" name="EMailAddress_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="EMailType" type="ns2:EMailType_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="AddrLine" type="ns2:AddrLine_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="PrefEMailAddr" type="ns2:PrefEMailAddr_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="StartDate" type="xsd:string" />
+				</xsd:sequence>
+				<xsd:attribute name="DataRep" type="xsd:string" />
+				<xsd:attribute name="id" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:simpleType name="BirthDate_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="1972-02-02" />
+					<xsd:enumeration value="1972-02-02" />
+					<xsd:enumeration value="1959-03-01" />
+					<xsd:enumeration value="1959-03-01" />
+					<xsd:enumeration value="1948-02-28" />
+					<xsd:enumeration value="1948-02-28" />
+					<xsd:enumeration value="1959-05-08" />
+					<xsd:enumeration value="1959-05-08" />
+					<xsd:enumeration value="1999-10-26" />
+					<xsd:enumeration value="1999-10-26" />
+					<xsd:enumeration value="1955-01-14" />
+					<xsd:enumeration value="1955-01-14" />
+					<xsd:enumeration value="1964-06-20" />
+					<xsd:enumeration value="1964-06-20" />
+					<xsd:enumeration value="1969-10-07" />
+					<xsd:enumeration value="1969-10-07" />
+					<xsd:enumeration value="1988-07-28" />
+					<xsd:enumeration value="1988-07-28" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="PermTableRating_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="NetIncomeAmt_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="200000.00" />
+					<xsd:enumeration value="200000.00" />
+					<xsd:enumeration value="0.00" />
+					<xsd:enumeration value="0.00" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="CompanyProducerID_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="1635" />
+					<xsd:enumeration value="1635" />
+					<xsd:enumeration value="055455" />
+					<xsd:enumeration value="055455" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="ReleasePartyOrgCode_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="AIGI" />
+					<xsd:enumeration value="AIGI" />
+					<xsd:enumeration value="AIGP" />
+					<xsd:enumeration value="AIGP" />
+					<xsd:enumeration value="FFMT" />
+					<xsd:enumeration value="FFMT" />
+					<xsd:enumeration value="METD" />
+					<xsd:enumeration value="METD" />
+					<xsd:enumeration value="MLFP" />
+					<xsd:enumeration value="MLFP" />
+					<xsd:enumeration value="PACP" />
+					<xsd:enumeration value="PACP" />
+					<xsd:enumeration value="PACT" />
+					<xsd:enumeration value="PACT" />
+					<xsd:enumeration value="PPLN" />
+					<xsd:enumeration value="PPLN" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="City_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Janesville" />
+					<xsd:enumeration value="Janesville" />
+					<xsd:enumeration value="city" />
+					<xsd:enumeration value="city" />
+					<xsd:enumeration value="Dana Point" />
+					<xsd:enumeration value="Dana Point" />
+					<xsd:enumeration value="test" />
+					<xsd:enumeration value="test" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="Jurisdiction_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="PlanName_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="20ROPFULL" />
+					<xsd:enumeration value="20ROPFULL" />
+					<xsd:enumeration value="Base Plan for MLT 10" />
+					<xsd:enumeration value="Base Plan for MLT 10" />
+					<xsd:enumeration value="Level Term 20 Series 151X" />
+					<xsd:enumeration value="Level Term 20 Series 151X" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="TransferEncodingTypeString_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Base64" />
+					<xsd:enumeration value="Base64" />
+					<xsd:enumeration value="base64" />
+					<xsd:enumeration value="base64" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="LineOfBusiness_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="Coverage_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="PlanName" type="ns2:PlanName1_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="ShortName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="ProductCode" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="LifeCovStatus" type="ns2:LifeCovStatus_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="LifeCovTypeCode" type="ns2:LifeCovTypeCode_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="IndicatorCode" type="ns2:IndicatorCode_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="DeathBenefitOptType" type="ns2:DeathBenefitOptType_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="CurrentAmt" type="ns2:CurrentAmt_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="LifeParticipant" type="ns2:LifeParticipant_element_type" />
+				</xsd:sequence>
+				<xsd:attribute name="id" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:complexType name="PhoneTypeCode_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="CryptPswd_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="NONE" />
+					<xsd:enumeration value="NONE" />
+					<xsd:enumeration value="PL47@vB$Wj653" />
+					<xsd:enumeration value="PL47@vB$Wj653" />
+					<xsd:enumeration value="PL47@vB$wJ653" />
+					<xsd:enumeration value="PL47@vB$wJ653" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="Holding_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="HoldingTypeCode" type="ns2:HoldingTypeCode_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="HoldingStatus" type="ns2:HoldingStatus_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="HoldingForm" type="ns2:HoldingForm_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Policy" type="ns2:Policy_element_type" />
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Attachment" type="ns2:Attachment_element_type" />
+				</xsd:sequence>
+				<xsd:attribute name="id" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:complexType name="AttachmentBasicType_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="AppVer_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="1.0" />
+					<xsd:enumeration value="1.0" />
+					<xsd:enumeration value="4.7.0" />
+					<xsd:enumeration value="4.7.0" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="PrefAddr_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="PreventOverrideInd_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="AddressCountry_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="USA" />
+					<xsd:enumeration value="USA" />
+					<xsd:enumeration value="Country" />
+					<xsd:enumeration value="Country" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="QualPlanType_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType mixed="true" name="UserPswd_element_type">
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" name="CryptPswd" type="ns2:CryptPswd_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="CryptType" type="xsd:string" />
+						<xsd:element maxOccurs="1" minOccurs="0" name="Pswd" type="ns2:Pswd_element_type" />
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PhoneTypeCode1_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="LifeParticipantRoleCode_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="FormInstance_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="FormName" type="xsd:string" />
+				</xsd:sequence>
+				<xsd:attribute name="id" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:complexType name="LifeParticipant_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="LifeParticipantRoleCode" type="ns2:LifeParticipantRoleCode_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="IssueAge" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="IssueGender" type="ns2:IssueGender_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="SmokerStat" type="ns2:SmokerStat_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="PermTableRating" type="ns2:PermTableRating_element_type" />
+				</xsd:sequence>
+				<xsd:attribute name="PartyID" type="xsd:string" />
+				<xsd:attribute name="id" type="xsd:string" />
+				<xsd:attribute name="DataRep" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:simpleType name="RequirementInfoUniqueID_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="1471115" />
+					<xsd:enumeration value="1471115" />
+					<xsd:enumeration value="10371403" />
+					<xsd:enumeration value="10371403" />
+					<xsd:enumeration value="374761412IN001APS-PIL   001" />
+					<xsd:enumeration value="374761412IN001APS-PIL   001" />
+					<xsd:enumeration value="2014-11-12-11.52.34.853200C01-1_life_1_TI_1" />
+					<xsd:enumeration value="2014-11-12-11.52.34.853200C01-1_life_1_TI_1" />
+					<xsd:enumeration value="2014-05-02-14.46.39.455140C01-1_life_1_BUSINESSBENEFICARYIR_1" />
+					<xsd:enumeration value="2014-05-02-14.46.39.455140C01-1_life_1_BUSINESSBENEFICARYIR_1" />
+					<xsd:enumeration value="2014-10-02-10.43.59.385940C01-1_life_1_APS_1" />
+					<xsd:enumeration value="2014-10-02-10.43.59.385940C01-1_life_1_APS_1" />
+					<xsd:enumeration value="2014-12-01-13.24.25.076920C01-1_life_1_APS_1" />
+					<xsd:enumeration value="2014-12-01-13.24.25.076920C01-1_life_1_APS_1" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="CarrierApptTypeCode_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="NoResponseOK_element_type">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string">
+						<xsd:attribute name="tc" type="xsd:string" />
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:simpleType name="RequirementInfoKey_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="2014-11-12-11.52.34.853200C01-1_life_1_TI_1" />
+					<xsd:enumeration value="2014-11-12-11.52.34.853200C01-1_life_1_TI_1" />
+					<xsd:enumeration value="2014-05-02-14.46.39.455140C01-1_life_1_BUSINESSBENEFICARYIR_1" />
+					<xsd:enumeration value="2014-05-02-14.46.39.455140C01-1_life_1_BUSINESSBENEFICARYIR_1" />
+					<xsd:enumeration value="2014-10-02-10.43.59.385940C01-1_life_1_APS_1" />
+					<xsd:enumeration value="2014-10-02-10.43.59.385940C01-1_life_1_APS_1" />
+					<xsd:enumeration value="2014-12-01-13.24.25.076920C01-1_life_1_APS_1" />
+					<xsd:enumeration value="2014-12-01-13.24.25.076920C01-1_life_1_APS_1" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="BirthDate1_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="1977-07-06" />
+					<xsd:enumeration value="1977-07-06" />
+					<xsd:enumeration value="1991-05-02" />
+					<xsd:enumeration value="1991-05-02" />
+					<xsd:enumeration value="1999-09-22" />
+					<xsd:enumeration value="1999-09-22" />
+					<xsd:enumeration value="1960-01-01" />
+					<xsd:enumeration value="1960-01-01" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="InitialPremAmt_element_type">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="3509.73" />
+					<xsd:enumeration value="3509.73" />
+					<xsd:enumeration value="0.00" />
+					<xsd:enumeration value="0.00" />
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

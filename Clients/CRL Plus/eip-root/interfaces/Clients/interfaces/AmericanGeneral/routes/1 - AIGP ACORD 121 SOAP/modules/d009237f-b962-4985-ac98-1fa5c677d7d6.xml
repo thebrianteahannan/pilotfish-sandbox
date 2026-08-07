@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor"
+        id="d009237f-b962-4985-ac98-1fa5c677d7d6"
+        name="AIG.1 - set defaultSourceInfoDescr"
+        tag="Processor"
+        type="Transaction Attribute Population"
+        version="2.0">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      <AttributePairs>[eip_pair:defaultSourceInfoDescr:eip_name:AmericanGeneral:eip_value]</AttributePairs>
+      <AttributeScope>Transaction</AttributeScope>
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      <Expression>AmericanGeneral</Expression>
+      <AttributeName>defaultSourceInfoDescr</AttributeName>
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2018-03-08T10:04:57-06:00" ModifiedBy="aramos@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="To PACT Result Listener" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>PACT</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To METL 1122 Status Listener" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>METL</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To MFLP 1122 Listener" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>MLFP</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To METD 1122 Listener" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>METD</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To PRUX 1122 Listener" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>PRUX</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To ELFP" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>ELFP</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To AXA" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>AXA</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To MLFE 1122 Listener" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>MLFE</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To GRBR 1122 Listener" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>GRBR</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To AIE 1122 Listener" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>AIE</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To AIGP" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>AIGP</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To LADDER" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>LADDER</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To AIG Legacy" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>AIGL</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To AIG Legacy" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>=</Operator>
+                <Value>TDEX</Value>
+              </Attribute>
+              <Or>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>71437</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>73176</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>09848</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>89916</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>89817</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>89917</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>73148</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>73177</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1071</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1044</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>71438</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1060</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1061</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1062</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1064</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1066</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1068</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1070</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1048</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1049</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1050</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1051</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1052</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1053</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1054</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1055</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>1056</Value>
+                </Attribute>
+              </Or>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To AXA" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>=</Operator>
+                <Value>TDEX</Value>
+              </Attribute>
+              <Attribute>
+                <Name>reqAcctNum</Name>
+                <Operator>=</Operator>
+                <Value>71711</Value>
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To ELFP" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>=</Operator>
+                <Value>TDEX</Value>
+              </Attribute>
+              <Or>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>71661</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>reqAcctNum</Name>
+                  <Operator>=</Operator>
+                  <Value>73038</Value>
+                </Attribute>
+              </Or>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To LINC" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>LINC</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="To Fidelity" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>sourceClient</Name>
+              <Operator>=</Operator>
+              <Value>FGLI</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Advanced Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>false</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+        <MonitorTransports>false</MonitorTransports>
+        <IgnoreListenerErrorPeriod>900</IgnoreListenerErrorPeriod>
+        <DataIDOGNLExpression>{ognl:#transaction.getTransactionID()}</DataIDOGNLExpression>
+        <IgnoreTransportErrorPeriod>900</IgnoreTransportErrorPeriod>
+        <MonitorListeners>false</MonitorListeners>
+        <IgnoreStageErrorPeriod>900</IgnoreStageErrorPeriod>
+        <DeDuplicateErrorPeriod>86400</DeDuplicateErrorPeriod>
+        <CollectDataIDs>true</CollectDataIDs>
+        <MonitorStages>true</MonitorStages>
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Status.4 - Route to client specific.Programmable (Java) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target icon="" name="PACT interface">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To PACT Result Listener" retries="1">
+      <ModuleConfig>
+        <ServiceName>PAC ACORD 1122 Status</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="METL interface">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To METL 1122 Status Listener" retries="1">
+      <ModuleConfig>
+        <ServiceName>METL 1122 Status Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Met Individual">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To MFLP 1122 Listener" retries="1">
+      <ModuleConfig>
+        <ServiceName>MLFP 1122 Status Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Met Direct Interface">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To METD 1122 Listener" retries="1">
+      <ModuleConfig>
+        <ServiceName>METD 1122 Status Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Prudential Interface">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To PRUX 1122 Listener" retries="1">
+      <ModuleConfig>
+        <ServiceName>PRUX ACORD 1122 Status</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Erie Life">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To ELFP" retries="1">
+      <ModuleConfig>
+        <ServiceName>ELFP Status Update</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="AXA Interface">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To AXA" retries="1">
+      <ModuleConfig>
+        <ServiceName>AXA ACORD 1122 Status</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="MLFE Interface">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To MLFE 1122 Listener" retries="1">
+      <ModuleConfig>
+        <ServiceName>MLFE 1122 Status Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Gerber Interface">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To GRBR 1122 Listener" retries="1">
+      <ModuleConfig>
+        <ServiceName>Receive1122.ProgramableListener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="AIE Interface">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To AIE 1122 Listener" retries="1">
+      <ModuleConfig>
+        <ServiceName>AIE 1122 Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="AIGP Interface">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To AIGP" retries="1">
+      <ModuleConfig>
+        <ServiceName>AIGP ACORD 1122 Status</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Ladder Life Interface">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To LADDER" retries="1">
+      <ModuleConfig>
+        <ServiceName>LADDER ACORD 1122 Status</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="AIG Legacy">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To AIG Legacy" retries="1">
+      <ModuleConfig>
+        <ServiceName>AIGP.L1 - 1122 Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Lincoln National">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To LINC" retries="1">
+      <ModuleConfig>
+        <ServiceName>Lincoln 1122 Status</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Fidelity &amp; Guaranty Life">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To Fidelity" retries="1">
+      <ModuleConfig>
+        <ServiceName>Fidelity 122 Status</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

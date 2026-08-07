@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2026-04-06T13:47:08-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Ignore Status Updates For Client" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.crl.statustype</Name>
+                <Operator>=</Operator>
+                <Value>status</Value>
+              </Attribute>
+              <Attribute>
+                <Name>sourceClient</Name>
+                <Operator>!=</Operator>
+                <Value>PACT</Value>
+              </Attribute>
+              <Or>
+                <Attribute>
+                  <Name>sourceClient</Name>
+                  <Operator>=</Operator>
+                  <Value>METL</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>sourceClient</Name>
+                  <Operator>=</Operator>
+                  <Value>METD</Value>
+                </Attribute>
+                <Attribute>
+                  <Name>sourceClient</Name>
+                  <Operator>=</Operator>
+                  <Value>MLFE</Value>
+                </Attribute>
+              </Or>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Request Attachment" />
+          </Targets>
+          <Condition>
+            <Expression>
+              /RESULTS/TRANSACTIONATTACHMENT/ATTACHMENT/CRLDOCUMENTID[not(@id) and string-length(../CRLDRAWERNAME) &gt; 0]
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="CallCreateNormalized1122" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Advanced Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+        <MonitorTransports>false</MonitorTransports>
+        <IgnoreListenerErrorPeriod>900</IgnoreListenerErrorPeriod>
+        <DataIDOGNLExpression>{ognl:#transaction.getTransactionID()}</DataIDOGNLExpression>
+        <IgnoreTransportErrorPeriod>900</IgnoreTransportErrorPeriod>
+        <MonitorListeners>false</MonitorListeners>
+        <IgnoreStageErrorPeriod>900</IgnoreStageErrorPeriod>
+        <DeDuplicateErrorPeriod>86400</DeDuplicateErrorPeriod>
+        <CollectDataIDs>true</CollectDataIDs>
+        <MonitorStages>true</MonitorStages>
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="RemoveEmptyDocId" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="ReceiveStatusDetails">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.stream.StreamNormalizerProcessor" name="Status.2 - Fix encoding">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <BufferSize>512</BufferSize>
+          <CharacterEncoding>UTF-8</CharacterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.stream.StreamNormalizerProcessor" name="Status.2 - Fix encoding 2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <BufferSize>512</BufferSize>
+          <CharacterEncoding>UTF-8</CharacterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Pull attributes from DB results">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:statuses:eip_name:/RESULTS/TRANSACTIONSTATUSES:eip_value][eip_pair:sourceClient:eip_name:/RESULTS/PFSOURCECLIENT:eip_value][eip_pair:flownetOrderNumber:eip_name:/RESULTS/FLOWNETORDERNUM:eip_value][eip_pair:modetc:eip_name:/RESULTS/MODETC:eip_value][eip_pair:com.pilotfish.crl.ordertransactionid:eip_name:/RESULTS/TRANSACTIONID:eip_value][eip_pair:com.pilotfish.crl.ordercompletedate:eip_name:/RESULTS/ORDERCOMPLETEDATE:eip_value][eip_pair:com.pilotfish.crl.lastmodifiedate:eip_name:/RESULTS/LASTMODIFIEDDATE:eip_value][eip_pair:com.pilotfish.crl.testindicator:eip_name:/RESULTS/TESTINDICATOR:eip_value][eip_pair:com.pilotfish.AieTo:eip_name:/RESULTS/TRANSACTIONACORDINFORMATIONEXCHANGE/AIE/AIETO:eip_value][eip_pair:com.pilotfish.AieToService:eip_name:/RESULTS/TRANSACTIONACORDINFORMATIONEXCHANGE/AIE/AIETOSERVICE:eip_value][eip_pair:com.pilotfish.AieFrom:eip_name:/RESULTS/TRANSACTIONACORDINFORMATIONEXCHANGE/AIE/AIEFROM:eip_value][eip_pair:com.pilotfish.AieFromService:eip_name:/RESULTS/TRANSACTIONACORDINFORMATIONEXCHANGE/AIE/AIEFROMSERVICE:eip_value][eip_pair:com.pilotfish.AieReplyTo:eip_name:/RESULTS/TRANSACTIONACORDINFORMATIONEXCHANGE/AIE/AIEREPLYTO:eip_value][eip_pair:com.pilotfish.AieReplyToService:eip_name:/RESULTS/TRANSACTIONACORDINFORMATIONEXCHANGE/AIE/AIEREPLYTOSERVICE:eip_value][eip_pair:reqAcctNum:eip_name:/RESULTS/TRANSACTIONREQINFO/REQINFO/REQACCTNUM:eip_value][eip_pair:teledexOrderNumber:eip_name:/RESULTS/TELEDEXORDERNUM:eip_value][eip_pair:originalText:eip_name:/RESULTS/TRANSACTIONTEXT/ORIGINALTXT:eip_value][eip_pair:teledexRemoteID:eip_name:/RESULTS/TELEDEXREMOTEID:eip_value][eip_pair:finalResultsDeliveredDate:eip_name:/RESULTS/FINALRESULTDELIVEREDDATE:eip_value][eip_pair:ExamOrderRequired:eip_name:/RESULTS/TRANSACTIONSTATUSES/STATUS[REQINFOID=ancestor::RESULTS/TRANSACTIONREQINFO/REQINFO[REQCODETC='535'][last()]/REQINFOID][PROVIDEREVENTCODE='S85'][string-length(MESSAGESENTDATE)=0]:eip_value][eip_pair:statusIDForAttachment:eip_name:/RESULTS/TRANSACTIONATTACHMENT/ATTACHMENT/STATUSID:eip_value][eip_pair:reportedStatus:eip_name:/RESULTS/TRANSACTIONREPORTEDSTATUS:eip_value][eip_pair:attachmentDescription:eip_name://TRANSACTIONATTACHMENTDESCRIPTION/ATTACHMENTDESCRIPTION/DESCR:eip_value]</XPathExpressions>
+          <Namespaces>null</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Determine Status Type">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.statustype</AttributeName>
+          <Expression>{ognl:#check = :[((#this == null) || (#this.trim().length() == 0)) ? ('status') : ('result')], #check(getAttribute("com.pilotfish.crl.ordercompletedate"))}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Wrap statuses">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>statuses</AttributeName>
+          <Expression>{ognl:(getAttribute('statuses')==null) ? '&lt;TRANSACTIONSTATUSES /&gt;' : '&lt;TRANSACTIONSTATUSES&gt;\n'+getAttribute('statuses')+'\n&lt;/TRANSACTIONSTATUSES&gt;'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="store results">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>results</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathValueProcessor" name="Status.2 - Retrieve image attachments.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Namespace />
+          <ForkingXPath>/RESULTS/TRANSACTIONSTATUSES</ForkingXPath>
+          <TreatAsXML>true</TreatAsXML>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="store statuses">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>statuses</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="restore results">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>results</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.AttributeRemovalProcessor" name="delete attribute">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetAttributes>[eip_pair:results:eip_name::eip_value]</TargetAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>Status.2 - Retrieve image attachments</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="CallCreateNormalized1122" retries="1">
+      <ModuleConfig>
+        <ServiceName>CreateNormalized1122Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Request Attachment" retries="1">
+      <ModuleConfig>
+        <ServiceName>GetDocumentRequest</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Ignore Status Updates For Client" retries="1">
+      <ModuleConfig>
+        <ServiceName>Update Status Inbound</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

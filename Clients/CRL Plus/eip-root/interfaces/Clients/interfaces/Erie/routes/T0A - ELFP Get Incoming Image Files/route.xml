@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2017-09-12T13:51:27-05:00" ModifiedBy="ntpfish-pvl1@crlcorp.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.file.ftp.FTPListener" enabled="true" name="Get all image files">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>$$TeledexDb_DontConnect</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <FTPListenerType>Encrypted FTP (SSH/SFTP)</FTPListenerType>
+        <Host>$$TeledexFTPHost</Host>
+        <Port>22</Port>
+        <PollingInterval>600</PollingInterval>
+        <PollingDirectory>$$TeledexFTPOutgoingDirectory</PollingDirectory>
+        <FileNameRestriction>T1.*|TD.*</FileNameRestriction>
+        <FileExtensionRestriction>PDF,pdf</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <FilenameIsMvsDsn>false</FilenameIsMvsDsn>
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <Timeout>300</Timeout>
+        <Sftp_SocketTimeout>300</Sftp_SocketTimeout>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private (P)</Protection>
+        <FileType>Binary</FileType>
+        <StopWhenPollingFailure>false</StopWhenPollingFailure>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <UseChangeDirectoryCommand>false</UseChangeDirectoryCommand>
+        <ReconnectAfterBytes>52428800</ReconnectAfterBytes>
+        <CacheType>File Cache</CacheType>
+        <PostProcessOperation>Delete</PostProcessOperation>
+        <TargetDirectory />
+        <UserName>$$TeledexFTPUsername</UserName>
+        <Password>$$TeledexFTPPassword</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <CheckFTPPermissions>true</CheckFTPPermissions>
+        <CheckPreviouslyProcessed>true</CheckPreviouslyProcessed>
+        <CheckWriteInProgress>true</CheckWriteInProgress>
+        <SchedulerStartTag>M0W0D0H1m1</SchedulerStartTag>
+        <SchedulerEndTag>M0W0D0H1m59</SchedulerEndTag>
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <RetryDelay>15</RetryDelay>
+        <HeaderLines>0</HeaderLines>
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <CombineFiles>false</CombineFiles>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <RetryConnection>true</RetryConnection>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.T0A - Store incoming filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103_Filename</AttributeName>
+          <Expression>{ognl:getAttribute('com.pilotfish.FileName')+"."+getAttribute('com.pilotfish.FileExtension')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.T0A - Set sourceClient">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>sourceClient</AttributeName>
+          <Expression>{ognl:getAttribute('Incoming103_Filename').startsWith('T1')?'ELFP':(getAttribute('Incoming103_Filename').startsWith('TD')?'AIGP':'UNKNOWN')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Erie.T0A - Save file to processing dir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:#properties.get('processing.dir') + "/" + getAttribute('sourceClient')}</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('Incoming103_Filename')}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.Base64OutputProcessor" name="Erie.T0A - Base64 encode file data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <IsLineSeparated>false</IsLineSeparated>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Erie.T0A - Store PDF data in attribute">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103_PDF_Data</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.T0A - Get Teledex Order Number">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103_TeledexOrderNum</AttributeName>
+          <Expression>{ognl:getAttribute('com.pilotfish.FileName').substring(2)}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.T0A - Create temp XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103Image_Temp_XML</AttributeName>
+          <Expression>&lt;INCOMING103IMAGE&gt;&lt;TELEDEXNUM&gt;[TELEDEXNUMBER]&lt;/TELEDEXNUM&gt;&lt;REMOTE_ID&gt;[REMOTEID]&lt;/REMOTE_ID&gt;&lt;REMOTE_NO&gt;[REMOTENO]&lt;/REMOTE_NO&gt;&lt;POLICY&gt;[POLICYNUM]&lt;/POLICY&gt;&lt;/INCOMING103IMAGE&gt;</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Erie.T0A - Load Temp XML to transaction data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103Image_Temp_XML</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="Erie.T0A - Set Temp XML values">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:\[TELEDEXNUMBER\]:eip_name:{ognl:@java.util.regex.Matcher@quoteReplacement(getAttribute('Incoming103_TeledexOrderNum'))}:eip_value]</REGEX_TABLE_TAG>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="Load incoming files from Processing Directory">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <PollingInterval>7200</PollingInterval>
+        <PollingDirectory>{ognl:#properties.get('processing.dir')}</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction>PDF,pdf</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Keep</PostProcessOperation>
+        <TargetDirectory />
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>true</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>5400</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.T0A - (Dir Listener) Store incoming filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103_Filename</AttributeName>
+          <Expression>{ognl:getAttribute('com.pilotfish.FileName')+"."+getAttribute('com.pilotfish.FileExtension')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.T0A - (Dir Listener) Set sourceClient">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>sourceClient</AttributeName>
+          <Expression>{ognl:getAttribute('Incoming103_Filename').startsWith('T1')?'ELFP':(getAttribute('Incoming103_Filename').startsWith('TD')?'AIGP':'UNKNOWN')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.Base64OutputProcessor" name="Erie.T0A - (Dir Listener) Base64 encode file data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <IsLineSeparated>false</IsLineSeparated>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Erie.T0A - (Dir Listener) Store PDF data in attribute">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103_PDF_Data</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.T0A - (Dir Listener) Get Teledex Order Number">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103_TeledexOrderNum</AttributeName>
+          <Expression>{ognl:getAttribute('com.pilotfish.FileName').substring(2)}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.T0A - (Dir Listener) Create temp XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103Image_Temp_XML</AttributeName>
+          <Expression>&lt;INCOMING103IMAGE&gt;&lt;TELEDEXNUM&gt;[TELEDEXNUMBER]&lt;/TELEDEXNUM&gt;&lt;REMOTE_ID&gt;[REMOTEID]&lt;/REMOTE_ID&gt;&lt;REMOTE_NO&gt;[REMOTENO]&lt;/REMOTE_NO&gt;&lt;POLICY&gt;[POLICYNUM]&lt;/POLICY&gt;&lt;/INCOMING103IMAGE&gt;</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Erie.T0A - (Dir Listener) Load Temp XML to transaction data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103Image_Temp_XML</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="Erie.T0A - (Dir Listener) Set Temp XML values">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:\[TELEDEXNUMBER\]:eip_name:{ognl:@java.util.regex.Matcher@quoteReplacement(getAttribute('Incoming103_TeledexOrderNum'))}:eip_value]</REGEX_TABLE_TAG>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Send image file to IAS" retries="1">
+      <ModuleConfig>
+        <ServiceName>Load Image File Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ErieT0A-Set Incoming103_FlownetOrderNum">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103_FlownetOrderNum</AttributeName>
+          <Expression>0</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="ERIE.T0A - Restore PDF data to transaction">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103_PDF_Data</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Erie.T01 - Save image file to processing directory">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:#properties.get('processing.dir')+"/"+getAttribute('sourceClient')}</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('Incoming103_Filename')}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.AttributeRemovalProcessor" name="Erie.T0A - Remove image data attribute">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetAttributes>[eip_pair:Incoming103_PDF_Data:eip_name:Not needed anymore:eip_value]</TargetAttributes>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Testing.TestCaseID-1-ReceiveRequest.Database SQL Transport" />
+          </Targets>
+          <Condition>
+            <Expression>
+              /Query/TransRefGUIDPattern
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="InvalidRequest" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Testing.TestCaseID-1-ReceiveRequest.Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Testing.TestCaseID-9-ErrorHandler Listener</ErrorListenerName>
+        <IncludeData>false</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.http.HttpPostListener" name="Testing.TestCaseID-1-ReceiveRequest.HTTP Post Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <RequestPath>TestCaseID</RequestPath>
+        <Timeout>600</Timeout>
+        <TimeoutHandlingMechanism>Send timeout message</TimeoutHandlingMechanism>
+        <Synchronous>true</Synchronous>
+        <RequireSSL>false</RequireSSL>
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/plain;charset=UTF-8:eip_value]</HTTPHeaders>
+        <WsdlFile />
+        <WsdlContentType>application/wsdl+xml</WsdlContentType>
+        <ValidateAtListenerLevel>false</ValidateAtListenerLevel>
+        <USE_BASIC_AUTH>false</USE_BASIC_AUTH>
+        <AUTH_FILE>auth.txt</AUTH_FILE>
+        <REALM>PilotFish</REALM>
+        <AdditionalResources />
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target name="System Unnamed">
+    <FormatProfile name="GenerateTestCaseIDQuery" />
+    <Transport class="com.pilotfish.eip.modules.db.DatabaseSqlTransport" name="Testing.TestCaseID-1-ReceiveRequest.Database SQL Transport" retries="1">
+      <ModuleConfig>
+        <InputFile />
+        <UserName>$$db.username</UserName>
+        <Password>$$db.password</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$db.driver</JdbcDriver>
+        <JdbcURL>$$db.url</JdbcURL>
+        <KeepConnection>false</KeepConnection>
+        <Autocommit>false</Autocommit>
+        <Timeout>600</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema>$$db.username</RestrictMetaDataToSchema>
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <CallbackListenerName>Testing.TestCaseID-2-SendResponse Listener</CallbackListenerName>
+        <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+        <JDBCProperties>null</JDBCProperties>
+        <UseConnectionPooling>false</UseConnectionPooling>
+        <PermittedDBConnections>5</PermittedDBConnections>
+        <LogMetadata>true</LogMetadata>
+        <LogSQL>true</LogSQL>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="InvalidRequest" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Testing.TestCaseID-1-SetInvalidReponse">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Response</AttributeName>
+          <Expression>&lt;error&gt;Invalid Request&lt;/error&gt;</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Testing.TestCaseID-1-Set invalid data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.eip.modules.SaveDataToAttributeProcessor.ATTR_NAME</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

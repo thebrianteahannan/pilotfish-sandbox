@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor"
+        id="2875aed1-f8a7-4b92-871f-f361aae6d8b1"
+        name="AIG.1 - set response code for missing fields"
+        tag="Processor"
+        type="Transaction Attribute Population"
+        version="2.0">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      <AttributePairs>[eip_pair:com.pilotfish.HTTPResponseCode:eip_name:500:eip_value]</AttributePairs>
+      <AttributeScope>Transaction</AttributeScope>
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      <Expression>500</Expression>
+      <AttributeName>com.pilotfish.HTTPResponseCode</AttributeName>
+   </ModuleConfig>
+</Module>

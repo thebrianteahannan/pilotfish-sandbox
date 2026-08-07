@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2017-11-15T15:55:09-06:00" ModifiedBy="ntpfish-pvl1@crlcorp.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="true">
+        <Rule>
+          <Targets>
+            <TransportTarget name="PRUX - Archive Outgoing" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>(@java.lang.Integer@parseInt(getAttribute('Retry.Count'))==0)</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="PRUX 1122 Status or Result" />
+            <TransportTarget name="PRUX - Empty File for Future Pickup" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Advanced Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>false</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+        <MonitorTransports>false</MonitorTransports>
+        <IgnoreListenerErrorPeriod>900</IgnoreListenerErrorPeriod>
+        <DataIDOGNLExpression>{ognl:#transaction.getTransactionID()}</DataIDOGNLExpression>
+        <IgnoreTransportErrorPeriod>900</IgnoreTransportErrorPeriod>
+        <MonitorListeners>false</MonitorListeners>
+        <DeDuplicateErrorPeriod>86400</DeDuplicateErrorPeriod>
+        <IgnoreStageErrorPeriod>900</IgnoreStageErrorPeriod>
+        <CollectDataIDs>true</CollectDataIDs>
+        <MonitorStages>true</MonitorStages>
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="CRL Order Status DB">
+    <FormatProfile name="PRUX SOAP" />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="PRUX Batch Pickup Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <PollingInterval>$$PrudentialBatchDeliveryIntervalSeconds</PollingInterval>
+        <PollingDirectory>$$PrudentialStagingDirectory</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction>xml</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>{ognl:#properties.get('archive.dir')+"/PRUX/1122/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}</TargetDirectory>
+        <Tokenizers />
+        <SerializedTransactionsTag>25000</SerializedTransactionsTag>
+        <SubFolderIterationTag>true</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag>$$PrudentialBatchDeliveryStart</SchedulerStartTag>
+        <SchedulerEndTag>$$PrudentialBatchDeliveryEnd</SchedulerEndTag>
+        <ExcludeDaysTag>$$PrudentialBatchDaysExclude</ExcludeDaysTag>
+        <ExcludeDatesTag />
+        <TimeZone>US/Central</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>true</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XMLWrapProcessor" name="PRUX Wrap Data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <ROOT_ELEMENT_NAME_TAG>XCSData</ROOT_ELEMENT_NAME_TAG>
+          <USE_CDATA_TAG>false</USE_CDATA_TAG>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PRUX Set SoureClient">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>sourceClient</AttributeName>
+          <Expression>PRUX</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PRUX Set StatusType">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.statustype</AttributeName>
+          <Expression>status</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PRUX Set Retry count to 0">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Retry.Count</AttributeName>
+          <Expression>0</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="PRUX Remove any XML headers">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:&lt;\?.*\?&gt;:eip_name::eip_value]</REGEX_TABLE_TAG>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="" name="HTTP Post Retry">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="PRUX Pickup File For Retry Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="Prudential.4a - PRUX Delete staged retry file">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>{ognl:#properties.get('PrudentialStagingDirectory') + '/' + getAttribute('staged.outbound.filename')}</FileName>
+          <PostProcessOperation>Delete</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="POST to PRUX">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="PRUX 1122 Status or Result" retries="8" retryDelayMs="900000">
+      <ModuleConfig>
+        <TargetURL>$$PrudentialOutgoingWsUrl</TargetURL>
+        <UserName>$$PrudentialOutgoingWsUsername</UserName>
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password>$$PrudentialOutgoingWsPassword</Password>
+        <PreemptiveAuthentication>false</PreemptiveAuthentication>
+        <ResponseListener>PRUX Result Listener</ResponseListener>
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>600000</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <SynchronizationKey />
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <SpecifyTLS>false</SpecifyTLS>
+        <TLSVersion>TLSv1.1</TLSVersion>
+        <KeyStoreFilePath>$$PrudentialKeyStoreFilePath</KeyStoreFilePath>
+        <KeyStoreFileType>jks</KeyStoreFileType>
+        <KeyStoreFilePassword>$$PrudentialKeyStoreFilePassword</KeyStoreFilePassword>
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <TrustStoreFilePath>trust.jks</TrustStoreFilePath>
+        <TrustStoreFileType>jks</TrustStoreFileType>
+        <TrustStoreFilePassword>crl</TrustStoreFilePassword>
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PRUX.3-Set staged.outbound.filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>staged.outbound.filename</AttributeName>
+          <Expression>{ognl:'outgoing-1122-'+new java.text.SimpleDateFormat('yyyyMMdd-HHmmss').format(new java.util.Date())+'.xml'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="PRUX.3 -Stage outbound batch file">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$PrudentialStagingDirectory</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('staged.outbound.filename')}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PRUX.3 - set file to delete">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>delete.if.successfully.delivered</AttributeName>
+          <Expression>{ognl:#properties.get('PrudentialStagingDirectory')+'/'+getAttribute('staged.outbound.filename')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Local Archive Dir">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="PRUX - Archive Outgoing" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:getAttribute('archive.dir')}</TargetDirectory>
+        <FileName>{ognl:getAttribute('archive.filename')}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>false</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetArchiveDir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>$$archive.dir</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetArchiveSubDir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>{ognl:getAttribute("archive.dir")+"/PRUX/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetArchiveFilename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.filename</AttributeName>
+          <Expression>{ognl:"outgoing-PRUX-" + new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new java.util.Date())}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Batch Pickup Dir">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="PRUX - Empty File for Future Pickup" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$PrudentialStagingDirectory</TargetDirectory>
+        <FileName>empty</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Create New</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.BlankXMLIntoDataProcessor" name="Put Blank data into Transaction Data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.PauseProcessor" name="PRUX.3-Pause">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Period>60</Period>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

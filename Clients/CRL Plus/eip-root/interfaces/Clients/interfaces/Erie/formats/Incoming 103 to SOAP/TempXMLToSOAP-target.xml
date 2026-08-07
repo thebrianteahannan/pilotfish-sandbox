@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:doc="http://crlcorp.com/schema/DocumentRequest" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" targetNamespace="http://schemas.xmlsoap.org/soap/envelope/">
+			<xsd:element name="Envelope" type="soapenv:Envelope_type" />
+			<xsd:complexType name="Envelope_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Body" type="soapenv:Body_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Body_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" ref="doc:StoreDocumentRequest" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:doc="http://crlcorp.com/schema/DocumentRequest" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="http://crlcorp.com/schema/DocumentRequest">
+			<xsd:element name="StoreDocumentRequest" type="doc:StoreDocumentRequest_type" />
+			<xsd:complexType name="Images_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="MimeType" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="ImageSequence" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="DataBuffer" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ColumnValue_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Value" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Type" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Pages_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="OriginalFileName" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="PageSequence" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Images" type="doc:Images_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="DocumentIndex_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="ColumnName" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="ColumnValue" type="doc:ColumnValue_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="StoreDocumentRequest_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="DrawerName" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="UserId" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="DocumentType" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="DocumentIndex" type="doc:DocumentIndex_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Pages" type="doc:Pages_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

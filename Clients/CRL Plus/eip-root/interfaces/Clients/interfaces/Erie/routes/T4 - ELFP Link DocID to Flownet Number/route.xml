@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2017-03-31T13:47:21-04:00" ModifiedBy="aramos@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Link FlownetNum to DocID Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Erie.T4 - Load link SOAP message template">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103_Link_FlownetNum_XML</AttributeName>
+          <Expression>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:imag="http://www.crlcorp.com/ImageMessage"&gt;    &lt;soapenv:Header/&gt;    &lt;soapenv:Body&gt;       &lt;imag:WS_ReceiveDocKeys&gt;          &lt;ImageServerEntities&gt;             &lt;!--Zero or more repetitions:--&gt;             &lt;ImageServerEntity&gt;                &lt;Drawer&gt;CRL_PLUS&lt;/Drawer&gt;                &lt;Indexes&gt;                   &lt;!--Zero or more repetitions:--&gt;                   &lt;ImageServerIndex&gt;                      &lt;Key&gt;ORDER_NUMBER&lt;/Key&gt;                      &lt;Value&gt;[ORDERNUMBER]&lt;/Value&gt;                   &lt;/ImageServerIndex&gt;                   &lt;ImageServerIndex&gt;                      &lt;Key&gt;DOCUMENT_ID&lt;/Key&gt;                      &lt;Value&gt;[DOCUMENTID]&lt;/Value&gt;                   &lt;/ImageServerIndex&gt;                &lt;/Indexes&gt;             &lt;/ImageServerEntity&gt;          &lt;/ImageServerEntities&gt;       &lt;/imag:WS_ReceiveDocKeys&gt;    &lt;/soapenv:Body&gt; &lt;/soapenv:Envelope&gt;</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Erie.T4 - Load temp XML into transaction data">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>Incoming103_Link_FlownetNum_XML</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="Erie.T4 - Set Temp XML values">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:\[ORDERNUMBER\]:eip_name:{ognl:#orderNum=getAttribute('Incoming103_FlownetOrderNum'),#orderNum!=null?@java.util.regex.Matcher@quoteReplacement(#orderNum):"0"}:eip_value][eip_pair:\[DOCUMENTID\]:eip_name:{ognl:@java.util.regex.Matcher@quoteReplacement(getAttribute('Incoming103_Response_DocID'))}:eip_value]</REGEX_TABLE_TAG>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.AttributeRemovalProcessor" name="Erie.T4 - Remove temporary attributes">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetAttributes>[eip_pair:Incoming103_Link_FlownetNum_XML:eip_name:Not needed anymore:eip_value]</TargetAttributes>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="Erie.T25 - Link FlownetNum to DocID" retries="8" retryDelayMs="15000">
+      <ModuleConfig>
+        <TargetURL>$$FlowNetWebServiceURL</TargetURL>
+        <UserName>$$FlowNetWebServiceUsername</UserName>
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password>$$FlowNetWebServicePassword</Password>
+        <PreemptiveAuthentication>false</PreemptiveAuthentication>
+        <ResponseListener>Process DocID - FlownetNum link response listener</ResponseListener>
+        <ResponseCodeHandling>Pass Through</ResponseCodeHandling>
+        <Timeout>60000</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <SynchronizationKey />
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <SpecifyTLS>false</SpecifyTLS>
+        <TLSVersion>TLSv1.1</TLSVersion>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Erie.T4 - Archive outgoing SOAP message">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:#properties.get('archive.dir') +"/"+getAttribute('sourceClient')+"/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())+"/ImageUpload"}</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('Incoming103_Filename')+"-"+getAttribute('Incoming103_FlownetOrderNum')+"-FlowNet-Upload-Request-" + new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(new java.util.Date()) + ".xml"}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

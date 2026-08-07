@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLXML xmlns="http://pilotfish.sqlxml">
+	<Assign name="pf_processing_key" exp="#key = new java.text.SimpleDateFormat('yyyy-MM-dd-HH-mm-ss').format(new java.util.Date()), #txData.getAttributes().setAttribute('pf_processing_key', #key), #key"/>
+	<Execute>
+		<SQL>UPDATE
+				VALIDATION_ERROR E
+			SET
+				ERROR_MESSAGE_DELIVERED = cast(to_timestamp(?, 'YYYY-MM-DD HH24:MI:SS.FF3') AS DATE)
+			WHERE
+				ERROR_MESSAGE_DELIVERED is null
+				AND PF_SOURCE_CLIENT IN ('PRUX')</SQL>
+		<Params>ognl:#pf_processing_key</Params>
+	</Execute>
+	<Execute into="errors" as="error">
+		<SQL>
+			SELECT
+				E.POLNUMBER,
+				E.ERROR_DATE,
+				E.REQ_CODE_TC,
+				E.REQ_CODE_TXT,
+				E.REASON_FOR_ERROR
+			FROM
+				VALIDATION_ERROR E
+			WHERE
+				ERROR_MESSAGE_DELIVERED = cast(to_timestamp(?, 'YYYY-MM-DD HH24:MI:SS.FF3') AS DATE)
+			AND E.PF_SOURCE_CLIENT IN ('PRUX') ORDER BY E.ERROR_DATE DESC
+		</SQL>
+		<Params>ognl:#pf_processing_key</Params>
+	</Execute>
+	<XMLOut var="errors" />
+</SQLXML>

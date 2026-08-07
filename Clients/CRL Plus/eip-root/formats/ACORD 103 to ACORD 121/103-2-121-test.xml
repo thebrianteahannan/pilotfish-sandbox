@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:bo="http://ACORD.org/Standards/Life/2" xmlns:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.23.00.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="2.23.00">
+	<UserAuthRequest>
+		<VendorApp>
+			<VendorName VendorCode="84">Hooper Holmes, Inc.</VendorName>
+			<AppName>Winimage</AppName>
+			<AppVer>2.5</AppVer>
+		</VendorApp>
+		<OLifEExtension ExtensionCode="6778" VendorCode="220">
+			<DellTransRefGUID>f374efe3-fb96-411d-becb-d2820ca0ac29</DellTransRefGUID>
+			<CompanyNumber>2A</CompanyNumber>
+		</OLifEExtension>
+	</UserAuthRequest>
+	<TXLifeRequest PrimaryObjectID="Holding_Primary">
+		<TransRefGUID>d2554a46-931b-4832-93cb-d78b7674c013</TransRefGUID>
+		<TransType tc="103">New Business Submission</TransType>
+		<TransExeDate>2015-03-11</TransExeDate>
+		<TransExeTime>10:40:54-05:00</TransExeTime>
+		<OLifE>
+			<SourceInfo>
+				<CreationDate>2015-03-11</CreationDate>
+				<CreationTime>10:40:54-05:00</CreationTime>
+				<SourceInfoName>Hooper Holmes, Inc.</SourceInfoName>
+			</SourceInfo>
+			<Holding id="Holding_Primary">
+				<Policy>
+					<PolNumber>LI509511</PolNumber>
+					<ProductCode>Term</ProductCode>
+					<CarrierCode>5340</CarrierCode>
+					<PlanName>Other</PlanName>
+					<PolicyStatus tc="56">Reentry Pending</PolicyStatus>
+					<ReplacementType tc="3">External Replacement</ReplacementType>
+					<PaymentMode tc="4">Monthly</PaymentMode>
+					<PaymentMethod tc="7">Electronic Funds Transfer</PaymentMethod>
+					<AccountNumber>111</AccountNumber>
+					<RoutingNumber>999999999</RoutingNumber>
+					<BankAcctType tc="1">Checking</BankAcctType>
+					<Life>
+						<QualPlanType tc="1">Non-Qualified</QualPlanType>
+						<Coverage>
+							<PlanName>Other</PlanName>
+							<IndicatorCode tc="1">Base</IndicatorCode>
+							<CurrentAmt>400000</CurrentAmt>
+							<CovOption>
+								<PlanName>Accelerated Death Benefit</PlanName>
+							</CovOption>
+							<LifeParticipant PartyID="Party_PrimaryInsured" id="LifeParticipant_PrimaryInsured">
+								<LifeParticipantRoleCode tc="1">Primary Insured</LifeParticipantRoleCode>
+							</LifeParticipant>
+							<LifeParticipant PartyID="Party_PrimaryAgent" id="LifeParticipant_PrimaryAgent">
+								<LifeParticipantRoleCode tc="15">Primary Agent</LifeParticipantRoleCode>
+							</LifeParticipant>
+							<LifeParticipant PartyID="Party_Owner" id="LifeParticipant_Owner">
+								<LifeParticipantRoleCode tc="18">Owner</LifeParticipantRoleCode>
+							</LifeParticipant>
+							<LifeParticipant PartyID="Party_Payor" id="LifeParticipant_Payor">
+								<LifeParticipantRoleCode tc="12">Payor</LifeParticipantRoleCode>
+							</LifeParticipant>
+							<LifeParticipant DataRep="Partial" PartyID="Party_PrimaryBene_1" id="LifeParticipant_PrimaryBene_1">
+								<LifeParticipantRoleCode tc="7">Beneficiary - Primary</LifeParticipantRoleCode>
+								<BeneficiaryPercentDistribution>50</BeneficiaryPercentDistribution>
+							</LifeParticipant>
+							<LifeParticipant DataRep="Partial" PartyID="Party_PrimaryBene_2" id="LifeParticipant_PrimaryBene_2">
+								<LifeParticipantRoleCode tc="7">Beneficiary - Primary</LifeParticipantRoleCode>
+								<BeneficiaryPercentDistribution>50</BeneficiaryPercentDistribution>
+							</LifeParticipant>
+						</Coverage>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>d2554a46-931b-4832-93cb-d78b7674c013</TrackingID>
+						<ApplicationJurisdiction tc="38">NC</ApplicationJurisdiction>
+						<SignatureInfo>
+							<SignatureRoleCode tc="1">Primary Insured</SignatureRoleCode>
+							<SignatureDate>2015-03-11</SignatureDate>
+							<SignatureState tc="38">NC</SignatureState>
+							<SignatureOK tc="1">True</SignatureOK>
+						</SignatureInfo>
+						<SignatureInfo>
+							<SignatureRoleCode tc="15">Primary Agent</SignatureRoleCode>
+							<SignatureDate>2015-03-11</SignatureDate>
+							<SignatureState tc="38">NC</SignatureState>
+							<SignatureOK tc="1">True</SignatureOK>
+						</SignatureInfo>
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="Party_PrimaryInsured" id="Req1">
+						<ReqCode tc="137">Tele-Interview</ReqCode>
+						<RequestedDate>2015-03-11</RequestedDate>
+						<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+						<RequirementAcctNum>71661</RequirementAcctNum>
+					</RequirementInfo>
+				</Policy>
+				<Attachment>
+					<Description>Multiple Policy? NO Are select rates being applied for? YES</Description>
+					<AttachmentType tc="2">Comment</AttachmentType>
+				</Attachment>
+			</Holding>
+			<Party id="Party_PrimaryInsured">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID>999991234</GovtID>
+				<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+				<Person DataRep="Partial">
+					<FirstName>HENRY</FirstName>
+					<LastName>TEST</LastName>
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1985-04-17</BirthDate>
+					<Height2>
+						<MeasureUnits tc="2">US System Standard</MeasureUnits>
+						<MeasureValue>36</MeasureValue>
+					</Height2>
+					<Weight2>
+						<MeasureUnits tc="2">US System Standard</MeasureUnits>
+						<MeasureValue>150</MeasureValue>
+					</Weight2>
+					<BirthJurisdictionTC tc="38">NC</BirthJurisdictionTC>
+				</Person>
+				<Address id="APP_ADDRESS">
+					<Line1>123 main st</Line1>
+					<City>charlotte</City>
+					<AddressStateTC tc="38">NC</AddressStateTC>
+					<Zip>99999</Zip>
+				</Address>
+				<Phone id="APP_CPhone">
+					<PhoneTypeCode tc="12">Mobile</PhoneTypeCode>
+					<AreaCode>814</AreaCode>
+					<DialNumber>1002222</DialNumber>
+				</Phone>
+				<EMailAddress>
+					<AddrLine>test@test.com</AddrLine>
+					<OLifEExtension VendorCode="84">
+						<eDeliveryOptIn>NN</eDeliveryOptIn>
+					</OLifEExtension>
+				</EMailAddress>
+			</Party>
+			<Party id="Party_Owner">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID>999991234</GovtID>
+				<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+				<Person DataRep="Partial">
+					<FirstName>HENRY</FirstName>
+					<LastName>TEST</LastName>
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1985-04-17</BirthDate>
+				</Person>
+				<Address>
+					<Line1>123 main st</Line1>
+					<City>charlotte</City>
+					<AddressStateTC tc="38">NC</AddressStateTC>
+					<Zip>99999</Zip>
+				</Address>
+				<EMailAddress>
+					<AddrLine>test@test.com</AddrLine>
+					<OLifEExtension VendorCode="84">
+						<eDeliveryOptIn>NN</eDeliveryOptIn>
+					</OLifEExtension>
+				</EMailAddress>
+			</Party>
+			<Party id="Party_Payor">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName />
+				<Person DataRep="Partial">
+					<FirstName>LORETTA TEST</FirstName>
+					<LastName>LORETTA TEST</LastName>
+				</Person>
+				<Address>
+					<Line1>123 MAIN ST</Line1>
+					<City>CHARLOTTE</City>
+					<AddressStateTC tc="38">NC</AddressStateTC>
+					<Zip>99999</Zip>
+				</Address>
+				<EMailAddress>
+					<OLifEExtension>
+						<eDeliveryOptIn>EU</eDeliveryOptIn>
+					</OLifEExtension>
+				</EMailAddress>
+			</Party>
+			<Party id="Party_PrimaryAgent">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<Person>
+					<FirstName>Nimbus</FirstName>
+					<LastName>1</LastName>
+				</Person>
+				<Producer>
+					<CarrierAppointment>
+						<CompanyProducerID>AA1000</CompanyProducerID>
+					</CarrierAppointment>
+				</Producer>
+			</Party>
+			<Party id="Party_PrimaryBene_1">
+				<PartyTypeCode tc="1">Party</PartyTypeCode>
+				<GovtID>123456798</GovtID>
+				<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+				<Person>
+					<FirstName>TEST</FirstName>
+					<LastName>TEST</LastName>
+					<BirthDate>1985-07-23</BirthDate>
+				</Person>
+			</Party>
+			<Party id="Party_PrimaryBene_2">
+				<PartyTypeCode tc="1">Party</PartyTypeCode>
+				<GovtID>123456789</GovtID>
+				<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+				<Person>
+					<BirthDate>1985-07-23</BirthDate>
+				</Person>
+			</Party>
+			<Relation OriginatingObjectID="Holding_Primary" RelatedObjectID="Party_Owner" id="Relation_OwnerToHolding">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="8">Owner</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_PrimaryBene_1" id="Relation_PrimaryBene1ToPrimaryInsured">
+				<OriginatingObjectType tc="6">Party</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="2147483647">Other</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_PrimaryBene_2" id="Relation_PrimaryBene2ToPrimaryInsured">
+				<OriginatingObjectType tc="6">Party</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="5">Family</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Holding_Primary" RelatedObjectID="TermAppGen-GV" id="Relation_TermAppGen-GV">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="101">Form Instance</RelatedObjectType>
+				<RelationRoleCode tc="107">Form For</RelationRoleCode>
+			</Relation>
+			<FormInstance id="TermAppGen-GV">
+				<FormName>TermAppGen-GV</FormName>
+				<FormResponse>
+					<QuestionNumber>ChildInsuredCitizenship</QuestionNumber>
+					<ResponseCode>2</ResponseCode>
+				</FormResponse>
+				<FormResponse>
+					<QuestionNumber>PrimaryInsuredCitizenship</QuestionNumber>
+					<ResponseCode>1</ResponseCode>
+				</FormResponse>
+				<Attachment>
+					<AttachmentData>SUkqAAgAAAASAP4ABAABAAAAAAAAAAABAwABAAAAwAYAAAEBAwABAAAAmAgAAAIBAwABAAAA
+BACL0wQAkuYEAD74BAB2/gQAgAEFAOEEBQDTCgUAEg8FANcPBQBXQU5HAQAAAAsAAACYEAUA
+CAAAAKgnAABUuwAATCcBAEyHAQC8KwIApOICADxfAwCQRQQA/IoEALSnBAA=</AttachmentData>
+					<ImageType tc="3">TIF</ImageType>
+				</Attachment>
+			</FormInstance>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>
+

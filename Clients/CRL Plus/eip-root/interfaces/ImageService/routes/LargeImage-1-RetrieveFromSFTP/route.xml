@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2026-04-24T10:28:54-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.file.ftp.FTPListener" enabled="true" name="LargeImage-1-RetrieveFromSFTP Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>true</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <FTPListenerType>Encrypted FTP (SSH/SFTP)</FTPListenerType>
+        <Host>$$image.large.sftp.hostname</Host>
+        <Port>22</Port>
+        <PollingInterval>1800</PollingInterval>
+        <PollingDirectory>$$image.large.sftp.dir</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction />
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <FilenameIsMvsDsn>false</FilenameIsMvsDsn>
+        <SerializedTransactionsTag>1</SerializedTransactionsTag>
+        <Timeout>300</Timeout>
+        <Sftp_SocketTimeout>0</Sftp_SocketTimeout>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private</Protection>
+        <FileType>Binary</FileType>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <UseChangeDirectoryCommand>false</UseChangeDirectoryCommand>
+        <ReconnectAfterBytes>102400</ReconnectAfterBytes>
+        <CacheType>File Cache</CacheType>
+        <PostProcessOperation>Delete</PostProcessOperation>
+        <TargetDirectory />
+        <UserName>$$image.large.sftp.username</UserName>
+        <Password>$$image.large.sftp.password</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <CheckFTPPermissions>true</CheckFTPPermissions>
+        <CheckPreviouslyProcessed>true</CheckPreviouslyProcessed>
+        <CheckWriteInProgress>true</CheckWriteInProgress>
+        <SchedulerStartTag>M0W0D1H18m0</SchedulerStartTag>
+        <SchedulerEndTag>M0W0D1H23m0</SchedulerEndTag>
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>US/Pacific</TimeZone>
+        <HeaderLines>0</HeaderLines>
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <CombineFiles>false</CombineFiles>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set status_id">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.status_id</AttributeName>
+          <Expression>{ognl:#filename=getAttribute('com.pilotfish.FileName'),(#filename!=null &amp;&amp; #filename.indexOf('-')&lt;1)?#filename : #filename.substring(0, #filename.indexOf('-'))}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="LargeImage-1-RetrieveFromSFTP. Store Locally" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$image.large.staging.dir</TargetDirectory>
+        <FileName>{ognl:getAttribute('com.pilotfish.crl.status_id')}</FileName>
+        <FileExtension>{ognl:getAttribute('com.pilotfish.FileExtension')}</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Create New</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+        <OutputFilePath>false</OutputFilePath>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ImageService.LargeImage-1-RetrieveFromSFTP.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>ImageService.LargeImage-1-RetrieveFromSFTP</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="ImageService.LargeImage-1-RetrieveFromSFTP.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+    <PostProcessors>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="CallTriggerLargeAttachment">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>TriggerLargeAttachment Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60000</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </PostProcessors>
+  </Target>
+</Route>
+

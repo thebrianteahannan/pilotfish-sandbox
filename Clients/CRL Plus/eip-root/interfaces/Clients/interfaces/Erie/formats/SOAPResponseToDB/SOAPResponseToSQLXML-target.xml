@@ -1,0 +1,1036 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://pilotfish.sqlxml" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" elementFormDefault="qualified" targetNamespace="http://pilotfish.sqlxml">
+			<xsd:element name="Assign">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The Assign element creates a SQLXML variable with the provided name and expression.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The Assign element creates a SQLXML variable with the provided name and expression.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:identity_attribute_type">
+							<xsd:attribute name="exp" type="xsd:identity_attribute_type" use="required">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Specifies the OGNL expression to evaluate as the variable value.</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:appInfo />
+									<xsd:documentation>Specifies the OGNL expression to evaluate as the variable value.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="name" type="xsd:identity_attribute_type" use="required">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Specifies the name of the variable to define.</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:appInfo />
+									<xsd:documentation>Specifies the name of the variable to define.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SQL">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The SQL element allows the user to provide a text value for SQL to be executed "as-is".</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The SQL element allows the user to provide a text value for SQL to be executed "as-is".</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:identity_attribute_type" />
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Param">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The Param element defines a parameter for a stored procedure in terms of mode, type, and name.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The Param element defines a parameter for a stored procedure in terms of mode, type, and name.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:identity_attribute_type">
+							<xsd:attribute name="mode" type="xsd:identity_attribute_type" use="required">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Specifies the OGNL expression to evaluate as the variable value.</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:appInfo />
+									<xsd:documentation>Specifies the OGNL expression to evaluate as the variable value.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="name" type="xsd:identity_attribute_type" use="required">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Specifies the name of the variable to define.</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:appInfo />
+									<xsd:documentation>Specifies the name of the variable to define.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="type" type="xsd:identity_attribute_type" use="required">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Specifies the numeric SQL type for the parameter (dictated by JDBC driver).</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:appInfo />
+									<xsd:documentation>Specifies the numeric SQL type for the parameter (dictated by JDBC driver).</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CallProc">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The CallProc element declared a Stored Procedure call with execution syntax (SQL) and parameters (Params).</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The CallProc element declared a Stored Procedure call with execution syntax (SQL) and parameters (Params).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:SQL" />
+						<xsd:element maxOccurs="unbounded" minOccurs="0" ref="ns1:Param" />
+					</xsd:sequence>
+					<xsd:attribute name="into" type="xsd:identity_attribute_type" use="required">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies the name of the variable to store results into.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Specifies the name of the variable to store results into.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="hasResultSet" type="xsd:identity_attribute_type">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies if the Stored Procedure returns a Result Set.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Specifies if the Stored Procedure returns a Result Set.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Delete">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The Delete element is used to remove rows from a provided table given some set of columns using the "key" attribute.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The Delete element is used to remove rows from a provided table given some set of columns using the "key" attribute.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ATTACHMENT" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="CRLTRANSACTION" />
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Exception">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The Exception element throws an Exception with the message contents of the element's child text nodes (value).</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The Exception element throws an Exception with the message contents of the element's child text nodes (value).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:identity_attribute_type" />
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Params">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The Params element defines a parameter for Execute statements, ordered according to their appearance in the SQL statement.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The Params element defines a parameter for Execute statements, ordered according to their appearance in the SQL statement.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:identity_attribute_type" />
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Execute">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The Execute element executes a user-provided block of SQL against the database and optionally stores results into a variable (defined by "into" and "as" attributes).</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The Execute element executes a user-provided block of SQL against the database and optionally stores results into a variable (defined by "into" and "as" attributes).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:SQL" />
+						<xsd:element maxOccurs="unbounded" minOccurs="0" ref="ns1:Params" />
+					</xsd:sequence>
+					<xsd:attribute name="into" type="xsd:identity_attribute_type" use="required">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies the name of the variable to store results into ("records").</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Specifies the name of the variable to store results into ("records").</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="as" type="xsd:identity_attribute_type">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies the name of sub-variables to store results into ("record").</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Specifies the name of sub-variables to store results into ("record").</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Insert">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The Insert element is used to insert rows into a provided table given a set of columns and their values.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The Insert element is used to insert rows into a provided table given a set of columns and their values.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ATTACHMENT" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="CRLTRANSACTION" />
+					</xsd:choice>
+					<xsd:attribute ref="ns1:identity" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="InsertOrUpdate">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The InsertOrUpdate element is used to insert or update (one is tried, and then the other) rows into a provided table given a set of columns and their values.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The InsertOrUpdate element is used to insert or update (one is tried, and then the other) rows into a provided table given a set of columns and their values.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ATTACHMENT" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="CRLTRANSACTION" />
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="RefreshMetaData">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The RefreshMetaData element reloads database metadata (table, column names / types, etc).</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The RefreshMetaData element reloads database metadata (table, column names / types, etc).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:identity_attribute_type" />
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Select">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The Select element is used to select rows from a provided table given a set of columns (which may have "key" values, indicating "WHERE" clauses) and their values.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The Select element is used to select rows from a provided table given a set of columns (which may have "key" values, indicating "WHERE" clauses) and their values.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ATTACHMENT" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="CRLTRANSACTION" />
+					</xsd:choice>
+					<xsd:attribute name="into" type="xsd:identity_attribute_type" use="required">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies the variable name to store results into ("records").</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Specifies the variable name to store results into ("records").</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SelectOrInsertAndSelect">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The SelectOrInsertAndSelect element is used select records and if no records are
+				returned, then insert the not-empty values and rerun the select.
+				This can be useful for inserting into a normalized database where you need to retrieve a record from a
+				lookup table, and if it is not in the table, add it to the table.
+				The select is run again to retrieve any generated keys.
+				The set of columns should set "key" values for all columns that need to be in the where clause.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The SelectOrInsertAndSelect element is used select records and if no records are
+				returned, then insert the not-empty values and rerun the select.
+				This can be useful for inserting into a normalized database where you need to retrieve a record from a
+				lookup table, and if it is not in the table, add it to the table.
+				The select is run again to retrieve any generated keys.
+				The set of columns should set "key" values for all columns that need to be in the where clause.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ATTACHMENT" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="CRLTRANSACTION" />
+					</xsd:choice>
+					<xsd:attribute name="into" type="xsd:identity_attribute_type" use="required">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies the variable name to store results into ("records").</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Specifies the variable name to store results into ("records").</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Update">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The Update element is used to update rows into a provided table given a set of columns (which may have "key" attributes representing "WHERE" clauses) and their values.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The Update element is used to update rows into a provided table given a set of columns (which may have "key" attributes representing "WHERE" clauses) and their values.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ATTACHMENT" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="CRLTRANSACTION" />
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="XMLOut">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The XMLOut element is used to serialize variable or expression contents to XML as output.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The XMLOut element is used to serialize variable or expression contents to XML as output.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:identity_attribute_type">
+							<xsd:attribute name="output" type="xsd:identity_attribute_type">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Specifies the format to output to. Defaults to "xml," but "TEXT" is also supported.</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:appInfo />
+									<xsd:documentation>Specifies the format to output to. Defaults to "xml," but "TEXT" is also supported.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="output-tags" type="xsd:identity_attribute_type">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Specifies a comma-separated list of output tag names for the TEXT "output" option.</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:appInfo />
+									<xsd:documentation>Specifies a comma-separated list of output tag names for the TEXT "output" option.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="attribute-tags" type="xsd:identity_attribute_type">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Specifies a comma-separated list of attribute tag names.</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:appInfo />
+									<xsd:documentation>Specifies a comma-separated list of attribute tag names.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="contextNode" type="xsd:identity_attribute_type">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Specifies an alternate parent element name for output.</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:appInfo />
+									<xsd:documentation>Specifies an alternate parent element name for output.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="trimValues" type="xsd:identity_attribute_type">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Specifies if output values in tags are whitespace-trimmed. Defaults to "true".</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:appInfo />
+									<xsd:documentation>Specifies if output values in tags are whitespace-trimmed. Defaults to "true".</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="appendTo" type="xsd:identity_attribute_type">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Specifies an additional variable (in addition to "var") to output in addition to "var".</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:appInfo />
+									<xsd:documentation>Specifies an additional variable (in addition to "var") to output in addition to "var".</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+							<xsd:attribute name="var" type="xsd:identity_attribute_type" use="required">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Specifies the name of the variable to output.</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:annotation>
+									<xsd:appInfo />
+									<xsd:documentation>Specifies the name of the variable to output.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="While">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The While element is used to iterate over a set of expressions.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The While element is used to iterate over a set of expressions.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Assign" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:CallProc" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Delete" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Exception" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Execute" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:If" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Insert" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:InsertOrUpdate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Iterate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:RefreshMetaData" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Select" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:SelectOrInsertAndSelect" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:TryCatch" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Update" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:While" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:XMLOut" />
+					</xsd:all>
+					<xsd:attribute name="init" type="xsd:identity_attribute_type">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies an initial OGNL expression that is evaluated when the While element is first executed.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Specifies an initial OGNL expression that is evaluated when the While element is first executed.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="increment" type="xsd:identity_attribute_type">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies an OGNL expression that is evaluated once per iteration.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Specifies an OGNL expression that is evaluated once per iteration.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="test" type="xsd:identity_attribute_type" use="required">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies an OGNL expression that is evaluated to test if another iteration will execute.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Specifies an OGNL expression that is evaluated to test if another iteration will execute.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Try">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The Try element is part of the Try/Catch/Finally set and is used to wrap executed elements. Failures are handled by the Catch clause.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The Try element is part of the Try/Catch/Finally set and is used to wrap executed elements. Failures are handled by the Catch clause.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Assign" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:CallProc" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Delete" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Exception" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Execute" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:If" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Insert" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:InsertOrUpdate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Iterate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:RefreshMetaData" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Select" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:SelectOrInsertAndSelect" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:TryCatch" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Update" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:While" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:XMLOut" />
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Catch">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The Catch element is part of the Try/Catch/Finally set and is used to execute elements. It has a context variable called "EXCEPTION" available to it.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The Catch element is part of the Try/Catch/Finally set and is used to execute elements. It has a context variable called "EXCEPTION" available to it.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Assign" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:CallProc" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Delete" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Exception" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Execute" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:If" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Insert" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:InsertOrUpdate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Iterate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:RefreshMetaData" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Select" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:SelectOrInsertAndSelect" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:TryCatch" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Update" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:While" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:XMLOut" />
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Finally">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The Finally element is part of the Try/Catch/Finally set and is used to execute elements at the end of the set.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The Finally element is part of the Try/Catch/Finally set and is used to execute elements at the end of the set.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Assign" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:CallProc" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Delete" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Exception" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Execute" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:If" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Insert" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:InsertOrUpdate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Iterate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:RefreshMetaData" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Select" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:SelectOrInsertAndSelect" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:TryCatch" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Update" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:While" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:XMLOut" />
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="TryCatch">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The TryCatch element defines a Try/Catch/Finally set, which allows for safe handling of statements.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The TryCatch element defines a Try/Catch/Finally set, which allows for safe handling of statements.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Try" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Catch" />
+						<xsd:element maxOccurs="1" minOccurs="0" ref="ns1:Finally" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Iterate">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The Iterate element iterates over a provided variable set ("over") using a sub-variable name for each entry ("as") and executes its child elements for each.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The Iterate element iterates over a provided variable set ("over") using a sub-variable name for each entry ("as") and executes its child elements for each.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Assign" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:CallProc" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Delete" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Exception" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Execute" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:If" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Insert" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:InsertOrUpdate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Iterate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:RefreshMetaData" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Select" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:SelectOrInsertAndSelect" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:TryCatch" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Update" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:While" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:XMLOut" />
+					</xsd:all>
+					<xsd:attribute name="over" type="xsd:identity_attribute_type" use="required">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies the variable to iterate over ("records").</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Specifies the variable to iterate over ("records").</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="as" type="xsd:identity_attribute_type" use="required">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies the variable name for each iteration ("record").</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Specifies the variable name for each iteration ("record").</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="If">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The If element tests a condition and, if it evalutes to true, executes its child elements.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The If element tests a condition and, if it evalutes to true, executes its child elements.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Assign" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:CallProc" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Delete" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Exception" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Execute" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:If" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Insert" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:InsertOrUpdate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Iterate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:RefreshMetaData" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Select" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:SelectOrInsertAndSelect" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:TryCatch" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Update" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:While" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:XMLOut" />
+					</xsd:all>
+					<xsd:attribute name="test" type="xsd:identity_attribute_type" use="required">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies the OGNL expression to evaluate as a test.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Specifies the OGNL expression to evaluate as a test.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SQLXML">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">The SQLXML element is the root-level element for SQLXML documents. It is required and used by the SQLXML sub-system to identify a SQLXML document.</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:appInfo />
+					<xsd:documentation>The SQLXML element is the root-level element for SQLXML documents. It is required and used by the SQLXML sub-system to identify a SQLXML document.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Assign" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:CallProc" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Delete" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Exception" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Execute" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:If" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Insert" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:InsertOrUpdate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Iterate" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:RefreshMetaData" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Select" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:SelectOrInsertAndSelect" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:TryCatch" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:Update" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:While" />
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:XMLOut" />
+					</xsd:all>
+					<xsd:attribute name="identifierQuoteString" type="xsd:identity_attribute_type">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Provides a definition for a literal used to wrap field and table names. For example, if this is set to ", then a table named TABLE would be referenced as "TABLE". The default value is blank (no value).</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Provides a definition for a literal used to wrap field and table names. For example, if this is set to ", then a table named TABLE would be referenced as "TABLE". The default value is blank (no value).</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="defaultNullString" type="xsd:identity_attribute_type">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Allows the user to provide a default value for null literal values. Defaults to null.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Allows the user to provide a default value for null literal values. Defaults to null.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="defaultNullNumber" type="xsd:identity_attribute_type">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Allows the user to provide a default value for null numeric values. Defaults to null.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Allows the user to provide a default value for null numeric values. Defaults to null.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="defaultNullDate" type="xsd:identity_attribute_type">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Allows the user to provide a default value for null date values. Defaults to null.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Allows the user to provide a default value for null date values. Defaults to null.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="tagNameChars" type="xsd:identity_attribute_type">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">A literal used as a list of characters allowed (in addition to alphanumerics) in result tag names. Setting this to "_" will allow resulting tags to have underscores. Defaults to blank.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>A literal used as a list of characters allowed (in addition to alphanumerics) in result tag names. Setting this to "_" will allow resulting tags to have underscores. Defaults to blank.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="XMLExceptionOutput" type="xsd:identity_attribute_type">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies if SQLXML exceptions should be handled as XML output (if true) or fail at the stage (if blank). Defaults to blank.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appInfo />
+							<xsd:documentation>Specifies if SQLXML exceptions should be handled as XML output (if true) or fail at the stage (if blank). Defaults to blank.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="identityQuery" type="xsd:identity_attribute_type">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Specifies if SQLXML should use an identity query.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:appinfo />
+							<xsd:documentation>Specifies if SQLXML should use an identity query.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="ATTACHMENT">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" name="ATTACHMENT_ID" type="ATTACHMENT_ID_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="TRANSACTION_ID" type="TRANSACTION_ID_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="STATUS_ID" type="STATUS_ID_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="BASICTYPE_TC" type="BASICTYPE_TC_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="BASICTYPE_TXT" type="BASICTYPE_TXT_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="DESCR" type="DESCR_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="TYPE_TC" type="TYPE_TC_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="TYPE_TXT" type="TYPE_TXT_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="MIMETYPE" type="MIMETYPE_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="ENCTYPESTR" type="ENCTYPESTR_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="ENCTYPE_TC" type="ENCTYPE_TC_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="LOCATION_TC" type="LOCATION_TC_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="CRL_DOCUMENT_ID" type="CRL_DOCUMENT_ID_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="CRL_FOLDER_ID" type="CRL_FOLDER_ID_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="CRL_DRAWER_NAME" type="CRL_DRAWER_NAME_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="CRL_PAGE_COUNT" type="CRL_PAGE_COUNT_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="PLATFORM" type="PLATFORM_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="CRL_FILENAME" type="CRL_FILENAME_element_type" />
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CRLTRANSACTION">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" name="TRANSACTION_ID" type="TRANSACTION_ID1_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="TRANSREFGUID" type="TRANSREFGUID_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="TYPE_TC" type="TYPE_TC1_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="TYPE_TXT" type="TYPE_TXT1_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="EXE_DATE" type="EXE_DATE_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="MODE_TC" type="MODE_TC_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="MODE_TXT" type="MODE_TXT_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="TESTINDICATOR" type="TESTINDICATOR_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="CREATION_DATE" type="CREATION_DATE_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="SOURCE_INFO_NAME" type="SOURCE_INFO_NAME_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="SOURCE_INFO_DESCR" type="SOURCE_INFO_DESCR_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="PF_SOURCE_CLIENT" type="PF_SOURCE_CLIENT_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="PLATFORM" type="PLATFORM1_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="ORDER_COMPLETE_DATE" type="ORDER_COMPLETE_DATE_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="LAST_STATUS_DELIVERED_DATE" type="LAST_STATUS_DELIVERED_DATE_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="FINAL_RESULT_DELIVERED_DATE" type="FINAL_RESULT_DELIVERED_DATE_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="CREATED_BY" type="CREATED_BY_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="CREATED_DATE" type="CREATED_DATE_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="LAST_MODIFIED_BY" type="LAST_MODIFIED_BY_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="LAST_MODIFIED_DATE" type="LAST_MODIFIED_DATE_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="FLOWNET_ORDER_NUM" type="FLOWNET_ORDER_NUM_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="PF_PROCESSING_KEY" type="PF_PROCESSING_KEY_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="FINAL_RESULT_STAGED_DATE" type="FINAL_RESULT_STAGED_DATE_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="PF_BATCH_NAME" type="PF_BATCH_NAME_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="TELEDEX_REMOTE_ID" type="TELEDEX_REMOTE_ID_element_type" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="TELEDEX_ORDER_NUM" type="TELEDEX_ORDER_NUM_element_type" />
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:simpleType name="BASICTYPE_TXT_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="TYPE_TXT_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="SOURCE_INFO_NAME_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="PLATFORM_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="TRANSACTION_ID_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="CRL_PAGE_COUNT_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="EXE_DATE_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="TYPE_TXT1_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="LAST_STATUS_DELIVERED_DATE_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="LOCATION_TC_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="CREATION_DATE_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="LAST_MODIFIED_DATE_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="FINAL_RESULT_STAGED_DATE_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="STATUS_ID_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="SOURCE_INFO_DESCR_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="PF_SOURCE_CLIENT_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="TELEDEX_ORDER_NUM_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="BASICTYPE_TC_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="CREATED_DATE_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="ENCTYPESTR_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="TRANSACTION_ID1_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="LAST_MODIFIED_BY_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="MODE_TXT_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="ENCTYPE_TC_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="TRANSREFGUID_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="CRL_FOLDER_ID_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="CRL_DOCUMENT_ID_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="FINAL_RESULT_DELIVERED_DATE_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="ORDER_COMPLETE_DATE_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="ATTACHMENT_ID_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="TELEDEX_REMOTE_ID_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="CREATED_BY_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="TESTINDICATOR_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="PF_PROCESSING_KEY_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="PF_BATCH_NAME_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="CRL_DRAWER_NAME_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="MIMETYPE_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="CRL_FILENAME_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="DESCR_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="MODE_TC_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="PLATFORM1_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="FLOWNET_ORDER_NUM_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="TYPE_TC_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+			<xsd:simpleType name="TYPE_TC1_element_type">
+				<xsd:restriction base="xsd:anyType" />
+			</xsd:simpleType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

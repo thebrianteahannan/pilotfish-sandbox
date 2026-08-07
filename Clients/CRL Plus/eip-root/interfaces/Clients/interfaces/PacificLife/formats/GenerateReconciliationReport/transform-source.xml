@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="EIPData" type="EIPData_type" />
+			<xsd:complexType name="EIPData_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="RESULTS" type="RESULTS_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="RESULTS_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="RESULT" type="RESULT_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="RESULT_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="POLICYNUM" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REQUIREMENTTYPE" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="UNIQUEID" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORDERNUMBER" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DATEOPENED" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADDITONALINFO" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="COMPANY" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

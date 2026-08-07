@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="XCSData" type="XCSData_type" />
+			<xsd:complexType name="XCSData_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Columns">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="Column">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="index" type="xsd:string" />
+											<xsd:attribute form="unqualified" name="length" type="xsd:string" />
+											<xsd:attribute form="unqualified" name="type" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:attribute form="unqualified" name="count" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="XCSRecord">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BRANCH" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORDERNO" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORDER_DATE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORDER_TYPE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="RUSH" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORIGIN" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AGENT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AGENT_CD" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AGENCY" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AGENCY_CDE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AGENCY_PH" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AGENCY_FAX" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="P_CLIENT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="P_ACCOUNT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="A_CLIENT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="A_ACCOUNT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="I_CLIENT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="I_ACCOUNT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PRO_INS_NO" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="INSUR_CODE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="POL_AMT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="USAGE_CDE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APL_SI_DT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="POL_TYPE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SUB_PTYPE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="POLICY" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_ORD_ID" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_PREFIX" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_FNAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_MNAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_LNAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_SUFFIX" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_FALIAS" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_MALIAS" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_LALIAS" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_GENDER" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_SMOKER" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_MAR_ST" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_SOC" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_DOB" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_AGE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PLAC_BIRTH" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CTRY_CITZN" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EXAM_PLAC" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CONT_HME_B" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CONT_HME_E" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR1_NAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR1_ADR1" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR1_ADR2" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR1_CITY" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR1_ST" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR1_ZIP1" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR1_ZIP2" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR1_CTRY" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR1_PH" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR1_EXT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="RES_BDATE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="RES_EDATE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR2_PLAC" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR2_NAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR2_ADR1" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR2_ADR2" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR2_CITY" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR2_ST" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR2_ZIP1" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR2_ZIP2" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR2_CTRY" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR2_PH" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADR2_EXT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REMARKS1" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REMARKS2" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REMARKS3" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REMARKS4" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PRC_LST" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BILL_ST" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BILL_CD1" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BILL_CD2" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BILL_CD3" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BILL_CD4" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BILL_CD5" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BILL_CD6" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BILL_CD7" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BILL_CD8" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BILL_CD9" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="LAB" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EXAMINER" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EXM_SOC" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EXAMNR_CDE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APPT_DATE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APPT_TIME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APPT_PM" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="TO_EXAMNER" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SCHD_DATE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="STATUS" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="TRANTONO" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SPARE_DATE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SPARE_FLD" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="FOLLOW_DTE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="FOLLOW_FLD" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AIM" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PHY_FNAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PHY_MNAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PHY_LNAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PHY_ADR1" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PHY_ADR2" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PHY_CITY" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PHY_ST" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PHY_ZIP1" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PHY_ZIP2" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PHY_CTRY" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PHY_PHONE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PHY_FAX" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APS_DATE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BEN_PREFIX" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BEN_FNAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BEN_MNAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BEN_LNAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BEN_SUFFIX" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BEN_COMP" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BEN_AGE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BEN_TYPE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BEN_RELAT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EMPLOYER" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EMPL_ADR1" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EMPL_ADR2" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EMPL_CITY" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EMPL_ST" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EMPL_ZIP1" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EMPL_ZIP2" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EMPL_CTRY" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EMPL_PH" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EMPL_EXT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OCCUPATION" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CONT_EMP_B" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CONT_EMP_H" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EMPL_BDTE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EMPL_EDTE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="INF_DATE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DRV_LIC" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ISSUE_ST" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MVR_DATE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORIG_BR" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORIG_ORDNO" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REMOTE_ID" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REMOTE_NO" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PEP_FIELD" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DONE_DATE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_HTFT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_HTIN" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_WT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ATTACHMENT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EFORM_ID" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="FILE_NAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CONT_PREF" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CONT_NEEDS" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CONT_INST" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CONT_EXT" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CTRL_POL" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DELIV_ST" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PRU_TRANS" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PBX_IND" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PLC_IND" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ALT_POL" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="RELAT_APP" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="JUV_NAME" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="JUV_FLAG" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AGT_W_CLI" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EA_IND" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ALT_PH" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_EMAIL" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="APP_MOBILE" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AGT_PH" type="xsd:string" />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AGT_EMAIL" type="xsd:string" />
+							<xsd:attribute form="unqualified" name="row" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

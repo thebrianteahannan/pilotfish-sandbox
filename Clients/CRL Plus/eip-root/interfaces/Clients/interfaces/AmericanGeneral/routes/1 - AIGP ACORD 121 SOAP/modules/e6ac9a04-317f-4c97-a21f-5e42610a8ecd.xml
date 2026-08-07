@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor"
+        id="e6ac9a04-317f-4c97-a21f-5e42610a8ecd"
+        name="AIG.1 - AIGP ACORD 121 SOAP.Processor1"
+        tag="Processor"
+        type="Transaction Attribute Population"
+        version="2.0">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      <AttributePairs>[eip_pair:sourceClient:eip_name:AIGP:eip_value]</AttributePairs>
+      <AttributeScope>Transaction</AttributeScope>
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      <Expression>AIGP</Expression>
+      <AttributeName>sourceClient</AttributeName>
+   </ModuleConfig>
+</Module>

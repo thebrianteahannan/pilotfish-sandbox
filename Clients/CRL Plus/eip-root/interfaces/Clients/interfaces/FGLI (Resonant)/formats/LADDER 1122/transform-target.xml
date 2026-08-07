@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://tempuri.org/" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" xmlns:s1="http://acord.ws.ure.allfinanz.com" elementFormDefault="qualified">
+			<xsd:element name="Format">
+				<xsd:complexType>
+					<xsd:sequence />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:HandleRequest" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="ns1:HandleRequestResponse" />
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://tempuri.org/" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" xmlns:s1="http://acord.ws.ure.allfinanz.com" targetNamespace="http://tempuri.org/">
+			<xsd:element name="HandleRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="0" name="PLServicesAccountID" type="xsd:string" />
+						<xsd:element maxOccurs="1" minOccurs="0" name="PLServiceAccountPwd" type="xsd:string" />
+						<xsd:element maxOccurs="1" minOccurs="0" name="TXLifePayLoad" type="s1:TXLifePayload" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="HandleRequestResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="0" name="HandleRequestResult" type="s1:Response" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" xmlns:s1="http://acord.ws.ure.allfinanz.com" targetNamespace="http://acord.ws.ure.allfinanz.com">
+			<xsd:complexType name="TXLifePayload">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:string" />
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="Response">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="ErrorCode" type="xsd:int" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="ErrorMessage" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

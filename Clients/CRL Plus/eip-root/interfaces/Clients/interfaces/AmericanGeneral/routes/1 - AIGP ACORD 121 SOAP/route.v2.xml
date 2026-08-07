@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route id="ca992660-2b21-4fdd-bf1a-1a7dfc1cbd31"
+       name="1 - AIGP ACORD 121 SOAP"
+       version="2.0">
+   <RouteSettings RouteSpecificPooling="true"
+                  debugTraceCurrentSecondsToKeepFiles="-1"
+                  debugTraceMaxFiles="-1"
+                  debuggingTrace="false"
+                  transactionTimeToLive="300000">
+      <Description>&lt;h1&gt;
+      Web Service to Inbound Route
+    &lt;/h1&gt;
+    &lt;h2&gt;
+      Overview:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The Web Service to Inbound Route listens for a SOAP web service request, 
+      as defined in &amp;quot;Order.wsdl&amp;quot;, authenticates the request based on supplied 
+      credentials, parses out the encapsulated CRL Order, and passes that 
+      order to the Document Type Discovery route.
+    &lt;/p&gt;
+    &lt;h2&gt;
+      
+    &lt;/h2&gt;
+    &lt;h2&gt;
+      Listener:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The listener is a SOAP Web Service listener configured to conform to 
+      Order.wsdl. The inbound SOAP envelope must contain a username and 
+      password. The username and password are parsed, the password converted 
+      to a hash format, then authenticated, via a Database Authenticator, 
+      against a CRL database containing customer credentials. If the 
+      authentication is successful, the CRL order is stripped from the SOAP 
+      envelope at which point the encapsulating envelope data is discarded.
+    &lt;/p&gt;
+    &lt;h2&gt;
+      
+    &lt;/h2&gt;
+    &lt;h2&gt;
+      Source Transform/Route/Target Transform:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      Relay the extracted CRL order document.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Transport:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The remaining document is then relayed through the remainder of the 
+      route and passed to the Document Type Discovery route. Additionally, a 
+      Synchronout Response transport will send a response back to the 
+      requestor containing an HTTP status code.
+    &lt;/p&gt;</Description>
+   </RouteSettings>
+   <Nodes>
+      <Node height="72.0"
+            id="04407e2a-8129-4ec8-a33a-2f26bf3daa78"
+            label="AmericanGeneral"
+            moduleId="3dd5b10a-73b6-4738-a094-6577a875593f"
+            width="192.0"
+            x="840.0"
+            y="888.0"/>
+      <Node height="72.0"
+            id="72f14894-f724-4cfe-b4f1-29de5cf75245"
+            label="Get user/pass"
+            moduleId="181292e0-15bd-4c4e-9317-f570f6d1c060"
+            width="192.0"
+            x="1104.0"
+            y="888.0"/>
+      <Node height="72.0"
+            id="4f1768cf-0bce-426a-98d3-12d56e223b2f"
+            label="AIG1-validate creds"
+            moduleId="4025ea79-020a-4dcd-886e-e8937e9573b4"
+            width="192.0"
+            x="1104.0"
+            y="984.0"/>
+      <Node height="72.0"
+            id="f7f643c3-9d21-4549-a9d9-d2ac58bc4b62"
+            label="AIG.1 - set FileName"
+            moduleId="a8a1e7ed-c745-4ccf-ac3e-fae5ae9215c7"
+            width="192.0"
+            x="1104.0"
+            y="1080.0"/>
+      <Node height="72.0"
+            id="297f9ab0-1a58-4680-8921-2dba2ec4e166"
+            label="AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor-WithWrapper"
+            moduleId="7aad069b-c21d-486f-aecd-41c87d3e79cc"
+            width="192.0"
+            x="1104.0"
+            y="1176.0"/>
+      <Node height="72.0"
+            id="0eb6cf0a-66be-4724-a161-c8189c5dcf04"
+            label="AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor1-WithWrapper"
+            moduleId="8780672b-1a23-4818-8a54-abb6af31d623"
+            width="192.0"
+            x="1104.0"
+            y="1368.0"/>
+      <Node height="72.0"
+            id="13c9aca9-5517-4235-a465-8fbd9d9100ff"
+            label="Get CRL Doc"
+            moduleId="215bcded-ee89-41cb-8794-17cdf204342e"
+            width="192.0"
+            x="1104.0"
+            y="1560.0"/>
+      <Node height="72.0"
+            id="72ba18a3-3fb4-44b5-a526-75772a2fb144"
+            label="AIG.1 - AIGP ACORD 121 SOAP.Processor1"
+            moduleId="e6ac9a04-317f-4c97-a21f-5e42610a8ecd"
+            width="192.0"
+            x="1104.0"
+            y="1752.0"/>
+      <Node height="72.0"
+            id="b53d3f51-e954-40ec-abd4-37ad1c044555"
+            label="AIG.1 - Remove CDATA wrapper"
+            moduleId="ca56a33e-7ce6-4c09-b586-a4e9547f842a"
+            width="192.0"
+            x="1104.0"
+            y="1848.0"/>
+      <Node height="72.0"
+            id="c7025fa4-c5ed-4e34-a71d-307629e321ad"
+            label="AIG.1 - set FileName-Copy-1"
+            moduleId="ea25aee3-8f90-46e4-97de-13a2a6bac061"
+            width="192.0"
+            x="1104.0"
+            y="1944.0"/>
+      <Node height="72.0"
+            id="77cdc4e7-6b3b-4885-882b-a74182e8b1d7"
+            label="AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor"
+            moduleId="8a459c56-980e-4ec7-b36b-0986a1fdb0b3"
+            width="192.0"
+            x="1104.0"
+            y="2040.0"/>
+      <Node height="72.0"
+            id="ecb8fafe-49bf-4e40-a67f-90431ac4b0f5"
+            label="AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor1"
+            moduleId="e93d2c79-98b4-446b-9b5e-5ffd075879d9"
+            width="192.0"
+            x="1104.0"
+            y="2136.0"/>
+      <Node height="96.0"
+            id="2062bc47-f576-4ce0-99df-34dc11de14da"
+            label="AmericanGeneral Test Dir Listener"
+            moduleId="88bc2429-4d9a-4e8c-8391-332d58971a25"
+            width="192.0"
+            x="936.0"
+            y="2640.0"/>
+      <Node height="192.0"
+            id="e017943d-d4a6-4e50-a1e5-afcd0677f5c6"
+            label="Set sourceClient 2"
+            moduleId="eb861326-fd7f-4135-a0cd-70880c8e9765"
+            width="168.0"
+            x="1248.0"
+            y="2616.0"/>
+      <Node height="72.0"
+            id="693ef30f-d3bf-4add-a190-87ec06a278a7"
+            label="AIG.1 - set FileName-1"
+            moduleId="ac131dce-5b57-4281-b72f-be5a4892977a"
+            width="192.0"
+            x="1536.0"
+            y="2640.0"/>
+      <Node height="96.0"
+            id="be2403da-bec5-4c66-8062-178fe8850ba8"
+            label="Conditional Router"
+            moduleId="4a8a1724-84ed-4c25-9265-0d88f5f3669f"
+            width="192.0"
+            x="1632.0"
+            y="1752.0"/>
+      <Node height="72.0"
+            id="6065b99a-a0cc-44cd-8c4c-0e1045b6fd71"
+            label="AIG.1 - AIGP ACORD 121 SOAP.Processor"
+            moduleId="4d87732e-f142-4d6d-9fcb-98e7ecf351ca"
+            width="192.0"
+            x="1104.0"
+            y="1272.0"/>
+      <Node height="72.0"
+            id="915e3e29-88ea-4437-a26c-db003b1b861c"
+            label="AIG.1 - set defaultSourceInfoName"
+            moduleId="040a9238-4694-4674-863c-6d05007ee619"
+            width="192.0"
+            x="1104.0"
+            y="1464.0"/>
+      <Node height="72.0"
+            id="5f6370f5-2f3d-4bb7-8f60-2f5139a1f081"
+            label="AIG.1 - set defaultSourceInfoDescr"
+            moduleId="d009237f-b962-4985-ac98-1fa5c677d7d6"
+            width="192.0"
+            x="1104.0"
+            y="1656.0"/>
+      <Node height="72.0"
+            id="41d10ac1-8e22-432f-9171-2114843b08a5"
+            label="Doctype Route"
+            moduleId="88ee9e31-7764-47f3-a076-8101d199c753"
+            width="192.0"
+            x="1584.0"
+            y="864.0"/>
+      <Node height="72.0"
+            id="a3b139fd-44fb-46f0-959a-5ed89a02d35f"
+            label="AIG.1 - set response code"
+            moduleId="fc776eee-9e21-4c8e-aa74-456443e9d844"
+            width="192.0"
+            x="2280.0"
+            y="1560.0"/>
+      <Node height="72.0"
+            id="7aebcbd8-e5d5-43a5-89a8-7418774feee2"
+            label="AIG.1 - load invalid creds response"
+            moduleId="7ba41f12-b9ea-4fa7-ad8d-561230618d56"
+            width="192.0"
+            x="2544.0"
+            y="1560.0"/>
+      <Node height="72.0"
+            id="4840bb55-6742-4b8b-91ed-f8463e20de80"
+            label="AIGP1 - Invalid Creds"
+            moduleId="8baec810-001c-4d05-bb3e-670b47e43df1"
+            width="192.0"
+            x="2808.0"
+            y="1560.0"/>
+      <Node height="72.0"
+            id="52c58cbb-c18c-42d5-b59d-2bfaaf3b955b"
+            label="AIG.1 - set response code for missing fields"
+            moduleId="2875aed1-f8a7-4b92-871f-f361aae6d8b1"
+            width="192.0"
+            x="2280.0"
+            y="1704.0"/>
+      <Node height="72.0"
+            id="e27a66e7-c249-46c6-b670-226ce95125dc"
+            label="AIG.1 - load missing fields response"
+            moduleId="bb87f8f9-0858-4f48-a318-66653382a934"
+            width="192.0"
+            x="2544.0"
+            y="1704.0"/>
+      <Node height="72.0"
+            id="9e23f556-8813-4a5e-8bdf-0b5d5e1102b0"
+            label="Missing Required Fields"
+            moduleId="9e7f803f-b9a2-4c25-9020-a067a002956f"
+            width="192.0"
+            x="2808.0"
+            y="1704.0"/>
+   </Nodes>
+   <Connections>
+      <Connection condition="true"
+                  id="7dab1958-b050-4840-b051-a322e90df531"
+                  sourceConnector="right-output"
+                  sourceNodeId="04407e2a-8129-4ec8-a33a-2f26bf3daa78"
+                  targetConnector="left-input"
+                  targetNodeId="72f14894-f724-4cfe-b4f1-29de5cf75245"/>
+      <Connection condition="true"
+                  id="b69b97e5-54e6-4225-a2e5-8b196ae45a63"
+                  sourceConnector="right-output"
+                  sourceNodeId="72f14894-f724-4cfe-b4f1-29de5cf75245"
+                  targetConnector="left-input"
+                  targetNodeId="4f1768cf-0bce-426a-98d3-12d56e223b2f"/>
+      <Connection condition="true"
+                  id="f5aa7dc5-cbe3-427f-be33-ab9f7c56fa2e"
+                  sourceConnector="right-output"
+                  sourceNodeId="4f1768cf-0bce-426a-98d3-12d56e223b2f"
+                  targetConnector="left-input"
+                  targetNodeId="f7f643c3-9d21-4549-a9d9-d2ac58bc4b62"/>
+      <Connection condition="true"
+                  id="6ea83897-3d78-4f83-a828-fcf81682d9d8"
+                  sourceConnector="right-output"
+                  sourceNodeId="f7f643c3-9d21-4549-a9d9-d2ac58bc4b62"
+                  targetConnector="left-input"
+                  targetNodeId="297f9ab0-1a58-4680-8921-2dba2ec4e166"/>
+      <Connection condition="true"
+                  id="66aa2125-59dd-4933-a9ea-797defb649ee"
+                  sourceConnector="right-output"
+                  sourceNodeId="297f9ab0-1a58-4680-8921-2dba2ec4e166"
+                  targetConnector="left-input"
+                  targetNodeId="0eb6cf0a-66be-4724-a161-c8189c5dcf04"/>
+      <Connection condition="true"
+                  id="f990e7a0-72de-4c1d-b845-a9cd467a8840"
+                  sourceConnector="right-output"
+                  sourceNodeId="0eb6cf0a-66be-4724-a161-c8189c5dcf04"
+                  targetConnector="left-input"
+                  targetNodeId="13c9aca9-5517-4235-a465-8fbd9d9100ff"/>
+      <Connection condition="true"
+                  id="dcbc504f-95da-4cef-8d99-436bbb28c87a"
+                  sourceConnector="right-output"
+                  sourceNodeId="13c9aca9-5517-4235-a465-8fbd9d9100ff"
+                  targetConnector="left-input"
+                  targetNodeId="72ba18a3-3fb4-44b5-a526-75772a2fb144"/>
+      <Connection condition="true"
+                  id="9e11a441-ae59-4820-840f-1c4ed25f7ec2"
+                  sourceConnector="right-output"
+                  sourceNodeId="72ba18a3-3fb4-44b5-a526-75772a2fb144"
+                  targetConnector="left-input"
+                  targetNodeId="b53d3f51-e954-40ec-abd4-37ad1c044555"/>
+      <Connection condition="true"
+                  id="61e4024d-913a-4fbb-9914-9be3402f4063"
+                  sourceConnector="right-output"
+                  sourceNodeId="b53d3f51-e954-40ec-abd4-37ad1c044555"
+                  targetConnector="left-input"
+                  targetNodeId="c7025fa4-c5ed-4e34-a71d-307629e321ad"/>
+      <Connection condition="true"
+                  id="9d3d248b-f555-4eb4-ad8b-234da4cc9ce6"
+                  sourceConnector="right-output"
+                  sourceNodeId="c7025fa4-c5ed-4e34-a71d-307629e321ad"
+                  targetConnector="left-input"
+                  targetNodeId="77cdc4e7-6b3b-4885-882b-a74182e8b1d7"/>
+      <Connection condition="true"
+                  id="bb4a7e19-4618-43cf-8042-a75d9b521fe8"
+                  sourceConnector="right-output"
+                  sourceNodeId="77cdc4e7-6b3b-4885-882b-a74182e8b1d7"
+                  targetConnector="left-input"
+                  targetNodeId="ecb8fafe-49bf-4e40-a67f-90431ac4b0f5"/>
+      <Connection condition="true"
+                  id="5845bda2-94f1-4d7e-aab3-2fdcc0156d71"
+                  sourceConnector="right-output"
+                  sourceNodeId="2062bc47-f576-4ce0-99df-34dc11de14da"
+                  targetConnector="left-input"
+                  targetNodeId="e017943d-d4a6-4e50-a1e5-afcd0677f5c6"/>
+      <Connection condition="true"
+                  id="22ef32c9-080d-48c7-8ffa-9bb2ff306a8e"
+                  sourceConnector="right-output"
+                  sourceNodeId="e017943d-d4a6-4e50-a1e5-afcd0677f5c6"
+                  targetConnector="left-input"
+                  targetNodeId="693ef30f-d3bf-4add-a190-87ec06a278a7"/>
+      <Connection condition="true"
+                  id="a59b9287-0485-43df-8aa5-0b735703e599"
+                  sourceConnector="right-output"
+                  sourceNodeId="6065b99a-a0cc-44cd-8c4c-0e1045b6fd71"
+                  targetConnector="left-input"
+                  targetNodeId="915e3e29-88ea-4437-a26c-db003b1b861c"/>
+      <Connection condition="true"
+                  id="ca074c0f-ec65-4335-82e1-f2714a0dc396"
+                  sourceConnector="right-output"
+                  sourceNodeId="915e3e29-88ea-4437-a26c-db003b1b861c"
+                  targetConnector="left-input"
+                  targetNodeId="5f6370f5-2f3d-4bb7-8f60-2f5139a1f081"/>
+      <Connection condition="true"
+                  id="eeefab9e-1175-41a0-bcd9-b796c41e2502"
+                  sourceConnector="right-output"
+                  sourceNodeId="5f6370f5-2f3d-4bb7-8f60-2f5139a1f081"
+                  targetConnector="left-input"
+                  targetNodeId="41d10ac1-8e22-432f-9171-2114843b08a5"/>
+      <Connection condition="true"
+                  id="893d3cf8-349c-4c82-b048-b66628e6414f"
+                  sourceConnector="right-output"
+                  sourceNodeId="a3b139fd-44fb-46f0-959a-5ed89a02d35f"
+                  targetConnector="left-input"
+                  targetNodeId="7aebcbd8-e5d5-43a5-89a8-7418774feee2"/>
+      <Connection condition="true"
+                  id="495ad11f-1d1d-436c-8e41-aa7aa396e4ff"
+                  sourceConnector="right-output"
+                  sourceNodeId="7aebcbd8-e5d5-43a5-89a8-7418774feee2"
+                  targetConnector="left-input"
+                  targetNodeId="4840bb55-6742-4b8b-91ed-f8463e20de80"/>
+      <Connection condition="true"
+                  id="429a9ce6-e8b1-47e3-9e67-8f33fdeaa957"
+                  sourceConnector="right-output"
+                  sourceNodeId="52c58cbb-c18c-42d5-b59d-2bfaaf3b955b"
+                  targetConnector="left-input"
+                  targetNodeId="e27a66e7-c249-46c6-b670-226ce95125dc"/>
+      <Connection condition="true"
+                  id="66ed22e0-5d53-4029-9c4a-84fa20548958"
+                  sourceConnector="right-output"
+                  sourceNodeId="e27a66e7-c249-46c6-b670-226ce95125dc"
+                  targetConnector="left-input"
+                  targetNodeId="9e23f556-8813-4a5e-8bdf-0b5d5e1102b0"/>
+      <Connection condition="true"
+                  id="079b2313-78dc-491f-b2f9-b1c8ba4fad11"
+                  sourceConnector="right-output"
+                  sourceNodeId="ecb8fafe-49bf-4e40-a67f-90431ac4b0f5"
+                  targetConnector="router-input:8f45f63c-66a5-4355-8aa1-d163e6a2a804"
+                  targetNodeId="be2403da-bec5-4c66-8062-178fe8850ba8"/>
+      <Connection condition="true"
+                  id="561fb74c-7b54-48e2-afed-1c28e81b0dc8"
+                  sourceConnector="right-output"
+                  sourceNodeId="693ef30f-d3bf-4add-a190-87ec06a278a7"
+                  targetConnector="router-input:8f45f63c-66a5-4355-8aa1-d163e6a2a804"
+                  targetNodeId="be2403da-bec5-4c66-8062-178fe8850ba8"/>
+      <Connection condition="true"
+                  id="a892d5d3-010b-4d8e-8beb-276d5220dd44"
+                  sourceConnector="router-output:774fe996-fc1c-402b-bce0-1a09949b34b3"
+                  sourceNodeId="be2403da-bec5-4c66-8062-178fe8850ba8"
+                  targetConnector="left-input"
+                  targetNodeId="a3b139fd-44fb-46f0-959a-5ed89a02d35f"/>
+      <Connection condition="true"
+                  id="56e78343-3131-474d-8e08-f4e88a208a25"
+                  sourceConnector="router-output:14005f59-a9e7-4f2b-85fa-854ebc527cef"
+                  sourceNodeId="be2403da-bec5-4c66-8062-178fe8850ba8"
+                  targetConnector="left-input"
+                  targetNodeId="52c58cbb-c18c-42d5-b59d-2bfaaf3b955b"/>
+      <Connection condition="true"
+                  id="13a5e26a-3b80-4280-aa55-299438cd583b"
+                  sourceConnector="router-output:d691e4dc-b33d-4eca-9270-c4b79ea248ed"
+                  sourceNodeId="be2403da-bec5-4c66-8062-178fe8850ba8"
+                  targetConnector="left-input"
+                  targetNodeId="6065b99a-a0cc-44cd-8c4c-0e1045b6fd71"/>
+   </Connections>
+</Route>

@@ -1,0 +1,1165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xtr:TransRoot xmlns:xtr="http://www.pilotfishtechnology.com/XCS/TransformEngine" xmlns:ff="http://www.pilotfishtechnology.com/XCS/TransformEngine/FlatFile">
+	<xtr:HandlerConfig>
+		<xtr:Builder>com.pilotfish.eip.transform.flatfile.RecordDeserializer</xtr:Builder>
+		<xtr:Serializer>com.pilotfish.eip.transform.flatfile.RecordSerializer</xtr:Serializer>
+	</xtr:HandlerConfig>
+	<xtr:Initialization>
+		<xtr:Record delimiter="\r\n" style="delimited" />
+		<xtr:Field style="fixed-width" />
+		<xtr:Direction selected="ToXML" />
+	</xtr:Initialization>
+	<xtr:ModuleRegistry>
+		<xtr:RecordControl class="com.pilotfish.eip.transform.flatfile.FieldRecordControl" name="Field RecordControl" />
+	</xtr:ModuleRegistry>
+	<xtr:RecordSegment delimiter="\r\n" name="NAILBA800">
+		<xtr:RecordSegment delimiter="\r\n" name="Header">
+			<xtr:Field name="RecordType">
+				<ff:Start>1</ff:Start>
+				<ff:End>5</ff:End>
+			</xtr:Field>
+			<xtr:Field name="RecordLength">
+				<ff:Start>6</ff:Start>
+				<ff:End>9</ff:End>
+			</xtr:Field>
+			<xtr:Field name="NCSSPStandardNumber">
+				<ff:Start>10</ff:Start>
+				<ff:End>12</ff:End>
+			</xtr:Field>
+			<xtr:Field name="NCSSPVersionNumber">
+				<ff:Start>13</ff:Start>
+				<ff:End>16</ff:End>
+			</xtr:Field>
+			<xtr:Field name="DateSent">
+				<ff:Start>17</ff:Start>
+				<ff:End>22</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TimeSent">
+				<ff:Start>23</ff:Start>
+				<ff:End>31</ff:End>
+			</xtr:Field>
+			<xtr:Field name="SenderName">
+				<ff:Start>32</ff:Start>
+				<ff:End>56</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TargetName">
+				<ff:Start>57</ff:Start>
+				<ff:End>81</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TransactionSetControlNumber">
+				<ff:Start>82</ff:Start>
+				<ff:End>96</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TransactionSetTestFileIndicator">
+				<ff:Start>97</ff:Start>
+				<ff:End>97</ff:End>
+			</xtr:Field>
+			<xtr:Field name="Reserved">
+				<ff:Start>98</ff:Start>
+				<ff:End>1000</ff:End>
+			</xtr:Field>
+		</xtr:RecordSegment>
+		<xtr:RecordSegment delimiter="\r\n" name="Request">
+			<xtr:RecordSegment delimiter="\r\n" name="ReportOrderBillingSegment">
+				<xtr:Field name="RecordType">
+					<ff:Start>1</ff:Start>
+					<ff:End>2</ff:End>
+				</xtr:Field>
+				<xtr:Field name="TransactionSequenceNumber">
+					<ff:Start>3</ff:Start>
+					<ff:End>7</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OrderOriginatorCode">
+					<ff:Start>8</ff:Start>
+					<ff:End>8</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ServiceProviderVendorID">
+					<ff:Start>9</ff:Start>
+					<ff:End>13</ff:End>
+				</xtr:Field>
+				<xtr:Field name="BillToVendorAccountNumber">
+					<ff:Start>14</ff:Start>
+					<ff:End>23</ff:End>
+				</xtr:Field>
+				<xtr:Field name="BillToVendorSubAccountNumber">
+					<ff:Start>24</ff:Start>
+					<ff:End>28</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OrderOriginatorBusinessContact">
+					<ff:Start>29</ff:Start>
+					<ff:End>58</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OrderOriginatorContactVoicePhone">
+					<ff:Start>59</ff:Start>
+					<ff:End>68</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OrderOriginatorContactFaxPhone">
+					<ff:Start>69</ff:Start>
+					<ff:End>78</ff:End>
+				</xtr:Field>
+				<xtr:Field name="InsuranceCarrierIDForReportDelivery">
+					<ff:Start>79</ff:Start>
+					<ff:End>83</ff:End>
+				</xtr:Field>
+				<xtr:Field name="InsuranceCarrierNameForReportDelivery">
+					<ff:Start>84</ff:Start>
+					<ff:End>113</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ManagingGeneralAgencyName">
+					<ff:Start>114</ff:Start>
+					<ff:End>143</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ManagingGeneralAgencyHOID">
+					<ff:Start>144</ff:Start>
+					<ff:End>155</ff:End>
+				</xtr:Field>
+				<xtr:Field name="Unused">
+					<ff:Start>156</ff:Start>
+					<ff:End>1000</ff:End>
+				</xtr:Field>
+			</xtr:RecordSegment>
+			<xtr:RecordSegment delimiter="\r\n" name="ReportOrderInsuranceContractInformationRecord">
+				<xtr:Field name="RecordType">
+					<ff:Start>1</ff:Start>
+					<ff:End>2</ff:End>
+				</xtr:Field>
+				<xtr:Field name="TransactionSequenceNumber">
+					<ff:Start>3</ff:Start>
+					<ff:End>7</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OrderRequestDate">
+					<ff:Start>8</ff:Start>
+					<ff:End>15</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OrderRequestTime">
+					<ff:Start>16</ff:Start>
+					<ff:End>21</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OrderType">
+					<ff:Start>22</ff:Start>
+					<ff:End>22</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OrderOriginatorQuotebackNumber">
+					<ff:Start>23</ff:Start>
+					<ff:End>82</ff:End>
+				</xtr:Field>
+				<xtr:Field name="WritingAgentLastName">
+					<ff:Start>83</ff:Start>
+					<ff:End>107</ff:End>
+				</xtr:Field>
+				<xtr:Field name="WritingAgentFirstName">
+					<ff:Start>108</ff:Start>
+					<ff:End>122</ff:End>
+				</xtr:Field>
+				<xtr:Field name="WritingAgentMiddleInitial">
+					<ff:Start>123</ff:Start>
+					<ff:End>123</ff:End>
+				</xtr:Field>
+				<xtr:Field name="WritingAgentGovernmentIDType">
+					<ff:Start>124</ff:Start>
+					<ff:End>124</ff:End>
+				</xtr:Field>
+				<xtr:Field name="WritingAgentGovernmentID">
+					<ff:Start>125</ff:Start>
+					<ff:End>133</ff:End>
+				</xtr:Field>
+				<xtr:Field name="WritingAgentHOID">
+					<ff:Start>134</ff:Start>
+					<ff:End>145</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ProposedInsuredCarrierCaseReferenceID">
+					<ff:Start>146</ff:Start>
+					<ff:End>160</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ProposedInsuredGACaseReferenceID">
+					<ff:Start>161</ff:Start>
+					<ff:End>175</ff:End>
+				</xtr:Field>
+				<xtr:Field name="InsuranceProductAppliedFor">
+					<ff:Start>176</ff:Start>
+					<ff:End>205</ff:End>
+				</xtr:Field>
+				<xtr:Field name="InsuranceAmountOfCoverageAppliedFor">
+					<ff:Start>206</ff:Start>
+					<ff:End>215</ff:End>
+				</xtr:Field>
+				<xtr:Field name="LifeOrDisabilityFlag">
+					<ff:Start>216</ff:Start>
+					<ff:End>216</ff:End>
+				</xtr:Field>
+				<xtr:Field name="CustomerReportName">
+					<ff:Start>217</ff:Start>
+					<ff:End>250</ff:End>
+				</xtr:Field>
+				<xtr:Field name="Unused">
+					<ff:Start>251</ff:Start>
+					<ff:End>1000</ff:End>
+				</xtr:Field>
+			</xtr:RecordSegment>
+			<xtr:RecordSegment delimiter="\r\n" name="ReportOrderOtherInsuranceContractInformationRecord">
+				<xtr:Field name="RecordType">
+					<ff:Start>1</ff:Start>
+					<ff:End>2</ff:End>
+				</xtr:Field>
+				<xtr:Field name="TransactionSequenceNumber">
+					<ff:Start>3</ff:Start>
+					<ff:End>7</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-1-InforceOrAppliedForCarrID">
+					<ff:Start>8</ff:Start>
+					<ff:End>12</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-1-InForceOrAppliedFor">
+					<ff:Start>13</ff:Start>
+					<ff:End>13</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-1-AmountOfCoverage">
+					<ff:Start>14</ff:Start>
+					<ff:End>23</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-1-WillThisCoverageBeReplaced">
+					<ff:Start>24</ff:Start>
+					<ff:End>24</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-1-LifeOrDisability">
+					<ff:Start>25</ff:Start>
+					<ff:End>25</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-2-InforceOrAppliedForCarrID">
+					<ff:Start>26</ff:Start>
+					<ff:End>30</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-2-InForceOrAppliedFor">
+					<ff:Start>31</ff:Start>
+					<ff:End>31</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-2-AmountOfCoverage">
+					<ff:Start>32</ff:Start>
+					<ff:End>41</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-2-WillThisCoverageBeReplaced">
+					<ff:Start>42</ff:Start>
+					<ff:End>42</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-2-LifeOrDisability">
+					<ff:Start>43</ff:Start>
+					<ff:End>43</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-3-InforceOrAppliedForCarrID">
+					<ff:Start>44</ff:Start>
+					<ff:End>48</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-3-InForceOrAppliedFor">
+					<ff:Start>49</ff:Start>
+					<ff:End>49</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-3-AmountOfCoverage">
+					<ff:Start>50</ff:Start>
+					<ff:End>59</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-3-WillThisCoverageBeReplaced">
+					<ff:Start>60</ff:Start>
+					<ff:End>60</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-3-LifeOrDisability">
+					<ff:Start>61</ff:Start>
+					<ff:End>61</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-4-InforceOrAppliedForCarrID">
+					<ff:Start>62</ff:Start>
+					<ff:End>66</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-4-InForceOrAppliedFor">
+					<ff:Start>67</ff:Start>
+					<ff:End>67</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-4-AmountOfCoverage">
+					<ff:Start>68</ff:Start>
+					<ff:End>77</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-4-WillThisCoverageBeReplaced">
+					<ff:Start>78</ff:Start>
+					<ff:End>78</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-4-LifeOrDisability">
+					<ff:Start>79</ff:Start>
+					<ff:End>79</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-5-InforceOrAppliedForCarrID">
+					<ff:Start>80</ff:Start>
+					<ff:End>84</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-5-InForceOrAppliedFor">
+					<ff:Start>85</ff:Start>
+					<ff:End>85</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-5-AmountOfCoverage">
+					<ff:Start>86</ff:Start>
+					<ff:End>95</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-5-WillThisCoverageBeReplaced">
+					<ff:Start>96</ff:Start>
+					<ff:End>96</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OtherInsurance-5-LifeOrDisability">
+					<ff:Start>97</ff:Start>
+					<ff:End>97</ff:End>
+				</xtr:Field>
+				<xtr:Field name="Unused">
+					<ff:Start>98</ff:Start>
+					<ff:End>1000</ff:End>
+				</xtr:Field>
+			</xtr:RecordSegment>
+			<xtr:RecordSegment delimiter="\r\n" name="ProposedInsureds">
+				<xtr:RecordSegment delimiter="\r\n" name="ProposedInsured">
+					<xtr:Field name="RecordType">
+						<ff:Start>1</ff:Start>
+						<ff:End>2</ff:End>
+					</xtr:Field>
+					<xtr:Field name="TransactionSequenceNumber">
+						<ff:Start>3</ff:Start>
+						<ff:End>7</ff:End>
+					</xtr:Field>
+					<xtr:Field name="LastName">
+						<ff:Start>8</ff:Start>
+						<ff:End>32</ff:End>
+					</xtr:Field>
+					<xtr:Field name="FirstName">
+						<ff:Start>33</ff:Start>
+						<ff:End>47</ff:End>
+					</xtr:Field>
+					<xtr:Field name="MiddleInitial">
+						<ff:Start>48</ff:Start>
+						<ff:End>48</ff:End>
+					</xtr:Field>
+					<xtr:Field name="NamePrefix">
+						<ff:Start>49</ff:Start>
+						<ff:End>53</ff:End>
+					</xtr:Field>
+					<xtr:Field name="NameSuffix">
+						<ff:Start>54</ff:Start>
+						<ff:End>58</ff:End>
+					</xtr:Field>
+					<xtr:Field name="DateOfBirth">
+						<ff:Start>59</ff:Start>
+						<ff:End>66</ff:End>
+					</xtr:Field>
+					<xtr:Field name="StateOfBirth">
+						<ff:Start>67</ff:Start>
+						<ff:End>68</ff:End>
+					</xtr:Field>
+					<xtr:Field name="Gender">
+						<ff:Start>69</ff:Start>
+						<ff:End>69</ff:End>
+					</xtr:Field>
+					<xtr:Field name="MaritalStatus">
+						<ff:Start>70</ff:Start>
+						<ff:End>70</ff:End>
+					</xtr:Field>
+					<xtr:Field name="MaidenName">
+						<ff:Start>71</ff:Start>
+						<ff:End>95</ff:End>
+					</xtr:Field>
+					<xtr:Field name="HomePhoneNumber">
+						<ff:Start>96</ff:Start>
+						<ff:End>105</ff:End>
+					</xtr:Field>
+					<xtr:Field name="WorkPhoneNumber">
+						<ff:Start>106</ff:Start>
+						<ff:End>115</ff:End>
+					</xtr:Field>
+					<xtr:Field name="WorkPhoneExtension">
+						<ff:Start>116</ff:Start>
+						<ff:End>120</ff:End>
+					</xtr:Field>
+					<xtr:Field name="DriversLicenseNumber">
+						<ff:Start>121</ff:Start>
+						<ff:End>135</ff:End>
+					</xtr:Field>
+					<xtr:Field name="DriversLicenseState">
+						<ff:Start>136</ff:Start>
+						<ff:End>137</ff:End>
+					</xtr:Field>
+					<xtr:Field name="GovernmentIDType">
+						<ff:Start>138</ff:Start>
+						<ff:End>138</ff:End>
+					</xtr:Field>
+					<xtr:Field name="GovernmentID">
+						<ff:Start>139</ff:Start>
+						<ff:End>147</ff:End>
+					</xtr:Field>
+					<xtr:Field name="Language">
+						<ff:Start>148</ff:Start>
+						<ff:End>162</ff:End>
+					</xtr:Field>
+					<xtr:Field name="BenficiaryLastName">
+						<ff:Start>163</ff:Start>
+						<ff:End>187</ff:End>
+					</xtr:Field>
+					<xtr:Field name="BeneficiaryFirstName">
+						<ff:Start>188</ff:Start>
+						<ff:End>202</ff:End>
+					</xtr:Field>
+					<xtr:Field name="BeneficiaryMiddleInitial">
+						<ff:Start>203</ff:Start>
+						<ff:End>203</ff:End>
+					</xtr:Field>
+					<xtr:Field name="BeneficiaryRelationship">
+						<ff:Start>204</ff:Start>
+						<ff:End>204</ff:End>
+					</xtr:Field>
+					<xtr:Field name="NewBusinessContactForCase">
+						<ff:Start>205</ff:Start>
+						<ff:End>216</ff:End>
+					</xtr:Field>
+					<xtr:Field name="Unused">
+						<ff:Start>217</ff:Start>
+						<ff:End>1000</ff:End>
+					</xtr:Field>
+				</xtr:RecordSegment>
+				<xtr:RecordControl name="Field RecordControl">
+					<ff:ControlField name="RecordIdentifier">
+						<ff:Start>1</ff:Start>
+						<ff:End>1</ff:End>
+					</ff:ControlField>
+					<ff:Case>
+						<ff:Test Occurs="999999999" field="RecordIdentifier" value="1" />
+						<ff:Record ref="ProposedInsured" />
+						<ff:Occurs>2147483647</ff:Occurs>
+					</ff:Case>
+					<ff:DefaultCase>
+						<ff:Record ref="Unknown" />
+						<ff:Occurs>0</ff:Occurs>
+					</ff:DefaultCase>
+				</xtr:RecordControl>
+				<xtr:RecordSegment delimiter="\r\n" name="Unknown">
+					<xtr:Field name="Unused">
+						<ff:Start>1</ff:Start>
+						<ff:End>1000</ff:End>
+					</xtr:Field>
+				</xtr:RecordSegment>
+			</xtr:RecordSegment>
+			<xtr:RecordSegment delimiter="\r\n" name="ReportOrderServiceRequests">
+				<xtr:RecordSegment delimiter="\r\n" name="ReportOrderServiceRequest">
+					<xtr:Field name="RecordType">
+						<ff:Start>1</ff:Start>
+						<ff:End>2</ff:End>
+					</xtr:Field>
+					<xtr:Field name="TransactionSequenceNumber">
+						<ff:Start>3</ff:Start>
+						<ff:End>7</ff:End>
+					</xtr:Field>
+					<xtr:Field name="ServiceRequested">
+						<ff:Start>8</ff:Start>
+						<ff:End>12</ff:End>
+					</xtr:Field>
+					<xtr:Field name="ServiceRequestedDescription">
+						<ff:Start>13</ff:Start>
+						<ff:End>42</ff:End>
+					</xtr:Field>
+					<xtr:Field name="BestTimeToCall">
+						<ff:Start>43</ff:Start>
+						<ff:End>46</ff:End>
+					</xtr:Field>
+					<xtr:Field name="BestPlaceToCall">
+						<ff:Start>47</ff:Start>
+						<ff:End>47</ff:End>
+					</xtr:Field>
+					<xtr:Field name="RequestedExamDate">
+						<ff:Start>48</ff:Start>
+						<ff:End>55</ff:End>
+					</xtr:Field>
+					<xtr:Field name="RequestedExamTime">
+						<ff:Start>56</ff:Start>
+						<ff:End>59</ff:End>
+					</xtr:Field>
+					<xtr:Field name="SpecialInstructionsToProvider">
+						<ff:Start>60</ff:Start>
+						<ff:End>137</ff:End>
+					</xtr:Field>
+					<xtr:Field name="Reserved">
+						<ff:Start>138</ff:Start>
+						<ff:End>149</ff:End>
+					</xtr:Field>
+					<xtr:Field name="RequirementCode">
+						<ff:Start>150</ff:Start>
+						<ff:End>152</ff:End>
+					</xtr:Field>
+					<xtr:Field name="Unknown2">
+						<ff:Start>153</ff:Start>
+						<ff:End>204</ff:End>
+					</xtr:Field>
+					<xtr:Field name="EmployeeSSN">
+						<ff:Start>205</ff:Start>
+						<ff:End>216</ff:End>
+					</xtr:Field>
+					<xtr:Field name="EmployeeName">
+						<ff:Start>217</ff:Start>
+						<ff:End>229</ff:End>
+					</xtr:Field>
+					<xtr:Field name="Unknown">
+						<ff:Start>230</ff:Start>
+						<ff:End>1000</ff:End>
+					</xtr:Field>
+				</xtr:RecordSegment>
+				<xtr:RecordSegment delimiter="\r\n" name="Unknown">
+					<xtr:Field name="Unused">
+						<ff:Start>1</ff:Start>
+						<ff:End>1000</ff:End>
+					</xtr:Field>
+				</xtr:RecordSegment>
+				<xtr:RecordControl name="Field RecordControl">
+					<ff:ControlField name="RecordType">
+						<ff:Start>1</ff:Start>
+						<ff:End>1</ff:End>
+					</ff:ControlField>
+					<ff:DefaultCase>
+						<ff:Record ref="Unknown" />
+						<ff:Occurs>0</ff:Occurs>
+					</ff:DefaultCase>
+					<ff:Case>
+						<ff:Test Occurs="999999999" field="RecordType" value="2" />
+						<ff:Record ref="ReportOrderServiceRequest" />
+						<ff:Occurs>2147483647</ff:Occurs>
+					</ff:Case>
+				</xtr:RecordControl>
+			</xtr:RecordSegment>
+			<xtr:RecordSegment delimiter="\r\n" name="ReportOrderProposedInsuredResidenceHistory">
+				<xtr:Field name="RecordType">
+					<ff:Start>1</ff:Start>
+					<ff:End>2</ff:End>
+				</xtr:Field>
+				<xtr:Field name="TransactionSequenceNumber">
+					<ff:Start>3</ff:Start>
+					<ff:End>7</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ResidenceFrom">
+					<ff:Start>8</ff:Start>
+					<ff:End>15</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ResidenceTo">
+					<ff:Start>16</ff:Start>
+					<ff:End>23</ff:End>
+				</xtr:Field>
+				<xtr:Field name="AddressLine1">
+					<ff:Start>24</ff:Start>
+					<ff:End>53</ff:End>
+				</xtr:Field>
+				<xtr:Field name="AddressLine2">
+					<ff:Start>54</ff:Start>
+					<ff:End>83</ff:End>
+				</xtr:Field>
+				<xtr:Field name="City">
+					<ff:Start>84</ff:Start>
+					<ff:End>103</ff:End>
+				</xtr:Field>
+				<xtr:Field name="State">
+					<ff:Start>104</ff:Start>
+					<ff:End>105</ff:End>
+				</xtr:Field>
+				<xtr:Field name="PostalCode">
+					<ff:Start>106</ff:Start>
+					<ff:End>114</ff:End>
+				</xtr:Field>
+				<xtr:Field name="Country">
+					<ff:Start>115</ff:Start>
+					<ff:End>129</ff:End>
+				</xtr:Field>
+				<xtr:Field name="SpecialInstructions">
+					<ff:Start>130</ff:Start>
+					<ff:End>207</ff:End>
+				</xtr:Field>
+				<xtr:Field name="Unused3">
+					<ff:Start>208</ff:Start>
+					<ff:End>1000</ff:End>
+				</xtr:Field>
+			</xtr:RecordSegment>
+			<xtr:RecordSegment delimiter="\r\n" name="ReportOrderProposedInsuredCurrentEmploymentRecord">
+				<xtr:Field name="RecordType">
+					<ff:Start>1</ff:Start>
+					<ff:End>2</ff:End>
+				</xtr:Field>
+				<xtr:Field name="TransactionSequenceNumber">
+					<ff:Start>3</ff:Start>
+					<ff:End>7</ff:End>
+				</xtr:Field>
+				<xtr:Field name="EmploymentFromDate">
+					<ff:Start>8</ff:Start>
+					<ff:End>15</ff:End>
+				</xtr:Field>
+				<xtr:Field name="EmploymentToDate">
+					<ff:Start>16</ff:Start>
+					<ff:End>23</ff:End>
+				</xtr:Field>
+				<xtr:Field name="Occupation">
+					<ff:Start>24</ff:Start>
+					<ff:End>53</ff:End>
+				</xtr:Field>
+				<xtr:Field name="HoursEmployedPerWeek">
+					<ff:Start>54</ff:Start>
+					<ff:End>55</ff:End>
+				</xtr:Field>
+				<xtr:Field name="EmployerName">
+					<ff:Start>56</ff:Start>
+					<ff:End>85</ff:End>
+				</xtr:Field>
+				<xtr:Field name="EmployerAddressLine1">
+					<ff:Start>86</ff:Start>
+					<ff:End>115</ff:End>
+				</xtr:Field>
+				<xtr:Field name="EmployerAddressLine2">
+					<ff:Start>116</ff:Start>
+					<ff:End>145</ff:End>
+				</xtr:Field>
+				<xtr:Field name="EmployerAddressCity">
+					<ff:Start>146</ff:Start>
+					<ff:End>165</ff:End>
+				</xtr:Field>
+				<xtr:Field name="EmployerAddressState">
+					<ff:Start>166</ff:Start>
+					<ff:End>167</ff:End>
+				</xtr:Field>
+				<xtr:Field name="EmployerAddressPostalCode">
+					<ff:Start>168</ff:Start>
+					<ff:End>176</ff:End>
+				</xtr:Field>
+				<xtr:Field name="Unused">
+					<ff:Start>177</ff:Start>
+					<ff:End>1000</ff:End>
+				</xtr:Field>
+			</xtr:RecordSegment>
+			<xtr:RecordSegment delimiter="\r\n" name="ReportOrderMedicalHistoryInformation">
+				<xtr:Field name="RecordType">
+					<ff:Start>1</ff:Start>
+					<ff:End>2</ff:End>
+				</xtr:Field>
+				<xtr:Field name="TransactionSequenceNumber">
+					<ff:Start>3</ff:Start>
+					<ff:End>7</ff:End>
+				</xtr:Field>
+				<xtr:Field name="DoctorOrOther">
+					<ff:Start>8</ff:Start>
+					<ff:End>8</ff:End>
+				</xtr:Field>
+				<xtr:Field name="PhysicianName">
+					<ff:Start>9</ff:Start>
+					<ff:End>38</ff:End>
+				</xtr:Field>
+				<xtr:Field name="PhysicianAddressLine1">
+					<ff:Start>39</ff:Start>
+					<ff:End>68</ff:End>
+				</xtr:Field>
+				<xtr:Field name="PhysicianAddressLine2">
+					<ff:Start>69</ff:Start>
+					<ff:End>98</ff:End>
+				</xtr:Field>
+				<xtr:Field name="PhysicianCity">
+					<ff:Start>99</ff:Start>
+					<ff:End>118</ff:End>
+				</xtr:Field>
+				<xtr:Field name="PhysicianState">
+					<ff:Start>119</ff:Start>
+					<ff:End>120</ff:End>
+				</xtr:Field>
+				<xtr:Field name="PhysicianPostalCode">
+					<ff:Start>121</ff:Start>
+					<ff:End>129</ff:End>
+				</xtr:Field>
+				<xtr:Field name="PhysicianPhoneNumber">
+					<ff:Start>130</ff:Start>
+					<ff:End>139</ff:End>
+				</xtr:Field>
+				<xtr:Field name="PhysicianFaxNumber">
+					<ff:Start>140</ff:Start>
+					<ff:End>149</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ProposedInsuredAccountNumber">
+					<ff:Start>150</ff:Start>
+					<ff:End>164</ff:End>
+				</xtr:Field>
+				<xtr:Field name="DateLastSeen">
+					<ff:Start>165</ff:Start>
+					<ff:End>172</ff:End>
+				</xtr:Field>
+				<xtr:Field name="SpecialInstructions">
+					<ff:Start>173</ff:Start>
+					<ff:End>1000</ff:End>
+				</xtr:Field>
+			</xtr:RecordSegment>
+			<xtr:RecordControl name="Field RecordControl">
+				<ff:ControlField name="RecordType">
+					<ff:Start>1</ff:Start>
+					<ff:End>2</ff:End>
+				</ff:ControlField>
+				<ff:ControlField name="RecordTypeFirstChar">
+					<ff:Start>1</ff:Start>
+					<ff:End>1</ff:End>
+				</ff:ControlField>
+				<ff:Case>
+					<ff:Test Occurs="1" field="RecordType" value="$A" />
+					<ff:Record ref="ReportOrderBillingSegment" />
+					<ff:Occurs>2147483647</ff:Occurs>
+				</ff:Case>
+				<ff:Case>
+					<ff:Test Occurs="999999999" field="RecordType" value="0A" />
+					<ff:Record ref="ReportOrderInsuranceContractInformationRecord" />
+					<ff:Occurs>2147483647</ff:Occurs>
+				</ff:Case>
+				<ff:Case>
+					<ff:Test Occurs="2147483647" field="RecordType" value="0B" />
+					<ff:Record ref="ReportOrderOtherInsuranceContractInformationRecord" />
+					<ff:Occurs>2147483647</ff:Occurs>
+				</ff:Case>
+				<ff:Case>
+					<ff:Test Occurs="999999999" field="RecordTypeFirstChar" value="1" />
+					<ff:Record ref="ProposedInsureds" />
+					<ff:Occurs>2147483647</ff:Occurs>
+				</ff:Case>
+				<ff:Case>
+					<ff:Test Occurs="999999999" field="RecordTypeFirstChar" value="2" />
+					<ff:Record ref="ReportOrderServiceRequests" />
+					<ff:Occurs>2147483647</ff:Occurs>
+				</ff:Case>
+				<ff:Case>
+					<ff:Test Occurs="999999999" field="RecordType" value="3A" />
+					<ff:Record ref="ReportOrderProposedInsuredResidenceHistory" />
+					<ff:Occurs>2147483647</ff:Occurs>
+				</ff:Case>
+				<ff:Case>
+					<ff:Test Occurs="999999999" field="RecordTypeFirstChar" value="5" />
+					<ff:Record ref="ReportOrderMedicalHistoryInformation" />
+					<ff:Occurs>2147483647</ff:Occurs>
+				</ff:Case>
+				<ff:Case>
+					<ff:Test Occurs="999999999" field="RecordType" value="4A" />
+					<ff:Record ref="ReportOrderProposedInsuredCurrentEmploymentRecord" />
+					<ff:Occurs>2147483647</ff:Occurs>
+				</ff:Case>
+				<ff:Case>
+					<ff:Test Occurs="999999999" field="RecordType" value="6A" />
+					<ff:Record ref="ApplicicantOtherContactInfo" />
+					<ff:Occurs>2147483647</ff:Occurs>
+				</ff:Case>
+				<ff:DefaultCase>
+					<ff:Record ref="Unknown" />
+					<ff:Occurs>0</ff:Occurs>
+				</ff:DefaultCase>
+			</xtr:RecordControl>
+			<xtr:RecordSegment delimiter="\r\n" name="Unknown">
+				<xtr:Field name="Unused">
+					<ff:Start>1</ff:Start>
+					<ff:End>1000</ff:End>
+				</xtr:Field>
+			</xtr:RecordSegment>
+			<xtr:RecordSegment delimiter="\r\n" name="ApplicicantOtherContactInfo">
+				<xtr:Field name="RecordType">
+					<ff:Start>1</ff:Start>
+					<ff:End>2</ff:End>
+				</xtr:Field>
+				<xtr:Field name="TransactionSequenceNumber">
+					<ff:Start>3</ff:Start>
+					<ff:End>7</ff:End>
+				</xtr:Field>
+				<xtr:Field name="CellPhone1">
+					<ff:Start>8</ff:Start>
+					<ff:End>17</ff:End>
+				</xtr:Field>
+				<xtr:Field name="CellPhone2">
+					<ff:Start>18</ff:Start>
+					<ff:End>27</ff:End>
+				</xtr:Field>
+				<xtr:Field name="EmailAddress">
+					<ff:Start>28</ff:Start>
+					<ff:End>77</ff:End>
+				</xtr:Field>
+				<xtr:Field name="Unknown">
+					<ff:Start>78</ff:Start>
+					<ff:End>1000</ff:End>
+				</xtr:Field>
+			</xtr:RecordSegment>
+		</xtr:RecordSegment>
+		<xtr:RecordSegment delimiter="\r\n" name="Trailer">
+			<xtr:Field name="RecordType">
+				<ff:Start>1</ff:Start>
+				<ff:End>5</ff:End>
+			</xtr:Field>
+			<xtr:Field name="RecordLength">
+				<ff:Start>6</ff:Start>
+				<ff:End>9</ff:End>
+			</xtr:Field>
+			<xtr:Field name="NCSSPStandardNumber">
+				<ff:Start>10</ff:Start>
+				<ff:End>12</ff:End>
+			</xtr:Field>
+			<xtr:Field name="NCSSPVersionNumber">
+				<ff:Start>13</ff:Start>
+				<ff:End>16</ff:End>
+			</xtr:Field>
+			<xtr:Field name="DateSent">
+				<ff:Start>17</ff:Start>
+				<ff:End>22</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TimeSent">
+				<ff:Start>23</ff:Start>
+				<ff:End>31</ff:End>
+			</xtr:Field>
+			<xtr:Field name="SenderName">
+				<ff:Start>32</ff:Start>
+				<ff:End>56</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TargetName">
+				<ff:Start>57</ff:Start>
+				<ff:End>81</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TransactionSetControlNumber">
+				<ff:Start>82</ff:Start>
+				<ff:End>96</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TotalRecordCount">
+				<ff:Start>97</ff:Start>
+				<ff:End>106</ff:End>
+			</xtr:Field>
+			<xtr:Field name="Reserved">
+				<ff:Start>107</ff:Start>
+				<ff:End>1000</ff:End>
+			</xtr:Field>
+		</xtr:RecordSegment>
+		<xtr:RecordSegment delimiter="\r\n" name="Unknown">
+			<xtr:Field name="Unused">
+				<ff:Start>1</ff:Start>
+				<ff:End>1000</ff:End>
+			</xtr:Field>
+		</xtr:RecordSegment>
+		<xtr:RecordControl name="Field RecordControl">
+			<ff:ControlField name="RecordType">
+				<ff:Start>1</ff:Start>
+				<ff:End>2</ff:End>
+			</ff:ControlField>
+			<ff:Case>
+				<ff:Test Occurs="999999999" field="RecordType" value="$$" />
+				<ff:Record ref="Header" />
+				<ff:Occurs>2147483647</ff:Occurs>
+			</ff:Case>
+			<ff:Case>
+				<ff:Test Occurs="999999999" field="RecordType" value="$A" />
+				<ff:Record ref="Request" />
+				<ff:Occurs>2147483647</ff:Occurs>
+			</ff:Case>
+			<ff:Case>
+				<ff:Test Occurs="999999999" field="RecordType" value="99" />
+				<ff:Record ref="Trailer" />
+				<ff:Occurs>2147483647</ff:Occurs>
+			</ff:Case>
+			<ff:DefaultCase>
+				<ff:Record ref="Unknown" />
+			</ff:DefaultCase>
+		</xtr:RecordControl>
+	</xtr:RecordSegment>
+	<xtr:RecordSegment delimiter="\r\n" name="NAILBA850">
+		<xtr:RecordSegment delimiter="\r\n" name="Header">
+			<xtr:Field name="RecordType">
+				<ff:Start>1</ff:Start>
+				<ff:End>5</ff:End>
+			</xtr:Field>
+			<xtr:Field name="RecordLength">
+				<ff:Start>6</ff:Start>
+				<ff:End>9</ff:End>
+			</xtr:Field>
+			<xtr:Field name="NCSSPStandardNumber">
+				<ff:Start>10</ff:Start>
+				<ff:End>12</ff:End>
+			</xtr:Field>
+			<xtr:Field name="NCSSPVersionNumber">
+				<ff:Start>13</ff:Start>
+				<ff:End>16</ff:End>
+			</xtr:Field>
+			<xtr:Field name="DateSent">
+				<ff:Start>17</ff:Start>
+				<ff:End>22</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TimeSent">
+				<ff:Start>23</ff:Start>
+				<ff:End>31</ff:End>
+			</xtr:Field>
+			<xtr:Field name="SendingSystem">
+				<ff:Start>32</ff:Start>
+				<ff:End>56</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TargetSystem">
+				<ff:Start>57</ff:Start>
+				<ff:End>81</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TransactionSetControlNumber">
+				<ff:Start>82</ff:Start>
+				<ff:End>96</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TransactionSetTestFileIndicator">
+				<ff:Start>97</ff:Start>
+				<ff:End>97</ff:End>
+			</xtr:Field>
+			<xtr:Field name="Unused">
+				<ff:Start>98</ff:Start>
+				<ff:End>1000</ff:End>
+			</xtr:Field>
+		</xtr:RecordSegment>
+		<xtr:RecordSegment delimiter="\r\n" name="Result">
+			<xtr:RecordSegment delimiter="\r\n" name="IndividualReportStatus">
+				<xtr:Field name="RecordType">
+					<ff:Start>1</ff:Start>
+					<ff:End>2</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ServiceProviderOrderReferenceID">
+					<ff:Start>3</ff:Start>
+					<ff:End>17</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ServiceProviderID">
+					<ff:Start>18</ff:Start>
+					<ff:End>22</ff:End>
+				</xtr:Field>
+				<xtr:Field name="BillToVendorAccountNumber">
+					<ff:Start>23</ff:Start>
+					<ff:End>32</ff:End>
+				</xtr:Field>
+				<xtr:Field name="BillToVendorSubAccountNumber">
+					<ff:Start>33</ff:Start>
+					<ff:End>37</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OrderOriginatorQuotebackID">
+					<ff:Start>38</ff:Start>
+					<ff:End>97</ff:End>
+				</xtr:Field>
+				<xtr:Field name="OrderOriginatorContactInitials">
+					<ff:Start>98</ff:Start>
+					<ff:End>99</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ServiceProductCode">
+					<ff:Start>100</ff:Start>
+					<ff:End>104</ff:End>
+				</xtr:Field>
+				<xtr:Field name="EntityReportRequestedOf">
+					<ff:Start>105</ff:Start>
+					<ff:End>134</ff:End>
+				</xtr:Field>
+				<xtr:Field name="EntityProvidingReportInformation">
+					<ff:Start>135</ff:Start>
+					<ff:End>164</ff:End>
+				</xtr:Field>
+				<xtr:Field name="CarrierIDForReportDelivery">
+					<ff:Start>165</ff:Start>
+					<ff:End>169</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ReportSubjectLastName">
+					<ff:Start>170</ff:Start>
+					<ff:End>194</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ReportSubjectFirstName">
+					<ff:Start>195</ff:Start>
+					<ff:End>209</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ReportSubjectMiddleInitial">
+					<ff:Start>210</ff:Start>
+					<ff:End>210</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ReportSubjectGovernmentIDType">
+					<ff:Start>211</ff:Start>
+					<ff:End>211</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ReportSubjectGovernmentID">
+					<ff:Start>212</ff:Start>
+					<ff:End>220</ff:End>
+				</xtr:Field>
+				<xtr:Field name="ReportSubjectDateOfBirth">
+					<ff:Start>221</ff:Start>
+					<ff:End>228</ff:End>
+				</xtr:Field>
+				<xtr:Field name="StatusContactInitials">
+					<ff:Start>229</ff:Start>
+					<ff:End>230</ff:End>
+				</xtr:Field>
+				<xtr:Field name="StatusDate">
+					<ff:Start>231</ff:Start>
+					<ff:End>238</ff:End>
+				</xtr:Field>
+				<xtr:Field name="StatusTime">
+					<ff:Start>239</ff:Start>
+					<ff:End>244</ff:End>
+				</xtr:Field>
+				<xtr:Field name="StatusCode">
+					<ff:Start>245</ff:Start>
+					<ff:End>248</ff:End>
+				</xtr:Field>
+				<xtr:Field name="Unused">
+					<ff:Start>249</ff:Start>
+					<ff:End>250</ff:End>
+				</xtr:Field>
+			</xtr:RecordSegment>
+			<xtr:RecordSegment delimiter="\r\n" name="ReportText">
+				<xtr:RecordSegment delimiter="\r\n" name="ReportTextRecord">
+					<xtr:Field name="RecordType">
+						<ff:Start>1</ff:Start>
+						<ff:End>2</ff:End>
+					</xtr:Field>
+					<xtr:Field name="ServiceProviderOrderReferenceID">
+						<ff:Start>3</ff:Start>
+						<ff:End>17</ff:End>
+					</xtr:Field>
+					<xtr:Field name="FreeFormTextLine1">
+						<ff:Start>18</ff:Start>
+						<ff:End>95</ff:End>
+					</xtr:Field>
+					<xtr:Field name="FreeFormTextLine2">
+						<ff:Start>96</ff:Start>
+						<ff:End>173</ff:End>
+					</xtr:Field>
+					<xtr:Field name="Unused">
+						<ff:Start>174</ff:Start>
+						<ff:End>250</ff:End>
+					</xtr:Field>
+				</xtr:RecordSegment>
+				<xtr:RecordSegment delimiter="\r\n" name="Unknown">
+					<xtr:Field name="Unknown">
+						<ff:Start>1</ff:Start>
+						<ff:End>250</ff:End>
+					</xtr:Field>
+				</xtr:RecordSegment>
+				<xtr:RecordControl name="Field RecordControl">
+					<ff:ControlField name="ControlField">
+						<ff:Start>1</ff:Start>
+						<ff:End>1</ff:End>
+					</ff:ControlField>
+					<ff:Case>
+						<ff:Test Occurs="999999999" field="ControlField" value="1" />
+						<ff:Record ref="ReportTextRecord" />
+						<ff:Occurs>2147483647</ff:Occurs>
+					</ff:Case>
+					<ff:DefaultCase>
+						<ff:Record ref="Unknown" />
+						<ff:Occurs>0</ff:Occurs>
+					</ff:DefaultCase>
+				</xtr:RecordControl>
+			</xtr:RecordSegment>
+			<xtr:RecordControl name="Field RecordControl">
+				<ff:ControlField name="RecordType">
+					<ff:Start>1</ff:Start>
+					<ff:End>2</ff:End>
+				</ff:ControlField>
+				<ff:ControlField name="RecordCheck">
+					<ff:Start>1</ff:Start>
+					<ff:End>1</ff:End>
+				</ff:ControlField>
+				<ff:Case>
+					<ff:Test Occurs="1" field="RecordType" value="0A" />
+					<ff:Record ref="IndividualReportStatus" />
+					<ff:Occurs>2147483647</ff:Occurs>
+				</ff:Case>
+				<ff:Case>
+					<ff:Test Occurs="999999999" field="RecordCheck" value="1" />
+					<ff:Record ref="ReportText" />
+					<ff:Occurs>2147483647</ff:Occurs>
+				</ff:Case>
+			</xtr:RecordControl>
+			<xtr:RecordSegment delimiter="\r\n" name="Unknown">
+				<xtr:Field name="Unused">
+					<ff:Start>1</ff:Start>
+					<ff:End>1000</ff:End>
+				</xtr:Field>
+			</xtr:RecordSegment>
+		</xtr:RecordSegment>
+		<xtr:RecordSegment delimiter="\r\n" name="Trailer">
+			<xtr:Field name="RecordType">
+				<ff:Start>1</ff:Start>
+				<ff:End>5</ff:End>
+			</xtr:Field>
+			<xtr:Field name="RecordLength">
+				<ff:Start>6</ff:Start>
+				<ff:End>9</ff:End>
+			</xtr:Field>
+			<xtr:Field name="StandardNumber">
+				<ff:Start>10</ff:Start>
+				<ff:End>12</ff:End>
+			</xtr:Field>
+			<xtr:Field name="VersionNumber">
+				<ff:Start>13</ff:Start>
+				<ff:End>16</ff:End>
+			</xtr:Field>
+			<xtr:Field name="DateSent">
+				<ff:Start>17</ff:Start>
+				<ff:End>22</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TimeSent">
+				<ff:Start>23</ff:Start>
+				<ff:End>31</ff:End>
+			</xtr:Field>
+			<xtr:Field name="SendingSytem">
+				<ff:Start>32</ff:Start>
+				<ff:End>56</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TargetSystem">
+				<ff:Start>57</ff:Start>
+				<ff:End>81</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TransactionSetControlNumber">
+				<ff:Start>82</ff:Start>
+				<ff:End>96</ff:End>
+			</xtr:Field>
+			<xtr:Field name="TotalRecordCount">
+				<ff:Start>97</ff:Start>
+				<ff:End>106</ff:End>
+			</xtr:Field>
+			<xtr:Field name="Unused">
+				<ff:Start>107</ff:Start>
+				<ff:End>1000</ff:End>
+			</xtr:Field>
+		</xtr:RecordSegment>
+		<xtr:RecordSegment delimiter="\r\n" name="Unknown">
+			<xtr:Field name="Unused">
+				<ff:Start>1</ff:Start>
+				<ff:End>1000</ff:End>
+			</xtr:Field>
+		</xtr:RecordSegment>
+		<xtr:RecordControl name="Field RecordControl">
+			<ff:ControlField name="RecordType">
+				<ff:Start>1</ff:Start>
+				<ff:End>2</ff:End>
+			</ff:ControlField>
+			<ff:DefaultCase>
+				<ff:Record ref="Unknown" />
+			</ff:DefaultCase>
+			<ff:Case>
+				<ff:Test Occurs="999999999" field="RecordType" value="$$" />
+				<ff:Record ref="Header" />
+				<ff:Occurs>2147483647</ff:Occurs>
+			</ff:Case>
+			<ff:Case>
+				<ff:Test Occurs="999999999" field="RecordType" value="0A" />
+				<ff:Record ref="Result" />
+				<ff:Occurs>2147483647</ff:Occurs>
+			</ff:Case>
+			<ff:Case>
+				<ff:Test Occurs="999999999" field="RecordType" value="99" />
+				<ff:Record ref="Trailer" />
+				<ff:Occurs>2147483647</ff:Occurs>
+			</ff:Case>
+		</xtr:RecordControl>
+	</xtr:RecordSegment>
+	<xtr:RecordControl name="Field RecordControl">
+		<ff:ControlField name="TransactionType">
+			<ff:Start>10</ff:Start>
+			<ff:End>3</ff:End>
+		</ff:ControlField>
+		<ff:Case>
+			<ff:Test Occurs="999999999" field="TransactionType" value="800" />
+			<ff:Record ref="NAILBA800" />
+			<ff:Occurs>2147483647</ff:Occurs>
+		</ff:Case>
+		<ff:Case>
+			<ff:Test Occurs="999999999" field="TransactionType" value="850" />
+			<ff:Record ref="NAILBA850" />
+			<ff:Occurs>2147483647</ff:Occurs>
+		</ff:Case>
+		<ff:DefaultCase>
+			<ff:Record ref="NAILBA800" />
+		</ff:DefaultCase>
+	</xtr:RecordControl>
+</xtr:TransRoot>
+

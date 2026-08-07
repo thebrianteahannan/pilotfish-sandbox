@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/static/app.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css" />
   <link rel="stylesheet" href="/static/code-highlight.css" />
+  <link rel="stylesheet" href="/static/timing-tab.css" />
 </head>
 <body>
   <header>
@@ -172,45 +173,18 @@
   </div>
   {% endif %}
 
-  <div id="tab-timing" hidden>
-    <main class="timing-main">
-      <section class="panel timing-panel">
-        <div class="row-head">
-          <h2>Build timing</h2>
-          <div class="timing-actions">
-            <button type="button" class="btn" id="timing-refresh-btn">Refresh</button>
-            <a class="btn" href="/documents/build-timing.json" target="_blank" rel="noopener">Raw JSON</a>
-          </div>
-        </div>
-        <p class="section-lead">End-to-end construction time from first request to completion (<code>documents/build-timing.json</code>).</p>
-        <p id="timing-status" class="status muted"></p>
-        <div id="timing-root" class="timing-root" aria-live="polite"></div>
-      </section>
-    </main>
-  </div>
+  <!-- TIMING_TAB_STANDARD:START -->
+  {% include 'partials/timing_tab.html' %}
+  <!-- TIMING_TAB_STANDARD:END -->
 
-  <div id="tab-info" hidden>
-    <main>
-      <section class="panel">
-        <h2>Info &amp; review PDFs</h2>
-        <ul>
-          <li>Demo only — synthetic payer edits before clearinghouse.</li>
-          <li>EIP: <a href="{{ eip_url }}" target="_blank" rel="noopener">{{ eip_url }}</a></li>
-          {% if lan_hint %}<li>LAN UI: <a href="{{ lan_hint }}" target="_blank" rel="noopener">{{ lan_hint }}</a></li>{% endif %}
-          <li><a href="/documents/capability-brief.pdf" target="_blank" rel="noopener">Capability brief PDF</a></li>
-          <li><a href="/documents/route-diagrams.pdf" target="_blank" rel="noopener">Route diagrams PDF</a></li>
-          <li><a href="/documents/test-plan.pdf" target="_blank" rel="noopener">Test plan PDF</a></li>
-          <li><a href="/documents/test-results.pdf" target="_blank" rel="noopener"><strong>Test results PDF</strong></a>
-            <span class="muted"> — also <a href="/documents/{{ test_results_pdf }}" target="_blank" rel="noopener">{{ test_results_pdf }}</a></span>
-          </li>
-        </ul>
-      </section>
-    </main>
-  </div>
+  <!-- INFO_TAB_STANDARD:START -->
+  {% include 'partials/info_tab.html' %}
+  <!-- INFO_TAB_STANDARD:END -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
   <script src="/static/code-highlight.js"></script>
   <script src="/static/app.js"></script>
+  <script src="/static/timing-tab.js"></script>
 </body>
 </html>

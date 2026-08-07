@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<UserAuthRequest>
+		<UserLoginName />
+		<UserPswd>
+			<CryptType>NONE</CryptType>
+			<CryptPswd />
+		</UserPswd>
+		<UserDate>2016-11-02</UserDate>
+		<UserTime>15:25:32-05:00</UserTime>
+		<VendorApp>
+			<VendorName VendorCode="118">CRL-Plus</VendorName>
+			<AppName>XMLPROC</AppName>
+			<AppVer>1.0.0</AppVer>
+		</VendorApp>
+	</UserAuthRequest>
+	<TXLifeRequest>
+		<TransRefGUID>3399DA19-8655-12C4-F73C-A605A9A6E73F</TransRefGUID>
+		<TransType tc="1122">Requirement Notification Transmittal</TransType>
+		<TransExeDate>2016-11-02</TransExeDate>
+		<TransExeTime>15:25:32</TransExeTime>
+		<TransMode tc="2">Original</TransMode>
+		<TestIndicator tc="1">True</TestIndicator>
+		<OLifE>
+			<SourceInfo>
+				<SourceInfoName>CRL-Plus</SourceInfoName>
+				<SourceInfoDescription>Email : INSURANCECS@CRLCORP.COM</SourceInfoDescription>
+				<SourceInfoComment>Phone : 8558507587</SourceInfoComment>
+			</SourceInfo>
+			<Holding id="HOLD_1">
+				<HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+				<Policy CarrierPartyID="PARTY_PRU_1" id="POLICY_1">
+					<PolNumber>V4655909</PolNumber>
+					<CarrierCode>79227</CarrierCode>
+					<ProductType tc="" />
+					<Life>
+						<FaceAmt />
+						<TotalRiskAmt>400000</TotalRiskAmt>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>196970</TrackingID>
+						<ApplicationJurisdiction tc="32">NE</ApplicationJurisdiction>
+						<PrefLanguage tc="" />
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="PARTY_INS_1" FulfillerPartyID="PARTY_VEND_1" RequesterPartyID="PARTY_PRU_1">
+						<CarrierOrderNum>1803804</CarrierOrderNum>
+						<ReqCode tc="137">Conduct Tele-Interview</ReqCode>
+						<RequirementInfoUniqueID>0029V46559090003804</RequirementInfoUniqueID>
+						<ReqStatus tc="11">Completed</ReqStatus>
+						<RequestedDate>2016-10-31 00:00:00.0</RequestedDate>
+						<FulfilledDate>2016-11-01</FulfilledDate>
+						<StatusDate>2016-11-01</StatusDate>
+						<ReleasePartyOrgCode>PRUX</ReleasePartyOrgCode>
+						<RequirementAcctNum>70544</RequirementAcctNum>
+						<RequirementDetails />
+						<ProviderOrderNum>70616</ProviderOrderNum>
+						<OrderReceivedDate>2016-10-31</OrderReceivedDate>
+					</RequirementInfo>
+					<RequirementInfo AppliesToPartyID="Patient">
+						<ReqCode tc="137">Conduct Tele-Interview</ReqCode>
+						<RequirementInfoUniqueID>a28b08ff-fd16-42b8-a691-957e0b7d2dce</RequirementInfoUniqueID>
+						<ReqStatus tc="1">Pending</ReqStatus>
+						<RequestedDate>2016-11-02 15:11:58.0</RequestedDate>
+						<FulfilledDate>2016-11-01</FulfilledDate>
+						<StatusDate>2016-11-02</StatusDate>
+						<ReleasePartyOrgCode />
+						<RequirementAcctNum>70544</RequirementAcctNum>
+						<RequirementDetails />
+						<ProviderOrderNum>70616</ProviderOrderNum>
+						<OrderReceivedDate>2016-10-31</OrderReceivedDate>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S85</ProviderEventCode>
+							<StatusEventDate>2016-11-02</StatusEventDate>
+							<StatusEventTime>15:12:01-05:00</StatusEventTime>
+							<StatusEventDetail>Service - 102618- ORDERED APPLICATION</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>616</ProviderEventCode>
+							<StatusEventDate>2016-11-02</StatusEventDate>
+							<StatusEventTime>15:13:26-05:00</StatusEventTime>
+							<StatusEventDetail>Left message on cell phone.</StatusEventDetail>
+						</StatusEvent>
+					</RequirementInfo>
+				</Policy>
+			</Holding>
+			<Party id="PARTY_PRU_1">
+				<PartyTypeCode tc="2">Organization</PartyTypeCode>
+				<GovtID />
+				<Organization>
+					<AbbrName />
+				</Organization>
+				<FullName>PRUCO LIFE INSURANCE COMPANY OF ARIZONA</FullName>
+			</Party>
+			<Party id="PARTY_VEND_1">
+				<PartyTypeCode tc="2">Organization</PartyTypeCode>
+				<GovtID />
+				<Organization>
+					<AbbrName />
+				</Organization>
+				<FullName>CRL-Plus</FullName>
+			</Party>
+			<Party id="PARTY_INS_1">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID />
+				<Person>
+					<FirstName>TELE</FirstName>
+					<MiddleName />
+					<LastName>TESTING CRL</LastName>
+					<Occupation />
+					<Gender tc="" />
+					<BirthDate>1979-10-05</BirthDate>
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="" />
+				</Person>
+				<FullName />
+				<Address>
+					<AddressTypeCode tc="1">Home</AddressTypeCode>
+					<Line1>123 MAIN ST</Line1>
+					<Line2 />
+					<City>FREMONT</City>
+					<AddressState>NE</AddressState>
+					<AddressStateTC tc="32">NE</AddressStateTC>
+					<Zip>68025</Zip>
+					<PreventOverrideInd tc="" />
+				</Address>
+				<Address>
+					<AddressTypeCode tc="26">Billing Mailing</AddressTypeCode>
+					<Line1>123 MAIN ST</Line1>
+					<Line2 />
+					<City>FREMONT</City>
+					<AddressState>NE</AddressState>
+					<AddressStateTC tc="32">NE</AddressStateTC>
+					<Zip>68025</Zip>
+					<PreventOverrideInd tc="" />
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="2">Business</PhoneTypeCode>
+					<AreaCode>896</AreaCode>
+					<DialNumber>5554789</DialNumber>
+					<Ext />
+					<PrefPhone tc="0">False</PrefPhone>
+				</Phone>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>789</AreaCode>
+					<DialNumber>5551234</DialNumber>
+					<Ext />
+					<PrefPhone tc="1">True</PrefPhone>
+					<BestTimeToCallTo>11:00:00</BestTimeToCallTo>
+				</Phone>
+			</Party>
+			<Party id="PARTY_AGCY_1">
+				<PartyTypeCode tc="2">Organziation</PartyTypeCode>
+				<GovtID />
+				<Organization>
+					<AbbrName />
+				</Organization>
+				<FullName />
+				<Phone>
+					<PhoneTypeCode tc="" />
+					<AreaCode>877</AreaCode>
+					<DialNumber>7526765</DialNumber>
+					<Ext />
+					<PrefPhone tc="0">False</PrefPhone>
+				</Phone>
+			</Party>
+			<Party id="PARTY_AGT_1">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID />
+				<Person>
+					<FirstName />
+					<MiddleName />
+					<LastName />
+					<Occupation />
+					<Gender tc="" />
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="" />
+				</Person>
+				<FullName>HED</FullName>
+			</Party>
+			<Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_VEND_1" id="REL_2">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="90">Paramed Company</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_INS_1" id="REL_3">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="32">Insured</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_AGCY_1" id="REL_4">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="182">Writing Agency</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_AGT_1" id="REL_5">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="37">Primary Writing Agent</RelationRoleCode>
+			</Relation>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>
+

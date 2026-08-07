@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<UserAuthRequest>
+		<UserLoginName />
+		<UserPswd>
+			<CryptType>NONE</CryptType>
+			<Pswd />
+		</UserPswd>
+		<VendorApp>
+			<VendorName VendorCode="118">CRL-Plus</VendorName>
+			<AppName>XMLPROC</AppName>
+			<AppVer>1.0.0</AppVer>
+		</VendorApp>
+	</UserAuthRequest>
+	<TXLifeRequest>
+		<TransRefGUID>2D3BDE6C-BBA8-923A-301E-1DBFE39D75DB</TransRefGUID>
+		<TransType tc="1122">General Requirements Result Transmittal</TransType>
+		<TransExeDate>2017-02-07</TransExeDate>
+		<TransExeTime>16:16:55-06:00</TransExeTime>
+		<OLifE>
+			<SourceInfo>
+				<SourceInfoName>CRL-Plus</SourceInfoName>
+				<SourceInfoDescription>Email : INSURANCECS@CRLCORP.COM</SourceInfoDescription>
+				<SourceInfoComment>Phone : 8558507587</SourceInfoComment>
+			</SourceInfo>
+			<Holding id="Holding_Primary">
+				<HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+				<Policy>
+					<PolNumber>PF580256</PolNumber>
+					<Life>
+						<FaceAmt>250000</FaceAmt>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>PFffc0ac-72e0-4cb7-a3ff-ffcfd114fe79</TrackingID>
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="Party_PrimaryInsured" FulfillerPartyID="Party_Fulfiller_1" RequesterPartyID="Party_Requester_1">
+						<ReqCode tc="137">Tele-Interview</ReqCode>
+						<RequirementDetails>Tele-Interview</RequirementDetails>
+						<ReqStatus tc="7">Received</ReqStatus>
+						<RequestedDate>2017-01-24</RequestedDate>
+						<ReceivedAtLocationDate>2017-01-25</ReceivedAtLocationDate>
+						<StatusDate>2017-01-25</StatusDate>
+						<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+						<RequirementAcctNum>71661</RequirementAcctNum>
+						<ProviderOrderNum>99999</ProviderOrderNum>
+						<OrderReceivedDate>2017-01-25</OrderReceivedDate>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S85</ProviderEventCode>
+							<StatusEventDate>2017-01-25</StatusEventDate>
+							<StatusEventTime>13:36:37-06:00</StatusEventTime>
+							<StatusEventDetail>Service - 102618- ORDERED APPLICATION</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S79</ProviderEventCode>
+							<StatusEventDate>2017-01-25</StatusEventDate>
+							<StatusEventTime>13:36:37-06:00</StatusEventTime>
+							<StatusEventDetail>Order Received</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S70</ProviderEventCode>
+							<StatusEventDate>2017-01-25</StatusEventDate>
+							<StatusEventTime>13:36:37-06:00</StatusEventTime>
+							<StatusEventDetail>Scheduled Appointment: 03/02/2017 at 10:00 AM  until 09:00 PM ,' America/Chicago',' Central Time Zone</StatusEventDetail>
+						</StatusEvent>
+					</RequirementInfo>
+					<RequirementInfo AppliesToPartyID="Party_PrimaryInsured" FulfillerPartyID="Party_Fulfiller_1" RequesterPartyID="Party_Requester_1">
+						<ReqCode tc="535">Diagnose</ReqCode>
+						<RequirementDetails>Diagnose</RequirementDetails>
+						<ReqStatus tc="7">Received</ReqStatus>
+						<RequestedDate>2017-01-24</RequestedDate>
+						<ReceivedAtLocationDate>2017-01-25</ReceivedAtLocationDate>
+						<StatusDate>2017-01-25</StatusDate>
+						<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+						<RequirementAcctNum>71661</RequirementAcctNum>
+						<ProviderOrderNum>99999</ProviderOrderNum>
+						<OrderReceivedDate>2017-01-25</OrderReceivedDate>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S85</ProviderEventCode>
+							<StatusEventDate>2017-01-25</StatusEventDate>
+							<StatusEventTime>13:36:37-06:00</StatusEventTime>
+							<StatusEventDetail>Service - 102618- ORDERED APPLICATION</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S79</ProviderEventCode>
+							<StatusEventDate>2017-01-25</StatusEventDate>
+							<StatusEventTime>13:36:37-06:00</StatusEventTime>
+							<StatusEventDetail>Order Received</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S70</ProviderEventCode>
+							<StatusEventDate>2017-01-25</StatusEventDate>
+							<StatusEventTime>13:36:37-06:00</StatusEventTime>
+							<StatusEventDetail>Scheduled Appointment: 03/02/2017 at 10:00 AM  until 09:00 PM ,' America/Chicago',' Central Time Zone</StatusEventDetail>
+						</StatusEvent>
+					</RequirementInfo>
+				</Policy>
+			</Holding>
+			<Party xmlns="" id="Party_PrimaryInsured">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID>123456789</GovtID>
+				<Person>
+					<FirstName>JOHN</FirstName>
+					<LastName>DOE</LastName>
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1950-01-01</BirthDate>
+					<BirthJurisdictionTC tc="40">Romania</BirthJurisdictionTC>
+				</Person>
+			</Party>
+			<Party xmlns="" id="Party_Requester_1">
+				<PartyTypeCode tc="2">Company</PartyTypeCode>
+				<FullName>ERIE 103 PRODUCTION</FullName>
+				<Organization>
+					<DBA>ERIE 103 PRODUCTION</DBA>
+				</Organization>
+			</Party>
+			<Party xmlns="" id="Party_Fulfiller_1">
+				<PartyTypeCode tc="2">Company</PartyTypeCode>
+				<FullName>Hooper Holmes</FullName>
+				<Organization>
+					<DBA>Hooper Holmes</DBA>
+				</Organization>
+			</Party>
+			<Relation OriginatingObjectID="Holding_Primary" RelatedObjectID="$primaryInsuredId" id="Relation_1">
+				<RelationRoleCode tc="32">Insured</RelationRoleCode>
+			</Relation>
+			<Relation xmlns="" OriginatingObjectID="Party_1" RelatedObjectID="Party_Fulfiller_1" id="Relation_Fulfiller_1">
+				<RelationRoleCode tc="99">Fulfills</RelationRoleCode>
+			</Relation>
+			<Relation xmlns="" OriginatingObjectID="Party_1" RelatedObjectID="Party_Requester_1" id="Relation_Requester_1">
+				<RelationRoleCode tc="97">Requestor</RelationRoleCode>
+			</Relation>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>
+

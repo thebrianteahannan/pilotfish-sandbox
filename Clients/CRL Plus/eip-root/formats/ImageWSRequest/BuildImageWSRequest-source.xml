@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://ACORD.org/Standards/Life/2" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="http://ACORD.org/Standards/Life/2">
+			<xsd:element name="Attachment" type="ns1:Attachment_type" />
+			<xsd:complexType name="Attachment_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="AttachmentBasicType">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Description" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="AttachmentData" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="AttachmentType">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="MimeType" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="TransferEncodingTypeString" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="TransferEncodingTypeTC">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="AttachmentLocation">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="tc" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

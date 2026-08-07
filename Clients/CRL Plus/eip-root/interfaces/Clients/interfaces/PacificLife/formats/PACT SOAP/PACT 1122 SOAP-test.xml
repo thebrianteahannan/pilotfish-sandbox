@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2">
+	<UserAuthRequest>
+		<UserLoginName />
+		<UserPswd>
+			<CryptType>NONE</CryptType>
+			<Pswd />
+		</UserPswd>
+		<VendorApp>
+			<VendorName VendorCode="118">CRL-Plus</VendorName>
+			<AppName>XMLPROC</AppName>
+			<AppVer>1.0.0</AppVer>
+		</VendorApp>
+	</UserAuthRequest>
+	<TXLifeRequest>
+		<!-- New GUID generated for each status transmittal -->
+		<TransRefGUID>4BCC02FA-91E4-6EC0-918D-64BBA0EA1E58</TransRefGUID>
+		<TransType tc="1122">Requirement Notification Transmittal</TransType>
+		<TransExeDate>2016-10-17</TransExeDate>
+		<TransExeTime>11:30:33-05:00</TransExeTime>
+		<OLifE>
+			<SourceInfo>
+				<SourceInfoName>CRL-Plus</SourceInfoName>
+				<SourceInfoDescription>Email : INSURANCECS@CRLCORP.COM</SourceInfoDescription>
+				<SourceInfoComment>Phone : 8558507587</SourceInfoComment>
+			</SourceInfo>
+			<Holding id="HoldingType_1">
+				<HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+				<Policy>
+					<PolNumber>AT10241770</PolNumber>
+					<Life>
+						<FactAmt>700000</FactAmt>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>2016-08-12-11.15.49.325220C01-1_life_1_APS_2</TrackingID>
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="Party_1" FulfillerPartyID="Party_Fulfiller_1" RequesterPartyID="Party_Requester_1" id="Requirement_1_1">
+						<ReqCode tc="11" />
+						<RequirementInfoUniqueID>2016-08-12-11.15.49.325220C01-1_life_1_APS_2</RequirementInfoUniqueID>
+						<ReqStatus tc="11">Completed</ReqStatus>
+						<RequirementDetails>Obtain Attending Physician Statement</RequirementDetails>
+						<RequestedDate>2016-10-17</RequestedDate>
+						<ReceivedAtLocationDate>2016-10-17</ReceivedAtLocationDate>
+						<FulfilledDate>2016-10-17</FulfilledDate>
+						<StatusDate>2016-10-17</StatusDate>
+						<ReleasePartyOrgCode>PACT</ReleasePartyOrgCode>
+						<RequirementAcctNum>78748</RequirementAcctNum>
+						<ProviderOrderNum>69651</ProviderOrderNum>
+						<OrderReceivedDate>2016-10-17</OrderReceivedDate>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Others</StatusEventCode>
+							<ProviderEventCode>099</ProviderEventCode>
+							<StatusEventDate>2016-10-17</StatusEventDate>
+							<StatusEventTime>11:16:03-05:00</StatusEventTime>
+							<StatusEventDetail>Closed due to CNR</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Others</StatusEventCode>
+							<ProviderEventCode>S76</ProviderEventCode>
+							<StatusEventDate>2016-10-17</StatusEventDate>
+							<StatusEventTime>11:16:16-05:00</StatusEventTime>
+							<StatusEventDetail>Service Line ClosedOut</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Others</StatusEventCode>
+							<ProviderEventCode>S66</ProviderEventCode>
+							<StatusEventDate>2016-10-17</StatusEventDate>
+							<StatusEventTime>11:16:16-05:00</StatusEventTime>
+							<StatusEventDetail>Attachment Sent to Client</StatusEventDetail>
+						</StatusEvent>
+					</RequirementInfo>
+				</Policy>
+				<Attachment>
+					<AttachmentBasicType tc="2">Image</AttachmentBasicType>
+					<FileName>123-456-attribute.tif</FileName>
+					<AttachmentData>image.attr.1</AttachmentData>
+					<MimeTypeTC tc="11">image/tiff</MimeTypeTC>
+					<TransferEncodingTypeString>base64</TransferEncodingTypeString>
+					<AttachmentLocation tc="1">Inline</AttachmentLocation>
+				</Attachment>
+				<Attachment>
+					<AttachmentBasicType tc="2">Image</AttachmentBasicType>
+					<FileName>image.tif</FileName>
+					<AttachmentData>TU0AKgAAAAgACwEAAAMAAAABBqQAAAEBAAMAAAABCJgAAAEDAAMAAAABAAEAAAEGAAMAAAABAAEAAAERAAQAAAA6AAAAlAEVAAMAAAABA///////////////////////////////////////////////////////////////////////////////////////w</AttachmentData>
+					<MimeTypeTC tc="11">image/tiff</MimeTypeTC>
+					<TransferEncodingTypeString>base64</TransferEncodingTypeString>
+					<AttachmentLocation tc="1">Inline</AttachmentLocation>
+				</Attachment>
+			</Holding>
+			<Party id="Party_1">
+				<FullName>Gordon SNMMMMTESTCASEGY</FullName>
+				<GovtID>030000000</GovtID>
+				<ResidenceState tc="6">California</ResidenceState>
+				<ResidenceCountry tc="1">United States of America</ResidenceCountry>
+				<Person>
+					<FirstName>Gordon</FirstName>
+					<LastName>SNMMMMTESTCASEGY</LastName>
+					<BirthDate>1947-05-15</BirthDate>
+					<Age>69</Age>
+				</Person>
+			</Party>
+			<Party id="Party_Requester_1">
+				<PartyTypeCode tc="2">Company</PartyTypeCode>
+				<FullName>PACIFIC LIFE TEST PROD</FullName>
+				<Organization>
+					<DBA>PACIFIC LIFE TEST PROD</DBA>
+				</Organization>
+			</Party>
+			<Party id="Party_Fulfiller_1">
+				<PartyTypeCode tc="2">Company</PartyTypeCode>
+				<FullName>CRL-Plus</FullName>
+				<Organization>
+					<DBA>CRL-Plus</DBA>
+				</Organization>
+			</Party>
+			<Relation OriginatingObjectID="HoldingType_1" RelatedObjectID="Party_1" id="RelationType_2">
+				<RelationRoleCode tc="32">Insured</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Party_1" RelatedObjectID="Party_Requester_1" id="Relation_Requester_1">
+				<RelationRoleCode tc="97">Requestor</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Party_1" RelatedObjectID="Party_Fulfiller_1" id="Relation_Fulfiller_1">
+				<RelationRoleCode tc="99">Fulfills</RelationRoleCode>
+			</Relation>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>
+

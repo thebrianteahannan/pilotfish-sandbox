@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="" targetNamespace="http://crlcorp.com/DocumentService" xmlns="http://www.w3.org/XML/1998/namespace=xml" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://crlcorp.com/DocumentService" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://crlcorp.com/DocumentService" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:tns="http://crlcorp.com/DocumentService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><s:element name="SubmitOrderData"><s:complexType><s:sequence><s:element maxOccurs="1" minOccurs="0" name="OrderData" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="SubmitOrderDataResponse"><s:complexType><s:sequence><s:element maxOccurs="1" minOccurs="0" name="SubmitOrderDataResult" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="WSSecurity" type="tns:WSSecurity"/>
+<s:complexType name="WSSecurity"><s:sequence><s:element maxOccurs="1" minOccurs="0" name="Credentials" type="tns:UserNameToken"/>
+</s:sequence>
+</s:complexType>
+<s:complexType name="UserNameToken"><s:sequence><s:element maxOccurs="1" minOccurs="0" name="Username" type="s:string"/>
+<s:element maxOccurs="1" minOccurs="0" name="Password" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:schema>
+  </wsdl:types>
+  <wsdl:message name="SubmitOrderDataSoapIn">
+    <wsdl:part name="parameters" element="tns:SubmitOrderData">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SubmitOrderDataSoapOut">
+    <wsdl:part name="parameters" element="tns:SubmitOrderDataResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SubmitOrderData_PortType">
+    <wsdl:operation name="SubmitOrderData">
+      <wsdl:input message="tns:SubmitOrderDataSoapIn">
+    </wsdl:input>
+      <wsdl:output message="tns:SubmitOrderDataSoapOut">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SubmitOrderData_Binding" type="tns:SubmitOrderData_PortType">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="SubmitOrderData">
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SubmitOrder">
+    <wsdl:port name="SubmitOrderData_Port" binding="tns:SubmitOrderData_Binding">
+			<!-- Test URL -->
+			<wsdlsoap:address location="https://plus-intg-test.crlcorp.com/http-post/axa" />
+			<!-- Production URL -->
+			<!--<wsdlsoap:address location="https://plus-intg.crlcorp.com/http-post/axa" />-->
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestConfigurations>
+   <TestConfig name="test email">
+      <Stage>
+         <Identifier>processor@listener=Status.91 - SQL Listener,processor=Status.91 - set crl.environment</Identifier>
+         <IsStart file="C:\Pilotfish\eip-root\debug-trace\Status.91 - Generate daily report\18665 93893\1 - Listener - Status.91 - DatabaseResponse.trace">true</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@listener=Status.91 - SQL Listener,processor=Status.91 - set emailReport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@listener=Status.91 - SQL Listener</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>forking@listener=Status.91 - SQL Listener</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>routing</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>xslt@transport=Status.91 - Email Report</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=Status.91 - Email Report</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=Status.91 - Email Report</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=Status.91 - Email Report</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=Status.91 - Query Database</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=Status.91 - Query Database</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Status.91 - Query Database,processor=Status.91 - Generate daily report.Processor</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=Status.91 - Query Database</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=Status.91 - Invalid Credentials</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=Status.91 - Invalid Credentials</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Status.91 - Invalid Credentials,processor=Status.91 - setResonseCode</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Status.91 - Invalid Credentials,processor=Status.91 - set auth header</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=Status.91 - Invalid Credentials</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>xslt@transport=Status.91 - Synchronous Response</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=Status.91 - Synchronous Response</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=Status.91 - Synchronous Response</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=Status.91 - Synchronous Response</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+   </TestConfig>
+</TestConfigurations>

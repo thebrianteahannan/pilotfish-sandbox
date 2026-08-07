@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:TXLife xmlns:ns1="http://ACORD.org/Standards/Life/2" xmlns:datetime="http://exslt.org/dates-and-times" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaLocation="">
+	<ns1:UserAuthRequest>
+		<ns1:UserLoginName />
+		<ns1:UserPswd>
+			<ns1:CryptType />
+			<ns1:CryptPswd />
+		</ns1:UserPswd>
+		<ns1:UserDate />
+		<ns1:UserTime />
+		<ns1:VendorApp>
+			<ns1:AppName />
+			<ns1:AppVer />
+		</ns1:VendorApp>
+	</ns1:UserAuthRequest>
+	<ns1:TXLifeRequest>
+		<ns1:TransRefGUID>F6156CC4-AF8B-7AD1-3EDE-29D6A10FD225</ns1:TransRefGUID>
+		<ns1:TransType tc="121" />
+		<ns1:TransExeDate>2014-12-16</ns1:TransExeDate>
+		<ns1:TransExeTime>10:32:43</ns1:TransExeTime>
+		<ns1:TransMode tc="" />
+		<ns1:TestIndicator tc="" />
+		<ns1:OLifE>
+			<ns1:SourceInfo>
+				<ns1:CreationDate>2006-05-02</ns1:CreationDate>
+				<ns1:CreationTime>15:28:53</ns1:CreationTime>
+				<ns1:SourceInfoName>AgencyA</ns1:SourceInfoName>
+				<ns1:SourceInfoDescription />
+			</ns1:SourceInfo>
+			<ns1:Holding id="Holding">
+				<ns1:HoldingTypeCode tc="" />
+				<ns1:Policy CarrierPartyID="" id="">
+					<ns1:PolNumber>99904</ns1:PolNumber>
+					<ns1:CarrierCode>ABC1</ns1:CarrierCode>
+					<ns1:Life>
+						<ns1:FaceAmt>0000000000</ns1:FaceAmt>
+						<ns1:Coverage id="">
+							<ns1:CurrentAmt>0000000000</ns1:CurrentAmt>
+						</ns1:Coverage>
+					</ns1:Life>
+					<ns1:ApplicationInfo>
+						<ns1:TrackingID>4C48D7B1-309C-A3BE-90B7-E64BCB41F9FD</ns1:TrackingID>
+					</ns1:ApplicationInfo>
+					<ns1:RequirementInfo AppliesToPartyID="" id="">
+						<ns1:ReqCode tc="DEPL">DEPL</ns1:ReqCode>
+						<ns1:RequirementInfoKey />
+						<ns1:RequirementInfoUniqueID>9068AD98-5B24-5DF8-B94A-7A406E2DBCBA</ns1:RequirementInfoUniqueID>
+						<ns1:RequestedDate>2006-05-02</ns1:RequestedDate>
+						<ns1:ReleasePartyOrgCode />
+						<ns1:RequirementAcctNum>752643801</ns1:RequirementAcctNum>
+					</ns1:RequirementInfo>
+					<ns1:RequirementInfo AppliesToPartyID="" id="">
+						<ns1:ReqCode tc="OPTL">OPTL</ns1:ReqCode>
+						<ns1:RequirementInfoKey />
+						<ns1:RequirementInfoUniqueID>0692DBB2-03CD-8646-14D1-61D86AC55A8E</ns1:RequirementInfoUniqueID>
+						<ns1:RequestedDate>2006-05-02</ns1:RequestedDate>
+						<ns1:ReleasePartyOrgCode />
+						<ns1:RequirementAcctNum>831394081</ns1:RequirementAcctNum>
+					</ns1:RequirementInfo>
+					<ns1:RequirementInfo AppliesToPartyID="" id="">
+						<ns1:ReqCode tc="OPTL">OPTL</ns1:ReqCode>
+						<ns1:RequirementInfoKey />
+						<ns1:RequirementInfoUniqueID>BD74B7E2-39B0-1E05-4F65-0BA69167CC6B</ns1:RequirementInfoUniqueID>
+						<ns1:RequestedDate>2006-05-02</ns1:RequestedDate>
+						<ns1:ReleasePartyOrgCode />
+						<ns1:RequirementAcctNum>945166981</ns1:RequirementAcctNum>
+					</ns1:RequirementInfo>
+				</ns1:Policy>
+			</ns1:Holding>
+			<ns1:Party id="Patient">
+				<ns1:PartyTypeCode tc="" />
+				<ns1:FullName>Clarkson Kelly</ns1:FullName>
+				<ns1:Address>
+					<ns1:Line1>123 Idol Street</ns1:Line1>
+					<ns1:Line2 />
+					<ns1:City>Hollywood</ns1:City>
+					<ns1:AddressCountry />
+					<ns1:AddressStateTC tc="CA">CA</ns1:AddressStateTC>
+					<ns1:Zip>99999</ns1:Zip>
+					<ns1:AddressCountryTC tc="" />
+				</ns1:Address>
+				<ns1:Phone>
+					<ns1:CountryCode />
+					<ns1:AreaCode>603</ns1:AreaCode>
+					<ns1:DialNumber>5551212</ns1:DialNumber>
+					<ns1:PhoneTypeCode tc="" />
+					<ns1:PrefPhone tc="" />
+				</ns1:Phone>
+				<ns1:EMailAddress />
+				<ns1:GovtID>111223333</ns1:GovtID>
+				<ns1:Person id="">
+					<ns1:FirstName>Clarkson</ns1:FirstName>
+					<ns1:LastName>Kelly</ns1:LastName>
+					<ns1:Gender tc="F">F</ns1:Gender>
+					<ns1:BirthDate>1961-01-01</ns1:BirthDate>
+				</ns1:Person>
+				<ns1:Risk>
+					<ns1:MedicalExam>
+						<ns1:LabSlipTicketNum />
+					</ns1:MedicalExam>
+				</ns1:Risk>
+			</ns1:Party>
+			<ns1:Party id="Carrier">
+				<ns1:PartyTypeCode tc="" />
+				<ns1:FullName />
+				<ns1:Organization>
+					<ns1:AbbrName />
+				</ns1:Organization>
+				<ns1:Phone>
+					<ns1:CountryCode />
+					<ns1:AreaCode>800</ns1:AreaCode>
+					<ns1:DialNumber>6386420</ns1:DialNumber>
+					<ns1:PhoneTypeCode tc="" />
+					<ns1:PrefPhone tc="" />
+				</ns1:Phone>
+				<ns1:EMailAddress />
+				<ns1:GovtID />
+			</ns1:Party>
+			<ns1:Party id="Facility">
+				<ns1:PartyTypeCode tc="" />
+				<ns1:FullName>Seacrest</ns1:FullName>
+				<ns1:Organization>
+					<ns1:AbbrName />
+				</ns1:Organization>
+				<ns1:Address>
+					<ns1:Line1>123 Medical Street</ns1:Line1>
+					<ns1:Line2 />
+					<ns1:City>Hollywood</ns1:City>
+					<ns1:AddressCountry />
+					<ns1:AddressStateTC tc="CA">CA</ns1:AddressStateTC>
+					<ns1:Zip>99999</ns1:Zip>
+					<ns1:AddressCountryTC tc="" />
+				</ns1:Address>
+				<ns1:Phone>
+					<ns1:CountryCode />
+					<ns1:AreaCode>999</ns1:AreaCode>
+					<ns1:DialNumber>8887777</ns1:DialNumber>
+					<ns1:PhoneTypeCode tc="" />
+					<ns1:PrefPhone tc="" />
+				</ns1:Phone>
+			</ns1:Party>
+			<ns1:Relation OriginatingObjectID="Holding" RelatedObjectID="Patient" id="HoldingPatientRelation">
+				<ns1:OriginatingObjectType tc="4" />
+				<ns1:RelatedObjectType tc="6" />
+				<ns1:RelationRoleCode tc="41" />
+			</ns1:Relation>
+			<ns1:Relation OriginatingObjectID="Holding" RelatedObjectID="Carrier" id="HoldingCarrierRelation">
+				<ns1:OriginatingObjectType tc="4" />
+				<ns1:RelatedObjectType tc="36" />
+				<ns1:RelationRoleCode tc="87" />
+			</ns1:Relation>
+			<ns1:Relation OriginatingObjectID="Holding" RelatedObjectID="Facility" id="HoldingFacilityRelation">
+				<ns1:OriginatingObjectType tc="4" />
+				<ns1:RelatedObjectType tc="169" />
+				<ns1:RelationRoleCode tc="41" />
+			</ns1:Relation>
+		</ns1:OLifE>
+	</ns1:TXLifeRequest>
+</ns1:TXLife>
+

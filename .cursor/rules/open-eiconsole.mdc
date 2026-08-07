@@ -1,0 +1,35 @@
+---
+description: When asked to open eiConsole, launch Mac app with current interface eip-root as working directory
+alwaysApply: true
+---
+
+# Open eiConsole (Mac)
+
+When the user asks to open eiConsole (e.g. "open the eiConsole", "launch eiConsole"), do it — do not only give instructions.
+
+## Resolve working directory
+
+Prefer the **active interface** `eip-root` (folder containing `interfaces/`):
+
+1. Path the user names or `@`-mentions
+2. Else nearest `…/eip-root` from open/recent files, chat context, or cwd under `Clients/**`
+3. Else ask which interface if several are plausible
+
+Valid WD: absolute path to that `eip-root` with an `interfaces` directory.
+
+If none can be determined → launch eiConsole **without** changing prefs.
+
+## Launch (Mac)
+
+App: `/Applications/eiConsole/eiConsole.app` (prefer this over guinea installs).
+
+When WD is known:
+
+1. Write `com.pilotfish.eip.console.workingDirectory_0` in `~/Library/Preferences/com.pilotfish.eip.plist` (nested `/com/pilotfish/eip/` → `gui/` → `console/` → `config/` → `prefs/`) to the eip-root path
+2. Rotate that path to index 0 among existing `workingDirectory_*` (dedupe; keep ~10)
+3. If eiConsole is already running, quit it so prefs reload
+4. `open -a "/Applications/eiConsole/eiConsole.app"`
+
+When WD is unknown: only step 4.
+
+Confirm briefly with the path used, or that none was set.

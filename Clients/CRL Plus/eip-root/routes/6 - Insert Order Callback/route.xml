@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2025-08-19T12:35:53-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Order Not Found" />
+            <TransportTarget name="9 - Insert Order Callback.RouteToRoute Transport" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>orderNotFound</Name>
+              <Operator>=</Operator>
+              <Value>true</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="9 - Insert Order Callback.RouteToRoute Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Incoming Routes Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="9 - Insert Order Callback.Programmable (Java) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="set database.TransactionID">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:database.TransactionID:eip_name://TRANSACTIONID:eip_value]</XPathExpressions>
+          <Namespaces>null</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="restore normalized 121">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>transactionData</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set crl.env">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>crl.environment</AttributeName>
+          <Expression>$$crl.environment</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ROOT.6 - set PF_Response">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>PF_Response</AttributeName>
+          <Expression>{ognl:#DbTransID=getAttribute('database.TransactionID'), #insertError=getAttribute('insert.order.error'), (#insertError!=null)?#insertError:("Transaction_ID="+#DbTransID)}</Expression>
+          <AttributeScope>Process</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="9 - Insert Order Callback.RouteToRoute Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>5 - Synchronous Confirmation.Programmable (Java) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="CreateOrderNotFoundEmail" />
+    <Transport class="com.pilotfish.eip.modules.email.EmailTransport" name="Order Not Found" retries="1">
+      <ModuleConfig>
+        <Host>$$mail.server</Host>
+        <UserName />
+        <Password />
+        <Port>25</Port>
+        <SSLEnabled>false</SSLEnabled>
+        <StartTLS>false</StartTLS>
+        <SendFrom>$$mail.errors.from</SendFrom>
+        <ReplyTo />
+        <SendTo>$$mail.cancellationerror.to</SendTo>
+        <SendCC />
+        <SendBCC />
+        <Subject>{ognl:'PF-Error: Cancellation Received, Order Not Found in ' + getAttribute('crl.environment')}</Subject>
+        <DataInAttachment>false</DataInAttachment>
+        <AttachmentFilename>data.dat</AttachmentFilename>
+        <MIMEType>text/plain</MIMEType>
+        <AttachmentsTable />
+        <ENCRYPT_MESSAGE>false</ENCRYPT_MESSAGE>
+        <DNS_FIND_CERT>false</DNS_FIND_CERT>
+        <PathToCertificate />
+        <SIGN_MESSAGE>false</SIGN_MESSAGE>
+        <PathToPemFile />
+        <PrivateKeyName />
+        <PrivateKeyPassword />
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

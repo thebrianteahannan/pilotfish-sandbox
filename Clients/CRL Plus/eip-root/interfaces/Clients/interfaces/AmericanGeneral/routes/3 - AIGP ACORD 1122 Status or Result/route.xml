@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2026-06-09T10:30:59-05:00" ModifiedBy="cheng-yeh.lee@crlcorp.com " RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="AIG.3-HTTP Post Transport" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.crl.testindicator</Name>
+                <Operator>=</Operator>
+                <Value>2</Value>
+              </Attribute>
+              <Expression>
+                (//acord:ReqStatus/@tc=11 and not(//acord:ProviderEventCode[.='S82'])) or (//acord:ReqStatus/@tc=1 and //acord:ProviderEventCode[.='S76' or .='S78'])
+                <Namespaces>
+                  <Namespace name="acord">http://ACORD.org/Standards/Life/2</Namespace>
+                </Namespaces>
+              </Expression>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="AIG.3-HTTP Post Transport" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //acord:StatusEvent
+              <Namespaces>
+                <Namespace name="acord">http://ACORD.org/Standards/Life/2</Namespace>
+              </Namespaces>
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="AIG.3-Bypass Delivery" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="AmericanGeneral.3 - AIGP ACORD 1122 Status or Result.Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>false</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="CRL Order Status DB">
+    <FormatProfile name="AIGP 1122Customization" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="AIGP ACORD 1122 Status">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="AIG.3-set Attrs From Xpath">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:OrderNumber:eip_name://acord:ProviderOrderNum:eip_value][eip_pair:ReqInfoStatus:eip_name://acord:ReqStatus:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:soap:eip_name:http://schemas.xmlsoap.org/soap/envelope/:eip_value][eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>true</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIG.3-set AIGOutgoingWsUsername">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>AIGOutgoingWsUsername</AttributeName>
+          <Expression>$$AIGOutgoingWsUsername</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIG.3-set AIGOutgoingWsPassword">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>AIGOutgoingWsPassword</AttributeName>
+          <Expression>$$AIGOutgoingWsPassword</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="AIG.3-Bypass Delivery" retries="1">
+      <ModuleConfig>
+        <ServiceName>Update Status Inbound</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Upload acceptance file and mark status consumed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.ftp.FTPTransport" name="Upload Internal AIG Test Status" retries="10" retryDelayMs="90000">
+      <ModuleConfig>
+        <FTPTransportType>Encrypted FTP (JSCH SSH/SFTP)</FTPTransportType>
+        <Host>$$sftp.hostname</Host>
+        <Port>22</Port>
+        <TargetDirectory>$$sftp.reconcile.directory</TargetDirectory>
+        <FileName>{ognl:getAttribute('audit.filename')}</FileName>
+        <FileExtension>txt</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <Timeout>300</Timeout>
+        <Sftp_SocketTimeout>300</Sftp_SocketTimeout>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private (P)</Protection>
+        <FileType>Binary</FileType>
+        <AppendToFile>false</AppendToFile>
+        <Overwrite>false</Overwrite>
+        <CheckForFileAfterWriting>false</CheckForFileAfterWriting>
+        <FAIL_ON_FALSE_RESULT>true</FAIL_ON_FALSE_RESULT>
+        <WriteFromHome>false</WriteFromHome>
+        <UserName>$$sftp.username</UserName>
+        <Password>$$sftp.password</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <RetryDelay>1</RetryDelay>
+        <RetryConnection>false</RetryConnection>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIG.3-set audit.filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>audit.filename</AttributeName>
+          <Expression>{ognl:'audit-outgoing-AIGP-'+getAttribute('OrderNumber')+'-'+getAttribute('ReqInfoStatus')+'-'+new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID()}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.PauseProcessor" name="AIG.3-Random pause for SFTP concurrency issue">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Period>{ognl:new java.util.Random().nextDouble()*15+1}</Period>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+    <PostProcessors>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="AIG.3-Post upload - update status">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>Update Status Inbound</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </PostProcessors>
+  </Target>
+  <Target icon="" name="AIG 1122 Endpoint">
+    <FormatProfile name="AIGP 1122 SOAP Wrapper" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="AIG.3-HTTP Post Transport" retries="3" retryDelayMs="5000">
+      <ModuleConfig>
+        <TargetURL>$$AIGOutgoingWsUrl</TargetURL>
+        <UserName>$$AIGOutgoingWsUsername</UserName>
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password>$$AIGOutgoingWsPassword</Password>
+        <PreemptiveAuthentication>true</PreemptiveAuthentication>
+        <ResponseListener>AIGP Result Listener</ResponseListener>
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>-1</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <SynchronizationKey />
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <SpecifyTLS>false</SpecifyTLS>
+        <TLSVersion>TLSv1.1</TLSVersion>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <TrustStoreFilePath>truststore6716645221152875755.jks</TrustStoreFilePath>
+        <TrustStoreFileType>JKS</TrustStoreFileType>
+        <TrustStoreFilePassword>pilotfish</TrustStoreFilePassword>
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <ValidateHostname>false</ValidateHostname>
+        <ErrorResponseEncoding>UTF-8</ErrorResponseEncoding>
+        <TrustSelfSignedCerts>false</TrustSelfSignedCerts>
+        <DisableChunking>false</DisableChunking>
+        <FormElementEncoding>UTF-8</FormElementEncoding>
+        <UrlParamEncoding>UTF-8</UrlParamEncoding>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIG.3-set archive.dir-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>$$archive.dir</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIG.3-set archive subdir-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>{ognl:getAttribute("archive.dir")+"/AIGP/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIG.3-set filename-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>filename</AttributeName>
+          <Expression>{ognl:"ACORD1122-AIG-" + getAttribute('OrderNumber')+'-'+getAttribute('ReqInfoStatus') + new java.text.SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID()+'.xml'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileOperationProcessor" name="CreateArchiveSubdir-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>{ognl:getAttribute("archive.dir")}</FileName>
+          <Overwrite>false</Overwrite>
+          <ExceptionOnFailure>false</ExceptionOnFailure>
+          <PostProcessOperation>Create Folder</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="AIG.3-Save archive-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:getAttribute('archive.dir')}</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('filename')}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AmericanGeneral.3 - AIGP ACORD 1122 Status or Result.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>AmericanGeneral.3 - AIGP ACORD 1122 Status or Result</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="AmericanGeneral.3 - AIGP ACORD 1122 Status or Result.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

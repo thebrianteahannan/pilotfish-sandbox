@@ -1,0 +1,1744 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:ns2="http://ACORD.org/Standards/Life/2">
+	<ns2:TXLife Version="">
+		<ns2:TXLifeRequest PrimaryObj="Holding">
+			<ns2:UserAuthRequest>
+				<ns2:UserLoginName>MetLife</ns2:UserLoginName>
+				<ns2:UserPswd>
+					<ns2:CryptPswd />
+					<ns2:CryptType />
+					<ns2:Pswd />
+				</ns2:UserPswd>
+				<ns2:UserDate>2015-04-06</ns2:UserDate>
+				<ns2:UserTime>12:35:01</ns2:UserTime>
+				<ns2:VendorApp>
+					<ns2:VendorName VendorCode="" />
+					<ns2:AppName />
+					<ns2:AppVer />
+				</ns2:VendorApp>
+			</ns2:UserAuthRequest>
+			<ns2:TXLifeRequest PrimaryObj="Holding">
+				<ns2:TransRefGUID>A3604319-C59A-E26E-5D8B-0E1BB968128E</ns2:TransRefGUID>
+				<ns2:TransType tc="121">General Requirement Order Request</ns2:TransType>
+				<ns2:TransExeDate>2015-06-10</ns2:TransExeDate>
+				<ns2:TransExeTime>15:30:30</ns2:TransExeTime>
+				<ns2:TransMode tc="" />
+				<ns2:TestIndicator tc="" />
+				<ns2:OLifE>
+					<ns2:SourceInfo>
+						<ns2:CreationDate />
+						<ns2:CreationTime />
+						<ns2:SourceInfoName />
+						<ns2:SourceInfoDescription />
+					</ns2:SourceInfo>
+					<ns2:Holding id="Holding">
+						<ns2:HoldingTypeCode tc="2">Policy</ns2:HoldingTypeCode>
+						<ns2:Policy CarrierPartyID="Carrier" id="Policy_1">
+							<ns2:PolNumber>78452</ns2:PolNumber>
+							<ns2:LineOfBusiness tc="" />
+							<ns2:ProductType tc="">SPTL</ns2:ProductType>
+							<ns2:ProductCode />
+							<ns2:CarrierCode>METL</ns2:CarrierCode>
+							<ns2:PlanName />
+							<ns2:PolicyStatus tc="" />
+							<ns2:PolicyValue />
+							<ns2:PaymentMode tc="" />
+							<ns2:PaymentMethod tc="" />
+							<ns2:Life>
+								<ns2:InitialPremAmt />
+								<ns2:FaceAmt>0000000000</ns2:FaceAmt>
+								<ns2:Coverage id="">
+									<ns2:PlanName />
+									<ns2:ShortName />
+									<ns2:LifeCovStatus tc="" />
+									<ns2:LifeCovTypeCode tc="" />
+									<ns2:IndicatorCode tc="" />
+									<ns2:CurrentAmt>0000000000</ns2:CurrentAmt>
+									<ns2:LifeParticipant PartyID="" id="">
+										<ns2:LifeParticipantRoleCode tc="" />
+									</ns2:LifeParticipant>
+								</ns2:Coverage>
+							</ns2:Life>
+							<ns2:ApplicationInfo>
+								<ns2:TrackingID>21515382-8C0C-D8E0-9605-76107CCF1412</ns2:TrackingID>
+								<ns2:ApplicationJurisdiction tc="" />
+								<ns2:SignedDate />
+								<ns2:PrefLanguage tc="" />
+							</ns2:ApplicationInfo>
+							<ns2:RequirementInfo AppliesToPartyID="Patient" FulfillerPartyID="" RequesterPartyID="" id="Req_1">
+								<ns2:ReqCode tc="459">PVT ING</ns2:ReqCode>
+								<ns2:RequirementInfoUniqueID>FC896E79-F944-3C46-4C0E-A30F19BE70FB</ns2:RequirementInfoUniqueID>
+								<ns2:RequestedDate>2015-04-06</ns2:RequestedDate>
+								<ns2:RequestedScheduleDate />
+								<ns2:RequestedScheduleTimeStart />
+								<ns2:ReleasePartyOrgCode />
+								<ns2:RequirementAcctNum>706602711</ns2:RequirementAcctNum>
+								<ns2:CarrierOrderNum>0000154649</ns2:CarrierOrderNum>
+								<ns2:RequirementInfoKey>439196807</ns2:RequirementInfoKey>
+								<ns2:RequirementDetails>Pre-Diabetes, Impaired Glucose Tolerance, Insulin Resistance of PCOS:  Actualdiagnosis, results of fasting glucose, GTT, HbA1c, any cardiac risk factors, treatment, current weight, date of last visit;</ns2:RequirementDetails>
+							</ns2:RequirementInfo>
+						</ns2:Policy>
+					</ns2:Holding>
+					<ns2:Party id="Patient">
+						<ns2:PartyTypeCode tc="1">Person</ns2:PartyTypeCode>
+						<ns2:GovtID>S43919680</ns2:GovtID>
+						<ns2:Person>
+							<ns2:FirstName>Marsha</ns2:FirstName>
+							<ns2:MiddleName />
+							<ns2:LastName>Tee</ns2:LastName>
+							<ns2:Occupation />
+							<ns2:Gender tc="2">Female</ns2:Gender>
+							<ns2:BirthDate>1962-07-01</ns2:BirthDate>
+							<ns2:Citizenship tc="" />
+							<ns2:BirthCountry tc="" />
+							<ns2:BirthJurisdictionTC tc="" />
+							<ns2:Prefix />
+						</ns2:Person>
+						<ns2:FullName>Marsha Tee</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>107 MellowYello Cr</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>West Monroe</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="22">LA</ns2:AddressStateTC>
+							<ns2:Zip>71292</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="" />
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>8278022</ns2:DialNumber>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Carrier">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName>METL</ns2:AbbrName>
+						</ns2:Organization>
+						<ns2:FullName>MetLife</ns2:FullName>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>800</ns2:AreaCode>
+							<ns2:DialNumber>6386420</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Facility">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName />
+						</ns2:Organization>
+						<ns2:FullName>Sharp</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>5328 Cypress St</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>West Monroe</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="22">LA</ns2:AddressStateTC>
+							<ns2:Zip>71291</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>318</ns2:AreaCode>
+							<ns2:DialNumber>3973636</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Patient" id="HoldingPatientRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="6" />
+						<ns2:RelationRoleCode tc="32" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Carrier" id="HoldingCarrierRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="36" />
+						<ns2:RelationRoleCode tc="87" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Facility" id="HoldingFacilityRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="169" />
+						<ns2:RelationRoleCode tc="41" />
+					</ns2:Relation>
+				</ns2:OLifE>
+			</ns2:TXLifeRequest>
+		</ns2:TXLifeRequest>
+	</ns2:TXLife>
+	<ns2:TXLife Version="">
+		<ns2:TXLifeRequest PrimaryObj="Holding">
+			<ns2:UserAuthRequest>
+				<ns2:UserLoginName>MetLife</ns2:UserLoginName>
+				<ns2:UserPswd>
+					<ns2:CryptPswd />
+					<ns2:CryptType />
+					<ns2:Pswd />
+				</ns2:UserPswd>
+				<ns2:UserDate>2015-04-06</ns2:UserDate>
+				<ns2:UserTime>12:35:01</ns2:UserTime>
+				<ns2:VendorApp>
+					<ns2:VendorName VendorCode="" />
+					<ns2:AppName />
+					<ns2:AppVer />
+				</ns2:VendorApp>
+			</ns2:UserAuthRequest>
+			<ns2:TXLifeRequest PrimaryObj="Holding">
+				<ns2:TransRefGUID>1CC8DD38-D4A9-98A5-BDE7-76D68A122D7A</ns2:TransRefGUID>
+				<ns2:TransType tc="121">General Requirement Order Request</ns2:TransType>
+				<ns2:TransExeDate>2015-06-10</ns2:TransExeDate>
+				<ns2:TransExeTime>15:30:30</ns2:TransExeTime>
+				<ns2:TransMode tc="" />
+				<ns2:TestIndicator tc="" />
+				<ns2:OLifE>
+					<ns2:SourceInfo>
+						<ns2:CreationDate />
+						<ns2:CreationTime />
+						<ns2:SourceInfoName />
+						<ns2:SourceInfoDescription />
+					</ns2:SourceInfo>
+					<ns2:Holding id="Holding">
+						<ns2:HoldingTypeCode tc="2">Policy</ns2:HoldingTypeCode>
+						<ns2:Policy CarrierPartyID="Carrier" id="Policy_1">
+							<ns2:PolNumber>78452</ns2:PolNumber>
+							<ns2:LineOfBusiness tc="" />
+							<ns2:ProductType tc="">SPTL</ns2:ProductType>
+							<ns2:ProductCode />
+							<ns2:CarrierCode>METL</ns2:CarrierCode>
+							<ns2:PlanName />
+							<ns2:PolicyStatus tc="" />
+							<ns2:PolicyValue />
+							<ns2:PaymentMode tc="" />
+							<ns2:PaymentMethod tc="" />
+							<ns2:Life>
+								<ns2:InitialPremAmt />
+								<ns2:FaceAmt>0000000000</ns2:FaceAmt>
+								<ns2:Coverage id="">
+									<ns2:PlanName />
+									<ns2:ShortName />
+									<ns2:LifeCovStatus tc="" />
+									<ns2:LifeCovTypeCode tc="" />
+									<ns2:IndicatorCode tc="" />
+									<ns2:CurrentAmt>0000000000</ns2:CurrentAmt>
+									<ns2:LifeParticipant PartyID="" id="">
+										<ns2:LifeParticipantRoleCode tc="" />
+									</ns2:LifeParticipant>
+								</ns2:Coverage>
+							</ns2:Life>
+							<ns2:ApplicationInfo>
+								<ns2:TrackingID>1B496D47-0772-FE4A-A263-9F5ACC2A9A96</ns2:TrackingID>
+								<ns2:ApplicationJurisdiction tc="" />
+								<ns2:SignedDate />
+								<ns2:PrefLanguage tc="" />
+							</ns2:ApplicationInfo>
+							<ns2:RequirementInfo AppliesToPartyID="Patient" FulfillerPartyID="" RequesterPartyID="" id="Req_1">
+								<ns2:ReqCode tc="459">PVT ING</ns2:ReqCode>
+								<ns2:RequirementInfoUniqueID>1867A424-85C9-E806-15D9-EB99C1E36132</ns2:RequirementInfoUniqueID>
+								<ns2:RequestedDate>2015-04-06</ns2:RequestedDate>
+								<ns2:RequestedScheduleDate />
+								<ns2:RequestedScheduleTimeStart />
+								<ns2:ReleasePartyOrgCode />
+								<ns2:RequirementAcctNum>559186621</ns2:RequirementAcctNum>
+								<ns2:CarrierOrderNum>0000123227</ns2:CarrierOrderNum>
+								<ns2:RequirementInfoKey>416045113</ns2:RequirementInfoKey>
+								<ns2:RequirementDetails>(Antiphospholipid Syndrome) Bleeding/Clotting Disorder: actual diagnosis, dateof diagnosis, severity to include details of any history of bleeding or thrombotic events, details of all treatment, and history of any complications;</ns2:RequirementDetails>
+							</ns2:RequirementInfo>
+						</ns2:Policy>
+					</ns2:Holding>
+					<ns2:Party id="Patient">
+						<ns2:PartyTypeCode tc="1">Person</ns2:PartyTypeCode>
+						<ns2:GovtID>416045113</ns2:GovtID>
+						<ns2:Person>
+							<ns2:FirstName>Karen</ns2:FirstName>
+							<ns2:MiddleName />
+							<ns2:LastName>TEEville</ns2:LastName>
+							<ns2:Occupation />
+							<ns2:Gender tc="2">Female</ns2:Gender>
+							<ns2:BirthDate>1964-04-16</ns2:BirthDate>
+							<ns2:Citizenship tc="" />
+							<ns2:BirthCountry tc="" />
+							<ns2:BirthJurisdictionTC tc="" />
+							<ns2:Prefix />
+						</ns2:Person>
+						<ns2:FullName>Karen TEEville</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>15 State Ct</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Pike Road</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="1">AL</ns2:AddressStateTC>
+							<ns2:Zip>36064</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="" />
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>3788446</ns2:DialNumber>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Carrier">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName>METL</ns2:AbbrName>
+						</ns2:Organization>
+						<ns2:FullName>MetLife</ns2:FullName>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>800</ns2:AreaCode>
+							<ns2:DialNumber>6386420</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Facility">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName />
+						</ns2:Organization>
+						<ns2:FullName>Mc Clatchey</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>35 Collier rd Ste 775</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Atlanta</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="13">GA</ns2:AddressStateTC>
+							<ns2:Zip>30309</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>404</ns2:AreaCode>
+							<ns2:DialNumber>3501122</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Patient" id="HoldingPatientRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="6" />
+						<ns2:RelationRoleCode tc="32" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Carrier" id="HoldingCarrierRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="36" />
+						<ns2:RelationRoleCode tc="87" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Facility" id="HoldingFacilityRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="169" />
+						<ns2:RelationRoleCode tc="41" />
+					</ns2:Relation>
+				</ns2:OLifE>
+			</ns2:TXLifeRequest>
+		</ns2:TXLifeRequest>
+	</ns2:TXLife>
+	<ns2:TXLife Version="">
+		<ns2:TXLifeRequest PrimaryObj="Holding">
+			<ns2:UserAuthRequest>
+				<ns2:UserLoginName>MetLife</ns2:UserLoginName>
+				<ns2:UserPswd>
+					<ns2:CryptPswd />
+					<ns2:CryptType />
+					<ns2:Pswd />
+				</ns2:UserPswd>
+				<ns2:UserDate>2015-04-06</ns2:UserDate>
+				<ns2:UserTime>12:35:01</ns2:UserTime>
+				<ns2:VendorApp>
+					<ns2:VendorName VendorCode="" />
+					<ns2:AppName />
+					<ns2:AppVer />
+				</ns2:VendorApp>
+			</ns2:UserAuthRequest>
+			<ns2:TXLifeRequest PrimaryObj="Holding">
+				<ns2:TransRefGUID>6B4317FA-D378-7651-F001-756C68E556DB</ns2:TransRefGUID>
+				<ns2:TransType tc="121">General Requirement Order Request</ns2:TransType>
+				<ns2:TransExeDate>2015-06-10</ns2:TransExeDate>
+				<ns2:TransExeTime>15:30:30</ns2:TransExeTime>
+				<ns2:TransMode tc="" />
+				<ns2:TestIndicator tc="" />
+				<ns2:OLifE>
+					<ns2:SourceInfo>
+						<ns2:CreationDate />
+						<ns2:CreationTime />
+						<ns2:SourceInfoName />
+						<ns2:SourceInfoDescription />
+					</ns2:SourceInfo>
+					<ns2:Holding id="Holding">
+						<ns2:HoldingTypeCode tc="2">Policy</ns2:HoldingTypeCode>
+						<ns2:Policy CarrierPartyID="Carrier" id="Policy_1">
+							<ns2:PolNumber>78452</ns2:PolNumber>
+							<ns2:LineOfBusiness tc="" />
+							<ns2:ProductType tc="">OPTL</ns2:ProductType>
+							<ns2:ProductCode />
+							<ns2:CarrierCode>METL</ns2:CarrierCode>
+							<ns2:PlanName />
+							<ns2:PolicyStatus tc="" />
+							<ns2:PolicyValue />
+							<ns2:PaymentMode tc="" />
+							<ns2:PaymentMethod tc="" />
+							<ns2:Life>
+								<ns2:InitialPremAmt />
+								<ns2:FaceAmt>0000000000</ns2:FaceAmt>
+								<ns2:Coverage id="">
+									<ns2:PlanName />
+									<ns2:ShortName />
+									<ns2:LifeCovStatus tc="" />
+									<ns2:LifeCovTypeCode tc="" />
+									<ns2:IndicatorCode tc="" />
+									<ns2:CurrentAmt>0000000000</ns2:CurrentAmt>
+									<ns2:LifeParticipant PartyID="" id="">
+										<ns2:LifeParticipantRoleCode tc="" />
+									</ns2:LifeParticipant>
+								</ns2:Coverage>
+							</ns2:Life>
+							<ns2:ApplicationInfo>
+								<ns2:TrackingID>B0C30FA0-DB7B-6A79-4A8F-851F984A0A57</ns2:TrackingID>
+								<ns2:ApplicationJurisdiction tc="" />
+								<ns2:SignedDate />
+								<ns2:PrefLanguage tc="" />
+							</ns2:ApplicationInfo>
+							<ns2:RequirementInfo AppliesToPartyID="Patient" FulfillerPartyID="" RequesterPartyID="" id="Req_1">
+								<ns2:ReqCode tc="459">PVT ING</ns2:ReqCode>
+								<ns2:RequirementInfoUniqueID>E101234A-8B51-B5B1-CC39-73C11FE94CB1</ns2:RequirementInfoUniqueID>
+								<ns2:RequestedDate>2015-04-06</ns2:RequestedDate>
+								<ns2:RequestedScheduleDate />
+								<ns2:RequestedScheduleTimeStart />
+								<ns2:ReleasePartyOrgCode />
+								<ns2:RequirementAcctNum>367511091</ns2:RequirementAcctNum>
+								<ns2:CarrierOrderNum>0000149107</ns2:CarrierOrderNum>
+								<ns2:RequirementInfoKey>526390249</ns2:RequirementInfoKey>
+								<ns2:RequirementDetails>PFO surgery 2014/Congenital Heart Disease: type, symptoms/severity, results ofcardiac testing and current status;</ns2:RequirementDetails>
+							</ns2:RequirementInfo>
+						</ns2:Policy>
+					</ns2:Holding>
+					<ns2:Party id="Patient">
+						<ns2:PartyTypeCode tc="1">Person</ns2:PartyTypeCode>
+						<ns2:GovtID>S52639024</ns2:GovtID>
+						<ns2:Person>
+							<ns2:FirstName>Jon</ns2:FirstName>
+							<ns2:MiddleName />
+							<ns2:LastName>Teetterer</ns2:LastName>
+							<ns2:Occupation />
+							<ns2:Gender tc="" />
+							<ns2:BirthDate>1973-07-03</ns2:BirthDate>
+							<ns2:Citizenship tc="" />
+							<ns2:BirthCountry tc="" />
+							<ns2:BirthJurisdictionTC tc="" />
+							<ns2:Prefix />
+						</ns2:Person>
+						<ns2:FullName>Jon Teetterer</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>2930 Tester Fish Camp Rd</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Marianna</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="12">FL</ns2:AddressStateTC>
+							<ns2:Zip>32446</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="" />
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>523412</ns2:DialNumber>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Carrier">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName>METL</ns2:AbbrName>
+						</ns2:Organization>
+						<ns2:FullName>MetLife</ns2:FullName>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>800</ns2:AreaCode>
+							<ns2:DialNumber>6386420</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Facility">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName />
+						</ns2:Organization>
+						<ns2:FullName>Ebersole</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>1600 Lakeland Hills Blvd</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Lakeland</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="12">FL</ns2:AddressStateTC>
+							<ns2:Zip>33805</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>863</ns2:AreaCode>
+							<ns2:DialNumber>6307000</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Patient" id="HoldingPatientRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="6" />
+						<ns2:RelationRoleCode tc="32" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Carrier" id="HoldingCarrierRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="36" />
+						<ns2:RelationRoleCode tc="87" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Facility" id="HoldingFacilityRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="169" />
+						<ns2:RelationRoleCode tc="41" />
+					</ns2:Relation>
+				</ns2:OLifE>
+			</ns2:TXLifeRequest>
+		</ns2:TXLifeRequest>
+	</ns2:TXLife>
+	<ns2:TXLife Version="">
+		<ns2:TXLifeRequest PrimaryObj="Holding">
+			<ns2:UserAuthRequest>
+				<ns2:UserLoginName>MetLife</ns2:UserLoginName>
+				<ns2:UserPswd>
+					<ns2:CryptPswd />
+					<ns2:CryptType />
+					<ns2:Pswd />
+				</ns2:UserPswd>
+				<ns2:UserDate>2015-04-06</ns2:UserDate>
+				<ns2:UserTime>12:35:01</ns2:UserTime>
+				<ns2:VendorApp>
+					<ns2:VendorName VendorCode="" />
+					<ns2:AppName />
+					<ns2:AppVer />
+				</ns2:VendorApp>
+			</ns2:UserAuthRequest>
+			<ns2:TXLifeRequest PrimaryObj="Holding">
+				<ns2:TransRefGUID>ACC57AD0-F0B5-560E-5BFC-7D200EB6D9C1</ns2:TransRefGUID>
+				<ns2:TransType tc="121">General Requirement Order Request</ns2:TransType>
+				<ns2:TransExeDate>2015-06-10</ns2:TransExeDate>
+				<ns2:TransExeTime>15:30:30</ns2:TransExeTime>
+				<ns2:TransMode tc="" />
+				<ns2:TestIndicator tc="" />
+				<ns2:OLifE>
+					<ns2:SourceInfo>
+						<ns2:CreationDate />
+						<ns2:CreationTime />
+						<ns2:SourceInfoName />
+						<ns2:SourceInfoDescription />
+					</ns2:SourceInfo>
+					<ns2:Holding id="Holding">
+						<ns2:HoldingTypeCode tc="2">Policy</ns2:HoldingTypeCode>
+						<ns2:Policy CarrierPartyID="Carrier" id="Policy_1">
+							<ns2:PolNumber>78452</ns2:PolNumber>
+							<ns2:LineOfBusiness tc="" />
+							<ns2:ProductType tc="">OPTL</ns2:ProductType>
+							<ns2:ProductCode />
+							<ns2:CarrierCode>METL</ns2:CarrierCode>
+							<ns2:PlanName />
+							<ns2:PolicyStatus tc="" />
+							<ns2:PolicyValue />
+							<ns2:PaymentMode tc="" />
+							<ns2:PaymentMethod tc="" />
+							<ns2:Life>
+								<ns2:InitialPremAmt />
+								<ns2:FaceAmt>0000000000</ns2:FaceAmt>
+								<ns2:Coverage id="">
+									<ns2:PlanName />
+									<ns2:ShortName />
+									<ns2:LifeCovStatus tc="" />
+									<ns2:LifeCovTypeCode tc="" />
+									<ns2:IndicatorCode tc="" />
+									<ns2:CurrentAmt>0000000000</ns2:CurrentAmt>
+									<ns2:LifeParticipant PartyID="" id="">
+										<ns2:LifeParticipantRoleCode tc="" />
+									</ns2:LifeParticipant>
+								</ns2:Coverage>
+							</ns2:Life>
+							<ns2:ApplicationInfo>
+								<ns2:TrackingID>31275B63-A08A-0781-2396-A09538DF4280</ns2:TrackingID>
+								<ns2:ApplicationJurisdiction tc="" />
+								<ns2:SignedDate />
+								<ns2:PrefLanguage tc="" />
+							</ns2:ApplicationInfo>
+							<ns2:RequirementInfo AppliesToPartyID="Patient" FulfillerPartyID="" RequesterPartyID="" id="Req_1">
+								<ns2:ReqCode tc="459">PVT ING</ns2:ReqCode>
+								<ns2:RequirementInfoUniqueID>104DA59A-E732-7A0D-B6BC-24ADFE785276</ns2:RequirementInfoUniqueID>
+								<ns2:RequestedDate>2015-04-06</ns2:RequestedDate>
+								<ns2:RequestedScheduleDate />
+								<ns2:RequestedScheduleTimeStart />
+								<ns2:ReleasePartyOrgCode />
+								<ns2:RequirementAcctNum>898651441</ns2:RequirementAcctNum>
+								<ns2:CarrierOrderNum>0000149107</ns2:CarrierOrderNum>
+								<ns2:RequirementInfoKey>559350163</ns2:RequirementInfoKey>
+								<ns2:RequirementDetails>3/2012 angina/ Cardiac: Actual diagnosis to include results of all cardiac testing, details of related treatment and current status;</ns2:RequirementDetails>
+							</ns2:RequirementInfo>
+						</ns2:Policy>
+					</ns2:Holding>
+					<ns2:Party id="Patient">
+						<ns2:PartyTypeCode tc="1">Person</ns2:PartyTypeCode>
+						<ns2:GovtID>S55935016</ns2:GovtID>
+						<ns2:Person>
+							<ns2:FirstName>Robert</ns2:FirstName>
+							<ns2:MiddleName />
+							<ns2:LastName>Teeampion</ns2:LastName>
+							<ns2:Occupation />
+							<ns2:Gender tc="" />
+							<ns2:BirthDate>1960-10-01</ns2:BirthDate>
+							<ns2:Citizenship tc="" />
+							<ns2:BirthCountry tc="" />
+							<ns2:BirthJurisdictionTC tc="" />
+							<ns2:Prefix />
+						</ns2:Person>
+						<ns2:FullName>Robert Teeampion</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>1556 Teemewood Pl</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Pittsburg</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="0">UN</ns2:AddressStateTC>
+							<ns2:Zip>A94565</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="" />
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>232071</ns2:DialNumber>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Carrier">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName>METL</ns2:AbbrName>
+						</ns2:Organization>
+						<ns2:FullName>MetLife</ns2:FullName>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>800</ns2:AreaCode>
+							<ns2:DialNumber>6386420</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Facility">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName />
+						</ns2:Organization>
+						<ns2:FullName>Chandler</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>5161 Clayton Rd</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Concord</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="6">CA</ns2:AddressStateTC>
+							<ns2:Zip>94521</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>6098282</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Patient" id="HoldingPatientRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="6" />
+						<ns2:RelationRoleCode tc="32" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Carrier" id="HoldingCarrierRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="36" />
+						<ns2:RelationRoleCode tc="87" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Facility" id="HoldingFacilityRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="169" />
+						<ns2:RelationRoleCode tc="41" />
+					</ns2:Relation>
+				</ns2:OLifE>
+			</ns2:TXLifeRequest>
+		</ns2:TXLifeRequest>
+	</ns2:TXLife>
+	<ns2:TXLife Version="">
+		<ns2:TXLifeRequest PrimaryObj="Holding">
+			<ns2:UserAuthRequest>
+				<ns2:UserLoginName>MetLife</ns2:UserLoginName>
+				<ns2:UserPswd>
+					<ns2:CryptPswd />
+					<ns2:CryptType />
+					<ns2:Pswd />
+				</ns2:UserPswd>
+				<ns2:UserDate>2015-04-06</ns2:UserDate>
+				<ns2:UserTime>12:35:01</ns2:UserTime>
+				<ns2:VendorApp>
+					<ns2:VendorName VendorCode="" />
+					<ns2:AppName />
+					<ns2:AppVer />
+				</ns2:VendorApp>
+			</ns2:UserAuthRequest>
+			<ns2:TXLifeRequest PrimaryObj="Holding">
+				<ns2:TransRefGUID>3315DE49-DE95-FEF0-1645-7B5B551AF899</ns2:TransRefGUID>
+				<ns2:TransType tc="121">General Requirement Order Request</ns2:TransType>
+				<ns2:TransExeDate>2015-06-10</ns2:TransExeDate>
+				<ns2:TransExeTime>15:30:30</ns2:TransExeTime>
+				<ns2:TransMode tc="" />
+				<ns2:TestIndicator tc="" />
+				<ns2:OLifE>
+					<ns2:SourceInfo>
+						<ns2:CreationDate />
+						<ns2:CreationTime />
+						<ns2:SourceInfoName />
+						<ns2:SourceInfoDescription />
+					</ns2:SourceInfo>
+					<ns2:Holding id="Holding">
+						<ns2:HoldingTypeCode tc="2">Policy</ns2:HoldingTypeCode>
+						<ns2:Policy CarrierPartyID="Carrier" id="Policy_1">
+							<ns2:PolNumber>78452</ns2:PolNumber>
+							<ns2:LineOfBusiness tc="" />
+							<ns2:ProductType tc="">OPTL</ns2:ProductType>
+							<ns2:ProductCode />
+							<ns2:CarrierCode>METL</ns2:CarrierCode>
+							<ns2:PlanName />
+							<ns2:PolicyStatus tc="" />
+							<ns2:PolicyValue />
+							<ns2:PaymentMode tc="" />
+							<ns2:PaymentMethod tc="" />
+							<ns2:Life>
+								<ns2:InitialPremAmt />
+								<ns2:FaceAmt>0000000000</ns2:FaceAmt>
+								<ns2:Coverage id="">
+									<ns2:PlanName />
+									<ns2:ShortName />
+									<ns2:LifeCovStatus tc="" />
+									<ns2:LifeCovTypeCode tc="" />
+									<ns2:IndicatorCode tc="" />
+									<ns2:CurrentAmt>0000000000</ns2:CurrentAmt>
+									<ns2:LifeParticipant PartyID="" id="">
+										<ns2:LifeParticipantRoleCode tc="" />
+									</ns2:LifeParticipant>
+								</ns2:Coverage>
+							</ns2:Life>
+							<ns2:ApplicationInfo>
+								<ns2:TrackingID>6263B2CF-4956-E3DD-847D-B67A72470DCC</ns2:TrackingID>
+								<ns2:ApplicationJurisdiction tc="" />
+								<ns2:SignedDate />
+								<ns2:PrefLanguage tc="" />
+							</ns2:ApplicationInfo>
+							<ns2:RequirementInfo AppliesToPartyID="Patient" FulfillerPartyID="" RequesterPartyID="" id="Req_1">
+								<ns2:ReqCode tc="459">PVT ING</ns2:ReqCode>
+								<ns2:RequirementInfoUniqueID>9C16BAB4-DD28-043C-3B74-37B584D52909</ns2:RequirementInfoUniqueID>
+								<ns2:RequestedDate>2015-04-06</ns2:RequestedDate>
+								<ns2:RequestedScheduleDate />
+								<ns2:RequestedScheduleTimeStart />
+								<ns2:ReleasePartyOrgCode />
+								<ns2:RequirementAcctNum>609319231</ns2:RequirementAcctNum>
+								<ns2:CarrierOrderNum>0000149107</ns2:CarrierOrderNum>
+								<ns2:RequirementInfoKey>565626054</ns2:RequirementInfoKey>
+								<ns2:RequirementDetails>Diabetes: Type, age of onset, current height/weight, treatment and results ofmost recent diagnostic testing to include HgbA1c;</ns2:RequirementDetails>
+							</ns2:RequirementInfo>
+						</ns2:Policy>
+					</ns2:Holding>
+					<ns2:Party id="Patient">
+						<ns2:PartyTypeCode tc="1">Person</ns2:PartyTypeCode>
+						<ns2:GovtID>S56562605</ns2:GovtID>
+						<ns2:Person>
+							<ns2:FirstName>Raymond</ns2:FirstName>
+							<ns2:MiddleName />
+							<ns2:LastName>Teeueta</ns2:LastName>
+							<ns2:Occupation />
+							<ns2:Gender tc="" />
+							<ns2:BirthDate>1945-05-03</ns2:BirthDate>
+							<ns2:Citizenship tc="" />
+							<ns2:BirthCountry tc="" />
+							<ns2:BirthJurisdictionTC tc="" />
+							<ns2:Prefix />
+						</ns2:Person>
+						<ns2:FullName>Raymond Teeueta</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>1342 Mapleteste Dr</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Columbus</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="13">GA</ns2:AddressStateTC>
+							<ns2:Zip>31904</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="" />
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>566012</ns2:DialNumber>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Carrier">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName>METL</ns2:AbbrName>
+						</ns2:Organization>
+						<ns2:FullName>MetLife</ns2:FullName>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>800</ns2:AreaCode>
+							<ns2:DialNumber>6386420</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Facility">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName />
+						</ns2:Organization>
+						<ns2:FullName>Raborn</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>1942 North Ave</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Columbus</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="13">GA</ns2:AddressStateTC>
+							<ns2:Zip>31901</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>5961245</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Patient" id="HoldingPatientRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="6" />
+						<ns2:RelationRoleCode tc="32" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Carrier" id="HoldingCarrierRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="36" />
+						<ns2:RelationRoleCode tc="87" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Facility" id="HoldingFacilityRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="169" />
+						<ns2:RelationRoleCode tc="41" />
+					</ns2:Relation>
+				</ns2:OLifE>
+			</ns2:TXLifeRequest>
+		</ns2:TXLifeRequest>
+	</ns2:TXLife>
+	<ns2:TXLife Version="">
+		<ns2:TXLifeRequest PrimaryObj="Holding">
+			<ns2:UserAuthRequest>
+				<ns2:UserLoginName>MetLife</ns2:UserLoginName>
+				<ns2:UserPswd>
+					<ns2:CryptPswd />
+					<ns2:CryptType />
+					<ns2:Pswd />
+				</ns2:UserPswd>
+				<ns2:UserDate>2015-04-06</ns2:UserDate>
+				<ns2:UserTime>12:35:01</ns2:UserTime>
+				<ns2:VendorApp>
+					<ns2:VendorName VendorCode="" />
+					<ns2:AppName />
+					<ns2:AppVer />
+				</ns2:VendorApp>
+			</ns2:UserAuthRequest>
+			<ns2:TXLifeRequest PrimaryObj="Holding">
+				<ns2:TransRefGUID>A8D62E9B-3B04-35EB-69BD-DEEBE11A4DD2</ns2:TransRefGUID>
+				<ns2:TransType tc="121">General Requirement Order Request</ns2:TransType>
+				<ns2:TransExeDate>2015-06-10</ns2:TransExeDate>
+				<ns2:TransExeTime>15:30:30</ns2:TransExeTime>
+				<ns2:TransMode tc="" />
+				<ns2:TestIndicator tc="" />
+				<ns2:OLifE>
+					<ns2:SourceInfo>
+						<ns2:CreationDate />
+						<ns2:CreationTime />
+						<ns2:SourceInfoName />
+						<ns2:SourceInfoDescription />
+					</ns2:SourceInfo>
+					<ns2:Holding id="Holding">
+						<ns2:HoldingTypeCode tc="2">Policy</ns2:HoldingTypeCode>
+						<ns2:Policy CarrierPartyID="Carrier" id="Policy_1">
+							<ns2:PolNumber>78452</ns2:PolNumber>
+							<ns2:LineOfBusiness tc="" />
+							<ns2:ProductType tc="">OPTL</ns2:ProductType>
+							<ns2:ProductCode />
+							<ns2:CarrierCode>METL</ns2:CarrierCode>
+							<ns2:PlanName />
+							<ns2:PolicyStatus tc="" />
+							<ns2:PolicyValue />
+							<ns2:PaymentMode tc="" />
+							<ns2:PaymentMethod tc="" />
+							<ns2:Life>
+								<ns2:InitialPremAmt />
+								<ns2:FaceAmt>0000000000</ns2:FaceAmt>
+								<ns2:Coverage id="">
+									<ns2:PlanName />
+									<ns2:ShortName />
+									<ns2:LifeCovStatus tc="" />
+									<ns2:LifeCovTypeCode tc="" />
+									<ns2:IndicatorCode tc="" />
+									<ns2:CurrentAmt>0000000000</ns2:CurrentAmt>
+									<ns2:LifeParticipant PartyID="" id="">
+										<ns2:LifeParticipantRoleCode tc="" />
+									</ns2:LifeParticipant>
+								</ns2:Coverage>
+							</ns2:Life>
+							<ns2:ApplicationInfo>
+								<ns2:TrackingID>B71924DF-AF02-1309-D03D-EF1BBF55769D</ns2:TrackingID>
+								<ns2:ApplicationJurisdiction tc="" />
+								<ns2:SignedDate />
+								<ns2:PrefLanguage tc="" />
+							</ns2:ApplicationInfo>
+							<ns2:RequirementInfo AppliesToPartyID="Patient" FulfillerPartyID="" RequesterPartyID="" id="Req_1">
+								<ns2:ReqCode tc="459">PVT ING</ns2:ReqCode>
+								<ns2:RequirementInfoUniqueID>A1649259-C834-6EB7-6FF4-01A60DB04FD0</ns2:RequirementInfoUniqueID>
+								<ns2:RequestedDate>2015-04-06</ns2:RequestedDate>
+								<ns2:RequestedScheduleDate />
+								<ns2:RequestedScheduleTimeStart />
+								<ns2:ReleasePartyOrgCode />
+								<ns2:RequirementAcctNum>686592541</ns2:RequirementAcctNum>
+								<ns2:CarrierOrderNum>0000119114</ns2:CarrierOrderNum>
+								<ns2:RequirementInfoKey>376298967</ns2:RequirementInfoKey>
+								<ns2:RequirementDetails>(2005 Hodgkin's) Hodgkin's/Non-Hodgkin's lymphoma (diagnosis, results of testing, severity and current status);</ns2:RequirementDetails>
+							</ns2:RequirementInfo>
+						</ns2:Policy>
+					</ns2:Holding>
+					<ns2:Party id="Patient">
+						<ns2:PartyTypeCode tc="1">Person</ns2:PartyTypeCode>
+						<ns2:GovtID>376298967</ns2:GovtID>
+						<ns2:Person>
+							<ns2:FirstName>Oeystein</ns2:FirstName>
+							<ns2:MiddleName />
+							<ns2:LastName>Teersen</ns2:LastName>
+							<ns2:Occupation />
+							<ns2:Gender tc="1">Male</ns2:Gender>
+							<ns2:BirthDate>1979-05-10</ns2:BirthDate>
+							<ns2:Citizenship tc="" />
+							<ns2:BirthCountry tc="" />
+							<ns2:BirthJurisdictionTC tc="" />
+							<ns2:Prefix />
+						</ns2:Person>
+						<ns2:FullName>Oeystein Teersen</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>1158 Teennington Dr</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Sunnyvale</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="0">UN</ns2:AddressStateTC>
+							<ns2:Zip>A94087</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="" />
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>8397044</ns2:DialNumber>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Carrier">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName>METL</ns2:AbbrName>
+						</ns2:Organization>
+						<ns2:FullName>MetLife</ns2:FullName>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>800</ns2:AreaCode>
+							<ns2:DialNumber>6386420</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Facility">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName />
+						</ns2:Organization>
+						<ns2:FullName>Doaga</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>301 Old San Francisco Rd</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Sunnyvale</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="6">CA</ns2:AddressStateTC>
+							<ns2:Zip>94086</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>8397044</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Patient" id="HoldingPatientRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="6" />
+						<ns2:RelationRoleCode tc="32" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Carrier" id="HoldingCarrierRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="36" />
+						<ns2:RelationRoleCode tc="87" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Facility" id="HoldingFacilityRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="169" />
+						<ns2:RelationRoleCode tc="41" />
+					</ns2:Relation>
+				</ns2:OLifE>
+			</ns2:TXLifeRequest>
+		</ns2:TXLifeRequest>
+	</ns2:TXLife>
+	<ns2:TXLife Version="">
+		<ns2:TXLifeRequest PrimaryObj="Holding">
+			<ns2:UserAuthRequest>
+				<ns2:UserLoginName>MetLife</ns2:UserLoginName>
+				<ns2:UserPswd>
+					<ns2:CryptPswd />
+					<ns2:CryptType />
+					<ns2:Pswd />
+				</ns2:UserPswd>
+				<ns2:UserDate>2015-04-06</ns2:UserDate>
+				<ns2:UserTime>12:35:01</ns2:UserTime>
+				<ns2:VendorApp>
+					<ns2:VendorName VendorCode="" />
+					<ns2:AppName />
+					<ns2:AppVer />
+				</ns2:VendorApp>
+			</ns2:UserAuthRequest>
+			<ns2:TXLifeRequest PrimaryObj="Holding">
+				<ns2:TransRefGUID>38B50FA2-FA41-EB9E-8865-3B93D16CB701</ns2:TransRefGUID>
+				<ns2:TransType tc="121">General Requirement Order Request</ns2:TransType>
+				<ns2:TransExeDate>2015-06-10</ns2:TransExeDate>
+				<ns2:TransExeTime>15:30:30</ns2:TransExeTime>
+				<ns2:TransMode tc="" />
+				<ns2:TestIndicator tc="" />
+				<ns2:OLifE>
+					<ns2:SourceInfo>
+						<ns2:CreationDate />
+						<ns2:CreationTime />
+						<ns2:SourceInfoName />
+						<ns2:SourceInfoDescription />
+					</ns2:SourceInfo>
+					<ns2:Holding id="Holding">
+						<ns2:HoldingTypeCode tc="2">Policy</ns2:HoldingTypeCode>
+						<ns2:Policy CarrierPartyID="Carrier" id="Policy_1">
+							<ns2:PolNumber>78452</ns2:PolNumber>
+							<ns2:LineOfBusiness tc="" />
+							<ns2:ProductType tc="">GRPVUL</ns2:ProductType>
+							<ns2:ProductCode />
+							<ns2:CarrierCode>METL</ns2:CarrierCode>
+							<ns2:PlanName />
+							<ns2:PolicyStatus tc="" />
+							<ns2:PolicyValue />
+							<ns2:PaymentMode tc="" />
+							<ns2:PaymentMethod tc="" />
+							<ns2:Life>
+								<ns2:InitialPremAmt />
+								<ns2:FaceAmt>0000000000</ns2:FaceAmt>
+								<ns2:Coverage id="">
+									<ns2:PlanName />
+									<ns2:ShortName />
+									<ns2:LifeCovStatus tc="" />
+									<ns2:LifeCovTypeCode tc="" />
+									<ns2:IndicatorCode tc="" />
+									<ns2:CurrentAmt>0000000000</ns2:CurrentAmt>
+									<ns2:LifeParticipant PartyID="" id="">
+										<ns2:LifeParticipantRoleCode tc="" />
+									</ns2:LifeParticipant>
+								</ns2:Coverage>
+							</ns2:Life>
+							<ns2:ApplicationInfo>
+								<ns2:TrackingID>E036DFD1-CDFE-1AFF-76AD-7D389C9EF0E6</ns2:TrackingID>
+								<ns2:ApplicationJurisdiction tc="" />
+								<ns2:SignedDate />
+								<ns2:PrefLanguage tc="" />
+							</ns2:ApplicationInfo>
+							<ns2:RequirementInfo AppliesToPartyID="Patient" FulfillerPartyID="" RequesterPartyID="" id="Req_1">
+								<ns2:ReqCode tc="459">PVT ING</ns2:ReqCode>
+								<ns2:RequirementInfoUniqueID>6561952E-5BBE-0E73-B68B-0ADD21083A6F</ns2:RequirementInfoUniqueID>
+								<ns2:RequestedDate>2015-04-06</ns2:RequestedDate>
+								<ns2:RequestedScheduleDate />
+								<ns2:RequestedScheduleTimeStart />
+								<ns2:ReleasePartyOrgCode />
+								<ns2:RequirementAcctNum>118455691</ns2:RequirementAcctNum>
+								<ns2:CarrierOrderNum>0000101421</ns2:CarrierOrderNum>
+								<ns2:RequirementInfoKey>227153349</ns2:RequirementInfoKey>
+								<ns2:RequirementDetails>Sleep Apnea: Date of diagnosis, type (obstructive vs central), results of diagnostic testing (pre and post to include number of AI/RDI), treatment and current status;</ns2:RequirementDetails>
+							</ns2:RequirementInfo>
+						</ns2:Policy>
+					</ns2:Holding>
+					<ns2:Party id="Patient">
+						<ns2:PartyTypeCode tc="1">Person</ns2:PartyTypeCode>
+						<ns2:GovtID>S2271533</ns2:GovtID>
+						<ns2:Person>
+							<ns2:FirstName>Michael</ns2:FirstName>
+							<ns2:MiddleName />
+							<ns2:LastName>Teeitlock</ns2:LastName>
+							<ns2:Occupation />
+							<ns2:Gender tc="" />
+							<ns2:BirthDate>1975-03-02</ns2:BirthDate>
+							<ns2:Citizenship tc="" />
+							<ns2:BirthCountry tc="" />
+							<ns2:BirthJurisdictionTC tc="" />
+							<ns2:Prefix />
+						</ns2:Person>
+						<ns2:FullName>Michael Teeitlock</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>3224 S Test St</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Arlington</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="55">VA</ns2:AddressStateTC>
+							<ns2:Zip>22206</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="" />
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>362409</ns2:DialNumber>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Carrier">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName>METL</ns2:AbbrName>
+						</ns2:Organization>
+						<ns2:FullName>MetLife</ns2:FullName>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>800</ns2:AreaCode>
+							<ns2:DialNumber>6386420</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Facility">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName />
+						</ns2:Organization>
+						<ns2:FullName>Gofreed,</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>3833 N. Fairfax Dr.  Suite 360</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Arlington</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="55">VA</ns2:AddressStateTC>
+							<ns2:Zip>22203</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode />
+							<ns2:DialNumber />
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Patient" id="HoldingPatientRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="6" />
+						<ns2:RelationRoleCode tc="32" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Carrier" id="HoldingCarrierRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="36" />
+						<ns2:RelationRoleCode tc="87" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Facility" id="HoldingFacilityRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="169" />
+						<ns2:RelationRoleCode tc="41" />
+					</ns2:Relation>
+				</ns2:OLifE>
+			</ns2:TXLifeRequest>
+		</ns2:TXLifeRequest>
+	</ns2:TXLife>
+	<ns2:TXLife Version="">
+		<ns2:TXLifeRequest PrimaryObj="Holding">
+			<ns2:UserAuthRequest>
+				<ns2:UserLoginName>MetLife</ns2:UserLoginName>
+				<ns2:UserPswd>
+					<ns2:CryptPswd />
+					<ns2:CryptType />
+					<ns2:Pswd />
+				</ns2:UserPswd>
+				<ns2:UserDate>2015-04-06</ns2:UserDate>
+				<ns2:UserTime>12:35:01</ns2:UserTime>
+				<ns2:VendorApp>
+					<ns2:VendorName VendorCode="" />
+					<ns2:AppName />
+					<ns2:AppVer />
+				</ns2:VendorApp>
+			</ns2:UserAuthRequest>
+			<ns2:TXLifeRequest PrimaryObj="Holding">
+				<ns2:TransRefGUID>0BEBAEEE-BBD2-EF9F-58CD-F1EE8350E701</ns2:TransRefGUID>
+				<ns2:TransType tc="121">General Requirement Order Request</ns2:TransType>
+				<ns2:TransExeDate>2015-06-10</ns2:TransExeDate>
+				<ns2:TransExeTime>15:30:30</ns2:TransExeTime>
+				<ns2:TransMode tc="" />
+				<ns2:TestIndicator tc="" />
+				<ns2:OLifE>
+					<ns2:SourceInfo>
+						<ns2:CreationDate />
+						<ns2:CreationTime />
+						<ns2:SourceInfoName />
+						<ns2:SourceInfoDescription />
+					</ns2:SourceInfo>
+					<ns2:Holding id="Holding">
+						<ns2:HoldingTypeCode tc="2">Policy</ns2:HoldingTypeCode>
+						<ns2:Policy CarrierPartyID="Carrier" id="Policy_1">
+							<ns2:PolNumber>78452</ns2:PolNumber>
+							<ns2:LineOfBusiness tc="" />
+							<ns2:ProductType tc="">DEPL</ns2:ProductType>
+							<ns2:ProductCode />
+							<ns2:CarrierCode>METL</ns2:CarrierCode>
+							<ns2:PlanName />
+							<ns2:PolicyStatus tc="" />
+							<ns2:PolicyValue />
+							<ns2:PaymentMode tc="" />
+							<ns2:PaymentMethod tc="" />
+							<ns2:Life>
+								<ns2:InitialPremAmt />
+								<ns2:FaceAmt>0000000000</ns2:FaceAmt>
+								<ns2:Coverage id="">
+									<ns2:PlanName />
+									<ns2:ShortName />
+									<ns2:LifeCovStatus tc="" />
+									<ns2:LifeCovTypeCode tc="" />
+									<ns2:IndicatorCode tc="" />
+									<ns2:CurrentAmt>0000000000</ns2:CurrentAmt>
+									<ns2:LifeParticipant PartyID="" id="">
+										<ns2:LifeParticipantRoleCode tc="" />
+									</ns2:LifeParticipant>
+								</ns2:Coverage>
+							</ns2:Life>
+							<ns2:ApplicationInfo>
+								<ns2:TrackingID>4246D7F1-B091-6CE7-581A-AD98D8D7FFC9</ns2:TrackingID>
+								<ns2:ApplicationJurisdiction tc="" />
+								<ns2:SignedDate />
+								<ns2:PrefLanguage tc="" />
+							</ns2:ApplicationInfo>
+							<ns2:RequirementInfo AppliesToPartyID="Patient" FulfillerPartyID="" RequesterPartyID="" id="Req_1">
+								<ns2:ReqCode tc="459">PVT ING</ns2:ReqCode>
+								<ns2:RequirementInfoUniqueID>72FFC93F-D47D-5A9A-D164-9B86A863A596</ns2:RequirementInfoUniqueID>
+								<ns2:RequestedDate>2015-04-06</ns2:RequestedDate>
+								<ns2:RequestedScheduleDate />
+								<ns2:RequestedScheduleTimeStart />
+								<ns2:ReleasePartyOrgCode />
+								<ns2:RequirementAcctNum>588576511</ns2:RequirementAcctNum>
+								<ns2:CarrierOrderNum>0000093864</ns2:CarrierOrderNum>
+								<ns2:RequirementInfoKey>440825836</ns2:RequirementInfoKey>
+								<ns2:RequirementDetails>(08/2013 - Breast Cancer) Cancer/Tumor: Pathology and staging reports to include TNM, Clarks Level, Dukes etc., procedure reports, details of related treatment and current status;</ns2:RequirementDetails>
+							</ns2:RequirementInfo>
+						</ns2:Policy>
+					</ns2:Holding>
+					<ns2:Party id="Patient">
+						<ns2:PartyTypeCode tc="1">Person</ns2:PartyTypeCode>
+						<ns2:GovtID>S44082583</ns2:GovtID>
+						<ns2:Person>
+							<ns2:FirstName>Laura</ns2:FirstName>
+							<ns2:MiddleName />
+							<ns2:LastName>Teellinger</ns2:LastName>
+							<ns2:Occupation />
+							<ns2:Gender tc="" />
+							<ns2:BirthDate>1969-01-31</ns2:BirthDate>
+							<ns2:Citizenship tc="" />
+							<ns2:BirthCountry tc="" />
+							<ns2:BirthJurisdictionTC tc="" />
+							<ns2:Prefix />
+						</ns2:Person>
+						<ns2:FullName>Laura Teellinger</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>1413 E Testow Ridge Ct</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Derby</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="20">KS</ns2:AddressStateTC>
+							<ns2:Zip>67037</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="" />
+							<ns2:AreaCode>316</ns2:AreaCode>
+							<ns2:DialNumber>440536</ns2:DialNumber>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Carrier">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName>METL</ns2:AbbrName>
+						</ns2:Organization>
+						<ns2:FullName>MetLife</ns2:FullName>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>800</ns2:AreaCode>
+							<ns2:DialNumber>6386420</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Facility">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName />
+						</ns2:Organization>
+						<ns2:FullName>Tenofsky</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>1947 Founders Circle</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Wichita</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="20">KS</ns2:AddressStateTC>
+							<ns2:Zip>67206</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>6134707</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Patient" id="HoldingPatientRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="6" />
+						<ns2:RelationRoleCode tc="32" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Carrier" id="HoldingCarrierRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="36" />
+						<ns2:RelationRoleCode tc="87" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Facility" id="HoldingFacilityRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="169" />
+						<ns2:RelationRoleCode tc="41" />
+					</ns2:Relation>
+				</ns2:OLifE>
+			</ns2:TXLifeRequest>
+		</ns2:TXLifeRequest>
+	</ns2:TXLife>
+	<ns2:TXLife Version="">
+		<ns2:TXLifeRequest PrimaryObj="Holding">
+			<ns2:UserAuthRequest>
+				<ns2:UserLoginName>MetLife</ns2:UserLoginName>
+				<ns2:UserPswd>
+					<ns2:CryptPswd />
+					<ns2:CryptType />
+					<ns2:Pswd />
+				</ns2:UserPswd>
+				<ns2:UserDate>2015-04-06</ns2:UserDate>
+				<ns2:UserTime>12:35:01</ns2:UserTime>
+				<ns2:VendorApp>
+					<ns2:VendorName VendorCode="" />
+					<ns2:AppName />
+					<ns2:AppVer />
+				</ns2:VendorApp>
+			</ns2:UserAuthRequest>
+			<ns2:TXLifeRequest PrimaryObj="Holding">
+				<ns2:TransRefGUID>B37188E2-8964-DF85-2C4A-6F5AD5020BE2</ns2:TransRefGUID>
+				<ns2:TransType tc="121">General Requirement Order Request</ns2:TransType>
+				<ns2:TransExeDate>2015-06-10</ns2:TransExeDate>
+				<ns2:TransExeTime>15:30:30</ns2:TransExeTime>
+				<ns2:TransMode tc="" />
+				<ns2:TestIndicator tc="" />
+				<ns2:OLifE>
+					<ns2:SourceInfo>
+						<ns2:CreationDate />
+						<ns2:CreationTime />
+						<ns2:SourceInfoName />
+						<ns2:SourceInfoDescription />
+					</ns2:SourceInfo>
+					<ns2:Holding id="Holding">
+						<ns2:HoldingTypeCode tc="2">Policy</ns2:HoldingTypeCode>
+						<ns2:Policy CarrierPartyID="Carrier" id="Policy_1">
+							<ns2:PolNumber>78452</ns2:PolNumber>
+							<ns2:LineOfBusiness tc="" />
+							<ns2:ProductType tc="">OPTL</ns2:ProductType>
+							<ns2:ProductCode />
+							<ns2:CarrierCode>METL</ns2:CarrierCode>
+							<ns2:PlanName />
+							<ns2:PolicyStatus tc="" />
+							<ns2:PolicyValue />
+							<ns2:PaymentMode tc="" />
+							<ns2:PaymentMethod tc="" />
+							<ns2:Life>
+								<ns2:InitialPremAmt />
+								<ns2:FaceAmt>0000000000</ns2:FaceAmt>
+								<ns2:Coverage id="">
+									<ns2:PlanName />
+									<ns2:ShortName />
+									<ns2:LifeCovStatus tc="" />
+									<ns2:LifeCovTypeCode tc="" />
+									<ns2:IndicatorCode tc="" />
+									<ns2:CurrentAmt>0000000000</ns2:CurrentAmt>
+									<ns2:LifeParticipant PartyID="" id="">
+										<ns2:LifeParticipantRoleCode tc="" />
+									</ns2:LifeParticipant>
+								</ns2:Coverage>
+							</ns2:Life>
+							<ns2:ApplicationInfo>
+								<ns2:TrackingID>F3F53A6D-ADA6-290A-4018-53A6CA5960E4</ns2:TrackingID>
+								<ns2:ApplicationJurisdiction tc="" />
+								<ns2:SignedDate />
+								<ns2:PrefLanguage tc="" />
+							</ns2:ApplicationInfo>
+							<ns2:RequirementInfo AppliesToPartyID="Patient" FulfillerPartyID="" RequesterPartyID="" id="Req_1">
+								<ns2:ReqCode tc="459">PVT ING</ns2:ReqCode>
+								<ns2:RequirementInfoUniqueID>8FB41251-C628-A90B-B8BD-D79374A29728</ns2:RequirementInfoUniqueID>
+								<ns2:RequestedDate>2015-04-06</ns2:RequestedDate>
+								<ns2:RequestedScheduleDate />
+								<ns2:RequestedScheduleTimeStart />
+								<ns2:ReleasePartyOrgCode />
+								<ns2:RequirementAcctNum>413144231</ns2:RequirementAcctNum>
+								<ns2:CarrierOrderNum>0000093864</ns2:CarrierOrderNum>
+								<ns2:RequirementInfoKey>456928599</ns2:RequirementInfoKey>
+								<ns2:RequirementDetails>Diabetes: Type, age of onset, current height/weight, treatment and results ofmost recent diagnostic testing to include HgbA1c;</ns2:RequirementDetails>
+							</ns2:RequirementInfo>
+						</ns2:Policy>
+					</ns2:Holding>
+					<ns2:Party id="Patient">
+						<ns2:PartyTypeCode tc="1">Person</ns2:PartyTypeCode>
+						<ns2:GovtID>456928599</ns2:GovtID>
+						<ns2:Person>
+							<ns2:FirstName>Joe</ns2:FirstName>
+							<ns2:MiddleName />
+							<ns2:LastName>tester</ns2:LastName>
+							<ns2:Occupation />
+							<ns2:Gender tc="1">Male</ns2:Gender>
+							<ns2:BirthDate>1952-08-20</ns2:BirthDate>
+							<ns2:Citizenship tc="" />
+							<ns2:BirthCountry tc="" />
+							<ns2:BirthJurisdictionTC tc="" />
+							<ns2:Prefix />
+						</ns2:Person>
+						<ns2:FullName>Joe tester</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>4310 Cherrry Dr Nw</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Cedar Rapids</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="19">IA</ns2:AddressStateTC>
+							<ns2:Zip>52405</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="" />
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>6545496</ns2:DialNumber>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Carrier">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName>METL</ns2:AbbrName>
+						</ns2:Organization>
+						<ns2:FullName>MetLife</ns2:FullName>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>800</ns2:AreaCode>
+							<ns2:DialNumber>6386420</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Facility">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName />
+						</ns2:Organization>
+						<ns2:FullName>Boyles</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>75 Short Street Nw</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Cedar Rapids</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="19">IA</ns2:AddressStateTC>
+							<ns2:Zip>52405-429</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode />
+							<ns2:DialNumber />
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Patient" id="HoldingPatientRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="6" />
+						<ns2:RelationRoleCode tc="32" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Carrier" id="HoldingCarrierRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="36" />
+						<ns2:RelationRoleCode tc="87" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Facility" id="HoldingFacilityRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="169" />
+						<ns2:RelationRoleCode tc="41" />
+					</ns2:Relation>
+				</ns2:OLifE>
+			</ns2:TXLifeRequest>
+		</ns2:TXLifeRequest>
+	</ns2:TXLife>
+	<ns2:TXLife Version="">
+		<ns2:TXLifeRequest PrimaryObj="Holding">
+			<ns2:UserAuthRequest>
+				<ns2:UserLoginName>MetLife</ns2:UserLoginName>
+				<ns2:UserPswd>
+					<ns2:CryptPswd />
+					<ns2:CryptType />
+					<ns2:Pswd />
+				</ns2:UserPswd>
+				<ns2:UserDate>2015-04-06</ns2:UserDate>
+				<ns2:UserTime>12:35:01</ns2:UserTime>
+				<ns2:VendorApp>
+					<ns2:VendorName VendorCode="" />
+					<ns2:AppName />
+					<ns2:AppVer />
+				</ns2:VendorApp>
+			</ns2:UserAuthRequest>
+			<ns2:TXLifeRequest PrimaryObj="Holding">
+				<ns2:TransRefGUID>8EC69257-8126-8872-BD33-7389C5B77376</ns2:TransRefGUID>
+				<ns2:TransType tc="121">General Requirement Order Request</ns2:TransType>
+				<ns2:TransExeDate>2015-06-10</ns2:TransExeDate>
+				<ns2:TransExeTime>15:30:30</ns2:TransExeTime>
+				<ns2:TransMode tc="" />
+				<ns2:TestIndicator tc="" />
+				<ns2:OLifE>
+					<ns2:SourceInfo>
+						<ns2:CreationDate />
+						<ns2:CreationTime />
+						<ns2:SourceInfoName />
+						<ns2:SourceInfoDescription />
+					</ns2:SourceInfo>
+					<ns2:Holding id="Holding">
+						<ns2:HoldingTypeCode tc="2">Policy</ns2:HoldingTypeCode>
+						<ns2:Policy CarrierPartyID="Carrier" id="Policy_1">
+							<ns2:PolNumber>78452</ns2:PolNumber>
+							<ns2:LineOfBusiness tc="" />
+							<ns2:ProductType tc="">OPTL</ns2:ProductType>
+							<ns2:ProductCode />
+							<ns2:CarrierCode>METL</ns2:CarrierCode>
+							<ns2:PlanName />
+							<ns2:PolicyStatus tc="" />
+							<ns2:PolicyValue />
+							<ns2:PaymentMode tc="" />
+							<ns2:PaymentMethod tc="" />
+							<ns2:Life>
+								<ns2:InitialPremAmt />
+								<ns2:FaceAmt>0000000000</ns2:FaceAmt>
+								<ns2:Coverage id="">
+									<ns2:PlanName />
+									<ns2:ShortName />
+									<ns2:LifeCovStatus tc="" />
+									<ns2:LifeCovTypeCode tc="" />
+									<ns2:IndicatorCode tc="" />
+									<ns2:CurrentAmt>0000000000</ns2:CurrentAmt>
+									<ns2:LifeParticipant PartyID="" id="">
+										<ns2:LifeParticipantRoleCode tc="" />
+									</ns2:LifeParticipant>
+								</ns2:Coverage>
+							</ns2:Life>
+							<ns2:ApplicationInfo>
+								<ns2:TrackingID>94B4F385-7ADB-6532-7E5E-A4B5F864AD56</ns2:TrackingID>
+								<ns2:ApplicationJurisdiction tc="" />
+								<ns2:SignedDate />
+								<ns2:PrefLanguage tc="" />
+							</ns2:ApplicationInfo>
+							<ns2:RequirementInfo AppliesToPartyID="Patient" FulfillerPartyID="" RequesterPartyID="" id="Req_1">
+								<ns2:ReqCode tc="459">PVT ING</ns2:ReqCode>
+								<ns2:RequirementInfoUniqueID>82867E75-BBEE-B540-5F1E-462B8BB1F986</ns2:RequirementInfoUniqueID>
+								<ns2:RequestedDate>2015-04-06</ns2:RequestedDate>
+								<ns2:RequestedScheduleDate />
+								<ns2:RequestedScheduleTimeStart />
+								<ns2:ReleasePartyOrgCode />
+								<ns2:RequirementAcctNum>34144171</ns2:RequirementAcctNum>
+								<ns2:CarrierOrderNum>0000100641</ns2:CarrierOrderNum>
+								<ns2:RequirementInfoKey>113965566</ns2:RequirementInfoKey>
+								<ns2:RequirementDetails>(B)Hepatitis: Type, date of diagnosis, severity to include results of liver biopsy, if done and copy of most recent LFTs;</ns2:RequirementDetails>
+							</ns2:RequirementInfo>
+						</ns2:Policy>
+					</ns2:Holding>
+					<ns2:Party id="Patient">
+						<ns2:PartyTypeCode tc="1">Person</ns2:PartyTypeCode>
+						<ns2:GovtID>113965566</ns2:GovtID>
+						<ns2:Person>
+							<ns2:FirstName>Testg</ns2:FirstName>
+							<ns2:MiddleName />
+							<ns2:LastName>My</ns2:LastName>
+							<ns2:Occupation />
+							<ns2:Gender tc="1">Male</ns2:Gender>
+							<ns2:BirthDate>1985-01-31</ns2:BirthDate>
+							<ns2:Citizenship tc="" />
+							<ns2:BirthCountry tc="" />
+							<ns2:BirthJurisdictionTC tc="" />
+							<ns2:Prefix />
+						</ns2:Person>
+						<ns2:FullName>Testg My</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>10 Broadway Ct</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Gaithersburg</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="25">MD</ns2:AddressStateTC>
+							<ns2:Zip>20878</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="" />
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>2563814</ns2:DialNumber>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Carrier">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName>METL</ns2:AbbrName>
+						</ns2:Organization>
+						<ns2:FullName>MetLife</ns2:FullName>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>800</ns2:AreaCode>
+							<ns2:DialNumber>6386420</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Party id="Facility">
+						<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+						<ns2:GovtID />
+						<ns2:Organization>
+							<ns2:AbbrName />
+						</ns2:Organization>
+						<ns2:FullName>Stern</ns2:FullName>
+						<ns2:Address>
+							<ns2:AddressTypeCode tc="" />
+							<ns2:Line1>9420 Key W Ave  202</ns2:Line1>
+							<ns2:Line2 />
+							<ns2:City>Rockville</ns2:City>
+							<ns2:AddressState />
+							<ns2:AddressStateTC tc="25">MD</ns2:AddressStateTC>
+							<ns2:Zip>20850</ns2:Zip>
+							<ns2:PreventOverrideInd tc="" />
+						</ns2:Address>
+						<ns2:Phone>
+							<ns2:PhoneTypeCode tc="2">Business</ns2:PhoneTypeCode>
+							<ns2:AreaCode>999</ns2:AreaCode>
+							<ns2:DialNumber>2519555</ns2:DialNumber>
+							<ns2:PrefPhone tc="1">True</ns2:PrefPhone>
+						</ns2:Phone>
+						<ns2:ResidenceState tc="" />
+						<ns2:ResidenceCountry tc="" />
+					</ns2:Party>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Patient" id="HoldingPatientRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="6" />
+						<ns2:RelationRoleCode tc="32" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Carrier" id="HoldingCarrierRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="36" />
+						<ns2:RelationRoleCode tc="87" />
+					</ns2:Relation>
+					<ns2:Relation OriginatingObjectID="Holding" RelatedObjectID="Facility" id="HoldingFacilityRelation">
+						<ns2:OriginatingObjectType tc="4" />
+						<ns2:RelatedObjectType tc="169" />
+						<ns2:RelationRoleCode tc="41" />
+					</ns2:Relation>
+				</ns2:OLifE>
+			</ns2:TXLifeRequest>
+		</ns2:TXLifeRequest>
+	</ns2:TXLife>
+</root>
+

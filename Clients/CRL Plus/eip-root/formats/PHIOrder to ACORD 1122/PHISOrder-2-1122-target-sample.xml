@@ -1,0 +1,98 @@
+<?xml version="1.0" standalone="no"?>
+<TXLife xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://ACORD.org/Standards/Life/2"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.20.02.xsd">
+     <UserAuthRequest>
+          <UserLoginName></UserLoginName>
+          <UserPswd>
+               <CryptType>NONE</CryptType>
+               <Pswd></Pswd>
+          </UserPswd>
+          <VendorApp>
+          <VendorName VendorCode="84">Portamedic</VendorName>
+          <AppName>XMLPROC</AppName>
+          <AppVer>1.0.0</AppVer>
+          </VendorApp>
+     </UserAuthRequest>
+     
+     <TXLifeRequest>
+          <!-- New GUID generated for each status transmittal -->
+          <TransRefGUID>741D9B7B-AFF0-43B5-B59A-75F05FCFB473</TransRefGUID>
+          <TransType tc="1122">General Requirements Result Transmittal</TransType>
+          <TransExeDate>2014-12-22</TransExeDate>
+          <TransExeTime>21:19:51-05:00</TransExeTime>
+          <OLifE>
+               <SourceInfo>
+                    <SourceInfoName>Branch : 777 TELEDEX TEST BRANCH</SourceInfoName>
+                    <SourceInfoDescription>Email : mmadden@HooperHolmes.com</SourceInfoDescription>
+                    <SourceInfoComment>Phone : 8006953926</SourceInfoComment>
+               </SourceInfo>
+               <Holding id="Holding_1">
+                    <HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+                    <Policy>
+                         <PolNumber>AT10087810</PolNumber>
+                         <ProductType tc="3">Universal Life</ProductType>
+                              <Life>
+                                   <FaceAmt>150000</FaceAmt>
+                              </Life>
+                              <ApplicationInfo>
+                                   <TrackingID>2014-10-23-10.43.25.347780C01-1_life_1_TI_1</TrackingID>
+                              </ApplicationInfo>
+                              <RequirementInfo id = "Requirement_1_1" AppliesToPartyID="Party_1" RequesterPartyID="Party_Requester_1" FulfillerPartyID="Party_Fulfiller_1">
+     <ReqCode tc="137"/>
+                                        <RequirementInfoUniqueID>2014-10-23-10.43.25.347780C01-1_life_1_TI_1</RequirementInfoUniqueID>
+                                        <RequirementDetails>Telephone Interview (list of questions asked by ho</RequirementDetails>
+                                        <ReqStatus tc="7">Received</ReqStatus>
+                                        <RequestedDate>2014-10-23</RequestedDate>
+                                        <ReceivedAtLocationDate>2014-12-22</ReceivedAtLocationDate>
+                                        <StatusDate>2014-12-22</StatusDate>
+                                        <ReleasePartyOrgCode>PACT</ReleasePartyOrgCode>
+                                        <RequirementAcctNum>71648</RequirementAcctNum>
+                                        <ProviderOrderNum>777059034</ProviderOrderNum>
+                                        <OrderReceivedDate>2014-10-23</OrderReceivedDate>
+                                        <StatusEvent>
+                                             <StatusEventCode tc="2147483647">Others</StatusEventCode>
+                                             <ProviderEventCode>S79</ProviderEventCode>
+                                             <StatusEventDate>2014-12-22</StatusEventDate>
+                                             <StatusEventTime>20:39:44-05:00</StatusEventTime>
+                                             <StatusEventDetail>Received Order on: 12/22/14</StatusEventDetail>
+                                        </StatusEvent>
+                              </RequirementInfo>
+                    </Policy>
+               </Holding>
+               <Party id="Party_1">
+                    <FullName>Gordon SNMMMMTESTCASEGY</FullName>
+                    <GovtID>030000000</GovtID>
+                    <ResidenceState tc="28">Minnesota</ResidenceState>
+                    <ResidenceCountry tc="1">United States of America</ResidenceCountry>
+                              <Person>
+                                   <FirstName>Gordon</FirstName>
+                                   <LastName>SNMMMMTESTCASEGY</LastName>
+                                   <BirthDate>1947-05-15</BirthDate>
+                                   <Age>67</Age>
+                              </Person>
+               </Party>
+               <Party id="Party_Requester_1">
+                    <PartyTypeCode tc="2">Company</PartyTypeCode>
+                    <FullName>PACIFIC LIFE TEST PROD</FullName>
+                    <Organization>
+                         <DBA>PACIFIC LIFE TEST PROD</DBA>
+                    </Organization>
+               </Party>
+               <Party id="Party_Fulfiller_1">
+                    <PartyTypeCode tc="2">Company</PartyTypeCode>
+                    <FullName>Hooper Holmes</FullName>
+                    <Organization>
+                                        <DBA>Hooper Holmes</DBA>
+                    </Organization>
+               </Party>
+               <Relation id="Relation_1" OriginatingObjectID="Holding_1" RelatedObjectID="Party_1">
+                    <RelationRoleCode tc="32">Insured</RelationRoleCode>
+               </Relation>
+               <Relation id="Relation_Requester_1" OriginatingObjectID="Party_1" RelatedObjectID="Party_Requester_1">
+                    <RelationRoleCode tc="97">Requestor</RelationRoleCode>
+               </Relation>
+               <Relation id="Relation_Fulfiller_1" OriginatingObjectID="Party_1" RelatedObjectID="Party_Fulfiller_1">
+                    <RelationRoleCode tc="99">Fulfills</RelationRoleCode>
+               </Relation>
+          </OLifE>
+     </TXLifeRequest>
+</TXLife>

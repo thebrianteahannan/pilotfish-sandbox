@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000" version="1.0">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="AmericanGeneral.L3 - AIGP Legacy 1122 ZIP and Deliver.FTP / SFTP Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('com.pilotfish.FilesList').toString()!="[]" &amp;&amp; !"true".equals(getAttribute('AIGBypassClientDelivery'))</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Skip Delivery" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>"true".equals(getAttribute('AIGBypassClientDelivery'))</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="AmericanGeneral.L3 - AIGP Legacy 1122 ZIP and Deliver.Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>false</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <MustContainString />
+        <MustNotContainString />
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryZIPListener" enabled="true" name="AIGP.L3 - Directory Zip Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>11:07-11:07</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <PollingInterval>30</PollingInterval>
+        <PollingDirectory>{ognl:#dir=#properties.get('AIGLegacyStagingDirectory'),new java.io.File(#dir).mkdirs(),#dir}</PollingDirectory>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <ProcessOldestSubdir>false</ProcessOldestSubdir>
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>{ognl:#properties.get('archive.dir')+'/AIGP-Legacy/Batch/'+new java.text.SimpleDateFormat('yyyy-MM-dd-HH-mm-ss').format(new java.util.Date())}</TargetDirectory>
+        <SchedulerStartTag>$$AIGLegacyImagesSchedulingStartTime</SchedulerStartTag>
+        <SchedulerEndTag>$$AIGLegacyImagesSchedulingEndTime</SchedulerEndTag>
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIGP.L3 - Set zip.filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:zip.filename:eip_name:{ognl:'AGIM'+new java.text.SimpleDateFormat('yyyyMMddHHmmssSSS').format(new java.util.Date())}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>{ognl:'AGIM'+new java.text.SimpleDateFormat('yyyyMMddHHmmssSSS').format(new java.util.Date())}</Expression>
+          <AttributeName>zip.filename</AttributeName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileOperationProcessor" name="AmericanGeneral.L3 - AIGP Legacy 1122 ZIP and Deliver.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>$$AIGLegacyStagingDirectory</FileName>
+          <Overwrite>false</Overwrite>
+          <ExceptionOnFailure>false</ExceptionOnFailure>
+          <PostProcessOperation>Create Folder</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIGP.L3 - Set recon.filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:recon.filename:eip_name:{ognl:'EXP'+new java.text.SimpleDateFormat('yyyyMMdd').format(new java.util.Date())}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>{ognl:'EXP'+new java.text.SimpleDateFormat('yyyyMMdd').format(new java.util.Date())}</Expression>
+          <AttributeName>recon.filename</AttributeName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIGP.L3 - set AIGBypassClientDelivery">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:AIGBypassClientDelivery:eip_name:$$AIGBypassClientDelivery:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>$$AIGBypassClientDelivery</Expression>
+          <AttributeName>AIGBypassClientDelivery</AttributeName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AmericanGeneral.L1 - AIGP Legacy 1122 Status or Result.Processor-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:RouteName:eip_name:AmericanGeneral.L3 - AIGP Legacy 1122 ZIP and Deliver:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>AmericanGeneral.L3 - AIGP Legacy 1122 ZIP and Deliver</Expression>
+          <AttributeName>RouteName</AttributeName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="AmericanGeneral.L3 - AIGP Legacy 1122 ZIP and Deliver.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+          <LoopCallout>false</LoopCallout>
+          <LoopCondition>true</LoopCondition>
+          <MaxIterations>5</MaxIterations>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.ftp.FTPTransport" name="AmericanGeneral.L3 - AIGP Legacy 1122 ZIP and Deliver.FTP / SFTP Transport" retries="24" retryDelayMs="300000">
+      <ModuleConfig>
+        <FTPTransportType>Encrypted FTP (JSCH SSH/SFTP)</FTPTransportType>
+        <Host>$$AIGLegacyImagesFTPHost</Host>
+        <Port>22</Port>
+        <TargetDirectory>$$AIGLegacyImagesFTPDirectory</TargetDirectory>
+        <FileName>{ognl:getAttribute('zip.filename')}</FileName>
+        <FileExtension>ZIP</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <Timeout>300</Timeout>
+        <Sftp_SocketTimeout>300</Sftp_SocketTimeout>
+        <RetryConnection>true</RetryConnection>
+        <RetryDelay>15</RetryDelay>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private (P)</Protection>
+        <FileType>Binary</FileType>
+        <AppendToFile>false</AppendToFile>
+        <Overwrite>false</Overwrite>
+        <CheckForFileAfterWriting>false</CheckForFileAfterWriting>
+        <FAIL_ON_FALSE_RESULT>true</FAIL_ON_FALSE_RESULT>
+        <WriteFromHome>false</WriteFromHome>
+        <SetFileTime>true</SetFileTime>
+        <UserName>$$AIGLegacyImagesFTPUsername</UserName>
+        <Password>$$AIGLegacyImagesFTPPassword</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIGP.L3 - set archive.dir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:archive.dir:eip_name:$$archive.dir:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>$$archive.dir</Expression>
+          <AttributeName>archive.dir</AttributeName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIGP.L3 - set archive subdir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:archive.dir:eip_name:{ognl:getAttribute('archive.dir')+'/AIGP-Legacy/'+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>{ognl:getAttribute('archive.dir')+'/AIGP-Legacy/'+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}</Expression>
+          <AttributeName>archive.dir</AttributeName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileOperationProcessor" name="AIGP.L3 - create archive dir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>{ognl:getAttribute('archive.dir')}</FileName>
+          <Overwrite>false</Overwrite>
+          <ExceptionOnFailure>false</ExceptionOnFailure>
+          <PostProcessOperation>Create Folder</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="AIGP.L3 - Archive ZIP File">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:getAttribute('archive.dir')}</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('zip.filename')+'.ZIP'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+    <PostProcessors>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="AIGP.L3 - Call next route">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>AIG.L4 - Reconciliation File Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+          <LoopCallout>false</LoopCallout>
+          <LoopCondition>true</LoopCondition>
+          <MaxIterations>5</MaxIterations>
+        </ModuleConfig>
+      </Processor>
+    </PostProcessors>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Skip Delivery" retries="1">
+      <ModuleConfig>
+        <ServiceName>Update Status Inbound</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIGP.L3 - Set Batch Name">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:com.pilotfish.crl.stagedBatchName:eip_name:AIGP:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>AIGP</Expression>
+          <AttributeName>com.pilotfish.crl.stagedBatchName</AttributeName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIGP.L3 - set com.pilotfish.crl.statustype">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:com.pilotfish.crl.statustype:eip_name:batch:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>batch</Expression>
+          <AttributeName>com.pilotfish.crl.statustype</AttributeName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIGP.L3 set zip.filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:zip.filename:eip_name:DELIVERY_BYPASSED:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>DELIVERY_BYPASSED</Expression>
+          <AttributeName>zip.filename</AttributeName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AIGP.L3 - set sourceClient">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:sourceClient:eip_name:TDEX:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <Expression>TDEX</Expression>
+          <AttributeName>sourceClient</AttributeName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>

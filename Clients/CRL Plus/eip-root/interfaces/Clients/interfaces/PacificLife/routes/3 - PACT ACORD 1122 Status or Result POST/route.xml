@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2023-11-08T12:21:22-06:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Wait For Attachment" />
+          </Targets>
+          <Condition>
+            <And>
+              <Expression>
+                //acord:ReqStatus/@tc=11 and //acord:StatusEvent and not(//acord:Attachment) and //acord:RequirementAcctNum[.='78748' or .='78767'] and not(//acord:ProviderEventCode[.='S78' or .='333' or .='334' or .='S82']) and not(//acord:StatusEventDetail[contains(.,'CNR') or .='Cancelled per customer'])
+                <Namespaces>
+                  <Namespace name="acord">http://ACORD.org/Standards/Life/2</Namespace>
+                </Namespaces>
+              </Expression>
+              <Attribute>
+                <Name>OrderIsReported</Name>
+                <Operator>=</Operator>
+                <Value>false</Value>
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Bypass Delivery Archive" />
+            <TransportTarget name="Upload Test Status" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.crl.testindicator</Name>
+                <Operator>=</Operator>
+                <Value>2</Value>
+              </Attribute>
+              <Expression>
+                //acord:StatusEvent
+                <Namespaces>
+                  <Namespace name="acord">http://ACORD.org/Standards/Life/2</Namespace>
+                </Namespaces>
+              </Expression>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets />
+          <Condition>
+            <Expression>
+              //acord:StatusEvent and //acord:ProviderEventCode[. != 'S82']
+              <Namespaces>
+                <Namespace name="acord">http://ACORD.org/Standards/Life/2</Namespace>
+              </Namespaces>
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Empty Status" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="CRL Order Status DB">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="PAC ACORD 1122 Status">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PACT3.set PLServicesAccountID">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>PLServicesAccountID</AttributeName>
+          <Expression>$$PacificLifeOutgoingWsUsername</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PACT3.set PLServiceAccountPwd">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>PLServiceAccountPwd</AttributeName>
+          <Expression>$$PacificLifeOutgoingWsPassword</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.stream.StreamNormalizerProcessor" name="PacificLife.3 - PACT ACORD 1122 Status or Result POST.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <BufferSize>512</BufferSize>
+          <CharacterEncoding>UTF-8</CharacterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="PACT3.set Attrs From Xpath">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:OrderNumber:eip_name://acord:ProviderOrderNum:eip_value][eip_pair:ReqInfoStatus:eip_name://acord:ReqStatus:eip_value][eip_pair:NumAttachments:eip_name:count(//acord:AttachmentData):eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:soap:eip_name:http://schemas.xmlsoap.org/soap/envelope/:eip_value][eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="ImageDeposit">
+        <ModuleConfig>
+          <ExecuteProcessor>false</ExecuteProcessor>
+          <XSLTPath>ImageDeposit.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTVersion>1.0</XSLTVersion>
+          <XSLTEngine>Xalan (Interpreted)</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.imaging.TIFFAppenderProcessor" name="TIFF Image Concatenation">
+        <ModuleConfig>
+          <ExecuteProcessor>false</ExecuteProcessor>
+          <AttributeName>com.crl.paclife.mergedTiff</AttributeName>
+          <XPathExpressions>[eip_pair:Images:eip_name://ns1:Attachment[ns1:MimeTypeTC/@tc='11' and ns1:AttachmentBasicType/@tc='2']/ns1:AttachmentData[string-length(.) &gt; 0]:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:ns1:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <ExceptionOnMissingElement>false</ExceptionOnMissingElement>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="PACT3.call combine attachments">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('NumAttachments')&gt;1}</ExecuteProcessor>
+          <Listener>PACT3-1-ExtractAttachment</Listener>
+          <Synchronous>true</Synchronous>
+          <Timeout>1800</Timeout>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PACT.3 - set OrderIsReported">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>OrderIsReported</AttributeName>
+          <Expression>{ognl:#reportedStatus=getAttribute('reportedStatus') ,( #reportedStatus!=null &amp;&amp; #reportedStatus.length()&gt;0 ) ? 'true' : 'false'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="POST to PAC">
+    <FormatProfile name="PACT SOAP" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="1122 Status or Result" retries="3" retryDelayMs="5000">
+      <ModuleConfig>
+        <TargetURL>$$PacificLifeOutgoingWsUrl</TargetURL>
+        <UserName>$$PacificLifeOutgoingWsUsername</UserName>
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password>$$PacificLifeOutgoingWsPassword</Password>
+        <PreemptiveAuthentication>false</PreemptiveAuthentication>
+        <ResponseListener>PACT Result Listener</ResponseListener>
+        <ResponseCodeHandling>Pass Through</ResponseCodeHandling>
+        <Timeout>600000</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <SynchronizationKey />
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <SpecifyTLS>false</SpecifyTLS>
+        <TLSVersion>TLSv1.1</TLSVersion>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <TrustStoreFilePath>truststore4835315711945443529.jks</TrustStoreFilePath>
+        <TrustStoreFileType>jks</TrustStoreFileType>
+        <TrustStoreFilePassword>pilotfish</TrustStoreFilePassword>
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetArchiveDir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>$$archive.dir</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetArchiveSubDir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>{ognl:getAttribute("archive.dir")+"/PACT/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetArchiveFilename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.filename</AttributeName>
+          <Expression>{ognl:"outgoing-PACT-"+getAttribute('OrderNumber')+'-'+getAttribute('ReqInfoStatus')+'-' + new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID()}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileOperationProcessor" name="CreateArchiveSubdir-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>{ognl:getAttribute("archive.dir")}</FileName>
+          <Overwrite>false</Overwrite>
+          <ExceptionOnFailure>false</ExceptionOnFailure>
+          <PostProcessOperation>Create Folder</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="StoreArchive">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:getAttribute('archive.dir')}</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('archive.filename') + '.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="PacificLife.3 - Check For Cancellation Statuses">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:hasCancellationStatus:eip_name://acord:ProviderEventCode[.='333' or .='334']:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEscapingProcessor" name="PACT3.EscapeXML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XPath>/soap:Envelope/soap:Body/tem:HandleRequest/tem:TXLifePayLoad</XPath>
+          <Direction>Escape</Direction>
+          <Namespaces>[eip_pair:ns2:eip_name:http://ACORD.org/Standards/Life/2:eip_value][eip_pair:tem:eip_name:http://tempuri.org/:eip_value][eip_pair:soap:eip_name:http://schemas.xmlsoap.org/soap/envelope/:eip_value]</Namespaces>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Mark Status Consumed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Empty Status" retries="1">
+      <ModuleConfig>
+        <ServiceName>Update Status Inbound</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Mark Status Consumed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Wait For Attachment" retries="1">
+      <ModuleConfig>
+        <ServiceName>Update Status Inbound</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Clear statuses">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>statuses</AttributeName>
+          <Expression>&lt;XCSData /&gt;</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PACT3.set awaitingAttachments">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.statustype</AttributeName>
+          <Expression>awaitingAttachments</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Archive bypass file">
+    <FormatProfile name="PACT SOAP" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Bypass Delivery Archive" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:getAttribute('archive.dir')}</TargetDirectory>
+        <FileName>{ognl:getAttribute('archive.filename')}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Create New</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+        <OutputFilePath>false</OutputFilePath>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set archive dir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>$$archive.dir</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set archive subdir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>{ognl:getAttribute("archive.dir")+"/PACT/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set archive filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.filename</AttributeName>
+          <Expression>{ognl:'audit-outgoing-PACT-'+getAttribute('OrderNumber')+'-'+getAttribute('ReqInfoStatus')+'-'+new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID()}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Upload acceptance file and mark status consumed">
+    <FormatProfile name="PACT SOAP" />
+    <Transport class="com.pilotfish.eip.modules.file.ftp.FTPTransport" name="Upload Test Status" retries="10" retryDelayMs="90000">
+      <ModuleConfig>
+        <FTPTransportType>Encrypted FTP (JSCH SSH/SFTP)</FTPTransportType>
+        <Host>$$sftp.hostname</Host>
+        <Port>22</Port>
+        <TargetDirectory>$$sftp.reconcile.directory</TargetDirectory>
+        <FileName>{ognl:getAttribute('audit.filename')}</FileName>
+        <FileExtension>txt</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <Timeout>300</Timeout>
+        <Sftp_SocketTimeout>300</Sftp_SocketTimeout>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private (P)</Protection>
+        <FileType>Binary</FileType>
+        <AppendToFile>false</AppendToFile>
+        <Overwrite>false</Overwrite>
+        <CheckForFileAfterWriting>false</CheckForFileAfterWriting>
+        <FAIL_ON_FALSE_RESULT>true</FAIL_ON_FALSE_RESULT>
+        <WriteFromHome>false</WriteFromHome>
+        <UserName>$$sftp.username</UserName>
+        <Password>$$sftp.password</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set audit.filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>audit.filename</AttributeName>
+          <Expression>{ognl:'audit-outgoing-PACT-'+getAttribute('OrderNumber')+'-'+getAttribute('ReqInfoStatus')+'-'+new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID()}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.PauseProcessor" name="Random pause for SFTP concurrency issue">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Period>{ognl:new java.util.Random().nextDouble()*15+1}</Period>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+    <PostProcessors>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="PacificLife.3 - Post upload - update status">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>Update Status Inbound</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </PostProcessors>
+  </Target>
+</Route>
+

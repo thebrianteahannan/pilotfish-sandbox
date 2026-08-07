@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2026-04-01T09:26:23-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Incoming Routes Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="NAILBA to ACORD" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Listener Nailba 800">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.EOLProcessor" name="ROOT.Incoming-To-Standard-121.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <EndlineSequence>\r\n</EndlineSequence>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="ACORD 103 to ACORD 121" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Listener 103">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target icon="" name="121 Normalization">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To 121 Normalizaiton" retries="1">
+      <ModuleConfig>
+        <ServiceName>Non-standard 121</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="3 - 121 Normalization - Capture Route Name for Call Route-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>{ognl:getAttribute('sourceClient') + '-' + getAttribute('com.pilotfish.FileName') + '-IncomingToStandard121'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="3 - 121 Normalization - Capture Call Route-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Description>&lt;h1&gt;
+      Incoming to Standard 121
+    &lt;/h1&gt;
+    &lt;h2&gt;
+      Overview:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The Incoming to Standard 121 route accepts either an Acord 103 or Nailba 
+      document and transforms it into a non-normalized Acord 121 document. The 
+      Acord 121 document is then forwarded to the 121 Normalization route.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Source:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The only source for this route is currently the Document Type Discovery 
+      route.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Listener:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      There are two listners, one for each document type, which are both 
+      Programmable Listeners that must be called from a previous route.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Source Transform:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      Depending on the listener called, the transformation performed will be 
+      either Nailba to Acord 121 or Acord 103 to Acord 121. In the case of the 
+      Nailba transformation, the Nailba format is converted to intermediary 
+      XML via the file specificaiton &amp;quot;NAILBADefinition.xml&amp;quot; then transformed 
+      to a non-normalized Acord 121 document via the &amp;quot;NAILBAToAcord.xslt&amp;quot; 
+      style sheet. In the case of Acord 103, the &amp;quot;103-2-121.xslt&amp;quot; style sheet 
+      is applied to output a non-normalized Acord 121 document.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Route:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      No routing rules are applied. Any transaction, at this point, is 
+      forwarded to the 121 Normalization target.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Target Transform:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      Relay to 121 Normalization transport.
+    &lt;/p&gt;
+    &lt;p&gt;
+      
+    &lt;/p&gt;
+    &lt;h2&gt;
+      Transport:
+    &lt;/h2&gt;
+    &lt;p&gt;
+      The now, non-normalized Acord 121 containing transaction is forwarded to 
+      the 121 Normalization route.
+    &lt;/p&gt;</Description>
+</Route>
+

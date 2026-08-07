@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Demo SNIP Types 6–7 (Snip7Validation) customer rule file.
+  Stock SNIP has no Level 6/7 rules; this file is loaded when Snip7Validation=true.
+
+  Rule: Place of Service (CLM05-1) must not be 99 (customer-specific denial).
+  Seed claims use POS 11 and should not fire this rule.
+-->
+<rules>
+  <rule>
+    <xpath><![CDATA[
+      for $root in /XCSData/Interchange/Group/Transaction//CLM/CLM05/CLM05_1[.='99']
+      return (concat(
+        '<Path>', path($root), '</Path>',
+        '<SegPosition>', $root/ancestor-or-self::*[@SegIdx][1]/@SegIdx, '</SegPosition>',
+        '<EleCopy>', $root, '</EleCopy>',
+        '<ErrorCode>', '7', '</ErrorCode>'
+      ))
+    ]]></xpath>
+    <xpathShort><![CDATA[
+      for $root in /XCSData/Interchange/Group/Transaction//CLM/CLM05/CLM05_1[.='99']
+      return (concat(
+        '<Path>', path($root), '</Path>',
+        '<SegPosition>', $root/ancestor-or-self::*[@SegIdx][1]/@SegIdx, '</SegPosition>',
+        '<EleCopy>', $root, '</EleCopy>',
+        '<ErrorCode>', '7', '</ErrorCode>'
+      ))
+    ]]></xpathShort>
+    <snipLevel>7</snipLevel>
+    <parameterMap>
+      <Message>Demo customer rule: Place of Service 99 is not accepted</Message>
+      <SegmentID>CLM</SegmentID>
+      <ViolationType>Element</ViolationType>
+      <RuleId>demo-snip7-pos-99</RuleId>
+      <ValidationLevel>7</ValidationLevel>
+      <ElePosition>5</ElePosition>
+      <ElementID>1331</ElementID>
+      <LoopID>2300</LoopID>
+    </parameterMap>
+    <docType>837</docType>
+    <versions>
+      <version>005010X222</version>
+      <version>005010X222A1</version>
+      <version>005010X222A2</version>
+    </versions>
+  </rule>
+</rules>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor"
+        id="181292e0-15bd-4c4e-9317-f570f6d1c060"
+        name="Get user/pass"
+        tag="Processor"
+        type="XPath Evaluation"
+        version="2.0">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      <AttributeScope>Transaction</AttributeScope>
+      <XPathExpressions>[eip_pair:username:eip_name://doc:Username:eip_value][eip_pair:password:eip_name://doc:Password:eip_value]</XPathExpressions>
+      <GlobalAttributeExpressions></GlobalAttributeExpressions>
+      <Namespaces>[eip_pair:env:eip_name:http://schemas.xmlsoap.org/soap/envelope/:eip_value][eip_pair:doc:eip_name:http://crlcorp.com/DocumentService:eip_value]</Namespaces>
+      <Namespace></Namespace>
+      <XPath1Compatibility>true</XPath1Compatibility>
+   </ModuleConfig>
+</Module>

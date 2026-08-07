@@ -15,6 +15,7 @@
     .pill.bad { background:#f87171; color:#2a0a0a; }
     .pill.good { background:#34d399; color:#052e1a; }
   </style>
+  <link rel="stylesheet" href="/static/timing-tab.css" />
 </head>
 <body>
   <header class="top">
@@ -26,6 +27,7 @@
         {% if has_xslt %}
         <button type="button" class="tab" data-tab="xslt" aria-selected="false">XSLT</button>
         {% endif %}
+        <button type="button" class="tab" data-tab="timing" aria-selected="false">Timing</button>
         <button type="button" class="tab" data-tab="info" aria-selected="false">Info</button>
       </nav>
     </div>
@@ -103,14 +105,12 @@
   </div>
   {% endif %}
 
-  <main id="tab-info" class="panel info-tab" hidden>
-    <h1>Clinic eligibility — AAA theater then success</h1>
-    <p class="sub">Build real X12 270 → mock payer 271 → parse benefits / AAA. Orchestrated by this clinic UI.</p>
-    {% if lan_hint %}
-    <p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>
-    {% endif %}
-    <p class="sub muted">EIP: <code>{{ pf_public }}</code> · Payer: <code>{{ payer_public }}</code></p>
-  </main>
+  <!-- TIMING_TAB_STANDARD:START -->
+  {% include 'partials/timing_tab.html' %}
+  <!-- TIMING_TAB_STANDARD:END -->
+  <!-- INFO_TAB_STANDARD:START -->
+  {% include 'partials/info_tab.html' %}
+  <!-- INFO_TAB_STANDARD:END -->
 
   <script>
     window.ELIG_PRESETS = {{ presets | tojson }};
@@ -119,5 +119,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
   <script src="/static/code-highlight.js"></script>
   <script src="/static/app.js"></script>
+  <script src="/static/timing-tab.js"></script>
 </body>
 </html>

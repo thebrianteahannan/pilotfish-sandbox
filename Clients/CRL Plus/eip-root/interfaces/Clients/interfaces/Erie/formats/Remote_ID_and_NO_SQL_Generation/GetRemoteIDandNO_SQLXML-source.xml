@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://pilotfish.sqlxml" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="INCOMING103IMAGE" type="INCOMING103IMAGE_type" />
+			<xsd:complexType name="INCOMING103IMAGE_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="TELEDEXNUM" type="xsd:identity_attribute_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REMOTE_ID" type="xsd:identity_attribute_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REMOTE_NO" type="xsd:identity_attribute_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://pilotfish.sqlxml" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="http://pilotfish.sqlxml" />
+	</formatBuilderData>
+</formatWrapper>
+

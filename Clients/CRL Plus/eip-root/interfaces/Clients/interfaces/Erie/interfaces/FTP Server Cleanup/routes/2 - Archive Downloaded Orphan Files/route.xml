@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="aramos@pilotfishtechnology.com" LastModificationTime="2017-03-22T09:35:37-04:00" ModifiedBy="aramos@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>true</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.internal.OrchestrationListener" enabled="true" name="Get files for Zip">
+      <ModuleConfig>
+        <EventTypeExists>Input Manually</EventTypeExists>
+        <EventType>ImageServerZip</EventType>
+        <RequiredProcessComponents />
+        <RequiredTransactionCount>{ognl:getAttribute('com.pilotfish.PollingCycleSize')}</RequiredTransactionCount>
+        <RequiredConditionalEvaluation />
+        <ActionType>Aggregate Transactions</ActionType>
+        <RemoveProcessInstanceWhen>When Transactions Fired</RemoveProcessInstanceWhen>
+        <TimeoutInterval>3600</TimeoutInterval>
+        <RemoveProcessOnTimeout>true</RemoveProcessOnTimeout>
+        <LogExceptionOnTimeout>true</LogExceptionOnTimeout>
+        <ThrowExceptionOnTimeout>false</ThrowExceptionOnTimeout>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="ProcessOrchestration_to_ZipXML" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Save Zip File" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:#properties.get('archive.dir')+'/ELFP/'+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())+'/ImageServerArchive'}</TargetDirectory>
+        <FileName>{ognl:'ImageServerBackup_'+new java.text.SimpleDateFormat('yyyy-MM-dd').format(new java.util.Date())}</FileName>
+        <FileExtension>zip</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Create New</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <OutputFilePath>false</OutputFilePath>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.archive.ZIPArchiveCompressionProcessor" name="Image Server Cleanup.Create zip file">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><TestConfigurations>
+  <TestConfig name="Test1 - Validation Handling">
+    <Stage>
+      <Identifier>processor@listener=99-1 - Validation Error Handling.Programmable (Java) Listener,processor=ROOT.99-1 - Validation Error Handling.Processor</Identifier>
+      <IsStart>true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+      <TransactionAttributes>
+        <Attribute key="sourceClient" value="GRBR"/>
+        <Attribute key="Incoming121XML" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;bo:TXLife xmlns:bo=&quot;http://ACORD.org/Standards/Life/2&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://ACORD.org/Standards/Life/2 TXLife2.10.00.XSD&quot;&gt; &#9;&lt;bo:UserAuthRequest&gt; &#9;&#9;&lt;bo:UserLoginName&gt;AIGI&lt;/bo:UserLoginName&gt; &#9;&#9;&lt;bo:UserPswd&gt; &#9;&#9;&#9;&lt;bo:CryptPswd&gt;NONE&lt;/bo:CryptPswd&gt; &#9;&#9;&lt;/bo:UserPswd&gt; &#9;&#9;&lt;bo:UserDate&gt;2014-07-21&lt;/bo:UserDate&gt; &#9;&#9;&lt;bo:UserTime&gt;16:04:53-05:00&lt;/bo:UserTime&gt; &#9;&#9;&lt;bo:VendorApp&gt; &#9;&#9;&#9;&lt;bo:VendorName VendorCode=&quot;118&quot;&gt;CRL-PLUS, Inc.&lt;/bo:VendorName&gt; &#9;&#9;&#9;&lt;bo:AppName&gt;XMLProc&lt;/bo:AppName&gt; &#9;&#9;&#9;&lt;bo:AppVer&gt;1.0&lt;/bo:AppVer&gt; &#9;&#9;&lt;/bo:VendorApp&gt; &#9;&lt;/bo:UserAuthRequest&gt; &#9;&lt;bo:TXLifeRequest&gt; &#9;&#9;&lt;bo:TransRefGUID&gt;7449cc72-204d-49f0-a28b-f5c555f4a4c4&lt;/bo:TransRefGUID&gt; &#9;&#9;&lt;bo:TransMode tc=&quot;2&quot;&gt;Update&lt;/bo:TransMode&gt; &#9;&#9;&lt;bo:TransType tc=&quot;121&quot;&gt;General Requirement Order Request&lt;/bo:TransType&gt; &#9;&#9;&lt;bo:TransExeDate&gt;2014-07-21&lt;/bo:TransExeDate&gt; &#9;&#9;&lt;bo:TransExeTime&gt;16:04:53-05:00&lt;/bo:TransExeTime&gt; &#9;&#9;&lt;bo:TestIndicator tc=&quot;1&quot;&gt;Yes&lt;/bo:TestIndicator&gt; &#9;&#9;&lt;bo:OLifE&gt; &#9;&#9;&#9;&lt;bo:Holding id=&quot;Hold2&quot;&gt; &#9;&#9;&#9;&#9;&lt;bo:HoldingTypeCode tc=&quot;2&quot;&gt;Policy&lt;/bo:HoldingTypeCode&gt; &#9;&#9;&#9;&#9;&lt;bo:Policy&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:LineOfBusiness tc=&quot;2343&quot;&gt;LIFE INSURANCE&lt;/bo:LineOfBusiness&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:PolNumber&gt;REGIRUSL02&lt;/bo:PolNumber&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:ProductCode&gt;TEST PRODUCT CODE&lt;/bo:ProductCode&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:CarrierCode&gt;TEST CARRIER CODE&lt;/bo:CarrierCode&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:ProductType tc=&quot;0&quot;&gt;L&lt;/bo:ProductType&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:PaymentMode tc=&quot;343&quot;&gt;TEST PAYMENT MODE&lt;/bo:PaymentMode&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:PaymentMethod tc=&quot;999&quot;&gt;TEST PAYMENT METHOD&lt;/bo:PaymentMethod&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:PlanName&gt;TEST PLAN NAME&lt;/bo:PlanName&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:Life&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:FaceAmt&gt;125000&lt;/bo:FaceAmt&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:InitialPremAmt&gt;1200&lt;/bo:InitialPremAmt&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:Coverage&gt; &#9;&#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:ShortName&gt;TEST SHORT NAME&lt;/bo:ShortName&gt; &#9;&#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:LifeCovStatus tc=&quot;234&quot;&gt;TEST COVERAGE STATUS&lt;/bo:LifeCovStatus&gt; &#9;&#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:LifeCovTypeCode tc=&quot;3432&quot;&gt;TEST LIFE COVERAGE CODE&lt;/bo:LifeCovTypeCode&gt; &#9;&#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:IndicatorCode tc=&quot;99&quot;&gt;TEST IND CODE&lt;/bo:IndicatorCode&gt; &#9;&#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:CurrentAmt&gt;20394&lt;/bo:CurrentAmt&gt; &#9;&#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:LifeParticipant PartyID=&quot;3142&quot;&gt; &#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;TEST PARTICIPANT &#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:LifeParticipantRoleCode tc=&quot;34&quot;&gt;TEST VALUE&lt;/bo:LifeParticipantRoleCode&gt; &#9;&#9;&#9;&#9;&#9;&#9;&#9;&lt;/bo:LifeParticipant&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;/bo:Coverage&gt; &#9;&#9;&#9;&#9;&#9;&lt;/bo:Life&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:ApplicationInfo&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:ApplicationJurisdiction tc=&quot;323&quot;&gt;TEST VALUE&lt;/bo:ApplicationJurisdiction&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:TrackingID&gt;777-76-6661156-8414153&lt;/bo:TrackingID&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:SignedDate&gt;11-12-2016 12:12:12 PM&lt;/bo:SignedDate&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:PrefLanguage tc=&quot;65745&quot;&gt;11-12-2016 12:12:12 PM&lt;/bo:PrefLanguage&gt; &#9;&#9;&#9;&#9;&#9;&lt;/bo:ApplicationInfo&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:RequirementInfo AppliesToPartyId=&quot;234&quot;&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:ReqCode tc=&quot;139&quot;&gt;Prepare Inspection Report&lt;/bo:ReqCode&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:RequestedDate&gt;2014-07-21&lt;/bo:RequestedDate&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:ReleasePartyOrgCode&gt;AIGI&lt;/bo:ReleasePartyOrgCode&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:RequirementAcctNum&gt;89817&lt;/bo:RequirementAcctNum&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:RequirementInfoUniqueID&gt;89817&lt;/bo:RequirementInfoUniqueID&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:RequestedScheduleTimeStart&gt;89817&lt;/bo:RequestedScheduleTimeStart&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:ReqStatus&gt;asdlkfj&lt;/bo:ReqStatus&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:RequirementDetails&gt;asdlkfj&lt;/bo:RequirementDetails&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:CarrierOrderNum&gt;asdlkfj&lt;/bo:CarrierOrderNum&gt; &#9;&#9;&#9;&#9;&#9;&lt;/bo:RequirementInfo&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:RequirementInfo AppliesToPartyId=&quot;235&quot;&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:ReqCode tc=&quot;334&quot;&gt;Financial Credit Check&lt;/bo:ReqCode&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:RequestedDate&gt;2014-07-21&lt;/bo:RequestedDate&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:ReleasePartyOrgCode&gt;AIGI&lt;/bo:ReleasePartyOrgCode&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:RequirementAcctNum&gt;89817&lt;/bo:RequirementAcctNum&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:RequirementInfoUniqueID&gt;89817&lt;/bo:RequirementInfoUniqueID&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:RequestedScheduleTimeStart&gt;89817&lt;/bo:RequestedScheduleTimeStart&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:ReqStatus&gt;asdlkfj&lt;/bo:ReqStatus&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:RequirementDetails&gt;asdlkfj&lt;/bo:RequirementDetails&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:CarrierOrderNum&gt;asdlkfj&lt;/bo:CarrierOrderNum&gt; &#9;&#9;&#9;&#9;&#9;&lt;/bo:RequirementInfo&gt; &#9;&#9;&#9;&#9;&lt;/bo:Policy&gt; &#9;&#9;&#9;&#9;&lt;bo:Attachment&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:Description&gt;test of comments made Special attention&lt;/bo:Description&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:AttachmentType tc=&quot;2&quot;&gt;Comment&lt;/bo:AttachmentType&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:AttachmentBasicType tc=&quot;2&quot;&gt;Comment&lt;/bo:AttachmentBasicType&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:MimeType&gt;Comment&lt;/bo:MimeType&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:TransferEncodingTypeString tc=&quot;2&quot;&gt;Comment&lt;/bo:TransferEncodingTypeString&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:AttachmentLocation tc=&quot;2&quot;&gt;Comment&lt;/bo:AttachmentLocation&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:OLifEExtension&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:CRL_DOCUMENT_ID&gt;TEST VALUE&lt;/bo:CRL_DOCUMENT_ID&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:CRL_FOLDER_ID&gt;TEST VALUE&lt;/bo:CRL_FOLDER_ID&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:CRL_DRAWER_NAME&gt;TEST VALUE&lt;/bo:CRL_DRAWER_NAME&gt; &#9;&#9;&#9;&#9;&#9;&#9;&lt;bo:CRL_PAGE_COUNT&gt;TEST VALUE&lt;/bo:CRL_PAGE_COUNT&gt; &#9;&#9;&#9;&#9;&#9;&lt;/bo:OLifEExtension&gt; &#9;&#9;&#9;&#9;&lt;/bo:Attachment&gt; &#9;&#9;&#9;&lt;/bo:Holding&gt; &#9;&#9;&#9;&lt;bo:Party id=&quot;Party1_2&quot;&gt; &#9;&#9;&#9;&#9;&lt;bo:PartyTypeCode tc=&quot;1&quot;&gt;Person&lt;/bo:PartyTypeCode&gt; &#9;&#9;&#9;&#9;&lt;bo:GovtID&gt;222334444&lt;/bo:GovtID&gt; &#9;&#9;&#9;&#9;&lt;bo:GovtIDTC tc=&quot;1&quot;&gt;Social Security Number US&lt;/bo:GovtIDTC&gt; &#9;&#9;&#9;&#9;&lt;bo:Person&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:FirstName&gt;BOBBY&lt;/bo:FirstName&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:LastName&gt;TESTCASEB&lt;/bo:LastName&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:Occupation&gt;Manager&lt;/bo:Occupation&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:MarStat tc=&quot;3&quot;&gt;Divorced&lt;/bo:MarStat&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:Gender tc=&quot;2&quot;&gt;F&lt;/bo:Gender&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:BirthDate&gt;1972-02-02&lt;/bo:BirthDate&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:DriversLicenseNum&gt;334455&lt;/bo:DriversLicenseNum&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:DriversLicenseState tc=&quot;51&quot;&gt;TX&lt;/bo:DriversLicenseState&gt; &#9;&#9;&#9;&#9;&lt;/bo:Person&gt; &#9;&#9;&#9;&#9;&lt;bo:Address&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:AddressTypeCode tc=&quot;1&quot;&gt;Residence&lt;/bo:AddressTypeCode&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:Line1&gt;10 Monroe St&lt;/bo:Line1&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:City&gt;Houston&lt;/bo:City&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:AddressState&gt;TX&lt;/bo:AddressState&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:Zip&gt;77000&lt;/bo:Zip&gt; &#9;&#9;&#9;&#9;&lt;/bo:Address&gt; &#9;&#9;&#9;&#9;&lt;bo:Phone&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:AreaCode&gt;713&lt;/bo:AreaCode&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:DialNumber /&gt; &#9;&#9;&#9;&#9;&lt;/bo:Phone&gt; &#9;&#9;&#9;&lt;/bo:Party&gt; &#9;&#9;&#9;&lt;bo:Party id=&quot;Party2_2&quot;&gt; &#9;&#9;&#9;&#9;&lt;bo:PartyTypeCode tc=&quot;2&quot;&gt;Organization&lt;/bo:PartyTypeCode&gt; &#9;&#9;&#9;&#9;&lt;bo:FullName&gt;Target Co&lt;/bo:FullName&gt; &#9;&#9;&#9;&#9;&lt;bo:Organization&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:AbbrName&gt;Target Co&lt;/bo:AbbrName&gt; &#9;&#9;&#9;&#9;&lt;/bo:Organization&gt; &#9;&#9;&#9;&#9;&lt;bo:Address&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:AddressTypeCode tc=&quot;2&quot;&gt;Business&lt;/bo:AddressTypeCode&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:Line1&gt;25 Dolly Ln&lt;/bo:Line1&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:Line2&gt;Suite 100&lt;/bo:Line2&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:City&gt;Houston&lt;/bo:City&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:AddressState&gt;TX&lt;/bo:AddressState&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:Zip&gt;77018&lt;/bo:Zip&gt; &#9;&#9;&#9;&#9;&lt;/bo:Address&gt; &#9;&#9;&#9;&#9;&lt;bo:Phone&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:PhoneTypeCode tc=&quot;2&quot;&gt;Business&lt;/bo:PhoneTypeCode&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:AreaCode&gt;713&lt;/bo:AreaCode&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:DialNumber&gt;8311000&lt;/bo:DialNumber&gt; &#9;&#9;&#9;&#9;&lt;/bo:Phone&gt; &#9;&#9;&#9;&lt;/bo:Party&gt; &#9;&#9;&#9;&lt;bo:Party id=&quot;Party3_2&quot;&gt; &#9;&#9;&#9;&#9;&lt;bo:PartyTypeCode tc=&quot;1&quot;&gt;Person&lt;/bo:PartyTypeCode&gt; &#9;&#9;&#9;&#9;&lt;bo:Person&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:FirstName&gt;Bob&lt;/bo:FirstName&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:LastName&gt;Best&lt;/bo:LastName&gt; &#9;&#9;&#9;&#9;&lt;/bo:Person&gt; &#9;&#9;&#9;&lt;/bo:Party&gt; &#9;&#9;&#9;&lt;bo:Party id=&quot;Party4_2&quot;&gt; &#9;&#9;&#9;&#9;&lt;bo:PartyTypeCode tc=&quot;1&quot;&gt;Person&lt;/bo:PartyTypeCode&gt; &#9;&#9;&#9;&#9;&lt;bo:FullName&gt;Sam Jones&lt;/bo:FullName&gt; &#9;&#9;&#9;&#9;&lt;bo:Person&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:FirstName&gt;Sam&lt;/bo:FirstName&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:LastName&gt;Jones&lt;/bo:LastName&gt; &#9;&#9;&#9;&#9;&lt;/bo:Person&gt; &#9;&#9;&#9;&#9;&lt;bo:Phone&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:PhoneTypeCode tc=&quot;2&quot;&gt;Business&lt;/bo:PhoneTypeCode&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:AreaCode&gt;888&lt;/bo:AreaCode&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:DialNumber&gt;5121000&lt;/bo:DialNumber&gt; &#9;&#9;&#9;&#9;&lt;/bo:Phone&gt; &#9;&#9;&#9;&lt;/bo:Party&gt; &#9;&#9;&#9;&lt;bo:Party id=&quot;Party5_2&quot;&gt; &#9;&#9;&#9;&#9;&lt;bo:PartyTypeCode tc=&quot;2&quot;&gt;Organization&lt;/bo:PartyTypeCode&gt; &#9;&#9;&#9;&#9;&lt;bo:FullName&gt;Jones Agency&lt;/bo:FullName&gt; &#9;&#9;&#9;&#9;&lt;bo:Organization&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:AbbrName&gt;Jones Agency&lt;/bo:AbbrName&gt; &#9;&#9;&#9;&#9;&lt;/bo:Organization&gt; &#9;&#9;&#9;&#9;&lt;bo:Phone&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:PhoneTypeCode tc=&quot;2&quot;&gt;Business&lt;/bo:PhoneTypeCode&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:AreaCode&gt;888&lt;/bo:AreaCode&gt; &#9;&#9;&#9;&#9;&#9;&lt;bo:DialNumber&gt;5121000&lt;/bo:DialNumber&gt; &#9;&#9;&#9;&#9;&lt;/bo:Phone&gt; &#9;&#9;&#9;&lt;/bo:Party&gt; &#9;&#9;&#9;&lt;bo:Relation OriginatingObjectID=&quot;Hold2&quot; RelatedObjectID=&quot;Party1_2&quot; id=&quot;Relation1_2&quot;&gt; &#9;&#9;&#9;&#9;&lt;bo:OriginatingObjectType tc=&quot;4&quot;&gt;Holding&lt;/bo:OriginatingObjectType&gt; &#9;&#9;&#9;&#9;&lt;bo:RelatedObjectType tc=&quot;6&quot;&gt;Party&lt;/bo:RelatedObjectType&gt; &#9;&#9;&#9;&#9;&lt;bo:RelationRoleCode tc=&quot;32&quot;&gt;Insured&lt;/bo:RelationRoleCode&gt; &#9;&#9;&#9;&lt;/bo:Relation&gt; &#9;&#9;&#9;&lt;bo:Relation OriginatingObjectID=&quot;Hold2&quot; RelatedObjectID=&quot;Party2_2&quot; id=&quot;Relation2_2&quot;&gt; &#9;&#9;&#9;&#9;&lt;bo:OriginatingObjectType tc=&quot;4&quot;&gt;Holding&lt;/bo:OriginatingObjectType&gt; &#9;&#9;&#9;&#9;&lt;bo:RelatedObjectType tc=&quot;6&quot;&gt;Party&lt;/bo:RelatedObjectType&gt; &#9;&#9;&#9;&#9;&lt;bo:RelationRoleCode tc=&quot;7&quot;&gt;Employer&lt;/bo:RelationRoleCode&gt; &#9;&#9;&#9;&#9;&lt;bo:NameFromRelatedObject&gt;Target Co&lt;/bo:NameFromRelatedObject&gt; &#9;&#9;&#9;&lt;/bo:Relation&gt; &#9;&#9;&#9;&lt;bo:Relation OriginatingObjectID=&quot;Hold2&quot; RelatedObjectID=&quot;Party3_2&quot; id=&quot;Relation3_2&quot;&gt; &#9;&#9;&#9;&#9;&lt;bo:OriginatingObjectType tc=&quot;4&quot;&gt;Holding&lt;/bo:OriginatingObjectType&gt; &#9;&#9;&#9;&#9;&lt;bo:RelatedObjectType tc=&quot;6&quot;&gt;Party&lt;/bo:RelatedObjectType&gt; &#9;&#9;&#9;&#9;&lt;bo:RelationRoleCode tc=&quot;34&quot;&gt;Beneficiary&lt;/bo:RelationRoleCode&gt; &#9;&#9;&#9;&#9;&lt;bo:RelationDescription tc=&quot;0&quot;&gt;Father&lt;/bo:RelationDescription&gt; &#9;&#9;&#9;&#9;&lt;bo:NameFromRelatedObject&gt;Best&lt;/bo:NameFromRelatedObject&gt; &#9;&#9;&#9;&lt;/bo:Relation&gt; &#9;&#9;&#9;&lt;bo:Relation OriginatingObjectID=&quot;Hold2&quot; RelatedObjectID=&quot;Party4_2&quot; id=&quot;Relation4_2&quot;&gt; &#9;&#9;&#9;&#9;&lt;bo:OriginatingObjectType tc=&quot;4&quot;&gt;Holding&lt;/bo:OriginatingObjectType&gt; &#9;&#9;&#9;&#9;&lt;bo:RelatedObjectType tc=&quot;6&quot;&gt;Party&lt;/bo:RelatedObjectType&gt; &#9;&#9;&#9;&#9;&lt;bo:RelationRoleCode tc=&quot;182&quot;&gt;Writing Agency&lt;/bo:RelationRoleCode&gt; &#9;&#9;&#9;&#9;&lt;bo:NameFromRelatedObject&gt;Sam Jones&lt;/bo:NameFromRelatedObject&gt; &#9;&#9;&#9;&lt;/bo:Relation&gt; &#9;&#9;&#9;&lt;bo:Relation OriginatingObjectID=&quot;Hold2&quot; RelatedObjectID=&quot;Party5_2&quot; id=&quot;Relation5_2&quot;&gt; &#9;&#9;&#9;&#9;&lt;bo:OriginatingObjectType tc=&quot;4&quot;&gt;Holding&lt;/bo:OriginatingObjectType&gt; &#9;&#9;&#9;&#9;&lt;bo:RelatedObjectType tc=&quot;6&quot;&gt;Party&lt;/bo:RelatedObjectType&gt; &#9;&#9;&#9;&#9;&lt;bo:RelationRoleCode tc=&quot;37&quot;&gt;Primary Writing Agent&lt;/bo:RelationRoleCode&gt; &#9;&#9;&#9;&#9;&lt;bo:NameFromRelatedObject&gt;Jones Agency&lt;/bo:NameFromRelatedObject&gt; &#9;&#9;&#9;&lt;/bo:Relation&gt; &#9;&#9;&lt;/bo:OLifE&gt; &#9;&lt;/bo:TXLifeRequest&gt; &lt;/bo:TXLife&gt;"/>
+      </TransactionAttributes>
+    </Stage>
+    <Stage>
+      <Identifier>processor@listener=99-1 - Validation Error Handling.Programmable (Java) Listener,processor=ROOT.99-1 - Validation Error Handling.Processor1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@listener=99-1 - Validation Error Handling.Programmable (Java) Listener,processor=ROOT.99-1 - Validation Error Handling.Processor2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@listener=99-1 - Validation Error Handling.Programmable (Java) Listener,processor=ROOT.99-1 - Validation Error Handling.Processor3</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@listener=99-1 - Validation Error Handling.Programmable (Java) Listener,processor=ROOT.99-1 - Validation Error Handling.Processor4</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@listener=99-1 - Validation Error Handling.Programmable (Java) Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>forking@listener=99-1 - Validation Error Handling.Programmable (Java) Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>routing</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=99-1 - Validation Error Handling.Synchronous Response Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=99-1 - Validation Error Handling.Synchronous Response Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=99-1 - Validation Error Handling.Synchronous Response Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=99-1 - Validation Error Handling.Synchronous Response Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=99-1 - Validation Error Handling.Database SQL Transport Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=99-1 - Validation Error Handling.Database SQL Transport Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=99-1 - Validation Error Handling.Database SQL Transport Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=99-1 - Validation Error Handling.Database SQL Transport Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+</TestConfigurations>

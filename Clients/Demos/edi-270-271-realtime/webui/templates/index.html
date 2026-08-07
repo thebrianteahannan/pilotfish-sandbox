@@ -16,6 +16,7 @@
     .pill.good { background:#34d399; color:#052e1a; }
     .pill.rt { background:#60a5fa; color:#0b1f3a; }
   </style>
+  <link rel="stylesheet" href="/static/timing-tab.css" />
 </head>
 <body>
   <header class="top">
@@ -27,6 +28,7 @@
         {% if has_xslt %}
         <button type="button" class="tab" data-tab="xslt" aria-selected="false">XSLT</button>
         {% endif %}
+        <button type="button" class="tab" data-tab="timing" aria-selected="false">Timing</button>
         <button type="button" class="tab" data-tab="info" aria-selected="false">Info</button>
       </nav>
     </div>
@@ -106,18 +108,12 @@
   </div>
   {% endif %}
 
-  <main id="tab-info" class="panel info-tab" hidden>
-    <h1>Realtime eligibility — PilotFish owns the 270/271 round-trip</h1>
-    <p class="sub">Clinic posts <code>EligibilityRequest</code> once to
-      <code>{{ pf_public }}/check</code>. PilotFish maps to X12 270, posts to the mock payer,
-      parses the 271, and returns clinic JSON on the same HTTP request.</p>
-    {% if lan_hint %}
-    <p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>
-    {% endif %}
-    <p class="sub muted">EIP: <code>{{ pf_public }}</code> · Payer (host): <code>{{ payer_public }}</code></p>
-    <p class="sub"><a href="/documents/differences.pdf" target="_blank" rel="noreferrer">How this differs from
-      <code>edi-270-271-eligibility</code></a></p>
-  </main>
+  <!-- TIMING_TAB_STANDARD:START -->
+  {% include 'partials/timing_tab.html' %}
+  <!-- TIMING_TAB_STANDARD:END -->
+  <!-- INFO_TAB_STANDARD:START -->
+  {% include 'partials/info_tab.html' %}
+  <!-- INFO_TAB_STANDARD:END -->
 
   <script>
     window.ELIG_PRESETS = {{ presets | tojson }};
@@ -126,5 +122,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
   <script src="/static/code-highlight.js"></script>
   <script src="/static/app.js"></script>
+  <script src="/static/timing-tab.js"></script>
 </body>
 </html>

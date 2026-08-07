@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestConfigurations>
+   <TestConfig name="Test1">
+      <AlternateDataSource>From Text</AlternateDataSource>
+      <StartingText>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#xD;
+&lt;TRANSACTION&gt;&#xD;
+	&lt;PFSOURCECLIENT&gt;AIGL&lt;/PFSOURCECLIENT&gt;&#xD;
+	&lt;PFBATCHID&gt;1&lt;/PFBATCHID&gt;&#xD;
+	&lt;ORDERCOMPLETEDATE/&gt;&#xD;
+	&lt;LASTMODIFIEDDATE&gt;2021-03-09 14:10:34.0&lt;/LASTMODIFIEDDATE&gt;&#xD;
+	&lt;TRANSACTIONID&gt;225683&lt;/TRANSACTIONID&gt;&#xD;
+&lt;/TRANSACTION&gt;</StartingText>
+      <Stage>
+         <Identifier>xslt@transport=Database Retrieve Status Details</Identifier>
+         <IsStart>true</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=Database Retrieve Status Details</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=Database Retrieve Status Details</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=Database Retrieve Status Details</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+   </TestConfig>
+</TestConfigurations>

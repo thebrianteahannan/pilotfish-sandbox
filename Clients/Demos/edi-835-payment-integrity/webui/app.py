@@ -460,5 +460,69 @@ def documents_file(name: str):
     return send_file(path, mimetype=mime, as_attachment=False, download_name=path.name)
 
 
+
+# INFO_TAB_STANDARD_BOOTSTRAP
+try:
+    from document_routes import ensure_document_routes
+except ImportError:
+    ensure_document_routes = None  # type: ignore
+
+_INFO_TAB_CTX = {
+    "info_title": 'EDI 835 payment integrity',
+    "info_blurb": 'Poll remits, score underpay / integrity signals against Open AR, and route decisions with BI artifacts.',
+    "info_note": 'Demo only — synthetic 835 + Open AR.',
+    "eip_url": 'http://localhost:8110/eip/',
+    "lan_hint": "",
+    "info_ports": [
+        {"label": "SQL Server", "value": "14339"},
+        {"label": "PilotFish EIP", "value": "8110"},
+        {"label": "Demo Web UI", "value": "8111"}
+    ],
+    "info_extra_links": [],
+    "info_extra_sections": [],
+    "test_results_pdf": 'EDI835_Payment_Integrity_Test_Results.pdf',
+}
+
+@app.context_processor
+def _info_tab_standard_context():
+    import os as _os
+    ctx = dict(_INFO_TAB_CTX)
+    eip = _os.environ.get("EIP_PUBLIC_URL")
+    if eip:
+        ctx["eip_url"] = eip
+    lan = _os.environ.get("LAN_HINT", "")
+    if lan:
+        ctx["lan_hint"] = lan
+    return ctx
+
+if ensure_document_routes is not None:
+    from pathlib import Path as _Path
+    import os as _os
+    _docs_dir = _Path(_os.environ.get("DOCUMENTS_DIR", "/documents"))
+    ensure_document_routes(
+        app,
+        _docs_dir,
+        route_pdf_name='EDI835_Payment_Integrity_V2_Route_Diagrams.pdf',
+        capability_pdf_name='EDI835_Payment_Integrity_Capability_Brief.pdf',
+        test_plan_pdf_name=None,
+        test_results_pdf_name='EDI835_Payment_Integrity_Test_Results.pdf',
+    )
+# END INFO_TAB_STANDARD_BOOTSTRAP
+
+
+# TIMING_TAB_API_BOOTSTRAP
+try:
+    from document_routes import ensure_build_timing_api
+except ImportError:
+    ensure_build_timing_api = None  # type: ignore
+if ensure_build_timing_api is not None:
+    from pathlib import Path as _PathTiming
+    import os as _os_timing
+    ensure_build_timing_api(
+        app,
+        _PathTiming(_os_timing.environ.get("DOCUMENTS_DIR", "/documents")),
+    )
+# END TIMING_TAB_API_BOOTSTRAP
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=WEBUI_PORT, debug=False)

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<UserAuthRequest>
+		<UserLoginName />
+		<UserPswd>
+			<CryptType>NONE</CryptType>
+			<CryptPswd />
+		</UserPswd>
+		<UserDate>2017-02-14</UserDate>
+		<UserTime>19:50:32-06:00</UserTime>
+		<VendorApp>
+			<VendorName VendorCode="118">CRL-Plus</VendorName>
+			<AppName>XMLPROC</AppName>
+			<AppVer>1.0.0</AppVer>
+		</VendorApp>
+	</UserAuthRequest>
+	<TXLifeRequest>
+		<TransRefGUID>B4189294-F3D3-E168-C743-AEB856BF18CA</TransRefGUID>
+		<TransType tc="1122">Requirement Notification Transmittal</TransType>
+		<TransExeDate>2017-02-14</TransExeDate>
+		<TransExeTime>19:50:32</TransExeTime>
+		<TransMode tc="2">Original</TransMode>
+		<TestIndicator tc="0">False</TestIndicator>
+		<OLifE>
+			<SourceInfo>
+				<SourceInfoName>CRL-Plus</SourceInfoName>
+				<SourceInfoDescription>Email : INSURANCECS@CRLCORP.COM</SourceInfoDescription>
+				<SourceInfoComment>Phone : 8558507587</SourceInfoComment>
+			</SourceInfo>
+			<Holding id="Holding_Primary">
+				<HoldingTypeCode tc="" />
+				<Policy>
+					<PolNumber>LI581479</PolNumber>
+					<CarrierCode>5340</CarrierCode>
+					<ProductType tc="" />
+					<Life>
+						<FaceAmt>275000</FaceAmt>
+						<Coverage id="">
+							<PlanName>Term</PlanName>
+							<ShortName />
+							<LifeCovStatus tc="" />
+							<LifeCovTypeCode tc="" />
+							<IndicatorCode tc="1">Base</IndicatorCode>
+							<CurrentAmt>275000</CurrentAmt>
+							<LifeParticipant PartyID="Party_PrimaryInsured" id="LifeParticipant_PrimaryInsured">
+								<LifeParticipantRoleCode tc="1">Primary Insured</LifeParticipantRoleCode>
+							</LifeParticipant>
+						</Coverage>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>9cc8cc1b-65e7-4aa0-b5ad-a9f2502bb7b6</TrackingID>
+						<ApplicationJurisdiction tc="41">OH</ApplicationJurisdiction>
+						<PrefLanguage tc="" />
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="Party_PrimaryInsured">
+						<CarrierOrderNum />
+						<ReqCode tc="137">Tele-Interview</ReqCode>
+						<RequirementInfoUniqueID />
+						<ReqStatus tc="1">Pending</ReqStatus>
+						<RequestedDate>2017-02-07 00:00:00.0</RequestedDate>
+						<StatusDate>2017-02-14</StatusDate>
+						<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+						<RequirementAcctNum>71661</RequirementAcctNum>
+						<RequirementDetails />
+						<ProviderOrderNum>74423</ProviderOrderNum>
+						<OrderReceivedDate>2017-02-08</OrderReceivedDate>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Others</StatusEventCode>
+							<ProviderEventCode>006</ProviderEventCode>
+							<StatusEventDate>2017-02-14</StatusEventDate>
+							<StatusEventTime>19:37:41-06:00</StatusEventTime>
+							<StatusEventDetail>Left message at home.</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Others</StatusEventCode>
+							<ProviderEventCode>S83</ProviderEventCode>
+							<StatusEventDate>2017-02-14</StatusEventDate>
+							<StatusEventTime>19:38:00-06:00</StatusEventTime>
+							<StatusEventDetail>Scheduled Follow Up: 02/16/2017 at 04:00 PM  until 08:00 PM ,' America/Chicago',' Central Time Zone</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Others</StatusEventCode>
+							<ProviderEventCode>006</ProviderEventCode>
+							<StatusEventDate>2017-02-14</StatusEventDate>
+							<StatusEventTime>19:38:02-06:00</StatusEventTime>
+							<StatusEventDetail>Left message at home.</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Others</StatusEventCode>
+							<ProviderEventCode>S83</ProviderEventCode>
+							<StatusEventDate>2017-02-14</StatusEventDate>
+							<StatusEventTime>19:38:18-06:00</StatusEventTime>
+							<StatusEventDetail>Scheduled Follow Up: 02/16/2017 at 04:00 PM  until 08:00 PM ,' America/Chicago',' Central Time Zone</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Others</StatusEventCode>
+							<ProviderEventCode>099</ProviderEventCode>
+							<StatusEventDate>2017-02-14</StatusEventDate>
+							<StatusEventTime>19:38:20-06:00</StatusEventTime>
+							<StatusEventDetail>Receipt Email sent to agent</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Others</StatusEventCode>
+							<ProviderEventCode>006</ProviderEventCode>
+							<StatusEventDate>2017-02-14</StatusEventDate>
+							<StatusEventTime>19:38:41-06:00</StatusEventTime>
+							<StatusEventDetail>Left message at home.</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Others</StatusEventCode>
+							<ProviderEventCode>S83</ProviderEventCode>
+							<StatusEventDate>2017-02-14</StatusEventDate>
+							<StatusEventTime>19:39:27-06:00</StatusEventTime>
+							<StatusEventDetail>Scheduled Follow Up: 02/16/2017 at 04:00 PM  until 08:00 PM ,' America/Chicago',' Central Time Zone</StatusEventDetail>
+						</StatusEvent>
+					</RequirementInfo>
+				</Policy>
+			</Holding>
+			<Party id="Party_PrimaryInsured">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName />
+				<GovtID>259575069</GovtID>
+				<Person>
+					<FirstName>Lori</FirstName>
+					<MiddleName />
+					<LastName>Hrnchar</LastName>
+					<Occupation />
+					<Gender tc="2">Female</Gender>
+					<BirthDate>1975-09-03</BirthDate>
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="41" />
+				</Person>
+				<Address>
+					<AddressTypeCode tc="1">Residence</AddressTypeCode>
+					<Line1>4542 LAKEVIEW GLEN DR</Line1>
+					<Line2 />
+					<City>MEDINA</City>
+					<AddressState>OH</AddressState>
+					<AddressStateTC tc="41">OH</AddressStateTC>
+					<Zip>442566508</Zip>
+					<PreventOverrideInd tc="" />
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>330</AreaCode>
+					<DialNumber>6351066</DialNumber>
+					<Ext />
+				</Phone>
+				<EMailAddress>
+					<AddrLine>lori2@zips.uakron.edu</AddrLine>
+				</EMailAddress>
+			</Party>
+			<Party id="Party_Owner">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName />
+				<GovtID>259575069</GovtID>
+				<Person>
+					<FirstName>Lori</FirstName>
+					<MiddleName />
+					<LastName>Hrnchar</LastName>
+					<Occupation />
+					<Gender tc="2">Female</Gender>
+					<BirthDate>1975-09-03</BirthDate>
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="41" />
+				</Person>
+				<Address>
+					<AddressTypeCode tc="1">Residence</AddressTypeCode>
+					<Line1>4542 LAKEVIEW GLEN DR</Line1>
+					<Line2 />
+					<City>MEDINA</City>
+					<AddressState>OH</AddressState>
+					<AddressStateTC tc="41">OH</AddressStateTC>
+					<Zip>442566508</Zip>
+					<PreventOverrideInd tc="" />
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>330</AreaCode>
+					<DialNumber>6351066</DialNumber>
+					<Ext />
+				</Phone>
+				<EMailAddress>
+					<AddrLine>lori2@zips.uakron.edu</AddrLine>
+				</EMailAddress>
+			</Party>
+			<Party id="Party_PrimaryAgent">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName />
+				<GovtID />
+				<Person>
+					<FirstName>Patrick Renz</FirstName>
+					<MiddleName />
+					<LastName>Patrick Renz</LastName>
+					<Occupation />
+					<Gender tc="" />
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="" />
+				</Person>
+				<EMailAddress>
+					<AddrLine>pat@renzinsurance.com</AddrLine>
+				</EMailAddress>
+			</Party>
+			<Relation OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_Owner" id="Relation_OwnerToPrimaryInsured">
+				<OriginatingObjectType tc="6">Party</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="168">Self</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Holding_Primary" RelatedObjectID="Party_PrimaryInsured" id="Relation_Party_PrimaryInsured">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="32">Insured</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Holding_Primary" RelatedObjectID="Party_PrimaryAgent" id="Relation_Party_PrimaryAgent">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="37">Primary Writing Agent</RelationRoleCode>
+			</Relation>
+			<ns1:Party xmlns:ns1="http://ACORD.org/Standards/Life/2" id="Party_Requester_1">
+				<ns1:PartyTypeCode tc="2">Company</ns1:PartyTypeCode>
+				<ns1:FullName>ERIE 103 PRODUCTION</ns1:FullName>
+				<ns1:Organization>
+					<ns1:DBA>ERIE 103 PRODUCTION</ns1:DBA>
+				</ns1:Organization>
+			</ns1:Party>
+			<ns1:Party xmlns:ns1="http://ACORD.org/Standards/Life/2" id="Party_Fulfiller_1">
+				<ns1:PartyTypeCode tc="2">Company</ns1:PartyTypeCode>
+				<ns1:FullName>Hooper Holmes</ns1:FullName>
+				<ns1:Organization>
+					<ns1:DBA>Hooper Holmes</ns1:DBA>
+				</ns1:Organization>
+			</ns1:Party>
+			<ns1:Relation xmlns:ns1="http://ACORD.org/Standards/Life/2" OriginatingObjectID="Party_1" RelatedObjectID="Party_Requester_1" id="Relation_Requester_1">
+				<ns1:RelationRoleCode tc="97">Requestor</ns1:RelationRoleCode>
+			</ns1:Relation>
+			<ns1:Relation xmlns:ns1="http://ACORD.org/Standards/Life/2" OriginatingObjectID="Party_1" RelatedObjectID="Party_Fulfiller_1" id="Relation_Fulfiller_1">
+				<ns1:RelationRoleCode tc="99">Fulfills</ns1:RelationRoleCode>
+			</ns1:Relation>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>
+

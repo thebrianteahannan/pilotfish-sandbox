@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.21.90.xsd">
+  <UserAuthRequest>
+    <UserLoginName>NONE</UserLoginName>
+    <UserPswd>
+      <CryptType>NONE</CryptType>
+      <Pswd>password</Pswd>
+    </UserPswd>
+    <UserDate>2013-09-12</UserDate>
+    <UserTime>15:04:19</UserTime>
+    <VendorApp>
+      <VendorName VendorCode="4">NONE</VendorName>
+      <AppName>DaApp</AppName>
+    </VendorApp>
+  </UserAuthRequest>
+  <TXLifeRequest>
+    <TransRefGUID>E1AFBF90-9384-4B24-B50E-8DCDDC933D6F</TransRefGUID>
+    <TransType tc="121">General Requirements Order Request</TransType>
+    <TransExeDate>2013-09-12</TransExeDate>
+    <TransExeTime>15:04:19</TransExeTime>
+    <TransMode tc="2">ORIGINAL</TransMode>
+    <NoResponseOK tc="0">False</NoResponseOK>
+    <TestIndicator tc="0">False</TestIndicator>
+    <OLifE>
+      <SourceInfo>
+        <CreationDate>2013-09-12</CreationDate>
+        <CreationTime>15:04:19</CreationTime>
+        <SourceInfoName>DaApp</SourceInfoName>
+        <SourceInfoComment>DaDevelopers</SourceInfoComment>
+      </SourceInfo>
+      <Holding id="HOLDING_18450821">
+        <Policy CarrierPartyID="PARTY_3162305">
+          <PolNumber>1-000226941</PolNumber>
+          <LineOfBusiness tc="1">Life</LineOfBusiness>
+          <Jurisdiction tc="51">Texas</Jurisdiction>
+          <EffDate>2013-09-12</EffDate>
+          <PaymentMode tc="4">Monthly</PaymentMode>
+          <PaymentMethod tc="7">Electronic Funds Transfer</PaymentMethod>
+          <Life>
+            <Coverage id="COVERAGE_1">
+              <PlanName>LT302011G  - 30yr LT 2011-G</PlanName>
+              <ProductCode>LT302011G</ProductCode>
+              <LifeCovStatus tc="8">Pending</LifeCovStatus>
+              <IndicatorCode tc="1">Base</IndicatorCode>
+              <FaceAmt>500000</FaceAmt>
+              <EffDate>2013-09-12</EffDate>
+              <LifeParticipant PartyID="PARTY_18450820">
+                <LifeParticipantRoleCode tc="1">Primary Insured</LifeParticipantRoleCode>
+                <TobaccoPremiumBasis tc="1">Non Smoker</TobaccoPremiumBasis>
+                <UnderwritingClass tc="2147483647">1 - Premier Select</UnderwritingClass>
+              </LifeParticipant>
+            </Coverage>
+          </Life>
+          <ApplicationInfo>
+            <TrackingID>1-000226941</TrackingID>
+            <ApplicationJurisdiction tc="51">TX</ApplicationJurisdiction>
+            <PrefLanguage tc="9">English</PrefLanguage>
+          </ApplicationInfo>
+          <!-- Explicit Requirements send a single 535 requirement as a directive to have APPS calculate based on age and FaceAmt -->
+          <RequirementInfo FulfillerPartyID="Fulfiller_1" id="Req_18452243" AppliesToPartyID="PARTY_18450820" RequesterPartyID="PARTY_3162305" RequestorContactPartyID="PARTY_2960005">
+            <ReqCode tc="2">BLOOD</ReqCode>
+            <RequirementInfoUniqueID>18452243</RequirementInfoUniqueID>
+            <ReqStatus tc="1">Pending</ReqStatus>
+            <!-- Request an appointment date and time-->
+            <RequestedDate>2013-09-12</RequestedDate>
+            <RequirementAcctNum>02494</RequirementAcctNum>
+          </RequirementInfo>
+          <RequirementInfo FulfillerPartyID="Fulfiller_1" id="Req_18452246" AppliesToPartyID="PARTY_18450820" RequesterPartyID="PARTY_3162305" RequestorContactPartyID="PARTY_2960005">
+            <ReqCode tc="5">HOS</ReqCode>
+            <RequirementInfoUniqueID>18452246</RequirementInfoUniqueID>
+            <ReqStatus tc="1">Pending</ReqStatus>
+            <RequestedDate>2013-09-12</RequestedDate>
+            <RequirementAcctNum>02494</RequirementAcctNum>
+          </RequirementInfo>
+          <RequirementInfo FulfillerPartyID="Fulfiller_1" id="Req_18452251" AppliesToPartyID="PARTY_18450820" RequesterPartyID="PARTY_3162305" RequestorContactPartyID="PARTY_2960005">
+            <ReqCode tc="349">LSM</ReqCode>
+            <RequirementInfoUniqueID>18452251</RequirementInfoUniqueID>
+            <ReqStatus tc="1">Pending</ReqStatus>
+            <RequestedDate>2013-09-12</RequestedDate>
+            <RequirementAcctNum>02494</RequirementAcctNum>
+          </RequirementInfo>
+        </Policy>
+        <Attachment>  <!-- Special instuctions can go here-->
+          <DateCreated>2012-10-12</DateCreated>
+          <AttachmentBasicType tc="1">Text Only</AttachmentBasicType>
+          <AttachmentData>This is a free form note containing some message human or machine entered</AttachmentData>
+          <AttachmentType tc="14">General Note</AttachmentType>
+        </Attachment>
+      </Holding>
+      <Party id="PARTY_3105013">
+        <PartyTypeCode tc="2">Organization</PartyTypeCode>
+        <FullName>LSG</FullName>
+        <Organization>
+          <TrustType/>
+        </Organization>
+      </Party>
+      <Party id="Fulfiller_1">
+        <PartyTypeCode tc="2">Organization</PartyTypeCode>
+        <FullName>APPS</FullName>
+        <Organization>
+          <OrgForm tc="23">Corporation</OrgForm>
+        </Organization>
+      </Party>
+      <Party id="PARTY_4398000">
+        <PartyTypeCode tc="1">Person</PartyTypeCode>
+        <FullName>Kevin Test</FullName>
+        <GovtID/>
+        <Person>
+          <FirstName>Kevin</FirstName>
+          <MiddleName>M</MiddleName>
+          <LastName>Test</LastName>
+        </Person>
+        <Producer>
+          <CarrierAppointment>
+            <CompanyProducerID>018</CompanyProducerID>
+          </CarrierAppointment>
+        </Producer>
+        <EMailAddress>
+          <AddrLine>kTest@None.com</AddrLine>
+        </EMailAddress>
+        <Address>
+          <AddressTypeCode tc="2">Business</AddressTypeCode>
+          <Line1>10 Electric Boulevard</Line1>
+          <City>Lincoln</City>
+          <AddressStateTC tc="47">Rhode Island</AddressStateTC>
+          <Zip>02865-1165</Zip>
+          <AddressCountryTC tc="1">United States of America</AddressCountryTC>
+        </Address>
+        <Phone>
+          <PhoneTypeCode tc="2">Business</PhoneTypeCode>
+          <AreaCode>800</AreaCode>
+          <DialNumber>2223344</DialNumber>
+          <Ext>11111</Ext>
+          <PrefPhone tc="0">FALSE</PrefPhone>
+        </Phone>
+      </Party>
+      <Party id="PARTY_18450820">
+        <PartyTypeCode tc="1">Person</PartyTypeCode>
+        <FullName>Sharon Testlady</FullName>
+        <GovtID>222-33-1111</GovtID>
+        <GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+        <Person>
+          <FirstName>Sharon</FirstName>
+          <MiddleName>L</MiddleName>
+          <LastName>Testlady</LastName>
+          <Occupation>Teacher</Occupation>
+          <MarStat tc="1">Married</MarStat>
+          <Gender tc="2">Female</Gender>
+          <BirthDate>1972-02-13</BirthDate>
+          <Age>41</Age>  <!-- Age as entered -->
+          <DriversLicenseNum>11111111111</DriversLicenseNum>
+          <DriversLicenseState tc="51">Texas</DriversLicenseState>
+          <BirthCountry tc="1">United States of America</BirthCountry>
+          <BirthJurisdictionTC tc="51">Texas</BirthJurisdictionTC>
+        </Person>
+        <EMailAddress>
+          <AddrLine>TestLady@testl.net</AddrLine>
+        </EMailAddress>
+        <Address>
+          <AddressTypeCode tc="2">Business</AddressTypeCode>
+          <Line1>5 Test Forest lane</Line1>
+          <Line2>Drive</Line2>
+          <City>Woodlands</City>
+          <AddressStateTC tc="51">Texas</AddressStateTC>
+          <Zip>77381</Zip>
+          <AddressCountryTC tc="1">United States of America</AddressCountryTC>
+          <PrefAddr tc="1">True</PrefAddr>  <!-- This is the exam address Boolean field tc = 0/1-->
+        </Address>
+        <Address>
+          <AddressTypeCode tc="1">Residence</AddressTypeCode>
+          <Line1>1 Testing Way</Line1>
+          <City>Houston</City>
+          <AddressStateTC tc="51">Texas</AddressStateTC>
+          <Zip>77014-2455</Zip>
+          <AddressCountryTC tc="1">United States of America</AddressCountryTC>
+          <PrefAddr tc="0">False</PrefAddr>
+        </Address>
+        <Phone>
+          <PhoneTypeCode tc="1">Home</PhoneTypeCode>
+          <AreaCode>281</AreaCode>
+          <DialNumber>1111</DialNumber>
+          <PrefPhone tc="0">FALSE</PrefPhone>
+        </Phone>
+        <Phone>
+          <PhoneTypeCode tc="2">Business</PhoneTypeCode>
+          <AreaCode>281</AreaCode>
+          <DialNumber>33333</DialNumber>
+          <PrefPhone tc="1">True</PrefPhone>  <!-- This pref phone directs examiner to call here first-->
+        </Phone>
+      </Party>
+      <Party id="PARTY_2960005">
+        <PartyTypeCode tc="1">Person</PartyTypeCode>
+        <Person>
+          <FirstName>Carolyn</FirstName>
+          <LastName>test</LastName>
+        </Person>
+        <Phone>
+          <PhoneTypeCode tc="19">Fax</PhoneTypeCode>
+          <AreaCode>888</AreaCode>
+          <DialNumber>222222</DialNumber>
+        </Phone>
+        <Phone>
+          <PhoneTypeCode tc="2">Business</PhoneTypeCode>
+          <AreaCode>800</AreaCode>
+          <DialNumber>33333</DialNumber>
+        </Phone>
+        <EMailAddress>
+          <AddrLine>CHEALEY@TestCompany.com</AddrLine>
+        </EMailAddress>
+      </Party>
+      <Party id="PARTY_3162305">
+        <PartyTypeCode tc="2">Organization</PartyTypeCode>
+        <FullName>Test Life Insurance</FullName>
+        <Address>
+          <AddressTypeCode tc="2">Business</AddressTypeCode>
+          <Line1>10 Test Blvd</Line1>
+          <City>Lincoln</City>
+          <Zip>02865</Zip>
+          <AddressStateTC tc="47">Rhode Island</AddressStateTC>
+          <AddressCountryTC tc="1">United States of America</AddressCountryTC>
+        </Address>
+      </Party>
+      <Relation id="N10081" RelatedObjectID="PARTY_3105013" OriginatingObjectID="HOLDING_18450821">
+        <OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+        <RelatedObjectType tc="6">Party</RelatedObjectType>
+        <RelationRoleCode tc="48">General Agent</RelationRoleCode>
+      </Relation>
+      <Relation id="N1008C" RelatedObjectID="PARTY_4398000" OriginatingObjectID="HOLDING_18450821">
+        <OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+        <RelatedObjectType tc="6">Party</RelatedObjectType>
+        <RelationRoleCode tc="11">Agent</RelationRoleCode>
+      </Relation>
+      <Relation id="N100A4" RelatedObjectID="PARTY_18450820" OriginatingObjectID="HOLDING_18450821">
+        <OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+        <RelatedObjectType tc="6">Party</RelatedObjectType>
+        <RelationRoleCode tc="32">Insured</RelationRoleCode>
+      </Relation>
+      <Relation id="N10487" RelatedObjectID="PARTY_2960005" OriginatingObjectID="HOLDING_18450821">
+        <OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+        <RelatedObjectType tc="6">Party</RelatedObjectType>
+        <RelationRoleCode tc="235">Case Manager</RelationRoleCode>
+      </Relation>
+    </OLifE>
+  </TXLifeRequest>
+</TXLife>

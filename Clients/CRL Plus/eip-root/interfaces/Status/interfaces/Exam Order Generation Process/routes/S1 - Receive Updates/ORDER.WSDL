@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="" targetNamespace="http://crlcorp.com/DocumentService" xmlns="http://www.w3.org/XML/1998/namespace=xml" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://crlcorp.com/DocumentService" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<wsdl:types>
+		<s:schema elementFormDefault="qualified" targetNamespace="http://crlcorp.com/DocumentService" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:tns="http://crlcorp.com/DocumentService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<s:element name="SubmitResponseData">
+				<s:complexType>
+					<s:sequence>
+						<s:element maxOccurs="1" minOccurs="0" name="ResponseData" type="s:string"/>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="SubmitResponseDataResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element maxOccurs="1" minOccurs="0" name="SubmitResponseDataResult" type="s:string"/>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="WSSecurity" type="tns:WSSecurity"/>
+			<s:complexType name="WSSecurity">
+				<s:sequence>
+					<s:element maxOccurs="1" minOccurs="0" name="Credentials" type="tns:UserNameToken"/>
+				</s:sequence>
+			</s:complexType>
+			<s:complexType name="UserNameToken">
+				<s:sequence>
+					<s:element maxOccurs="1" minOccurs="0" name="Username" type="s:string"/>
+					<s:element maxOccurs="1" minOccurs="0" name="Password" type="s:string"/>
+				</s:sequence>
+			</s:complexType>
+		</s:schema>
+	</wsdl:types>
+	<wsdl:message name="SubmitResponseDataSoapIn">
+		<wsdl:part name="parameters" element="tns:SubmitResponseData">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="SubmitResponseDataSoapOut">
+		<wsdl:part name="parameters" element="tns:SubmitResponseDataResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="SubmitResponseData_PortType">
+		<wsdl:operation name="SubmitResponseData">
+			<wsdl:input message="tns:SubmitResponseDataSoapIn">
+			</wsdl:input>
+			<wsdl:output message="tns:SubmitResponseDataSoapOut">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="SubmitResponseData_Binding" type="tns:SubmitResponseData_PortType">
+		<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="SubmitResponseData">
+			<wsdl:input>
+				<wsdlsoap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SubmitResponse">
+		<wsdl:port name="SubmitResponseData_Port" binding="tns:SubmitResponseData_Binding">
+			<!-- Test URL -->
+			<wsdlsoap:address location="https://plus-intg-test.crlcorp.com/http-post/exam-response" />
+			<!-- Production URL -->
+			<!--<wsdlsoap:address location="https://plus-intg.crlcorp.com/http-post/exam-response" />-->
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

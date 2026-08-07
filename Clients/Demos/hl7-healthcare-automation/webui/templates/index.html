@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/static/app.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css" />
   <link rel="stylesheet" href="/static/code-highlight.css" />
+  <link rel="stylesheet" href="/static/timing-tab.css" />
 </head>
 <body>
   <header>
@@ -21,6 +22,7 @@
         {% if has_xslt %}
         <button type="button" class="main-tab" data-main-tab="xslt" role="tab" aria-selected="false">XSLT</button>
         {% endif %}
+        <button type="button" class="main-tab" data-main-tab="timing" role="tab" aria-selected="false">Timing</button>
         <button type="button" class="main-tab" data-main-tab="info" role="tab" aria-selected="false">Info</button>
       </div>
     </div>
@@ -125,20 +127,17 @@
   </div>
   {% endif %}
 
-  <main id="tab-info" class="panel info-tab" hidden>
-    <h1>HL7 Healthcare Integration Automation</h1>
-    <p class="sub">
-      Based on the
-      <a href="{{ case_study_url }}" target="_blank" rel="noreferrer">HL7 Healthcare Integration Automation Platform</a>
-      case study — hospitals send HL7 2.x, PilotFish validates, optionally splits batches, inserts SQL, and forwards to a clearinghouse.
-    </p>
-    {% if lan_hint %}<p class="sub">LAN: <a href="{{ lan_hint }}">{{ lan_hint }}</a></p>{% endif %}
-    <p class="sub muted">EIP: <a href="http://localhost:8096/eip/" target="_blank" rel="noreferrer"><code>http://localhost:8096/eip/</code></a></p>
-  </main>
+  <!-- TIMING_TAB_STANDARD:START -->
+  {% include 'partials/timing_tab.html' %}
+  <!-- TIMING_TAB_STANDARD:END -->
+  <!-- INFO_TAB_STANDARD:START -->
+  {% include 'partials/info_tab.html' %}
+  <!-- INFO_TAB_STANDARD:END -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
   <script src="/static/code-highlight.js"></script>
   <script src="/static/app.js"></script>
+  <script src="/static/timing-tab.js"></script>
 </body>
 </html>

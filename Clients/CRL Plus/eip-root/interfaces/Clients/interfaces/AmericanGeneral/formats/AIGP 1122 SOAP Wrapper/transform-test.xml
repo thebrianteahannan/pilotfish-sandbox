@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2">
+	<UserAuthRequest>
+		<UserLoginName />
+		<UserPswd>
+			<CryptType>NONE</CryptType>
+			<Pswd />
+		</UserPswd>
+		<VendorApp>
+			<VendorName VendorCode="118">CRL-Plus</VendorName>
+			<AppName>XMLPROC</AppName>
+			<AppVer>1.0.0</AppVer>
+		</VendorApp>
+	</UserAuthRequest>
+	<TXLifeRequest>
+		<TransRefGUID>ADB2C755-08BE-28D8-4C32-77BA0CCE37E7</TransRefGUID>
+		<TransType tc="1122">Requirement Notification Transmittal</TransType>
+		<TransExeDate>2016-11-23</TransExeDate>
+		<TransExeTime>07:41:19-06:00</TransExeTime>
+		<OLifE>
+			<SourceInfo>
+				<SourceInfoName>CRL-Plus</SourceInfoName>
+				<SourceInfoDescription>Email : INSURANCECS@CRLCORP.COM</SourceInfoDescription>
+				<SourceInfoComment>Phone : 8558507587</SourceInfoComment>
+			</SourceInfo>
+			<Holding id="HoldingType_1">
+				<HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+				<Policy>
+					<PolNumber>A03CHIND01</PolNumber>
+					<Life>
+						<FactAmt>1000002</FactAmt>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>ALIP001A03CHIND01_life_Party-44161_TI_1</TrackingID>
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="Party_1" FulfillerPartyID="Party_Fulfiller_1" RequesterPartyID="Party_Requester_1" id="Requirement_1_1">
+						<ReqCode tc="137">Conduct Tele-Interview</ReqCode>
+						<RequirementInfoUniqueID>ALIP001A03CHIND01_life_Party-44161_TI_1</RequirementInfoUniqueID>
+						<ReqStatus tc="11">Completed</ReqStatus>
+						<RequirementDetails>Conduct Tele-Interview</RequirementDetails>
+						<RequestedDate>2016-11-20</RequestedDate>
+						<ReceivedAtLocationDate>2016-11-20</ReceivedAtLocationDate>
+						<FulfilledDate>2016-11-21</FulfilledDate>
+						<StatusDate>2016-11-21</StatusDate>
+						<ReleasePartyOrgCode>AIG</ReleasePartyOrgCode>
+						<RequirementAcctNum>1071</RequirementAcctNum>
+						<ProviderOrderNum>71026</ProviderOrderNum>
+						<OrderReceivedDate>2016-11-20</OrderReceivedDate>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Other</StatusEventCode>
+							<ProviderEventCode>S85</ProviderEventCode>
+							<StatusEventDate>2016-11-20</StatusEventDate>
+							<StatusEventTime>23:45:08-06:00</StatusEventTime>
+							<StatusEventDetail>Service - 102781- ORDERED APPLICATION PART II</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Other</StatusEventCode>
+							<ProviderEventCode>S79</ProviderEventCode>
+							<StatusEventDate>2016-11-20</StatusEventDate>
+							<StatusEventTime>23:45:08-06:00</StatusEventTime>
+							<StatusEventDetail>Order Received</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Other</StatusEventCode>
+							<ProviderEventCode>065</ProviderEventCode>
+							<StatusEventDate>2016-11-21</StatusEventDate>
+							<StatusEventTime>12:48:34-06:00</StatusEventTime>
+							<StatusEventDetail>Applicant wants to talk to agent.</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Other</StatusEventCode>
+							<ProviderEventCode>501</ProviderEventCode>
+							<StatusEventDate>2016-11-21</StatusEventDate>
+							<StatusEventTime>12:49:49-06:00</StatusEventTime>
+							<StatusEventDetail>Interview partially completed.</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Other</StatusEventCode>
+							<ProviderEventCode>613</ProviderEventCode>
+							<StatusEventDate>2016-11-21</StatusEventDate>
+							<StatusEventTime>12:50:42-06:00</StatusEventTime>
+							<StatusEventDetail>Called, no answer, no message left.</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Other</StatusEventCode>
+							<ProviderEventCode>011</ProviderEventCode>
+							<StatusEventDate>2016-11-21</StatusEventDate>
+							<StatusEventTime>12:51:40-06:00</StatusEventTime>
+							<StatusEventDetail>Appointment Set</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Other</StatusEventCode>
+							<ProviderEventCode>S67</ProviderEventCode>
+							<StatusEventDate>2016-11-21</StatusEventDate>
+							<StatusEventTime>13:59:06-06:00</StatusEventTime>
+							<StatusEventDetail>Service Line Completed</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647">Other</StatusEventCode>
+							<ProviderEventCode>526</ProviderEventCode>
+							<StatusEventDate>2016-11-21</StatusEventDate>
+							<StatusEventTime>13:58:46-06:00</StatusEventTime>
+							<StatusEventDetail>Interview completed and released.</StatusEventDetail>
+						</StatusEvent>
+					</RequirementInfo>
+				</Policy>
+			</Holding>
+			<Party id="Party_1">
+				<FullName>Kenney Snmmmmtestcasejn</FullName>
+				<GovtID>734505630</GovtID>
+				<ResidenceState tc="51">Texas</ResidenceState>
+				<ResidenceCountry tc="1">United States of America</ResidenceCountry>
+				<Person>
+					<FirstName>Kenney</FirstName>
+					<LastName>Snmmmmtestcasejn</LastName>
+					<BirthDate>1978-02-07</BirthDate>
+					<Age>38</Age>
+				</Person>
+			</Party>
+			<Party id="Party_Requester_1">
+				<PartyTypeCode tc="2">Company</PartyTypeCode>
+				<FullName>AIG</FullName>
+				<Organization>
+					<DBA>AIG</DBA>
+				</Organization>
+			</Party>
+			<Party id="Party_Fulfiller_1">
+				<PartyTypeCode tc="2">Company</PartyTypeCode>
+				<FullName>CRL-Plus</FullName>
+				<Organization>
+					<DBA>CRL-Plus</DBA>
+				</Organization>
+			</Party>
+			<Relation OriginatingObjectID="HoldingType_1" RelatedObjectID="Party_1" id="RelationType_2">
+				<RelationRoleCode tc="32">Insured</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Party_1" RelatedObjectID="Party_Requester_1" id="Relation_Requester_1">
+				<RelationRoleCode tc="97">Requestor</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Party_1" RelatedObjectID="Party_Fulfiller_1" id="Relation_Fulfiller_1">
+				<RelationRoleCode tc="99">Fulfills</RelationRoleCode>
+			</Relation>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>
+

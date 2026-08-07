@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Format xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" name="ACORD 103 to ACORD 121">
+  <TransformationModule class="com.pilotfish.eip.modules.internal.RelayTransformationModule">
+    <ModuleConfig>
+      <ExecuteTransformation>true</ExecuteTransformation>
+    </ModuleConfig>
+  </TransformationModule>
+  <XSLT>
+    <ToXML>103-2-121.xslt</ToXML>
+    <CacheXSLTToXML>false</CacheXSLTToXML>
+    <FromXML />
+    <CacheXSLTFromXML>false</CacheXSLTFromXML>
+    <XSLTVersion>1.0</XSLTVersion>
+    <XSLTEngine>XALAN_INTERPRETED</XSLTEngine>
+    <XSLTParameters>null</XSLTParameters>
+    <ExecuteTransformation>true</ExecuteTransformation>
+  </XSLT>
+  <FormatMetadata />
+  <SplitControl xmlns="http://www.pilotfishtechnology.com/eip/FormatSpec">
+    <JoinModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullJoinModule" />
+    <ForkModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullForkModule" />
+  </SplitControl>
+</Format>
+

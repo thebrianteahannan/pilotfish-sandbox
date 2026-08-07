@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.10.00.xsd">
+	<UserAuthRequest>
+		<UserLoginName />
+		<UserPswd>
+			<CryptType />
+			<CryptPswd />
+		</UserPswd>
+		<UserDate>2015-04-06</UserDate>
+		<UserTime>13:05:35-04:00</UserTime>
+		<VendorApp>
+			<VendorName VendorCode="84">Portamedic</VendorName>
+			<AppName>ImagePro</AppName>
+			<AppVer>1.0.0</AppVer>
+		</VendorApp>
+	</UserAuthRequest>
+	<TXLifeRequest>
+		<TransRefGUID>02945FEB-0291-A2CC-0000-0149A3FBBB7F</TransRefGUID>
+		<TransType tc="1122">Requirement Notification Transmittal</TransType>
+		<TransExeDate>2014-11-12</TransExeDate>
+		<TransExeTime>07:30:24</TransExeTime>
+		<TransMode tc="2">Original</TransMode>
+		<TestIndicator tc="0">False</TestIndicator>
+		<OLifE>
+			<SourceInfo>
+				<CreationDate>2014-11-12</CreationDate>
+				<CreationTime>07:30:24</CreationTime>
+			</SourceInfo>
+			<Holding id="Holding_1">
+				<HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+				<Policy id="Policy_1">
+					<PolNumber>POLNO7836</PolNumber>
+					<CarrierCode>MUSA</CarrierCode>
+					<ProductType tc="2">Term</ProductType>
+					<Life>
+						<LoanIntType tc="1">Fixed</LoanIntType>
+						<DivType tc="1">None</DivType>
+						<Coverage id="Coverage_0">
+							<ProductCode>CDT15B</ProductCode>
+							<LifeCovStatus tc="8">Pending Issue</LifeCovStatus>
+							<LifeCovTypeCode tc="0">Unknown</LifeCovTypeCode>
+							<IndicatorCode tc="1">Base</IndicatorCode>
+							<CurrentAmt>500000</CurrentAmt>
+							<LifeParticipant DataRep="Full" PartyID="PARTYID_IN_1" id="LIFEPARTICIPANTPARTYID_IN_1">
+								<LifeParticipantRoleCode tc="1">Primary Insured</LifeParticipantRoleCode>
+								<IssueAge>35</IssueAge>
+								<IssueGender tc="1">Male</IssueGender>
+								<SmokerStat tc="1">Never used tobacco in any form</SmokerStat>
+								<PermTableRating tc="1">None</PermTableRating>
+							</LifeParticipant>
+						</Coverage>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>374761412</TrackingID>
+						<ApplicationJurisdiction tc="17">Illinois</ApplicationJurisdiction>
+						<SignedDate>2014-10-23</SignedDate>
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="PARTYID_IN_1">
+						<ReqCode tc="1001700226">APS-PHYSICIAN INFORMATION LINE</ReqCode>
+						<RequirementInfoUniqueID>374761412IN001APS-PIL   001</RequirementInfoUniqueID>
+						<ReqStatus tc="4">OutStanding</ReqStatus>
+						<RequestedDate>2014-11-12</RequestedDate>
+						<StatusDate />
+						<ReleasePartyOrgCode>MLFP</ReleasePartyOrgCode>
+						<RequirementAcctNum>78620</RequirementAcctNum>
+						<StatusEvent>
+							<StatusEventCode tc="" />
+							<ProviderEventCode>test2</ProviderEventCode>
+							<StatusEventDate />
+							<StatusEventTime>-04:00</StatusEventTime>
+							<StatusEventDetail>this is a second test</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="" />
+							<ProviderEventCode>test3</ProviderEventCode>
+							<StatusEventDate />
+							<StatusEventTime>-04:00</StatusEventTime>
+							<StatusEventDetail>this is the third result</StatusEventDetail>
+						</StatusEvent>
+					</RequirementInfo>
+				</Policy>
+			</Holding>
+			<Party id="PARTYID_IN_1">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName>Jones, Tom</FullName>
+				<GovtID>3456789</GovtID>
+				<GovtIDStat tc="0">Unknown</GovtIDStat>
+				<GovtIDTC tc="1">Social Security Number</GovtIDTC>
+				<ResidenceState tc="17">Illinois</ResidenceState>
+				<ResidenceCountry tc="1">USA</ResidenceCountry>
+				<Person>
+					<FirstName>Tom</FirstName>
+					<MiddleName>W</MiddleName>
+					<LastName>Jones</LastName>
+					<Occupation>POLICE OFFICER</Occupation>
+					<MarStat tc="0">Unknown</MarStat>
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1969-10-07</BirthDate>
+					<Citizenship tc="1">United States of America</Citizenship>
+					<EstSalary>0.00</EstSalary>
+					<NetIncomeAmt>200000.00</NetIncomeAmt>
+				</Person>
+				<Address id="AddressID_IN_1_R_1">
+					<AddressTypeCode tc="1">Residence</AddressTypeCode>
+					<Line1>170 Mt Airy Rd</Line1>
+					<City>WEST CHICAGO</City>
+					<AddressState>IL</AddressState>
+					<AddressStateTC tc="17">Illinois</AddressStateTC>
+					<Zip>60185</Zip>
+					<AddressCountryTC tc="1">USA</AddressCountryTC>
+					<StartDate>2014-10-20</StartDate>
+					<PreventOverrideInd tc="0">False</PreventOverrideInd>
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="0">Unknown</PhoneTypeCode>
+					<AreaCode>908</AreaCode>
+					<DialNumber>5554645</DialNumber>
+					<PrefPhone tc="1">True</PrefPhone>
+					<BestTimeToCallFrom>17:00:00</BestTimeToCallFrom>
+					<BestTimeToCallTo>19:00:00</BestTimeToCallTo>
+					<StartDate>2014-10-20</StartDate>
+				</Phone>
+				<EMailAddress DataRep="Full" id="EmailID_IN_1">
+					<EMailType tc="2147483647">Other</EMailType>
+					<AddrLine>tomjones@YAHOO.COM</AddrLine>
+					<StartDate>2014-10-20</StartDate>
+				</EMailAddress>
+			</Party>
+			<Party id="PartyID_PH_1">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName>Springstein, Bruce</FullName>
+				<Person>
+					<FirstName>Bruce</FirstName>
+					<LastName>Springstein</LastName>
+					<EstSalary>0.00</EstSalary>
+					<NetIncomeAmt>0.00</NetIncomeAmt>
+				</Person>
+				<Address id="AddressID_PH_1_M_1">
+					<AddressTypeCode tc="17">Mailing</AddressTypeCode>
+					<Line1>40 Morristown Rd</Line1>
+					<City>WHEATON</City>
+					<AddressState>IL</AddressState>
+					<AddressStateTC tc="17">Illinois</AddressStateTC>
+					<Zip>60187</Zip>
+					<AddressCountryTC tc="1">USA</AddressCountryTC>
+					<StartDate>2014-10-20</StartDate>
+					<PreventOverrideInd tc="0">False</PreventOverrideInd>
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="0">Unknown</PhoneTypeCode>
+					<AreaCode>908</AreaCode>
+					<DialNumber>5556900</DialNumber>
+					<StartDate>2014-10-20</StartDate>
+				</Phone>
+			</Party>
+			<Relation OriginatingObjectID="Holding_1" RelatedObjectID="PARTYID_IN_1" id="RelationID_1">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="32">Insured</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="PARTYID_IN_1" RelatedObjectID="PartyID_PH_1" id="RelationID_2">
+				<OriginatingObjectType tc="6">Party</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="58">Primary Physician</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Holding_1" RelatedObjectID="PartyID_PA_1" id="RelationID_3">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="37">Primary Writing Agent</RelationRoleCode>
+			</Relation>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>
+

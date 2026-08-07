@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<UserAuthRequest>
+		<UserLoginName />
+		<UserPswd>
+			<CryptType>NONE</CryptType>
+			<CryptPswd />
+		</UserPswd>
+		<UserDate>2016-03-22</UserDate>
+		<UserTime>16:34:27-05:00</UserTime>
+		<VendorApp>
+			<VendorName VendorCode="118">CRL-Plus</VendorName>
+			<AppName>XMLPROC</AppName>
+			<AppVer>1.0.0</AppVer>
+		</VendorApp>
+	</UserAuthRequest>
+	<TXLifeRequest>
+		<TransRefGUID>E3C66695-11F5-2207-78B3-83D7DA5655B1</TransRefGUID>
+		<TransType tc="1122">Requirement Notification Transmittal</TransType>
+		<TransExeDate>2016-03-22</TransExeDate>
+		<TransExeTime>16:34:27</TransExeTime>
+		<TransMode tc="2">Original</TransMode>
+		<TestIndicator tc="1">True</TestIndicator>
+		<OLifE>
+			<SourceInfo>
+				<SourceInfoName>CRL-Plus</SourceInfoName>
+				<SourceInfoDescription>Email : INSURANCECS@CRLCORP.COM</SourceInfoDescription>
+				<SourceInfoComment>Phone : 8558507587</SourceInfoComment>
+			</SourceInfo>
+			<Holding id="HoldingType_1">
+				<HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+				<Policy CarrierPartyID="PartyType_1" id="PolicyType_1">
+					<PolNumber>AT10201640</PolNumber>
+					<CarrierCode>CCode</CarrierCode>
+					<ProductType tc="" />
+					<Life>
+						<InitialPremAmt />
+						<FaceAmt>6000000.000000</FaceAmt>
+						<Coverage id="CoverageType_1">
+							<PlanName />
+							<ShortName />
+							<LifeCovStatus tc="" />
+							<LifeCovTypeCode tc="" />
+							<IndicatorCode tc="" />
+							<CurrentAmt>6000000.000000</CurrentAmt>
+							<LifeParticipant PartyID="" id="">
+								<LifeParticipantRoleCode tc="" />
+							</LifeParticipant>
+						</Coverage>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>2016-03-10-22.30.44.656360C01-1_life_1_TI_1</TrackingID>
+						<ApplicationJurisdiction tc="" />
+						<SignedDate />
+						<PrefLanguage tc="" />
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="PartyType_2_life_1">
+						<RequirementDetails />
+						<CarrierOrderNum />
+						<ReqCode tc="137">Conduct Tele-Interview</ReqCode>
+						<RequirementInfoUniqueID>2016-03-10-22.30.44.656360C01-1_life_1_TI_1</RequirementInfoUniqueID>
+						<ReqStatus tc="7">Received</ReqStatus>
+						<RequestedDate>2016-03-17 00:00:00.0</RequestedDate>
+						<StatusDate>2016-03-17</StatusDate>
+						<ReleasePartyOrgCode>PACT</ReleasePartyOrgCode>
+						<RequirementAcctNum>71648</RequirementAcctNum>
+						<RequirementDetails />
+						<ProviderOrderNum>6153900</ProviderOrderNum>
+						<OrderReceivedDate>2016-03-17</OrderReceivedDate>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S85</ProviderEventCode>
+							<StatusEventDate>2016-03-17</StatusEventDate>
+							<StatusEventTime>14:12:26-05:00</StatusEventTime>
+							<StatusEventDetail>Service - 102616- ORDERED APPLICATION</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S79</ProviderEventCode>
+							<StatusEventDate>2016-03-17</StatusEventDate>
+							<StatusEventTime>14:12:26-05:00</StatusEventTime>
+							<StatusEventDetail>Order Received</StatusEventDetail>
+						</StatusEvent>
+					</RequirementInfo>
+				</Policy>
+			</Holding>
+			<Party id="PartyType_1">
+				<PartyTypeCode tc="2">Organization</PartyTypeCode>
+				<GovtID />
+				<Organization>
+					<AbbrName>PacLife</AbbrName>
+				</Organization>
+				<FullName>Pacific Life Insurance</FullName>
+				<Address>
+					<AddressTypeCode tc="2">Business</AddressTypeCode>
+					<Line1>45 Enterprise</Line1>
+					<Line2>California</Line2>
+					<City>Aliso Viejo</City>
+					<AddressState>UN</AddressState>
+					<AddressStateTC tc="0">UN</AddressStateTC>
+					<Zip />
+					<PreventOverrideInd tc="" />
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="" />
+					<AreaCode>877</AreaCode>
+					<DialNumber>4412357</DialNumber>
+					<Ext />
+				</Phone>
+				<ResidenceState tc="" />
+				<ResidenceCountry tc="" />
+			</Party>
+			<Party id="PartyType_2_Insured">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID>030000000</GovtID>
+				<Person>
+					<FirstName>MRASGA INFLIGHT</FirstName>
+					<MiddleName />
+					<LastName>STAGE SEVEN</LastName>
+					<Occupation />
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1971-01-01</BirthDate>
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="" />
+					<Prefix />
+				</Person>
+				<FullName />
+				<Address>
+					<AddressTypeCode tc="1">Residence</AddressTypeCode>
+					<Line1>1223 Lakerforest Drive, Apt # 121</Line1>
+					<Line2 />
+					<City>Lake Forest</City>
+					<AddressState>GA</AddressState>
+					<AddressStateTC tc="13">GA</AddressStateTC>
+					<Zip>11111</Zip>
+					<PreventOverrideInd tc="" />
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1" />
+					<AreaCode>111</AreaCode>
+					<DialNumber>222-3334</DialNumber>
+					<Ext />
+					<PrefPhone tc="1">YES</PrefPhone>
+				</Phone>
+				<ResidenceState tc="" />
+				<ResidenceCountry tc="" />
+			</Party>
+			<Relation OriginatingObjectID="HoldingType_1" RelatedObjectID="PartyType_Insured" id="RelationType_1">
+				<OriginatingObjectType tc="4" />
+				<RelatedObjectType tc="6" />
+				<RelationRoleCode tc="87" />
+			</Relation>
+			<Relation OriginatingObjectID="HoldingType_1" RelatedObjectID="PartyType_2_life_1" id="RelationType_2">
+				<OriginatingObjectType tc="4" />
+				<RelatedObjectType tc="6" />
+				<RelationRoleCode tc="32" />
+			</Relation>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>
+

@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2026-05-01T09:55:25-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Wait For Attachment" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //acord:ReqStatus/@tc=11 and //acord:StatusEvent and not(//acord:Attachment) and not(//acord:ProviderEventCode[.='S78' or .='333' or .='334' or .='S82']) and not(//acord:StatusEventDetail[contains(.,'CNR') or .='Cancelled per customer'])
+              <Namespaces>
+                <Namespace name="acord">http://ACORD.org/Standards/Life/2</Namespace>
+              </Namespaces>
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Bypass Delivery Archive" />
+            <TransportTarget name="Upload Test Status" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.crl.testindicator</Name>
+                <Operator>=</Operator>
+                <Value>2</Value>
+              </Attribute>
+              <Expression>
+                //acord:StatusEvent
+                <Namespaces>
+                  <Namespace name="acord">http://ACORD.org/Standards/Life/2</Namespace>
+                </Namespaces>
+              </Expression>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="1122 Status or Result" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //acord:StatusEvent and //acord:ProviderEventCode[. != 'S82']
+              <Namespaces>
+                <Namespace name="acord">http://ACORD.org/Standards/Life/2</Namespace>
+              </Namespaces>
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Empty Status" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="LL.3-Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Outgoing Routes</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="CRL Order Status DB">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="FGLI 1122 Status">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+        <MonitoringTime>12:39-12:39</MonitoringTime>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <InactivityPolling>500</InactivityPolling>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <CheckInactivity>false</CheckInactivity>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="LL3.set PLServicesAccountID">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>PLServicesAccountID</AttributeName>
+          <Expression>$$PacificLifeOutgoingWsUsername</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:PLServicesAccountID:eip_name:$$PacificLifeOutgoingWsUsername:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="LL3.set PLServiceAccountPwd">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>PLServiceAccountPwd</AttributeName>
+          <Expression>$$PacificLifeOutgoingWsPassword</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:PLServiceAccountPwd:eip_name:$$PacificLifeOutgoingWsPassword:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.stream.StreamNormalizerProcessor" name="LL.3 - LL ACORD 1122 Status or Result POST.Processor1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <BufferSize>512</BufferSize>
+          <CharacterEncoding>UTF-8</CharacterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="LL3.set Attrs From Xpath">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:OrderNumber:eip_name://acord:ProviderOrderNum:eip_value][eip_pair:ReqInfoStatus:eip_name://acord:ReqStatus:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:soap:eip_name:http://schemas.xmlsoap.org/soap/envelope/:eip_value][eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>true</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="POST to FGLI">
+    <FormatProfile name="FGLI 1122" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="1122 Status or Result" retries="3" retryDelayMs="5000">
+      <ModuleConfig>
+        <TargetURL>$$FGLIOutgoingWsURL</TargetURL>
+        <UserName>$$FGLIOutgoingWsUserName</UserName>
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password>$$FGLIOutgoingWsPassword</Password>
+        <PreemptiveAuthentication>true</PreemptiveAuthentication>
+        <ResponseListener>FGLI Result Listener</ResponseListener>
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>600000</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <SynchronizationKey />
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <SpecifyTLS>false</SpecifyTLS>
+        <TLSVersion>TLSv1.1</TLSVersion>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <ValidateHostname>false</ValidateHostname>
+        <ErrorResponseEncoding>UTF-8</ErrorResponseEncoding>
+        <TrustSelfSignedCerts>false</TrustSelfSignedCerts>
+        <DisableChunking>false</DisableChunking>
+        <FormElementEncoding>UTF-8</FormElementEncoding>
+        <UrlParamEncoding>UTF-8</UrlParamEncoding>
+        <TrustStoreSource>JVM</TrustStoreSource>
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetArchiveDir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>$$archive.dir</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:archive.dir:eip_name:$$archive.dir:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetArchiveSubDir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>{ognl:getAttribute("archive.dir")+"/FGLIRES/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:archive.dir:eip_name:{ognl:getAttribute("archive.dir")+"/LADDER/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="SetArchiveFilename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.filename</AttributeName>
+          <Expression>{ognl:"outgoing-FGLIRES-"+getAttribute('OrderNumber')+'-'+getAttribute('ReqInfoStatus')+'-' + new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID()}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:archive.filename:eip_name:{ognl:"outgoing-LADDER-"+getAttribute('OrderNumber')+'-'+getAttribute('ReqInfoStatus')+'-' + new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID()}:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileOperationProcessor" name="CreateArchiveSubdir-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>{ognl:getAttribute("archive.dir")}</FileName>
+          <Overwrite>false</Overwrite>
+          <ExceptionOnFailure>false</ExceptionOnFailure>
+          <PostProcessOperation>Create Folder</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="StoreArchive">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>{ognl:getAttribute('archive.dir')}</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('archive.filename') + '.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="LL.3 - Check For Cancellation Statuses">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:hasCancellationStatus:eip_name://acord:ProviderEventCode[.='333' or .='334']:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>true</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEscapingProcessor" name="LL3.EscapeXML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XPath>/soap:Envelope/soap:Body/tem:HandleRequest/tem:TXLifePayLoad</XPath>
+          <Direction>Escape</Direction>
+          <Namespaces>[eip_pair:ns2:eip_name:http://ACORD.org/Standards/Life/2:eip_value][eip_pair:tem:eip_name:http://tempuri.org/:eip_value][eip_pair:soap:eip_name:http://schemas.xmlsoap.org/soap/envelope/:eip_value]</Namespaces>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="FGLI.Resonant.Processor-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>{ognl:'Clients.FGLI (Resonant)-' + getAttribute('com.pilotfish.FileName') + '-3 - 1122 Status or Result POST'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="FGLI (Resonant).3 - 1122 Status or Result POST.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Mark Status Consumed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Empty Status" retries="1">
+      <ModuleConfig>
+        <ServiceName>Update Status Inbound</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Mark Status Consumed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Wait For Attachment" retries="1">
+      <ModuleConfig>
+        <ServiceName>Update Status Inbound</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Clear statuses">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>statuses</AttributeName>
+          <Expression>&lt;XCSData /&gt;</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:statuses:eip_name:&lt;XCSData /&gt;:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="LL3.set awaitingAttachments">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.statustype</AttributeName>
+          <Expression>awaitingAttachments</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:com.pilotfish.crl.statustype:eip_name:awaitingAttachments:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Archive bypass file">
+    <FormatProfile name="FGLI 1122" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Bypass Delivery Archive" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:getAttribute('archive.dir')}</TargetDirectory>
+        <FileName>{ognl:getAttribute('archive.filename')}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Create New</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+        <OutputFilePath>false</OutputFilePath>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set archive dir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>$$archive.dir</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:archive.dir:eip_name:$$archive.dir:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set archive subdir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.dir</AttributeName>
+          <Expression>{ognl:getAttribute("archive.dir")+"/FGLIRES/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:archive.dir:eip_name:{ognl:getAttribute("archive.dir")+"/LADDER/"+new java.text.SimpleDateFormat('yyyy-MM').format(new java.util.Date())}:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set archive filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>archive.filename</AttributeName>
+          <Expression>{ognl:'audit-outgoing-FGLIRES-'+getAttribute('OrderNumber')+'-'+getAttribute('ReqInfoStatus')+'-'+new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID()}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:archive.filename:eip_name:{ognl:'audit-outgoing-FGLI-'+getAttribute('OrderNumber')+'-'+getAttribute('ReqInfoStatus')+'-'+new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID()}:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Upload acceptance file and mark status consumed">
+    <FormatProfile name="FGLI 1122" />
+    <Transport class="com.pilotfish.eip.modules.file.ftp.FTPTransport" name="Upload Test Status" retries="10" retryDelayMs="90000">
+      <ModuleConfig>
+        <FTPTransportType>Encrypted FTP (JSCH SSH/SFTP)</FTPTransportType>
+        <Host>$$sftp.hostname</Host>
+        <Port>22</Port>
+        <TargetDirectory>$$sftp.reconcile.directory</TargetDirectory>
+        <FileName>{ognl:getAttribute('audit.filename')}</FileName>
+        <FileExtension>txt</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <Timeout>300</Timeout>
+        <Sftp_SocketTimeout>300</Sftp_SocketTimeout>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private (P)</Protection>
+        <FileType>Binary</FileType>
+        <AppendToFile>false</AppendToFile>
+        <Overwrite>false</Overwrite>
+        <CheckForFileAfterWriting>false</CheckForFileAfterWriting>
+        <FAIL_ON_FALSE_RESULT>true</FAIL_ON_FALSE_RESULT>
+        <WriteFromHome>false</WriteFromHome>
+        <UserName>$$sftp.username</UserName>
+        <Password>$$sftp.password</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <RetryDelay>1</RetryDelay>
+        <SetFileTime>true</SetFileTime>
+        <RetryConnection>false</RetryConnection>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set audit.filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>audit.filename</AttributeName>
+          <Expression>{ognl:'audit-outgoing-LADDER-'+getAttribute('OrderNumber')+'-'+getAttribute('ReqInfoStatus')+'-'+new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID()}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:audit.filename:eip_name:{ognl:'audit-outgoing-FGLI-'+getAttribute('OrderNumber')+'-'+getAttribute('ReqInfoStatus')+'-'+new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID()}:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.PauseProcessor" name="Random pause for SFTP concurrency issue">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Period>{ognl:new java.util.Random().nextDouble()*15+1}</Period>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+    <PostProcessors>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="PacificLife.3 - Post upload - update status">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>Update Status Inbound</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </PostProcessors>
+  </Target>
+</Route>
+

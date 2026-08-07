@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestConfigurations>
+   <TestConfig name="escape result">
+      <AlternateDataSource>From Text</AlternateDataSource>
+      <StartingText>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#xD;
+&lt;soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;&#xD;
+	&lt;soap:Body&gt;&#xD;
+		&lt;SubmitOrderDataResponse xmlns="http://crlcorp.com/DocumentService"&gt;&#xD;
+			&lt;SubmitOrderDataResult&gt;&#xD;
+				&lt;Message&gt;The order file was sent successfully.&lt;/Message&gt;&#xD;
+				&lt;TransactionID&gt;1234&lt;/TransactionID&gt;&#xD;
+				&lt;TeledexOrderNumber&gt;4321&lt;/TeledexOrderNumber&gt;&#xD;
+			&lt;/SubmitOrderDataResult&gt;&#xD;
+		&lt;/SubmitOrderDataResponse&gt;&#xD;
+	&lt;/soap:Body&gt;&#xD;
+&lt;/soap:Envelope&gt;&#xD;
+&#xD;
+</StartingText>
+      <Stage>
+         <Identifier>processor@transport=Teledex Order Confirmation.Synchronous Response Transport,processor=Teledex.2 - Escape Response Body</Identifier>
+         <IsStart>true</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>true</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=Teledex Order Confirmation.Synchronous Response Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+   </TestConfig>
+</TestConfigurations>

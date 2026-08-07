@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<UserAuthRequest>
+		<UserLoginName />
+		<UserPswd>
+			<CryptType>NONE</CryptType>
+			<CryptPswd />
+		</UserPswd>
+		<UserDate>2017-02-28</UserDate>
+		<UserTime>16:22:27-06:00</UserTime>
+		<VendorApp>
+			<VendorName VendorCode="118">CRL-Plus</VendorName>
+			<AppName>XMLPROC</AppName>
+			<AppVer>1.0.0</AppVer>
+		</VendorApp>
+	</UserAuthRequest>
+	<TXLifeRequest>
+		<TransRefGUID>96D30AD4-82FD-2E37-066C-6A7C4960ADD4</TransRefGUID>
+		<TransType tc="1122">Requirement Notification Transmittal</TransType>
+		<TransExeDate>2017-02-28</TransExeDate>
+		<TransExeTime>16:22:27</TransExeTime>
+		<TransMode tc="2">Original</TransMode>
+		<TestIndicator tc="0">False</TestIndicator>
+		<OLifE>
+			<SourceInfo>
+				<SourceInfoName>CRL-Plus</SourceInfoName>
+				<SourceInfoDescription>Email : INSURANCECS@CRLCORP.COM</SourceInfoDescription>
+				<SourceInfoComment>Phone : 8558507587</SourceInfoComment>
+			</SourceInfo>
+			<Holding id="Application_Holding">
+				<HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+				<Policy CarrierPartyID="Party_Carrier" id="Party_Carrier">
+					<PolNumber>AXA004886</PolNumber>
+					<CarrierCode>AXA Equitable</CarrierCode>
+					<LineOfBusiness tc="1">Life</LineOfBusiness>
+					<ProductType tc="2">TERM</ProductType>
+					<Jurisdiction tc="26">MA</Jurisdiction>
+					<Life>
+						<FaceAmt>540000</FaceAmt>
+						<Coverage id="">
+							<PlanName />
+							<ShortName />
+							<LifeCovStatus tc="" />
+							<LifeCovTypeCode tc="" />
+							<IndicatorCode tc="" />
+							<CurrentAmt />
+							<LifeParticipant PartyID="Party_PrimaryInsured" id="">
+								<LifeParticipantRoleCode tc="1">Primary Insured</LifeParticipantRoleCode>
+							</LifeParticipant>
+						</Coverage>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>c4c36c87-db8f-477b-8f0b-e8bcac716a0f</TrackingID>
+						<ApplicationJurisdiction tc="26">MA</ApplicationJurisdiction>
+						<PrefLanguage tc="" />
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="Party_PrimaryInsured" RequesterPartyID="Party_Carrier">
+						<CarrierOrderNum />
+						<ReqCode tc="137">Conduct Tele-Interview</ReqCode>
+						<RequirementInfoUniqueID />
+						<ReqStatus tc="11">Completed</ReqStatus>
+						<RequestedDate>2017-02-27 00:00:00.0</RequestedDate>
+						<FulfilledDate>2017-02-28</FulfilledDate>
+						<StatusDate>2017-02-28</StatusDate>
+						<ReleasePartyOrgCode>PPLN</ReleasePartyOrgCode>
+						<RequirementAcctNum>71711</RequirementAcctNum>
+						<RequirementDetails />
+						<ProviderOrderNum>75834</ProviderOrderNum>
+						<OrderReceivedDate>2017-02-28</OrderReceivedDate>
+					</RequirementInfo>
+					<RequirementInfo AppliesToPartyID="Patient" RequesterPartyID="Party_Carrier">
+						<CarrierOrderNum />
+						<ReqCode tc="535">Diagnose</ReqCode>
+						<RequirementInfoUniqueID>f52e1fbb-5569-4d3f-a9c8-668ba6a99fd7</RequirementInfoUniqueID>
+						<ReqStatus tc="11">Completed</ReqStatus>
+						<RequestedDate>2017-02-28 15:02:59.0</RequestedDate>
+						<FulfilledDate>2017-02-28</FulfilledDate>
+						<StatusDate>2017-02-28</StatusDate>
+						<ReleasePartyOrgCode />
+						<RequirementAcctNum>71711</RequirementAcctNum>
+						<RequirementDetails />
+						<ProviderOrderNum>75834</ProviderOrderNum>
+						<OrderReceivedDate>2017-02-28</OrderReceivedDate>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S85</ProviderEventCode>
+							<StatusEventDate>2017-02-28</StatusEventDate>
+							<StatusEventTime>15:03:01-06:00</StatusEventTime>
+							<StatusEventDetail>Service - 102932- Exam Order Requirement</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>099</ProviderEventCode>
+							<StatusEventDate>2017-02-28</StatusEventDate>
+							<StatusEventTime>15:21:08-06:00</StatusEventTime>
+							<StatusEventDetail>Completed</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S67</ProviderEventCode>
+							<StatusEventDate>2017-02-28</StatusEventDate>
+							<StatusEventTime>15:21:43-06:00</StatusEventTime>
+							<StatusEventDetail>Service Line Completed</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>099</ProviderEventCode>
+							<StatusEventDate>2017-02-28</StatusEventDate>
+							<StatusEventTime>15:21:23-06:00</StatusEventTime>
+							<StatusEventDetail>completed</StatusEventDetail>
+						</StatusEvent>
+					</RequirementInfo>
+				</Policy>
+			</Holding>
+			<Party id="Party_PrimaryInsured">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName>Mrs Jennifer Pease</FullName>
+				<GovtID>020864597</GovtID>
+				<Person>
+					<FirstName>Jennifer</FirstName>
+					<MiddleName />
+					<LastName>Pease</LastName>
+					<Occupation />
+					<Gender tc="2">Female</Gender>
+					<BirthDate>1988-08-12</BirthDate>
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="" />
+				</Person>
+				<Address>
+					<AddressTypeCode tc="1">Residence</AddressTypeCode>
+					<Line1>6 Beaver Path</Line1>
+					<Line2 />
+					<City>Mattapoisett</City>
+					<AddressState>MA</AddressState>
+					<AddressStateTC tc="26">MA</AddressStateTC>
+					<Zip>02739-____</Zip>
+					<PreventOverrideInd tc="" />
+				</Address>
+				<Address>
+					<AddressTypeCode tc="2147483647">Contact Address</AddressTypeCode>
+					<Line1>6 Beaver Path</Line1>
+					<Line2 />
+					<City>Mattapoisett</City>
+					<AddressState>MA</AddressState>
+					<AddressStateTC tc="26">MA</AddressStateTC>
+					<Zip>02739-____</Zip>
+					<PreventOverrideInd tc="" />
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>978</AreaCode>
+					<DialNumber>2734201</DialNumber>
+					<Ext />
+				</Phone>
+				<Phone>
+					<PhoneTypeCode tc="2147483647">Contact Phone</PhoneTypeCode>
+					<AreaCode>978</AreaCode>
+					<DialNumber>2734201</DialNumber>
+					<Ext />
+				</Phone>
+			</Party>
+			<Party id="Party_WA_1">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName>Kyle Britton</FullName>
+				<GovtID>119494</GovtID>
+				<Person>
+					<FirstName />
+					<MiddleName />
+					<LastName />
+					<Occupation />
+					<Gender tc="" />
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="" />
+				</Person>
+				<Phone>
+					<PhoneTypeCode tc="2">Business</PhoneTypeCode>
+					<AreaCode>781</AreaCode>
+					<DialNumber>2678392</DialNumber>
+					<Ext />
+				</Phone>
+				<EMailAddress>
+					<AddrLine>kyle.britton@axa-advisors.com</AddrLine>
+				</EMailAddress>
+			</Party>
+			<Party id="Party_WAgency">
+				<PartyTypeCode tc="2">Organization</PartyTypeCode>
+				<FullName>300</FullName>
+				<GovtID>119494</GovtID>
+				<Organization>
+					<AbbrName />
+				</Organization>
+			</Party>
+			<Relation OriginatingObjectID="Application_Holding" RelatedObjectID="Party_PrimaryInsured" id="Relation_PrimaryInsured">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="32">Insured</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Application_Holding" RelatedObjectID="Party_WA_1" id="Relation_WritingAgent_1">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="37">Primary Writing Agent</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Application_Holding" RelatedObjectID="Party_WAgency" id="Relation_WritingAgency">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="182">Writing Agency</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Application_Holding" RelatedObjectID="Party_Carrier" id="Relation_Carrier">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="87">Carrier</RelationRoleCode>
+			</Relation>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>
+

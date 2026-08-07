@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?><TestConfigurations>
+  <TestConfig name="CancelNonExistantOrder">
+      <Stage>
+         <Identifier>xslt@listener=8 - Insert Order.Programmable (Java) Listener</Identifier>
+         <IsStart file="C:\Pilotfish\eip-root\formats\Normalized 121 to SQLXML\Normalized121toSQLXML-test.xml">true</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+         <TransactionAttributes>
+            <Attribute key="sourceClient" value="PILOTFISH"/>
+            <Attribute key="com.pilotfish.crl.original.txt" value="&lt;ACORD&gt;&amp;&lt;&gt;'&quot;&lt;/ACORD&gt;"/>
+         </TransactionAttributes>
+      </Stage>
+      <Stage>
+         <Identifier>routing</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=5 - Insert Order.Database SQL Transport Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=5 - Insert Order.Database SQL Transport Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=5 - Insert Order.Database SQL Transport Transport,processor=ROOT.5 - Create failedsql.dir</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=5 - Insert Order.Database SQL Transport Transport,processor=ROOT.5 - set sqlxml.stage.filename</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=5 - Insert Order.Database SQL Transport Transport,processor=ROOT.5 - Save SQLXML</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=5 - Insert Order.Database SQL Transport Transport,processor=character encoding</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=5 - Insert Order.Database SQL Transport Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>unknown/unexpected</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>true</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+   </TestConfig>
+  <TestConfig name="Test1 Insert AIE 121 Order">
+    <AlternateDataSource>From Text</AlternateDataSource>
+    <StartingText>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;TXLife xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.20.02.xsd" xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;UserAuthRequest&gt;
+    &lt;UserLoginName&gt;PACLIFE&lt;/UserLoginName&gt;
+    &lt;UserPswd&gt;
+      &lt;CryptType&gt;NONE&lt;/CryptType&gt;
+      &lt;CryptPswd&gt;PAcMras150727!&lt;/CryptPswd&gt;
+    &lt;/UserPswd&gt;
+    &lt;UserDate&gt;2016-05-02&lt;/UserDate&gt;
+    &lt;UserTime&gt;11:13:09&lt;/UserTime&gt;
+    &lt;VendorApp&gt;
+      &lt;AppName&gt;MRAS AIS&lt;/AppName&gt;
+      &lt;AppVer&gt;4.10.0&lt;/AppVer&gt;
+    &lt;/VendorApp&gt;
+  &lt;/UserAuthRequest&gt;
+  &lt;TXLifeRequest&gt;
+    &lt;TransRefGUID&gt;CRL-TEST-0060-TI&lt;/TransRefGUID&gt;
+    &lt;TransType tc="121"&gt;General Requirement Order Request&lt;/TransType&gt;
+    &lt;TransMode tc="2"&gt;Original&lt;/TransMode&gt;
+    &lt;TestIndicator tc="2"&gt;YES&lt;/TestIndicator&gt;
+    &lt;OLifE&gt;
+      &lt;SourceInfo&gt;
+        &lt;CreationDate&gt;2016-05-02&lt;/CreationDate&gt;
+        &lt;CreationTime&gt;11:13:09&lt;/CreationTime&gt;
+        &lt;SourceInfoName&gt;MRAS AIS&lt;/SourceInfoName&gt;
+      &lt;/SourceInfo&gt;
+      &lt;Holding id="HoldingType_1"&gt;
+        &lt;HoldingTypeCode tc="2"&gt;Policy&lt;/HoldingTypeCode&gt;
+        &lt;Policy id="PolicyType_1" CarrierPartyID="PartyType_1"&gt;
+          &lt;PolNumber&gt;CRL-TEST-0060-TI&lt;/PolNumber&gt;
+          &lt;CarrierCode&gt;CCode&lt;/CarrierCode&gt;
+          &lt;Life&gt;
+            &lt;FaceAmt&gt;280000.000000&lt;/FaceAmt&gt;
+            &lt;Coverage id="CoverageType_1"&gt;
+              &lt;CurrentAmt&gt;280000.000000&lt;/CurrentAmt&gt;
+            &lt;/Coverage&gt;
+          &lt;/Life&gt;
+          &lt;ApplicationInfo&gt;
+            &lt;TrackingID&gt;CRL-TEST-0060-TI&lt;/TrackingID&gt;
+          &lt;/ApplicationInfo&gt;
+          &lt;RequirementInfo id="RequirementInfoType_1" AppliesToPartyID="PartyType_2_life_1"&gt;
+            &lt;ReqCode tc="137"/&gt;
+            &lt;RequirementInfoKey&gt;2016-05-02-02.54.17.786340C01-1_life_1_TI_1&lt;/RequirementInfoKey&gt;
+            &lt;RequirementInfoUniqueID&gt;2016-05-02-02.54.17.786340C01-1_life_1_TI_1&lt;/RequirementInfoUniqueID&gt;
+            &lt;RequestedDate&gt;2016-05-02&lt;/RequestedDate&gt;
+            &lt;ReleasePartyOrgCode&gt;PACT&lt;/ReleasePartyOrgCode&gt;
+            &lt;RequirementAcctNum&gt;71648&lt;/RequirementAcctNum&gt;
+          &lt;/RequirementInfo&gt;
+        &lt;/Policy&gt;
+        &lt;Attachment&gt;
+          &lt;Description&gt;http://TSTAUWGATI.pacificlife.net:81/pac/screens/externalOpenCase&lt;/Description&gt;
+          &lt;AttachmentType tc="2"/&gt;
+        &lt;/Attachment&gt;
+      &lt;/Holding&gt;
+      &lt;Party id="PartyType_1"&gt;
+        &lt;PartyTypeCode tc="2"&gt;Organization&lt;/PartyTypeCode&gt;
+        &lt;FullName&gt;Insurance Company&lt;/FullName&gt;
+        &lt;Organization&gt;
+          &lt;AbbrName&gt;InsCom&lt;/AbbrName&gt;
+        &lt;/Organization&gt;
+        &lt;Address&gt;
+          &lt;Line1&gt;Address Line 1&lt;/Line1&gt;
+          &lt;Line2&gt;Address Line 2&lt;/Line2&gt;
+          &lt;City&gt;City&lt;/City&gt;
+          &lt;AddressCountry&gt;Country&lt;/AddressCountry&gt;
+        &lt;/Address&gt;
+        &lt;Phone&gt;
+          &lt;PhoneTypeCode tc="2"/&gt;
+          &lt;CountryCode&gt;+1&lt;/CountryCode&gt;
+          &lt;AreaCode&gt;1&lt;/AreaCode&gt;
+          &lt;DialNumber&gt;1234567&lt;/DialNumber&gt;
+        &lt;/Phone&gt;
+        &lt;EMailAddress/&gt;
+      &lt;/Party&gt;
+      &lt;Relation id="RelationType_1" OriginatingObjectID="HoldingType_1" RelatedObjectID="PartyType_1"&gt;
+        &lt;OriginatingObjectType tc="4"/&gt;
+        &lt;RelatedObjectType tc="6"/&gt;
+        &lt;RelationRoleCode tc="87"/&gt;
+      &lt;/Relation&gt;
+      &lt;Party id="PartyType_2_life_1"&gt;
+        &lt;PartyTypeCode tc="1"&gt;Person&lt;/PartyTypeCode&gt;
+        &lt;GovtID&gt;030000000&lt;/GovtID&gt;
+        &lt;Person id="PersonType_1"&gt;
+          &lt;FirstName&gt;FLOW&lt;/FirstName&gt;
+          &lt;LastName&gt;CRLTESTC&lt;/LastName&gt;
+          &lt;Gender tc="1"&gt;Male&lt;/Gender&gt;
+          &lt;BirthDate&gt;1965-07-09&lt;/BirthDate&gt;
+        &lt;/Person&gt;
+        &lt;Address&gt;
+          &lt;Line1&gt;30 Mortensen Avenue&lt;/Line1&gt;
+          &lt;City&gt;Sacramento&lt;/City&gt;
+          &lt;AddressStateTC tc="8"/&gt;
+          &lt;Zip&gt;11111&lt;/Zip&gt;
+          &lt;AddressCountryTC tc="1"/&gt;
+        &lt;/Address&gt;
+        &lt;Phone&gt;
+          &lt;PhoneTypeCode tc="1"/&gt;
+          &lt;AreaCode&gt;111&lt;/AreaCode&gt;
+          &lt;DialNumber&gt;222-3334&lt;/DialNumber&gt;
+        &lt;/Phone&gt;
+      &lt;/Party&gt;
+      &lt;Relation id="RelationType_2" OriginatingObjectID="HoldingType_1" RelatedObjectID="PartyType_2_life_1"&gt;
+        &lt;OriginatingObjectType tc="4"/&gt;
+        &lt;RelatedObjectType tc="6"/&gt;
+        &lt;RelationRoleCode tc="32"/&gt;
+      &lt;/Relation&gt;
+    &lt;/OLifE&gt;
+  &lt;/TXLifeRequest&gt;
+&lt;/TXLife&gt;</StartingText>
+    <Stage>
+      <Identifier>processor@transport=5 - Insert Order.Database SQL Transport Transport,processor=Set transactionData</Identifier>
+      <IsStart>true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+      <TransactionAttributes>
+        <Attribute key="com.pilotfish.To_Service" value="BrainService"/>
+        <Attribute key="sourceClient" value="AIE"/>
+        <Attribute key="com.pilotfish.From" value="PacLife"/>
+        <Attribute key="com.pilotfish.crl.original.txt" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt; &lt;TXLife xsi:schemaLocation=&quot;http://ACORD.org/Standards/Life/2 TXLife2.20.02.xsd&quot; xmlns=&quot;http://ACORD.org/Standards/Life/2&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;   &lt;UserAuthRequest&gt;     &lt;UserLoginName&gt;PACLIFE&lt;/UserLoginName&gt;     &lt;UserPswd&gt;       &lt;CryptType&gt;NONE&lt;/CryptType&gt;       &lt;CryptPswd&gt;PAcMras150727!&lt;/CryptPswd&gt;     &lt;/UserPswd&gt;     &lt;UserDate&gt;2016-05-02&lt;/UserDate&gt;     &lt;UserTime&gt;11:13:09&lt;/UserTime&gt;     &lt;VendorApp&gt;       &lt;AppName&gt;MRAS AIS&lt;/AppName&gt;       &lt;AppVer&gt;4.10.0&lt;/AppVer&gt;     &lt;/VendorApp&gt;   &lt;/UserAuthRequest&gt;   &lt;TXLifeRequest&gt;     &lt;TransRefGUID&gt;CRL-TEST-0060-TI&lt;/TransRefGUID&gt;     &lt;TransType tc=&quot;121&quot;&gt;General Requirement Order Request&lt;/TransType&gt;     &lt;TransMode tc=&quot;2&quot;&gt;Original&lt;/TransMode&gt;     &lt;TestIndicator tc=&quot;2&quot;&gt;YES&lt;/TestIndicator&gt;     &lt;OLifE&gt;       &lt;SourceInfo&gt;         &lt;CreationDate&gt;2016-05-02&lt;/CreationDate&gt;         &lt;CreationTime&gt;11:13:09&lt;/CreationTime&gt;         &lt;SourceInfoName&gt;MRAS AIS&lt;/SourceInfoName&gt;       &lt;/SourceInfo&gt;       &lt;Holding id=&quot;HoldingType_1&quot;&gt;         &lt;HoldingTypeCode tc=&quot;2&quot;&gt;Policy&lt;/HoldingTypeCode&gt;         &lt;Policy id=&quot;PolicyType_1&quot; CarrierPartyID=&quot;PartyType_1&quot;&gt;           &lt;PolNumber&gt;CRL-TEST-0060-TI&lt;/PolNumber&gt;           &lt;CarrierCode&gt;CCode&lt;/CarrierCode&gt;           &lt;Life&gt;             &lt;FaceAmt&gt;280000.000000&lt;/FaceAmt&gt;             &lt;Coverage id=&quot;CoverageType_1&quot;&gt;               &lt;CurrentAmt&gt;280000.000000&lt;/CurrentAmt&gt;             &lt;/Coverage&gt;           &lt;/Life&gt;           &lt;ApplicationInfo&gt;             &lt;TrackingID&gt;CRL-TEST-0060-TI&lt;/TrackingID&gt;           &lt;/ApplicationInfo&gt;           &lt;RequirementInfo id=&quot;RequirementInfoType_1&quot; AppliesToPartyID=&quot;PartyType_2_life_1&quot;&gt;             &lt;ReqCode tc=&quot;137&quot;/&gt;             &lt;RequirementInfoKey&gt;2016-05-02-02.54.17.786340C01-1_life_1_TI_1&lt;/RequirementInfoKey&gt;             &lt;RequirementInfoUniqueID&gt;2016-05-02-02.54.17.786340C01-1_life_1_TI_1&lt;/RequirementInfoUniqueID&gt;             &lt;RequestedDate&gt;2016-05-02&lt;/RequestedDate&gt;             &lt;ReleasePartyOrgCode&gt;PACT&lt;/ReleasePartyOrgCode&gt;             &lt;RequirementAcctNum&gt;71648&lt;/RequirementAcctNum&gt;           &lt;/RequirementInfo&gt;         &lt;/Policy&gt;         &lt;Attachment&gt;           &lt;Description&gt;http://TSTAUWGATI.pacificlife.net:81/pac/screens/externalOpenCase&lt;/Description&gt;           &lt;AttachmentType tc=&quot;2&quot;/&gt;         &lt;/Attachment&gt;       &lt;/Holding&gt;       &lt;Party id=&quot;PartyType_1&quot;&gt;         &lt;PartyTypeCode tc=&quot;2&quot;&gt;Organization&lt;/PartyTypeCode&gt;         &lt;FullName&gt;Insurance Company&lt;/FullName&gt;         &lt;Organization&gt;           &lt;AbbrName&gt;InsCom&lt;/AbbrName&gt;         &lt;/Organization&gt;         &lt;Address&gt;           &lt;Line1&gt;Address Line 1&lt;/Line1&gt;           &lt;Line2&gt;Address Line 2&lt;/Line2&gt;           &lt;City&gt;City&lt;/City&gt;           &lt;AddressCountry&gt;Country&lt;/AddressCountry&gt;         &lt;/Address&gt;         &lt;Phone&gt;           &lt;PhoneTypeCode tc=&quot;2&quot;/&gt;           &lt;CountryCode&gt;+1&lt;/CountryCode&gt;           &lt;AreaCode&gt;1&lt;/AreaCode&gt;           &lt;DialNumber&gt;1234567&lt;/DialNumber&gt;         &lt;/Phone&gt;         &lt;EMailAddress/&gt;       &lt;/Party&gt;       &lt;Relation id=&quot;RelationType_1&quot; OriginatingObjectID=&quot;HoldingType_1&quot; RelatedObjectID=&quot;PartyType_1&quot;&gt;         &lt;OriginatingObjectType tc=&quot;4&quot;/&gt;         &lt;RelatedObjectType tc=&quot;6&quot;/&gt;         &lt;RelationRoleCode tc=&quot;87&quot;/&gt;       &lt;/Relation&gt;       &lt;Party id=&quot;PartyType_2_life_1&quot;&gt;         &lt;PartyTypeCode tc=&quot;1&quot;&gt;Person&lt;/PartyTypeCode&gt;         &lt;GovtID&gt;030000000&lt;/GovtID&gt;         &lt;Person id=&quot;PersonType_1&quot;&gt;           &lt;FirstName&gt;FLOW&lt;/FirstName&gt;           &lt;LastName&gt;CRLTESTC&lt;/LastName&gt;           &lt;Gender tc=&quot;1&quot;&gt;Male&lt;/Gender&gt;           &lt;BirthDate&gt;1965-07-09&lt;/BirthDate&gt;         &lt;/Person&gt;         &lt;Address&gt;           &lt;Line1&gt;30 Mortensen Avenue&lt;/Line1&gt;           &lt;City&gt;Sacramento&lt;/City&gt;           &lt;AddressStateTC tc=&quot;8&quot;/&gt;           &lt;Zip&gt;11111&lt;/Zip&gt;           &lt;AddressCountryTC tc=&quot;1&quot;/&gt;         &lt;/Address&gt;         &lt;Phone&gt;           &lt;PhoneTypeCode tc=&quot;1&quot;/&gt;           &lt;AreaCode&gt;111&lt;/AreaCode&gt;           &lt;DialNumber&gt;222-3334&lt;/DialNumber&gt;         &lt;/Phone&gt;       &lt;/Party&gt;       &lt;Relation id=&quot;RelationType_2&quot; OriginatingObjectID=&quot;HoldingType_1&quot; RelatedObjectID=&quot;PartyType_2_life_1&quot;&gt;         &lt;OriginatingObjectType tc=&quot;4&quot;/&gt;         &lt;RelatedObjectType tc=&quot;6&quot;/&gt;         &lt;RelationRoleCode tc=&quot;32&quot;/&gt;       &lt;/Relation&gt;     &lt;/OLifE&gt;   &lt;/TXLifeRequest&gt; &lt;/TXLife&gt;"/>
+        <Attribute key="com.pilotfish.From_Service" value="FromServiceEx"/>
+        <Attribute key="com.pilotfish.To" value="Brain"/>
+        <Attribute key="acordDoctype" value="121"/>
+      </TransactionAttributes>
+    </Stage>
+    <Stage>
+      <Identifier>transform@listener=8 - Insert Order.Programmable (Java) Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>forking@listener=8 - Insert Order.Programmable (Java) Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@listener=8 - Insert Order.Programmable (Java) Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>routing</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=5 - Insert Order.Database SQL Transport Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=5 - Insert Order.Database SQL Transport Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=5 - Insert Order.Database SQL Transport Transport,processor=ROOT.5 - Create failedsql.dir</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=5 - Insert Order.Database SQL Transport Transport,processor=ROOT.5 - set sqlxml.stage.filename</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=5 - Insert Order.Database SQL Transport Transport,processor=ROOT.5 - Save SQLXML</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>processor@transport=5 - Insert Order.Database SQL Transport Transport,processor=character encoding</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=5 - Insert Order.Database SQL Transport Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>unknown/unexpected</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+</TestConfigurations>

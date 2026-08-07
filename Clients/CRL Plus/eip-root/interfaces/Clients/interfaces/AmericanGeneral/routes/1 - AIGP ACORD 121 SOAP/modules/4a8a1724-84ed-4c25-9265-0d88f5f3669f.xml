@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule"
+        id="4a8a1724-84ed-4c25-9265-0d88f5f3669f"
+        name="Conditional Router"
+        tag="RoutingModule"
+        type="Conditional Node Router"
+        version="2.0">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="8f45f63c-66a5-4355-8aa1-d163e6a2a804" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="774fe996-fc1c-402b-bce0-1a09949b34b3"
+                    name="Rule 1 - AIGP1 - Invalid Creds"
+                    type="OGNL">
+               <condition>getAttribute("Acord123.ValidCredentials") != null &amp;&amp; getAttribute("Acord123.ValidCredentials").toString().equals("false")</condition>
+            </output>
+            <output id="14005f59-a9e7-4f2b-85fa-854ebc527cef"
+                    name="Rule 2 - Missing Required Fields"
+                    type="XPATH">
+               <condition>not(//ns2:Party[@id=../ns2:Relation[ns2:RelationRoleCode/@tc=32]/@RelatedObjectID][ns2:Person/ns2:FirstName][ns2:Person/ns2:LastName][ns2:Address/ns2:Zip])</condition>
+               <namespaces>
+                  <namespace prefix="ns2" uri="http://ACORD.org/Standards/Life/2"/>
+               </namespaces>
+            </output>
+            <output id="d691e4dc-b33d-4eca-9270-c4b79ea248ed"
+                    name="Rule 3 - Doctype Route"
+                    type="OGNL">
+               <condition>true</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2017-02-02T13:17:42-05:00" ModifiedBy="aramos@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Stage Internal Test to Disk" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>com.pilotfish.crl.testindicator</Name>
+                <Operator>=</Operator>
+                <Value>2</Value>
+              </Attribute>
+              <Expression>
+                //*[local-name() = 'StatusEvent']
+                <Namespaces>
+                  <Namespace name="acord">http://ACORD.org/Standards/Life/2</Namespace>
+                </Namespaces>
+              </Expression>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Stage File to Disk" />
+          </Targets>
+          <Condition>
+            <Expression>
+              /*[local-name() = 'TXLifeRequest']/*[local-name() = 'OLifE']/*[local-name() = 'Holding']/*[local-name() = 'Policy']/*[local-name() = 'RequirementInfo'][count(*[local-name() = 'StatusEvent']) &gt; 0]
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Ignore Status Update" />
+          </Targets>
+          <Condition>
+            <Expression>
+              /*[local-name() = 'TXLifeRequest']/*[local-name() = 'OLifE']/*[local-name() = 'Holding']/*[local-name() = 'Policy']/*[local-name() = 'RequirementInfo'][count(*[local-name() = 'StatusEvent']) = 0]
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="PRUX Customize 1122" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="PRUX ACORD 1122 Status">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="PRUX3.set Attrs From Xpath">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:OrderNumber:eip_name://acord:ProviderOrderNum:eip_value][eip_pair:ReqInfoStatus:eip_name://acord:ReqStatus:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:soap:eip_name:http://schemas.xmlsoap.org/soap/envelope/:eip_value][eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Stage File to Disk" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:getAttribute('staging.dir')}</TargetDirectory>
+        <FileName>{ognl:"1122TXLifeRequest-Order-"+getAttribute('OrderNumber')+'-'+getAttribute('ReqInfoStatus')+'-' + new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date())+#transaction.getOriginatingTransactionID()}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>true</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+        <OutputFilePath>false</OutputFilePath>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PRUX3 - Set StagingDir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>staging.dir</AttributeName>
+          <Expression>$$PrudentialStagingDirectory</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PRUX3 - Update Staging Directory">
+        <ModuleConfig>
+          <ExecuteProcessor>false</ExecuteProcessor>
+          <AttributeName>staging.dir</AttributeName>
+          <Expression>{ognl:getAttribute('staging.dir')+'/'+getAttribute('com.crl.batchid')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PRUX3 - Set Status to Result">
+        <ModuleConfig>
+          <ExecuteProcessor>false</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.statustype</AttributeName>
+          <Expression>result</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PRUX3 - Set StagedBatchName">
+        <ModuleConfig>
+          <ExecuteProcessor>false</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.stagedBatchName</AttributeName>
+          <Expression>{ognl:getAttribute('com.crl.batchid')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PRUX3 - Set StagedBatchName-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.stagedBatchName</AttributeName>
+          <Expression>PRUX</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="PRUX3 - String namespaces">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:&lt;\w*::eip_name:&lt;:eip_value][eip_pair:&lt;/\w*::eip_name:&lt;/:eip_value][eip_pair:\s*xmlns[:xsdi]*="[^"]*":eip_name::eip_value][eip_pair:&lt;\?[^?]*\?\&gt;\s*:eip_name::eip_value]</REGEX_TABLE_TAG>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+    <PostProcessors>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="PRUX3 Status Update">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>Update Status Inbound</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </PostProcessors>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Ignore Status Update" retries="1">
+      <ModuleConfig>
+        <ServiceName>Update Status Inbound</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Stage Internal Test to Disk" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:getAttribute('internal.file.staging.dir')}</TargetDirectory>
+        <FileName>{ognl:getAttribute('audit.filename')}</FileName>
+        <FileExtension>txt</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Create New</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+        <OutputFilePath>false</OutputFilePath>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="PRUX.3-set Attrs From Xpath - 2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:OrderNumber:eip_name://acord:ProviderOrderNum:eip_value][eip_pair:ReqInfoStatus:eip_name://acord:ReqStatus:eip_value][eip_pair:NumAttachments:eip_name:count(//acord:AttachmentData):eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:soap:eip_name:http://schemas.xmlsoap.org/soap/envelope/:eip_value][eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PRUX.3-set audit.filename - 2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>audit.filename</AttributeName>
+          <Expression>{ognl:'audit-outgoing-PRUX-'+getAttribute('OrderNumber')+'-'+getAttribute('ReqInfoStatus')+'-'+new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-").format(new java.util.Date()) + #transaction.getOriginatingTransactionID()}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PRUX3 - Set Internal File StagingDir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>internal.file.staging.dir</AttributeName>
+          <Expression>$$PrudentialStagingDirectoryInternalTest</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PRUX3 - Set StagedBatchName-InternalTest">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.stagedBatchName</AttributeName>
+          <Expression>PRUX-Internal</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+    <PostProcessors>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="PRUX.3-Post test staging - update status">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>Update Status Inbound</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </PostProcessors>
+  </Target>
+</Route>
+

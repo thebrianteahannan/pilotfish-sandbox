@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source name="CRL Public FTP">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.file.ftp.FTPListener" name="SFTP-To-Inbound.FTP Listener">
+      <ModuleConfig>
+        <FTPListenerType>Encrypted FTP (JSCH SSH/SFTP)</FTPListenerType>
+        <IS_TRIGGERABLE_LISTENER>true</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <PollingInterval>30</PollingInterval>
+        <PollingDirectory>$$sftp.input.directory</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction />
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Delete</PostProcessOperation>
+        <TargetDirectory />
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <Host>$$sftp.hostname</Host>
+        <UserName>$$sftp.username</UserName>
+        <Password>$$sftp.password</Password>
+        <Port>22</Port>
+        <KeepConnection>false</KeepConnection>
+        <UseChangeDirectoryCommand>false</UseChangeDirectoryCommand>
+        <Timeout>300</Timeout>
+        <UsePassiveMode>true</UsePassiveMode>
+        <ReconnectAfterBytes>102400</ReconnectAfterBytes>
+        <CheckFTPPermissions>true</CheckFTPPermissions>
+        <CheckPreviouslyProcessed>true</CheckPreviouslyProcessed>
+        <CheckWriteInProgress>true</CheckWriteInProgress>
+        <FileType>Binary</FileType>
+        <Protection>Private</Protection>
+        <KeyAuthentication>false</KeyAuthentication>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target name="Doctype Discovery">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="To Doctype Route" retries="1">
+      <ModuleConfig>
+        <ServiceName>Source Document Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="ManAtt.2-StoreLocally" />
+          </Targets>
+          <Condition>
+            <Expression>
+              /RECORD/FILENAME
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <Source name="System Unnamed">
+    <FormatProfile name="ForkAttachments" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" name="ManualAttach.2-Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="ManAtt.2-StoreLocally" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$image.large.staging.dir</TargetDirectory>
+        <FileName>{ognl:getAttribute('filename')}</FileName>
+        <FileExtension>{ognl:getAttribute('extension')}</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>false</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <OutputFilePath>false</OutputFilePath>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="ManualAttach.2-set transactionData">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>transactionData</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="ManualAttach.2-XPath Eval">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:attachment.filename:eip_name:/RECORD/FILENAME:eip_value][eip_pair:attachment.attachment_id:eip_name:/RECORD/ATTACHMENTID:eip_value][eip_pair:attachment.transaction_id:eip_name:/RECORD/TRANSACTIONID:eip_value]</XPathExpressions>
+          <Namespaces>null</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.ftp.JschSingleFileProcessor" name="ManualAttach.2-SFTP Download">
+        <ModuleConfig>
+          <Host>$$image.large.sftp.hostname</Host>
+          <Port>22</Port>
+          <Timeout>300</Timeout>
+          <SocketTimeout>300</SocketTimeout>
+          <UserName>$$image.large.sftp.username</UserName>
+          <Password>$$image.large.sftp.password</Password>
+          <TargetDirectory>$$image.large.sftp.dir</TargetDirectory>
+          <FileName>{ognl:getAttribute('attachment.filename')}</FileName>
+          <PostProcessOperation>Delete</PostProcessOperation>
+          <MoveToDir />
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ManualAttach.2-DownloadAttachment.set filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>filename</AttributeName>
+          <Expression>{ognl:#filename=getAttribute('attachment.filename'),#index=#filename.lastIndexOf("."),(#index&gt;-1)?#filename.substring(0,#index):#filename}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="ManualAttach.2-DownloadAttachment.set Extension">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>extension</AttributeName>
+          <Expression>{ognl:#filename=getAttribute('attachment.filename'),#index=#filename.lastIndexOf(".")+1,(#index&gt;0)?#filename.substring(#index):'null'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+    <PostProcessors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="ManualAttach.2-Restore transactionData">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>transactionData</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="ManualAttach.2-CallNextRoute">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>ManualAttach.3-Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </PostProcessors>
+  </Target>
+</Route>
+

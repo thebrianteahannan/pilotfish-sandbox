@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="true">
+        <Rule>
+          <Targets>
+            <TransportTarget name="PacLife Rest ECG Transport" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //ns1:RequirementInfo/ns1:ReqCode/@tc='13'
+              <Namespaces>
+                <Namespace name="ns1">http://ACORD.org/Standards/Life/2</Namespace>
+              </Namespaces>
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="PacLife Treadmill ECG Transport" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //ns1:RequirementInfo/ns1:ReqCode/@tc='14'
+              <Namespaces>
+                <Namespace name="ns1">http://ACORD.org/Standards/Life/2</Namespace>
+              </Namespaces>
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="PacLife Part II Transport" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //ns1:RequirementInfo/ns1:ReqCode/@tc='265'
+              <Namespaces>
+                <Namespace name="ns1">http://ACORD.org/Standards/Life/2</Namespace>
+              </Namespaces>
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="PacLife MedPlus Transport" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //ns1:RequirementInfo[not(ns1:ReqCode/@tc = '631' or ns1:Attachment/ns1:AttachmentSource = 'Age-based Functional Test')]
+              <Namespaces>
+                <Namespace name="ns1">http://ACORD.org/Standards/Life/2</Namespace>
+              </Namespaces>
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="PacLife Lab Transport" />
+            <TransportTarget name="PacLife Misc Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <Source name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" name="PacLife 1122 Pickup">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>true</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <PollingInterval>5</PollingInterval>
+        <PollingDirectory>$$PacificLifeSpecial1122PickupDirectory</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction />
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Delete</PostProcessOperation>
+        <TargetDirectory />
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.imaging.TIFFAppenderProcessor" name="TIFF Image Concatenation">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.crl.paclife.mergedTiff</AttributeName>
+          <XPathExpressions>[eip_pair:Images:eip_name://ns1:Attachment[ns1:MimeTypeTC/@tc='11' and ns1:AttachmentBasicType/@tc='2']/ns1:AttachmentData[string-length(.) &gt; 0]:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:ns1:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <ExceptionOnMissingElement>false</ExceptionOnMissingElement>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target name="System Unnamed">
+    <FormatProfile name="PacLife Lab 1122" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="PacLife Lab Transport" retries="1">
+      <ModuleConfig>
+        <TargetURL>$$PacificLifeSpecial1122URL</TargetURL>
+        <UserName />
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password />
+        <ResponseListener />
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>-1</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <KeyStoreFilePath />
+        <CertificateAttribute />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <TrustStoreFileType />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <TrustStoreFilePath />
+        <CertificateAttribute />
+        <TrustStoreFilePassword />
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target name="System Unnamed">
+    <FormatProfile name="PacLife Misc 1122" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="PacLife Misc Transport" retries="1">
+      <ModuleConfig>
+        <TargetURL>$$PacificLifeSpecial1122URL</TargetURL>
+        <UserName />
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password />
+        <ResponseListener />
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>-1</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <KeyStoreFilePath />
+        <CertificateAttribute />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <TrustStoreFileType />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <TrustStoreFilePath />
+        <CertificateAttribute />
+        <TrustStoreFilePassword />
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target name="System Unnamed">
+    <FormatProfile name="PacLife Rest ECG" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="PacLife Rest ECG Transport" retries="1">
+      <ModuleConfig>
+        <TargetURL>$$PacificLifeSpecial1122URL</TargetURL>
+        <UserName />
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password />
+        <ResponseListener />
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>-1</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <KeyStoreFilePath />
+        <CertificateAttribute />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <TrustStoreFileType />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <TrustStoreFilePath />
+        <CertificateAttribute />
+        <TrustStoreFilePassword />
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target name="System Unnamed">
+    <FormatProfile name="PacLife Treadmill ECG" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="PacLife Treadmill ECG Transport" retries="1">
+      <ModuleConfig>
+        <TargetURL>$$PacificLifeSpecial1122URL</TargetURL>
+        <UserName />
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password />
+        <ResponseListener />
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>-1</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <KeyStoreFilePath />
+        <CertificateAttribute />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <TrustStoreFileType />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <TrustStoreFilePath />
+        <CertificateAttribute />
+        <TrustStoreFilePassword />
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target name="System Unnamed">
+    <FormatProfile name="PacLife Part II 1122" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="PacLife Part II Transport" retries="1">
+      <ModuleConfig>
+        <TargetURL>$$PacificLifeSpecial1122URL</TargetURL>
+        <UserName />
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password />
+        <ResponseListener />
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>-1</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <KeyStoreFilePath />
+        <CertificateAttribute />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <TrustStoreFileType />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <TrustStoreFilePath />
+        <CertificateAttribute />
+        <TrustStoreFilePassword />
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target name="System Unnamed">
+    <FormatProfile name="PacLife Med Plus 1122" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="PacLife MedPlus Transport" retries="1">
+      <ModuleConfig>
+        <TargetURL>$$PacificLifeSpecial1122URL</TargetURL>
+        <UserName />
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password />
+        <ResponseListener />
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>-1</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <KeyStoreFilePath />
+        <CertificateAttribute />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <TrustStoreFileType />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <TrustStoreFilePath />
+        <CertificateAttribute />
+        <TrustStoreFilePassword />
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

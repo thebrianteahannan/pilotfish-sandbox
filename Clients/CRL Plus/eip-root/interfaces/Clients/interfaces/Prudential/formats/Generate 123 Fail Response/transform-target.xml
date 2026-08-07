@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://hhws.portamedic.com/wsordresp/hhresponse.asmx" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" targetNamespace="http://schemas.xmlsoap.org/soap/envelope/">
+			<xsd:element name="Envelope" type="soap:Envelope_type" />
+			<xsd:complexType name="Envelope_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Body" type="soap:Body_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Body_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" ref="GetOrderResponseResponse" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://hhws.portamedic.com/wsordresp/hhresponse.asmx" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="https://hhws.portamedic.com/wsordresp/hhresponse.asmx">
+			<xsd:complexType name="GetOrderResponseResponse_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="GetOrderResponseResult" type="GetOrderResponseResult_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="GetOrderResponseResponse" type="GetOrderResponseResponse_type" />
+			<xsd:complexType name="GetOrderResponseResult_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="POLICY" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="REQINFO_UNIQUE_ID" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="TRANSMODE" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="REQCODE" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="RESULTCODE" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="RESULTINFO_DESC" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

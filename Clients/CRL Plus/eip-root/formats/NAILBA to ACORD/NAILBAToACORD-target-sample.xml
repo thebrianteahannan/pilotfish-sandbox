@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.20.02.xsd">
+	<UserAuthRequest>
+		<UserLoginName>PACP</UserLoginName>
+		<UserPswd>
+			<CryptType>NONE</CryptType>
+			<CryptPswd>PL47@vB$Wj653</CryptPswd>
+		</UserPswd>
+		<UserDate>2014-10-31</UserDate>
+		<UserTime>10:47:07</UserTime>
+		<VendorApp>
+			<AppName>MRAS AIS</AppName>
+			<AppVer>4.7.0</AppVer>
+		</VendorApp>
+	</UserAuthRequest>
+	<TXLifeRequest>
+		<TransRefGUID>9D5B01C4-1496-7516-2004-C4A3DC683CD4</TransRefGUID>
+		<TransType tc="121">General Requirement Order Request</TransType>
+		<TransExeDate>2014-10-31</TransExeDate>
+		<TransExeTime>10:47:07</TransExeTime>
+		<TransMode tc="2">Original</TransMode>
+		<TestIndicator tc="0">NO</TestIndicator>
+		<OLifE>
+			<SourceInfo>
+				<CreationDate>2014-10-31</CreationDate>
+				<CreationTime>10:47:07</CreationTime>
+				<SourceInfoName>MRAS AIS</SourceInfoName>
+				<SourceInfoDescription>MRAS AIS v.4.7.0</SourceInfoDescription>
+			</SourceInfo>
+			<Holding id="HoldingType_1">
+				<HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+				<Policy CarrierPartyID="PartyType_1" id="PolicyType_1">
+					<PolNumber>AT10090670</PolNumber>
+					<CarrierCode>CCode</CarrierCode>
+					<Life>
+						<FaceAmt>2000000.000000</FaceAmt>
+						<Coverage id="CoverageType_1">
+							<CurrentAmt>2000000.000000</CurrentAmt>
+						</Coverage>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>2014-10-02-10.43.59.385940C01-1_life_1_APS_1</TrackingID>
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="PartyType_2_life_1" id="RequirementInfoType_1">
+						<ReqCode tc="11" />
+						<RequirementInfoKey>2014-10-02-10.43.59.385940C01-1_life_1_APS_1</RequirementInfoKey>
+						<RequirementInfoUniqueID>2014-10-02-10.43.59.385940C01-1_life_1_APS_1</RequirementInfoUniqueID>
+						<RequestedDate>2014-10-31</RequestedDate>
+						<ReleasePartyOrgCode>PACP</ReleasePartyOrgCode>
+						<RequirementAcctNum>78748</RequirementAcctNum>
+					</RequirementInfo>
+				</Policy>
+				<Attachment>
+					<Description>001929166237.TIF</Description>
+					<AttachmentData tc="1">=</AttachmentData>
+					<AttachmentType tc="1" />
+					<TransferEncodingTypeString>base64</TransferEncodingTypeString>
+					<AttachmentLocation tc="1" />
+				</Attachment>
+			</Holding>
+			<Party id="PartyType_1">
+				<PartyTypeCode tc="2">Organization</PartyTypeCode>
+				<FullName>Pacific Life Insurance</FullName>
+				<Organization>
+					<AbbrName>PacLife</AbbrName>
+				</Organization>
+				<Address>
+					<Line1>45 Enterprise</Line1>
+					<Line2>California</Line2>
+					<City>Aliso Viejo</City>
+					<AddressCountry>USA</AddressCountry>
+				</Address>
+				<Phone>
+					<CountryCode>+1</CountryCode>
+					<AreaCode>877</AreaCode>
+					<DialNumber>4412357</DialNumber>
+				</Phone>
+				<EMailAddress />
+			</Party>
+			<Relation OriginatingObjectID="HoldingType_1" RelatedObjectID="PartyType_1" id="RelationType_1">
+				<OriginatingObjectType tc="4" />
+				<RelatedObjectType tc="6" />
+				<RelationRoleCode tc="87" />
+			</Relation>
+			<Party id="PartyType_2_life_1">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID>284586931</GovtID>
+				<Person id="PersonType_1">
+					<FirstName>Pilot</FirstName>
+					<LastName>POC</LastName>
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1999-09-22</BirthDate>
+				</Person>
+				<Address>
+					<Line1>10 Main</Line1>
+					<City>Dana Point</City>
+					<AddressStateTC tc="6" />
+					<Zip>92629</Zip>
+					<AddressCountryTC tc="1" />
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1" />
+					<AreaCode>999</AreaCode>
+					<DialNumber>999-9999</DialNumber>
+					<PrefPhone tc="1">YES</PrefPhone>
+				</Phone>
+				<Risk>
+					<MedicalExam>
+						<LabSlipTicketNum>00999999</LabSlipTicketNum>
+					</MedicalExam>
+				</Risk>
+			</Party>
+			<Relation OriginatingObjectID="HoldingType_1" RelatedObjectID="PartyType_2_life_1" id="RelationType_2">
+				<OriginatingObjectType tc="4" />
+				<RelatedObjectType tc="6" />
+				<RelationRoleCode tc="32" />
+			</Relation>
+			<Party id="PartyType_3_APS_1">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName>Edward Smith</FullName>
+				<Address>
+					<Line1>3 Arch Professional Bldg</Line1>
+					<Line2>32322 Coast Highway Ste B</Line2>
+					<City>Laguna Beach</City>
+					<AddressStateTC tc="6" />
+					<Zip>92651</Zip>
+					<AddressCountryTC tc="1" />
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="2" />
+					<AreaCode>999</AreaCode>
+					<DialNumber>9999999</DialNumber>
+					<PrefPhone tc="1">YES</PrefPhone>
+				</Phone>
+			</Party>
+			<Relation OriginatingObjectID="HoldingType_1" RelatedObjectID="PartyType_3_APS_1" id="RelationType_3">
+				<OriginatingObjectType tc="4" />
+				<RelatedObjectType tc="6" />
+				<RelationRoleCode tc="41" />
+			</Relation>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Format xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" name="121 Data Validation">
+  <TransformationModule class="com.pilotfish.eip.modules.internal.RelayTransformationModule">
+    <ModuleConfig>
+      <ExecuteTransformation>true</ExecuteTransformation>
+    </ModuleConfig>
+  </TransformationModule>
+  <XSLT>
+    <ToXML>transform.xslt</ToXML>
+    <CacheXSLTToXML>false</CacheXSLTToXML>
+    <FromXML>transform.xslt</FromXML>
+    <CacheXSLTFromXML>false</CacheXSLTFromXML>
+    <XSLTVersion>1.0</XSLTVersion>
+    <XSLTEngine>XALAN_INTERPRETED</XSLTEngine>
+    <XSLTParameters>null</XSLTParameters>
+    <ExecuteTransformation>true</ExecuteTransformation>
+  </XSLT>
+  <FormatMetadata />
+  <SplitControl xmlns="http://www.pilotfishtechnology.com/eip/FormatSpec">
+    <JoinModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullJoinModule" />
+    <ForkModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullForkModule" />
+  </SplitControl>
+</Format>
+

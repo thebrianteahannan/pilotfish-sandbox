@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="" targetNamespace="http://crlcorp.com/crlresponse" xmlns="http://www.w3.org/XML/1998/namespace=xml" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://crlcorp.com/crlresponse" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<wsdl:types>
+		<s:schema elementFormDefault="qualified" targetNamespace="http://crlcorp.com/crlresponse" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:tns="http://crlcorp.com/crlresponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+			<s:element name="GetOrderResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element maxOccurs="1" minOccurs="0" name="UserID" type="s:string"/>
+						<s:element maxOccurs="1" minOccurs="0" name="PassWD" type="s:string"/>
+						<s:element maxOccurs="1" minOccurs="0" name="Policy" type="s:string"/>
+						<s:element maxOccurs="1" minOccurs="0" name="RequirmentInfoUniqueID" type="s:string"/>
+						<s:element maxOccurs="1" minOccurs="0" name="TransMode" type="s:string"/>
+						<s:element maxOccurs="1" minOccurs="0" name="ReqCode" type="s:string"/>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetOrderResponseResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element maxOccurs="1" minOccurs="0" name="GetOrderResponseResult" type="tns:ORDRESP_INFO"/>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:complexType name="ORDRESP_INFO">
+				<s:sequence>
+					<s:element maxOccurs="1" minOccurs="0" name="POLICY" type="s:string"/>
+					<s:element maxOccurs="1" minOccurs="0" name="REQINFO_UNIQUE_ID" type="s:string"/>
+					<s:element maxOccurs="1" minOccurs="0" name="TRANSMODE" type="s:string"/>
+					<s:element maxOccurs="1" minOccurs="0" name="REQCODE" type="s:string"/>
+					<s:element maxOccurs="1" minOccurs="0" name="RESULTCODE" type="s:string"/>
+					<s:element maxOccurs="1" minOccurs="0" name="RESULTINFO_DESC" type="s:string"/>
+				</s:sequence>
+			</s:complexType>
+		</s:schema>
+	</wsdl:types>
+	<wsdl:message name="GetOrderResponseSoapOut">
+		<wsdl:part name="parameters" element="tns:GetOrderResponseResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="GetOrderResponseSoapIn">
+		<wsdl:part name="parameters" element="tns:GetOrderResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="GetOrderResponse_PortType">
+		<wsdl:operation name="GetOrderResponse">
+			<wsdl:input message="tns:GetOrderResponseSoapIn">
+			</wsdl:input>
+			<wsdl:output message="tns:GetOrderResponseSoapOut">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="GetOrderResponse_Binding" type="tns:GetOrderResponse_PortType">
+		<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetOrderResponse">
+			<wsdl:input>
+				<wsdlsoap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="HHRESPONSE">
+		<wsdl:port name="GetOrderResponse_Port" binding="tns:GetOrderResponse_Binding">
+			<!-- Test URL -->
+			<wsdlsoap:address location="https://plus-intg-test.crlcorp.com/http-post/prux-response" />
+			<!-- Production URL -->
+			<!--<wsdlsoap:address location="https://plus-intg.crlcorp.com/http-post/prux-response" />-->
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

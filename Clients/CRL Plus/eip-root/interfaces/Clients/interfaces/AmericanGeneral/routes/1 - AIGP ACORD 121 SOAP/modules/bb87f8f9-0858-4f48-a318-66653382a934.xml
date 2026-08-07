@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.file.StaticFileProcessor"
+        id="bb87f8f9-0858-4f48-a318-66653382a934"
+        name="AIG.1 - load missing fields response"
+        tag="Processor"
+        type="Static File"
+        version="2.0">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      <FileName>invalid-order-response.xml</FileName>
+      <PostProcessOperation>Do Nothing</PostProcessOperation>
+      <TargetDirectory></TargetDirectory>
+   </ModuleConfig>
+</Module>

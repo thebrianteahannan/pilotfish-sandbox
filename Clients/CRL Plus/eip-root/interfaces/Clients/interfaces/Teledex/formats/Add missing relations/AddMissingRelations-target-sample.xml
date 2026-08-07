@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="2.23.00" xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.23.00.xsd">
+	<UserAuthRequest>
+		<UserLoginName>iPipeline</UserLoginName>
+		<UserPswd>
+			<CryptType>NONE</CryptType>
+		</UserPswd>
+		<VendorApp>
+			<VendorName VendorCode="220">iPipeline</VendorName>
+			<AppName>iGo Forms</AppName>
+		</VendorApp>
+		<OLifEExtension ExtensionCode="6778" VendorCode="220">
+			<DellTransRefGUID>c8cb2ab5-9943-4170-9a74-083e01045d5f</DellTransRefGUID>
+			<CompanyNumber>2A</CompanyNumber>
+		</OLifEExtension>
+	</UserAuthRequest>
+	<TXLifeRequest PrimaryObjectID="Holding_Primary">
+		<TransRefGUID>84ffc0ac-72e0-4cb7-a3ff-ffcfd114fe79</TransRefGUID>
+		<TransType tc="103">New Business Submission</TransType>
+		<TransExeDate>2017-01-24</TransExeDate>
+		<TransExeTime>10:05:40</TransExeTime>
+		<OLifE>
+			<SourceInfo>
+				<CreationDate>2017-01-18</CreationDate>
+				<CreationTime>00:00:00</CreationTime>
+				<SourceInfoName>IPIPELINE</SourceInfoName>
+			</SourceInfo>
+			<Holding id="Holding_Primary">
+				<CurrencyTypeCode tc="840">USD</CurrencyTypeCode>
+				<Policy>
+					<PolNumber>PF580256</PolNumber>
+					<ProductCode>Term</ProductCode>
+					<CarrierCode>5340</CarrierCode>
+					<PlanName>Term</PlanName>
+					<PolicyStatus tc="8">Pending</PolicyStatus>
+					<ReplacementType tc="3">External Replacement</ReplacementType>
+					<PaymentMode tc="4">Chek-matic</PaymentMode>
+					<PaymentAmt>28.48</PaymentAmt>
+					<PaymentMethod tc="7">Chek-matic</PaymentMethod>
+					<AccountNumber>9999999999999</AccountNumber>
+					<RoutingNumber>241075726</RoutingNumber>
+					<BankAcctType tc="2">Checking</BankAcctType>
+					<Life>
+						<QualPlanType tc="1">Non-Qualified</QualPlanType>
+						<FaceAmt>250000</FaceAmt>
+						<Coverage>
+							<PlanName>Term</PlanName>
+							<IndicatorCode tc="1">Base</IndicatorCode>
+							<CurrentAmt>250000</CurrentAmt>
+							<LevelPremiumPeriod>30</LevelPremiumPeriod>
+							<CovOption>
+								<PlanName>Accelerated Death Benefit</PlanName>
+							</CovOption>
+							<LifeParticipant PartyID="Party_PrimaryInsured" id="LifeParticipant_PrimaryInsured">
+								<LifeParticipantRoleCode tc="1">Primary Insured</LifeParticipantRoleCode>
+							</LifeParticipant>
+							<LifeParticipant PartyID="Party_Payor" id="LifeParticipant_Payor">
+								<LifeParticipantRoleCode tc="12">Payor</LifeParticipantRoleCode>
+							</LifeParticipant>
+							<LifeParticipant PartyID="Party_PrimaryAgent" id="LifeParticipant_PrimaryAgent">
+								<LifeParticipantRoleCode tc="15">Primary Agent</LifeParticipantRoleCode>
+							</LifeParticipant>
+						</Coverage>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>PFffc0ac-72e0-4cb7-a3ff-ffcfd114fe79</TrackingID>
+						<ApplicationJurisdiction tc="41">OH</ApplicationJurisdiction>
+						<SignatureInfo>
+							<SignatureRoleCode tc="1">Primary Insured</SignatureRoleCode>
+							<SignatureDate>2017-01-24</SignatureDate>
+							<SignatureState tc="41">OH</SignatureState>
+							<SignatureOK tc="1">True</SignatureOK>
+						</SignatureInfo>
+						<SignatureInfo>
+							<SignatureRoleCode tc="15">Primary Agent</SignatureRoleCode>
+							<SignatureDate>2017-01-24</SignatureDate>
+							<SignatureState tc="41">OH</SignatureState>
+							<SignatureOK tc="1">True</SignatureOK>
+						</SignatureInfo>
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="Party_PrimaryInsured" id="Req1">
+						<ReqCode tc="137">Tele-Interview</ReqCode>
+						<RequestedDate>2017-01-24</RequestedDate>
+						<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+						<RequirementAcctNum>71661</RequirementAcctNum>
+						<OLifEExtension VendorCode="220">
+							<TestIndicator tc="1">True</TestIndicator>
+						</OLifEExtension>
+					</RequirementInfo>
+					<RequirementInfo AppliesToPartyID="Party_PrimaryInsured" id="Req2">
+						<ReqCode tc="535">Diagnose</ReqCode>
+						<RequestedDate>2017-01-24</RequestedDate>
+						<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+						<RequirementAcctNum>71661</RequirementAcctNum>
+						<OLifEExtension VendorCode="220">
+							<TestIndicator tc="1">True</TestIndicator>
+						</OLifEExtension>
+					</RequirementInfo>
+				</Policy>
+				<Attachment>
+					<Description>Multiple Policy? NO Are select rates being applied for?  </Description>
+					<AttachmentType tc="2">Comment</AttachmentType>
+				</Attachment>
+			</Holding>
+			<Party id="Party_PrimaryInsured">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID>123456789</GovtID>
+				<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+				<Person DataRep="Partial">
+					<FirstName>JOHN</FirstName>
+					<LastName>DOE</LastName>
+					<Occupation />
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1950-01-01</BirthDate>
+					<Height2>
+						<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+						<MeasureValue>36</MeasureValue>
+					</Height2>
+					<Weight2>
+						<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+						<MeasureValue>40</MeasureValue>
+					</Weight2>
+					<BirthJurisdictionTC tc="40">Romania</BirthJurisdictionTC>
+				</Person>
+				<Address>
+					<Line1>943 1st Avenue</Line1>
+					<City>New York</City>
+					<AddressStateTC tc="37" />
+					<Zip>10022</Zip>
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>216</AreaCode>
+					<DialNumber>5551234</DialNumber>
+				</Phone>
+				<EMailAddress>
+					<AddrLine>john.doe@aol.com</AddrLine>
+					<OLifEExtension VendorCode="220">
+						<eDeliveryOptIn>NN</eDeliveryOptIn>
+					</OLifEExtension>
+				</EMailAddress>
+				<Risk />
+			</Party>
+			<Party id="Party_Owner">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID />
+				<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+				<Person DataRep="Partial">
+					<FirstName />
+					<LastName>Doe</LastName>
+					<Occupation />
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1950-01-01</BirthDate>
+					<Height2>
+						<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+						<MeasureValue>36</MeasureValue>
+					</Height2>
+					<Weight2>
+						<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+						<MeasureValue>40</MeasureValue>
+					</Weight2>
+					<BirthJurisdictionTC tc="40">Romania</BirthJurisdictionTC>
+				</Person>
+				<Address>
+					<Line1>943 1st Avenue</Line1>
+					<City>New York</City>
+					<AddressStateTC tc="37" />
+					<Zip>10022</Zip>
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>216</AreaCode>
+					<DialNumber>5551234</DialNumber>
+				</Phone>
+				<EMailAddress>
+					<AddrLine>john.doe@aol.com</AddrLine>
+					<OLifEExtension VendorCode="220">
+						<eDeliveryOptIn>NN</eDeliveryOptIn>
+					</OLifEExtension>
+				</EMailAddress>
+				<Risk />
+			</Party>
+			<Relation OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_Owner" id="Relation_OwnerToPrimaryInsured">
+				<OriginatingObjectType tc="6">Party</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="168">Self</RelationRoleCode>
+				<RelationDescription tc="91">Self</RelationDescription>
+			</Relation>
+			<Party id="Party_Payor">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID />
+				<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+				<Person DataRep="Partial">
+					<FirstName />
+					<LastName>Doe</LastName>
+					<Occupation />
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1950-01-01</BirthDate>
+					<Height2>
+						<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+						<MeasureValue>36</MeasureValue>
+					</Height2>
+					<Weight2>
+						<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+						<MeasureValue>40</MeasureValue>
+					</Weight2>
+					<BirthJurisdictionTC tc="40">Romania</BirthJurisdictionTC>
+				</Person>
+				<Address>
+					<Line1>943 1st Avenue</Line1>
+					<City>New York</City>
+					<AddressStateTC tc="37" />
+					<Zip>10022</Zip>
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>216</AreaCode>
+					<DialNumber>5551234</DialNumber>
+				</Phone>
+				<EMailAddress>
+					<AddrLine>john.doe@aol.com</AddrLine>
+					<OLifEExtension VendorCode="220">
+						<eDeliveryOptIn>NN</eDeliveryOptIn>
+					</OLifEExtension>
+				</EMailAddress>
+				<Risk />
+			</Party>
+			<Relation OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_Payor" id="Relation_PayorToPrimaryInsured">
+				<OriginatingObjectType tc="6">Party</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="168">Self</RelationRoleCode>
+				<RelationDescription tc="91">Self</RelationDescription>
+			</Relation>
+			<Party id="Party_PrimaryAgent">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<Person>
+					<FirstName>Raymond Halter</FirstName>
+					<LastName>Raymond Halter</LastName>
+				</Person>
+				<Producer>
+					<CarrierAppointment>
+						<CompanyProducerID>GG3276</CompanyProducerID>
+					</CarrierAppointment>
+				</Producer>
+				<EMailAddress>
+					<EMailType tc="1">Business</EMailType>
+					<AddrLine>john.doe@aol.com</AddrLine>
+				</EMailAddress>
+			</Party>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>

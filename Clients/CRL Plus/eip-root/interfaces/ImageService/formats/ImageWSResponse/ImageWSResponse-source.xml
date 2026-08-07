@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://crlcorp.com/schema/DocumentRequest" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" elementFormDefault="qualified">
+			<xsd:element name="Format">
+				<xsd:complexType>
+					<xsd:sequence />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="ns2:GetDocumentRequest" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="ns2:GetDocumentResponse" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="ns2:GetDrawerIndexKeysRequest" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="ns2:GetDrawerIndexKeysResponse" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="ns2:StoreDocumentRequest" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="ns2:StoreDocumentResponse" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="ns2:UpdateDocumentIndexRequest" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="ns2:UpdateDocumentIndexResponse" />
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://crlcorp.com/schema/DocumentRequest" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="http://crlcorp.com/schema/DocumentRequest">
+			<xsd:element name="GetDocumentRequest">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ns2:ImageAccessRequest">
+							<xsd:sequence>
+								<xsd:element maxOccurs="unbounded" minOccurs="1" name="SearchCriteria" type="ns2:SearchCriteriaType" />
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetDocumentResponse">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ns2:ImageAccessResponse">
+							<xsd:sequence>
+								<xsd:element maxOccurs="unbounded" minOccurs="0" name="SearchResult" type="ns2:SearchResultType" />
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetDrawerIndexKeysRequest">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ns2:ImageAccessRequest">
+							<xsd:sequence />
+							<xsd:any minOccurs="0" />
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetDrawerIndexKeysResponse">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ns2:ImageAccessResponse">
+							<xsd:sequence>
+								<xsd:element maxOccurs="unbounded" minOccurs="1" name="DocumentIndex" type="ns2:DocumentIndexType" />
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="StoreDocumentRequest">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ns2:ImageAccessRequest">
+							<xsd:sequence>
+								<xsd:element maxOccurs="1" minOccurs="1" name="DocumentType" type="xsd:string" />
+								<xsd:element maxOccurs="unbounded" minOccurs="1" name="DocumentIndex" type="ns2:DocumentIndexType" />
+								<xsd:element maxOccurs="unbounded" minOccurs="1" name="Pages" type="ns2:PageType" />
+								<xsd:element maxOccurs="1" minOccurs="0" name="WrapInXml" type="xsd:boolean" />
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="StoreDocumentResponse">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ns2:ImageAccessResponse">
+							<xsd:sequence>
+								<xsd:element maxOccurs="1" minOccurs="0" name="DocumentId" type="xsd:int" />
+								<xsd:element maxOccurs="1" minOccurs="0" name="FolderId" type="xsd:int" />
+								<xsd:element maxOccurs="1" minOccurs="0" name="DrawerName" type="xsd:string" />
+								<xsd:element maxOccurs="1" minOccurs="0" name="PageCount" type="xsd:int" />
+								<xsd:element maxOccurs="unbounded" minOccurs="0" name="PageId" type="xsd:int" />
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="UpdateDocumentIndexRequest">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ns2:ImageAccessRequest">
+							<xsd:sequence>
+								<xsd:element maxOccurs="unbounded" minOccurs="1" name="DocumentIndex" type="ns2:DocumentIndexType" />
+								<xsd:choice>
+									<xsd:element maxOccurs="1" minOccurs="1" name="DocumentId" type="xsd:integer" />
+									<xsd:element maxOccurs="1" minOccurs="1" name="FolderId" type="xsd:integer" />
+								</xsd:choice>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="UpdateDocumentIndexResponse">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ns2:ImageAccessResponse" />
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="ValueType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="Value" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Supported values are String, Integer, Float and Date. Special case values are IS_NULL and IS_NOT_NULL.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:documentation>Supported values are String, Integer, Float and Date. Special case values are IS_NULL and IS_NOT_NULL.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Type" type="ns2:ValueTypeType" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="DateFormat" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Date Format is used to determine how the date is formatted and uses the formats define in Java SimpleDateFormat.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:documentation>Date Format is used to determine how the date is formatted and uses the formats define in Java SimpleDateFormat.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="ValueTypeType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="STRING" />
+					<xsd:enumeration value="STRING" />
+					<xsd:enumeration value="INTEGER" />
+					<xsd:enumeration value="INTEGER" />
+					<xsd:enumeration value="FLOAT" />
+					<xsd:enumeration value="FLOAT" />
+					<xsd:enumeration value="DATE" />
+					<xsd:enumeration value="DATE" />
+					<xsd:enumeration value="TEXT" />
+					<xsd:enumeration value="TEXT" />
+					<xsd:enumeration value="NUMERIC" />
+					<xsd:enumeration value="NUMERIC" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="ImageAccessResponse">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="ApplicationVersion" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="RequestStatus" type="xsd:int" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="RequestUUID" type="xsd:string" />
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="ErrorMessage" type="ns2:ErrorType" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ImageAccessRequest">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="DrawerName" type="xsd:string" />
+					<xsd:choice>
+						<xsd:element maxOccurs="1" minOccurs="1" name="UserId" type="xsd:string" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="ApplicationId" type="xsd:string" />
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PageType">
+				<xsd:annotation>
+					<xsd:documentation />
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="OriginalFileName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="CreateDate" type="xsd:dateTime" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="PageSequence" type="xsd:int" />
+					<xsd:element maxOccurs="unbounded" minOccurs="1" name="Images" type="ns2:ImageType" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="SearchCriteriaType">
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:element maxOccurs="unbounded" minOccurs="1" name="DocumentIndex" type="ns2:DocumentIndexType" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="FolderId" type="xsd:integer" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="DocumentId" type="xsd:integer" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="PageId" type="xsd:integer" />
+						<xsd:element maxOccurs="1" minOccurs="0" name="CreateDate" type="xsd:dateTime" />
+					</xsd:choice>
+					<xsd:element maxOccurs="1" minOccurs="0" name="PageRange" type="ns2:PageRangeType">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">If this element is included, the SearchResult document(s) will be limited to the range of pages specified.</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:documentation>If this element is included, the SearchResult document(s) will be limited to the range of pages specified.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="OutputType" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">If OutputType is specified, the SearchResult document(s) will be converted to the outputType. For example, OutputType = "PDF" would cause a native TIFF document to be converted to PDF. If this element is omitted, the SearchResult document(s) will be returned as their native type without performing any file-type conversion. Also, the native document OutputType can be explicitly requested by using the value "NATIVE".</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:annotation>
+							<xsd:documentation>If OutputType is specified, the SearchResult document(s) will be converted to the outputType. For example, OutputType = "PDF" would cause a native TIFF document to be converted to PDF. If this element is omitted, the SearchResult document(s) will be returned as their native type without performing any file-type conversion. Also, the native document OutputType can be explicitly requested by using the value "NATIVE".</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ErrorType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="ErrorCode" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="ErrorMessage" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ImageType">
+				<xsd:sequence>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="MimeType" type="xsd:string" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="ImageSequence" type="xsd:int" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="DataBuffer" type="xsd:base64Binary" />
+					</xsd:sequence>
+					<xsd:any maxOccurs="unbounded" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="DocumentType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="DocumentId" type="xsd:int" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="TypeName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="CreateDate" type="xsd:dateTime" />
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Pages" type="ns2:PageType" />
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Index" type="ns2:DocumentIndexType" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="DocumentIndexType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="ColumnName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="ColumnValue" type="ns2:ValueType">
+						<xsd:annotation />
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="Required" type="xsd:boolean" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="RequestStatus">
+				<xsd:annotation>
+					<xsd:documentation>The valid values for the Request Status Element.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="SUCCESS" />
+					<xsd:enumeration value="SUCCESS" />
+					<xsd:enumeration value="PARTIAL_SUCCESS" />
+					<xsd:enumeration value="PARTIAL_SUCCESS" />
+					<xsd:enumeration value="NO_DOCUMENTS_FOUND" />
+					<xsd:enumeration value="NO_DOCUMENTS_FOUND" />
+					<xsd:enumeration value="FAILURE" />
+					<xsd:enumeration value="FAILURE" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="ImageAccessStatusType">
+				<xsd:annotation>
+					<xsd:documentation>The valid values for the Request Status Element.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="SUCCESS" />
+					<xsd:enumeration value="SUCCESS" />
+					<xsd:enumeration value="FAILURE" />
+					<xsd:enumeration value="FAILURE" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="PageRangeType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="BeginPage" type="xsd:int" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="EndPage" type="xsd:int" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="SearchResultType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Documents" type="ns2:DocumentType" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="SearchStatus" type="ns2:ImageAccessStatusType" />
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Errors" type="ns2:ErrorType" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="RequestStatus" type="ns2:ImageAccessStatusType" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="SearchCriteria" type="ns2:SearchCriteriaType" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

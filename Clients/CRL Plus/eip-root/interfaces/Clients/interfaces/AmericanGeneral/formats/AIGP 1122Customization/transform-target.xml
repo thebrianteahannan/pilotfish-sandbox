@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://acord.ws.ure.allfinanz.com" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="Format">
+				<xsd:complexType>
+					<xsd:sequence />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="Response" />
+					<xsd:element maxOccurs="1" minOccurs="1" ref="TXLifePayload">
+						<xsd:annotation>
+							<xsd:documentation>Payload is an ACORD compliant XML</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://acord.ws.ure.allfinanz.com" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="http://acord.ws.ure.allfinanz.com">
+			<xsd:element name="Response">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="ErrorCode" type="xsd:int">
+							<xsd:annotation>
+								<xsd:appinfo>
+									<pf:property name="annotation">Error code is a numeric error code(0 - 10000)</pf:property>
+								</xsd:appinfo>
+							</xsd:annotation>
+							<xsd:annotation>
+								<xsd:documentation>Error code is a numeric error code(0 - 10000)</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element maxOccurs="1" minOccurs="1" name="ErrorMessage" type="xsd:string">
+							<xsd:annotation>
+								<xsd:appinfo>
+									<pf:property name="annotation">Error message is an error description</pf:property>
+								</xsd:appinfo>
+							</xsd:annotation>
+							<xsd:annotation>
+								<xsd:documentation>Error message is an error description</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="TXLifePayload">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<pf:property name="annotation">Payload is an ACORD compliant XML</pf:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>Payload is an ACORD compliant XML</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string" />
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

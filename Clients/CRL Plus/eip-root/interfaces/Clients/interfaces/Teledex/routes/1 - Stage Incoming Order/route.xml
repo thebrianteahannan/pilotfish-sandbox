@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2023-10-08T22:12:19-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Teledex.1 - Load in FlowNet" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>skipTeledex</Name>
+              <Operator>=</Operator>
+              <Value>true</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Retry Incoming Order" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //ORDERNO[contains(.,'ERROR') and substring-after(.,'-')&lt;3]
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Send Error Notice" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //ORDERNO[contains(.,'ERROR') and substring-after(.,'-')=3]
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Teledex.1 - Load in FlowNet" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>acordDoctype</Name>
+                <Operator>=</Operator>
+                <Value>103</Value>
+              </Attribute>
+              <Attribute>
+                <Name>teledexOrder</Name>
+                <Operator>exists</Operator>
+                <Value />
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Teledex.1 - Stage Incoming Order.Directory / File Transport" />
+            <TransportTarget name="Teledex.1 - Load in FlowNet" />
+            <TransportTarget name="Stage 103 File For Teledex" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>acordDoctype</Name>
+                <Operator>=</Operator>
+                <Value>103</Value>
+              </Attribute>
+              <Attribute>
+                <Name>teledexOrder</Name>
+                <Operator>does not exist</Operator>
+                <Value />
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Teledex.1 - Load in FlowNet" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>teledexOrder</Name>
+              <Operator>exists</Operator>
+              <Value />
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Teledex.1 - Stage Incoming Order.Directory / File Transport" />
+            <TransportTarget name="Teledex.1 - Load in FlowNet" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>teledexOrder</Name>
+              <Operator>does not exist</Operator>
+              <Value />
+            </Attribute>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Error Handling">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Incoming Routes Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="From Client">
+    <FormatProfile name="ACORD to Teledex XML" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Teledex.1 - Incoming Order Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="CLASS">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>CLASS</AttributeName>
+          <Expression>$$db.driver</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="URL">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>URL</AttributeName>
+          <Expression>$$db.url</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="USER">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>USER</AttributeName>
+          <Expression>$$db.username</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PWD">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>PWD</AttributeName>
+          <Expression>$$db.password</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Save Content">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Retry.Count')!=null}</ExecuteProcessor>
+          <AttributeName>Modified_Content</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restored Original">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Retry.Count')!=null}</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Teledex.1 - Set incoming.txt">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Teledex.1-set teledexOrder">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:teledexOrder:eip_name://acord:TXLifeRequest/acord:OLifEExtension[@VendorCode='118' and @ExtensionCode='1000']/acord:TeledexOrderNumber:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Putback Content">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Retry.Count')!=null}</ExecuteProcessor>
+          <AttributeName>Modified_Content</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set subdir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>error.subdir</AttributeName>
+          <Expression>{ognl:#filename = getAttribute('com.pilotfish.FileName'), #sourceClient = getAttribute('sourceClient'), #oid = #transaction.getOriginatingTransactionID(), #timestamp = new java.text.SimpleDateFormat('yyyy-MM-dd-HH-mm-ss').format(new java.util.Date()), "teledex-"+#sourceClient+"-"+#filename+"-"+#timestamp+"-"+#oid+'.xml'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="TDEX.1-set acordDoctype">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('acordDoctype')==null}</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:acordDoctype:eip_name://acord:TransType/@tc:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="" name="Test directory">
+    <FormatProfile name="ACORD to Teledex XML" />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="Directory Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <PollingInterval>30</PollingInterval>
+        <PollingDirectory>C:\Pilotfish\staging\Teledex\_REPROCESS_INCOMING_ORDERS</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction />
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Delete</PostProcessOperation>
+        <TargetDirectory />
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="CLASS2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>CLASS</AttributeName>
+          <Expression>$$db.driver</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="URL2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>URL</AttributeName>
+          <Expression>$$db.url</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="USER2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>USER</AttributeName>
+          <Expression>$$db.username</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="PWD2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>PWD</AttributeName>
+          <Expression>$$db.password</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Save Content2">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Retry.Count')!=null}</ExecuteProcessor>
+          <AttributeName>Modified_Content</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restored Original2">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Retry.Count')!=null}</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Teledex.1 - Set incoming.txt2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="DirectoryListener-set teledexOrder">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:teledexOrder:eip_name://acord:TXLifeRequest/acord:OLifEExtension[@VendorCode='118' and @ExtensionCode='1000']/acord:TeledexOrderNumber:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Putback Content2">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Retry.Count')!=null}</ExecuteProcessor>
+          <AttributeName>Modified_Content</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="set subdir2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>error.subdir</AttributeName>
+          <Expression>{ognl:#filename = getAttribute('com.pilotfish.FileName'), #sourceClient = getAttribute('sourceClient'), #oid = #transaction.getOriginatingTransactionID(), #timestamp = new java.text.SimpleDateFormat('yyyy-MM-dd-HH-mm-ss').format(new java.util.Date()), "teledex-"+#sourceClient+"-"+#filename+"-"+#timestamp+"-"+#oid+'.xml'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="TDEX.1-set acordDoctype-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:acordDoctype:eip_name://acord:TransType/@tc:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="" name="SOAP Client">
+    <FormatProfile name="ACORD to Teledex XML" />
+    <Listener class="com.pilotfish.eip.modules.http.SoapHttpPostListener" enabled="true" name="TDEX">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <RequestPath>tdex</RequestPath>
+        <Timeout>600</Timeout>
+        <TimeoutHandlingMechanism>Send timeout message</TimeoutHandlingMechanism>
+        <Synchronous>true</Synchronous>
+        <RequireSSL>false</RequireSSL>
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <WsdlFile>ORDER.WSDL</WsdlFile>
+        <WsdlContentType>application/wsdl+xml</WsdlContentType>
+        <ValidateAtListenerLevel>false</ValidateAtListenerLevel>
+        <USE_BASIC_AUTH>true</USE_BASIC_AUTH>
+        <AUTH_FILE>$$AxaIncomingAuthFile</AUTH_FILE>
+        <REALM>PilotFish</REALM>
+        <AdditionalResources />
+        <SoapVersion>Autodetect SOAP Version</SoapVersion>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="TDX.1 Get user/pass">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:username:eip_name://doc:Username:eip_value][eip_pair:password:eip_name://doc:Password:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:env:eip_name:http://schemas.xmlsoap.org/soap/envelope/:eip_value][eip_pair:doc:eip_name:https://hhws.portamedic.com/DocumentService/:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathValueProcessor" name="TDX.1 Get CRL Doc">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Namespace>http://crlcorp.com/DocumentService</Namespace>
+          <ForkingXPath>//default:OrderData</ForkingXPath>
+          <TreatAsXML>false</TreatAsXML>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Document Fix">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>fix soap 121.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTVersion>1.0</XSLTVersion>
+          <XSLTEngine>Xalan (Interpreted)</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="TDX.1 CLASS">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>CLASS</AttributeName>
+          <Expression>$$db.driver</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="TDX.1 URL">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>URL</AttributeName>
+          <Expression>$$db.url</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="TDX.1 USER">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>USER</AttributeName>
+          <Expression>$$db.username</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="TDX.1 PWD">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>PWD</AttributeName>
+          <Expression>$$db.password</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="TDX.1 Save Content">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Retry.Count')!=null}</ExecuteProcessor>
+          <AttributeName>Modified_Content</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="TDX.1 Restored Original">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Retry.Count')!=null}</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="TDX.1  - Set incoming.txt">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="TDEX.1-set teledexOrderFlag">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:teledexOrder:eip_name://acord:TXLifeRequest/acord:OLifEExtension[@VendorCode='118' and @ExtensionCode='1000']/acord:TeledexOrderNumber:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="TDX.1 Putback Content">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Retry.Count')!=null}</ExecuteProcessor>
+          <AttributeName>Modified_Content</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="TDX.1 set subdir">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>error.subdir</AttributeName>
+          <Expression>{ognl:#filename = getAttribute('com.pilotfish.FileName'), #sourceClient = getAttribute('sourceClient'), #oid = #transaction.getOriginatingTransactionID(), #timestamp = new java.text.SimpleDateFormat('yyyy-MM-dd-HH-mm-ss').format(new java.util.Date()), "teledex-"+#sourceClient+"-"+#filename+"-"+#timestamp+"-"+#oid+'.xml'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="TDEX.1-set acordDoctype-Copy-2">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:acordDoctype:eip_name://acord:TransType/@tc:eip_value][eip_pair:releasePartyOrgCode:eip_name://acord:ReleasePartyOrgCode:eip_value][eip_pair:acctNum:eip_name://acord:RequirementAcctNum:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="TDEX.1 - Set ManualOrder flag">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>manualOrder</AttributeName>
+          <Expression>true</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="TDEX.1 - set skipTeledex">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>skipTeledex</AttributeName>
+          <Expression>{ognl:#acctNum=getAttribute('acctNum')+",", "71437,73176,09848,89916,71711,71661,71789,70291,89817,89917,73148,73177,1044,71438,1048,1049,1050,1051,1052,1053,1054,1055,1056,1064,1066,1068,1060,1061,1062,1070,".contains(#acctNum) ? "false" : "true"}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="TDEX.1 - Set sourceClient">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:"true".equals(getAttribute('skipTeledex'))}</ExecuteProcessor>
+          <AttributeName>sourceClient</AttributeName>
+          <Expression>{ognl:getAttribute('releasePartyOrgCode')}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="Write DBF XML">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Teledex.1 - Stage Incoming Order.Directory / File Transport" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$TeledexStagingDirectory</TargetDirectory>
+        <FileName>{ognl:#policy = getAttribute('teledex.policy'), #branch = getAttribute('teledex.branch'), #orderno = getAttribute('teledex.orderno'), #sourceClient = getAttribute('sourceClient'), #oid = #transaction.getOriginatingTransactionID(), #timestamp = new java.text.SimpleDateFormat('yyyy-MM-dd-HH-mm-ss').format(new java.util.Date()), "teledex-"+#sourceClient+"-"+#policy+"-"+#branch+"-"+#orderno+"-"+#timestamp+"-"+#oid}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Create New</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+        <OutputFilePath>false</OutputFilePath>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Teledex.1 - Set Source Client">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('sourceClient')==null}</ExecuteProcessor>
+          <AttributeName>sourceClient</AttributeName>
+          <Expression>TDEX</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Teledex.1 - get teledex fields">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:teledex.policy:eip_name://POLICY:eip_value][eip_pair:teledex.branch:eip_name://BRANCH:eip_value][eip_pair:teledex.orderno:eip_name://ORDERNO:eip_value]</XPathExpressions>
+          <Namespaces>null</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Retry Incoming Order">
+    <FormatProfile name="Reprocessing Incoming Order" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Retry Incoming Order" retries="1">
+      <ModuleConfig>
+        <ServiceName>Teledex.1 - Incoming Order Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Add namespace">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform-add-namespace.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTVersion>1.0</XSLTVersion>
+          <XSLTEngine>Xalan (Interpreted)</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Send Email &amp; Write Order">
+    <FormatProfile name="Error-Report-for-Teledex-Incoming-Order" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Send Error Notice" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>C:\Pilotfish\staging\Teledex\Errors</TargetDirectory>
+        <FileName>error</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Create New</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+        <OutputFilePath>false</OutputFilePath>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Save Current Data to Attribute">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>email.content</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Get Original Order">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write-File">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>C:\Pilotfish\staging\Teledex\Errors\INCOMING ORDERS</TargetDirectory>
+          <TargetFileName>{ognl:#filename = getAttribute('com.pilotfish.FileName'), #sourceClient = getAttribute('sourceClient'), #oid = #transaction.getOriginatingTransactionID(), #timestamp = new java.text.SimpleDateFormat('yyyy-MM-dd-HH-mm-ss').format(new java.util.Date()), "teledex-"+#sourceClient+"-"+#filename+"-"+#timestamp+"-"+#oid+'.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Get email.content">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>email.content</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Teledex.1 - Load in FlowNet" retries="1">
+      <ModuleConfig>
+        <ServiceName>Source Document Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Teledex.1 - Restore original text">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Teledex.1 - Restore original.received.order if exists">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('original.received.order') != null}</ExecuteProcessor>
+          <AttributeName>original.received.order</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Teledex.1 - set removePHI">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>removePHI</AttributeName>
+          <Expression>$$TeledexRemovePHI</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="Teledex.1 - Call Remove PHI Route">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:'true'.equalsIgnoreCase(getAttribute('removePHI'))}</ExecuteProcessor>
+          <Listener>Remove PHI from ACORD XML Listener</Listener>
+          <Synchronous>true</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Teledex.1 - XPath Attributes">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:com.pilotfish.FileName:eip_name://acord:PolNumber:eip_value][eip_pair:inboundClient:eip_name://acord:ReleasePartyOrgCode:eip_value][eip_pair:reqAcctNum:eip_name://acord:RequirementAcctNum:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Teledex.1 - set defaultSourceInfoName">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('defaultSourceInfoName')==null}</ExecuteProcessor>
+          <AttributeName>defaultSourceInfoName</AttributeName>
+          <Expression>Teledex</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Teledex.1 - set defaultSourceInfoDescr">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('defaultSourceInfoDescr')==null}</ExecuteProcessor>
+          <AttributeName>defaultSourceInfoDescr</AttributeName>
+          <Expression>Teledex</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Teledex.1 - set sourceClient">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('sourceClient')==null}</ExecuteProcessor>
+          <AttributeName>sourceClient</AttributeName>
+          <Expression>TDEX</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Stage 103 File For Teledex" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>{ognl:#properties.get('TeledexStagingDirectory')+"/103"}</TargetDirectory>
+        <FileName>{ognl:getAttribute('staged103filename')}</FileName>
+        <FileExtension>994</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Create New</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+        <OutputFilePath>false</OutputFilePath>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="TDEX.1 - Restore 103 Content">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.crl.original.txt</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="TDEX.1-set acordTransRefGuid">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:acordTransRefGuid:eip_name://acord:TransRefGUID:eip_value]</XPathExpressions>
+          <Namespaces>[eip_pair:acord:eip_name:http://ACORD.org/Standards/Life/2:eip_value]</Namespaces>
+          <Namespace />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Teledex.1 - set staged 103 filename">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>staged103filename</AttributeName>
+          <Expression>{ognl:#guid=getAttribute('acordTransRefGuid'), #remoteno=getAttribute('teledex.ordernum.for.transrefguid.'+#guid) , #remoteid=getAttribute('teledex.remoteid.for.transrefguid.'+#guid), #remoteno=new java.text.DecimalFormat("000000").format(@java.lang.Integer@parseInt(#remoteno)), #remoteid+#remoteno}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.PauseProcessor" name="Teledex.1 - Pause to stage 103 after the DBF">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Period>5</Period>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>
+

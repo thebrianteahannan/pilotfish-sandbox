@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestConfigurations>
+   <TestConfig name="aigp cdata">
+      <Stage>
+         <Identifier>processor@listener=Source Document Listener,processor=Remove CDATA wrapper</Identifier>
+         <IsStart file="C:\Pilotfish\eip-root\debug-trace\Clients.AmericanGeneral.1 - AIGP ACORD 121 SOAP\5853 33242\16 - Infrastructure - Target-Doctype Route-Checkpoint.trace">true</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+         <TransactionAttributes>
+            <Attribute key="defaultSourceInfoName" value="AIGP"/>
+            <Attribute key="com.pilotfish.Host" value="172.18.6.87:8443"/>
+            <Attribute key="com.pilotfish.RemoteAddr" value="192.168.152.51"/>
+            <Attribute key="inboundClient" value="AIGP"/>
+            <Attribute key="com.pilotfish.X-Forwarded-Server" value="plus-intg-test.crlcorp.com"/>
+            <Attribute key="com.pilotfish.eip.synchronousResponseTicket"
+                       value="com.pilotfish.eip.SynchronousResponseTicket@4dacf761"/>
+            <Attribute key="com.pilotfish.X-Forwarded-Host" value="plus-intg-test.crlcorp.com"/>
+            <Attribute key="com.pilotfish.Accept-Encoding" value="gzip,deflate"/>
+            <Attribute key="defaultSourceInfoDescr" value="AmericanGeneral"/>
+            <Attribute key="com.pilotfish.Content-Length" value="5630"/>
+            <Attribute key="password" value="8woG2P?J;x"/>
+            <Attribute key="com.pilotfish.eip.OriginatingTransactionCreationTime"
+                       value="2016-05-12 02:40:25:150"/>
+            <Attribute key="com.pilotfish.FileName" value="null"/>
+            <Attribute key="com.pilotfish.Synchronous" value="true"/>
+            <Attribute key="com.pilotfish.Content-Type" value="text/xml;charset=UTF-8"/>
+            <Attribute key="com.pilotfish.eip.transactionHistory"
+                       value="com.pilotfish.eip.transact.TransactionHistory@1178834d"/>
+            <Attribute key="sourceClient" value="AIGP"/>
+            <Attribute key="com.pilotfish.RequestURL" value="http://172.18.6.87:8443/http-post/aigp"/>
+            <Attribute key="com.pilotfish.X-Forwarded-For" value="167.230.104.94"/>
+            <Attribute key="Acord123.ValidCredentials" value="true"/>
+            <Attribute key="com.pilotfish.RequestPath" value="aigp"/>
+            <Attribute key="com.pilotfish.joinKey" value="Doctype Route"/>
+            <Attribute key="com.pilotfish.SOAPAction"
+                       value="&#34;http://crlcorp.com/DocumentService/SubmitOrderData&#34;"/>
+            <Attribute key="com.pilotfish.Protocol" value="HTTP/1.1"/>
+            <Attribute key="com.pilotfish.ServerPort" value="8443"/>
+            <Attribute key="com.pilotfish.eip.OriginatingTransactionID" value="5853"/>
+            <Attribute key="com.pilotfish.Connection" value="Keep-Alive"/>
+            <Attribute key="com.pilotfish.eip.currentPathKey" value="java.lang.Object@5f14179"/>
+            <Attribute key="com.pilotfish.ServerName" value="172.18.6.87"/>
+            <Attribute key="com.pilotfish.eip.TransactionCreationTime" value="2016-05-12 02:40:25:150"/>
+            <Attribute key="com.pilotfish.Locale" value="en_US"/>
+            <Attribute key="com.pilotfish.User-Agent" value="Apache-HttpClient/4.1.1 (java 1.5)"/>
+            <Attribute key="com.pilotfish.RemoteHost" value="192.168.152.51"/>
+            <Attribute key="username" value="aigt"/>
+         </TransactionAttributes>
+      </Stage>
+      <Stage>
+         <Identifier>processor@listener=Source Document Listener,processor=Set original txt</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+         <TransactionAttributes>
+            <Attribute key="defaultSourceInfoName" value="AIGP"/>
+            <Attribute key="com.pilotfish.Host" value="172.18.6.87:8443"/>
+            <Attribute key="com.pilotfish.RemoteAddr" value="192.168.152.51"/>
+            <Attribute key="inboundClient" value="AIGP"/>
+            <Attribute key="com.pilotfish.X-Forwarded-Server" value="plus-intg-test.crlcorp.com"/>
+            <Attribute key="com.pilotfish.eip.synchronousResponseTicket"
+                       value="com.pilotfish.eip.SynchronousResponseTicket@4dacf761"/>
+            <Attribute key="com.pilotfish.X-Forwarded-Host" value="plus-intg-test.crlcorp.com"/>
+            <Attribute key="com.pilotfish.Accept-Encoding" value="gzip,deflate"/>
+            <Attribute key="defaultSourceInfoDescr" value="AmericanGeneral"/>
+            <Attribute key="com.pilotfish.Content-Length" value="5630"/>
+            <Attribute key="password" value="8woG2P?J;x"/>
+            <Attribute key="com.pilotfish.eip.OriginatingTransactionCreationTime"
+                       value="2016-05-12 02:40:25:150"/>
+            <Attribute key="com.pilotfish.FileName" value="null"/>
+            <Attribute key="com.pilotfish.Synchronous" value="true"/>
+            <Attribute key="com.pilotfish.Content-Type" value="text/xml;charset=UTF-8"/>
+            <Attribute key="com.pilotfish.eip.transactionHistory"
+                       value="com.pilotfish.eip.transact.TransactionHistory@1178834d"/>
+            <Attribute key="sourceClient" value="AIGP"/>
+            <Attribute key="com.pilotfish.RequestURL" value="http://172.18.6.87:8443/http-post/aigp"/>
+            <Attribute key="com.pilotfish.X-Forwarded-For" value="167.230.104.94"/>
+            <Attribute key="Acord123.ValidCredentials" value="true"/>
+            <Attribute key="com.pilotfish.RequestPath" value="aigp"/>
+            <Attribute key="com.pilotfish.joinKey" value="Doctype Route"/>
+            <Attribute key="com.pilotfish.SOAPAction"
+                       value="&#34;http://crlcorp.com/DocumentService/SubmitOrderData&#34;"/>
+            <Attribute key="com.pilotfish.Protocol" value="HTTP/1.1"/>
+            <Attribute key="com.pilotfish.ServerPort" value="8443"/>
+            <Attribute key="com.pilotfish.eip.OriginatingTransactionID" value="5853"/>
+            <Attribute key="com.pilotfish.Connection" value="Keep-Alive"/>
+            <Attribute key="com.pilotfish.eip.currentPathKey" value="java.lang.Object@5f14179"/>
+            <Attribute key="com.pilotfish.ServerName" value="172.18.6.87"/>
+            <Attribute key="com.pilotfish.eip.TransactionCreationTime" value="2016-05-12 02:40:25:150"/>
+            <Attribute key="com.pilotfish.Locale" value="en_US"/>
+            <Attribute key="com.pilotfish.User-Agent" value="Apache-HttpClient/4.1.1 (java 1.5)"/>
+            <Attribute key="com.pilotfish.RemoteHost" value="192.168.152.51"/>
+            <Attribute key="username" value="aigt"/>
+         </TransactionAttributes>
+      </Stage>
+      <Stage>
+         <Identifier>processor@listener=Source Document Listener,processor=trim whitespace</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@listener=Source Document Listener,processor=Trimmed text to Data</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@listener=Source Document Listener,processor=Set docStart</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@listener=Source Document Listener,processor=Set isNailba</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@listener=Source Document Listener,processor=SetDefaultAcordDocType</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@listener=Source Document Listener,processor=SetAcordAttributes</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@listener=Source Document Listener</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>forking@listener=Source Document Listener</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>routing</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=Nailba Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=Nailba Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=Nailba Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=ACORD Batch Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=ACORD Batch Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=ACORD Batch Transport</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=ACORD 103 Single</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=ACORD 103 Single</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=ACORD 103 Single</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=ACORD 121 Single</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=ACORD 121 Single</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=ACORD 121 Single</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=Handle Unknown Doc Type</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=Handle Unknown Doc Type</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Handle Unknown Doc Type,processor=Set transactionData</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Handle Unknown Doc Type,processor=Set error.subdir</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Handle Unknown Doc Type,processor=DocType Load Error File</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=Handle Unknown Doc Type</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+   </TestConfig>
+</TestConfigurations>

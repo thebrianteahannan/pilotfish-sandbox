@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:TXLife xmlns:ns2="http://ACORD.org/Standards/Life/2">
+	<ns2:UserAuthRequest>
+		<ns2:UserLoginName>SomeUserLoginName</ns2:UserLoginName>
+		<ns2:UserPswd>
+			<ns2:CryptType>NONE</ns2:CryptType>
+			<ns2:CryptPswd>SomePassword!</ns2:CryptPswd>
+		</ns2:UserPswd>
+		<ns2:UserDate>2016-02-29</ns2:UserDate>
+		<ns2:UserTime>11:48:04</ns2:UserTime>
+		<ns2:VendorApp>
+			<ns2:AppName>SomeApplicationName</ns2:AppName>
+			<ns2:AppVer>1.23.45</ns2:AppVer>
+		</ns2:VendorApp>
+	</ns2:UserAuthRequest>
+	<ns2:TXLifeRequest>
+		<ns2:TransRefGUID>BD82A9BB-C624-4DE2-ADF7-3DF8F46A1373</ns2:TransRefGUID>
+		<ns2:TransType tc="121">General Requirement Order Request</ns2:TransType>
+		<ns2:TransMode tc="2">Original</ns2:TransMode>
+		<ns2:TestIndicator tc="1">YES</ns2:TestIndicator>
+		<ns2:OLifE>
+			<ns2:SourceInfo>
+				<ns2:CreationDate>2016-06-07</ns2:CreationDate>
+				<ns2:CreationTime>13:11:04</ns2:CreationTime>
+				<ns2:SourceInfoName>SomeSourceInfoName</ns2:SourceInfoName>
+			</ns2:SourceInfo>
+			<ns2:Holding id="HoldingType_1">
+				<ns2:HoldingTypeCode tc="2">Policy</ns2:HoldingTypeCode>
+				<ns2:Policy CarrierPartyID="PartyType_Agency_1" id="PolicyType_1">
+					<ns2:PolNumber>BH12345678</ns2:PolNumber>
+					<ns2:LineOfBusiness tc="1">Life</ns2:LineOfBusiness>
+					<ns2:ProductType tc="2323" />
+					<ns2:ProductCode>SomeProductCode</ns2:ProductCode>
+					<ns2:CarrierCode>SomeCarrierCode</ns2:CarrierCode>
+					<ns2:Life>
+						<ns2:FaceAmt>230000.000000</ns2:FaceAmt>
+						<ns2:Coverage id="CoverageType_1">
+							<ns2:IndicatorCode tc="1" />
+							<ns2:CurrentAmt>230000.000000</ns2:CurrentAmt>
+							<ns2:LifeParticipant>
+								<ns2:LifeParticipantRoleCode tc="5" />
+							</ns2:LifeParticipant>
+						</ns2:Coverage>
+					</ns2:Life>
+					<ns2:ApplicationInfo>
+						<ns2:TrackingID>SomeTrackingID1234</ns2:TrackingID>
+					</ns2:ApplicationInfo>
+					<ns2:RequirementInfo AppliesToPartyID="PartyType_Agent_1" FulfillerPartyID="PartyType_FulfillerParty_1" RequesterPartyID="PartyType_RequesterParty_1" id="RequirementInfo_1">
+						<ns2:ReqCode tc="137">SomeRequirement</ns2:ReqCode>
+						<ns2:RequirementInfoKey>SomeRequirementInfoKey.12.34</ns2:RequirementInfoKey>
+						<ns2:RequirementInfoUniqueID>SomeRequirementInfoUniqueID.12.34</ns2:RequirementInfoUniqueID>
+						<ns2:RequestedDate>2016-06-07</ns2:RequestedDate>
+						<ns2:ReleasePartyOrgCode>SomeReleasePartyOrganizationCode</ns2:ReleasePartyOrgCode>
+						<ns2:RequirementAcctNum>987654</ns2:RequirementAcctNum>
+					</ns2:RequirementInfo>
+				</ns2:Policy>
+				<ns2:Attachment>
+					<ns2:Description>http://some_url.com?x=hBMDRrXnQpj0V3ns4HGI0mtr-alkjdflkeoeRTNWZ6REXYLlA6fn4gT5oG5Kx8DZBE3jQQnV0HrSWQf4JChG50L_Z-OrWiztYcNnsJhQ6dWZ78WFxZnHXQIu6DSQwqFDvPNei3ql8IQqHGHB2om_l7o=~s6Gq-iPiWMRyCSiYm-odAQ==</ns2:Description>
+					<ns2:AttachmentType tc="2">Comment/Remark</ns2:AttachmentType>
+				</ns2:Attachment>
+			</ns2:Holding>
+			<ns2:Party id="PartyType_Agency_1">
+				<ns2:PartyTypeCode tc="2">Organization</ns2:PartyTypeCode>
+				<ns2:FullName>SomeInsuranceCompany</ns2:FullName>
+				<ns2:Person>
+					<ns2:FirstName>SomeFirstName</ns2:FirstName>
+					<ns2:LastName>SomeLastName</ns2:LastName>
+				</ns2:Person>
+				<ns2:Address>
+					<ns2:AddressTypeCode tc="2">Business</ns2:AddressTypeCode>
+					<ns2:Line1>1234 Not A Real Rd</ns2:Line1>
+					<ns2:Line2>Apt 999</ns2:Line2>
+					<ns2:City>SomeCity</ns2:City>
+					<ns2:AddressState>FL</ns2:AddressState>
+					<ns2:AddressStateTC tc="23">FL</ns2:AddressStateTC>
+				</ns2:Address>
+				<ns2:Phone>
+					<ns2:PhoneTypeCode tc="2" />
+					<ns2:AreaCode>1</ns2:AreaCode>
+					<ns2:DialNumber>1234567</ns2:DialNumber>
+				</ns2:Phone>
+			</ns2:Party>
+			<ns2:Party id="PartyType_Agent_1">
+				<ns2:PartyTypeCode tc="1">Person</ns2:PartyTypeCode>
+				<ns2:FullName>SomeFullName</ns2:FullName>
+				<ns2:GovtID>030000000</ns2:GovtID>
+				<ns2:Person>
+					<ns2:FirstName>SomeFirstName</ns2:FirstName>
+					<ns2:LastName>SomeLastName</ns2:LastName>
+					<ns2:Gender tc="1">Male</ns2:Gender>
+					<ns2:BirthDate>1999-12-24</ns2:BirthDate>
+				</ns2:Person>
+				<ns2:Address>
+					<ns2:AddressTypeCode tc="1">Residence</ns2:AddressTypeCode>
+					<ns2:Line1>123 SomeStreet</ns2:Line1>
+					<ns2:City>SomeCity</ns2:City>
+					<ns2:AddressState>GA</ns2:AddressState>
+					<ns2:AddressStateTC tc="13">GA</ns2:AddressStateTC>
+					<ns2:Zip>99999</ns2:Zip>
+				</ns2:Address>
+				<ns2:Phone>
+					<ns2:PhoneTypeCode tc="1" />
+					<ns2:AreaCode>123</ns2:AreaCode>
+					<ns2:DialNumber>3334444</ns2:DialNumber>
+				</ns2:Phone>
+				<ns2:Phone>
+					<ns2:PhoneTypeCode tc="2" />
+					<ns2:AreaCode>456</ns2:AreaCode>
+					<ns2:DialNumber>4445555</ns2:DialNumber>
+				</ns2:Phone>
+				<ns2:Phone>
+					<ns2:PhoneTypeCode tc="12" />
+					<ns2:AreaCode>789</ns2:AreaCode>
+					<ns2:DialNumber>5556666</ns2:DialNumber>
+				</ns2:Phone>
+				<ns2:Producer>
+					<ns2:CarrierAppointment>
+						<ns2:CompanyProducerID>999999</ns2:CompanyProducerID>
+					</ns2:CarrierAppointment>
+				</ns2:Producer>
+			</ns2:Party>
+			<ns2:Party id="PartyType_FulfillerParty_1">
+				<ns2:FullName>SomeFulfillerName</ns2:FullName>
+			</ns2:Party>
+			<ns2:Party id="PartyType_RequesterParty_1">
+				<ns2:FullName>SomeRequesterName</ns2:FullName>
+			</ns2:Party>
+			<ns2:Relation OriginatingObjectID="HoldingType_1" RelatedObjectID="PartyType_Agency_1" id="RelationType_1">
+				<ns2:OriginatingObjectType tc="4" />
+				<ns2:RelatedObjectType tc="6" />
+				<ns2:RelationRoleCode tc="121" />
+			</ns2:Relation>
+			<ns2:Relation OriginatingObjectID="HoldingType_1" RelatedObjectID="PartyType_Agent_1" id="RelationType_2">
+				<ns2:OriginatingObjectType tc="4" />
+				<ns2:RelatedObjectType tc="6" />
+				<ns2:RelationRoleCode tc="38" />
+			</ns2:Relation>
+		</ns2:OLifE>
+	</ns2:TXLifeRequest>
+</ns2:TXLife>
+

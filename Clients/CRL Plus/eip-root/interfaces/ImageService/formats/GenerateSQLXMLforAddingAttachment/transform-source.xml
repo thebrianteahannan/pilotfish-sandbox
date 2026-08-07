@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://pilotfish.sqlxml" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="attachment" type="attachment_type" />
+			<xsd:complexType name="attachment_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="filename" type="xsd:identity_attribute_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="status_id" type="xsd:identity_attribute_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://pilotfish.sqlxml" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="http://pilotfish.sqlxml" />
+	</formatBuilderData>
+</formatWrapper>
+

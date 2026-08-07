@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XCSData>
+	<NAILBA800>
+		<Header>
+			<RecordType>$$HDR</RecordType>
+			<RecordLength>0250</RecordLength>
+			<NCSSPStandardNumber>800</NCSSPStandardNumber>
+			<NCSSPVersionNumber>01.0</NCSSPVersionNumber>
+			<DateSent>150821</DateSent>
+			<TimeSent>170353EST</TimeSent>
+			<SenderName>MetLife</SenderName>
+			<TargetName>CRL Plus</TargetName>
+			<TransactionSetTestFileIndicator>T</TransactionSetTestFileIndicator>
+		</Header>
+		<Request>
+			<ReportOrderBillingSegment>
+				<RecordType>$A</RecordType>
+				<TransactionSequenceNumber>00001</TransactionSequenceNumber>
+				<OrderOriginatorCode>C</OrderOriginatorCode>
+				<ServiceProviderVendorID>METL</ServiceProviderVendorID>
+				<BillToVendorAccountNumber>78452</BillToVendorAccountNumber>
+				<OrderOriginatorBusinessContact>SOH Unit</OrderOriginatorBusinessContact>
+				<OrderOriginatorContactVoicePhone>8006386420</OrderOriginatorContactVoicePhone>
+				<InsuranceCarrierNameForReportDelivery>MetLife</InsuranceCarrierNameForReportDelivery>
+			</ReportOrderBillingSegment>
+			<ReportOrderInsuranceContractInformationRecord>
+				<RecordType>0A</RecordType>
+				<TransactionSequenceNumber>00002</TransactionSequenceNumber>
+				<OrderRequestDate>20150821</OrderRequestDate>
+				<OrderRequestTime>170353</OrderRequestTime>
+				<OrderType>C</OrderType>
+				<OrderOriginatorQuotebackNumber>819156861</OrderOriginatorQuotebackNumber>
+				<ProposedInsuredCarrierCaseReferenceID>0000143303</ProposedInsuredCarrierCaseReferenceID>
+				<InsuranceProductAppliedFor>OPTL</InsuranceProductAppliedFor>
+				<InsuranceAmountOfCoverageAppliedFor>0000000000</InsuranceAmountOfCoverageAppliedFor>
+				<LifeOrDisabilityFlag>L</LifeOrDisabilityFlag>
+				<CustomerReportName>Brookdale Senior Living</CustomerReportName>
+			</ReportOrderInsuranceContractInformationRecord>
+			<ProposedInsureds>
+				<ProposedInsured>
+					<RecordType>1A</RecordType>
+					<TransactionSequenceNumber>00003</TransactionSequenceNumber>
+					<LastName>FEDOROW</LastName>
+					<FirstName>ANBE</FirstName>
+					<DateOfBirth>19671227</DateOfBirth>
+					<Gender>F</Gender>
+					<HomePhoneNumber>4045090070</HomePhoneNumber>
+					<GovernmentIDType>S</GovernmentIDType>
+					<GovernmentID>146769886</GovernmentID>
+				</ProposedInsured>
+			</ProposedInsureds>
+			<ReportOrderServiceRequests>
+				<ReportOrderServiceRequest>
+					<RecordType>2A</RecordType>
+					<TransactionSequenceNumber>00004</TransactionSequenceNumber>
+					<ServiceRequested>APS</ServiceRequested>
+					<SpecialInstructionsToProvider>Arthritis: Type, date of diagnosis, severity to include number of joints invol</SpecialInstructionsToProvider>
+					<RequirementCode>459</RequirementCode>
+					<Unknown2>1</Unknown2>
+					<EmployeeSSN>46769886   F</EmployeeSSN>
+					<EmployeeName>EDOROWANBE</EmployeeName>
+				</ReportOrderServiceRequest>
+				<ReportOrderServiceRequest>
+					<RecordType>2A</RecordType>
+					<TransactionSequenceNumber>00005</TransactionSequenceNumber>
+					<SpecialInstructionsToProvider>ved, any extraarticular manifestations, current treatment and status;</SpecialInstructionsToProvider>
+					<Unknown2>1</Unknown2>
+					<EmployeeSSN>46769886   F</EmployeeSSN>
+					<EmployeeName>EDOROWANBE</EmployeeName>
+				</ReportOrderServiceRequest>
+			</ReportOrderServiceRequests>
+			<ReportOrderProposedInsuredResidenceHistory>
+				<RecordType>3A</RecordType>
+				<TransactionSequenceNumber>00006</TransactionSequenceNumber>
+				<AddressLine1>126 Cross Creek Pkwy</AddressLine1>
+				<City>Dallas</City>
+				<State>GA</State>
+				<PostalCode>30157</PostalCode>
+				<SpecialInstructions>W14112221715</SpecialInstructions>
+			</ReportOrderProposedInsuredResidenceHistory>
+			<ReportOrderMedicalHistoryInformation>
+				<RecordType>5A</RecordType>
+				<TransactionSequenceNumber>00007</TransactionSequenceNumber>
+				<DoctorOrOther>D</DoctorOrOther>
+				<PhysicianName>doc</PhysicianName>
+				<PhysicianAddressLine1>123 New</PhysicianAddressLine1>
+				<PhysicianCity>Pelzer</PhysicianCity>
+				<PhysicianState>SC</PhysicianState>
+				<PhysicianPostalCode>29669</PhysicianPostalCode>
+			</ReportOrderMedicalHistoryInformation>
+			<ApplicicantOtherContactInfo>
+				<RecordType>6A</RecordType>
+				<TransactionSequenceNumber>00008</TransactionSequenceNumber>
+				<EmailAddress>mwoolbert@yahoo.com</EmailAddress>
+			</ApplicicantOtherContactInfo>
+		</Request>
+		<Trailer>
+			<RecordType>99END</RecordType>
+			<RecordLength>0250</RecordLength>
+			<NCSSPStandardNumber>800</NCSSPStandardNumber>
+			<NCSSPVersionNumber>01.0</NCSSPVersionNumber>
+			<DateSent>150821</DateSent>
+			<TimeSent>170353EST</TimeSent>
+			<SenderName>MetLife</SenderName>
+			<TargetName>CRL Plus</TargetName>
+			<TotalRecordCount>0000000220</TotalRecordCount>
+		</Trailer>
+	</NAILBA800>
+</XCSData>
+

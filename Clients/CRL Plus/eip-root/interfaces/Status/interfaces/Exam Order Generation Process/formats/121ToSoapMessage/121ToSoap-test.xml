@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<UserAuthRequest>
+		<UserLoginName />
+		<UserPswd>
+			<CryptType>NONE</CryptType>
+			<CryptPswd />
+			<Pswd />
+		</UserPswd>
+		<UserDate>2017-02-28</UserDate>
+		<UserTime>09:41:19</UserTime>
+		<VendorApp>
+			<VendorName VendorCode="118">CRL-Plus</VendorName>
+			<AppName>XMLPROC</AppName>
+			<AppVer>1.0.0</AppVer>
+		</VendorApp>
+	</UserAuthRequest>
+	<TXLifeRequest>
+		<TransRefGUID>F3251408-5877-D94E-E24B-0E9436BED3BD</TransRefGUID>
+		<TransType tc="121">General Requirements Order Request</TransType>
+		<TransExeDate>2017-02-28</TransExeDate>
+		<TransExeTime>09:41:19</TransExeTime>
+		<TransMode tc="2">Original</TransMode>
+		<NoResponseOK tc="0">False</NoResponseOK>
+		<TestIndicator tc="0">False</TestIndicator>
+		<OLifE>
+			<SourceInfo>
+				<CreationDate>2017-02-28</CreationDate>
+				<CreationTime>09:41:19</CreationTime>
+				<SourceInfoName>CRL-Plus</SourceInfoName>
+				<SourceInfoDescription>Email : INSURANCECS@CRLCORP.COM</SourceInfoDescription>
+				<SourceInfoComment>Phone : 8558507587</SourceInfoComment>
+			</SourceInfo>
+			<Holding id="Holding">
+				<Policy CarrierPartyID="" id="">
+					<PolNumber>POL-TESTAIG-01</PolNumber>
+					<LineOfBusiness tc="1">Life</LineOfBusiness>
+					<Jurisdiction tc="" />
+					<EffDate />
+					<PaymentMode tc="" />
+					<PaymentMethod tc="" />
+					<ProductType id="0">L</ProductType>
+					<Life>
+						<FaceAmt xmlns="">100000</FaceAmt>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>04edbc8e-7782-4d6c-9c8b-0af8dac8d8c7</TrackingID>
+						<ApplicationJurisdiction tc="">CA</ApplicationJurisdiction>
+						<PrefLanguage tc="" />
+					</ApplicationInfo>
+					<RequirementInfo RequesterPartyID="Party_Carrier">
+						<ReqCode tc="535">Diagnose</ReqCode>
+						<ReqStatus tc="2">Submitted</ReqStatus>
+						<RequestedDate>2017-02-28</RequestedDate>
+						<RequirementAcctNum>UNKNOWN</RequirementAcctNum>
+					</RequirementInfo>
+				</Policy>
+			</Holding>
+			<Party xmlns="" id="Party_Insured">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName />
+				<GovtID />
+				<Person>
+					<FirstName>Rick</FirstName>
+					<MiddleName />
+					<LastName>Testing</LastName>
+					<Occupation />
+					<Gender tc="" />
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="" />
+				</Person>
+				<Address>
+					<AddressTypeCode tc="1">Residence</AddressTypeCode>
+					<Line1>12344 Testing Rd</Line1>
+					<Line2 />
+					<City>NoWhereVille</City>
+					<AddressState>CA</AddressState>
+					<AddressStateTC tc="6">CA</AddressStateTC>
+					<Zip>11111</Zip>
+					<PreventOverrideInd tc="" />
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode />
+					<DialNumber>407-998-9895</DialNumber>
+					<Ext />
+				</Phone>
+			</Party>
+			<Relation xmlns="" OriginatingObjectID="Holding" RelatedObjectID="Party_Insured" id="">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="32">Insured</RelationRoleCode>
+			</Relation>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>
+

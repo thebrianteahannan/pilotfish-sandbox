@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://crlcorp.com/DocumentService" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" targetNamespace="http://crlcorp.com/DocumentService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://crlcorp.com/DocumentService">
+      <s:element name="SubmitOrderData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrderData" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+<!--      
+      <s:element name="SubmitOrderDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SubmitOrderDataResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+-->      
+			<s:element name="SubmitOrderDataResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element name="SubmitOrderDataResult">
+							<s:complexType>
+								<s:sequence>
+									<s:element name="Results">
+										<s:complexType>
+											<s:sequence>
+												<s:element maxOccurs="1" minOccurs="0" name="Message" type="s:string"/>
+												<s:element maxOccurs="1" minOccurs="0" name="TransactionID" type="s:string"/>
+												<s:element maxOccurs="1" minOccurs="0" name="TeledexOrderNumber" type="s:string"/>
+											</s:sequence>
+										</s:complexType>
+									</s:element>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:complexType>
+			</s:element>  
+      
+      <s:element name="WSSecurity" type="tns:WSSecurity" />
+      <s:complexType name="WSSecurity">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Credentials" type="tns:UserNameToken" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserNameToken">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SubmitOrderDataSoapIn">
+    <wsdl:part name="parameters" element="tns:SubmitOrderData" />
+  </wsdl:message>
+  <wsdl:message name="SubmitOrderDataSoapOut">
+    <wsdl:part name="parameters" element="tns:SubmitOrderDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="SubmitOrderDataWSSecurity">
+    <wsdl:part name="WSSecurity" element="tns:WSSecurity" />
+  </wsdl:message>
+  <wsdl:portType name="SubmitOrderSoap">
+    <wsdl:operation name="SubmitOrderData">
+      <wsdl:input message="tns:SubmitOrderDataSoapIn" />
+      <wsdl:output message="tns:SubmitOrderDataSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SubmitOrderSoap" type="tns:SubmitOrderSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+    <wsdl:operation name="SubmitOrderData">
+      <soap:operation soapAction="http://crlcorp.com/DocumentService/SubmitOrderData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SubmitOrderDataWSSecurity" part="WSSecurity" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+	<wsdl:service name="SubmitOrder">
+		<wsdl:port name="SubmitOrderData_Port" binding="tns:SubmitOrderData_Binding">
+			<!-- Test URL -->
+			<soap:address location="https://plus-intg-test.crlcorp.com/http-post/tdex" />
+			<!-- Production URL -->
+			<!--<soap:address location="https://plus-intg.crlcorp.com/http-post/tdex" />-->
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

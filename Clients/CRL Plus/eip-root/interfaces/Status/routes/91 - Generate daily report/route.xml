@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2018-07-31T12:51:52-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Status.91 - Email Report" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>emailReport</Name>
+              <Operator>exists</Operator>
+              <Value />
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Status.91 - Query Database" />
+          </Targets>
+          <Condition>
+            <And>
+              <Attribute>
+                <Name>receivedRequest</Name>
+                <Operator>=</Operator>
+                <Value>true</Value>
+              </Attribute>
+              <Attribute>
+                <Name>validCredentials</Name>
+                <Operator>=</Operator>
+                <Value>true</Value>
+              </Attribute>
+            </And>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Status.91 - Synchronous Response" />
+          </Targets>
+          <Condition>
+            <Attribute>
+              <Name>receivedResponse</Name>
+              <Operator>=</Operator>
+              <Value>true</Value>
+            </Attribute>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Status.91 - Invalid Credentials" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.db.DatabaseSqlListener" enabled="true" name="Status.91 - SQL Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <PollingInterval>$$problem.report.schedule.interval</PollingInterval>
+        <InputFile>sql.xml</InputFile>
+        <WriteQuery>false</WriteQuery>
+        <Query />
+        <QueryParams />
+        <UserName>$$db.username</UserName>
+        <Password>$$db.password</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$db.driver</JdbcDriver>
+        <JdbcURL>$$db.url</JdbcURL>
+        <SchedulerStartTag>$$problem.report.schedule.start</SchedulerStartTag>
+        <SchedulerEndTag>$$problem.report.schedule.end</SchedulerEndTag>
+        <ExcludeDaysTag>Sat,Sun</ExcludeDaysTag>
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <BatchSensitive>false</BatchSensitive>
+        <Timeout>600</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema>$$db.username</RestrictMetaDataToSchema>
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <UseSingleOutputStream>true</UseSingleOutputStream>
+        <RefreshHandler>false</RefreshHandler>
+        <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+        <JDBCProperties>null</JDBCProperties>
+        <LogMetadata>false</LogMetadata>
+        <LogSQL>false</LogSQL>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Status.91 - set crl.environment">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>crl.environment</AttributeName>
+          <Expression>$$crl.environment</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Status.91 - set emailReport">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>emailReport</AttributeName>
+          <Expression>true</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.http.rest.RESTfulWebServiceListener" enabled="true" name="Status.91 - Request Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <SERVICE_NAME>reports</SERVICE_NAME>
+        <USER_NAME>crl-plus</USER_NAME>
+        <PASSWORD>dowGbKp9g4</PASSWORD>
+        <POST_SUPPORTED>false</POST_SUPPORTED>
+        <GET_SUPPORTED>true</GET_SUPPORTED>
+        <PUT_SUPPORTED>false</PUT_SUPPORTED>
+        <DELETE_SUPPORTED>false</DELETE_SUPPORTED>
+        <SupportedResources>problem-AIGP,problem-all,problem-PACT,problem-PRUX,problem-LADDER</SupportedResources>
+        <Timeout>600</Timeout>
+        <RequireSSL>false</RequireSSL>
+        <Synchronous>true</Synchronous>
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/html:eip_value]</HTTPHeaders>
+        <WadlFile />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Status.91 - set receivedRequest">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>receivedRequest</AttributeName>
+          <Expression>true</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Status.91 - Check Credentials">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('com.pilotfish.Authorization')!=null}</ExecuteProcessor>
+          <AttributeName>validCredentials</AttributeName>
+          <Expression>true</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Status.91 - DatabaseResponse">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Status.91 - set receivedResponse">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>receivedResponse</AttributeName>
+          <Expression>true</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.AttributeRemovalProcessor" name="Status.91 - remove receivedRequest">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetAttributes>[eip_pair:receivedRequest:eip_name::eip_value]</TargetAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Status.91 - set crl.env">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>crl.environment</AttributeName>
+          <Expression>$$crl.environment</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="StatusProblemReport" />
+    <Transport class="com.pilotfish.eip.modules.email.EmailTransport" name="Status.91 - Email Report" retries="1">
+      <ModuleConfig>
+        <Host>$$mail.server</Host>
+        <UserName />
+        <Password />
+        <Port>25</Port>
+        <SSLEnabled>false</SSLEnabled>
+        <StartTLS>false</StartTLS>
+        <SendFrom>$$mail.errors.from</SendFrom>
+        <ReplyTo />
+        <SendTo>$$mail.undeliveredstatus.to</SendTo>
+        <SendCC />
+        <SendBCC />
+        <Subject>{ognl:'PilotFish Problem Report ('+getAttribute('crl.environment')+')'}</Subject>
+        <DataInAttachment>false</DataInAttachment>
+        <AttachmentFilename>data.dat</AttachmentFilename>
+        <MIMEType>text/html</MIMEType>
+        <AttachmentsTable />
+        <ENCRYPT_MESSAGE>false</ENCRYPT_MESSAGE>
+        <DNS_FIND_CERT>false</DNS_FIND_CERT>
+        <PathToCertificate />
+        <SIGN_MESSAGE>false</SIGN_MESSAGE>
+        <PathToPemFile />
+        <PrivateKeyName />
+        <PrivateKeyPassword />
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.db.DatabaseSqlTransport" name="Status.91 - Query Database" retries="1">
+      <ModuleConfig>
+        <InputFile />
+        <WriteQuery>false</WriteQuery>
+        <Query />
+        <QueryParams />
+        <UserName>$$db.username</UserName>
+        <Password>$$db.password</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$db.driver</JdbcDriver>
+        <JdbcURL>$$db.url</JdbcURL>
+        <KeepConnection>false</KeepConnection>
+        <Autocommit>false</Autocommit>
+        <Timeout>600</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema>$$db.username</RestrictMetaDataToSchema>
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <CallbackListenerName>Status.91 - DatabaseResponse</CallbackListenerName>
+        <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+        <JDBCProperties>null</JDBCProperties>
+        <UseConnectionPooling>false</UseConnectionPooling>
+        <PermittedDBConnections>5</PermittedDBConnections>
+        <LogMetadata>false</LogMetadata>
+        <LogSQL>false</LogSQL>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Status.91 - Generate daily report.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>false</ExecuteProcessor>
+          <AttributeName>receivedRequest</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.StaticFileProcessor" name="Status.91 - Load sql.xml">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <FileName>sql.xml</FileName>
+          <PostProcessOperation>Do Nothing</PostProcessOperation>
+          <TargetDirectory />
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Status.91 - set report.client">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>report.client</AttributeName>
+          <Expression>{ognl:#path=getAttribute('com.pilotfish.RequestPath'), #path.substring(#path.lastIndexOf('problem-')+8)}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="Status.91 - update client in query">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:#client=getAttribute('report.client'), !'all'.equalsIgnoreCase(#client) &amp;&amp; #client.matches('[A-Za-z0-9-]*')}</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:(PF_SOURCE_CLIENT\s+in)\s+\([^)]*\):eip_name:{ognl:"$1('"+getAttribute('report.client')+"')"}:eip_value]</REGEX_TABLE_TAG>
+          <SampleAttributes>report.client::PRUX</SampleAttributes>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Status.91 - Invalid Credentials" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Status.91 - setResonseCode">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.HTTPResponseCode</AttributeName>
+          <Expression>401</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Status.91 - set auth header">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>com.pilotfish.eip.modules.http.StoredHeaders</AttributeName>
+          <Expression>{ognl:#map=new java.util.HashMap(),#map.put('WWW-Authenticate','Basic realm="CRL-Plus Reports"'),#map}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="System Unnamed">
+    <FormatProfile name="StatusProblemReport" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Status.91 - Synchronous Response" retries="1" />
+  </Target>
+</Route>
+

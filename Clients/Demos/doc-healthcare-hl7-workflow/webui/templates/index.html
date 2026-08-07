@@ -8,15 +8,25 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/app.css" />
+  <link rel="stylesheet" href="/static/timing-tab.css" />
 </head>
 <body>
   <header>
-    <h1>DOC Healthcare → HL7 Routes</h1>
-    <p>
-      Visual of the PilotFish routes built for the corrections healthcare workflow case study:
-      database events in, MULTI packages split, HL7 ADT out for MyAvatar.
-    </p>
-    <nav class="nav">
+    <div class="app-bar" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.65rem 1rem;">
+      <div>
+        <h1 style="margin-bottom:.35rem;">DOC Healthcare → HL7 Routes</h1>
+        <p style="margin:0;">
+          Visual of the PilotFish routes built for the corrections healthcare workflow case study:
+          database events in, MULTI packages split, HL7 ADT out for MyAvatar.
+        </p>
+      </div>
+      <div class="main-tabs" role="tablist" aria-label="App views">
+        <button type="button" class="main-tab active" data-main-tab="demo" role="tab" aria-selected="true">Demo</button>
+        <button type="button" class="main-tab" data-main-tab="timing" role="tab" aria-selected="false">Timing</button>
+        <button type="button" class="main-tab" data-main-tab="info" role="tab" aria-selected="false">Info</button>
+      </div>
+    </div>
+    <nav class="nav" id="demo-nav">
       <a href="#pipeline">Pipeline</a>
       <a href="#route-1a">Route 1a SQL</a>
       <a href="#route-1b">Route 1b Oracle</a>
@@ -27,6 +37,7 @@
     </nav>
   </header>
 
+  <div id="tab-demo">
   <main>
     <section class="panel" id="pipeline">
       <h2>End-to-end pipeline</h2>
@@ -268,7 +279,16 @@
       <div id="results" class="results"></div>
     </section>
   </main>
+  </div>
+
+  <!-- TIMING_TAB_STANDARD:START -->
+  {% include 'partials/timing_tab.html' %}
+  <!-- TIMING_TAB_STANDARD:END -->
+  <!-- INFO_TAB_STANDARD:START -->
+  {% include 'partials/info_tab.html' %}
+  <!-- INFO_TAB_STANDARD:END -->
 
   <script src="/static/app.js"></script>
+  <script src="/static/timing-tab.js"></script>
 </body>
 </html>

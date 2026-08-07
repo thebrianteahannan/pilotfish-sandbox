@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<UserAuthRequest>
+		<UserLoginName/>
+		<UserPswd>
+			<CryptType>NONE</CryptType>
+			<CryptPswd/>
+		</UserPswd>
+		<UserDate>2017-01-19</UserDate>
+		<UserTime>06:46:10-06:00</UserTime>
+		<VendorApp>
+			<VendorName VendorCode="118">CRL-Plus</VendorName>
+			<AppName>XMLPROC</AppName>
+			<AppVer>1.0.0</AppVer>
+		</VendorApp>
+	</UserAuthRequest>
+	<TXLifeRequest>
+		<TransRefGUID>3CB851E1-363A-9CDC-94A9-8003D3A63B1C</TransRefGUID>
+		<TransType tc="1122">Requirement Notification Transmittal</TransType>
+		<TransExeDate>2017-01-19</TransExeDate>
+		<TransExeTime>06:46:10</TransExeTime>
+		<TransMode tc="2">Original</TransMode>
+		<TestIndicator tc="0">False</TestIndicator>
+		<OLifE>
+			<SourceInfo>
+				<SourceInfoName>CRL-Plus</SourceInfoName>
+				<SourceInfoDescription>Email : INSURANCECS@CRLCORP.COM</SourceInfoDescription>
+				<SourceInfoComment>Phone : 8558507587</SourceInfoComment>
+			</SourceInfo>
+			<Holding id="HoldingType_1">
+				<HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+				<Policy CarrierPartyID="PartyType_1" id="PolicyType_1">
+					<PolNumber>TESTACCCH1</PolNumber>
+					<CarrierCode>036</CarrierCode>
+					<ProductType tc=""/>
+					<Life>
+						<FaceAmt>300000.000000</FaceAmt>
+						<Coverage id="CoverageType_1">
+							<PlanName/>
+							<ShortName/>
+							<LifeCovStatus tc=""/>
+							<LifeCovTypeCode tc=""/>
+							<IndicatorCode tc=""/>
+							<CurrentAmt>300000.000000</CurrentAmt>
+							<LifeParticipant PartyID="" id="">
+								<LifeParticipantRoleCode tc=""/>
+							</LifeParticipant>
+						</Coverage>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>ALIP001TESTACCCH1_life_Party-59245_TI_1</TrackingID>
+						<ApplicationJurisdiction tc=""/>
+						<PrefLanguage tc=""/>
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="PartyType_2_life_Party-59245">
+						<CarrierOrderNum/>
+						<ReqCode tc="137">Conduct Tele-Interview</ReqCode>
+						<RequirementInfoUniqueID>ALIP001TESTACCCH1_life_Party-59245_TI_1</RequirementInfoUniqueID>
+						<ReqStatus tc="7">Received</ReqStatus>
+						<RequestedDate>2017-01-19 00:00:00.0</RequestedDate>
+						<StatusDate>2017-01-19</StatusDate>
+						<ReleasePartyOrgCode>AIG</ReleasePartyOrgCode>
+						<RequirementAcctNum>1071</RequirementAcctNum>
+						<RequirementDetails/>
+						<ProviderOrderNum>73036</ProviderOrderNum>
+						<OrderReceivedDate>2017-01-19</OrderReceivedDate>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647"/>
+							<ProviderEventCode>S85</ProviderEventCode>
+							<StatusEventDate>2017-01-19</StatusEventDate>
+							<StatusEventTime>06:30:10-06:00</StatusEventTime>
+							<StatusEventDetail>Service - 102781- ORDERED APPLICATION PART II</StatusEventDetail>
+						</StatusEvent>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647"/>
+							<ProviderEventCode>S79</ProviderEventCode>
+							<StatusEventDate>2017-01-19</StatusEventDate>
+							<StatusEventTime>06:30:10-06:00</StatusEventTime>
+							<StatusEventDetail>Order Received</StatusEventDetail>
+						</StatusEvent>
+					</RequirementInfo>
+				</Policy>
+			</Holding>
+			<Party id="PartyType_1">
+				<PartyTypeCode tc="2">Organization</PartyTypeCode>
+				<FullName>AIG</FullName>
+				<GovtID/>
+				<Organization>
+					<AbbrName>AIG</AbbrName>
+				</Organization>
+				<Address>
+					<AddressTypeCode tc="2">Business</AddressTypeCode>
+					<Line1>Dummy1</Line1>
+					<Line2>Dummy2</Line2>
+					<City>Dallas</City>
+					<AddressState>UN</AddressState>
+					<AddressStateTC tc="0">UN</AddressStateTC>
+					<Zip/>
+					<PreventOverrideInd tc=""/>
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="2"/>
+					<AreaCode>001</AreaCode>
+					<DialNumber>7774441111</DialNumber>
+					<Ext/>
+				</Phone>
+			</Party>
+			<Party id="PartyType_2_life_Party-59245">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName/>
+				<GovtID>432342323</GovtID>
+				<Person>
+					<FirstName>steve</FirstName>
+					<MiddleName/>
+					<LastName>huges</LastName>
+					<Occupation/>
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1981-01-01</BirthDate>
+					<Citizenship tc=""/>
+					<BirthCountry tc=""/>
+					<BirthJurisdictionTC tc=""/>
+				</Person>
+				<Address>
+					<AddressTypeCode tc="1">Residence</AddressTypeCode>
+					<Line1>123 lake view</Line1>
+					<Line2/>
+					<City>Houston</City>
+					<AddressState>TX</AddressState>
+					<AddressStateTC tc="51">TX</AddressStateTC>
+					<Zip>77022</Zip>
+					<PreventOverrideInd tc=""/>
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1"/>
+					<AreaCode>207</AreaCode>
+					<DialNumber>6556464</DialNumber>
+					<Ext/>
+				</Phone>
+				<Phone>
+					<PhoneTypeCode tc="2"/>
+					<AreaCode>234</AreaCode>
+					<DialNumber>5232123</DialNumber>
+					<Ext/>
+				</Phone>
+			</Party>
+			<Relation OriginatingObjectID="HoldingType_1" RelatedObjectID="PartyType_1" id="RelationType_1">
+				<OriginatingObjectType tc="4"/>
+				<RelatedObjectType tc="6"/>
+				<RelationRoleCode tc="87">Carrier</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="HoldingType_1" RelatedObjectID="PartyType_2_life_Party-59245" id="RelationType_2">
+				<OriginatingObjectType tc="4"/>
+				<RelatedObjectType tc="6"/>
+				<RelationRoleCode tc="32">Insured</RelationRoleCode>
+			</Relation>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>

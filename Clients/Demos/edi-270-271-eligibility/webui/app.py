@@ -448,5 +448,69 @@ def capability_pdf_alias():
         status=404,
     )
 
+
+# INFO_TAB_STANDARD_BOOTSTRAP
+try:
+    from document_routes import ensure_document_routes
+except ImportError:
+    ensure_document_routes = None  # type: ignore
+
+_INFO_TAB_CTX = {
+    "info_title": 'Clinic eligibility — AAA theater then success',
+    "info_blurb": 'Build real X12 270 → mock payer 271 → parse benefits / AAA. Orchestrated by this clinic UI.',
+    "info_note": 'Demo only — orchestrated eligibility theater with mock payer.',
+    "eip_url": 'http://localhost:8106/eip/',
+    "lan_hint": "",
+    "info_ports": [
+        {"label": "Mock payer", "value": "8210"},
+        {"label": "PilotFish EIP", "value": "8106"},
+        {"label": "Demo Web UI", "value": "8107"}
+    ],
+    "info_extra_links": [],
+    "info_extra_sections": [],
+    "test_results_pdf": None,
+}
+
+@app.context_processor
+def _info_tab_standard_context():
+    import os as _os
+    ctx = dict(_INFO_TAB_CTX)
+    eip = _os.environ.get("EIP_PUBLIC_URL")
+    if eip:
+        ctx["eip_url"] = eip
+    lan = _os.environ.get("LAN_HINT", "")
+    if lan:
+        ctx["lan_hint"] = lan
+    return ctx
+
+if ensure_document_routes is not None:
+    from pathlib import Path as _Path
+    import os as _os
+    _docs_dir = _Path(_os.environ.get("DOCUMENTS_DIR", "/documents"))
+    ensure_document_routes(
+        app,
+        _docs_dir,
+        route_pdf_name='EDI270_271_V2_Route_Diagrams.pdf',
+        capability_pdf_name='EDI270_271_Capability_Brief.pdf',
+        test_plan_pdf_name=None,
+        test_results_pdf_name=None,
+    )
+# END INFO_TAB_STANDARD_BOOTSTRAP
+
+
+# TIMING_TAB_API_BOOTSTRAP
+try:
+    from document_routes import ensure_build_timing_api
+except ImportError:
+    ensure_build_timing_api = None  # type: ignore
+if ensure_build_timing_api is not None:
+    from pathlib import Path as _PathTiming
+    import os as _os_timing
+    ensure_build_timing_api(
+        app,
+        _PathTiming(_os_timing.environ.get("DOCUMENTS_DIR", "/documents")),
+    )
+# END TIMING_TAB_API_BOOTSTRAP
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=WEBUI_PORT, debug=False)

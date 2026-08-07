@@ -1,0 +1,16 @@
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:doc="http://crlcorp.com/schema/DocumentRequest">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <doc:GetDocumentRequest>
+          <doc:DrawerName>RLS_REQUISITION</doc:DrawerName>
+          <doc:UserId>EMERYS</doc:UserId>
+          <!--1 or more repetitions:-->
+          <doc:SearchCriteria>
+              <!--You have a CHOICE of the next 4 items at this level-->
+              <doc:DocumentId>1</doc:DocumentId>
+              <doc:OutputType>TIFF</doc:OutputType>
+         </doc:SearchCriteria>
+      </doc:GetDocumentRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

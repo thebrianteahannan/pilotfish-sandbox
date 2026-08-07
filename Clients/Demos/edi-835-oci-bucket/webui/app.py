@@ -317,5 +317,70 @@ def route_pdf_alias():
     return send_file(path)
 
 
+
+# INFO_TAB_STANDARD_BOOTSTRAP
+try:
+    from document_routes import ensure_document_routes
+except ImportError:
+    ensure_document_routes = None  # type: ignore
+
+_INFO_TAB_CTX = {
+    "info_title": 'SFTP 835 → ST split → JSON → OCI',
+    "info_blurb": 'Boss pattern: SFTP poll · fork each ST/Transaction · JSON · Object Storage REST (HTTP until OCI Transport exists).',
+    "info_note": 'Demo only — SFTP 835 to JSON Object Storage path.',
+    "eip_url": 'http://localhost:8104/eip/',
+    "lan_hint": "",
+    "info_ports": [
+        {"label": "SFTP", "value": "2222"},
+        {"label": "Mock OCI", "value": "4599"},
+        {"label": "PilotFish EIP", "value": "8104"},
+        {"label": "Demo Web UI", "value": "8105"}
+    ],
+    "info_extra_links": [{'href': '/documents/Connect_OciObjectStorageTransport_To_Real_Oracle_OCI.pdf', 'label': 'Connect OCI transport (guide PDF)'}, {'href': '/documents/PilotFish_EDI835_OCI_Gaps_And_Custom_Modules.pdf', 'label': 'Gaps and custom modules PDF'}],
+    "info_extra_sections": [],
+    "test_results_pdf": None,
+}
+
+@app.context_processor
+def _info_tab_standard_context():
+    import os as _os
+    ctx = dict(_INFO_TAB_CTX)
+    eip = _os.environ.get("EIP_PUBLIC_URL")
+    if eip:
+        ctx["eip_url"] = eip
+    lan = _os.environ.get("LAN_HINT", "")
+    if lan:
+        ctx["lan_hint"] = lan
+    return ctx
+
+if ensure_document_routes is not None:
+    from pathlib import Path as _Path
+    import os as _os
+    _docs_dir = _Path(_os.environ.get("DOCUMENTS_DIR", "/documents"))
+    ensure_document_routes(
+        app,
+        _docs_dir,
+        route_pdf_name='EDI835_OCI_V2_Route_Diagrams.pdf',
+        capability_pdf_name='EDI835_OCI_Capability_Brief.pdf',
+        test_plan_pdf_name=None,
+        test_results_pdf_name=None,
+    )
+# END INFO_TAB_STANDARD_BOOTSTRAP
+
+
+# TIMING_TAB_API_BOOTSTRAP
+try:
+    from document_routes import ensure_build_timing_api
+except ImportError:
+    ensure_build_timing_api = None  # type: ignore
+if ensure_build_timing_api is not None:
+    from pathlib import Path as _PathTiming
+    import os as _os_timing
+    ensure_build_timing_api(
+        app,
+        _PathTiming(_os_timing.environ.get("DOCUMENTS_DIR", "/documents")),
+    )
+# END TIMING_TAB_API_BOOTSTRAP
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "8105")))

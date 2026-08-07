@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<UserAuthRequest>
+		<UserLoginName />
+		<UserPswd>
+			<CryptType>NONE</CryptType>
+			<CryptPswd />
+		</UserPswd>
+		<UserDate>2017-03-01</UserDate>
+		<UserTime>12:08:44-06:00</UserTime>
+		<VendorApp>
+			<VendorName VendorCode="118">CRL-Plus</VendorName>
+			<AppName>XMLPROC</AppName>
+			<AppVer>1.0.0</AppVer>
+		</VendorApp>
+	</UserAuthRequest>
+	<TXLifeRequest>
+		<TransRefGUID>DD4E243C-7C41-78BC-120F-FBD160FD9B64</TransRefGUID>
+		<TransType tc="1122">Requirement Notification Transmittal</TransType>
+		<TransExeDate>2017-03-01</TransExeDate>
+		<TransExeTime>12:08:44</TransExeTime>
+		<TransMode tc="2">Original</TransMode>
+		<TestIndicator tc="0">False</TestIndicator>
+		<OLifE>
+			<SourceInfo>
+				<SourceInfoName>CRL-Plus</SourceInfoName>
+				<SourceInfoDescription>Email : INSURANCECS@CRLCORP.COM</SourceInfoDescription>
+				<SourceInfoComment>Phone : 8558507587</SourceInfoComment>
+			</SourceInfo>
+			<Holding id="Holding_Primary">
+				<HoldingTypeCode tc="" />
+				<Policy>
+					<PolNumber>LI581735</PolNumber>
+					<CarrierCode>5340</CarrierCode>
+					<LineOfBusiness tc="1">Life</LineOfBusiness>
+					<ProductType tc="" />
+					<Life>
+						<FaceAmt>250000</FaceAmt>
+						<Coverage id="">
+							<PlanName>Term</PlanName>
+							<ShortName />
+							<LifeCovStatus tc="" />
+							<LifeCovTypeCode tc="" />
+							<IndicatorCode tc="1">Base</IndicatorCode>
+							<CurrentAmt>250000</CurrentAmt>
+							<LifeParticipant PartyID="Party_PrimaryInsured" id="LifeParticipant_PrimaryInsured">
+								<LifeParticipantRoleCode tc="1">Primary Insured</LifeParticipantRoleCode>
+							</LifeParticipant>
+						</Coverage>
+						<Coverage id="">
+							<PlanName>Childrens Term Insurance</PlanName>
+							<ShortName />
+							<LifeCovStatus tc="" />
+							<LifeCovTypeCode tc="" />
+							<IndicatorCode tc="2">Rider</IndicatorCode>
+							<CurrentAmt />
+							<LifeParticipant PartyID="" id="">
+								<LifeParticipantRoleCode tc="" />
+							</LifeParticipant>
+						</Coverage>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>2eeca6cd-6203-477d-b0e0-8b1c54c6d0ac</TrackingID>
+						<ApplicationJurisdiction tc="18">IN</ApplicationJurisdiction>
+						<PrefLanguage tc="" />
+					</ApplicationInfo>
+					<RequirementInfo AppliesToPartyID="Party_PrimaryInsured">
+						<CarrierOrderNum />
+						<ReqCode tc="137">Tele-Interview</ReqCode>
+						<RequirementInfoUniqueID />
+						<ReqStatus tc="11">Completed</ReqStatus>
+						<RequestedDate>2017-02-09 00:00:00.0</RequestedDate>
+						<FulfilledDate>2017-02-27</FulfilledDate>
+						<StatusDate>2017-02-27</StatusDate>
+						<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+						<RequirementAcctNum>71661</RequirementAcctNum>
+						<RequirementDetails />
+						<ProviderOrderNum>74610</ProviderOrderNum>
+						<OrderReceivedDate>2017-02-10</OrderReceivedDate>
+						<StatusEvent>
+							<StatusEventCode tc="2147483647" />
+							<ProviderEventCode>S66</ProviderEventCode>
+							<StatusEventDate>2017-02-27</StatusEventDate>
+							<StatusEventTime>12:50:06-06:00</StatusEventTime>
+							<StatusEventDetail>Attachment Sent to Client</StatusEventDetail>
+						</StatusEvent>
+						<Attachment>
+							<Description>3f68af63-fde0-455b-9c9c-f57d0b540ef9</Description>
+							<FileName>00003904.tif</FileName>
+							<AttachmentData>SUkqA//wAQAQCagZA1P/8AEAEAmoGQNT//ABABAJqBkDU//wAQAQCagZA1P/8AEAEA=</AttachmentData>
+							<MimeTypeTC>image/tiff</MimeTypeTC>
+							<AttachmentType tc="2147483647">OLI_OTHER</AttachmentType>
+							<TransferEncodingTypeString>OLI_ENCODE_BASE64</TransferEncodingTypeString>
+							<AttachmentLocation tc="1" />
+							<AttachmentBasicType tc="2">Image</AttachmentBasicType>
+							<TransferEncodingTypeTC tc="4" />
+						</Attachment>
+					</RequirementInfo>
+				</Policy>
+			</Holding>
+			<Party id="Party_PrimaryInsured">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName />
+				<GovtID>303742329</GovtID>
+				<Person>
+					<FirstName>Edgardo</FirstName>
+					<MiddleName />
+					<LastName>Rodriguez</LastName>
+					<Occupation />
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1965-06-18</BirthDate>
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="46" />
+				</Person>
+				<Address>
+					<AddressTypeCode tc="1">Residence</AddressTypeCode>
+					<Line1>9911 TYLER ST</Line1>
+					<Line2 />
+					<City>CROWN POINT</City>
+					<AddressState>IN</AddressState>
+					<AddressStateTC tc="18">IN</AddressStateTC>
+					<Zip>463072490</Zip>
+					<PreventOverrideInd tc="" />
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>708</AreaCode>
+					<DialNumber>9902700</DialNumber>
+					<Ext />
+				</Phone>
+				<EMailAddress>
+					<AddrLine>jrrios360@gmail.com</AddrLine>
+				</EMailAddress>
+			</Party>
+			<Party id="Party_Owner">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName />
+				<GovtID>303742329</GovtID>
+				<Person>
+					<FirstName>Edgardo</FirstName>
+					<MiddleName />
+					<LastName>Rodriguez</LastName>
+					<Occupation />
+					<Gender tc="1">Male</Gender>
+					<BirthDate>1965-06-18</BirthDate>
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="46" />
+				</Person>
+				<Address>
+					<AddressTypeCode tc="1">Residence</AddressTypeCode>
+					<Line1>9911 TYLER ST</Line1>
+					<Line2 />
+					<City>CROWN POINT</City>
+					<AddressState>IN</AddressState>
+					<AddressStateTC tc="18">IN</AddressStateTC>
+					<Zip>463072490</Zip>
+					<PreventOverrideInd tc="" />
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>708</AreaCode>
+					<DialNumber>9902700</DialNumber>
+					<Ext />
+				</Phone>
+				<EMailAddress>
+					<AddrLine>jrrios360@gmail.com</AddrLine>
+				</EMailAddress>
+			</Party>
+			<Party id="Party_PrimaryAgent">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<FullName />
+				<GovtID />
+				<Person>
+					<FirstName>Jennifer Gholson</FirstName>
+					<MiddleName />
+					<LastName>Jennifer Gholson</LastName>
+					<Occupation />
+					<Gender tc="" />
+					<Citizenship tc="" />
+					<BirthCountry tc="" />
+					<BirthJurisdictionTC tc="" />
+				</Person>
+				<EMailAddress>
+					<AddrLine>jennifer@hoosierinsuranceagency.com</AddrLine>
+				</EMailAddress>
+			</Party>
+			<Relation OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_Owner" id="Relation_OwnerToPrimaryInsured">
+				<OriginatingObjectType tc="6">Party</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="168">Self</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Holding_Primary" RelatedObjectID="Party_PrimaryInsured" id="Relation_Party_PrimaryInsured">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="32">Insured</RelationRoleCode>
+			</Relation>
+			<Relation OriginatingObjectID="Holding_Primary" RelatedObjectID="Party_PrimaryAgent" id="Relation_Party_PrimaryAgent">
+				<OriginatingObjectType tc="4">Holding</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="37">Primary Writing Agent</RelationRoleCode>
+			</Relation>
+		</OLifE>
+	</TXLifeRequest>
+	<data id="originalText">
+		<!-- xml version="1.0" encoding="utf-8" standalone="yes" -->
+		<TXLife Version="2.23.00" xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.23.00.xsd">
+			<UserAuthRequest>
+				<UserLoginName>iPipeline</UserLoginName>
+				<UserPswd>
+					<CryptType>NONE</CryptType>
+				</UserPswd>
+				<VendorApp>
+					<VendorName VendorCode="220">iPipeline</VendorName>
+					<AppName>iGo Forms</AppName>
+				</VendorApp>
+				<OLifEExtension ExtensionCode="6778" VendorCode="220">
+					<DellTransRefGUID>1578c76d-8eea-43de-9d22-c95381b89d90</DellTransRefGUID>
+					<CompanyNumber>2A</CompanyNumber>
+				</OLifEExtension>
+			</UserAuthRequest>
+			<TXLifeRequest PrimaryObjectID="Holding_Primary">
+				<TransRefGUID>2eeca6cd-6203-477d-b0e0-8b1c54c6d0ac</TransRefGUID>
+				<TransType tc="103">New Business Submission</TransType>
+				<TransExeDate>2017-02-09</TransExeDate>
+				<TransExeTime>19:26:57</TransExeTime>
+				<OLifE>
+					<SourceInfo>
+						<CreationDate>2017-02-09</CreationDate>
+						<CreationTime>00:00:00</CreationTime>
+						<SourceInfoName>IPIPELINE</SourceInfoName>
+					</SourceInfo>
+					<Holding id="Holding_Primary">
+						<CurrencyTypeCode tc="840">USD</CurrencyTypeCode>
+						<Policy>
+							<PolNumber>LI581735</PolNumber>
+							<ProductCode>Term</ProductCode>
+							<CarrierCode>5340</CarrierCode>
+							<PlanName>Term</PlanName>
+							<PolicyStatus tc="8">Pending</PolicyStatus>
+							<ReplacementType tc="3">External Replacement</ReplacementType>
+							<PaymentMode tc="1">Annual</PaymentMode>
+							<PaymentMethod tc="2">Annual</PaymentMethod>
+							<Life>
+								<QualPlanType tc="1">Non-Qualified</QualPlanType>
+								<FaceAmt>250000</FaceAmt>
+								<Coverage>
+									<PlanName>Term</PlanName>
+									<IndicatorCode tc="1">Base</IndicatorCode>
+									<CurrentAmt>250000</CurrentAmt>
+									<LevelPremiumPeriod>20</LevelPremiumPeriod>
+									<CovOption>
+										<PlanName>Accelerated Death Benefit</PlanName>
+									</CovOption>
+									<CovOption>
+										<PlanName>Children's Term Insurance</PlanName>
+									</CovOption>
+									<LifeParticipant PartyID="Party_PrimaryInsured" id="LifeParticipant_PrimaryInsured">
+										<LifeParticipantRoleCode tc="1">Primary Insured</LifeParticipantRoleCode>
+									</LifeParticipant>
+									<LifeParticipant PartyID="Party_PrimaryAgent" id="LifeParticipant_PrimaryAgent">
+										<LifeParticipantRoleCode tc="15">Primary Agent</LifeParticipantRoleCode>
+									</LifeParticipant>
+								</Coverage>
+								<Coverage>
+									<PlanName>Childrens Term Insurance</PlanName>
+									<IndicatorCode tc="2">Rider</IndicatorCode>
+									<IntialNumberOfUnits>10</IntialNumberOfUnits>
+								</Coverage>
+							</Life>
+							<ApplicationInfo>
+								<TrackingID>2eeca6cd-6203-477d-b0e0-8b1c54c6d0ac</TrackingID>
+								<ApplicationJurisdiction tc="18">IN</ApplicationJurisdiction>
+								<SignatureInfo>
+									<SignatureRoleCode tc="1">Primary Insured</SignatureRoleCode>
+									<SignatureDate>2017-02-09</SignatureDate>
+									<SignatureState tc="18">IN</SignatureState>
+									<SignatureOK tc="1">True</SignatureOK>
+								</SignatureInfo>
+								<SignatureInfo>
+									<SignatureRoleCode tc="15">Primary Agent</SignatureRoleCode>
+									<SignatureDate>2017-02-09</SignatureDate>
+									<SignatureState tc="18">IN</SignatureState>
+									<SignatureOK tc="1">True</SignatureOK>
+								</SignatureInfo>
+							</ApplicationInfo>
+							<RequirementInfo AppliesToPartyID="Party_PrimaryInsured" id="Req1">
+								<ReqCode tc="137">Tele-Interview</ReqCode>
+								<RequestedDate>2017-02-09</RequestedDate>
+								<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+								<RequirementAcctNum>71661</RequirementAcctNum>
+								<OLifEExtension VendorCode="220">
+									<TestIndicator tc="1">True</TestIndicator>
+								</OLifEExtension>
+							</RequirementInfo>
+							<RequirementInfo AppliesToPartyID="Party_PrimaryInsured" id="Req2">
+								<ReqCode tc="535">Diagnose</ReqCode>
+								<RequestedDate>2017-02-09</RequestedDate>
+								<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+								<RequirementAcctNum>71661</RequirementAcctNum>
+								<OLifEExtension VendorCode="220">
+									<TestIndicator tc="1">True</TestIndicator>
+								</OLifEExtension>
+							</RequirementInfo>
+						</Policy>
+						<Attachment>
+							<Description>Multiple Policy? NO Are select rates being applied for?</Description>
+							<AttachmentType tc="2">Comment</AttachmentType>
+						</Attachment>
+					</Holding>
+					<Party id="Party_PrimaryInsured">
+						<PartyTypeCode tc="1">Person</PartyTypeCode>
+						<GovtID>303742329</GovtID>
+						<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+						<Person DataRep="Partial">
+							<FirstName>Edgardo</FirstName>
+							<LastName>Rodriguez</LastName>
+							<Occupation />
+							<Gender tc="1">Male</Gender>
+							<BirthDate>1965-06-18</BirthDate>
+							<Height2>
+								<MeasureUnits tc="2">US System Standard</MeasureUnits>
+								<MeasureValue>36</MeasureValue>
+							</Height2>
+							<Weight2>
+								<MeasureUnits tc="2">US System Standard</MeasureUnits>
+								<MeasureValue>40</MeasureValue>
+							</Weight2>
+							<BirthJurisdictionTC tc="46" />
+						</Person>
+						<Address>
+							<Line1>9911 TYLER ST</Line1>
+							<City>CROWN POINT</City>
+							<AddressStateTC tc="18" />
+							<Zip>463072490</Zip>
+						</Address>
+						<Phone>
+							<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+							<AreaCode>708</AreaCode>
+							<DialNumber>9902700</DialNumber>
+						</Phone>
+						<EMailAddress>
+							<AddrLine>jrrios360@gmail.com</AddrLine>
+							<OLifEExtension VendorCode="220">
+								<eDeliveryOptIn>NN</eDeliveryOptIn>
+							</OLifEExtension>
+						</EMailAddress>
+						<Risk />
+					</Party>
+					<Party id="Party_Owner">
+						<PartyTypeCode tc="1">Person</PartyTypeCode>
+						<GovtID>303742329</GovtID>
+						<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+						<Person DataRep="Partial">
+							<FirstName>Edgardo</FirstName>
+							<LastName>Rodriguez</LastName>
+							<Occupation />
+							<Gender tc="1">Male</Gender>
+							<BirthDate>1965-06-18</BirthDate>
+							<Height2>
+								<MeasureUnits tc="2">US System Standard</MeasureUnits>
+								<MeasureValue>36</MeasureValue>
+							</Height2>
+							<Weight2>
+								<MeasureUnits tc="2">US System Standard</MeasureUnits>
+								<MeasureValue>40</MeasureValue>
+							</Weight2>
+							<BirthJurisdictionTC tc="46" />
+						</Person>
+						<Address>
+							<Line1>9911 TYLER ST</Line1>
+							<City>CROWN POINT</City>
+							<AddressStateTC tc="18" />
+							<Zip>463072490</Zip>
+						</Address>
+						<Phone>
+							<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+							<AreaCode>708</AreaCode>
+							<DialNumber>9902700</DialNumber>
+						</Phone>
+						<EMailAddress>
+							<AddrLine>jrrios360@gmail.com</AddrLine>
+							<OLifEExtension VendorCode="220">
+								<eDeliveryOptIn>NN</eDeliveryOptIn>
+							</OLifEExtension>
+						</EMailAddress>
+						<Risk />
+					</Party>
+					<Relation OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_Owner" id="Relation_OwnerToPrimaryInsured">
+						<OriginatingObjectType tc="6">Party</OriginatingObjectType>
+						<RelatedObjectType tc="6">Party</RelatedObjectType>
+						<RelationRoleCode tc="168">Self</RelationRoleCode>
+						<RelationDescription tc="91">Self</RelationDescription>
+					</Relation>
+					<Party id="Party_PrimaryAgent">
+						<PartyTypeCode tc="1">Person</PartyTypeCode>
+						<Person>
+							<FirstName>Jennifer Gholson</FirstName>
+							<LastName>Jennifer Gholson</LastName>
+						</Person>
+						<Producer>
+							<CarrierAppointment>
+								<CompanyProducerID>ff2458</CompanyProducerID>
+							</CarrierAppointment>
+						</Producer>
+						<EMailAddress>
+							<EMailType tc="1">Business</EMailType>
+							<AddrLine>jennifer@hoosierinsuranceagency.com</AddrLine>
+						</EMailAddress>
+					</Party>
+				</OLifE>
+			</TXLifeRequest>
+		</TXLife>
+	</data>
+</TXLife>
+

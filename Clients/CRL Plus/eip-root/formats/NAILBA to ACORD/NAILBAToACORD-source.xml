@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="XCSData">
+				<xsd:complexType>
+					<xsd:sequence />
+					<xsd:element maxOccurs="1" minOccurs="1" name="NAILBA800" type="NAILBA800_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="NAILBA850" type="NAILBA850_element_type" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="Unknown1_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Unknown6_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Trailer1_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordLength" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="StandardNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="VersionNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="DateSent" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TimeSent" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="SendingSytem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TargetSystem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSetControlNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TotalRecordCount" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ReportOrderServiceRequest_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSequenceNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ServiceRequested" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ServiceRequestedDescription" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="BestTimeToCall" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="BestPlaceToCall" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="RequestedExamDate" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="RequestedExamTime" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="SpecialInstructionsToProvider" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Reserved" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="RequirementCode" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unknown2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="EmployeeSSN" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="EmployeeName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unknown" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ReportOrderProposedInsuredCurrentEmploymentRecord_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSequenceNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="EmploymentFromDate" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="EmploymentToDate" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Occupation" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="HoursEmployedPerWeek" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="EmployerName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="EmployerAddressLine1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="EmployerAddressLine2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="EmployerAddressCity" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="EmployerAddressState" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="EmployerAddressPostalCode" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Unknown_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ReportText_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportTextRecord" type="ReportTextRecord_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unknown" type="Unknown4_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ReportTextRecord_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ServiceProviderOrderReferenceID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="FreeFormTextLine1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="FreeFormTextLine2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Unknown5_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Header_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordLength" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="NCSSPStandardNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="NCSSPVersionNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="DateSent" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TimeSent" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="SenderName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TargetName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSetControlNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSetTestFileIndicator" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Reserved" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Trailer_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordLength" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="NCSSPStandardNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="NCSSPVersionNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="DateSent" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TimeSent" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="SenderName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TargetName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSetControlNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TotalRecordCount" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Reserved" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Unknown3_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ProposedInsureds_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="ProposedInsured" type="ProposedInsured_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unknown" type="Unknown_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Result_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="IndividualReportStatus" type="IndividualReportStatus_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportText" type="ReportText_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unknown" type="Unknown5_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Unknown2_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ReportOrderServiceRequests_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportOrderServiceRequest" type="ReportOrderServiceRequest_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unknown" type="Unknown1_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ProposedInsured_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSequenceNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="LastName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="FirstName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="MiddleInitial" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="NamePrefix" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="NameSuffix" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="DateOfBirth" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="StateOfBirth" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Gender" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="MaritalStatus" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="MaidenName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="HomePhoneNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="WorkPhoneNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="WorkPhoneExtension" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="DriversLicenseNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="DriversLicenseState" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="GovernmentIDType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="GovernmentID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Language" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="BenficiaryLastName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="BeneficiaryFirstName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="BeneficiaryMiddleInitial" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="BeneficiaryRelationship" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="NewBusinessContactForCase" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="NAILBA800_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Header" type="Header_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Request" type="Request_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Trailer" type="Trailer_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unknown" type="Unknown3_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Header1_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordLength" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="NCSSPStandardNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="NCSSPVersionNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="DateSent" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TimeSent" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="SendingSystem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TargetSystem" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSetControlNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSetTestFileIndicator" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ReportOrderOtherInsuranceContractInformationRecord_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSequenceNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-1-InforceOrAppliedForCarrID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-1-InForceOrAppliedFor" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-1-AmountOfCoverage" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-1-WillThisCoverageBeReplaced" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-1-LifeOrDisability" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-2-InforceOrAppliedForCarrID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-2-InForceOrAppliedFor" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-2-AmountOfCoverage" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-2-WillThisCoverageBeReplaced" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-2-LifeOrDisability" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-3-InforceOrAppliedForCarrID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-3-InForceOrAppliedFor" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-3-AmountOfCoverage" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-3-WillThisCoverageBeReplaced" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-3-LifeOrDisability" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-4-InforceOrAppliedForCarrID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-4-InForceOrAppliedFor" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-4-AmountOfCoverage" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-4-WillThisCoverageBeReplaced" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-4-LifeOrDisability" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-5-InforceOrAppliedForCarrID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-5-InForceOrAppliedFor" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-5-AmountOfCoverage" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-5-WillThisCoverageBeReplaced" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OtherInsurance-5-LifeOrDisability" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ReportOrderProposedInsuredResidenceHistory_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSequenceNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ResidenceFrom" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ResidenceTo" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="AddressLine1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="AddressLine2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="City" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="State" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="PostalCode" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Country" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="SpecialInstructions" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused3" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ApplicicantOtherContactInfo_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSequenceNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="CellPhone1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="CellPhone2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="EmailAddress" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unknown" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="NAILBA850_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Header" type="Header1_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Result" type="Result_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Trailer" type="Trailer1_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unknown" type="Unknown6_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Unknown4_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unknown" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Request_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportOrderBillingSegment" type="ReportOrderBillingSegment_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportOrderInsuranceContractInformationRecord" type="ReportOrderInsuranceContractInformationRecord_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportOrderOtherInsuranceContractInformationRecord" type="ReportOrderOtherInsuranceContractInformationRecord_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ProposedInsureds" type="ProposedInsureds_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportOrderServiceRequests" type="ReportOrderServiceRequests_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportOrderProposedInsuredResidenceHistory" type="ReportOrderProposedInsuredResidenceHistory_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportOrderProposedInsuredCurrentEmploymentRecord" type="ReportOrderProposedInsuredCurrentEmploymentRecord_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportOrderMedicalHistoryInformation" type="ReportOrderMedicalHistoryInformation_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unknown" type="Unknown2_element_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ApplicicantOtherContactInfo" type="ApplicicantOtherContactInfo_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ReportOrderBillingSegment_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSequenceNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OrderOriginatorCode" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ServiceProviderVendorID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="BillToVendorAccountNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="BillToVendorSubAccountNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OrderOriginatorBusinessContact" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OrderOriginatorContactVoicePhone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OrderOriginatorContactFaxPhone" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="InsuranceCarrierIDForReportDelivery" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="InsuranceCarrierNameForReportDelivery" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ManagingGeneralAgencyName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ManagingGeneralAgencyHOID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ReportOrderMedicalHistoryInformation_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSequenceNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="DoctorOrOther" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="PhysicianName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="PhysicianAddressLine1" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="PhysicianAddressLine2" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="PhysicianCity" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="PhysicianState" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="PhysicianPostalCode" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="PhysicianPhoneNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="PhysicianFaxNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ProposedInsuredAccountNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="DateLastSeen" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="SpecialInstructions" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ReportOrderInsuranceContractInformationRecord_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="TransactionSequenceNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OrderRequestDate" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OrderRequestTime" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OrderType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OrderOriginatorQuotebackNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="WritingAgentLastName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="WritingAgentFirstName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="WritingAgentMiddleInitial" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="WritingAgentGovernmentIDType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="WritingAgentGovernmentID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="WritingAgentHOID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ProposedInsuredCarrierCaseReferenceID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ProposedInsuredGACaseReferenceID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="InsuranceProductAppliedFor" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="InsuranceAmountOfCoverageAppliedFor" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="LifeOrDisabilityFlag" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="CustomerReportName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="IndividualReportStatus_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="RecordType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ServiceProviderOrderReferenceID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ServiceProviderID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="BillToVendorAccountNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="BillToVendorSubAccountNumber" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OrderOriginatorQuotebackID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="OrderOriginatorContactInitials" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ServiceProductCode" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="EntityReportRequestedOf" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="EntityProvidingReportInformation" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="CarrierIDForReportDelivery" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportSubjectLastName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportSubjectFirstName" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportSubjectMiddleInitial" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportSubjectGovernmentIDType" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportSubjectGovernmentID" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="ReportSubjectDateOfBirth" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="StatusContactInitials" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="StatusDate" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="StatusTime" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="StatusCode" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="Unused" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

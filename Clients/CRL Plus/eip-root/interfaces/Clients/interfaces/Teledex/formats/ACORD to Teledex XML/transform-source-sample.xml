@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="2.23.00" xsi:schemaLocation="http://ACORD.org/Standards/Life/2 TXLife2.23.00.xsd">
+	<UserAuthRequest>
+		<UserLoginName>iPipeline</UserLoginName>
+		<UserPswd>
+			<CryptType>NONE</CryptType>
+		</UserPswd>
+		<VendorApp>
+			<VendorName VendorCode="220">iPipeline</VendorName>
+			<AppName>iGo Forms</AppName>
+		</VendorApp>
+		<OLifEExtension VendorCode="220" ExtensionCode="6778">
+			<DellTransRefGUID>a7884499-030e-43f0-8652-4e5da264272e</DellTransRefGUID>
+			<CompanyNumber>7A</CompanyNumber>
+		</OLifEExtension>
+	</UserAuthRequest>
+	<TXLifeRequest PrimaryObjectID="Holding_Primary">
+		<TransRefGUID>4fb92e6b-d6df-4f39-9986-319eae05c677</TransRefGUID>
+		<TransType tc="103">New Business Submission</TransType>
+		<TransExeDate>2015-03-16</TransExeDate>
+		<TransExeTime>15:32:17</TransExeTime>
+		<OLifE>
+			<SourceInfo>
+				<CreationDate>2015-03-16</CreationDate>
+				<CreationTime>00:00:00</CreationTime>
+				<SourceInfoName>IPIPELINE</SourceInfoName>
+			</SourceInfo>
+			<Holding id="Holding_Primary">
+				<Policy>
+					<PolNumber>LI509620</PolNumber>
+					<ProductCode>Term</ProductCode>
+					<CarrierCode>5340</CarrierCode>
+					<PlanName>ERIEflex4</PlanName>
+					<PolicyStatus tc="8">Pending</PolicyStatus>
+					<ReplacementType tc="3">External Replacement</ReplacementType>
+					<PaymentMode tc="1">Annual</PaymentMode>
+					<PaymentMethod tc="2">Annual</PaymentMethod>
+					<Life>
+						<QualPlanType tc="1">Non-Qualified</QualPlanType>
+						<Coverage>
+							<PlanName>ERIEflex4</PlanName>
+							<IndicatorCode tc="1">Base</IndicatorCode>
+							<DeathBenefitOptType tc="1">Level</DeathBenefitOptType>
+							<CurrentAmt>150000</CurrentAmt>
+							<CovOption>
+								<PlanName>Accelerated Death Benefit</PlanName>
+							</CovOption>
+							<CovOption>
+								<PlanName>Guaranteed Insurability Option</PlanName>
+								<OptionAmt>25000</OptionAmt>
+							</CovOption>
+							<LifeParticipant id="LifeParticipant_PrimaryInsured" PartyID="Party_PrimaryInsured">
+								<LifeParticipantRoleCode tc="1">Primary Insured</LifeParticipantRoleCode>
+							</LifeParticipant>
+							<LifeParticipant id="LifeParticipant_PrimaryAgent" PartyID="Party_PrimaryAgent">
+								<LifeParticipantRoleCode tc="15">Primary Agent</LifeParticipantRoleCode>
+							</LifeParticipant>
+						</Coverage>
+					</Life>
+					<ApplicationInfo>
+						<TrackingID>4fb92e6b-d6df-4f39-9986-319eae05c677</TrackingID>
+						<ApplicationJurisdiction tc="18">IN</ApplicationJurisdiction>
+						<SignatureInfo>
+							<SignatureRoleCode tc="1">Primary Insured</SignatureRoleCode>
+							<SignatureDate>2015-03-16</SignatureDate>
+							<SignatureState tc="18">IN</SignatureState>
+							<SignatureOK tc="1">True</SignatureOK>
+						</SignatureInfo>
+						<SignatureInfo>
+							<SignatureRoleCode tc="15">Primary Agent</SignatureRoleCode>
+							<SignatureDate>2015-03-16</SignatureDate>
+							<SignatureState tc="18">IN</SignatureState>
+							<SignatureOK tc="1">True</SignatureOK>
+						</SignatureInfo>
+					</ApplicationInfo>
+					<RequirementInfo id="Req1" AppliesToPartyID="Party_PrimaryInsured">
+						<ReqCode tc="137">Tele-Interview</ReqCode>
+						<RequestedDate>2015-03-16</RequestedDate>
+						<ReleasePartyOrgCode>ELFP</ReleasePartyOrgCode>
+						<RequirementAcctNum>73038</RequirementAcctNum>
+						<OLifEExtension VendorCode="220">
+							<TestIndicator tc="1">True</TestIndicator>
+						</OLifEExtension>
+					</RequirementInfo>
+				</Policy>
+				<Attachment>
+					<Description>Multiple Policy? NO Are select rates being applied for? NO</Description>
+					<AttachmentType tc="2">Comment</AttachmentType>
+				</Attachment>
+			</Holding>
+			<Party id="Party_PrimaryInsured">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID>787091111</GovtID>
+				<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+				<Person DataRep="Partial">
+					<FirstName>PETER</FirstName>
+					<LastName>TEST</LastName>
+					<Occupation/>
+					<Gender tc="2">Female</Gender>
+					<BirthDate>1990-10-11</BirthDate>
+					<Height2>
+						<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+						<MeasureValue>36</MeasureValue>
+					</Height2>
+					<Weight2>
+						<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+						<MeasureValue>40</MeasureValue>
+					</Weight2>
+					<BirthJurisdictionTC tc="10"/>
+				</Person>
+				<Address>
+					<Line1>121 NORTH ROAD</Line1>
+					<City>ERIE</City>
+					<AddressStateTC tc="45"/>
+					<Zip>99999</Zip>
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>814</AreaCode>
+					<DialNumber>1002222</DialNumber>
+				</Phone>
+				<EMailAddress>
+					<AddrLine>TAMMY.CHAMBERS@ERIEINSURANCE.COM</AddrLine>
+					<OLifEExtension VendorCode="220">
+						<eDeliveryOptIn>NN</eDeliveryOptIn>
+					</OLifEExtension>
+				</EMailAddress>
+				<Risk/>
+			</Party>
+			<Party id="Party_Owner">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<GovtID>787091111</GovtID>
+				<GovtIDTC tc="1">Social Security Number US</GovtIDTC>
+				<Person DataRep="Partial">
+					<FirstName>PETER</FirstName>
+					<LastName>TEST</LastName>
+					<Occupation/>
+					<Gender tc="2">Female</Gender>
+					<BirthDate>1990-10-11</BirthDate>
+					<Height2>
+						<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+						<MeasureValue>36</MeasureValue>
+					</Height2>
+					<Weight2>
+						<MeasureUnits tc="2"> 
+							US System Standard
+					</MeasureUnits>
+						<MeasureValue>40</MeasureValue>
+					</Weight2>
+					<BirthJurisdictionTC tc="10"/>
+				</Person>
+				<Address>
+					<Line1>121 NORTH ROAD</Line1>
+					<City>ERIE</City>
+					<AddressStateTC tc="45"/>
+					<Zip>99999</Zip>
+				</Address>
+				<Phone>
+					<PhoneTypeCode tc="1">Home</PhoneTypeCode>
+					<AreaCode>814</AreaCode>
+					<DialNumber>1002222</DialNumber>
+				</Phone>
+				<EMailAddress>
+					<AddrLine>TAMMY.CHAMBERS@ERIEINSURANCE.COM</AddrLine>
+					<OLifEExtension VendorCode="220">
+						<eDeliveryOptIn>NN</eDeliveryOptIn>
+					</OLifEExtension>
+				</EMailAddress>
+				<Risk/>
+			</Party>
+			<Relation id="Relation_OwnerToPrimaryInsured" OriginatingObjectID="Party_PrimaryInsured" RelatedObjectID="Party_Owner">
+				<OriginatingObjectType tc="6">Party</OriginatingObjectType>
+				<RelatedObjectType tc="6">Party</RelatedObjectType>
+				<RelationRoleCode tc="168">Self</RelationRoleCode>
+				<RelationDescription tc="91">Self</RelationDescription>
+			</Relation>
+			<Party id="Party_PrimaryAgent">
+				<PartyTypeCode tc="1">Person</PartyTypeCode>
+				<Person>
+					<FirstName>Tammy Chambers</FirstName>
+					<LastName>Tammy Chambers</LastName>
+				</Person>
+				<Producer>
+					<CarrierAppointment>
+						<CompanyProducerID>AA1000</CompanyProducerID>
+					</CarrierAppointment>
+				</Producer>
+				<EMailAddress>
+					<EMailType tc="1">Business</EMailType>
+					<AddrLine>TAMMY.CHAMBERS@ERIEINSURANCE.COM</AddrLine>
+				</EMailAddress>
+			</Party>
+		</OLifE>
+	</TXLifeRequest>
+</TXLife>

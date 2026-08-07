@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestConfigurations>
+   <TestConfig name="RoutingRules">
+      <AlternateDataSource>From File</AlternateDataSource>
+      <Stage>
+         <Identifier>transform@listener=PRUX ACORD 1122 Status</Identifier>
+         <IsStart file="C:\Users\t_whittikere\Desktop\1122TXLifeRequest-OrderTransID-888812.xml">true</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>forking@listener=PRUX ACORD 1122 Status</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>xslt@listener=PRUX ACORD 1122 Status</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>routing</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=Stage File to Disk</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>true</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=Stage File to Disk</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Stage File to Disk,processor=PRUX3 - Set StagingDir</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Stage File to Disk,processor=PRUX3 - Update Staging Directory</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Stage File to Disk,processor=PRUX3 - String namespaces</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=Stage File to Disk</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=Ignore Status Update</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>true</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=Ignore Status Update</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=Ignore Status Update</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+   </TestConfig>
+   <TestConfig name="RoutingRulesNew">
+      <AlternateDataSource>From Text</AlternateDataSource>
+      <StartingText>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#xD;
+&lt;TXLifeRequest xmlns="http://ACORD.org/Standards/Life/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;&#xD;
+	&lt;TransRefGUID&gt;3EFA58E0-98E3-6C2B-8021-DCCC9BCAC5DE&lt;/TransRefGUID&gt;&#xD;
+	&lt;TransType tc="1122"&gt;Requirement Notification Transmittal&lt;/TransType&gt;&#xD;
+	&lt;TransExeDate&gt;2016-09-12&lt;/TransExeDate&gt;&#xD;
+	&lt;TransExeTime&gt;15:08:30&lt;/TransExeTime&gt;&#xD;
+	&lt;TransMode tc="2"&gt;Original&lt;/TransMode&gt;&#xD;
+	&lt;TestIndicator tc="1"&gt;True&lt;/TestIndicator&gt;&#xD;
+	&lt;ns2:OLifE xmlns:ns2="http://ACORD.org/Standards/Life/2"&gt;&#xD;
+		&lt;SourceInfo&gt;&#xD;
+			&lt;SourceInfoName&gt;CRL-Plus&lt;/SourceInfoName&gt;&#xD;
+			&lt;SourceInfoDescription&gt;Email : INSURANCECS@CRLCORP.COM&lt;/SourceInfoDescription&gt;&#xD;
+			&lt;SourceInfoComment&gt;Phone : 8558507587&lt;/SourceInfoComment&gt;&#xD;
+		&lt;/SourceInfo&gt;&#xD;
+		&lt;Holding id="HOLD_1"&gt;&#xD;
+			&lt;HoldingTypeCode tc="2"&gt;Policy&lt;/HoldingTypeCode&gt;&#xD;
+			&lt;Policy CarrierPartyID="PARTY_PRU_1" id="POLICY_1"&gt;&#xD;
+				&lt;PolNumber&gt;L6846349&lt;/PolNumber&gt;&#xD;
+				&lt;CarrierCode&gt;79227&lt;/CarrierCode&gt;&#xD;
+				&lt;ProductType tc=""/&gt;&#xD;
+				&lt;Life&gt;&#xD;
+					&lt;InitialPremAmt/&gt;&#xD;
+					&lt;FaceAmt/&gt;&#xD;
+					&lt;TotalRiskAmt&gt;300000&lt;/TotalRiskAmt&gt;&#xD;
+				&lt;/Life&gt;&#xD;
+				&lt;ApplicationInfo&gt;&#xD;
+					&lt;TrackingID&gt;195022&lt;/TrackingID&gt;&#xD;
+					&lt;ApplicationJurisdiction tc="1"&gt;AL&lt;/ApplicationJurisdiction&gt;&#xD;
+					&lt;SignedDate/&gt;&#xD;
+					&lt;PrefLanguage tc=""/&gt;&#xD;
+				&lt;/ApplicationInfo&gt;&#xD;
+				&lt;RequirementInfo AppliesToPartyID="PARTY_INS_1" RequesterPartyID="PARTY_PRU_1" FulfillerPartyID="PARTY_VEND_1"&gt;&#xD;
+					&lt;RequirementDetails/&gt;&#xD;
+					&lt;CarrierOrderNum&gt;1789228&lt;/CarrierOrderNum&gt;&#xD;
+					&lt;ReqCode tc="137"&gt;Conduct Tele-Interview&lt;/ReqCode&gt;&#xD;
+					&lt;RequirementInfoUniqueID&gt;0029L68463490009228&lt;/RequirementInfoUniqueID&gt;&#xD;
+					&lt;ReqStatus tc="7"&gt;Received&lt;/ReqStatus&gt;&#xD;
+					&lt;RequestedDate&gt;2016-12-02&lt;/RequestedDate&gt;&#xD;
+					&lt;StatusDate&gt;2016-09-12&lt;/StatusDate&gt;&#xD;
+					&lt;ReleasePartyOrgCode&gt;PRUX&lt;/ReleasePartyOrgCode&gt;&#xD;
+					&lt;RequirementAcctNum&gt;70543&lt;/RequirementAcctNum&gt;&#xD;
+					&lt;RequirementDetails/&gt;&#xD;
+					&lt;ProviderOrderNum&gt;66978&lt;/ProviderOrderNum&gt;&#xD;
+					&lt;OrderReceivedDate&gt;2016-09-12&lt;/OrderReceivedDate&gt;&#xD;
+					&lt;StatusEvent&gt;&#xD;
+						&lt;StatusEventCode tc="2147483647"/&gt;&#xD;
+						&lt;ProviderEventCode&gt;S85&lt;/ProviderEventCode&gt;&#xD;
+						&lt;StatusEventDate&gt;2016-09-12&lt;/StatusEventDate&gt;&#xD;
+						&lt;StatusEventTime&gt;06:45:11-05:00&lt;/StatusEventTime&gt;&#xD;
+						&lt;StatusEventDetail&gt;Service - 102751- ORDERED APPLICATION&lt;/StatusEventDetail&gt;&#xD;
+					&lt;/StatusEvent&gt;&#xD;
+					&lt;StatusEvent&gt;&#xD;
+						&lt;StatusEventCode tc="2147483647"/&gt;&#xD;
+						&lt;ProviderEventCode&gt;S79&lt;/ProviderEventCode&gt;&#xD;
+						&lt;StatusEventDate&gt;2016-09-12&lt;/StatusEventDate&gt;&#xD;
+						&lt;StatusEventTime&gt;06:45:12-05:00&lt;/StatusEventTime&gt;&#xD;
+						&lt;StatusEventDetail&gt;Order Received&lt;/StatusEventDetail&gt;&#xD;
+					&lt;/StatusEvent&gt;&#xD;
+				&lt;/RequirementInfo&gt;&#xD;
+			&lt;/Policy&gt;&#xD;
+		&lt;/Holding&gt;&#xD;
+		&lt;Party id="PARTY_PRU_1"&gt;&#xD;
+			&lt;PartyTypeCode tc="2"&gt;Organization&lt;/PartyTypeCode&gt;&#xD;
+			&lt;GovtID/&gt;&#xD;
+			&lt;Organization&gt;&#xD;
+				&lt;AbbrName/&gt;&#xD;
+			&lt;/Organization&gt;&#xD;
+			&lt;FullName&gt;PRUCO LIFE INSURANCE COMPANY OF ARIZONA&lt;/FullName&gt;&#xD;
+			&lt;ResidenceState tc=""/&gt;&#xD;
+			&lt;ResidenceCountry tc=""/&gt;&#xD;
+		&lt;/Party&gt;&#xD;
+		&lt;Party id="PARTY_VEND_1"&gt;&#xD;
+			&lt;PartyTypeCode tc="2"&gt;Organization&lt;/PartyTypeCode&gt;&#xD;
+			&lt;GovtID/&gt;&#xD;
+			&lt;Organization&gt;&#xD;
+				&lt;AbbrName/&gt;&#xD;
+			&lt;/Organization&gt;&#xD;
+			&lt;FullName&gt;CRL-Plus&lt;/FullName&gt;&#xD;
+			&lt;ResidenceState tc=""/&gt;&#xD;
+			&lt;ResidenceCountry tc=""/&gt;&#xD;
+		&lt;/Party&gt;&#xD;
+		&lt;Party id="PARTY_INS_1"&gt;&#xD;
+			&lt;PartyTypeCode tc="1"&gt;Person&lt;/PartyTypeCode&gt;&#xD;
+			&lt;GovtID/&gt;&#xD;
+			&lt;Person&gt;&#xD;
+				&lt;FirstName&gt;TESTING&lt;/FirstName&gt;&#xD;
+				&lt;MiddleName/&gt;&#xD;
+				&lt;LastName&gt;DEFECT&lt;/LastName&gt;&#xD;
+				&lt;Occupation/&gt;&#xD;
+				&lt;Gender tc="2"&gt;Female&lt;/Gender&gt;&#xD;
+				&lt;BirthDate&gt;1989-02-14&lt;/BirthDate&gt;&#xD;
+				&lt;Citizenship tc=""/&gt;&#xD;
+				&lt;BirthCountry tc=""/&gt;&#xD;
+				&lt;BirthJurisdictionTC tc=""/&gt;&#xD;
+				&lt;Prefix/&gt;&#xD;
+			&lt;/Person&gt;&#xD;
+			&lt;FullName/&gt;&#xD;
+			&lt;Address&gt;&#xD;
+				&lt;AddressTypeCode tc="1"&gt;Home&lt;/AddressTypeCode&gt;&#xD;
+				&lt;Line1&gt;lkenny&lt;/Line1&gt;&#xD;
+				&lt;Line2&gt;lkenny Apt 8&lt;/Line2&gt;&#xD;
+				&lt;City&gt;lkenny&lt;/City&gt;&#xD;
+				&lt;AddressState&gt;AL&lt;/AddressState&gt;&#xD;
+				&lt;AddressStateTC tc="1"&gt;AL&lt;/AddressStateTC&gt;&#xD;
+				&lt;Zip&gt;77657&lt;/Zip&gt;&#xD;
+				&lt;PreventOverrideInd tc=""/&gt;&#xD;
+			&lt;/Address&gt;&#xD;
+			&lt;Address&gt;&#xD;
+				&lt;AddressTypeCode tc="26"&gt;Billing Mailing&lt;/AddressTypeCode&gt;&#xD;
+				&lt;Line1&gt;lkenny&lt;/Line1&gt;&#xD;
+				&lt;Line2&gt;lkenny Apt 8&lt;/Line2&gt;&#xD;
+				&lt;City&gt;lkenny&lt;/City&gt;&#xD;
+				&lt;AddressState&gt;AL&lt;/AddressState&gt;&#xD;
+				&lt;AddressStateTC tc="1"&gt;AL&lt;/AddressStateTC&gt;&#xD;
+				&lt;Zip&gt;77657&lt;/Zip&gt;&#xD;
+				&lt;PreventOverrideInd tc=""/&gt;&#xD;
+			&lt;/Address&gt;&#xD;
+			&lt;Phone&gt;&#xD;
+				&lt;PhoneTypeCode tc="1"&gt;Home&lt;/PhoneTypeCode&gt;&#xD;
+				&lt;AreaCode&gt;876&lt;/AreaCode&gt;&#xD;
+				&lt;DialNumber&gt;8768768&lt;/DialNumber&gt;&#xD;
+				&lt;Ext/&gt;&#xD;
+				&lt;PrefPhone tc="1"&gt;True&lt;/PrefPhone&gt;&#xD;
+				&lt;BestTimeToCallTo&gt;11:00:00&lt;/BestTimeToCallTo&gt;&#xD;
+			&lt;/Phone&gt;&#xD;
+			&lt;ResidenceState tc=""/&gt;&#xD;
+			&lt;ResidenceCountry tc=""/&gt;&#xD;
+		&lt;/Party&gt;&#xD;
+		&lt;Party id="PARTY_AGCY_1"&gt;&#xD;
+			&lt;PartyTypeCode tc="2"&gt;Organziation&lt;/PartyTypeCode&gt;&#xD;
+			&lt;GovtID/&gt;&#xD;
+			&lt;Organization&gt;&#xD;
+				&lt;AbbrName/&gt;&#xD;
+			&lt;/Organization&gt;&#xD;
+			&lt;FullName/&gt;&#xD;
+			&lt;ResidenceState tc=""/&gt;&#xD;
+			&lt;ResidenceCountry tc=""/&gt;&#xD;
+		&lt;/Party&gt;&#xD;
+		&lt;Party id="PARTY_AGT_1"&gt;&#xD;
+			&lt;PartyTypeCode tc="1"&gt;Person&lt;/PartyTypeCode&gt;&#xD;
+			&lt;GovtID/&gt;&#xD;
+			&lt;Person&gt;&#xD;
+				&lt;FirstName/&gt;&#xD;
+				&lt;MiddleName/&gt;&#xD;
+				&lt;LastName/&gt;&#xD;
+				&lt;Occupation/&gt;&#xD;
+				&lt;Gender tc=""/&gt;&#xD;
+				&lt;BirthDate/&gt;&#xD;
+				&lt;Citizenship tc=""/&gt;&#xD;
+				&lt;BirthCountry tc=""/&gt;&#xD;
+				&lt;BirthJurisdictionTC tc=""/&gt;&#xD;
+				&lt;Prefix/&gt;&#xD;
+			&lt;/Person&gt;&#xD;
+			&lt;FullName&gt;ELAINE COYLE&lt;/FullName&gt;&#xD;
+			&lt;ResidenceState tc=""/&gt;&#xD;
+			&lt;ResidenceCountry tc=""/&gt;&#xD;
+		&lt;/Party&gt;&#xD;
+		&lt;Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_VEND_1" id="REL_2"&gt;&#xD;
+			&lt;OriginatingObjectType tc="4"&gt;Holding&lt;/OriginatingObjectType&gt;&#xD;
+			&lt;RelatedObjectType tc="6"&gt;Party&lt;/RelatedObjectType&gt;&#xD;
+			&lt;RelationRoleCode tc="90"&gt;Paramed Company&lt;/RelationRoleCode&gt;&#xD;
+		&lt;/Relation&gt;&#xD;
+		&lt;Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_INS_1" id="REL_3"&gt;&#xD;
+			&lt;OriginatingObjectType tc="4"&gt;Holding&lt;/OriginatingObjectType&gt;&#xD;
+			&lt;RelatedObjectType tc="6"&gt;Party&lt;/RelatedObjectType&gt;&#xD;
+			&lt;RelationRoleCode tc="32"&gt;Insured&lt;/RelationRoleCode&gt;&#xD;
+		&lt;/Relation&gt;&#xD;
+		&lt;Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_AGCY_1" id="REL_4"&gt;&#xD;
+			&lt;OriginatingObjectType tc="4"&gt;Holding&lt;/OriginatingObjectType&gt;&#xD;
+			&lt;RelatedObjectType tc="6"&gt;Party&lt;/RelatedObjectType&gt;&#xD;
+			&lt;RelationRoleCode tc="182"&gt;Writing Agency&lt;/RelationRoleCode&gt;&#xD;
+		&lt;/Relation&gt;&#xD;
+		&lt;Relation OriginatingObjectID="HOLD_1" RelatedObjectID="PARTY_AGT_1" id="REL_5"&gt;&#xD;
+			&lt;OriginatingObjectType tc="4"&gt;Holding&lt;/OriginatingObjectType&gt;&#xD;
+			&lt;RelatedObjectType tc="6"&gt;Party&lt;/RelatedObjectType&gt;&#xD;
+			&lt;RelationRoleCode tc="37"&gt;Primary Writing Agent&lt;/RelationRoleCode&gt;&#xD;
+		&lt;/Relation&gt;&#xD;
+		&lt;ns2:Party id="Party_Fulfiller_1"&gt;&#xD;
+			&lt;ns2:FullName&gt;CRL-Plus&lt;/ns2:FullName&gt;&#xD;
+			&lt;ns2:PartyTypeCode tc="2"&gt;Company&lt;/ns2:PartyTypeCode&gt;&#xD;
+			&lt;ns2:Organization&gt;&#xD;
+				&lt;ns2:DBA&gt;CRL-Plus&lt;/ns2:DBA&gt;&#xD;
+			&lt;/ns2:Organization&gt;&#xD;
+		&lt;/ns2:Party&gt;&#xD;
+		&lt;ns2:Relation id="Relation_Fulfiller_1" RelatedObjectID="Party_Fulfiller_1" OriginatingObjectID="PARTY_INS_1"&gt;&#xD;
+			&lt;ns2:RelationRoleCode tc="99"&gt;Fulfills&lt;/ns2:RelationRoleCode&gt;&#xD;
+		&lt;/ns2:Relation&gt;&#xD;
+	&lt;/ns2:OLifE&gt;&#xD;
+&lt;/TXLifeRequest&gt;</StartingText>
+      <Stage>
+         <Identifier>transform@listener=PRUX ACORD 1122 Status</Identifier>
+         <IsStart>true</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>forking@listener=PRUX ACORD 1122 Status</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>xslt@listener=PRUX ACORD 1122 Status</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>routing</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=Stage File to Disk</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=Stage File to Disk</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>true</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Stage File to Disk,processor=PRUX3 - Set StagingDir</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Stage File to Disk,processor=PRUX3 - Update Staging Directory</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Stage File to Disk,processor=PRUX3 - Set Status to Result</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Stage File to Disk,processor=PRUX3 - Set StagedBatchName</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@transport=Stage File to Disk,processor=PRUX3 - String namespaces</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=Stage File to Disk</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>processor@listener=PRUX ACORD 1122 Status,processor=METL Status Update</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>joining@transport=Ignore Status Update</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transform@transport=Ignore Status Update</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>true</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+      <Stage>
+         <Identifier>transport@transport=Ignore Status Update</Identifier>
+         <IsStart>false</IsStart>
+         <IsTrace>false</IsTrace>
+         <IsEnd>false</IsEnd>
+         <IsSkipping>false</IsSkipping>
+      </Stage>
+   </TestConfig>
+</TestConfigurations>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor"
+        id="040a9238-4694-4674-863c-6d05007ee619"
+        name="AIG.1 - set defaultSourceInfoName"
+        tag="Processor"
+        type="Transaction Attribute Population"
+        version="2.0">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      <AttributePairs>[eip_pair:defaultSourceInfoName:eip_name:AIGP:eip_value]</AttributePairs>
+      <AttributeScope>Transaction</AttributeScope>
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      <Expression>AIGP</Expression>
+      <AttributeName>defaultSourceInfoName</AttributeName>
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor"
+        id="7aad069b-c21d-486f-aecd-41c87d3e79cc"
+        name="AmericanGeneral.1 - AIGP ACORD 121 SOAP.Processor-WithWrapper"
+        tag="Processor"
+        type="Transaction Attribute Population"
+        version="2.0">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      <AttributePairs>[eip_pair:RouteName:eip_name:{ognl:'AIGP-' + getAttribute('com.pilotfish.FileName') + '-121SOAP.xml'}:eip_value]</AttributePairs>
+      <AttributeScope>Transaction</AttributeScope>
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      <Expression>{ognl:'AIGP-' + getAttribute('com.pilotfish.FileName') + '-121SOAP.xml'}</Expression>
+      <AttributeName>RouteName</AttributeName>
+   </ModuleConfig>
+</Module>

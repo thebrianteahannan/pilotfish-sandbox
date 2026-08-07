@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://pilotfish.sqlxml" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns2="http://crlcorp.com/schema/DocumentRequest" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="http://schemas.xmlsoap.org/soap/envelope/">
+			<xsd:element name="Envelope" type="SOAP-ENV:Envelope_type" />
+			<xsd:complexType name="Envelope_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Header" type="xsd:identity_attribute_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="Body" type="SOAP-ENV:Body_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Body_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" ref="ns2:StoreDocumentResponse" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://pilotfish.sqlxml" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="http://pilotfish.sqlxml" />
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://pilotfish.sqlxml" xmlns:ns2="http://crlcorp.com/schema/DocumentRequest" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="http://crlcorp.com/schema/DocumentRequest">
+			<xsd:element name="StoreDocumentResponse" type="ns2:StoreDocumentResponse_type" />
+			<xsd:complexType name="StoreDocumentResponse_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="ApplicationVersion" type="xsd:identity_attribute_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="RequestStatus" type="xsd:identity_attribute_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="RequestUUID" type="xsd:identity_attribute_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="DocumentId" type="xsd:identity_attribute_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="FolderId" type="xsd:identity_attribute_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="DrawerName" type="xsd:identity_attribute_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="PageCount" type="xsd:identity_attribute_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="PageId" type="xsd:identity_attribute_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

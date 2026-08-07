@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLXML xmlns="http://pilotfish.sqlxml" xmlns:ta="xalan://com.pilotfish.eip.TransactionAttributes" xmlns:td="xalan://com.pilotfish.eip.TransactionData">
+	<Execute into="results" as="transaction">
+		<SQL>select 1 as PLACEHOLDER from dual</SQL>
+	</Execute>
+    <Iterate as="transaction" over="results">
+	<Execute into="transaction.noordernum">
+		<!-- No FlowNet Order Number -->
+		<SQL>select t.PF_SOURCE_CLIENT, t.CREATED_DATE, t.TRANSACTION_ID, p.POLNUMBER, r.REQ_ACCT_NUM
+from CRLTRANSACTION t inner join POLICY p on t.TRANSACTION_ID=p.TRANSACTION_ID inner join REQ_INFO r on p.POLICY_ID=r.POLICY_ID
+where t.FLOWNET_ORDER_NUM is null and (sysdate - t.CREATED_DATE) &gt; (1.0/24.0) and to_date(t.CREATED_DATE) > ADD_MONTHS( to_date(sysdate), -2) and t.PF_SOURCE_CLIENT in ('PACT','AIGP','PRUX','LADDER','TDEX','AIGL','ELFP','AXA') and r.REQ_INFO_ID not in (1021,1022)
+ORDER BY T.TRANSACTION_ID DESC</SQL>
+	</Execute>
+	<Execute into="transaction.noactivities">
+		<!-- No Activities -->
+		<SQL>SELECT distinct t.PF_SOURCE_CLIENT, t.CREATED_DATE, t.FLOWNET_ORDER_NUM, t.TRANSACTION_ID, p.POLNUMBER, r.REQ_ACCT_NUM
+  FROM CRLTRANSACTION T, POLICY P, REQ_INFO R
+WHERE T.TRANSACTION_ID = P.TRANSACTION_ID
+   AND P.POLICY_ID = R.POLICY_ID
+   AND T.FLOWNET_ORDER_NUM IS NOT NULL AND T.FLOWNET_ORDER_NUM &lt;&gt; 'INVALID'
+   AND T.TRANSACTION_ID NOT IN (SELECT PP.TRANSACTION_ID FROM POLICY PP, REQ_INFO RR, STATUS SS WHERE SS.REQ_INFO_ID = RR.REQ_INFO_ID AND PP.POLICY_ID=RR.POLICY_ID AND T.TRANSACTION_ID=PP.TRANSACTION_ID)
+   AND (sysdate - t.CREATED_DATE) &gt; 1.0
+   AND to_date(t.CREATED_DATE) > ADD_MONTHS( to_date(sysdate), -2)
+   AND T.PF_SOURCE_CLIENT in ('PACT','AIGP','PRUX','LADDER','TDEX','AIGL','ELFP','AXA')
+   AND r.REQ_INFO_ID not in (1021,1022)
+ORDER BY T.TRANSACTION_ID DESC</SQL>
+
+	</Execute>
+	<Execute into="transaction.awaitingattachment">
+		<!-- awaiting attachment -->
+		<SQL>select t.PF_SOURCE_CLIENT, t.ORDER_COMPLETE_DATE, t.FLOWNET_ORDER_NUM, p.POLNUMBER, 
+(select  count(*) from ATTACHMENT where STATUS_ID is not null and CRL_DOCUMENT_ID is not null and TRANSACTION_ID=t.TRANSACTION_ID) as AVAILABLE,
+(select  count(*) from ATTACHMENT where STATUS_ID is not null and TRANSACTION_ID=t.TRANSACTION_ID) as EXPECTED,
+(select LISTAGG(TRANSACTION_ID||'-'||ATTACHMENT_ID||'-'||nvl(CRL_FILENAME, 'filename.pdf'),',') WITHIN GROUP (ORDER BY ATTACHMENT_ID) AS FILENAMES from ATTACHMENT where TRANSACTION_ID=t.TRANSACTION_ID and STATUS_ID is not null and CRL_DRAWER_NAME='SFTP' AND CRL_DOCUMENT_ID is null) as EXPECTED_FILENAMES
+from CRLTRANSACTION t inner join POLICY p on t.TRANSACTION_ID=p.TRANSACTION_ID 
+where t.AWAITING_ATTACHMENTS='Y' AND t.FLOWNET_ORDER_NUM &lt;&gt; 'INVALID' and t.PF_PROCESSING_KEY is null and (sysdate - t.CREATED_DATE) &gt; 1.0
+and to_date(t.CREATED_DATE) > ADD_MONTHS( to_date(sysdate), -2)
+and t.PF_SOURCE_CLIENT in ('PACT','AIGP','PRUX','LADDER','TDEX','AIGL','AIGP','AXA')
+and p.POLICY_ID not in (select r.POLICY_ID from REQ_INFO r where r.POLICY_ID=p.POLICY_ID and r.REQ_ACCT_NUM in (1021,1022))
+ORDER BY t.ORDER_COMPLETE_DATE DESC</SQL>
+	</Execute>
+	<Execute into="transaction.errorprocessing">
+		<!-- error processing/delivering order -->
+		<SQL>select t.PF_SOURCE_CLIENT, t.FLOWNET_ORDER_NUM, p.POLNUMBER, t.PF_PROCESSING_KEY 
+from CRLTRANSACTION t inner join POLICY p on t.TRANSACTION_ID=p.TRANSACTION_ID 
+where t.PF_PROCESSING_KEY is not null 
+and t.FLOWNET_ORDER_NUM &lt;&gt; 'INVALID'
+and (t.LAST_MODIFIED_DATE &lt; (sysdate - interval '1' hour) or (t.FINAL_RESULT_DELIVERED_DATE is null and (t.ORDER_COMPLETE_DATE &lt; sysdate - interval '1' hour)))
+and to_date(t.CREATED_DATE) > ADD_MONTHS( to_date(sysdate), -2)
+and t.PF_SOURCE_CLIENT in ('PACT','AIGP','PRUX','LADDER','TDEX','AIGL','ELFP','AXA')
+and p.POLICY_ID not in (select r.POLICY_ID from REQ_INFO r where r.POLICY_ID=p.POLICY_ID and r.REQ_ACCT_NUM in (1021,1022))
+ORDER BY T.TRANSACTION_ID DESC</SQL>
+	</Execute>
+	<Execute into="transaction.undeliveredstatus">
+		<!-- undelivered statuses -->
+		<SQL>select t.PF_SOURCE_CLIENT, t.FLOWNET_ORDER_NUM, p.POLNUMBER, r.REQ_STATUS, t.PF_PROCESSING_KEY,
+(select min(s.STATUS_EVENT_DATE) from STATUS s where s.REQ_INFO_ID=r.REQ_INFO_ID and s.MESSAGE_SENT_DATE is null) as ACTIVITY_DATE,
+(select LISTAGG(s.PROVIDER_EVENT_CODE, ',') WITHIN GROUP (ORDER BY s.STATUS_ID) FROM STATUS s where s.REQ_INFO_ID=r.REQ_INFO_ID and s.MESSAGE_SENT_DATE is null ) as PROVIDER_EVENT_CODES
+from CRLTRANSACTION t inner join policy p on t.TRANSACTION_ID=p.TRANSACTION_ID
+inner join REQ_INFO r on p.POLICY_ID=r.POLICY_ID
+where (sysdate - T.LAST_MODIFIED_DATE) &gt; 1.0
+and to_date(t.CREATED_DATE) > ADD_MONTHS( to_date(sysdate), -2)
+and r.REQ_INFO_ID in (select s.REQ_INFO_ID from STATUS s WHERE
+  s.MESSAGE_SENT_DATE is null and s.FLOWNET_ID is not null 
+  and t.PF_PROCESSING_KEY is null and t.AWAITING_ATTACHMENTS = 'N'
+  and t.FLOWNET_ORDER_NUM &lt;&gt; 'INVALID'
+  and s.PROVIDER_EVENT_CODE &lt;&gt; 'S82' and s.PROVIDER_EVENT_CODE &lt;&gt; '901' 
+  and s.STATUS_EVENT_DETAIL not like '%check #%')
+  and t.PF_SOURCE_CLIENT in ('PACT','AIGP','PRUX','LADDER','TDEX','AIGL','ELFP','AXA')
+  and r.REQ_ACCT_NUM not in (1021,1022)
+order by t.TRANSACTION_ID desc, r.REQ_INFO_ID asc</SQL>
+	</Execute>
+	</Iterate>
+	<XMLOut var="results" />
+</SQLXML>
