@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Orbit Disc - Spaceship Disc Golf</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,12 +29,11 @@
       <div><span class="label">Discs</span><span id="discs">inf</span></div>
     </div>
     <p id="toast" class="toast" hidden></p>
-    <div class="help">
+    <div class="help desktop-only">
       <kbd>W</kbd><kbd>S</kbd> thrust |
       <kbd>A</kbd><kbd>D</kbd> turn |
       <kbd>R</kbd><kbd>F</kbd> climb |
-      <kbd>Q</kbd><kbd>E</kbd> roll |
-      <kbd>Space</kbd> throw | drag to look
+      <kbd>Space</kbd> throw
     </div>
   </div>
 
@@ -42,13 +41,23 @@
     <div class="panel">
       <p class="eyebrow">LAN arcade</p>
       <h2>Orbit Disc</h2>
-      <p>Pilot a skiff through alpine peaks and fire discs into mountain-top baskets. Chain the chains. Respect the flight path.</p>
+      <p>Pilot a skiff through alpine peaks and fire discs into mountain-top baskets.</p>
       <button id="start-btn" type="button">Launch</button>
-      <p class="hint">Best with keyboard + mouse. Touch: drag to steer, tap Throw.</p>
+      <p class="hint">Phone: left stick to fly, Up/Down to climb, Throw to shoot. Drag the sky to look.</p>
     </div>
   </div>
 
-  <button id="throw-btn" type="button" class="throw-fab" hidden>Throw</button>
+  <div id="touch-controls" class="touch-controls" hidden>
+    <div id="stick" class="stick" aria-label="Flight stick">
+      <div id="stick-knob" class="stick-knob"></div>
+    </div>
+    <div class="touch-actions">
+      <button type="button" id="btn-up" class="pad-btn">Up</button>
+      <button type="button" id="btn-down" class="pad-btn">Down</button>
+      <button type="button" id="throw-btn" class="throw-fab">Throw</button>
+    </div>
+  </div>
+
   <canvas id="c"></canvas>
   <script type="module" src="game.js"></script>
 </body>

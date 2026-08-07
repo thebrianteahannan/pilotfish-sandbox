@@ -6,10 +6,17 @@ const holeEl = document.getElementById("hole");
 const toastEl = document.getElementById("toast");
 const startScreen = document.getElementById("start-screen");
 const startBtn = document.getElementById("start-btn");
+const touchControls = document.getElementById("touch-controls");
 const throwBtn = document.getElementById("throw-btn");
+const stickEl = document.getElementById("stick");
+const stickKnob = document.getElementById("stick-knob");
+const btnUp = document.getElementById("btn-up");
+const btnDown = document.getElementById("btn-down");
 
 const HOLES = 5;
 const keys = new Set();
+const isCoarse = matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
+
 let score = 0;
 let holeIndex = 0;
 let playing = false;
@@ -20,6 +27,9 @@ let lastX = 0;
 let lastY = 0;
 let cooldown = 0;
 let toastTimer = 0;
+let stickX = 0;
+let stickY = 0;
+let climbHold = 0;
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -38,7 +48,12 @@ scene.add(ship);
 function makeShip() {
   const body = new THREE.Mesh(
     new THREE.ConeGeometry(1.2, 4.2, 6),
-    new THREE.MeshStandardMaterial({ color: 0x3de0ff, metalness: 0.7, roughness: 0.35, emissive: 0x0a3a4a })
+    new THREE.MeshStandardMaterial({
+      color: 0x3de0ff,
+      metalness: 0.7,
+      roughness: 0.35,
+      emissive: 0x0a3a4a,
+    })
   );
   body.rotation.x = Math.PI / 2;
   const wing = new THREE.Mesh(
@@ -60,7 +75,6 @@ const rim = new THREE.DirectionalLight(0x6a4dff, 0.55);
 rim.position.set(-60, 40, -80);
 scene.add(rim);
 
-// Stars
 {
   const count = 900;
   const pos = new Float32Array(count * 3);
@@ -71,10 +85,11 @@ scene.add(rim);
   }
   const geo = new THREE.BufferGeometry();
   geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-  scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xffffff, size: 1.2, sizeAttenuation: true })));
+  scene.add(
+    new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xffffff, size: 1.2, sizeAttenuation: true }))
+  );
 }
 
-// Terrain
 const ground = new THREE.Mesh(
   new THREE.PlaneGeometry(900, 900, 96, 96),
   new THREE.MeshStandardMaterial({ color: 0x1c3d2a, roughness: 0.95, flatShading: true })
@@ -85,8 +100,7 @@ for (let i = 0; i < gPos.count; i++) {
   const x = gPos.getX(i);
   const y = gPos.getY(i);
   const h =
-    Math.sin(x * 0.02) * Math.cos(y * 0.018) * 8 +
-    Math.sin(x * 0.05 + y * 0.03) * 4;
+    Math.sin(x * 0.02) * Math.cos(y * 0.018) * 8 + Math.sin(x * 0.05 + y * 0.03) * 4;
   gPos.setZ(i, h);
 }
 gPos.needsUpdate = true;
@@ -98,12 +112,10 @@ const baskets = [];
 const discs = [];
 
 function mountainMesh(radius, height, color) {
-  const mesh = new THREE.Mesh(
+  return new THREE.Mesh(
     new THREE.ConeGeometry(radius, height, 7),
     new THREE.MeshStandardMaterial({ color, roughness: 0.9, flatShading: true })
   );
-  mesh.castShadow = true;
-  return mesh;
 }
 
 function makeBasket() {
@@ -134,7 +146,7 @@ function makeBasket() {
   const beacon = new THREE.PointLight(0xffb347, 1.4, 40);
   beacon.position.y = 3.2;
   g.add(pole, band, chains, beacon);
-  g.userData = { radius: 1.35 };
+  g.userData = { radius: 1.6 };
   return g;
 }
 
@@ -165,7 +177,6 @@ function layoutCourse() {
     scene.add(basket);
     baskets.push(basket);
 
-    // snow cap
     const cap = new THREE.Mesh(
       new THREE.ConeGeometry(L.r * 0.35, L.h * 0.18, 7),
       new THREE.MeshStandardMaterial({ color: 0xe8f4ff, roughness: 0.7 })
@@ -209,11 +220,7 @@ function throwDisc() {
   );
   disc.position.copy(ship.position).add(dir.clone().multiplyScalar(3));
   disc.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
-  disc.userData = {
-    vel: dir.multiplyScalar(55),
-    life: 8,
-    spin: 18,
-  };
+  disc.userData = { vel: dir.multiplyScalar(isCoarse ? 48 : 55), life: 8, spin: 18 };
   scene.add(disc);
   discs.push(disc);
 }
@@ -242,29 +249,41 @@ function update(dt) {
     if (toastTimer <= 0) toastEl.hidden = true;
   }
 
-  const turn = (keys.has("a") || keys.has("arrowleft") ? 1 : 0) - (keys.has("d") || keys.has("arrowright") ? 1 : 0);
-  const climb = (keys.has("r") || keys.has("arrowup") ? 1 : 0) - (keys.has("f") || keys.has("arrowdown") ? 1 : 0);
-  const throttle = (keys.has("w") ? 1 : 0) - (keys.has("s") ? 1 : 0);
+  const turnKey =
+    (keys.has("a") || keys.has("arrowleft") ? 1 : 0) -
+    (keys.has("d") || keys.has("arrowright") ? 1 : 0);
+  const climbKey =
+    (keys.has("r") || keys.has("arrowup") ? 1 : 0) -
+    (keys.has("f") || keys.has("arrowdown") ? 1 : 0) +
+    climbHold;
+  const throttleKey = (keys.has("w") ? 1 : 0) - (keys.has("s") ? 1 : 0);
   const roll = (keys.has("q") ? 1 : 0) - (keys.has("e") ? 1 : 0);
 
-  yaw += turn * 1.6 * dt;
-  pitch = THREE.MathUtils.clamp(pitch + climb * 1.2 * dt, -1.1, 1.1);
+  const turn = turnKey + stickX;
+  const climb = THREE.MathUtils.clamp(climbKey - stickY * 0.35, -1.5, 1.5);
+  // Phone: mild cruise + stick forward/back for boost/brake
+  const cruise = isCoarse ? 0.55 : 0;
+  const throttle = THREE.MathUtils.clamp(throttleKey - stickY + cruise, -1, 1.6);
+
+  yaw += turn * 1.7 * dt;
+  pitch = THREE.MathUtils.clamp(pitch + climb * 1.15 * dt, -1.1, 1.1);
 
   const forward = new THREE.Vector3(0, 0, -1).applyEuler(new THREE.Euler(pitch, yaw, 0, "YXZ"));
-  const speed = 28 + throttle * 38;
+  const speed = 26 + throttle * 36;
   ship.position.addScaledVector(forward, speed * dt);
   ship.position.y = THREE.MathUtils.clamp(ship.position.y + climb * 22 * dt, 8, 160);
-  ship.rotation.set(pitch * 0.85, yaw, roll * 0.5, "YXZ");
+  ship.rotation.set(pitch * 0.85, yaw, roll * 0.5 + stickX * 0.25, "YXZ");
 
-  // camera chase
-  const camOffset = new THREE.Vector3(0, 3.5, 10).applyEuler(new THREE.Euler(pitch * 0.6, yaw, 0, "YXZ"));
+  const camOffset = new THREE.Vector3(0, 3.5, 10).applyEuler(
+    new THREE.Euler(pitch * 0.6, yaw, 0, "YXZ")
+  );
   camera.position.lerp(ship.position.clone().add(camOffset), 1 - Math.pow(0.001, dt));
   camera.lookAt(ship.position.clone().add(forward.multiplyScalar(12)));
 
   for (let i = discs.length - 1; i >= 0; i--) {
     const d = discs[i];
     d.userData.life -= dt;
-    d.userData.vel.y -= 6 * dt; // gentle drop
+    d.userData.vel.y -= 6 * dt;
     d.position.addScaledVector(d.userData.vel, dt);
     d.rotateOnAxis(new THREE.Vector3(0, 1, 0), d.userData.spin * dt);
 
@@ -288,7 +307,13 @@ function frame() {
   requestAnimationFrame(frame);
 }
 
-function startGame() {
+function hideStart() {
+  startScreen.hidden = true;
+  startScreen.setAttribute("aria-hidden", "true");
+}
+
+function startGame(e) {
+  e?.preventDefault?.();
   score = 0;
   holeIndex = 0;
   scoreEl.textContent = "0";
@@ -298,20 +323,101 @@ function startGame() {
   discs.splice(0).forEach((d) => scene.remove(d));
   layoutCourse();
   playing = true;
-  startScreen.hidden = true;
-  throwBtn.hidden = false;
-  try {
-    canvas.requestPointerLock?.();
-  } catch (_) {
-    /* pointer lock optional (mobile / headless) */
+  hideStart();
+  touchControls.hidden = false;
+  showToast(isCoarse ? "Fly to the glowing basket" : "Hole 1 — chase the beacon");
+  if (!isCoarse) {
+    try {
+      canvas.requestPointerLock?.();
+    } catch (_) {}
   }
 }
 
 startBtn.addEventListener("click", startGame);
-throwBtn.addEventListener("click", (e) => {
+startBtn.addEventListener("pointerup", (e) => {
+  // iOS Safari sometimes needs pointerup; ignore if already playing
+  if (!playing) startGame(e);
+});
+
+throwBtn.addEventListener("pointerdown", (e) => {
   e.preventDefault();
+  e.stopPropagation();
   throwDisc();
 });
+
+function bindHold(btn, on, off) {
+  const down = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    on();
+  };
+  const up = (e) => {
+    e.preventDefault();
+    off();
+  };
+  btn.addEventListener("pointerdown", down);
+  btn.addEventListener("pointerup", up);
+  btn.addEventListener("pointerleave", up);
+  btn.addEventListener("pointercancel", up);
+}
+
+bindHold(
+  btnUp,
+  () => {
+    climbHold = 1;
+  },
+  () => {
+    if (climbHold > 0) climbHold = 0;
+  }
+);
+bindHold(
+  btnDown,
+  () => {
+    climbHold = -1;
+  },
+  () => {
+    if (climbHold < 0) climbHold = 0;
+  }
+);
+
+function setStick(clientX, clientY) {
+  const rect = stickEl.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  let dx = (clientX - cx) / (rect.width * 0.42);
+  let dy = (clientY - cy) / (rect.height * 0.42);
+  const mag = Math.hypot(dx, dy) || 1;
+  if (mag > 1) {
+    dx /= mag;
+    dy /= mag;
+  }
+  stickX = dx;
+  stickY = dy;
+  stickKnob.style.transform = `translate(${dx * 34}px, ${dy * 34}px)`;
+}
+
+function clearStick() {
+  stickX = 0;
+  stickY = 0;
+  stickKnob.style.transform = "translate(0,0)";
+}
+
+let stickActive = false;
+stickEl.addEventListener("pointerdown", (e) => {
+  stickActive = true;
+  stickEl.setPointerCapture?.(e.pointerId);
+  setStick(e.clientX, e.clientY);
+});
+stickEl.addEventListener("pointermove", (e) => {
+  if (!stickActive) return;
+  setStick(e.clientX, e.clientY);
+});
+const endStick = () => {
+  stickActive = false;
+  clearStick();
+};
+stickEl.addEventListener("pointerup", endStick);
+stickEl.addEventListener("pointercancel", endStick);
 
 addEventListener("keydown", (e) => {
   keys.add(e.key.toLowerCase());
@@ -323,10 +429,12 @@ addEventListener("keydown", (e) => {
 addEventListener("keyup", (e) => keys.delete(e.key.toLowerCase()));
 
 canvas.addEventListener("pointerdown", (e) => {
+  if (!playing) return;
+  // ignore if pressing UI
   pointerDown = true;
   lastX = e.clientX;
   lastY = e.clientY;
-  if (playing) canvas.setPointerCapture?.(e.pointerId);
+  canvas.setPointerCapture?.(e.pointerId);
 });
 canvas.addEventListener("pointerup", () => {
   pointerDown = false;
@@ -337,8 +445,9 @@ canvas.addEventListener("pointermove", (e) => {
   const dy = e.clientY - lastY;
   lastX = e.clientX;
   lastY = e.clientY;
-  yaw -= dx * 0.004;
-  pitch = THREE.MathUtils.clamp(pitch - dy * 0.0035, -1.1, 1.1);
+  const sens = isCoarse ? 0.0055 : 0.004;
+  yaw -= dx * sens;
+  pitch = THREE.MathUtils.clamp(pitch - dy * sens * 0.9, -1.1, 1.1);
 });
 
 addEventListener("resize", () => {
