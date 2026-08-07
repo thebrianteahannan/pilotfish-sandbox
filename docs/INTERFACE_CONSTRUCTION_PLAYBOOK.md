@@ -20,6 +20,7 @@ Cursor agents are **not** formally trained or certified by PilotFish. There is n
 | **A** | `PilotFish_V2/` (XCS / module Java + `modules.conf`) | **Same EIP module code V1 uses** — FQCNs, `ConfigurationItem` names/defaults, listener/processor/transport behavior (see §1.2) |
 | **B** | Working Sandbox demos under `Clients/**` | Proven **wiring** of those modules into V1 `route.xml` on `pilotfish-eip:23R1` |
 | **B** | This playbook + `.cursor/rules/` | Construction process, V1 vs V2 policy, risks, definition of done |
+| **B** | `EDI/TableData/` (see §3.6 + `EDI/README.md`) | Canonical X12 IG table data, XSDs, IG PDFs, and reference `examples/*.edi` for EDI demos |
 | **C** | Your chat + `DESIGN.md` | Job-specific contracts and overrides |
 | **D** | Live smoke tests / `logs/eip.log` | Confirm the chosen module loads on the demo image |
 | **E** | General model knowledge | Only to fill gaps after A–D |
@@ -375,7 +376,7 @@ Business / decision XML
 
 - Output **XML only** (`xsl:output method="xml"`). Populate structure and business values; let the transform module own delimiters, envelopes, and segment encoding.
 - Include an explicit `<ST>…</ST>` on modern X12 outbound XML (23R1 does **not** auto-inject ST from `@DocType` without legacy shape).
-- Prefer `UseInternalData=false` + `UseProvidedDelimiters=true` on EDI XML→EDI for `pilotfish-eip:23R1` (trial X12 tables may be expired). Call version skew out in `DESIGN.md`.
+- Prefer `UseInternalData=false` + `UseProvidedDelimiters=true` **and** Sandbox `EDI/TableData` via `USE_ENHANCED_CONTEXT=true` + `TransactionDataWithVersion` (§3.6) on `pilotfish-eip:23R1` (trial X12 tables are expired). Call the chosen IG folders out in `DESIGN.md`.
 - For HL7: `USE_FRIENDLY_NAMES=false`, `USE_NAMESPACE=false`, match `MSH.12` to `HL7Version`. Optional `EOLProcessor` (`EndlineSequence=\n`) when file consumers prefer LF.
 - Write intermediate EDI/HL7 XML to a debug/audit folder in demos so the XSLT tab and reviewers can see the structured map.
 
@@ -392,6 +393,31 @@ Business / decision XML
 - Structured dialect docs: `/Users/brianhannan/Documents/PilotFish Documentation/Documents/Processors/…/PilotFish-EDI-XML-Guide-*.md`
 
 **Anti-example (do not copy for new work):** XSLT that emits `ISA*00*…` or `MSH|^~\&|…` as text. Legacy demos that still do this (`hl7-healthcare-automation` event→HL7 text, older doc-healthcare maps) are **not** the construction standard going forward—refactor when touching those emitters.
+
+### 3.6 Sandbox `EDI/TableData` — use it whenever it improves the demo (**required for X12**)
+
+Canonical tree (sibling of `docs/`): **`EDI/TableData/x12/`** — see `EDI/README.md`.
+
+This is the Sandbox’s licensed-style WPC implementation-guide **table data** (plus XSDs, IG PDFs, and `examples/*.edi`). On `pilotfish-eip:23R1`, bundled **trial** X12 table data is expired, so demos must **not** rely on `UseInternalData=true` alone.
+
+**When building or touching any X12 interface under `Clients/`:**
+
+1. **Mount** `EDI/TableData/x12` into EIP at  
+   `/usr/local/tomcat/webapps/eip/eip-root/edi-tabledata`  
+   (compose volume, read-only). Existing EDI demos already do this.
+2. On every `EDITransformationModule` / `EDITransformationProcessor` that parses or emits that IG:  
+   - `UseInternalData=false`  
+   - `USE_ENHANCED_CONTEXT=true`  
+   - `TransactionDataWithVersion` pointing at the matching IG folder(s) under `edi-tabledata/`, version **`5010`**, using  
+     `{ognl:@com.pilotfish.utils.PilotFishUtils@getWorkingDirectory()+'/edi-tabledata/<IG>'}`  
+     Example for 835: `…/edi-tabledata/835-W1`. Multiple IGs: concatenate multiple `[eip_pair:…:eip_name:5010:eip_value]` entries (e.g. `270-A1` + `271-A1`, or `278-A1` + `278-A3`).
+3. **Prefer** IG `examples/*.edi` (and XSDs/PDFs) from `EDI/TableData` for reference fixtures — copy selected files into the demo’s `samples/tabledata/` when useful for UI/file drops. Keep **story-specific** happy-path samples under `samples/` when the demo logic depends on crafted content (underpays, completeness matrix, etc.).
+4. Keep inbound XPaths dual-friendly (`//CLP/CLP01 | … | //Segment[Element[1]='CLP']/…`) when migrating, so named-segment XML and basic EDI XML both work during transition.
+5. Call the TableData mount + chosen IG folders out in `DESIGN.md` (replaces “trial tables expired → basic EDI XML only”).
+
+**Do not** invent ad-hoc second copies of WPC table trees outside `EDI/TableData` unless the user asks. Update the canonical tree, then remount.
+
+**Reference demos (already wired):** `edi-835-payment-integrity`, `edi-835-oci-bucket`, `edi-278-prior-auth`, `edi-270-271-eligibility`, `edi-270-271-realtime`, `edi-837-snip-sqlserver`.
 
 ---
 
@@ -763,6 +789,8 @@ Every interface README must include:
 | Jumping to a custom Java module for auth, HTTP callouts, mapping, or routing | Prefer PF Call Route / HTTP / Attribute / XSLT first (§3.4); custom only when PF-only is extremely hard |
 | Hardcoding X12 (`ISA*…`) or HL7 (`MSH|…`) as text in XSLT | XSLT → PilotFish EDI/HL7 XML → `EDITransformationProcessor` / `HL7TransformationProcessor` (§3.5) |
 | Emitting EDI/HL7 without an intermediate structured XML audit in demos | Write EDI/HL7 XML to debug/output next to the wire file |
+| Leaving X12 demos on expired trial tables / basic Segment XML when Sandbox TableData exists | Mount `EDI/TableData/x12` + `TransactionDataWithVersion` → `edi-tabledata/<IG>` (§3.6) |
+| Hand-rolling sample EDI / duplicate WPC trees outside `EDI/TableData` | Prefer `EDI/TableData/x12/<IG>/examples` (+ XSDs/PDFs); keep story fixtures only when demo logic needs them |
 
 ---
 
@@ -783,7 +811,8 @@ An interface construct is done when:
 7. **LAN URL** is set (`LAN_HINT`) and both localhost + `192.x` URLs are listed when the UI is running (§1.1).  
 8. **Every review PDF** has a working browser link on localhost **and** `192.x` (§6.2), pasted in the agent summary.  
 9. Agent summary lists known limitations in plain language (no compliance theater).  
-10. **Outbound X12 / HL7** (when applicable) uses structured EDI/HL7 XML + Transformation processors (§3.5)—not hardcoded wire text.
+10. **Outbound X12 / HL7** (when applicable) uses structured EDI/HL7 XML + Transformation processors (§3.5)—not hardcoded wire text.  
+11. **X12 TableData** (when applicable): compose mounts `EDI/TableData/x12` and EDI transforms use enhanced context + `TransactionDataWithVersion` (§3.6).
 
 ---
 

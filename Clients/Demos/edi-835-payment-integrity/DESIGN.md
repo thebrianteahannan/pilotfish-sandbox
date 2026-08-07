@@ -55,7 +55,7 @@ Demo of opportunity idea **2.5 Payment integrity / 835 that finance can trust**:
 | Severity | Risk | Why it bites here | Mitigation / accepted? |
 |----------|------|-------------------|------------------------|
 | High | No PM/EHR post | Story stops at buckets + CSV | Accepted for sketch depth |
-| Med | Trial X12 tables expired on 23R1 | `UseInternalData=false` | Same as OCI 835 demo |
+| Med | 23R1 trial X12 tables expired | Sandbox mounts `EDI/TableData/x12` → `eip-root/edi-tabledata` with `USE_ENHANCED_CONTEXT=true` + `TransactionDataWithVersion` (5010); see playbook §3.6 / `EDI/README.md`. | Named-segment EDI XML via Sandbox TableData |
 | Med | Claim-before-complete on AR UPDATE | File write and SQL update not XA | Accepted demo dual-write |
 | Med | Multi-CLP per ST not forked per CLP | Fork is //Transaction | Sample uses 1 CLP per ST |
 | Low | CSV append races | Concurrent ST | Demo poll SerializedTransactions=1 |

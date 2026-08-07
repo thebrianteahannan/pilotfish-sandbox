@@ -26,7 +26,7 @@ Demo of opportunity idea **2.1 Prior authorization that does not die in fax and 
 | Stage | Module / mechanism | Notes |
 |-------|--------------------|-------|
 | R1 Listener | `DirectoryListener` | Poll `$$EDI_INBOUND_DIRECTORY` |
-| R1 Format | `EDITransformationModule` + `XPathForkingModule` `//Transaction` | Split each ST; `UseInternalData=false` (23R1 trial X12 tables expired) |
+| R1 Format | `EDITransformationModule` + `XPathForkingModule` `//Transaction` | Split each ST; `UseInternalData=false` + TableData mount (Sandbox mounts `EDI/TableData/x12` → `eip-root/edi-tabledata` with `USE_ENHANCED_CONTEXT=true` + `TransactionDataWithVersion` (5010); see playbook §3.6 / `EDI/README.md`.) |
 | R1 Target processors | XPath extract → `DatabaseSqlProcessor` AuthCatalog lookup → XSLT completeness + disposition | Build `AuthDecision` |
 | R1 Transport | `DirectoryTransport` | Stage under `output/staged-decisions/` |
 | R2 Listener | `DirectoryListener` | Poll staged decisions |
@@ -57,7 +57,7 @@ Demo of opportunity idea **2.1 Prior authorization that does not die in fax and 
 | Severity | Risk | Why it bites here | Mitigation / accepted? |
 |----------|------|-------------------|------------------------|
 | High | No real payer / FHIR PAS | Pitch lists Da Vinci + portals | Accepted — X12 278 first cut |
-| Med | Trial X12 tables expired on 23R1 | `UseInternalData=false`; generic Segment/Element XML | Same as 835 PI demo; XPath covers both shapes |
+| Med | 23R1 trial X12 tables expired | Sandbox mounts `EDI/TableData/x12` → `eip-root/edi-tabledata` with `USE_ENHANCED_CONTEXT=true` + `TransactionDataWithVersion` (5010); see playbook §3.6 / `EDI/README.md`. | Named-segment EDI XML via Sandbox TableData |
 | Med | Claim-before-complete on multi-file emit | 278, ORU, bucket, SQL not XA | Accepted demo dual-write |
 | Med | Synthetic 278 not clearinghouse-certified | Theater segments only | Documented; samples are demo-shaped |
 | Low | Multi-service loop per ST | Fork is //Transaction | Sample uses 1 service story per ST |

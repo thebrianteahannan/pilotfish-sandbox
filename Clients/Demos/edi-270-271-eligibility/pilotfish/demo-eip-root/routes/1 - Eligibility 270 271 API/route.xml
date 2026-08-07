@@ -96,6 +96,8 @@
           <ExecuteTransformation>true</ExecuteTransformation>
           <TransformationDirection>XML to EDI</TransformationDirection>
           <UseInternalData>false</UseInternalData>
+      <USE_ENHANCED_CONTEXT>true</USE_ENHANCED_CONTEXT>
+      <TransactionDataWithVersion>[eip_pair:{ognl:@com.pilotfish.utils.PilotFishUtils@getWorkingDirectory()+'/edi-tabledata/270-A1'}:eip_name:5010:eip_value][eip_pair:{ognl:@com.pilotfish.utils.PilotFishUtils@getWorkingDirectory()+'/edi-tabledata/271-A1'}:eip_name:5010:eip_value]</TransactionDataWithVersion>
           <FriendlyNamesLevel>None</FriendlyNamesLevel>
           <CODE_DEFS>false</CODE_DEFS>
           <SegmentIndexing>true</SegmentIndexing>

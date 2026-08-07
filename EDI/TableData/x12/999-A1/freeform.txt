@@ -1,0 +1,2465 @@
+*SETPUR
+999-A1
+This X12 Transaction Set contains the format and establishes the data 
+contents of the Implementation Acknowledgment Transaction Set (999) for use 
+within the context of an Electronic Data Interchange (EDI) environment. The 
+transaction set can be used to define the control structures for a set of 
+acknowledgments to indicate the results of the syntactical and relational 
+analysis of the electronically encoded documents, based upon a full or 
+implemented subset of X12 transaction sets. The encoded documents are the 
+transaction sets, which are grouped in functional groups, used in defining 
+transactions for business data interchange. This standard does not cover the 
+semantic meaning of the information encoded in the transaction sets.
+*SEGPUR
+AK1
+To start acknowledgment of a functional group
+*SEGPUR
+AK2
+To start acknowledgment of a single transaction set
+*SEGPUR
+AK9
+To acknowledge acceptance or rejection of a functional group and report the 
+number of included transaction sets from the original trailer, the accepted 
+sets, and the received sets in this functional group
+*SEGPUR
+CTX
+Describes an event context in terms of the application or implementation 
+contexts in force at the time the event occurred and the position in the EDI 
+stream at which that context was activated
+*SEGPUR
+IK3
+To report implementation errors in a data segment and identify the location 
+of the data segment
+*SEGPUR
+IK4
+To report implementation errors in a data element or composite data 
+structure and identify the location of the data element
+*SEGPUR
+IK5
+To acknowledge acceptance or rejection and report implementation errors in a 
+transaction set
+*SEGPUR
+SE
+To indicate the end of the transaction set and provide the count of the 
+transmitted segments (including the beginning (ST) and ending (SE) segments)
+*SEGPUR
+ST
+To indicate the start of a transaction set and to assign a control number
+*SEGNTE
+AK1,01,S,1
+AK101 is the functional ID found in the GS segment (GS01) in the functional 
+group being acknowledged.
+*SEGNTE
+AK1,02,S,1
+AK102 is the functional group control number found in the GS segment in the 
+functional group being acknowledged.
+*SEGNTE
+AK1,03,S,1
+AK103 is the version release industry identifier code in the GS segment 
+(GS08) in the functional group being acknowledged.
+*SEGNTE
+AK2,01,S,1
+AK201 is the transaction set ID found in the ST segment (ST01) in the 
+transaction set being acknowledged.
+*SEGNTE
+AK2,02,S,1
+AK202 is the transaction set control number found in the ST segment in the 
+transaction set being acknowledged.
+*SEGNTE
+AK2,03,S,1
+AK203 is the implementation convention reference, if any, found in the ST 
+segment (ST03) in the transaction set being acknowledged.
+*SEGNTE
+AK9,01,C,1
+If AK901 contains the value "A" or "E", then the transmitted functional 
+group is accepted.
+*SEGNTE
+SE,00,C,1
+SE is the last segment of each transaction set.
+*SEGNTE
+ST,01,S,1
+The transaction set identifier (ST01) is used by the translation routines of 
+the interchange partners to select the appropriate transaction set 
+definition (e.g., 810 selects the Invoice Transaction Set).
+*SEGNTE
+ST,03,S,1
+The implementation convention reference (ST03) is used by the translation 
+routines of the interchange partners to select the appropriate 
+implementation convention to match the transaction set definition. When 
+used, this implementation convention reference takes precedence over the 
+implementation reference specified in the GS08.
+*COMPUR
+C030
+Code indicating the relative position of the simple data element or 
+composite data structure in error within a segment, count beginning with 1 
+for the position immediately following the segment ID; additionally 
+indicating the relative position of a repeating structure in error, count 
+beginning with 1 for the position immediately following the preceding 
+element separator; additionally indicating the relative position of a 
+component of a composite data structure in error, count beginning with 1 for 
+the position following the preceding element or repetition separator
+*COMPUR
+C998
+Holds information to identify a context
+*COMPUR
+C999
+To hold the reference number of a data element and optionally a component 
+data element within a composite
+*COMNTE
+C999,01,S,1
+This element holds the reference number of the simple or composite element 
+at segment level.
+*COMNTE
+C999,02,S,1
+This element holds the reference number of the simple element within a 
+composite.
+*ELEDEF
+2
+Number of accepted Transaction Sets in a Functional Group
+*ELEDEF
+28
+Assigned number originated and maintained by the sender
+*ELEDEF
+96
+Total number of segments included in a transaction set including ST and SE 
+segments
+*ELEDEF
+97
+Total number of transaction sets included in the functional group or 
+interchange (transmission) group terminated by the trailer containing this 
+data element
+*ELEDEF
+123
+Number of Transaction Sets received
+*ELEDEF
+143
+Code uniquely identifying a Transaction Set
+*ELEDEF
+329
+Identifying control number that must be unique within the transaction set 
+functional group assigned by the originator for a transaction set
+*ELEDEF
+447
+The loop ID number given on the transaction set diagram is the value for 
+this data element in segments LS and LE
+*ELEDEF
+479
+Code identifying a group of application related transaction sets
+*ELEDEF
+480
+Code indicating the version, release, subrelease, and industry identifier of 
+the EDI standard being used, including the GS and GE segments; if code in 
+DE455 in GS segment is X, then in DE 480 positions 1-3 are the version 
+number; positions 4-6 are the release and subrelease, level of the version; 
+and positions 7-12 are the industry or trade association identifiers 
+(optionally assigned by user); if code in DE455 in GS segment is T, then 
+other formats are allowed
+*ELEDEF
+618
+Code indicating implementation error found based on the syntax editing of a 
+transaction set
+*ELEDEF
+620
+Code indicating implementation error found based on the syntax editing of a 
+segment
+*ELEDEF
+621
+Code indicating the implementation error found after syntax edits of a data 
+element
+*ELEDEF
+715
+Code indicating accept or reject condition based on the syntax editing of 
+the functional group
+*ELEDEF
+716
+Code indicating error found based on the syntax editing of the functional 
+group header and/or trailer
+*ELEDEF
+717
+Code indicating accept or reject condition based on the syntax editing of 
+the transaction set
+*ELEDEF
+719
+The numerical count position of this data segment from the start of the 
+transaction set: the transaction set header is count position 1
+*ELEDEF
+721
+Code defining the segment ID of the data segment in error (See Appendix A - 
+Number 77)
+*ELEDEF
+722
+This is used to indicate the relative position of a simple data element, or 
+the relative position of a composite data structure with the relative 
+position of the component within the composite data structure, in error; in 
+the data segment the count starts with 1 for the simple data element or 
+composite data structure immediately following the segment ID
+*ELEDEF
+724
+This is a copy of the data element in error
+*ELEDEF
+725
+Reference number used to locate the data element in the Data Element 
+Dictionary
+*ELEDEF
+1528
+To identify the component data element position within the composite that is 
+in error
+*ELEDEF
+1686
+To identify the specific repetition of a data element that is in error
+*ELEDEF
+1705
+Reference assigned to identify Implementation Convention
+*ELEDEF
+9998
+Holds a reference to or for a context
+*ELEDEF
+9999
+Holds the name or 'tag' of a context
+*ELECOD
+143, ,100,1
+Insurance Plan Description
+*ELECOD
+143, ,101,1
+Name and Address Lists
+*ELECOD
+143, ,102,1
+Associated Data
+*ELECOD
+143, ,103,1
+Abandoned Property Filings
+*ELECOD
+143, ,104,1
+Air Shipment Information
+*ELECOD
+143, ,105,1
+Business Entity Filings
+*ELECOD
+143, ,106,1
+Motor Carrier Rate Proposal
+*ELECOD
+143, ,107,1
+Request for Motor Carrier Rate Proposal
+*ELECOD
+143, ,108,1
+Response to a Motor Carrier Rate Proposal
+*ELECOD
+143, ,109,1
+Vessel Content Details
+*ELECOD
+143, ,110,1
+Air Freight Details and Invoice
+*ELECOD
+143, ,111,1
+Individual Insurance Policy and Client Information
+*ELECOD
+143, ,112,1
+Property Damage Report
+*ELECOD
+143, ,113,1
+Election Campaign and Lobbyist Reporting
+*ELECOD
+143, ,120,1
+Vehicle Shipping Order
+*ELECOD
+143, ,121,1
+Vehicle Service
+*ELECOD
+143, ,124,1
+Vehicle Damage
+*ELECOD
+143, ,125,1
+Multilevel Railcar Load Details
+*ELECOD
+143, ,126,1
+Vehicle Application Advice
+*ELECOD
+143, ,127,1
+Vehicle Baying Order
+*ELECOD
+143, ,128,1
+Dealer Information
+*ELECOD
+143, ,129,1
+Vehicle Carrier Rate Update
+*ELECOD
+143, ,130,1
+Student Educational Record (Transcript)
+*ELECOD
+143, ,131,1
+Student Educational Record (Transcript) Acknowledgment
+*ELECOD
+143, ,132,1
+Human Resource Information
+*ELECOD
+143, ,133,1
+Educational Institution Record
+*ELECOD
+143, ,135,1
+Student Aid Origination Record
+*ELECOD
+143, ,138,1
+Educational Testing and Prospect Request and Report
+*ELECOD
+143, ,139,1
+Student Loan Guarantee Result
+*ELECOD
+143, ,140,1
+Product Registration
+*ELECOD
+143, ,141,1
+Product Service Claim Response
+*ELECOD
+143, ,142,1
+Product Service Claim
+*ELECOD
+143, ,143,1
+Product Service Notification
+*ELECOD
+143, ,144,1
+Student Loan Transfer and Status Verification
+*ELECOD
+143, ,146,1
+Request for Student Educational Record (Transcript)
+*ELECOD
+143, ,147,1
+Response to Request for Student Educational Record (Transcript)
+*ELECOD
+143, ,148,1
+Report of Injury, Illness or Incident
+*ELECOD
+143, ,149,1
+Notice of Tax Adjustment or Assessment
+*ELECOD
+143, ,150,1
+Tax Rate Notification
+*ELECOD
+143, ,151,1
+Electronic Filing of Tax Return Data Acknowledgment
+*ELECOD
+143, ,152,1
+Statistical Government Information
+*ELECOD
+143, ,153,1
+Unemployment Insurance Tax Claim or Charge Information
+*ELECOD
+143, ,154,1
+Secured Interest Filing
+*ELECOD
+143, ,155,1
+Business Credit Report
+*ELECOD
+143, ,157,1
+Notice of Power of Attorney
+*ELECOD
+143, ,158,1
+Tax Jurisdiction Sourcing
+*ELECOD
+143, ,159,1
+Motion Picture Booking Confirmation
+*ELECOD
+143, ,160,1
+Transportation Automatic Equipment Identification
+*ELECOD
+143, ,161,1
+Train Sheet
+*ELECOD
+143, ,163,1
+Transportation Appointment Schedule Information
+*ELECOD
+143, ,170,1
+Revenue Receipts Statement
+*ELECOD
+143, ,175,1
+Court and Law Enforcement Notice
+*ELECOD
+143, ,176,1
+Court Submission
+*ELECOD
+143, ,179,1
+Environmental Compliance Reporting
+*ELECOD
+143, ,180,1
+Return Merchandise Authorization and Notification
+*ELECOD
+143, ,185,1
+Royalty Regulatory Report
+*ELECOD
+143, ,186,1
+Insurance Underwriting Requirements Reporting
+*ELECOD
+143, ,187,1
+Premium Audit Request and Return
+*ELECOD
+143, ,188,1
+Educational Course Inventory
+*ELECOD
+143, ,189,1
+Application for Admission to Educational Institutions
+*ELECOD
+143, ,190,1
+Student Enrollment Verification
+*ELECOD
+143, ,191,1
+Student Loan Pre-Claims and Claims
+*ELECOD
+143, ,194,1
+Grant or Assistance Application
+*ELECOD
+143, ,195,1
+Federal Communications Commission (FCC) License Application
+*ELECOD
+143, ,196,1
+Contractor Cost Data Reporting
+*ELECOD
+143, ,197,1
+Real Estate Title Evidence
+*ELECOD
+143, ,198,1
+Loan Verification Information
+*ELECOD
+143, ,199,1
+Real Estate Settlement Information
+*ELECOD
+143, ,200,1
+Mortgage Credit Report
+*ELECOD
+143, ,201,1
+Residential Loan Application
+*ELECOD
+143, ,202,1
+Secondary Mortgage Market Loan Delivery
+*ELECOD
+143, ,203,1
+Secondary Mortgage Market Investor Report
+*ELECOD
+143, ,204,1
+Motor Carrier Load Tender
+*ELECOD
+143, ,205,1
+Mortgage Note
+*ELECOD
+143, ,206,1
+Real Estate Inspection
+*ELECOD
+143, ,210,1
+Motor Carrier Freight Details and Invoice
+*ELECOD
+143, ,211,1
+Motor Carrier Bill of Lading
+*ELECOD
+143, ,212,1
+Motor Carrier Delivery Trailer Manifest
+*ELECOD
+143, ,213,1
+Motor Carrier Shipment Status Inquiry
+*ELECOD
+143, ,214,1
+Transportation Carrier Shipment Status Message
+*ELECOD
+143, ,215,1
+Motor Carrier Pickup Manifest
+*ELECOD
+143, ,216,1
+Motor Carrier Shipment Pickup Notification
+*ELECOD
+143, ,217,1
+Motor Carrier Loading and Route Guide
+*ELECOD
+143, ,219,1
+Logistics Service Request
+*ELECOD
+143, ,220,1
+Logistics Service Response
+*ELECOD
+143, ,222,1
+Cartage Work Assignment
+*ELECOD
+143, ,223,1
+Consolidators Freight Bill and Invoice
+*ELECOD
+143, ,224,1
+Motor Carrier Summary Freight Bill Manifest
+*ELECOD
+143, ,225,1
+Response to a Cartage Work Assignment
+*ELECOD
+143, ,227,1
+Trailer Usage Report
+*ELECOD
+143, ,228,1
+Equipment Inspection Report
+*ELECOD
+143, ,240,1
+Motor Carrier Package Status
+*ELECOD
+143, ,242,1
+Data Status Tracking
+*ELECOD
+143, ,244,1
+Product Source Information
+*ELECOD
+143, ,245,1
+Real Estate Tax Service Response
+*ELECOD
+143, ,248,1
+Account Assignment/Inquiry and Service/Status
+*ELECOD
+143, ,249,1
+Animal Toxicological Data
+*ELECOD
+143, ,250,1
+Purchase Order Shipment Management Document
+*ELECOD
+143, ,251,1
+Pricing Support
+*ELECOD
+143, ,252,1
+Insurance Producer Administration
+*ELECOD
+143, ,255,1
+Underwriting Information Services
+*ELECOD
+143, ,256,1
+Periodic Compensation
+*ELECOD
+143, ,259,1
+Residential Mortgage Insurance Explanation of Benefits
+*ELECOD
+143, ,260,1
+Application for Mortgage Insurance Benefits
+*ELECOD
+143, ,261,1
+Real Estate Information Request
+*ELECOD
+143, ,262,1
+Real Estate Information Report
+*ELECOD
+143, ,263,1
+Residential Mortgage Insurance Application Response
+*ELECOD
+143, ,264,1
+Mortgage Loan Default Status
+*ELECOD
+143, ,265,1
+Real Estate Title Insurance Services Order
+*ELECOD
+143, ,266,1
+Mortgage or Property Record Change Notification
+*ELECOD
+143, ,267,1
+Individual Life, Annuity and Disability Application
+*ELECOD
+143, ,268,1
+Annuity Activity
+*ELECOD
+143, ,269,1
+Health Care Benefit Coordination Verification
+*ELECOD
+143, ,270,1
+Eligibility, Coverage or Benefit Inquiry
+*ELECOD
+143, ,271,1
+Eligibility, Coverage or Benefit Information
+*ELECOD
+143, ,272,1
+Property and Casualty Loss Notification
+*ELECOD
+143, ,273,1
+Insurance/Annuity Application Status
+*ELECOD
+143, ,274,1
+Healthcare Provider Information
+*ELECOD
+143, ,275,1
+Patient Information
+*ELECOD
+143, ,276,1
+Health Care Claim Status Request
+*ELECOD
+143, ,277,1
+Health Care Information Status Notification
+*ELECOD
+143, ,278,1
+Health Care Services Review Information
+*ELECOD
+143, ,280,1
+Voter Registration Information
+*ELECOD
+143, ,283,1
+Tax or Fee Exemption Certification
+*ELECOD
+143, ,284,1
+Commercial Vehicle Safety Reports
+*ELECOD
+143, ,285,1
+Commercial Vehicle Safety and Credentials Information Exchange
+*ELECOD
+143, ,286,1
+Commercial Vehicle Credentials
+*ELECOD
+143, ,288,1
+Wage Determination
+*ELECOD
+143, ,290,1
+Cooperative Advertising Agreements
+*ELECOD
+143, ,300,1
+Reservation (Booking Request) (Ocean)
+*ELECOD
+143, ,301,1
+Confirmation (Ocean)
+*ELECOD
+143, ,303,1
+Booking Cancellation (Ocean)
+*ELECOD
+143, ,304,1
+Shipping Instructions
+*ELECOD
+143, ,309,1
+Customs Manifest
+*ELECOD
+143, ,310,1
+Freight Receipt and Invoice (Ocean)
+*ELECOD
+143, ,311,1
+Canada Customs Information
+*ELECOD
+143, ,312,1
+Arrival Notice (Ocean)
+*ELECOD
+143, ,313,1
+Shipment Status Inquiry (Ocean)
+*ELECOD
+143, ,315,1
+Status Details (Ocean)
+*ELECOD
+143, ,317,1
+Delivery/Pickup Order
+*ELECOD
+143, ,319,1
+Terminal Information
+*ELECOD
+143, ,322,1
+Terminal Operations and Intermodal Ramp Activity
+*ELECOD
+143, ,323,1
+Vessel Schedule and Itinerary (Ocean)
+*ELECOD
+143, ,324,1
+Vessel Stow Plan (Ocean)
+*ELECOD
+143, ,325,1
+Consolidation of Goods In Container
+*ELECOD
+143, ,326,1
+Consignment Summary List
+*ELECOD
+143, ,350,1
+Customs Status Information
+*ELECOD
+143, ,352,1
+U.S. Customs Carrier General Order Status
+*ELECOD
+143, ,353,1
+Customs Events Advisory Details
+*ELECOD
+143, ,354,1
+U.S. Customs Automated Manifest Archive Status
+*ELECOD
+143, ,355,1
+U.S. Customs Acceptance/Rejection
+*ELECOD
+143, ,356,1
+U.S. Customs Permit to Transfer Request
+*ELECOD
+143, ,357,1
+U.S. Customs In-Bond Information
+*ELECOD
+143, ,358,1
+Customs Consist Information
+*ELECOD
+143, ,361,1
+Carrier Interchange Agreement (Ocean)
+*ELECOD
+143, ,362,1
+Cargo Insurance Advice of Shipment
+*ELECOD
+143, ,404,1
+Rail Carrier Shipment Information
+*ELECOD
+143, ,410,1
+Rail Carrier Freight Details and Invoice
+*ELECOD
+143, ,412,1
+Trailer or Container Repair Billing
+*ELECOD
+143, ,414,1
+Rail Carhire Settlements
+*ELECOD
+143, ,417,1
+Rail Carrier Waybill Interchange
+*ELECOD
+143, ,418,1
+Rail Advance Interchange Consist
+*ELECOD
+143, ,419,1
+Advance Car Disposition
+*ELECOD
+143, ,420,1
+Car Handling Information
+*ELECOD
+143, ,421,1
+Estimated Time of Arrival and Car Scheduling
+*ELECOD
+143, ,422,1
+Equipment Order
+*ELECOD
+143, ,423,1
+Rail Industrial Switch List
+*ELECOD
+143, ,424,1
+Rail Carrier Services Settlement
+*ELECOD
+143, ,425,1
+Rail Waybill Request
+*ELECOD
+143, ,426,1
+Rail Revenue Waybill
+*ELECOD
+143, ,429,1
+Railroad Retirement Activity
+*ELECOD
+143, ,431,1
+Railroad Station Master File
+*ELECOD
+143, ,432,1
+Rail Deprescription
+*ELECOD
+143, ,433,1
+Railroad Reciprocal Switch File
+*ELECOD
+143, ,434,1
+Railroad Mark Register Update Activity
+*ELECOD
+143, ,435,1
+Standard Transportation Commodity Code Master
+*ELECOD
+143, ,436,1
+Locomotive Information
+*ELECOD
+143, ,437,1
+Railroad Junctions and Interchanges Activity
+*ELECOD
+143, ,440,1
+Shipment Weights
+*ELECOD
+143, ,451,1
+Railroad Event Report
+*ELECOD
+143, ,452,1
+Railroad Problem Log Inquiry or Advice
+*ELECOD
+143, ,453,1
+Railroad Service Commitment Advice
+*ELECOD
+143, ,455,1
+Railroad Parameter Trace Registration
+*ELECOD
+143, ,456,1
+Railroad Equipment Inquiry or Advice
+*ELECOD
+143, ,460,1
+Railroad Price Distribution Request or Response
+*ELECOD
+143, ,463,1
+Rail Rate Reply
+*ELECOD
+143, ,466,1
+Rate Request
+*ELECOD
+143, ,468,1
+Rate Docket Journal Log
+*ELECOD
+143, ,470,1
+Railroad Clearance
+*ELECOD
+143, ,475,1
+Rail Route File Maintenance
+*ELECOD
+143, ,485,1
+Ratemaking Action
+*ELECOD
+143, ,486,1
+Rate Docket Expiration
+*ELECOD
+143, ,490,1
+Rate Group Definition
+*ELECOD
+143, ,492,1
+Miscellaneous Rates
+*ELECOD
+143, ,494,1
+Rail Scale Rates
+*ELECOD
+143, ,500,1
+Medical Event Reporting
+*ELECOD
+143, ,501,1
+Vendor Performance Review
+*ELECOD
+143, ,503,1
+Pricing History
+*ELECOD
+143, ,504,1
+Clauses and Provisions
+*ELECOD
+143, ,511,1
+Requisition
+*ELECOD
+143, ,517,1
+Material Obligation Validation
+*ELECOD
+143, ,521,1
+Income or Asset Offset
+*ELECOD
+143, ,527,1
+Material Due-In and Receipt
+*ELECOD
+143, ,536,1
+Logistics Reassignment
+*ELECOD
+143, ,540,1
+Notice of Employment Status
+*ELECOD
+143, ,561,1
+Contract Abstract
+*ELECOD
+143, ,567,1
+Contract Completion Status
+*ELECOD
+143, ,568,1
+Contract Payment Management Report
+*ELECOD
+143, ,601,1
+U.S. Customs Export Shipment Information
+*ELECOD
+143, ,602,1
+Transportation Services Tender
+*ELECOD
+143, ,620,1
+Excavation Communication
+*ELECOD
+143, ,625,1
+Well Information
+*ELECOD
+143, ,650,1
+Maintenance Service Order
+*ELECOD
+143, ,715,1
+Intermodal Group Loading Plan
+*ELECOD
+143, ,753,1
+Request for Routing Instructions
+*ELECOD
+143, ,754,1
+Routing Instructions
+*ELECOD
+143, ,805,1
+Contract Pricing Proposal
+*ELECOD
+143, ,806,1
+Project Schedule Reporting
+*ELECOD
+143, ,810,1
+Invoice
+*ELECOD
+143, ,811,1
+Consolidated Service Invoice/Statement
+*ELECOD
+143, ,812,1
+Credit/Debit Adjustment
+*ELECOD
+143, ,813,1
+Electronic Filing of Tax Return Data
+*ELECOD
+143, ,814,1
+General Request, Response or Confirmation
+*ELECOD
+143, ,815,1
+Cryptographic Service Message
+*ELECOD
+143, ,816,1
+Organizational Relationships
+*ELECOD
+143, ,818,1
+Commission Sales Report
+*ELECOD
+143, ,819,1
+Joint Interest Billing and Operating Expense Statement
+*ELECOD
+143, ,820,1
+Payment Order/Remittance Advice
+*ELECOD
+143, ,821,1
+Financial Information Reporting
+*ELECOD
+143, ,822,1
+Account Analysis
+*ELECOD
+143, ,823,1
+Lockbox
+*ELECOD
+143, ,824,1
+Application Advice
+*ELECOD
+143, ,826,1
+Tax Information Exchange
+*ELECOD
+143, ,827,1
+Financial Return Notice
+*ELECOD
+143, ,828,1
+Debit Authorization
+*ELECOD
+143, ,829,1
+Payment Cancellation Request
+*ELECOD
+143, ,830,1
+Planning Schedule with Release Capability
+*ELECOD
+143, ,831,1
+Application Control Totals
+*ELECOD
+143, ,832,1
+Price/Sales Catalog
+*ELECOD
+143, ,833,1
+Mortgage Credit Report Order
+*ELECOD
+143, ,834,1
+Benefit Enrollment and Maintenance
+*ELECOD
+143, ,835,1
+Health Care Claim Payment/Advice
+*ELECOD
+143, ,836,1
+Procurement Notices
+*ELECOD
+143, ,837,1
+Health Care Claim
+*ELECOD
+143, ,838,1
+Trading Partner Profile
+*ELECOD
+143, ,839,1
+Project Cost Reporting
+*ELECOD
+143, ,840,1
+Request for Quotation
+*ELECOD
+143, ,841,1
+Specifications/Technical Information
+*ELECOD
+143, ,842,1
+Nonconformance Report
+*ELECOD
+143, ,843,1
+Response to Request for Quotation
+*ELECOD
+143, ,844,1
+Product Transfer Account Adjustment
+*ELECOD
+143, ,845,1
+Price Authorization Acknowledgment/Status
+*ELECOD
+143, ,846,1
+Inventory Inquiry/Advice
+*ELECOD
+143, ,847,1
+Material Claim
+*ELECOD
+143, ,848,1
+Material Safety Data Sheet
+*ELECOD
+143, ,849,1
+Response to Product Transfer Account Adjustment
+*ELECOD
+143, ,850,1
+Purchase Order
+*ELECOD
+143, ,851,1
+Asset Schedule
+*ELECOD
+143, ,852,1
+Product Activity Data
+*ELECOD
+143, ,853,1
+Routing and Carrier Instruction
+*ELECOD
+143, ,854,1
+Shipment Delivery Discrepancy Information
+*ELECOD
+143, ,855,1
+Purchase Order Acknowledgment
+*ELECOD
+143, ,856,1
+Ship Notice/Manifest
+*ELECOD
+143, ,857,1
+Shipment and Billing Notice
+*ELECOD
+143, ,858,1
+Shipment Information
+*ELECOD
+143, ,859,1
+Freight Invoice
+*ELECOD
+143, ,860,1
+Purchase Order Change Request - Buyer Initiated
+*ELECOD
+143, ,861,1
+Receiving Advice/Acceptance Certificate
+*ELECOD
+143, ,862,1
+Shipping Schedule
+*ELECOD
+143, ,863,1
+Report of Test Results
+*ELECOD
+143, ,864,1
+Text Message
+*ELECOD
+143, ,865,1
+Purchase Order Change Acknowledgment/Request - Seller Initiated
+*ELECOD
+143, ,866,1
+Production Sequence
+*ELECOD
+143, ,867,1
+Product Transfer and Resale Report
+*ELECOD
+143, ,868,1
+Electronic Form Structure
+*ELECOD
+143, ,869,1
+Order Status Inquiry
+*ELECOD
+143, ,870,1
+Order Status Report
+*ELECOD
+143, ,871,1
+Component Parts Content
+*ELECOD
+143, ,872,1
+Residential Mortgage Insurance Application
+*ELECOD
+143, ,873,1
+Commodity Movement Services
+*ELECOD
+143, ,874,1
+Commodity Movement Services Response
+*ELECOD
+143, ,875,1
+Grocery Products Purchase Order
+*ELECOD
+143, ,876,1
+Grocery Products Purchase Order Change
+*ELECOD
+143, ,877,1
+Manufacturer Coupon Family Code Structure
+*ELECOD
+143, ,878,1
+Product Authorization/De-authorization
+*ELECOD
+143, ,879,1
+Price Information
+*ELECOD
+143, ,880,1
+Grocery Products Invoice
+*ELECOD
+143, ,881,1
+Manufacturer Coupon Redemption Detail
+*ELECOD
+143, ,882,1
+Direct Store Delivery Summary Information
+*ELECOD
+143, ,883,1
+Market Development Fund Allocation
+*ELECOD
+143, ,884,1
+Market Development Fund Settlement
+*ELECOD
+143, ,885,1
+Retail Account Characteristics
+*ELECOD
+143, ,886,1
+Customer Call Reporting
+*ELECOD
+143, ,887,1
+Coupon Notification
+*ELECOD
+143, ,888,1
+Item Maintenance
+*ELECOD
+143, ,889,1
+Promotion Announcement
+*ELECOD
+143, ,891,1
+Deduction Research Report
+*ELECOD
+143, ,893,1
+Item Information Request
+*ELECOD
+143, ,894,1
+Delivery/Return Base Record
+*ELECOD
+143, ,895,1
+Delivery/Return Acknowledgment or Adjustment
+*ELECOD
+143, ,896,1
+Product Dimension Maintenance
+*ELECOD
+143, ,920,1
+Loss or Damage Claim - General Commodities
+*ELECOD
+143, ,924,1
+Loss or Damage Claim - Motor Vehicle
+*ELECOD
+143, ,925,1
+Claim Tracer
+*ELECOD
+143, ,926,1
+Claim Status Report and Tracer Reply
+*ELECOD
+143, ,928,1
+Automotive Inspection Detail
+*ELECOD
+143, ,940,1
+Warehouse Shipping Order
+*ELECOD
+143, ,943,1
+Warehouse Stock Transfer Shipment Advice
+*ELECOD
+143, ,944,1
+Warehouse Stock Transfer Receipt Advice
+*ELECOD
+143, ,945,1
+Warehouse Shipping Advice
+*ELECOD
+143, ,947,1
+Warehouse Inventory Adjustment Advice
+*ELECOD
+143, ,980,1
+Functional Group Totals
+*ELECOD
+143, ,990,1
+Response to a Load Tender
+*ELECOD
+143, ,993,1
+Secured Receipt or Acknowledgment
+*ELECOD
+143, ,996,1
+File Transfer
+*ELECOD
+143, ,997,1
+Functional Acknowledgment
+*ELECOD
+143, ,998,1
+Set Cancellation
+*ELECOD
+143, ,999,1
+Implementation Acknowledgment
+*ELECOD
+479, ,AA,1
+Account Analysis (822)
+*ELECOD
+479, ,AB,1
+Logistics Service Request (219)
+*ELECOD
+479, ,AC,1
+Associated Data (102)
+*ELECOD
+479, ,AD,1
+Individual Life, Annuity and Disability Application (267)
+*ELECOD
+479, ,AE,1
+Premium Audit Request and Return (187)
+*ELECOD
+479, ,AF,1
+Application for Admission to Educational Institutions (189)
+*ELECOD
+479, ,AG,1
+Application Advice (824)
+*ELECOD
+479, ,AH,1
+Logistics Service Response (220)
+*ELECOD
+479, ,AI,1
+Automotive Inspection Detail (928)
+*ELECOD
+479, ,AK,1
+Student Educational Record (Transcript) Acknowledgment (131)
+*ELECOD
+479, ,AL,1
+Set Cancellation (998)
+*ELECOD
+479, ,AM,1
+Item Information Request (893)
+*ELECOD
+479, ,AN,1
+Return Merchandise Authorization and Notification (180)
+*ELECOD
+479, ,AO,1
+Income or Asset Offset (521)
+*ELECOD
+479, ,AP,1
+Abandoned Property Filings (103)
+*ELECOD
+479, ,AQ,1
+U.S. Customs Manifest (309)
+*ELECOD
+479, ,AR,1
+Warehouse Stock Transfer Shipment Advice (943)
+*ELECOD
+479, ,AS,1
+Transportation Appointment Schedule Information (163)
+*ELECOD
+479, ,AT,1
+Animal Toxicological Data (249)
+*ELECOD
+479, ,AU,1
+U.S. Customs Status Information (350)
+*ELECOD
+479, ,AV,1
+U.S. Customs Carrier General Order Status (352)
+*ELECOD
+479, ,AW,1
+Warehouse Inventory Adjustment Advice (947)
+*ELECOD
+479, ,AX,1
+U.S. Customs Events Advisory Details (353)
+*ELECOD
+479, ,AY,1
+U.S. Customs Automated Manifest Archive Status (354)
+*ELECOD
+479, ,AZ,1
+U.S. Customs Acceptance/Rejection (355)
+*ELECOD
+479, ,BA,1
+U.S. Customs Permit to Transfer Request (356)
+*ELECOD
+479, ,BB,1
+U.S. Customs In-Bond Information (357)
+*ELECOD
+479, ,BC,1
+Business Credit Report (155)
+*ELECOD
+479, ,BD,1
+U.S. Customs Consist Information (358)
+*ELECOD
+479, ,BE,1
+Benefit Enrollment and Maintenance (834)
+*ELECOD
+479, ,BF,1
+Business Entity Filings (105)
+*ELECOD
+479, ,BL,1
+Motor Carrier Bill of Lading (211)
+*ELECOD
+479, ,BS,1
+Shipment and Billing Notice (857)
+*ELECOD
+479, ,CA,1
+Purchase Order Change Acknowledgment/Request - Seller Initiated (865)
+*ELECOD
+479, ,CB,1
+Unemployment Insurance Tax Claim or Charge Information (153)
+*ELECOD
+479, ,CC,1
+Clauses and Provisions (504)
+*ELECOD
+479, ,CD,1
+Credit/Debit Adjustment (812)
+*ELECOD
+479, ,CE,1
+Cartage Work Assignment (222)
+*ELECOD
+479, ,CF,1
+Corporate Financial Adjustment Information (844 and 849)
+*ELECOD
+479, ,CH,1
+Car Handling Information (420)
+*ELECOD
+479, ,CI,1
+Consolidated Service Invoice/Statement (811)
+*ELECOD
+479, ,CJ,1
+Manufacturer Coupon Family Code Structure (877)
+*ELECOD
+479, ,CK,1
+Manufacturer Coupon Redemption Detail (881)
+*ELECOD
+479, ,CL,1
+Election Campaign and Lobbyist Reporting (113)
+*ELECOD
+479, ,CM,1
+Component Parts Content (871)
+*ELECOD
+479, ,CN,1
+Coupon Notification (887)
+*ELECOD
+479, ,CO,1
+Cooperative Advertising Agreements (290)
+*ELECOD
+479, ,CP,1
+Electronic Proposal Information (251, 805)
+*ELECOD
+479, ,CQ,1
+Commodity Movement Services Response (874)
+*ELECOD
+479, ,CR,1
+Rail Carhire Settlements (414)
+*ELECOD
+479, ,CS,1
+Cryptographic Service Message (815)
+*ELECOD
+479, ,CT,1
+Application Control Totals (831)
+*ELECOD
+479, ,CU,1
+Commodity Movement Services (873)
+*ELECOD
+479, ,CV,1
+Commercial Vehicle Safety and Credentials Information Exchange (285)
+*ELECOD
+479, ,CW,1
+Educational Institution Record (133)
+*ELECOD
+479, ,D3,1
+Contract Completion Status (567)
+*ELECOD
+479, ,D4,1
+Contract Abstract (561)
+*ELECOD
+479, ,D5,1
+Contract Payment Management Report (568)
+*ELECOD
+479, ,DA,1
+Debit Authorization (828)
+*ELECOD
+479, ,DD,1
+Shipment Delivery Discrepancy Information (854)
+*ELECOD
+479, ,DF,1
+Market Development Fund Allocation (883)
+*ELECOD
+479, ,DI,1
+Dealer Information (128)
+*ELECOD
+479, ,DM,1
+Equipment Order (422)
+*ELECOD
+479, ,DS,1
+Data Status Tracking (242)
+*ELECOD
+479, ,DX,1
+Direct Exchange Delivery and Return Information (894, 895)
+*ELECOD
+479, ,EC,1
+Educational Course Inventory (188)
+*ELECOD
+479, ,ED,1
+Student Educational Record (Transcript) (130)
+*ELECOD
+479, ,EI,1
+Railroad Equipment Inquiry or Advice (456)
+*ELECOD
+479, ,EN,1
+Equipment Inspection
+*ELECOD
+479, ,EP,1
+Environmental Compliance Reporting (179)
+*ELECOD
+479, ,ER,1
+Revenue Receipts Statement (170)
+*ELECOD
+479, ,ES,1
+Notice of Employment Status (540)
+*ELECOD
+479, ,EV,1
+Railroad Event Report (451)
+*ELECOD
+479, ,EX,1
+Excavation Communication (620)
+*ELECOD
+479, ,FA,1
+Functional or Implementation Acknowledgment Transaction Sets (997, 999)
+*ELECOD
+479, ,FB,1
+Freight Invoice (859)
+*ELECOD
+479, ,FC,1
+Court and Law Enforcement Information (175, 176)
+*ELECOD
+479, ,FG,1
+Motor Carrier Loading and Route Guide (217)
+*ELECOD
+479, ,FR,1
+Financial Reporting (821, 827)
+*ELECOD
+479, ,FT,1
+File Transfer (996)
+*ELECOD
+479, ,GC,1
+Damage Claim Transaction Sets (920, 924, 925, 926)
+*ELECOD
+479, ,GE,1
+General Request, Response or Confirmation (814)
+*ELECOD
+479, ,GF,1
+Response to a Load Tender (990)
+*ELECOD
+479, ,GL,1
+Intermodal Group Loading Plan (715)
+*ELECOD
+479, ,GP,1
+Grocery Products Invoice (880)
+*ELECOD
+479, ,GR,1
+Statistical Government Information (152)
+*ELECOD
+479, ,GT,1
+Grant or Assistance Application (194)
+*ELECOD
+479, ,HB,1
+Eligibility, Coverage or Benefit Information (271)
+*ELECOD
+479, ,HC,1
+Health Care Claim (837)
+*ELECOD
+479, ,HI,1
+Health Care Services Review Information (278)
+*ELECOD
+479, ,HN,1
+Health Care Information Status Notification (277)
+*ELECOD
+479, ,HP,1
+Health Care Claim Payment/Advice (835)
+*ELECOD
+479, ,HR,1
+Health Care Claim Status Request (276)
+*ELECOD
+479, ,HS,1
+Eligibility, Coverage or Benefit Inquiry (270)
+*ELECOD
+479, ,HU,1
+Human Resource Information (132)
+*ELECOD
+479, ,HV,1
+Health Care Benefit Coordination Verification (269)
+*ELECOD
+479, ,IA,1
+Air Freight Details and Invoice (110, 980)
+*ELECOD
+479, ,IB,1
+Inventory Inquiry/Advice (846)
+*ELECOD
+479, ,IC,1
+Rail Advance Interchange Consist (418)
+*ELECOD
+479, ,ID,1
+Insurance/Annuity Application Status (273)
+*ELECOD
+479, ,IE,1
+Insurance Producer Administration (252)
+*ELECOD
+479, ,IF,1
+Individual Insurance Policy and Client Information (111)
+*ELECOD
+479, ,IG,1
+Direct Store Delivery Summary Information (882)
+*ELECOD
+479, ,IH,1
+Commercial Vehicle Safety Reports (284)
+*ELECOD
+479, ,IJ,1
+Report of Injury, Illness or Incident (148)
+*ELECOD
+479, ,IM,1
+Motor Carrier Freight Details and Invoice (210, 980)
+*ELECOD
+479, ,IN,1
+Invoice Information (810)
+*ELECOD
+479, ,IO,1
+Ocean Shipment Billing Details (310, 312, 980)
+*ELECOD
+479, ,IR,1
+Rail Carrier Freight Details and Invoice (410, 980)
+*ELECOD
+479, ,IS,1
+Estimated Time of Arrival and Car Scheduling (421)
+*ELECOD
+479, ,JB,1
+Joint Interest Billing and Operating Expense Statement (819)
+*ELECOD
+479, ,KM,1
+Commercial Vehicle Credentials (286)
+*ELECOD
+479, ,LA,1
+Federal Communications Commission (FCC) License Application (195)
+*ELECOD
+479, ,LB,1
+Lockbox (823)
+*ELECOD
+479, ,LI,1
+Locomotive Information (436)
+*ELECOD
+479, ,LN,1
+Property and Casualty Loss Notification (272)
+*ELECOD
+479, ,LR,1
+Logistics Reassignment (536)
+*ELECOD
+479, ,LS,1
+Asset Schedule (851)
+*ELECOD
+479, ,LT,1
+Student Loan Transfer and Status Verification (144)
+*ELECOD
+479, ,MA,1
+Motor Carrier Summary Freight Bill Manifest (224)
+*ELECOD
+479, ,MC,1
+Request for Motor Carrier Rate Proposal (107)
+*ELECOD
+479, ,MD,1
+Department of Defense Inventory Management (527)
+*ELECOD
+479, ,ME,1
+Mortgage Origination (198, 200, 201, 245, 261, 262, 263, 833, 872)
+*ELECOD
+479, ,MF,1
+Market Development Fund Settlement (884)
+*ELECOD
+479, ,MG,1
+Mortgage Servicing Transaction Sets (203, 206, 259, 260, 264, 266)
+*ELECOD
+479, ,MH,1
+Motor Carrier Rate Proposal (106)
+*ELECOD
+479, ,MI,1
+Motor Carrier Shipment Status Inquiry (213)
+*ELECOD
+479, ,MJ,1
+Secondary Mortgage Market Loan Delivery (202)
+*ELECOD
+479, ,MK,1
+Response to a Motor Carrier Rate Proposal (108)
+*ELECOD
+479, ,MM,1
+Medical Event Reporting (500)
+*ELECOD
+479, ,MN,1
+Mortgage Note (205)
+*ELECOD
+479, ,MO,1
+Maintenance Service Order (650)
+*ELECOD
+479, ,MP,1
+Motion Picture Booking Confirmation (159)
+*ELECOD
+479, ,MQ,1
+Consolidators Freight Bill and Invoice (223)
+*ELECOD
+479, ,MR,1
+Multilevel Railcar Load Details (125)
+*ELECOD
+479, ,MS,1
+Material Safety Data Sheet (848)
+*ELECOD
+479, ,MT,1
+Electronic Form Structure (868)
+*ELECOD
+479, ,MV,1
+Material Obligation Validation (517)
+*ELECOD
+479, ,MW,1
+Rail Waybill Response (427)
+*ELECOD
+479, ,MX,1
+Material Claim (847)
+*ELECOD
+479, ,MY,1
+Response to a Cartage Work Assignment (225)
+*ELECOD
+479, ,MZ,1
+Motor Carrier Package Status (240)
+*ELECOD
+479, ,NC,1
+Nonconformance Report (842)
+*ELECOD
+479, ,NL,1
+Name and Address Lists (101)
+*ELECOD
+479, ,NP,1
+Notice of Power of Attorney (157)
+*ELECOD
+479, ,NR,1
+Secured Receipt or Acknowledgment (993)
+*ELECOD
+479, ,NT,1
+Notice of Tax Adjustment or Assessment (149)
+*ELECOD
+479, ,OC,1
+Cargo Insurance Advice of Shipment (362)
+*ELECOD
+479, ,OG,1
+Order Group - Grocery (875, 876)
+*ELECOD
+479, ,OR,1
+Organizational Relationships (816)
+*ELECOD
+479, ,OW,1
+Warehouse Shipping Order (940)
+*ELECOD
+479, ,PA,1
+Price Authorization Acknowledgment/Status (845)
+*ELECOD
+479, ,PB,1
+Railroad Parameter Trace Registration (455)
+*ELECOD
+479, ,PC,1
+Purchase Order Change Request - Buyer Initiated (860)
+*ELECOD
+479, ,PD,1
+Product Activity Data (852)
+*ELECOD
+479, ,PE,1
+Periodic Compensation (256)
+*ELECOD
+479, ,PF,1
+Annuity Activity (268)
+*ELECOD
+479, ,PG,1
+Insurance Plan Description (100)
+*ELECOD
+479, ,PH,1
+Pricing History (503)
+*ELECOD
+479, ,PI,1
+Patient Information (275)
+*ELECOD
+479, ,PJ,1
+Project Schedule Reporting (806)
+*ELECOD
+479, ,PK,1
+Project Cost Reporting (839) and Contractor Cost Data Reporting (196)
+*ELECOD
+479, ,PL,1
+Railroad Problem Log Inquiry or Advice (452)
+*ELECOD
+479, ,PN,1
+Product Source Information (244)
+*ELECOD
+479, ,PO,1
+Purchase Order (850)
+*ELECOD
+479, ,PQ,1
+Property Damage Report (112)
+*ELECOD
+479, ,PR,1
+Purchase Order Acknowledgment (855)
+*ELECOD
+479, ,PS,1
+Planning Schedule with Release Capability (830)
+*ELECOD
+479, ,PT,1
+Product Transfer and Resale Report (867)
+*ELECOD
+479, ,PU,1
+Motor Carrier Shipment Pickup Notification (216)
+*ELECOD
+479, ,PV,1
+Purchase Order Shipment Management Document (250)
+*ELECOD
+479, ,PW,1
+Healthcare Provider Information (274)
+*ELECOD
+479, ,PY,1
+Payment Cancellation Request (829)
+*ELECOD
+479, ,QG,1
+Product Information (878, 879, 888, 889, 896)
+*ELECOD
+479, ,QM,1
+Transportation Carrier Shipment Status Message (214)
+*ELECOD
+479, ,QO,1
+Ocean Shipment Status Information (313, 315)
+*ELECOD
+479, ,RA,1
+Payment Order/Remittance Advice (820)
+*ELECOD
+479, ,RB,1
+Railroad Clearance (470)
+*ELECOD
+479, ,RC,1
+Receiving Advice/Acceptance Certificate (861)
+*ELECOD
+479, ,RD,1
+Royalty Regulatory Report (185)
+*ELECOD
+479, ,RE,1
+Warehouse Stock Receipt Advice (944)
+*ELECOD
+479, ,RF,1
+Request for Routing Instructions (753)
+*ELECOD
+479, ,RG,1
+Routing Instructions (754)
+*ELECOD
+479, ,RH,1
+Railroad Reciprocal Switch File (433)
+*ELECOD
+479, ,RI,1
+Routing and Carrier Instruction (853)
+*ELECOD
+479, ,RJ,1
+Railroad Mark Register Update Activity (434)
+*ELECOD
+479, ,RK,1
+Standard Transportation Commodity Code Master (435)
+*ELECOD
+479, ,RL,1
+Rail Industrial Switch List (423)
+*ELECOD
+479, ,RM,1
+Railroad Station Master File (431)
+*ELECOD
+479, ,RN,1
+Requisition Transaction (511)
+*ELECOD
+479, ,RO,1
+Ocean Booking Information (300, 301, 303)
+*ELECOD
+479, ,RP,1
+Commission Sales Report (818)
+*ELECOD
+479, ,RQ,1
+Request for Quotation (840) and Procurement Notices (836)
+*ELECOD
+479, ,RR,1
+Response to Request For Quotation (843)
+*ELECOD
+479, ,RS,1
+Order Status Information (869, 870)
+*ELECOD
+479, ,RT,1
+Report of Test Results (863)
+*ELECOD
+479, ,RU,1
+Railroad Retirement Activity (429)
+*ELECOD
+479, ,RV,1
+Railroad Junctions and Interchanges Activity (437)
+*ELECOD
+479, ,RW,1
+Rail Revenue Waybill (426)
+*ELECOD
+479, ,RX,1
+Rail Deprescription (432)
+*ELECOD
+479, ,RY,1
+Request for Student Educational Record (Transcript) (146)
+*ELECOD
+479, ,RZ,1
+Response to Request for Student Educational Record (Transcript) (147)
+*ELECOD
+479, ,SA,1
+Air Shipment Information (104)
+*ELECOD
+479, ,SB,1
+Rail Carrier Services Settlement (424)
+*ELECOD
+479, ,SC,1
+Price/Sales Catalog (832)
+*ELECOD
+479, ,SD,1
+Student Loan Pre-Claims and Claims (191)
+*ELECOD
+479, ,SE,1
+Shipper's Export Declaration (601)
+*ELECOD
+479, ,SH,1
+Ship Notice/Manifest (856)
+*ELECOD
+479, ,SI,1
+Shipment Information (858)
+*ELECOD
+479, ,SJ,1
+Transportation Automatic Equipment Identification (160)
+*ELECOD
+479, ,SL,1
+Student Aid Origination Record (135, 139)
+*ELECOD
+479, ,SM,1
+Motor Carrier Load Tender (204)
+*ELECOD
+479, ,SN,1
+Rail Route File Maintenance (475)
+*ELECOD
+479, ,SO,1
+Ocean Shipment Information (304, 309, 311, 317, 319, 322, 323, 324, 325, 
+326, 350, 352, 353, 354, 355, 356, 357, 358, 361)
+*ELECOD
+479, ,SP,1
+Specifications/Technical Information (841)
+*ELECOD
+479, ,SQ,1
+Production Sequence (866)
+*ELECOD
+479, ,SR,1
+Rail Carrier Shipment Information (404, 419)
+*ELECOD
+479, ,SS,1
+Shipping Schedule (862)
+*ELECOD
+479, ,ST,1
+Railroad Service Commitment Advice (453)
+*ELECOD
+479, ,SU,1
+Account Assignment/Inquiry and Service/Status (248)
+*ELECOD
+479, ,SV,1
+Student Enrollment Verification (190)
+*ELECOD
+479, ,SW,1
+Warehouse Shipping Advice (945)
+*ELECOD
+479, ,TA,1
+Electronic Filing of Tax Return Data Acknowledgment (151)
+*ELECOD
+479, ,TB,1
+Trailer or Container Repair Billing (412)
+*ELECOD
+479, ,TD,1
+Trading Partner Profile (838)
+*ELECOD
+479, ,TE,1
+Tax or Fee Exemption Certification (283)
+*ELECOD
+479, ,TF,1
+Electronic Filing of Tax Return Data (813)
+*ELECOD
+479, ,TI,1
+Tax Information Exchange (826)
+*ELECOD
+479, ,TJ,1
+Tax Jurisdiction Sourcing (158)
+*ELECOD
+479, ,TM,1
+Motor Carrier Delivery Trailer Manifest (212)
+*ELECOD
+479, ,TN,1
+Tax Rate Notification (150)
+*ELECOD
+479, ,TO,1
+Real Estate Title Services (197, 199, 265, 485, 486)
+*ELECOD
+479, ,TP,1
+Rail Rate Transactions (460, 463, 466, 468, 485, 486, 490, 492, 494)
+*ELECOD
+479, ,TR,1
+Train Sheet (161)
+*ELECOD
+479, ,TS,1
+Transportation Services Tender (602)
+*ELECOD
+479, ,TT,1
+Educational Testing and Prospect Request and Report (138)
+*ELECOD
+479, ,TU,1
+Trailer Usage Report (227)
+*ELECOD
+479, ,TX,1
+Text Message (864)
+*ELECOD
+479, ,UA,1
+Retail Account Characteristics (885)
+*ELECOD
+479, ,UB,1
+Customer Call Reporting (886)
+*ELECOD
+479, ,UC,1
+Secured Interest Filing (154)
+*ELECOD
+479, ,UD,1
+Deduction Research Report (891)
+*ELECOD
+479, ,UI,1
+Underwriting Information Services (255)
+*ELECOD
+479, ,UP,1
+Motor Carrier Pickup Manifest (215)
+*ELECOD
+479, ,UW,1
+Insurance Underwriting Requirements Reporting (186)
+*ELECOD
+479, ,VA,1
+Vehicle Application Advice (126)
+*ELECOD
+479, ,VB,1
+Vehicle Baying Order (127)
+*ELECOD
+479, ,VC,1
+Vehicle Shipping Order (120)
+*ELECOD
+479, ,VD,1
+Vehicle Damage (124)
+*ELECOD
+479, ,VE,1
+Vessel Content Details (109)
+*ELECOD
+479, ,VH,1
+Vehicle Carrier Rate Update (129)
+*ELECOD
+479, ,VI,1
+Voter Registration Information (280)
+*ELECOD
+479, ,VS,1
+Vehicle Service (121)
+*ELECOD
+479, ,WA,1
+Product Service Transaction Sets (140, 141, 142, 143)
+*ELECOD
+479, ,WB,1
+Rail Carrier Waybill Interchange (417)
+*ELECOD
+479, ,WG,1
+Vendor Performance Review (501)
+*ELECOD
+479, ,WI,1
+Wage Determination (288)
+*ELECOD
+479, ,WL,1
+Well Information (625)
+*ELECOD
+479, ,WR,1
+Shipment Weights (440)
+*ELECOD
+479, ,WT,1
+Rail Waybill Request (425)
+*ELECOD
+480, ,001000,1
+ASC X12 Standards Approved by ANSI in 1983
+*ELECOD
+480, ,002000,1
+ASC X12 Standards Approved by ANSI in 1986
+*ELECOD
+480, ,002001,1
+Draft Standards Approved by ASC X12 in November 1987
+*ELECOD
+480, ,002002,1
+Draft Standards Approved by ASC X12 through February 1988
+*ELECOD
+480, ,002003,1
+Draft Standards Approved by ASC X12 through August 1988
+*ELECOD
+480, ,002031,1
+Draft Standards Approved by ASC X12 through February 1989
+*ELECOD
+480, ,002040,1
+Draft Standards Approved by ASC X12 through May 1989
+*ELECOD
+480, ,002041,1
+Draft Standards Approved by ASC X12 through October 1989
+*ELECOD
+480, ,002042,1
+Draft Standards Approved by ASC X12 through February 1990
+*ELECOD
+480, ,003000,1
+ASC X12 Standards Approved by ANSI in 1992
+*ELECOD
+480, ,003010,1
+Draft Standards Approved by ASC X12 through June 1990
+*ELECOD
+480, ,003011,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through February 1991
+*ELECOD
+480, ,003012,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 1991
+*ELECOD
+480, ,003020,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 1991
+*ELECOD
+480, ,003021,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through February 1992
+*ELECOD
+480, ,003022,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 1992
+*ELECOD
+480, ,003030,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 1992
+*ELECOD
+480, ,003031,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through February 1993
+*ELECOD
+480, ,003032,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 1993
+*ELECOD
+480, ,003040,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 1993
+*ELECOD
+480, ,003041,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through February 1994
+*ELECOD
+480, ,003042,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 1994
+*ELECOD
+480, ,003050,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 1994
+*ELECOD
+480, ,003051,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through February 1995
+*ELECOD
+480, ,003052,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 1995
+*ELECOD
+480, ,003060,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 1995
+*ELECOD
+480, ,003061,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through February 1996
+*ELECOD
+480, ,003062,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 1996
+*ELECOD
+480, ,003070,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 1996
+*ELECOD
+480, ,003071,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through February 1997
+*ELECOD
+480, ,003072,1
+Draft Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 1997
+*ELECOD
+480, ,004000,1
+ASC X12 Standards Approved by ANSI in 1997
+*ELECOD
+480, ,004010,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 1997
+*ELECOD
+480, ,004011,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through February 1998
+*ELECOD
+480, ,004012,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 1998
+*ELECOD
+480, ,004020,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 1998
+*ELECOD
+480, ,004021,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through February 1999
+*ELECOD
+480, ,004022,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 1999
+*ELECOD
+480, ,004030,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 1999
+*ELECOD
+480, ,004031,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through February 2000
+*ELECOD
+480, ,004032,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 2000
+*ELECOD
+480, ,004040,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 2000
+*ELECOD
+480, ,004041,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through February 2001
+*ELECOD
+480, ,004042,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 2001
+*ELECOD
+480, ,004050,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 2001
+*ELECOD
+480, ,004051,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through February 2002
+*ELECOD
+480, ,004052,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 2002
+*ELECOD
+480, ,004060,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 2002
+*ELECOD
+480, ,004061,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through February 2003
+*ELECOD
+480, ,004062,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 2003
+*ELECOD
+480, ,004062,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through June 2003
+*ELECOD
+480, ,005000,1
+ASC X12 Standards Approved by ANSI in 2003
+*ELECOD
+480, ,005010,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 2003
+*ELECOD
+480, ,005010,1
+Standards Approved for Publication by ASC X12 Procedures Review Board 
+through October 2003
+*ELECOD
+618, ,1,1
+Transaction Set Not Supported
+*ELECOD
+618, ,2,1
+Transaction Set Trailer Missing
+*ELECOD
+618, ,3,1
+Transaction Set Control Number in Header and Trailer Do Not Match
+*ELECOD
+618, ,4,1
+Number of Included Segments Does Not Match Actual Count
+*ELECOD
+618, ,5,1
+One or More Segments in Error
+*ELECOD
+618, ,6,1
+Missing or Invalid Transaction Set Identifier
+*ELECOD
+618, ,7,1
+Missing or Invalid Transaction Set Control Number
+*ELECOD
+618, ,8,1
+Authentication Key Name Unknown
+*ELECOD
+618, ,9,1
+Encryption Key Name Unknown
+*ELECOD
+618, ,10,1
+Requested Service (Authentication or Encrypted) Not Available
+*ELECOD
+618, ,11,1
+Unknown Security Recipient
+*ELECOD
+618, ,12,1
+Incorrect Message Length (Encryption Only)
+*ELECOD
+618, ,13,1
+Message Authentication Code Failed
+*ELECOD
+618, ,15,1
+Unknown Security Originator
+*ELECOD
+618, ,16,1
+Syntax Error in Decrypted Text
+*ELECOD
+618, ,17,1
+Security Not Supported
+*ELECOD
+618, ,18,1
+Transaction Set not in Functional Group
+*ELECOD
+618, ,19,1
+Invalid Transaction Set Implementation Convention Reference
+*ELECOD
+618, ,23,1
+Transaction Set Control Number Not Unique within the Functional Group
+*ELECOD
+618, ,24,1
+S3E Security End Segment Missing for S3S Security Start Segment
+*ELECOD
+618, ,25,1
+S3S Security Start Segment Missing for S3E Security End Segment
+*ELECOD
+618, ,26,1
+S4E Security End Segment Missing for S4S Security Start Segment
+*ELECOD
+618, ,27,1
+S4S Security Start Segment Missing for S4E Security End Segment
+*ELECOD
+618, ,I5,1
+Implementation One or More Segments in Error
+*ELECOD
+618, ,I6,1
+Implementation Convention Not Supported
+*ELECOD
+620, ,1,1
+Unrecognized segment ID
+*ELECOD
+620, ,2,1
+Unexpected segment
+*ELECOD
+620, ,3,1
+Required Segment Missing
+*ELECOD
+620, ,4,1
+Loop Occurs Over Maximum Times
+*ELECOD
+620, ,5,1
+Segment Exceeds Maximum Use
+*ELECOD
+620, ,6,1
+Segment Not in Defined Transaction Set
+*ELECOD
+620, ,7,1
+Segment Not in Proper Sequence
+*ELECOD
+620, ,8,1
+Segment Has Data Element Errors
+*ELECOD
+620, ,I4,1
+Implementation "Not Used" Segment Present
+*ELECOD
+620, ,I6,1
+Implementation Dependent Segment Missing
+*ELECOD
+620, ,I7,1
+Implementation Loop Occurs Under Minimum Times
+*ELECOD
+620, ,I8,1
+Implementation Segment Below Minimum Use
+*ELECOD
+620, ,I9,1
+Implementation Dependent "Not Used" Segment Present
+*ELECOD
+621, ,1,1
+Required Data Element Missing
+*ELECOD
+621, ,2,1
+Conditional Required Data Element Missing
+*ELECOD
+621, ,3,1
+Too Many Data Elements
+*ELECOD
+621, ,4,1
+Data Element Too Short
+*ELECOD
+621, ,5,1
+Data Element Too Long
+*ELECOD
+621, ,6,1
+Invalid Character In Data Element
+*ELECOD
+621, ,7,1
+Invalid Code Value
+*ELECOD
+621, ,8,1
+Invalid Date
+*ELECOD
+621, ,9,1
+Invalid Time
+*ELECOD
+621, ,10,1
+Exclusion Condition Violated
+*ELECOD
+621, ,12,1
+Too Many Repetitions
+*ELECOD
+621, ,13,1
+Too Many Components
+*ELECOD
+621, ,I6,1
+Code Value Not Used in Implementation
+*ELECOD
+621, ,I9,1
+Implementation Dependent Data Element Missing
+*ELECOD
+621, ,I10,1
+Implementation "Not Used" Data Element Present
+*ELECOD
+621, ,I11,1
+Implementation Too Few Repetitions
+*ELECOD
+621, ,I12,1
+Implementation Pattern Match Failure
+*ELECOD
+621, ,I13,1
+Implementation Dependent "Not Used" Data Element Present
+*ELECOD
+715, ,A,1
+Accepted
+*ELECOD
+715, ,E,1
+Accepted, But Errors Were Noted.
+*ELECOD
+715, ,M,1
+Rejected, Message Authentication Code (MAC) Failed
+*ELECOD
+715, ,P,1
+Partially Accepted, At Least One Transaction Set Was Rejected
+*ELECOD
+715, ,R,1
+Rejected
+*ELECOD
+715, ,W,1
+Rejected, Assurance Failed Validity Tests
+*ELECOD
+715, ,X,1
+Rejected, Content After Decryption Could Not Be Analyzed
+*ELECOD
+716, ,1,1
+Functional Group Not Supported
+*ELECOD
+716, ,2,1
+Functional Group Version Not Supported
+*ELECOD
+716, ,3,1
+Functional Group Trailer Missing
+*ELECOD
+716, ,4,1
+Group Control Number in the Functional Group Header and Trailer Do Not Agree
+*ELECOD
+716, ,5,1
+Number of Included Transaction Sets Does Not Match Actual Count
+*ELECOD
+716, ,6,1
+Group Control Number Violates Syntax
+*ELECOD
+716, ,10,1
+Authentication Key Name Unknown
+*ELECOD
+716, ,11,1
+Encryption Key Name Unknown
+*ELECOD
+716, ,12,1
+Requested Service (Authentication or Encryption) Not Available
+*ELECOD
+716, ,13,1
+Unknown Security Recipient
+*ELECOD
+716, ,14,1
+Unknown Security Originator
+*ELECOD
+716, ,15,1
+Syntax Error in Decrypted Text
+*ELECOD
+716, ,16,1
+Security Not Supported
+*ELECOD
+716, ,17,1
+Incorrect Message Length (Encryption Only)
+*ELECOD
+716, ,18,1
+Message Authentication Code Failed
+*ELECOD
+716, ,19,1
+Functional Group Control Number not Unique within Interchange
+*ELECOD
+716, ,23,1
+S3E Security End Segment Missing for S3S Security Start Segment
+*ELECOD
+716, ,24,1
+S3S Security Start Segment Missing for S3E End Segment
+*ELECOD
+716, ,25,1
+S4E Security End Segment Missing for S4S Security Start Segment
+*ELECOD
+716, ,26,1
+S4S Security Start Segment Missing for S4E Security End Segment
+*ELECOD
+717, ,A,1
+Accepted
+*ELECOD
+717, ,E,1
+Accepted But Errors Were Noted
+*ELECOD
+717, ,M,1
+Rejected, Message Authentication Code (MAC) Failed
+*ELECOD
+717, ,R,1
+Rejected
+*ELECOD
+717, ,W,1
+Rejected, Assurance Failed Validity Tests
+*ELECOD
+717, ,X,1
+Rejected, Content After Decryption Could Not Be Analyzed
+*ELENTE
+143, ,260,1
+A claim filed for mortgage insurance benefits
+*ELENTE
+143, ,511,1
+Transaction set for ordering equipment and material from a supply 
+distribution system; this can also be used to inquire about, amend, or 
+terminate the original order
+*ELENTE
+143, ,517,1
+Transaction set for verifying the continued need for open orders. Can also 
+be used to confirm open order quantities and request reinstatement of 
+previously cancelled open orders
+*ELENTE
+143, ,527,1
+Transaction set for reporting material dues-in, anticipated receipts, and 
+receipts
+*ELENTE
+143, ,536,1
+Transaction set for reporting information needed by a new manager when 
+transferring inventory management responsibility between organizations
+*ELENTE
+143, ,561,1
+A summary of the essential elements of a contract, sufficient to enable the 
+contract administration process to commence
+*ELENTE
+143, ,567,1
+Transaction set for reporting the administrative closure status of 
+physically completed contracts
+*ELENTE
+479, ,D3,1
+Transaction set for reporting the administrative closure status of 
+physically completed contracts
+*ELENTE
+479, ,MD,1
+Transactions related to the interchange of information involving material in 
+the supply, control, and distribution systems and financial management of 
+the Department of Defense or other participating agencies
+*ELENTE
+479, ,RN,1
+Transaction set for ordering equipment and material. Can also be used to 
+inquire about, amend, or terminate the original order

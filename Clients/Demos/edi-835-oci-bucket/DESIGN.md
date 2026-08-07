@@ -54,7 +54,7 @@ Order: stage raw → fork Transaction → write JSON → HTTP POST to OCI mock. 
 | High | Was using `HttpPostTransport` (POST-only) | OCI PutObject needs signed PUT | Replaced by custom module |
 | High | `$$ENV` TargetURL interpolation | `$$BASE/{ognl:...}` treated as one missing property | Use OGNL fully-qualified URL string (smoke-verified) |
 | Med | No OCI request signing (OCI-HMAC signature) | Naked HTTP won’t auth against Oracle | Custom module + OCI Java SDK |
-| Med | Bundled X12 **trial table data expired** on 23R1 | `UseInternalData=true` fails EDI→XML | Demo uses `UseInternalData=false` |
+| Med | Bundled X12 trial table data expired on 23R1 | Sandbox mounts `EDI/TableData/x12` → `eip-root/edi-tabledata` with `USE_ENHANCED_CONTEXT=true` + `TransactionDataWithVersion` (5010); see playbook §3.6 / `EDI/README.md`. | Named-segment EDI XML via Sandbox TableData |
 | Med | EDI→XML invalid element names | Empty SVC (`~~`) produced `<120.00/>` and broke XPath fork | Sanitize sample; recommend custom ST splitter |
 | Med | JSCH vs modern OpenSSH algorithms | Fresh `atmoz/sftp` → “Algorithm negotiation fail” | Mount compat `sftp/sshd_config` |
 | Med | Multi-ST file → N HTTP calls | Throughput / partial failure | Retries on transport; optional custom batch putter |

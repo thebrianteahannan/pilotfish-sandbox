@@ -84,3 +84,7 @@ See `documents/EDI270_271_Orig_vs_Realtime_Differences.pdf`.
 | Mock payer | 8211 → 8210 |
 
 LAN hint: `http://192.168.68.52:8121/`
+
+### X12 TableData
+
+Sandbox mounts `EDI/TableData/x12` → `eip-root/edi-tabledata` with `USE_ENHANCED_CONTEXT=true` + `TransactionDataWithVersion` (5010); see playbook §3.6 / `EDI/README.md`.

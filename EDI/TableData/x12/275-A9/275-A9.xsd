@@ -1,0 +1,3461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="urn:x12:schemas:005010X210:275A9:PatientInformation" targetNamespace="urn:x12:schemas:005010X210:275A9:PatientInformation" xmlns:x12="http://schemas.x12.org/isomorph" version="005010X210" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation xml:lang="en">ASC X12 Schema 005010X210_275A9</xs:documentation>
+  </xs:annotation>
+  <xs:annotation>
+    <xs:documentation>2010 (c) Data Interchange Standards Association for the members of ASC X12</xs:documentation>
+  </xs:annotation>
+  <xs:element name="X12_005010X210_275A9">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ST_TransactionHeader"/>
+        <xs:element ref="BGN_BeginningSegment"/>
+        <xs:element ref="Loop_1000A"/>
+        <xs:element ref="Loop_1000B"/>
+        <xs:element ref="Loop_1000C"/>
+        <xs:element ref="Loop_1000D"/>
+        <xs:element maxOccurs="unbounded" ref="Loop_2000A"/>
+        <xs:element ref="SE_TransactionSetTrailer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop_1000A">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="NM1_PayerName_1000A"/>
+        <xs:element ref="PER_PayerContactInformation_1000A" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop_1000B">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="NM1_SubmitterInformation_1000B"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop_1000C">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="NM1_ProviderNameInformation_1000C"/>
+        <xs:element ref="PRV_ProviderTaxonomyInformation_1000C" minOccurs="0"/>
+        <xs:element ref="REF_ProviderSecondaryIdentification_1000C" minOccurs="0"/>
+        <xs:element ref="Loop_1100C"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop_1100C">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="NX1_ProviderIdentification_1100C"/>
+        <xs:element ref="N3_ProviderAddress_1100C"/>
+        <xs:element ref="N4_ProviderCityStateZIPCode_1100C"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop_1000D">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="NM1_PatientName_1000D"/>
+        <xs:element ref="REF_PatientControlNumber_1000D"/>
+        <xs:element ref="REF_InstitutionalTypeOfBill_1000D" minOccurs="0"/>
+        <xs:element ref="REF_MedicalRecordIdentificationNumber_1000D" minOccurs="0"/>
+        <xs:element ref="REF_ClaimIdentificationNumberForClearinghousesAndOtherTransmissionIntermediaries_1000D" minOccurs="0"/>
+        <xs:element ref="DTP_ClaimServiceDate_1000D" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop_2000A">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="LX_AssignedNumber_2000A"/>
+        <xs:element ref="TRN_PayerClaimControlNumberProviderAttachmentControlNumber_2000A"/>
+        <xs:element ref="STC_StatusInformation_2000A" minOccurs="0"/>
+        <xs:element ref="REF_ServiceLineItemIdentification_2000A" minOccurs="0"/>
+        <xs:element ref="REF_ProcedureOrRevenueCode_2000A" minOccurs="0"/>
+        <xs:element ref="REF_ProcedureCodeModifier_2000A" minOccurs="0"/>
+        <xs:element ref="Loop_2100A" minOccurs="0"/>
+        <xs:element ref="Loop_2100B"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop_2100A">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="DTP_ServiceLineDateOfService_2100A"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop_2100B">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="DTP_AdditionalInformationSubmissionDate_2100B"/>
+        <xs:element ref="CAT_CategoryOfPatientInformationService_2100B"/>
+        <xs:element ref="Loop_2110B"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop_2110B">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="EFI_ElectronicFormatIdentification_2110B"/>
+        <xs:element ref="BIN_BinaryDataSegment_2110B"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ST_TransactionHeader">
+    <xs:annotation>
+      <xs:documentation>275 Transaction Header</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ST01__TransactionSetIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>Code uniquely identifying a Transaction Set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Set Identifier Code" Number="143" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="3"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="275">
+                <xs:annotation>
+                  <xs:documentation>Patient Information</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="ST02__TransactionSetControlNumber">
+          <xs:annotation>
+            <xs:documentation>The unique identification number within a transaction set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Set Control Number" Number="329" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="4"/>
+              <xs:maxLength value="9"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="ST03__VersionReleaseOrIndustryIdentifier">
+          <xs:annotation>
+            <xs:documentation>Code indicating the version, release, sub-release and industry identification of the EDI standard being used.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Implementation Convention Reference" Number="1705" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="35"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BGN_BeginningSegment">
+    <xs:annotation>
+      <xs:documentation>Beginning Segment</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="BGN01__TransactionSetPurposeCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying purpose of transaction set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Set Purpose Code" Number="353" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="02">
+                <xs:annotation>
+                  <xs:documentation>Add</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="11">
+                <xs:annotation>
+                  <xs:documentation>Response</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="BGN02__TransactionSetReferenceNumber">
+          <xs:annotation>
+            <xs:documentation>Number uniquely identifying a transaction set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="BGN03__TransactionSetCreationDate">
+          <xs:annotation>
+            <xs:documentation>Identifies the date the submitter created the transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date" Number="373" DataType="DT" MaximumLength="8"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="8"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="BGN04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Time" Number="337" DataType="TM"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="4"/>
+              <xs:maxLength value="8"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="BGN05">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Time Code" Number="623" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="BGN06">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="BGN07">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Type Code" Number="640" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="BGN08">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Action Code" Number="306" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="BGN09">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Security Level Code" Number="786" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NM1_PayerName_1000A">
+    <xs:annotation>
+      <xs:documentation>Payer Name</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="NM101__EntityIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying an organizational entity, a physical location, property or an individual.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="PR">
+                <xs:annotation>
+                  <xs:documentation>Payer</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM102__EntityTypeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the type of entity.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Type Qualifier" Number="1065" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="1"/>
+              <xs:enumeration value="2">
+                <xs:annotation>
+                  <xs:documentation>Non-Person Entity</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM103__PayerName">
+          <xs:annotation>
+            <xs:documentation>Name identifying the payer organization.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Last or Organization Name" Number="1035" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM104">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name First" Number="1036" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="35"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM105">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Middle" Number="1037" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="25"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM106">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Prefix" Number="1038" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM107">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Suffix" Number="1039" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM108__IdentificationCodeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code designating the system/method of code structure used for Identification Code (67).</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code Qualifier" Number="66" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="PI">
+                <xs:annotation>
+                  <xs:documentation>Payor Identification</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="XV">
+                <xs:annotation>
+                  <xs:documentation>Centers for Medicare and Medicaid Services PlanID</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM109__PayerIdentifier">
+          <xs:annotation>
+            <xs:documentation>Number identifying the payer organization.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code" Number="67" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM110">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Relationship Code" Number="706" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM111">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM112">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Last or Organization Name" Number="1035" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PER_PayerContactInformation_1000A">
+    <xs:annotation>
+      <xs:documentation>Payer Contact Information</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="PER01__ContactFunctionCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying the major duty or responsibility of the person or group named.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Contact Function Code" Number="366" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="IC">
+                <xs:annotation>
+                  <xs:documentation>Information Contact</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER02__PayerContactName">
+          <xs:annotation>
+            <xs:documentation>Name identifying the payer organization's contact person.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name" Number="93" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER03__CommunicationNumberQualifier">
+          <xs:annotation>
+            <xs:documentation>Code identifying the type of communication number.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Communication Number Qualifier" Number="365" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="ED">
+                <xs:annotation>
+                  <xs:documentation>Electronic Data Interchange Access Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EM">
+                <xs:annotation>
+                  <xs:documentation>Electronic Mail</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FX">
+                <xs:annotation>
+                  <xs:documentation>Facsimile</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TE">
+                <xs:annotation>
+                  <xs:documentation>Telephone</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER04__PayerContactCommunicationNumber">
+          <xs:annotation>
+            <xs:documentation>Complete payer contact communications number, including country or area code when applicable.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Communication Number" Number="364" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="256"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER05__CommunicationNumberQualifier">
+          <xs:annotation>
+            <xs:documentation>Code identifying the type of communication number.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Communication Number Qualifier" Number="365" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="ED">
+                <xs:annotation>
+                  <xs:documentation>Electronic Data Interchange Access Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EM">
+                <xs:annotation>
+                  <xs:documentation>Electronic Mail</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EX">
+                <xs:annotation>
+                  <xs:documentation>Telephone Extension</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FX">
+                <xs:annotation>
+                  <xs:documentation>Facsimile</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TE">
+                <xs:annotation>
+                  <xs:documentation>Telephone</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER06__PayerContactCommunicationNumber">
+          <xs:annotation>
+            <xs:documentation>Complete payer contact communications number, including country or area code when applicable.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Communication Number" Number="364" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="256"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER07__CommunicationNumberQualifier">
+          <xs:annotation>
+            <xs:documentation>Code identifying the type of communication number.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Communication Number Qualifier" Number="365" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="ED">
+                <xs:annotation>
+                  <xs:documentation>Electronic Data Interchange Access Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EM">
+                <xs:annotation>
+                  <xs:documentation>Electronic Mail</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EX">
+                <xs:annotation>
+                  <xs:documentation>Telephone Extension</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FX">
+                <xs:annotation>
+                  <xs:documentation>Facsimile</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TE">
+                <xs:annotation>
+                  <xs:documentation>Telephone</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER08__PayerContactCommunicationNumber">
+          <xs:annotation>
+            <xs:documentation>Complete payer contact communications number, including country or area code when applicable.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Communication Number" Number="364" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="256"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER09">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Contact Inquiry Reference" Number="443" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="20"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NM1_SubmitterInformation_1000B">
+    <xs:annotation>
+      <xs:documentation>Submitter Information</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="NM101__EntityIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying an organizational entity, a physical location, property or an individual.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="41">
+                <xs:annotation>
+                  <xs:documentation>Submitter</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM102__EntityTypeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the type of entity.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Type Qualifier" Number="1065" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="1"/>
+              <xs:enumeration value="1">
+                <xs:annotation>
+                  <xs:documentation>Person</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2">
+                <xs:annotation>
+                  <xs:documentation>Non-Person Entity</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM103__SubmitterLastOrOrganizationName">
+          <xs:annotation>
+            <xs:documentation>The last name or the organizational name of the entity submitting the transaction</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Last or Organization Name" Number="1035" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM104__SubmitterFirstName">
+          <xs:annotation>
+            <xs:documentation>The first name of the person submitting the transaction or receiving the transaction, as identified by the preceding identification code.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name First" Number="1036" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="35"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM105__SubmitterMiddleNameOrInitial">
+          <xs:annotation>
+            <xs:documentation>The middle name or initial of the person submitting the transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Middle" Number="1037" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="25"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM106">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Prefix" Number="1038" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM107">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Suffix" Number="1039" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM108__IdentificationCodeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code designating the system/method of code structure used for Identification Code (67).</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code Qualifier" Number="66" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="46">
+                <xs:annotation>
+                  <xs:documentation>Electronic Transmitter Identification Number (ETIN)</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM109__SubmitterIdentifier">
+          <xs:annotation>
+            <xs:documentation>Code or number identifying the entity submitting the claim.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code" Number="67" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM110">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Relationship Code" Number="706" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM111">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM112">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Last or Organization Name" Number="1035" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NM1_ProviderNameInformation_1000C">
+    <xs:annotation>
+      <xs:documentation>Provider Name Information</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="NM101__EntityIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying an organizational entity, a physical location, property or an individual.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="1P">
+                <xs:annotation>
+                  <xs:documentation>Provider</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM102__EntityTypeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the type of entity.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Type Qualifier" Number="1065" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="1"/>
+              <xs:enumeration value="1">
+                <xs:annotation>
+                  <xs:documentation>Person</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2">
+                <xs:annotation>
+                  <xs:documentation>Non-Person Entity</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM103__ProviderLastOrOrganizationName">
+          <xs:annotation>
+            <xs:documentation>The last name of the provider of care or name of the provider organization submitting a transaction or related to the information provided in or request by the transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Last or Organization Name" Number="1035" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM104__ProviderFirstName">
+          <xs:annotation>
+            <xs:documentation>The first name of the provider of care submitting a transaction or related to the information provided in or request by the transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name First" Number="1036" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="35"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM105__ProviderMiddleName">
+          <xs:annotation>
+            <xs:documentation>The middle name of the provider of care submitting a transaction or related to the information provided in or request by the transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Middle" Number="1037" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="25"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM106">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Prefix" Number="1038" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM107__ProviderNameSuffix">
+          <xs:annotation>
+            <xs:documentation>The name suffix of the provider of care submitting a transaction or related to the information provided in or request by the transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Suffix" Number="1039" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM108__IdentificationCodeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code designating the system/method of code structure used for Identification Code (67).</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code Qualifier" Number="66" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="XX">
+                <xs:annotation>
+                  <xs:documentation>Centers for Medicare and Medicaid Services National Provider Identifier</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM109__ProviderIdentifier">
+          <xs:annotation>
+            <xs:documentation>Number assigned by the payer, regulatory authority, or other authorized body or agency to identify the provider.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code" Number="67" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM110">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Relationship Code" Number="706" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM111">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM112">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Last or Organization Name" Number="1035" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PRV_ProviderTaxonomyInformation_1000C">
+    <xs:annotation>
+      <xs:documentation>Provider Taxonomy Information</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="PRV01__ProviderCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying the type of provider.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Provider Code" Number="1221" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="BI">
+                <xs:annotation>
+                  <xs:documentation>Billing</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="PRV02__ReferenceIdentificationQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="PXC">
+                <xs:annotation>
+                  <xs:documentation>Health Care Provider Taxonomy Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="PRV03__ProviderTaxonomyCode">
+          <xs:annotation>
+            <xs:documentation>Code designating the provider type, classification, and specialization.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PRV04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="State or Province Code" Number="156" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PRV05">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" name="PRV06">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Provider Organization Code" Number="1223" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="3"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="REF_ProviderSecondaryIdentification_1000C">
+    <xs:annotation>
+      <xs:documentation>Provider Secondary Identification</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="REF01__ReferenceIdentificationQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="0B">
+                <xs:annotation>
+                  <xs:documentation>State License Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1G">
+                <xs:annotation>
+                  <xs:documentation>Provider UPIN Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="G2">
+                <xs:annotation>
+                  <xs:documentation>Provider Commercial Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LU">
+                <xs:annotation>
+                  <xs:documentation>Location Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="REF02__ProviderSecondaryIdentifier">
+          <xs:annotation>
+            <xs:documentation>Additional identifier for the provider.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Description" Number="352" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NX1_ProviderIdentification_1100C">
+    <xs:annotation>
+      <xs:documentation>Provider Identification</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="NX101__EntityIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying an organizational entity, a physical location, property or an individual.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="1P">
+                <xs:annotation>
+                  <xs:documentation>Provider</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NX102">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NX103">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NX104">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NX105">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="N3_ProviderAddress_1100C">
+    <xs:annotation>
+      <xs:documentation>Provider Address</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="N301__ProviderAddressLine">
+          <xs:annotation>
+            <xs:documentation>The street address of the provider.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Address Information" Number="166" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="55"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="N302__ProviderAddressLine">
+          <xs:annotation>
+            <xs:documentation>The street address of the provider.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Address Information" Number="166" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="55"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="N4_ProviderCityStateZIPCode_1100C">
+    <xs:annotation>
+      <xs:documentation>Provider City, State, ZIP Code</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="N401__ProviderCityName">
+          <xs:annotation>
+            <xs:documentation>The city name of the provider.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="City Name" Number="19" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="N402__ProviderStateOrProvinceCode">
+          <xs:annotation>
+            <xs:documentation>NEED DEFINITION.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="State or Province Code" Number="156" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="N403__PostalCode">
+          <xs:annotation>
+            <xs:documentation>Code defining international postal zone code excluding punctuation and blanks (zip code for United States).</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Postal Code" Number="116" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="3"/>
+              <xs:maxLength value="15"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="N404__CountryCode">
+          <xs:annotation>
+            <xs:documentation>Code indicating the geographic location.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Country Code" Number="26" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="N405">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Location Qualifier" Number="309" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="N406">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Location Identifier" Number="310" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="N407__CountrySubdivisionCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying the country subdivision.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Country Subdivision Code" Number="1715" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NM1_PatientName_1000D">
+    <xs:annotation>
+      <xs:documentation>Patient Name</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="NM101__EntityIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying an organizational entity, a physical location, property or an individual.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="QC">
+                <xs:annotation>
+                  <xs:documentation>Patient</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM102__EntityTypeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the type of entity.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Type Qualifier" Number="1065" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="1"/>
+              <xs:enumeration value="1">
+                <xs:annotation>
+                  <xs:documentation>Person</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM103__PatientLastName">
+          <xs:annotation>
+            <xs:documentation>The last name of the individual to whom the services were provided.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Last or Organization Name" Number="1035" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM104__PatientFirstName">
+          <xs:annotation>
+            <xs:documentation>The first name of the individual to whom the services were provided.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name First" Number="1036" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="35"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM105__PatientMiddleNameOrInitial">
+          <xs:annotation>
+            <xs:documentation>The middle name or initial of the individual to whom the services were provided.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Middle" Number="1037" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="25"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM106">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Prefix" Number="1038" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM107__PatientNameSuffix">
+          <xs:annotation>
+            <xs:documentation>Suffix to the name of the individual to whom the services were provided.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Suffix" Number="1039" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM108__IdentificationCodeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code designating the system/method of code structure used for Identification Code (67).</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code Qualifier" Number="66" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="II">
+                <xs:annotation>
+                  <xs:documentation>Standard Unique Health Identifier for each Individual in the United States</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="MI">
+                <xs:annotation>
+                  <xs:documentation>Member Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM109__PatientPrimaryIdentifier">
+          <xs:annotation>
+            <xs:documentation>Identifier assigned by the payer to identify the patient</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code" Number="67" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM110">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Relationship Code" Number="706" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM111">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM112">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Last or Organization Name" Number="1035" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="REF_PatientControlNumber_1000D">
+    <xs:annotation>
+      <xs:documentation>Patient Control Number</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="REF01__ReferenceIdentificationQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="EJ">
+                <xs:annotation>
+                  <xs:documentation>Patient Account Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="REF02__PatientControlNumber">
+          <xs:annotation>
+            <xs:documentation>Patient's unique alpha-numeric identification number for this claim assigned by the provider to facilitate retrieval of individual case records and posting of payment.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Description" Number="352" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="REF_InstitutionalTypeOfBill_1000D">
+    <xs:annotation>
+      <xs:documentation>Institutional Type Of Bill</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="REF01__ReferenceIdentificationQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="BLT">
+                <xs:annotation>
+                  <xs:documentation>Billing Type</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="REF02__BillTypeIdentifier">
+          <xs:annotation>
+            <xs:documentation>A code indicating the specific type of bill or claim.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Description" Number="352" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="REF_MedicalRecordIdentificationNumber_1000D">
+    <xs:annotation>
+      <xs:documentation>Medical Record Identification Number</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="REF01__ReferenceIdentificationQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="EA">
+                <xs:annotation>
+                  <xs:documentation>Medical Record Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="REF02__MedicalRecordIdentificationNumber">
+          <xs:annotation>
+            <xs:documentation>A unique number assigned to patient by the provider to assist in retrieval of medical records.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Description" Number="352" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="REF_ClaimIdentificationNumberForClearinghousesAndOtherTransmissionIntermediaries_1000D">
+    <xs:annotation>
+      <xs:documentation>Claim Identification Number for Clearinghouses and Other Transmission  Intermediaries</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="REF01__ReferenceIdentificationQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="D9">
+                <xs:annotation>
+                  <xs:documentation>Claim Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="REF02__ClearinghouseTraceNumber">
+          <xs:annotation>
+            <xs:documentation>Unique tracking number for the transaction assigned by a clearinghouse.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Description" Number="352" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DTP_ClaimServiceDate_1000D">
+    <xs:annotation>
+      <xs:documentation>Claim Service Date</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DTP01__DateTimeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code specifying the type of date or time or both date and time.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date/Time Qualifier" Number="374" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="3"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="472">
+                <xs:annotation>
+                  <xs:documentation>Service</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="DTP02__DateTimePeriodFormatQualifier">
+          <xs:annotation>
+            <xs:documentation>Code indicating the date format, time format, or date and time format.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date Time Period Format Qualifier" Number="1250" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="D8">
+                <xs:annotation>
+                  <xs:documentation>Date Expressed in Format CCYYMMDD</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="RD8">
+                <xs:annotation>
+                  <xs:documentation>Range of Dates Expressed in Format CCYYMMDD-CCYYMMDD</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="DTP03__ClaimServicePeriod">
+          <xs:annotation>
+            <xs:documentation>The beginning and end dates for the service period covered by a claim.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date Time Period" Number="1251" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="35"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LX_AssignedNumber_2000A">
+    <xs:annotation>
+      <xs:documentation>Assigned Number</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="LX01__AssignedNumber">
+          <xs:annotation>
+            <xs:documentation>Number assigned for differentiation within a transaction set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Assigned Number" Number="554" DataType="N0" MaximumLength="6"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="8"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRN_PayerClaimControlNumberProviderAttachmentControlNumber_2000A">
+    <xs:annotation>
+      <xs:documentation>Payer Claim Control Number/Provider Attachment Control Number</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="TRN01__TraceTypeCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying the type of re-association which needs to be performed.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Trace Type Code" Number="481" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="1">
+                <xs:annotation>
+                  <xs:documentation>Current Transaction Trace Numbers</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2">
+                <xs:annotation>
+                  <xs:documentation>Referenced Transaction Trace Numbers</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="TRN02__PayerClaimControlNumberOrProviderAttachmentControlNumber">
+          <xs:annotation>
+            <xs:documentation>Number assigned by a processor to identify a claim or identification number of the attachment.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="TRN03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Originating Company Identifier" Number="509" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="10"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="TRN04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="STC_StatusInformation_2000A">
+    <xs:annotation>
+      <xs:documentation>Status Information</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="STC01_HealthCareClaimStatus_2000A">
+          <xs:annotation>
+            <xs:documentation>Used to convey status of the entire claim or a specific service line</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+	          <xs:element name="STC01_01_HealthCareClaimStatusCategoryCode">
+                <xs:annotation>
+                  <xs:documentation>Code indicating the category of the associated claim status code.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Industry Code" Number="1271" DataType="AN"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="30"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element name="STC01_02_AdditionalInformationRequestCode">
+                <xs:annotation>
+                  <xs:documentation>Code identifying the additional information requested.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Industry Code" Number="1271" DataType="AN"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="30"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="STC01_03">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+                    <x12:TR3_Info Used="No"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="2"/>
+                    <xs:maxLength value="3"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element name="STC01_04_CodeListQualifierCode">
+                <xs:annotation>
+                  <xs:documentation>Code identifying a specific industry code list.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Code List Qualifier Code" Number="1270" DataType="ID"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="3"/>
+                    <xs:enumeration value="LOI">
+                      <xs:annotation>
+                        <xs:documentation>Logical Observation Identifier Names and Codes (LOINC) Codes</xs:documentation>
+                      </xs:annotation>
+                    </xs:enumeration>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="STC02">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date" Number="373" DataType="DT" MaximumLength="8"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="8"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="STC03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Action Code" Number="306" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="STC04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Monetary Amount" Number="782" DataType="R" MaximumLength="18"/>
+              <x12:TR3_Info MaximumLength="11" Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="20"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="STC05">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Monetary Amount" Number="782" DataType="R" MaximumLength="18"/>
+              <x12:TR3_Info MaximumLength="11" Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="20"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="STC06">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date" Number="373" DataType="DT" MaximumLength="8"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="8"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="STC07">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Payment Method Code" Number="591" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="3"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="STC08">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date" Number="373" DataType="DT" MaximumLength="8"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="8"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="STC09">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Check Number" Number="429" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="16"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="STC10_HealthCareClaimStatus_2000A">
+          <xs:annotation>
+            <xs:documentation>Used to convey status of the entire claim or a specific service line</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+	          <xs:element name="STC10_01_HealthCareClaimStatusCategoryCode">
+                <xs:annotation>
+                  <xs:documentation>Code indicating the category of the associated claim status code.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Industry Code" Number="1271" DataType="AN"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="30"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element name="STC10_02_AdditionalInformationRequestModifier">
+                <xs:annotation>
+                  <xs:documentation>A code that is used to modify the implicit scope of an Additional Information Request Code</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Industry Code" Number="1271" DataType="AN"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="30"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="STC10_03">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+                    <x12:TR3_Info Used="No"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="2"/>
+                    <xs:maxLength value="3"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element name="STC10_04_CodeListQualifierCode">
+                <xs:annotation>
+                  <xs:documentation>Code identifying a specific industry code list.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Code List Qualifier Code" Number="1270" DataType="ID"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="3"/>
+                    <xs:enumeration value="LOI">
+                      <xs:annotation>
+                        <xs:documentation>Logical Observation Identifier Names and Codes (LOINC) Codes</xs:documentation>
+                      </xs:annotation>
+                    </xs:enumeration>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="STC11_HealthCareClaimStatus_2000A">
+          <xs:annotation>
+            <xs:documentation>Used to convey status of the entire claim or a specific service line</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+	          <xs:element name="STC11_01_HealthCareClaimStatusCategoryCode">
+                <xs:annotation>
+                  <xs:documentation>Code indicating the category of the associated claim status code.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Industry Code" Number="1271" DataType="AN"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="30"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element name="STC11_02_AdditionalInformationRequestModifier">
+                <xs:annotation>
+                  <xs:documentation>A code that is used to modify the implicit scope of an Additional Information Request Code</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Industry Code" Number="1271" DataType="AN"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="30"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="STC11_03">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+                    <x12:TR3_Info Used="No"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="2"/>
+                    <xs:maxLength value="3"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element name="STC11_04_CodeListQualifierCode">
+                <xs:annotation>
+                  <xs:documentation>Code identifying a specific industry code list.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Code List Qualifier Code" Number="1270" DataType="ID"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="3"/>
+                    <xs:enumeration value="LOI">
+                      <xs:annotation>
+                        <xs:documentation>Logical Observation Identifier Names and Codes (LOINC) Codes</xs:documentation>
+                      </xs:annotation>
+                    </xs:enumeration>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="STC12">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Free-form Message Text" Number="933" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="264"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="REF_ServiceLineItemIdentification_2000A">
+    <xs:annotation>
+      <xs:documentation>Service Line Item Identification</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="REF01__ReferenceIdentificationQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="6R">
+                <xs:annotation>
+                  <xs:documentation>Provider Control Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FJ">
+                <xs:annotation>
+                  <xs:documentation>Line Item Control Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="REF02__LineItemControlNumber">
+          <xs:annotation>
+            <xs:documentation>Identifier assigned by the submitter/provider to this line item.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Description" Number="352" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="REF_ProcedureOrRevenueCode_2000A">
+    <xs:annotation>
+      <xs:documentation>Procedure or Revenue Code</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="REF01__ReferenceIdentificationQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="CPT">
+                <xs:annotation>
+                  <xs:documentation>Current Procedural Terminology Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="F8">
+                <xs:annotation>
+                  <xs:documentation>Original Reference Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FO">
+                <xs:annotation>
+                  <xs:documentation>Drug Formulary Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="PRT">
+                <xs:annotation>
+                  <xs:documentation>Product Type</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="RB">
+                <xs:annotation>
+                  <xs:documentation>Rate code number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="VP">
+                <xs:annotation>
+                  <xs:documentation>Vendor Product Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="YJ">
+                <xs:annotation>
+                  <xs:documentation>Revenue Source</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZZ">
+                <xs:annotation>
+                  <xs:documentation>Mutually Defined</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="REF02__ProcedureCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying the procedure, product or service.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Description" Number="352" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF04_ReferenceIdentifier_2000A">
+          <xs:annotation>
+            <xs:documentation>To identify one or more reference numbers or identification numbers as specified by the Reference Qualifier</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+	          <xs:element name="REF04_01_ReferenceIdentificationQualifier">
+                <xs:annotation>
+                  <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="2"/>
+                    <xs:maxLength value="3"/>
+                    <xs:enumeration value="YJ">
+                      <xs:annotation>
+                        <xs:documentation>Revenue Source</xs:documentation>
+                      </xs:annotation>
+                    </xs:enumeration>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element name="REF04_02_RevenueCode">
+                <xs:annotation>
+                  <xs:documentation>A code that identifies a specific accommodation, ancillary service or billing calculation.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="50"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="REF04_03">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+                    <x12:TR3_Info Used="No"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="2"/>
+                    <xs:maxLength value="3"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="REF04_04">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+                    <x12:TR3_Info Used="No"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="50"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="REF04_05">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+                    <x12:TR3_Info Used="No"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="2"/>
+                    <xs:maxLength value="3"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="REF04_06">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+                    <x12:TR3_Info Used="No"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="50"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="REF_ProcedureCodeModifier_2000A">
+    <xs:annotation>
+      <xs:documentation>Procedure Code Modifier</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="REF01__ReferenceIdentificationQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="SK">
+                <xs:annotation>
+                  <xs:documentation>Service Change Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="REF02__ProcedureCodeModifier">
+          <xs:annotation>
+            <xs:documentation>Identifies special circumstances related to the performance of the service.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Description" Number="352" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF04_ReferenceIdentifier_2000A">
+          <xs:annotation>
+            <xs:documentation>To identify one or more reference numbers or identification numbers as specified by the Reference Qualifier</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+	          <xs:element name="REF04_01_ReferenceIdentificationQualifier">
+                <xs:annotation>
+                  <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="2"/>
+                    <xs:maxLength value="3"/>
+                    <xs:enumeration value="XX4">
+                      <xs:annotation>
+                        <xs:documentation>Object Code</xs:documentation>
+                      </xs:annotation>
+                    </xs:enumeration>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element name="REF04_02_ProcedureCodeModifier">
+                <xs:annotation>
+                  <xs:documentation>Identifies special circumstances related to the performance of the service.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="50"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="REF04_03_ReferenceIdentificationQualifier">
+                <xs:annotation>
+                  <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="2"/>
+                    <xs:maxLength value="3"/>
+                    <xs:enumeration value="06">
+                      <xs:annotation>
+                        <xs:documentation>System Number</xs:documentation>
+                      </xs:annotation>
+                    </xs:enumeration>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="REF04_04_ProcedureCodeModifier">
+                <xs:annotation>
+                  <xs:documentation>Identifies special circumstances related to the performance of the service.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="50"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="REF04_05_ReferenceIdentificationQualifier">
+                <xs:annotation>
+                  <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="2"/>
+                    <xs:maxLength value="3"/>
+                    <xs:enumeration value="4N">
+                      <xs:annotation>
+                        <xs:documentation>Special Payment Reference Number</xs:documentation>
+                      </xs:annotation>
+                    </xs:enumeration>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="REF04_06_ProcedureCodeModifier">
+                <xs:annotation>
+                  <xs:documentation>Identifies special circumstances related to the performance of the service.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="50"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DTP_ServiceLineDateOfService_2100A">
+    <xs:annotation>
+      <xs:documentation>Service Line Date of Service</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DTP01__DateTimeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code specifying the type of date or time or both date and time.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date/Time Qualifier" Number="374" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="3"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="472">
+                <xs:annotation>
+                  <xs:documentation>Service</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="DTP02__DateTimePeriodFormatQualifier">
+          <xs:annotation>
+            <xs:documentation>Code indicating the date format, time format, or date and time format.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date Time Period Format Qualifier" Number="1250" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="D8">
+                <xs:annotation>
+                  <xs:documentation>Date Expressed in Format CCYYMMDD</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="RD8">
+                <xs:annotation>
+                  <xs:documentation>Range of Dates Expressed in Format CCYYMMDD-CCYYMMDD</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="DTP03__ServiceDate">
+          <xs:annotation>
+            <xs:documentation>Date of service, such as the start date of the service, the end date of the service, or the single day date of the service.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date Time Period" Number="1251" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="35"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DTP_AdditionalInformationSubmissionDate_2100B">
+    <xs:annotation>
+      <xs:documentation>Additional Information Submission Date</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DTP01__DateTimeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code specifying the type of date or time or both date and time.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date/Time Qualifier" Number="374" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="3"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="368">
+                <xs:annotation>
+                  <xs:documentation>Submittal</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="DTP02__DateTimePeriodFormatQualifier">
+          <xs:annotation>
+            <xs:documentation>Code indicating the date format, time format, or date and time format.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date Time Period Format Qualifier" Number="1250" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="D8">
+                <xs:annotation>
+                  <xs:documentation>Date Expressed in Format CCYYMMDD</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="DTP03__AdditionalInformationSubmittedDate">
+          <xs:annotation>
+            <xs:documentation>Date additional information provided in transaction set was submitted.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date Time Period" Number="1251" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="35"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAT_CategoryOfPatientInformationService_2100B">
+    <xs:annotation>
+      <xs:documentation>Category of Patient Information Service</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="CAT01__AttachmentReportTypeCode">
+          <xs:annotation>
+            <xs:documentation>Code to specify the type of attachment that is related to the claim.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Report Type Code" Number="755" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="AE">
+                <xs:annotation>
+                  <xs:documentation>Attachment</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="CAT02__AttachmentInformationFormatCode">
+          <xs:annotation>
+            <xs:documentation>A code that identifies the format of the attachment information being sent in the BIN segment.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Report Transmission Code" Number="756" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="HL">
+                <xs:annotation>
+                  <xs:documentation>Health Industry Level 7 Interface Standards (HL/7) Format</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IA">
+                <xs:annotation>
+                  <xs:documentation>Electronic Image</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="MB">
+                <xs:annotation>
+                  <xs:documentation>Binary Image</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TX">
+                <xs:annotation>
+                  <xs:documentation>Text</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="CAT03__VersionIdentificationCode">
+          <xs:annotation>
+            <xs:documentation>Revision level of a particular format, program, technique or algorithm</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Version Identifier" Number="799" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="CAT04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Code List Qualifier Code" Number="1270" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="CAT05">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Industry Code" Number="1271" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="CAT06">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Industry Code" Number="1271" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="CAT07">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Version Identifier" Number="799" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EFI_ElectronicFormatIdentification_2110B">
+    <xs:annotation>
+      <xs:documentation>Electronic Format Identification</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="EFI01__SecurityLevelCode">
+          <xs:annotation>
+            <xs:documentation>Code indicating the level of confidentiality assigned by the sender to the information following.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Security Level Code" Number="786" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="05">
+                <xs:annotation>
+                  <xs:documentation>Personal</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI02">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Free-form Message Text" Number="933" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="264"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Security Technique Code" Number="797" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Version Identifier" Number="799" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI05">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Program Identifier" Number="802" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI06">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Version Identifier" Number="799" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI07">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Interchange Format" Number="801" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI08">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Version Identifier" Number="799" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI09">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Compression Technique" Number="800" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI10">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Drawing Sheet Size Code" Number="789" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI11">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="File Name" Number="803" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="64"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI12">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Block Type" Number="804" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="4"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI13">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Record Length" Number="787" DataType="N" MaximumLength="15"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="17"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI14">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Block Length" Number="788" DataType="N" MaximumLength="5"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="7"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI15">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Version Identifier" Number="799" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="EFI16">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Filter ID Code" Number="1570" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="3"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BIN_BinaryDataSegment_2110B">
+    <xs:annotation>
+      <xs:documentation>Binary Data Segment</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="BIN01_LengthOfBinaryData">
+          <xs:annotation>
+            <xs:documentation>Expession of the length of following binary data in the number of integral octets of the binary data.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Length of Binary Data" Number="784" DataType="N0" MaximumLength="15"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="17"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="BIN02_LengthOfBinaryData">
+          <xs:annotation>
+            <xs:documentation>A string of octets whch can assume any binary pattern from hexadecimal 00 to FF.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Binary Data" Number="785" DataType="B"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="1"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SE_TransactionSetTrailer">
+    <xs:annotation>
+      <xs:documentation>275 Transaction Set Trailer</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="SE01__TransactionSegmentCount">
+          <xs:annotation>
+            <xs:documentation>A tally of all segments between the ST and the SE segments including the ST and SE segments.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Number of Included Segments" Number="96" DataType="N0" MaximumLength="10"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="12"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="SE02__TransactionSetControlNumber">
+          <xs:annotation>
+            <xs:documentation>The unique identification number within a transaction set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Set Control Number" Number="329" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="4"/>
+              <xs:maxLength value="9"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

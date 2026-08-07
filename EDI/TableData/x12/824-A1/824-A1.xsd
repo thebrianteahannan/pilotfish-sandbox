@@ -1,0 +1,4589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="urn:x12:schemas:005:010:824A1:ApplicationAdvice"
+  xmlns:x12="http://schemas.x12.org/isomorph" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="urn:x12:schemas:005:010:824A1:ApplicationAdvice"
+  elementFormDefault="qualified" version="005010">
+  <xs:annotation>
+    <xs:documentation xml:lang="en">Accredited Standards Committee X12 TR3 Schema:
+      005010X186_824A1</xs:documentation>
+  </xs:annotation>
+  <xs:annotation>
+    <xs:documentation>2022 © Accredited Standards Committee X12 Incorporated, Format © 2022
+      Washington Publishing Company. Exclusively published by the Washington Publishing Company. No
+      part of this publication may be distributed, posted, reproduced, stored in a retrieval system,
+      or transmitted in any form or by any means without the prior written permission of the
+      copyright owner. </xs:documentation>
+  </xs:annotation>
+  <xs:element name="X12_005010X186_824A1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ST_TransactionSetHeader"/>
+        <xs:element ref="BGN_BeginningSegment"/>
+        <xs:element ref="Loop_1000A"/>
+        <xs:element ref="Loop_1000B"/>
+        <xs:element ref="Loop_2000" maxOccurs="unbounded"/>
+        <xs:element ref="SE_TransactionSetTrailer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop_1000A">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="N1_SubmitterName_1000A"/>
+        <xs:element ref="REF_SubmitterSecondaryIndentifier_1000A" minOccurs="0"/>
+        <xs:element ref="PER_SubmitterEDIContactInformation_1000A" minOccurs="0" maxOccurs="2"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop_1000B">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="N1_ReceiverName_1000B"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop_2000">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="OTI_OriginalTransactionIdentification_2000"/>
+        <xs:element ref="REF_ReferenceInformation_2000" minOccurs="0"/>
+        <xs:element ref="DTM_DateTimeReference_2000" minOccurs="0" maxOccurs="2"/>
+        <xs:element ref="AMT_MonetaryAmountInformation_2000" minOccurs="0" maxOccurs="3"/>
+        <xs:element ref="QTY_QuantityInformation_2000" minOccurs="0" maxOccurs="3"/>
+        <xs:element ref="NM1_IndividualOrOrganizationalName_2000" minOccurs="0" maxOccurs="6"/>
+        <xs:element ref="Loop_2100" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Loop_2100">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="TED_ErrorOrInformationalMessageLocation_2100" minOccurs="0"/>
+        <xs:element ref="CTX_SituationalContextLocation_2100" minOccurs="0" maxOccurs="10"/>
+        <xs:element ref="RED_ErrorOrInformationalMessage_2100" maxOccurs="10"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ST_TransactionSetHeader">
+    <xs:annotation>
+      <xs:documentation>Transaction Set Header</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ST01__TransactionSetIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>Code uniquely identifying a Transaction Set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Set Identifier Code" Number="143" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="3"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="824">
+                <xs:annotation>
+                  <xs:documentation>Application Advice</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="ST02__TransactionSetControlNumber">
+          <xs:annotation>
+            <xs:documentation>The unique identification number within a transaction set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Set Control Number" Number="329" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="4"/>
+              <xs:maxLength value="9"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="ST03__ImplementationConventionReferenceIdentifier">
+          <xs:annotation>
+            <xs:documentation>Identifies the ANSI Version and Implementation Guide being used for this transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Implementation Convention Reference" Number="1705" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="35"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BGN_BeginningSegment">
+    <xs:annotation>
+      <xs:documentation>Beginning Segment</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="BGN01__TransactionSetPurposeCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying purpose of transaction set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Set Purpose Code" Number="353" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="11">
+                <xs:annotation>
+                  <xs:documentation>Response</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="BGN02__TransactionSetIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>Code uniquely identifying a Transaction Set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="BGN03__TransactionSetCreationDate">
+          <xs:annotation>
+            <xs:documentation>Identifies the date the submitter created the transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date" Number="373" DataType="DT" MaximumLength="8"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="8"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="BGN04__TransactionSetCreationTime">
+          <xs:annotation>
+            <xs:documentation>Time file is created for transmission.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Time" Number="337" DataType="TM"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="4"/>
+              <xs:maxLength value="8"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="BGN05">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Time Code" Number="623" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="BGN06__ReferencedInterchangeControlNumber">
+          <xs:annotation>
+            <xs:documentation>Interchange control number of transaction being acknowledged by this transaction set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="BGN07">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Type Code" Number="640" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="BGN08__ActionCode">
+          <xs:annotation>
+            <xs:documentation>Code indicating type of action</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Action Code" Number="306" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="RU">
+                <xs:annotation>
+                  <xs:documentation>Return</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="U">
+                <xs:annotation>
+                  <xs:documentation>Reject</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="WQ">
+                <xs:annotation>
+                  <xs:documentation>Accept</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="BGN09">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Security Level Code" Number="786" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="N1_SubmitterName_1000A">
+    <xs:annotation>
+      <xs:documentation>Submitter Name</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="N101__EntityIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying an organizational entity, a physical location, property or an individual.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="41">
+                <xs:annotation>
+                  <xs:documentation>Submitter</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="N102__SubmitterName">
+          <xs:annotation>
+            <xs:documentation>Name identifying the entity submitting the transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name" Number="93" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="N103__IdentificationCodeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code designating the system/method of code structure used for Identification Code (67).</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code Qualifier" Number="66" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="1">
+                <xs:annotation>
+                  <xs:documentation>D-U-N-S Number, Dun &amp; Bradstreet</xs:documentation>
+				</xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="9">
+                <xs:annotation>
+                  <xs:documentation>D-U-N-S+4, D-U-N-S Number with Four Character Suffix</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="24">
+                <xs:annotation>
+                  <xs:documentation>Employer's Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="46">
+                <xs:annotation>
+                  <xs:documentation>Electronic Transmitter Identification Number (ETIN)</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="75">
+                <xs:annotation>
+                  <xs:documentation>State or Province Assigned Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EQ">
+                <xs:annotation>
+                  <xs:documentation>Insurance Company Assigned Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FI">
+                <xs:annotation>
+                  <xs:documentation>Federal Taxpayer's Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="PI">
+                <xs:annotation>
+                  <xs:documentation>Payor Identification</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="XV">
+                <xs:annotation>
+                  <xs:documentation>Centers for Medicare and Medicaid Services PlanID</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="XX">
+                <xs:annotation>
+                  <xs:documentation>Centers for Medicare and Medicaid Services National Provider Identifier</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="N104__SubmitterIdentifier">
+          <xs:annotation>
+            <xs:documentation>Code or number identifying the entity submitting the claim.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code" Number="67" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="N105">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Relationship Code" Number="706" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="N106">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="REF_SubmitterSecondaryIndentifier_1000A">
+    <xs:annotation>
+      <xs:documentation>Submitter Secondary Indentifier</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="REF01__ReferenceIdentificationQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="3L">
+                <xs:annotation>
+                  <xs:documentation>Branch Identifier</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="REF02__SubmitterBranchIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>This value identifies a third party, branch, or department within the submitter's organization.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Description" Number="352" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PER_SubmitterEDIContactInformation_1000A">
+    <xs:annotation>
+      <xs:documentation>Submitter EDI Contact Information</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="PER01__ContactFunctionCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying the major duty or responsibility of the person or group named.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Contact Function Code" Number="366" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="IC">
+                <xs:annotation>
+                  <xs:documentation>Information Contact</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER02__SubmitterContactName">
+          <xs:annotation>
+            <xs:documentation>Name of the person at the submitter organization to whom inquiries about the transaction should be directed.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name" Number="93" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER03__CommunicationNumberQualifier">
+          <xs:annotation>
+            <xs:documentation>Code identifying the type of communication number.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Communication Number Qualifier" Number="365" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="EM">
+                <xs:annotation>
+                  <xs:documentation>Electronic Mail</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FX">
+                <xs:annotation>
+                  <xs:documentation>Facsimile</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TE">
+                <xs:annotation>
+                  <xs:documentation>Telephone</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER04__CommunicationNumber">
+          <xs:annotation>
+            <xs:documentation>Complete communications number including country or area code when applicable</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Communication Number" Number="364" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="256"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER05__CommunicationNumberQualifier">
+          <xs:annotation>
+            <xs:documentation>Code identifying the type of communication number.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Communication Number Qualifier" Number="365" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="EM">
+                <xs:annotation>
+                  <xs:documentation>Electronic Mail</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EX">
+                <xs:annotation>
+                  <xs:documentation>Telephone Extension</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FX">
+                <xs:annotation>
+                  <xs:documentation>Facsimile</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TE">
+                <xs:annotation>
+                  <xs:documentation>Telephone</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER06__CommunicationNumber">
+          <xs:annotation>
+            <xs:documentation>Complete communications number including country or area code when applicable</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Communication Number" Number="364" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="256"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER07__CommunicationNumberQualifier">
+          <xs:annotation>
+            <xs:documentation>Code identifying the type of communication number.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Communication Number Qualifier" Number="365" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="EM">
+                <xs:annotation>
+                  <xs:documentation>Electronic Mail</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EX">
+                <xs:annotation>
+                  <xs:documentation>Telephone Extension</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FX">
+                <xs:annotation>
+                  <xs:documentation>Facsimile</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TE">
+                <xs:annotation>
+                  <xs:documentation>Telephone</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER08__CommunicationNumber">
+          <xs:annotation>
+            <xs:documentation>Complete communications number including country or area code when applicable</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Communication Number" Number="364" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="256"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PER09">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Contact Inquiry Reference" Number="443" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="20"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="N1_ReceiverName_1000B">
+    <xs:annotation>
+      <xs:documentation>Receiver Name</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="N101__EntityIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying an organizational entity, a physical location, property or an individual.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="40">
+                <xs:annotation>
+                  <xs:documentation>Receiver</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="N102__ReceiverName">
+          <xs:annotation>
+            <xs:documentation>Name of organization receiving the transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name" Number="93" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="N103__IdentificationCodeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code designating the system/method of code structure used for Identification Code (67).</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code Qualifier" Number="66" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="1">
+                <xs:annotation>
+                  <xs:documentation>D-U-N-S Number, Dun &amp; Bradstreet</xs:documentation>
+				</xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="9">
+                <xs:annotation>
+                  <xs:documentation>D-U-N-S+4, D-U-N-S Number with Four Character Suffix</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="24">
+                <xs:annotation>
+                  <xs:documentation>Employer's Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="46">
+                <xs:annotation>
+                  <xs:documentation>Electronic Transmitter Identification Number (ETIN)</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="75">
+                <xs:annotation>
+                  <xs:documentation>State or Province Assigned Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EQ">
+                <xs:annotation>
+                  <xs:documentation>Insurance Company Assigned Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FI">
+                <xs:annotation>
+                  <xs:documentation>Federal Taxpayer's Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="PI">
+                <xs:annotation>
+                  <xs:documentation>Payor Identification</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="XV">
+                <xs:annotation>
+                  <xs:documentation>Centers for Medicare and Medicaid Services PlanID</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="XX">
+                <xs:annotation>
+                  <xs:documentation>Centers for Medicare and Medicaid Services National Provider Identifier</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="N104__ReceiverIdentifier">
+          <xs:annotation>
+            <xs:documentation>Number identifying the organization receiving the payment.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code" Number="67" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="N105">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Relationship Code" Number="706" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="N106">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OTI_OriginalTransactionIdentification_2000">
+    <xs:annotation>
+      <xs:documentation>Original Transaction Identification</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="OTI01__ApplicationAcknowledgmentCode">
+          <xs:annotation>
+            <xs:documentation>Code indicating the application system edit results of the business data.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Application Acknowledgment Code" Number="110" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="BA">
+                <xs:annotation>
+                  <xs:documentation>Batch Accept</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BC">
+                <xs:annotation>
+                  <xs:documentation>Batch Accept with Data Content Change</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BE">
+                <xs:annotation>
+                  <xs:documentation>Batch Accept with Error</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BP">
+                <xs:annotation>
+                  <xs:documentation>Batch Partial Accept/Reject</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BR">
+                <xs:annotation>
+                  <xs:documentation>Batch Reject</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IA">
+                <xs:annotation>
+                  <xs:documentation>Item Accept</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IC">
+                <xs:annotation>
+                  <xs:documentation>Item Accept with Data Content Change</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IE">
+                <xs:annotation>
+                  <xs:documentation>Item Accept with Error</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IP">
+                <xs:annotation>
+                  <xs:documentation>Item Partial Accept/Reject</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IR">
+                <xs:annotation>
+                  <xs:documentation>Item Reject</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TA">
+                <xs:annotation>
+                  <xs:documentation>Transaction Set Accept</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TC">
+                <xs:annotation>
+                  <xs:documentation>Transaction Set Accept with Data Content Change</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TE">
+                <xs:annotation>
+                  <xs:documentation>Transaction Set Accept with Error</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TP">
+                <xs:annotation>
+                  <xs:documentation>Transaction Set Partial Accept/Reject</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TR">
+                <xs:annotation>
+                  <xs:documentation>Transaction Set Reject</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="OTI02__ReferenceIdentificationQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="BT">
+                <xs:annotation>
+                  <xs:documentation>Batch Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IX">
+                <xs:annotation>
+                  <xs:documentation>Item Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TN">
+                <xs:annotation>
+                  <xs:documentation>Transaction Reference Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="OTI03__EditLevelReferenceIdentifier">
+          <xs:annotation>
+            <xs:documentation>The primary reference identification or number used to uniquely identify the original transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OTI04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Application Sender's Code" Number="142" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="15"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OTI05">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Application Receiver's Code" Number="124" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="15"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OTI06__FunctionalGroupCreationDate">
+          <xs:annotation>
+            <xs:documentation>Functional Group Creation Date.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date" Number="373" DataType="DT" MaximumLength="8"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="8"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OTI07__FunctionalGroupCreationTime">
+          <xs:annotation>
+            <xs:documentation>Functional Group Creation Time.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Time" Number="337" DataType="TM"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="4"/>
+              <xs:maxLength value="8"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OTI08__FunctionalGroupControlNumber">
+          <xs:annotation>
+            <xs:documentation>Originator's functional group control number.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Group Control Number" Number="28" DataType="N0" MaximumLength="9"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="11"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OTI09__TransactionSetControlNumber">
+          <xs:annotation>
+            <xs:documentation>The unique identification number within a transaction set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Set Control Number" Number="329" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="4"/>
+              <xs:maxLength value="9"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="OTI10__TransactionSetIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>Code uniquely identifying a Transaction Set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Set Identifier Code" Number="143" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="3"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="112">
+                <xs:annotation>
+                  <xs:documentation>Property Damage Report</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="124">
+                <xs:annotation>
+                  <xs:documentation>Vehicle Damage</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="148">
+                <xs:annotation>
+                  <xs:documentation>Report of Injury, Illness or Incident</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="187">
+                <xs:annotation>
+                  <xs:documentation>Premium Audit Request and Return</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="266">
+                <xs:annotation>
+                  <xs:documentation>Mortgage or Property Record Change Notification</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="269">
+                <xs:annotation>
+                  <xs:documentation>Health Care Benefit Coordination Verification</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="270">
+                <xs:annotation>
+                  <xs:documentation>Eligibility, Coverage or Benefit Inquiry</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="271">
+                <xs:annotation>
+                  <xs:documentation>Eligibility, Coverage or Benefit Information</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="272">
+                <xs:annotation>
+                  <xs:documentation>Property and Casualty Loss Notification</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="274">
+                <xs:annotation>
+                  <xs:documentation>Healthcare Provider Information</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="275">
+                <xs:annotation>
+                  <xs:documentation>Patient Information</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="276">
+                <xs:annotation>
+                  <xs:documentation>Health Care Claim Status Request</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="277">
+                <xs:annotation>
+                  <xs:documentation>Health Care Information Status Notification</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="278">
+                <xs:annotation>
+                  <xs:documentation>Health Care Services Review Information</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="811">
+                <xs:annotation>
+                  <xs:documentation>Consolidated Service Invoice/Statement</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="820">
+                <xs:annotation>
+                  <xs:documentation>Payment Order/Remittance Advice</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="834">
+                <xs:annotation>
+                  <xs:documentation>Benefit Enrollment and Maintenance</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="835">
+                <xs:annotation>
+                  <xs:documentation>Health Care Claim Payment/Advice</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="837">
+                <xs:annotation>
+                  <xs:documentation>Health Care Claim</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="841">
+                <xs:annotation>
+                  <xs:documentation>Specifications/Technical Information</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OTI11__VersionReleaseOrIndustryIdentifier">
+          <xs:annotation>
+            <xs:documentation>Code indicating the version, release, sub-release and industry identification of the EDI standard being used.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Version / Release / Industry Identifier Code" Number="480" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="12"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OTI12">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Set Purpose Code" Number="353" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OTI13">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Type Code" Number="640" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OTI14">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Application Type" Number="346" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OTI15">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Action Code" Number="306" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OTI16">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Handling Code" Number="305" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OTI17">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Status Reason Code" Number="641" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="3"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="REF_ReferenceInformation_2000">
+    <xs:annotation>
+      <xs:documentation>Reference Information</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="REF01__ReferenceIdentificationQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the reference identification.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification Qualifier" Number="128" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="06">
+                <xs:annotation>
+                  <xs:documentation>System Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="0B">
+                <xs:annotation>
+                  <xs:documentation>State License Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="0F">
+                <xs:annotation>
+                  <xs:documentation>Subscriber Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="0M">
+                <xs:annotation>
+                  <xs:documentation>Mortgage Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="11">
+                <xs:annotation>
+                  <xs:documentation>Account Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="14">
+                <xs:annotation>
+                  <xs:documentation>Master Account Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="17">
+                <xs:annotation>
+                  <xs:documentation>Client Reporting Category</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="18">
+                <xs:annotation>
+                  <xs:documentation>Plan Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1A">
+                <xs:annotation>
+                  <xs:documentation>Blue Cross Provider Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1B">
+                <xs:annotation>
+                  <xs:documentation>Blue Shield Provider Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1C">
+                <xs:annotation>
+                  <xs:documentation>Medicare Provider Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1D">
+                <xs:annotation>
+                  <xs:documentation>Medicaid Provider Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1E">
+                <xs:annotation>
+                  <xs:documentation>Dentist License Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1F">
+                <xs:annotation>
+                  <xs:documentation>Anesthesia License Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1G">
+                <xs:annotation>
+                  <xs:documentation>Provider UPIN Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1H">
+                <xs:annotation>
+                  <xs:documentation>CHAMPUS Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1J">
+                <xs:annotation>
+                  <xs:documentation>Facility ID Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1K">
+                <xs:annotation>
+                  <xs:documentation>Payor's Claim Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1L">
+                <xs:annotation>
+                  <xs:documentation>Group or Policy Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1S">
+                <xs:annotation>
+                  <xs:documentation>Ambulatory Patient Group (APG) Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1W">
+                <xs:annotation>
+                  <xs:documentation>Member Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="23">
+                <xs:annotation>
+                  <xs:documentation>Client Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="28">
+                <xs:annotation>
+                  <xs:documentation>Employee Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2F">
+                <xs:annotation>
+                  <xs:documentation>Consolidated Invoice Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2I">
+                <xs:annotation>
+                  <xs:documentation>Tracking Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2U">
+                <xs:annotation>
+                  <xs:documentation>Payer Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="33">
+                <xs:annotation>
+                  <xs:documentation>Lender Case Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="38">
+                <xs:annotation>
+                  <xs:documentation>Master Policy Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="3H">
+                <xs:annotation>
+                  <xs:documentation>Case Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="3J">
+                <xs:annotation>
+                  <xs:documentation>Office Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="49">
+                <xs:annotation>
+                  <xs:documentation>Family Unit Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="4A">
+                <xs:annotation>
+                  <xs:documentation>Personal Identification Number (PIN)</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="4N">
+                <xs:annotation>
+                  <xs:documentation>Special Payment Reference Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="5G">
+                <xs:annotation>
+                  <xs:documentation>Complaint</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="5H">
+                <xs:annotation>
+                  <xs:documentation>Incident</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="60">
+                <xs:annotation>
+                  <xs:documentation>Account Suffix Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="6N">
+                <xs:annotation>
+                  <xs:documentation>Claimant Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="6P">
+                <xs:annotation>
+                  <xs:documentation>Group Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="6R">
+                <xs:annotation>
+                  <xs:documentation>Provider Control Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="72">
+                <xs:annotation>
+                  <xs:documentation>Schedule Reference Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="7I">
+                <xs:annotation>
+                  <xs:documentation>Subscriber Authorization Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="7K">
+                <xs:annotation>
+                  <xs:documentation>List of Materials</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="87">
+                <xs:annotation>
+                  <xs:documentation>Functional Category</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="89">
+                <xs:annotation>
+                  <xs:documentation>Assembly Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="8U">
+                <xs:annotation>
+                  <xs:documentation>Bank Assigned Security Identifier</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="8X">
+                <xs:annotation>
+                  <xs:documentation>Transaction Category or Type</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="94">
+                <xs:annotation>
+                  <xs:documentation>File Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="9A">
+                <xs:annotation>
+                  <xs:documentation>Repriced Claim Reference Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="9B">
+                <xs:annotation>
+                  <xs:documentation>Repriced Line Item Reference Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="9C">
+                <xs:annotation>
+                  <xs:documentation>Adjusted Repriced Claim Reference Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="9D">
+                <xs:annotation>
+                  <xs:documentation>Adjusted Repriced Line Item Reference Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="9K">
+                <xs:annotation>
+                  <xs:documentation>Servicer</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="9N">
+                <xs:annotation>
+                  <xs:documentation>Investor</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="9R">
+                <xs:annotation>
+                  <xs:documentation>Job Order Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="A9">
+                <xs:annotation>
+                  <xs:documentation>Health Insurance Account Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="AAL">
+                <xs:annotation>
+                  <xs:documentation>Agent Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="AB">
+                <xs:annotation>
+                  <xs:documentation>Acceptable Source Purchaser ID</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ADB">
+                <xs:annotation>
+                  <xs:documentation>Master Property Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="AZ">
+                <xs:annotation>
+                  <xs:documentation>Health Insurance Policy Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="B3">
+                <xs:annotation>
+                  <xs:documentation>Preferred Provider Organization Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="B7">
+                <xs:annotation>
+                  <xs:documentation>Life Insurance Policy Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BA">
+                <xs:annotation>
+                  <xs:documentation>Retirement Plan Policy Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BB">
+                <xs:annotation>
+                  <xs:documentation>Authorization Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BLT">
+                <xs:annotation>
+                  <xs:documentation>Billing Type</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BQ">
+                <xs:annotation>
+                  <xs:documentation>Health Maintenance Organization Code Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BR">
+                <xs:annotation>
+                  <xs:documentation>Broker or Sales Office Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BT">
+                <xs:annotation>
+                  <xs:documentation>Batch Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="CE">
+                <xs:annotation>
+                  <xs:documentation>Class of Contract Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="CK">
+                <xs:annotation>
+                  <xs:documentation>Check Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="CRN">
+                <xs:annotation>
+                  <xs:documentation>Casualty Report Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="CT">
+                <xs:annotation>
+                  <xs:documentation>Contract Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="D3">
+                <xs:annotation>
+                  <xs:documentation>National Council for Prescription Drug Programs Pharmacy Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="D8">
+                <xs:annotation>
+                  <xs:documentation>Loss Report Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="D9">
+                <xs:annotation>
+                  <xs:documentation>Claim Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="DD">
+                <xs:annotation>
+                  <xs:documentation>Document Identification Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="DX">
+                <xs:annotation>
+                  <xs:documentation>Department/Agency Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="E5">
+                <xs:annotation>
+                  <xs:documentation>Claimant's Claim Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="E9">
+                <xs:annotation>
+                  <xs:documentation>Attachment Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EA">
+                <xs:annotation>
+                  <xs:documentation>Medical Record Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EI">
+                <xs:annotation>
+                  <xs:documentation>Employer's Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EJ">
+                <xs:annotation>
+                  <xs:documentation>Patient Account Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EL">
+                <xs:annotation>
+                  <xs:documentation>Electronic device pin number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EM">
+                <xs:annotation>
+                  <xs:documentation>Electronic Payment Reference Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EO">
+                <xs:annotation>
+                  <xs:documentation>Submitter Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EV">
+                <xs:annotation>
+                  <xs:documentation>Receiver Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EW">
+                <xs:annotation>
+                  <xs:documentation>Mammography Certification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="F2">
+                <xs:annotation>
+                  <xs:documentation>Version Code - Local</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="F4">
+                <xs:annotation>
+                  <xs:documentation>Facility Certification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="F5">
+                <xs:annotation>
+                  <xs:documentation>Medicare Version Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="F6">
+                <xs:annotation>
+                  <xs:documentation>Health Insurance Claim (HIC) Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="F8">
+                <xs:annotation>
+                  <xs:documentation>Original Reference Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FH">
+                <xs:annotation>
+                  <xs:documentation>Clinic Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FI">
+                <xs:annotation>
+                  <xs:documentation>File Identifier</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FJ">
+                <xs:annotation>
+                  <xs:documentation>Line Item Control Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FY">
+                <xs:annotation>
+                  <xs:documentation>Claim Office Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="G1">
+                <xs:annotation>
+                  <xs:documentation>Prior Authorization Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="G2">
+                <xs:annotation>
+                  <xs:documentation>Provider Commercial Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="G3">
+                <xs:annotation>
+                  <xs:documentation>Predetermination of Benefits Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="G4">
+                <xs:annotation>
+                  <xs:documentation>Peer Review Organization (PRO) Approval Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="G5">
+                <xs:annotation>
+                  <xs:documentation>Provider Site Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="HI">
+                <xs:annotation>
+                  <xs:documentation>Health Industry Number (HIN)</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="HJ">
+                <xs:annotation>
+                  <xs:documentation>Identity Card Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="HPI">
+                <xs:annotation>
+                  <xs:documentation>Centers for Medicare and Medicaid Services National Provider Identifier</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IF">
+                <xs:annotation>
+                  <xs:documentation>Issue Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IG">
+                <xs:annotation>
+                  <xs:documentation>Insurance Policy Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IJ">
+                <xs:annotation>
+                  <xs:documentation>Standard Industry Classification (SIC) Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IP">
+                <xs:annotation>
+                  <xs:documentation>Inspection Report Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IX">
+                <xs:annotation>
+                  <xs:documentation>Item Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="JD">
+                <xs:annotation>
+                  <xs:documentation>User Identification</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="KW">
+                <xs:annotation>
+                  <xs:documentation>Certification</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LC">
+                <xs:annotation>
+                  <xs:documentation>Lease Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LD">
+                <xs:annotation>
+                  <xs:documentation>Loan Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LU">
+                <xs:annotation>
+                  <xs:documentation>Location Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LX">
+                <xs:annotation>
+                  <xs:documentation>Qualified Products List</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LZ">
+                <xs:annotation>
+                  <xs:documentation>Lender Account Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ME">
+                <xs:annotation>
+                  <xs:documentation>Message Address or ID</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="N5">
+                <xs:annotation>
+                  <xs:documentation>Provider Plan Network Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="N6">
+                <xs:annotation>
+                  <xs:documentation>Plan Network Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="N7">
+                <xs:annotation>
+                  <xs:documentation>Facility Network Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="NF">
+                <xs:annotation>
+                  <xs:documentation>National Association of Insurance Commissioners (NAIC) Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="NQ">
+                <xs:annotation>
+                  <xs:documentation>Medicaid Recipient Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="OZ">
+                <xs:annotation>
+                  <xs:documentation>Product Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="P4">
+                <xs:annotation>
+                  <xs:documentation>Project Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="PG">
+                <xs:annotation>
+                  <xs:documentation>Product Group</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="PM">
+                <xs:annotation>
+                  <xs:documentation>Part Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="POL">
+                <xs:annotation>
+                  <xs:documentation>Policy Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="PQ">
+                <xs:annotation>
+                  <xs:documentation>Payee Identification</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="Q4">
+                <xs:annotation>
+                  <xs:documentation>Prior Identifier Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="Q5">
+                <xs:annotation>
+                  <xs:documentation>Property Control Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="QQ">
+                <xs:annotation>
+                  <xs:documentation>Unit Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="RB">
+                <xs:annotation>
+                  <xs:documentation>Rate code number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="S3">
+                <xs:annotation>
+                  <xs:documentation>Specification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ST">
+                <xs:annotation>
+                  <xs:documentation>Store Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="SY">
+                <xs:annotation>
+                  <xs:documentation>Social Security Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="T4">
+                <xs:annotation>
+                  <xs:documentation>Signal Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="T7">
+                <xs:annotation>
+                  <xs:documentation>Affected Subsystem Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TJ">
+                <xs:annotation>
+                  <xs:documentation>Federal Taxpayer's Identification Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TN">
+                <xs:annotation>
+                  <xs:documentation>Transaction Reference Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TT">
+                <xs:annotation>
+                  <xs:documentation>Terminal Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TX">
+                <xs:annotation>
+                  <xs:documentation>Tax Exempt Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="U3">
+                <xs:annotation>
+                  <xs:documentation>Unique Supplier Identification Number (USIN)</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="UA">
+                <xs:annotation>
+                  <xs:documentation>Mortgage Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="VD">
+                <xs:annotation>
+                  <xs:documentation>Volume Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="VE">
+                <xs:annotation>
+                  <xs:documentation>Vendor Abbreviation Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="VP">
+                <xs:annotation>
+                  <xs:documentation>Vendor Product Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="VR">
+                <xs:annotation>
+                  <xs:documentation>Vendor ID Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="VT">
+                <xs:annotation>
+                  <xs:documentation>Motor Vehicle ID Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="WU">
+                <xs:annotation>
+                  <xs:documentation>Vessel</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="X1">
+                <xs:annotation>
+                  <xs:documentation>Provider Claim Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="X4">
+                <xs:annotation>
+                  <xs:documentation>Clinical Laboratory Improvement Amendment Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="X5">
+                <xs:annotation>
+                  <xs:documentation>State Industrial Accident Provider Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="Y4">
+                <xs:annotation>
+                  <xs:documentation>Agency Claim Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="Z8">
+                <xs:annotation>
+                  <xs:documentation>Federal Housing Administration Case Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="Z9">
+                <xs:annotation>
+                  <xs:documentation>Veterans Affairs Case Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZH">
+                <xs:annotation>
+                  <xs:documentation>Carrier Assigned Reference Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZS">
+                <xs:annotation>
+                  <xs:documentation>Software Application Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZZ">
+                <xs:annotation>
+                  <xs:documentation>Mutually Defined</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="REF02__AdditionalReferenceIdentificationNumber">
+          <xs:annotation>
+            <xs:documentation>Reference information as defined for a particular transaction set or as specified by the Reference Identification Qualifier.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Reference Identification" Number="127" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="50"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Description" Number="352" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="REF04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DTM_DateTimeReference_2000">
+    <xs:annotation>
+      <xs:documentation>Date/Time Reference</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DTM01__DateTimeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code specifying the type of date or time or both date and time.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date/Time Qualifier" Number="374" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="3"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="003">
+                <xs:annotation>
+                  <xs:documentation>Invoice</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="007">
+                <xs:annotation>
+                  <xs:documentation>Effective</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="009">
+                <xs:annotation>
+                  <xs:documentation>Process</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="011">
+                <xs:annotation>
+                  <xs:documentation>Shipped</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="017">
+                <xs:annotation>
+                  <xs:documentation>Estimated Delivery</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="035">
+                <xs:annotation>
+                  <xs:documentation>Delivered</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="036">
+                <xs:annotation>
+                  <xs:documentation>Expiration</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="050">
+                <xs:annotation>
+                  <xs:documentation>Received</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="089">
+                <xs:annotation>
+                  <xs:documentation>Inquiry</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="090">
+                <xs:annotation>
+                  <xs:documentation>Report Start</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="091">
+                <xs:annotation>
+                  <xs:documentation>Report End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="096">
+                <xs:annotation>
+                  <xs:documentation>Discharge</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="097">
+                <xs:annotation>
+                  <xs:documentation>Transaction Creation</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="102">
+                <xs:annotation>
+                  <xs:documentation>Issue</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="119">
+                <xs:annotation>
+                  <xs:documentation>Test Performed</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="142">
+                <xs:annotation>
+                  <xs:documentation>Loss</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="150">
+                <xs:annotation>
+                  <xs:documentation>Service Period Start</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="151">
+                <xs:annotation>
+                  <xs:documentation>Service Period End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="186">
+                <xs:annotation>
+                  <xs:documentation>Invoice Period Start</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="187">
+                <xs:annotation>
+                  <xs:documentation>Invoice Period End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="193">
+                <xs:annotation>
+                  <xs:documentation>Period Start</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="194">
+                <xs:annotation>
+                  <xs:documentation>Period End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="198">
+                <xs:annotation>
+                  <xs:documentation>Completion</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="227">
+                <xs:annotation>
+                  <xs:documentation>Lease Term Start</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="228">
+                <xs:annotation>
+                  <xs:documentation>Lease Term End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="232">
+                <xs:annotation>
+                  <xs:documentation>Claim Statement Period Start</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="233">
+                <xs:annotation>
+                  <xs:documentation>Claim Statement Period End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="242">
+                <xs:annotation>
+                  <xs:documentation>Actual Start</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="245">
+                <xs:annotation>
+                  <xs:documentation>Estimated Completion</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="285">
+                <xs:annotation>
+                  <xs:documentation>Employment or Hire</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="286">
+                <xs:annotation>
+                  <xs:documentation>Retirement</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="296">
+                <xs:annotation>
+                  <xs:documentation>Initial Disability Period Return To Work</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="297">
+                <xs:annotation>
+                  <xs:documentation>Initial Disability Period Last Day Worked</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="300">
+                <xs:annotation>
+                  <xs:documentation>Enrollment Signature Date</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="301">
+                <xs:annotation>
+                  <xs:documentation>Consolidated Omnibus Budget Reconciliation Act (COBRA) Qualifying Event</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="303">
+                <xs:annotation>
+                  <xs:documentation>Maintenance Effective</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="304">
+                <xs:annotation>
+                  <xs:documentation>Latest Visit or Consultation</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="307">
+                <xs:annotation>
+                  <xs:documentation>Eligibility</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="310">
+                <xs:annotation>
+                  <xs:documentation>Date of Closing</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="313">
+                <xs:annotation>
+                  <xs:documentation>Cycle</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="330">
+                <xs:annotation>
+                  <xs:documentation>Referral Date</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="336">
+                <xs:annotation>
+                  <xs:documentation>Employment Begin</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="337">
+                <xs:annotation>
+                  <xs:documentation>Employment End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="338">
+                <xs:annotation>
+                  <xs:documentation>Medicare Begin</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="339">
+                <xs:annotation>
+                  <xs:documentation>Medicare End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="340">
+                <xs:annotation>
+                  <xs:documentation>Consolidated Omnibus Budget Reconciliation Act (COBRA) Begin</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="341">
+                <xs:annotation>
+                  <xs:documentation>Consolidated Omnibus Budget Reconciliation Act (COBRA) End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="344">
+                <xs:annotation>
+                  <xs:documentation>Coordination of Benefits Begin</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="345">
+                <xs:annotation>
+                  <xs:documentation>Coordination of Benefits End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="348">
+                <xs:annotation>
+                  <xs:documentation>Benefit Begin</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="349">
+                <xs:annotation>
+                  <xs:documentation>Benefit End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="350">
+                <xs:annotation>
+                  <xs:documentation>Education Begin</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="351">
+                <xs:annotation>
+                  <xs:documentation>Education End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="356">
+                <xs:annotation>
+                  <xs:documentation>Eligibility Begin</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="357">
+                <xs:annotation>
+                  <xs:documentation>Eligibility End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="360">
+                <xs:annotation>
+                  <xs:documentation>Initial Disability Period Start</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="361">
+                <xs:annotation>
+                  <xs:documentation>Initial Disability Period End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="370">
+                <xs:annotation>
+                  <xs:documentation>Actual Departure Date</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="372">
+                <xs:annotation>
+                  <xs:documentation>Actual Arrival Date</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="383">
+                <xs:annotation>
+                  <xs:documentation>Adjusted Hire</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="388">
+                <xs:annotation>
+                  <xs:documentation>Payment Commencement</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="393">
+                <xs:annotation>
+                  <xs:documentation>Plan Participation Suspension</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="394">
+                <xs:annotation>
+                  <xs:documentation>Rehire</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="405">
+                <xs:annotation>
+                  <xs:documentation>Production</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="431">
+                <xs:annotation>
+                  <xs:documentation>Onset of Current Symptoms or Illness</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="434">
+                <xs:annotation>
+                  <xs:documentation>Statement</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="435">
+                <xs:annotation>
+                  <xs:documentation>Admission</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="438">
+                <xs:annotation>
+                  <xs:documentation>Onset of Similar Symptoms or Illness</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="439">
+                <xs:annotation>
+                  <xs:documentation>Accident</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="441">
+                <xs:annotation>
+                  <xs:documentation>Prior Placement</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="446">
+                <xs:annotation>
+                  <xs:documentation>Replacement</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="452">
+                <xs:annotation>
+                  <xs:documentation>Appliance Placement</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="453">
+                <xs:annotation>
+                  <xs:documentation>Acute Manifestation of a Chronic Condition</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="454">
+                <xs:annotation>
+                  <xs:documentation>Initial Treatment</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="455">
+                <xs:annotation>
+                  <xs:documentation>Last X-Ray</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="456">
+                <xs:annotation>
+                  <xs:documentation>Surgery</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="461">
+                <xs:annotation>
+                  <xs:documentation>Last Certification</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="463">
+                <xs:annotation>
+                  <xs:documentation>Begin Therapy</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="471">
+                <xs:annotation>
+                  <xs:documentation>Prescription</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="472">
+                <xs:annotation>
+                  <xs:documentation>Service</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="473">
+                <xs:annotation>
+                  <xs:documentation>Medicaid Begin</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="474">
+                <xs:annotation>
+                  <xs:documentation>Medicaid End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="480">
+                <xs:annotation>
+                  <xs:documentation>Arterial Blood Gas Test</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="481">
+                <xs:annotation>
+                  <xs:documentation>Oxygen Saturation Test</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="484">
+                <xs:annotation>
+                  <xs:documentation>Last Menstrual Period</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="485">
+                <xs:annotation>
+                  <xs:documentation>Injury Begin</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="486">
+                <xs:annotation>
+                  <xs:documentation>Injury End</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="517">
+                <xs:annotation>
+                  <xs:documentation>Inspected</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="523">
+                <xs:annotation>
+                  <xs:documentation>Date of Claim</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="539">
+                <xs:annotation>
+                  <xs:documentation>Policy Effective</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="540">
+                <xs:annotation>
+                  <xs:documentation>Policy Expiration</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="543">
+                <xs:annotation>
+                  <xs:documentation>Last Premium Paid Date</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="547">
+                <xs:annotation>
+                  <xs:documentation>Date of Loan</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="573">
+                <xs:annotation>
+                  <xs:documentation>Date Claim Paid</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="582">
+                <xs:annotation>
+                  <xs:documentation>Report Period</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="607">
+                <xs:annotation>
+                  <xs:documentation>Certification Revision</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="666">
+                <xs:annotation>
+                  <xs:documentation>Date Paid</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="738">
+                <xs:annotation>
+                  <xs:documentation>Most Recent Hemoglobin or Hematocrit or Both</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="739">
+                <xs:annotation>
+                  <xs:documentation>Most Recent Serum Creatine</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="809">
+                <xs:annotation>
+                  <xs:documentation>Posted</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="866">
+                <xs:annotation>
+                  <xs:documentation>Examination</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="881">
+                <xs:annotation>
+                  <xs:documentation>Request</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="938">
+                <xs:annotation>
+                  <xs:documentation>Order</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="999">
+                <xs:annotation>
+                  <xs:documentation>Document Date</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ABC">
+                <xs:annotation>
+                  <xs:documentation>Estimated Date of Birth</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="INC">
+                <xs:annotation>
+                  <xs:documentation>Incident</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZZZ">
+                <xs:annotation>
+                  <xs:documentation>Mutually Defined</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="DTM02__AdditionalReferenceDate">
+          <xs:annotation>
+            <xs:documentation>Date uniquely identifying the orginal transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date" Number="373" DataType="DT" MaximumLength="8"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="8"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="DTM03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Time" Number="337" DataType="TM"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="4"/>
+              <xs:maxLength value="8"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="DTM04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Time Code" Number="623" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="DTM05">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date Time Period Format Qualifier" Number="1250" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="DTM06">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Date Time Period" Number="1251" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="35"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AMT_MonetaryAmountInformation_2000">
+    <xs:annotation>
+      <xs:documentation>Monetary Amount Information</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="AMT01__AmountQualifierCode">
+          <xs:annotation>
+            <xs:documentation>Code to qualify amount.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Amount Qualifier Code" Number="522" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="1">
+                <xs:annotation>
+                  <xs:documentation>Line Item Total</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2">
+                <xs:annotation>
+                  <xs:documentation>Batch Total</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="5">
+                <xs:annotation>
+                  <xs:documentation>Total Invoice Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="3V">
+                <xs:annotation>
+                  <xs:documentation>Mortgage</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="3Y">
+                <xs:annotation>
+                  <xs:documentation>Non-operational Fixed Assets</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="4Y">
+                <xs:annotation>
+                  <xs:documentation>Damages</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="8V">
+                <xs:annotation>
+                  <xs:documentation>Services</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="8Y">
+                <xs:annotation>
+                  <xs:documentation>Share Premium Capital</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="A8">
+                <xs:annotation>
+                  <xs:documentation>Noncovered Charges - Actual</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="AA">
+                <xs:annotation>
+                  <xs:documentation>Allocated</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="AAE">
+                <xs:annotation>
+                  <xs:documentation>Approved Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="AU">
+                <xs:annotation>
+                  <xs:documentation>Coverage Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="B1">
+                <xs:annotation>
+                  <xs:documentation>Benefit Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="B6">
+                <xs:annotation>
+                  <xs:documentation>Allowed - Actual</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="B7">
+                <xs:annotation>
+                  <xs:documentation>Deductible - Estimated</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="B9">
+                <xs:annotation>
+                  <xs:documentation>Co-insurance - Actual</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BM">
+                <xs:annotation>
+                  <xs:documentation>Adjustments</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BR">
+                <xs:annotation>
+                  <xs:documentation>Adjusted Insured Loss Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="C1">
+                <xs:annotation>
+                  <xs:documentation>Co-Payment Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="C5">
+                <xs:annotation>
+                  <xs:documentation>Claim Amount Due - Estimated</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="CE">
+                <xs:annotation>
+                  <xs:documentation>Summary Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="CI">
+                <xs:annotation>
+                  <xs:documentation>Funds Held for Insured</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="D">
+                <xs:annotation>
+                  <xs:documentation>Payor Amount Paid</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="D2">
+                <xs:annotation>
+                  <xs:documentation>Deductible Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="D8">
+                <xs:annotation>
+                  <xs:documentation>Discount Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="DX">
+                <xs:annotation>
+                  <xs:documentation>Deductible Waived</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="DY">
+                <xs:annotation>
+                  <xs:documentation>Per Day Limit</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="F2">
+                <xs:annotation>
+                  <xs:documentation>Patient Responsibility - Actual</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="F3">
+                <xs:annotation>
+                  <xs:documentation>Patient Responsibility - Estimated</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="F4">
+                <xs:annotation>
+                  <xs:documentation>Postage Claimed</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="F5">
+                <xs:annotation>
+                  <xs:documentation>Patient Amount Paid</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="F7">
+                <xs:annotation>
+                  <xs:documentation>Sales Tax</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="GT">
+                <xs:annotation>
+                  <xs:documentation>Goods and Services Tax</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="GW">
+                <xs:annotation>
+                  <xs:documentation>Total Charge</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="I">
+                <xs:annotation>
+                  <xs:documentation>Interest</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="KF">
+                <xs:annotation>
+                  <xs:documentation>Net Paid Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="KH">
+                <xs:annotation>
+                  <xs:documentation>Deduction Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="M8">
+                <xs:annotation>
+                  <xs:documentation>Markup Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="MA">
+                <xs:annotation>
+                  <xs:documentation>Maximum Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="N1">
+                <xs:annotation>
+                  <xs:documentation>Net Worth</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="N8">
+                <xs:annotation>
+                  <xs:documentation>Miscellaneous Taxes</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="NE">
+                <xs:annotation>
+                  <xs:documentation>Net Billed</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="NL">
+                <xs:annotation>
+                  <xs:documentation>Negative Ledger Balance</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="P3">
+                <xs:annotation>
+                  <xs:documentation>Premium Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="PG">
+                <xs:annotation>
+                  <xs:documentation>Payoff</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="PN">
+                <xs:annotation>
+                  <xs:documentation>Prior Gross Invoice Total</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="R">
+                <xs:annotation>
+                  <xs:documentation>Spend Down</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="RP">
+                <xs:annotation>
+                  <xs:documentation>Repair</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="SM">
+                <xs:annotation>
+                  <xs:documentation>Supplemental</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="T">
+                <xs:annotation>
+                  <xs:documentation>Tax</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="T2">
+                <xs:annotation>
+                  <xs:documentation>Total Claim Before Taxes</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="T3">
+                <xs:annotation>
+                  <xs:documentation>Total Submitted Charges</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TP">
+                <xs:annotation>
+                  <xs:documentation>Total payment amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TT">
+                <xs:annotation>
+                  <xs:documentation>Total Transaction Amount</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="YT">
+                <xs:annotation>
+                  <xs:documentation>Denied</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="YU">
+                <xs:annotation>
+                  <xs:documentation>In Process</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="YY">
+                <xs:annotation>
+                  <xs:documentation>Returned</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZK">
+                <xs:annotation>
+                  <xs:documentation>Federal Medicare or Medicaid Payment Mandate - Category 1</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZL">
+                <xs:annotation>
+                  <xs:documentation>Federal Medicare or Medicaid Payment Mandate - Category 2</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZM">
+                <xs:annotation>
+                  <xs:documentation>Federal Medicare or Medicaid Payment Mandate - Category 3</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZN">
+                <xs:annotation>
+                  <xs:documentation>Federal Medicare or Medicaid Payment Mandate - Category 4</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZO">
+                <xs:annotation>
+                  <xs:documentation>Federal Medicare or Medicaid Payment Mandate - Category 5</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZZ">
+                <xs:annotation>
+                  <xs:documentation>Mutually Defined</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="AMT02__AdditionalReferenceAmount">
+          <xs:annotation>
+            <xs:documentation>Monetary amount uniquely identifying the original transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Monetary Amount" Number="782" DataType="R" MaximumLength="18"/>
+              <x12:TR3_Info MaximumLength="11"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="20"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="AMT03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Credit/Debit Flag Code" Number="478" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="1"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QTY_QuantityInformation_2000">
+    <xs:annotation>
+      <xs:documentation>Quantity Information</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="QTY01__QuantityQualifier">
+          <xs:annotation>
+            <xs:documentation>Code specifying the type of quantity.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Quantity Qualifier" Number="673" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="01">
+                <xs:annotation>
+                  <xs:documentation>Discrete Quantity</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="02">
+                <xs:annotation>
+                  <xs:documentation>Cumulative Quantity</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1N">
+                <xs:annotation>
+                  <xs:documentation>Scrap allowed</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2W">
+                <xs:annotation>
+                  <xs:documentation>Segments</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2Y">
+                <xs:annotation>
+                  <xs:documentation>Functional Groups</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2Z">
+                <xs:annotation>
+                  <xs:documentation>Transaction Sets</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="3S">
+                <xs:annotation>
+                  <xs:documentation>Total Debits</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="3T">
+                <xs:annotation>
+                  <xs:documentation>Total Credits</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="41">
+                <xs:annotation>
+                  <xs:documentation>Number of Batches</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="42">
+                <xs:annotation>
+                  <xs:documentation>Number of Checks</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="46">
+                <xs:annotation>
+                  <xs:documentation>Total transactions</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="90">
+                <xs:annotation>
+                  <xs:documentation>Acknowledged Quantity</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="AA">
+                <xs:annotation>
+                  <xs:documentation>Unacknowledged Quantity</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BF">
+                <xs:annotation>
+                  <xs:documentation>Age Modifying Units</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="CA">
+                <xs:annotation>
+                  <xs:documentation>Covered - Actual</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="CD">
+                <xs:annotation>
+                  <xs:documentation>Co-insured - Actual</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EC">
+                <xs:annotation>
+                  <xs:documentation>Use of Extracorporeal Circulation</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EM">
+                <xs:annotation>
+                  <xs:documentation>Emergency Modifying Units</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="HF">
+                <xs:annotation>
+                  <xs:documentation>Invoices</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="HM">
+                <xs:annotation>
+                  <xs:documentation>Use of Hypothermia</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="HO">
+                <xs:annotation>
+                  <xs:documentation>Use of Hypotension</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="HP">
+                <xs:annotation>
+                  <xs:documentation>Use of Hyperbaric Pressurization</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="HS">
+                <xs:annotation>
+                  <xs:documentation>Hours</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LA">
+                <xs:annotation>
+                  <xs:documentation>Life-time Reserve - Actual</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LE">
+                <xs:annotation>
+                  <xs:documentation>Life-time Reserve - Estimated</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="NA">
+                <xs:annotation>
+                  <xs:documentation>Number of Non-covered Days</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="NE">
+                <xs:annotation>
+                  <xs:documentation>Non-Covered - Estimated</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="NP">
+                <xs:annotation>
+                  <xs:documentation>Number of Members</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="NR">
+                <xs:annotation>
+                  <xs:documentation>Not Replaced Blood Units</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="OU">
+                <xs:annotation>
+                  <xs:documentation>Outlier Days</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="P3">
+                <xs:annotation>
+                  <xs:documentation>Physical Status III</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="P4">
+                <xs:annotation>
+                  <xs:documentation>Physical Status IV</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="P5">
+                <xs:annotation>
+                  <xs:documentation>Physical Status V</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="P6">
+                <xs:annotation>
+                  <xs:documentation>Number of Services or Procedures</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="PS">
+                <xs:annotation>
+                  <xs:documentation>Prescription</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="SG">
+                <xs:annotation>
+                  <xs:documentation>Swan-Ganz</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TO">
+                <xs:annotation>
+                  <xs:documentation>Total</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="VS">
+                <xs:annotation>
+                  <xs:documentation>Visits</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZK">
+                <xs:annotation>
+                  <xs:documentation>Federal Medicare or Medicaid Payment Mandate - Category 1</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZL">
+                <xs:annotation>
+                  <xs:documentation>Federal Medicare or Medicaid Payment Mandate - Category 2</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZM">
+                <xs:annotation>
+                  <xs:documentation>Federal Medicare or Medicaid Payment Mandate - Category 3</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZN">
+                <xs:annotation>
+                  <xs:documentation>Federal Medicare or Medicaid Payment Mandate - Category 4</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZO">
+                <xs:annotation>
+                  <xs:documentation>Federal Medicare or Medicaid Payment Mandate - Category 5</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="QTY02__AdditionalReferenceQuantity">
+          <xs:annotation>
+            <xs:documentation>Quantity uniquely identifying the original transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Quantity" Number="380" DataType="R" MaximumLength="15"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="17"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="QTY03">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" name="QTY04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Free-form Information" Number="61" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NM1_IndividualOrOrganizationalName_2000">
+    <xs:annotation>
+      <xs:documentation>Individual or Organizational Name</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="NM101__EntityIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying an organizational entity, a physical location, property or an individual.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="03">
+                <xs:annotation>
+                  <xs:documentation>Dependent</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="13">
+                <xs:annotation>
+                  <xs:documentation>Contracted Service Provider</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1B">
+                <xs:annotation>
+                  <xs:documentation>Applicant</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1E">
+                <xs:annotation>
+                  <xs:documentation>Health Maintenance Organization (HMO)</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1H">
+                <xs:annotation>
+                  <xs:documentation>Kidney Dialysis Unit</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1I">
+                <xs:annotation>
+                  <xs:documentation>Preferred Provider Organization (PPO)</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1K">
+                <xs:annotation>
+                  <xs:documentation>Franchisor</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1P">
+                <xs:annotation>
+                  <xs:documentation>Provider</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1R">
+                <xs:annotation>
+                  <xs:documentation>University, College or School</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1T">
+                <xs:annotation>
+                  <xs:documentation>Physician, Clinic or Group Practice</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1X">
+                <xs:annotation>
+                  <xs:documentation>Laboratory</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2B">
+                <xs:annotation>
+                  <xs:documentation>Third-Party Administrator</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2D">
+                <xs:annotation>
+                  <xs:documentation>Miscellaneous Health Care Facility</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2K">
+                <xs:annotation>
+                  <xs:documentation>Partnership</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="30">
+                <xs:annotation>
+                  <xs:documentation>Service Supplier</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="31">
+                <xs:annotation>
+                  <xs:documentation>Postal Mailing Address</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="36">
+                <xs:annotation>
+                  <xs:documentation>Employer</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="3D">
+                <xs:annotation>
+                  <xs:documentation>Obstetrics and Gynecology Facility</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="40">
+                <xs:annotation>
+                  <xs:documentation>Receiver</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="41">
+                <xs:annotation>
+                  <xs:documentation>Submitter</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="47">
+                <xs:annotation>
+                  <xs:documentation>Estimator</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="69">
+                <xs:annotation>
+                  <xs:documentation>Repairing Outlet</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="70">
+                <xs:annotation>
+                  <xs:documentation>Prior Incorrect Insured</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="71">
+                <xs:annotation>
+                  <xs:documentation>Attending Physician</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="72">
+                <xs:annotation>
+                  <xs:documentation>Operating Physician</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="73">
+                <xs:annotation>
+                  <xs:documentation>Other Physician</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="74">
+                <xs:annotation>
+                  <xs:documentation>Corrected Insured</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="77">
+                <xs:annotation>
+                  <xs:documentation>Service Location</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="80">
+                <xs:annotation>
+                  <xs:documentation>Hospital</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="82">
+                <xs:annotation>
+                  <xs:documentation>Rendering Provider</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="85">
+                <xs:annotation>
+                  <xs:documentation>Billing Provider</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="87">
+                <xs:annotation>
+                  <xs:documentation>Pay-to Provider</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="8W">
+                <xs:annotation>
+                  <xs:documentation>Payment Address</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="AAP">
+                <xs:annotation>
+                  <xs:documentation>Employee</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ACV">
+                <xs:annotation>
+                  <xs:documentation>Information Source</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="AG">
+                <xs:annotation>
+                  <xs:documentation>Agent/Agency</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="AI">
+                <xs:annotation>
+                  <xs:documentation>Airline</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="AO">
+                <xs:annotation>
+                  <xs:documentation>Account Of</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BB">
+                <xs:annotation>
+                  <xs:documentation>Business Partner</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BE">
+                <xs:annotation>
+                  <xs:documentation>Beneficiary</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BR">
+                <xs:annotation>
+                  <xs:documentation>Broker</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="BV">
+                <xs:annotation>
+                  <xs:documentation>Billing Service</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="CC">
+                <xs:annotation>
+                  <xs:documentation>Claimant</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="CX">
+                <xs:annotation>
+                  <xs:documentation>Claim Administrator</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="DK">
+                <xs:annotation>
+                  <xs:documentation>Ordering Physician</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="DN">
+                <xs:annotation>
+                  <xs:documentation>Referring Provider</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="DQ">
+                <xs:annotation>
+                  <xs:documentation>Supervising Physician</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="E1">
+                <xs:annotation>
+                  <xs:documentation>Person or Other Entity Legally Responsible for a Child</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EF">
+                <xs:annotation>
+                  <xs:documentation>Electronic Filer</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EI">
+                <xs:annotation>
+                  <xs:documentation>Executor of Estate</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ENR">
+                <xs:annotation>
+                  <xs:documentation>Enroller</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EXS">
+                <xs:annotation>
+                  <xs:documentation>Ex-spouse</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="EY">
+                <xs:annotation>
+                  <xs:documentation>Employee Name</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FA">
+                <xs:annotation>
+                  <xs:documentation>Facility</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="FW">
+                <xs:annotation>
+                  <xs:documentation>Forwarder</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="GD">
+                <xs:annotation>
+                  <xs:documentation>Guardian</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="GP">
+                <xs:annotation>
+                  <xs:documentation>Gateway Provider</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="GW">
+                <xs:annotation>
+                  <xs:documentation>Group</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="GY">
+                <xs:annotation>
+                  <xs:documentation>Treatment Facility</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="H5">
+                <xs:annotation>
+                  <xs:documentation>Paying Agent</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="HA">
+                <xs:annotation>
+                  <xs:documentation>Owner</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="HK">
+                <xs:annotation>
+                  <xs:documentation>Subscriber</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IAE">
+                <xs:annotation>
+                  <xs:documentation>Member</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IL">
+                <xs:annotation>
+                  <xs:documentation>Insured or Subscriber</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IN">
+                <xs:annotation>
+                  <xs:documentation>Insurer</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="IP">
+                <xs:annotation>
+                  <xs:documentation>Independent Adjuster</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="J6">
+                <xs:annotation>
+                  <xs:documentation>Power of Attorney</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="KU">
+                <xs:annotation>
+                  <xs:documentation>Receiver Site</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="L5">
+                <xs:annotation>
+                  <xs:documentation>Contact</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LE">
+                <xs:annotation>
+                  <xs:documentation>Lessor</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LI">
+                <xs:annotation>
+                  <xs:documentation>Independent Lab</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LN">
+                <xs:annotation>
+                  <xs:documentation>Lender</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="LS">
+                <xs:annotation>
+                  <xs:documentation>Lessee</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="M8">
+                <xs:annotation>
+                  <xs:documentation>Educational Institution</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="MH">
+                <xs:annotation>
+                  <xs:documentation>Mortgage Insurer</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="NZ">
+                <xs:annotation>
+                  <xs:documentation>Primary Physician</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="OD">
+                <xs:annotation>
+                  <xs:documentation>Doctor of Optometry</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="OW">
+                <xs:annotation>
+                  <xs:documentation>Owner of Property or Unit</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="P2">
+                <xs:annotation>
+                  <xs:documentation>Primary Insured or Subscriber</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="P3">
+                <xs:annotation>
+                  <xs:documentation>Primary Care Provider</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="P4">
+                <xs:annotation>
+                  <xs:documentation>Prior Insurance Carrier</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="P5">
+                <xs:annotation>
+                  <xs:documentation>Plan Sponsor</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="PE">
+                <xs:annotation>
+                  <xs:documentation>Payee</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="PR">
+                <xs:annotation>
+                  <xs:documentation>Payer</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="PRP">
+                <xs:annotation>
+                  <xs:documentation>Primary Payer</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="PV">
+                <xs:annotation>
+                  <xs:documentation>Party performing certification</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="QA">
+                <xs:annotation>
+                  <xs:documentation>Pharmacy</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="QB">
+                <xs:annotation>
+                  <xs:documentation>Purchase Service Provider</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="QC">
+                <xs:annotation>
+                  <xs:documentation>Patient</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="QD">
+                <xs:annotation>
+                  <xs:documentation>Responsible Party</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="QE">
+                <xs:annotation>
+                  <xs:documentation>Policyholder</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="QH">
+                <xs:annotation>
+                  <xs:documentation>Physician</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="QN">
+                <xs:annotation>
+                  <xs:documentation>Dentist</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="QV">
+                <xs:annotation>
+                  <xs:documentation>Group Practice</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="R6">
+                <xs:annotation>
+                  <xs:documentation>Requester</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="RI">
+                <xs:annotation>
+                  <xs:documentation>Remit To</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="S3">
+                <xs:annotation>
+                  <xs:documentation>Custodial Parent</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="SEP">
+                <xs:annotation>
+                  <xs:documentation>Secondary Payer</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="SJ">
+                <xs:annotation>
+                  <xs:documentation>Service Provider</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="SU">
+                <xs:annotation>
+                  <xs:documentation>Supplier/Manufacturer</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TL">
+                <xs:annotation>
+                  <xs:documentation>Testing Laboratory</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TM">
+                <xs:annotation>
+                  <xs:documentation>Transmitter</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TT">
+                <xs:annotation>
+                  <xs:documentation>Transfer To</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TTP">
+                <xs:annotation>
+                  <xs:documentation>Tertiary Payer</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TV">
+                <xs:annotation>
+                  <xs:documentation>Third Party Administrator (TPA)</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="UY">
+                <xs:annotation>
+                  <xs:documentation>Vehicle</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="VN">
+                <xs:annotation>
+                  <xs:documentation>Vendor</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="X3">
+                <xs:annotation>
+                  <xs:documentation>Utilization Management Organization</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="Y2">
+                <xs:annotation>
+                  <xs:documentation>Managed Care Organization</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="ZZ">
+                <xs:annotation>
+                  <xs:documentation>Mutually Defined</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM102__EntityTypeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code qualifying the type of entity.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Type Qualifier" Number="1065" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="1"/>
+              <xs:enumeration value="1">
+                <xs:annotation>
+                  <xs:documentation>Person</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="2">
+                <xs:annotation>
+                  <xs:documentation>Non-Person Entity</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="NM103__AdditionalReferenceLastName">
+          <xs:annotation>
+            <xs:documentation>Last name of individual uniquely identifying the original transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Last or Organization Name" Number="1035" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM104__AdditionalReferenceFirstName">
+          <xs:annotation>
+            <xs:documentation>First name of individual uniquely identifying the original transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name First" Number="1036" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="35"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM105__AdditionalReferenceMiddleName">
+          <xs:annotation>
+            <xs:documentation>Middle name of individual uniquely identifying the original transaction.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Middle" Number="1037" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="25"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM106">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Prefix" Number="1038" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM107">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Suffix" Number="1039" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="10"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM108__IdentificationCodeQualifier">
+          <xs:annotation>
+            <xs:documentation>Code designating the system/method of code structure used for Identification Code (67).</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code Qualifier" Number="66" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM109__IdentificationCode">
+          <xs:annotation>
+            <xs:documentation>Code identifying a party or other code.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Identification Code" Number="67" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM110">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Relationship Code" Number="706" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM111">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Entity Identifier Code" Number="98" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="NM112">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Name Last or Organization Name" Number="1035" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TED_ErrorOrInformationalMessageLocation_2100">
+    <xs:annotation>
+      <xs:documentation>Error or Informational Message Location</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="TED01__ApplicationErrorConditionCode">
+          <xs:annotation>
+            <xs:documentation>Code indicating application error condition.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Application Error Condition Code" Number="647" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="024">
+                <xs:annotation>
+                  <xs:documentation>Other Unlisted Reason</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="TED02">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Free-form Message" Number="3" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="60"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="TED03__SegmentIDCode">
+          <xs:annotation>
+            <xs:documentation>Code defining the segment ID of the data segment in error (See Appendix A - Number 77).</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Segment ID Code" Number="721" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="TED04__SegmentPositionInTransactionSet">
+          <xs:annotation>
+            <xs:documentation>The numerical count position of this data segment from the start of the transaction set: the transaction set header is count position 1.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Segment Position in Transaction Set" Number="719" DataType="N0" MaximumLength="10"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="12"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="1" name="TED05_PositionInSegment_2100">
+          <xs:annotation>
+            <xs:documentation>Code indicating the relative position of the simple data element or composite data structure in error within a segment, count beginning with 1 for the position immediately following the segment ID; additionally indicating the relative position of a repeating structure in error, count beginning with 1 for the position immediately following the preceding element separator; additionally indicating the relative position of a component of a composite data structure in error, count beginning with 1 for the position following the preceding element or repetition separator</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+	          <xs:element name="TED05_01_ElementPositionInSegment">
+                <xs:annotation>
+                  <xs:documentation>This is used to indicate the relative position of a simple data element or the relative position of a composite data structure with the relative position of the component within the composite data structure.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Element Position in Segment" Number="722" DataType="N0" MaximumLength="2"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="4"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="TED05_02_ComponentDataElementPositionInComposite">
+                <xs:annotation>
+                  <xs:documentation>To identify the component data element position within the composite that is in error.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Component Data Element Position in Composite" Number="1528" DataType="N0" MaximumLength="2"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="4"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="TED05_03_RepeatingDataElementPosition">
+                <xs:annotation>
+                  <xs:documentation>To identify the specific repetition of a data element that is in error.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Repeating Data Element Position" Number="1686" DataType="N0" MaximumLength="4"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="6"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="TED06">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" name="TED07__CopyOfBadDataElement">
+          <xs:annotation>
+            <xs:documentation>This is a copy of the data element in error.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Copy of Bad Data Element" Number="724" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="99"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="TED08__DataElementNewContent">
+          <xs:annotation>
+            <xs:documentation>New data which has replaced erroneous data.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Data Element New Content" Number="961" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="99"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CTX_SituationalContextLocation_2100">
+    <xs:annotation>
+      <xs:documentation>Situational Context Location</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="10" name="CTX01_ContextIdentification_2100">
+          <xs:annotation>
+            <xs:documentation>Holds information to identify a context</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+	          <xs:element name="CTX01_01_DataContextOfError">
+                <xs:annotation>
+                  <xs:documentation>The industry name of the context element.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Context Name" Number="9999" DataType="AN"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="35"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="CTX01_02">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Context Reference" Number="9998" DataType="AN"/>
+                    <x12:TR3_Info Used="No"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="35"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CTX02__ContextSegmentIDCode">
+          <xs:annotation>
+            <xs:documentation>Used to indicate the segment that triggered an error in another element.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Segment ID Code" Number="721" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="CTX03__ContextSegmentPositionInTransactionSet">
+          <xs:annotation>
+            <xs:documentation>Numerical count position of data segment from the start of the transaction set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Segment Position in Transaction Set" Number="719" DataType="N0" MaximumLength="10"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="12"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="CTX04__ContextLoopIdentifierCode">
+          <xs:annotation>
+            <xs:documentation>Used to indicate the loop that triggered an error in another element.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Loop Identifier Code" Number="447" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="4"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="1" name="CTX05_PositionInSegment_2100">
+          <xs:annotation>
+            <xs:documentation>Code indicating the relative position of the simple data element or composite data structure in error within a segment, count beginning with 1 for the position immediately following the segment ID; additionally indicating the relative position of a repeating structure in error, count beginning with 1 for the position immediately following the preceding element separator; additionally indicating the relative position of a component of a composite data structure in error, count beginning with 1 for the position following the preceding element or repetition separator</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+	          <xs:element name="CTX05_01_ContextElementPositionInSegment">
+                <xs:annotation>
+                  <xs:documentation>Used to indicate the element position that triggered an error in another element.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Element Position in Segment" Number="722" DataType="N0" MaximumLength="2"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="4"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="CTX05_02_ContextComponentDataElementPositionInComposite">
+                <xs:annotation>
+                  <xs:documentation>Used to indicate the component element position that triggered an error in another element.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Component Data Element Position in Composite" Number="1528" DataType="N0" MaximumLength="2"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="4"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="CTX05_03_ContextRepeatingDataElementPosition">
+                <xs:annotation>
+                  <xs:documentation>Used to indicate the repetition of a data element that triggered an error in another element.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Repeating Data Element Position" Number="1686" DataType="N0" MaximumLength="4"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="6"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="1" name="CTX06_ReferenceInSegment_2100">
+          <xs:annotation>
+            <xs:documentation>To hold the reference number of a data element and optionally a component data element within a composite</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+	          <xs:element name="CTX06_01_ContextDataElementReferenceNumber">
+                <xs:annotation>
+                  <xs:documentation>Used to indicate the data element reference number of the data element that triggered an error in another element.</xs:documentation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Data Element Reference Number" Number="725" DataType="N0" MaximumLength="4"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="6"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+	          <xs:element minOccurs="0" name="CTX06_02">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <x12:STD_Info Name="Data Element Reference Number" Number="725" DataType="N0" MaximumLength="4"/>
+                    <x12:TR3_Info Used="No"/>
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="6"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RED_ErrorOrInformationalMessage_2100">
+    <xs:annotation>
+      <xs:documentation>Error or Informational Message</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="RED01__ErrorDescription">
+          <xs:annotation>
+            <xs:documentation>A free-form, human readable message intended to clarify a coded value's description.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Description" Number="352" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="RED02">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Related Data Identification Code" Number="1609" DataType="ID"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="RED03__AgencyQualifierCode">
+          <xs:annotation>
+            <xs:documentation>Identifies the agency assigning the code values.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Agency Qualifier Code" Number="559" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="2"/>
+              <xs:maxLength value="2"/>
+              <xs:enumeration value="94">
+                <xs:annotation>
+                  <xs:documentation>Code Assigned by the Organization that is the Ultimate Destination of the Transaction Set</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="RED04">
+          <xs:annotation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Source Subqualifier" Number="822" DataType="AN"/>
+              <x12:TR3_Info Used="No"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="15"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="RED05__InsuranceBusinessProcessApplicationErrorCodeQualifierCode">
+          <xs:annotation>
+            <xs:documentation>Code representing the external code source to use in RED06.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Code List Qualifier Code" Number="1270" DataType="ID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="3"/>
+              <xs:enumeration value="IBP">
+                <xs:annotation>
+                  <xs:documentation>Insurance Business Process Application Error Code</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="RED06__InsuranceBusinessProcessApplicationErrorCode">
+          <xs:annotation>
+            <xs:documentation>Code indicating the error or informational message.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Industry Code" Number="1271" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SE_TransactionSetTrailer">
+    <xs:annotation>
+      <xs:documentation>Transaction Set Trailer</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="SE01__NumberOfIncludedSegments">
+          <xs:annotation>
+            <xs:documentation>Total number of segments included in a transaction set including ST and SE segments.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Number of Included Segments" Number="96" DataType="N0" MaximumLength="10"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="12"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="SE02__TransactionSetControlNumber">
+          <xs:annotation>
+            <xs:documentation>The unique identification number within a transaction set.</xs:documentation>
+            <xs:appinfo>
+              <x12:STD_Info Name="Transaction Set Control Number" Number="329" DataType="AN"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="4"/>
+              <xs:maxLength value="9"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

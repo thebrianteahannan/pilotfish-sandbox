@@ -2,13 +2,14 @@
 <Format xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RoutePlacement="source" name="Split 278 Transactions">
   <!--
     Prefer EDI→XML + XPath //Transaction when X12 tables are licensed.
-    23R1 image trial X12 data is expired, so UseInternalData is false (basic EDI XML).
+    UseInternalData=false; USE_ENHANCED_CONTEXT=true with Sandbox EDI/TableData via edi-tabledata/<IG> (5010).
   -->
   <TransformationModule class="com.pilotfish.eip.modules.transform.edi.EDITransformationModule">
     <ModuleConfig>
       <ExecuteTransformation>true</ExecuteTransformation>
       <UseInternalData>false</UseInternalData>
-      <USE_ENHANCED_CONTEXT>false</USE_ENHANCED_CONTEXT>
+      <USE_ENHANCED_CONTEXT>true</USE_ENHANCED_CONTEXT>
+      <TransactionDataWithVersion>[eip_pair:{ognl:@com.pilotfish.utils.PilotFishUtils@getWorkingDirectory()+'/edi-tabledata/278-A1'}:eip_name:5010:eip_value][eip_pair:{ognl:@com.pilotfish.utils.PilotFishUtils@getWorkingDirectory()+'/edi-tabledata/278-A3'}:eip_name:5010:eip_value]</TransactionDataWithVersion>
       <FriendlyNamesLevel>None</FriendlyNamesLevel>
       <CODE_DEFS>false</CODE_DEFS>
       <SegmentIndexing>true</SegmentIndexing>

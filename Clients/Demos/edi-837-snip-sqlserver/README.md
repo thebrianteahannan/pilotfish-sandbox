@@ -53,3 +53,7 @@ docker compose exec sqlserver /opt/mssql-tools18/bin/sqlcmd \
   -Q "SELECT ClaimId, PatientId, ClaimAmount, Status FROM dbo.Claims ORDER BY ClaimId"
 docker compose down -v
 ```
+
+## X12 TableData
+
+Mounts repo `EDI/TableData/x12` to `eip-root/edi-tabledata` with `TransactionDataWithVersion` → `837-Q1` (5010). See playbook §3.6.

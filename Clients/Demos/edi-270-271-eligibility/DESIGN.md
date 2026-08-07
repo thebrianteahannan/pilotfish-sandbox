@@ -77,7 +77,7 @@ UI does not claim success until parse JSON returns `status=active` (or shows AAA
 ## Risks / honesty
 
 - 23R1 trial X12 code tables expired / incomplete for **271 EDI→XML**. Outbound **XML→EDI 270 works** for content but often **omits `ST*270`** without tables; clinic UI inserts `ST*270*0001*005010X279A1` before the payer call when missing. Inbound **EDI→XML 271 fails** with “Could not find matching table data for incoming 271”. Parse target therefore uses a **structural Saxon XSLT** over `<EdiPayload><![CDATA[raw 271]]></EdiPayload>` (still real X12 on the wire). With licensed tables, prefer `EDITransformationProcessor` EDI→XML and drop the ST shim.
-- `UseInternalData=false` on XML→EDI (same pattern as 837 demo).
+- Sandbox mounts `EDI/TableData/x12` → `eip-root/edi-tabledata` with `USE_ENHANCED_CONTEXT=true` + `TransactionDataWithVersion` (5010); see playbook §3.6 / `EDI/README.md`.
 - SNIP Types 1–3 not run in this slice (follow-on).
 - Clinic UI orchestration is intentional demo shape (sync REST + HttpPost mismatch).
 - Passwords / URLs are demo-only.
