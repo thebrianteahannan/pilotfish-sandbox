@@ -4,7 +4,9 @@ pflicense.key
 
 # Runtime input/output — never commit
 data/
+data-834/
 debug-trace/
+debug-trace-834/
 **/debug-trace/
 logs/
 **/logs/
@@ -20,6 +22,11 @@ eip.war*
 *.war
 *.zip
 *.trace.db
+<<<<<<< HEAD
+=======
+logs/
+logs-834/
+>>>>>>> cursor/xml-to-edi-834-interface-e374
 
 # Keep committed H2 DB under Clients/Med Rec/database/; ignore other copies
 /medreceivables.mv.db
