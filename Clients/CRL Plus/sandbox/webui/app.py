@@ -20,7 +20,7 @@ app = Flask(__name__)
 OUTPUT_DIR = Path(os.environ.get("OUTPUT_DIR", str(Path(__file__).resolve().parents[1] / "output")))
 SAMPLE_DIR = Path(os.environ.get("SAMPLE_DIR", str(Path(__file__).resolve().parents[1] / "sample-data")))
 AUTH_USER = os.environ.get("AIL_AUTH_USER", "ail")
-AUTH_PASS = os.environ.get("AIL_AUTH_PASS", "AIL-TEST-qYTc-nc0N-6DUN")
+AUTH_PASS = os.environ.get("AIL_AUTH_PASS", "AilSandbox$Test1")
 SKIP_OUTBOUND = os.environ.get("AIL_SKIP_OUTBOUND", "true").lower() in {"1", "true", "yes"}
 PORT = int(os.environ.get("PORT", "8094"))
 
@@ -273,7 +273,7 @@ def api_transactions():
 def http_post_ail():
     if not _check_basic_auth():
         return (
-            "Unauthorized — provide Basic auth matching auth-test.txt (ail / AIL-TEST-…)",
+            "Unauthorized — provide Basic auth matching auth-test.txt (ail / AilSandbox$Test1)",
             401,
             {"WWW-Authenticate": 'Basic realm="PilotFish"'},
         )

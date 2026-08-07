@@ -78,9 +78,9 @@ def styles():
 
 def bullets(items, s):
     return ListFlowable(
-        [ListItem(Paragraph(i, s["bullet"]), leftIndent=12, value="•") for i in items],
+        [ListItem(Paragraph(i, s["bullet"]), leftIndent=12, value="bullet") for i in items],
         bulletType="bullet",
-        start="•",
+        start="bullet",
     )
 
 
@@ -218,8 +218,8 @@ def main():
     story.append(Paragraph("https://plus.intg.crlcorp.com/http-post/ail", s["code"]))
     story.append(Paragraph("Sandbox / local equivalent:", s["small"]))
     story.append(Paragraph("http://&lt;lan-ip&gt;:8094/http-post/ail", s["code"]))
-    story.append(Paragraph("auth-test.txt (TEST credentials — rotated 2026-08-07):", s["small"]))
-    story.append(Paragraph("ail=AIL-TEST-qYTc-nc0N-6DUN<br/>AIL=AIL-TEST-qYTc-nc0N-6DUN", s["code"]))
+    story.append(Paragraph("auth-test.txt (sandbox values — rotate for real TEST/PROD):", s["small"]))
+    story.append(Paragraph("ail=AilSandbox$Test1<br/>AIL=AilSandbox$Test1", s["code"]))
     story.append(
         Paragraph(
             "Outbound carrier web service: initially point $$AILOutgoingWsURL at the sandbox mock "

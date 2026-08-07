@@ -23,11 +23,11 @@ Status routing update in `eip-root/interfaces/Status/routes/4 - Route to client 
 
 - `sourceClient=AIL` → ServiceName **`AIL 1122 Status`** (was `AmericanIncomeLife 122 Status`)
 
-TEST HTTP basic-auth credentials (rotated 2026-08-07 — send these to Wendy/AIL for TEST):
+Sandbox TEST credentials (rotate for real TEST/PROD):
 
 ```
-ail=AIL-TEST-qYTc-nc0N-6DUN
-AIL=AIL-TEST-qYTc-nc0N-6DUN
+ail=AilSandbox$Test1
+AIL=AilSandbox$Test1
 ```
 
 External URL pattern: `https://plus.intg.crlcorp.com/http-post/ail`
@@ -43,7 +43,7 @@ docker compose up -d --build
 - POST orders: `http://&lt;lan-ip&gt;:8094/http-post/ail` with Basic auth above
 
 ```bash
-curl -u 'ail:AIL-TEST-qYTc-nc0N-6DUN' \
+curl -u 'ail:AilSandbox$Test1' \
   -H 'Content-Type: text/xml' \
   --data-binary @sample-data/ail-121-order.xml \
   "http://localhost:8094/http-post/ail"
