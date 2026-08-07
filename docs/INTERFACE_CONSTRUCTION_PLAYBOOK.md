@@ -425,6 +425,7 @@ This is the Sandbox’s licensed-style WPC implementation-guide **table data** (
 
 Work in this order unless the user specifies otherwise:
 
+0. **Start timing (§4.1):** create/update `documents/build-timing.json` with `started_at` (UTC) as soon as the user asks for a new demo.
 1. **DESIGN.md** filled from §8 (can be draft; must exist before claiming “done”).
 2. **Module selection** via external PilotFish Documentation tracker/deep-dives + `PilotFish_V2` (`modules.conf` / module Java). Record chosen FQCNs in DESIGN.md Pipeline table. **Do not invent a custom module** until §3.4 is satisfied.
 3. **SQL init + samples** (if applicable).
@@ -439,8 +440,48 @@ Work in this order unless the user specifies otherwise:
 10c. **Test plan PDF + automated run (required):** maintain `tests/plan.json`, run `python3 tools/export_test_plan_pdf.py` and `python3 tools/run_interface_tests.py --wait` (see §7.1). Update the plan as capabilities are added.
 11. **README.md** (run, ports, smoke commands; link to `documents/*.pdf`).
 12. **Smoke / automated tests** (§7 / §7.1) and paste pass/fail summary into the chat (and update DESIGN.md Risks if findings).
+13. **Finalize timing + Docker inventory (§4.1 / §5.1):** complete `build-timing.json`, run `python3 tools/list_sandbox_demo_docker.py`, retain Hindsight note when the user marks the demo done.
 
 Do not refactor unrelated demos. Prefer copying the closest existing demo assembly after modules are chosen from Documentation/V2.
+
+### 4.1 Build timing — track start, end, and slow phases (**required**)
+
+Goal: measure **end-to-end demo construction time** (first user ask → user-deemed complete) and learn which phases take longest so the process can get faster.
+
+**When it starts:** the moment the user asks to create / scaffold / build a new interface demo (or a major net-new stack). Record wall-clock UTC immediately — do not wait until design is finished.
+
+**When it ends:** when the user says the demo is complete **or** explicitly accepts Definition of Done (§11). If unclear, ask. Do not invent an “end” silently after smoke tests alone.
+
+**Artifact (per demo):** `documents/build-timing.json`  
+Schema: copy `docs/templates/build-timing.example.json`. Keep updating the file during the build (phases can be filled as you go; finalize on completion).
+
+| Field | Purpose |
+|-------|---------|
+| `started_at` / `completed_at` | ISO-8601 UTC; drive `duration_minutes` |
+| `phases[]` | Named stages with start/end + duration (map to §4 checklist where possible) |
+| `slowest_phases` | Sorted by duration — what to optimize next |
+| `bottlenecks` | Concrete blockers (wrong FQCN, OGNL, rebuild loops, …) |
+| `speedup_ideas` | Actionable process fixes for the next demo |
+| `compose_project` + `docker_at_completion` | Tie timing to §5.1 inventory |
+
+**Required phases to capture** (merge/split if the work is shorter, but cover these concepts):
+
+1. Pre-flight + DESIGN  
+2. Scaffold (compose / SQL / ports)  
+3. Routes + transforms (often the long pole)  
+4. Web UI / inject / kickouts  
+5. V2 convert + route/capability/test PDFs  
+6. Smoke / automated tests + fixes  
+
+**Agent duties:**
+
+1. Create `documents/build-timing.json` early with `started_at`.  
+2. Update phase timestamps as work progresses (approximate is OK; prefer honest ranges over precision theater).  
+3. On completion: set `completed_at`, compute durations, fill `slowest_phases`, `bottlenecks`, `speedup_ideas`, and a §5.1 Docker snapshot.  
+4. Mention total minutes + top 1–2 slow phases in the completion chat summary.  
+5. Retain a short Hindsight note for the bank `PilotFish-Sandbox` when a demo is marked complete (document id like `build-timing-<slug>`), so future sessions can recall bottlenecks.
+
+Do **not** pad times or skip recording after a painful debug loop — those are the highest-value samples.
 
 ---
 
@@ -453,6 +494,35 @@ Do not refactor unrelated demos. Prefer copying the closest existing demo assemb
 - **LAN:** set `LAN_HINT` to `http://<192.x.x.x>:<webui-port>/` (see §1.1). Host ports must remain reachable on the LAN interface; announce both localhost and LAN URLs after `compose up`.
 - Secrets: demo password may match existing demos for local convenience, but **DESIGN.md and README must say demo-only** — never invent “production-ready” claims around `sa` + shared passwords.
 - Prefer least-privilege DB users when creating new non-demo client interfaces.
+- **Compose project name:** prefer the demo folder slug (Compose default). Record it in `DESIGN.md` Ops and in `documents/build-timing.json`.
+
+### 5.1 Sandbox demo Docker inventory (**required during builds**)
+
+Goal: know **how many demo stacks/containers this project is keeping alive** so idle demos can be stopped without guessing.
+
+**Inventory command (repo root):**
+
+```bash
+python3 tools/list_sandbox_demo_docker.py
+# machine-readable:
+python3 tools/list_sandbox_demo_docker.py --json
+```
+
+Reports:
+
+- Compose projects whose config path is under `Clients/`
+- Running containers named `pf-*` or images containing `pilotfish`
+- Demo dirs that have `docker-compose.yml` but are **not** in `docker compose ls` (idle candidates)
+
+**When to run:**
+
+1. **Start** of a new interface build (baseline).  
+2. **End** of a build (counts go into `build-timing.json` → `docker_at_completion`).  
+3. Anytime the user asks about Docker / disk / “what demos are running”.
+
+**In the agent summary**, include e.g. “Sandbox: N Compose projects / M containers running” and name this demo’s project + container prefixes.
+
+**Cleanup:** never `docker compose down -v` or prune images without the user’s OK. Prefer suggesting `cd <demo> && docker compose down` for stacks they are not using. Do not touch non-Sandbox Compose projects (e.g. unrelated folders on the machine).
 
 ---
 
@@ -812,7 +882,9 @@ An interface construct is done when:
 8. **Every review PDF** has a working browser link on localhost **and** `192.x` (§6.2), pasted in the agent summary.  
 9. Agent summary lists known limitations in plain language (no compliance theater).  
 10. **Outbound X12 / HL7** (when applicable) uses structured EDI/HL7 XML + Transformation processors (§3.5)—not hardcoded wire text.  
-11. **X12 TableData** (when applicable): compose mounts `EDI/TableData/x12` and EDI transforms use enhanced context + `TransactionDataWithVersion` (§3.6).
+11. **X12 TableData** (when applicable): compose mounts `EDI/TableData/x12` and EDI transforms use enhanced context + `TransactionDataWithVersion` (§3.6).  
+12. **`documents/build-timing.json`** exists with `started_at`, `completed_at`, phase durations, `slowest_phases`, and bottlenecks (§4.1); completion summary includes total minutes + top slow phases.  
+13. **Docker inventory** snapped via `python3 tools/list_sandbox_demo_docker.py` and recorded (`compose_project` + counts); idle stacks called out if relevant (§5.1).
 
 ---
 
@@ -856,5 +928,7 @@ curl -sS -o /dev/null -w "%{http_code} %{content_type}\n" \
   "http://${LAN_IP}:<webui-port>/documents/capability-brief.pdf"
 curl -sS -o /dev/null -w "%{http_code} %{content_type}\n" \
   "http://${LAN_IP}:<webui-port>/documents/test-plan.pdf"
+# finalize documents/build-timing.json (§4.1), then:
+python3 ../../../tools/list_sandbox_demo_docker.py
 docker compose down -v   # destroys DB volume — warn user first
 ```
