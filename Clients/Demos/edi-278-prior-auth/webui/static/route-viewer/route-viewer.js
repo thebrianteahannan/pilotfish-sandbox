@@ -12,6 +12,7 @@
   const XML_URL = `${BASE}/route.v2.xml`;
   const GROUPS_URL = `${BASE}/diagram-groups.json`;
   const docsMode = params.get("mode") === "docs" || params.has("print");
+  const docsBare = docsMode && params.get("bare") === "1";
   const layoutMode = (params.get("layout") || "pipeline").toLowerCase(); // pipeline | wrap | raw
   const colsParam = parseInt(params.get("cols") || "4", 10);
   const COLS = Number.isFinite(colsParam) && colsParam > 0 ? Math.min(8, colsParam) : 4;
@@ -62,7 +63,7 @@
     document.documentElement.classList.add("docs-mode");
     document.body.classList.add("docs-mode");
   }
-  if (docsMode && params.get("bare") === "1") document.body.classList.add("docs-bare");
+  if (docsBare) document.body.classList.add("docs-bare");
 
   function fallbackKind(label, inboundCount) {
     const t = (label || "").toLowerCase();
@@ -526,18 +527,42 @@
     el.svg.setAttribute("height", worldH);
     el.svg.style.width = el.world.style.width;
     el.svg.style.height = el.world.style.height;
-    el.editor.style.height = `${worldH}px`;
-    el.editor.style.minHeight = `${worldH}px`;
+
+    // Embedded docs (UI iframe): scale so side transports / wide pipelines stay on canvas.
+    // bare/print (PDF capture): keep 1:1 content size.
+    let scale = 1;
+    if (!docsBare) {
+      const top = document.querySelector(".topbar");
+      const topH = top ? Math.max(top.offsetHeight, top.scrollHeight) : 0;
+      const vw = Math.max((window.innerWidth || el.editor.clientWidth || 800) - 8, 280);
+      const vh = Math.max((window.innerHeight || 600) - topH - 8, 200);
+      scale = Math.min(vw / Math.max(worldW, 1), vh / Math.max(worldH, 1), 1);
+      scale = Math.max(0.35, scale);
+    }
+    state.scale = scale;
+    state.panX = 0;
+    state.panY = 0;
+    el.world.style.transformOrigin = "top left";
+    el.world.style.transform = scale < 0.999 ? `scale(${scale})` : "none";
+
+    const visualW = Math.ceil(worldW * scale);
+    const visualH = Math.ceil(worldH * scale);
+    el.editor.style.width = `${visualW}px`;
+    el.editor.style.height = `${visualH}px`;
+    el.editor.style.minHeight = `${visualH}px`;
+    el.editor.style.overflow = "hidden";
     const container = document.querySelector(".route-graph-container");
     if (container) {
-      container.style.height = `${worldH}px`;
-      container.style.minHeight = `${worldH}px`;
+      container.style.width = `${visualW}px`;
+      container.style.height = `${visualH}px`;
+      container.style.minHeight = `${visualH}px`;
+      container.style.overflow = "hidden";
     }
     document.documentElement.style.height = "auto";
     document.documentElement.style.overflow = "visible";
     document.body.style.height = "auto";
     document.body.style.overflow = "visible";
-    notifyParentSize(worldW, worldH);
+    notifyParentSize(visualW, visualH);
   }
 
   /**
@@ -714,7 +739,7 @@
 
   function applyTransform() {
     if (docsMode) {
-      el.world.style.transform = "none";
+      // applyDocsWorldSize owns the docs-mode transform (fit scale).
       return;
     }
     el.world.style.transform = `translate(${state.panX}px, ${state.panY}px) scale(${state.scale})`;
@@ -723,10 +748,9 @@
 
   function fitToView() {
     if (docsMode) {
-      state.scale = 1;
-      state.panX = 0;
-      state.panY = 0;
-      applyTransform();
+      if (!state.route) return;
+      const b = bounds(state.route.nodes);
+      applyDocsWorldSize(b.w + PAD * 2, b.h + PAD * 2);
       return;
     }
     const b = bounds(state.route.nodes);
@@ -836,7 +860,16 @@
       configSel.addEventListener("change", () => setConfigMode(configSel.value));
     }
     document.body.dataset.configMode = configMode;
-    if (docsMode) return;
+    if (docsMode) {
+      if (!docsBare) {
+        let resizeTimer = 0;
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => fitToView(), 120);
+        });
+      }
+      return;
+    }
     document.getElementById("zoom-in").addEventListener("click", () => {
       state.scale = Math.min(2, state.scale * 1.15);
       applyTransform();
