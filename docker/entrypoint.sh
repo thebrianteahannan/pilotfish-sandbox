@@ -32,6 +32,26 @@ fi
 # Ensure EIP / Tomcat can write data + logs
 chmod -R a+rwX /opt/pilotfish /usr/local/tomcat/webapps/eip/logs 2>/dev/null || true
 
+# Force debug-trace OFF on every route (historical XML exports blow disk/RAM)
+# Skip backups/ folders. Uses grep+sed so we only touch files that need it.
+EIP_ROOT="/usr/local/tomcat/webapps/eip/eip-root"
+if [ -d "${EIP_ROOT}/interfaces" ]; then
+  n=0
+  while IFS= read -r -d '' f; do
+    case "$f" in
+      */backups/*) continue ;;
+    esac
+    if grep -q 'debuggingTrace="true"' "$f" 2>/dev/null; then
+      sed -i 's/debuggingTrace="true"/debuggingTrace="false"/g' "$f"
+      n=$((n + 1))
+    fi
+  done < <(find "${EIP_ROOT}/interfaces" -name 'route.xml' -print0 2>/dev/null)
+  echo "Debug-trace: forced off on ${n} route.xml file(s)"
+fi
+mkdir -p "${EIP_ROOT}/debug-trace"
+# Prefer empty debug-trace dir (bind mounts may still receive writes if somehow re-enabled)
+rm -rf "${EIP_ROOT}/debug-trace"/* 2>/dev/null || true
+
 echo "Starting Tomcat with eiPlatform..."
 echo "  EIP root : /usr/local/tomcat/webapps/eip/eip-root"
 echo "  Data     : /opt/pilotfish/{input,output,archive,database}"

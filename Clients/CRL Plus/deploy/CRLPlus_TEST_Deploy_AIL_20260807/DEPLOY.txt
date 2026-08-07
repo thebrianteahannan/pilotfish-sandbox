@@ -1,0 +1,116 @@
+================================================================================
+CRL Plus — TEST deploy package
+American Income Life (AIL) electronic order (121 / 1122)
+Prepared: 2026-08-07
+================================================================================
+
+WHAT THIS PACKAGE IS FOR
+------------------------
+Deploy the AIL Ladder/FGL-style interface to CRL Plus TEST so American Income
+can POST ACORD 121 orders to:
+
+  https://plus.intg.crlcorp.com/http-post/ail
+
+Includes rotated TEST basic-auth credentials (2026-08-07).
+
+
+CONTENTS
+--------
+  DEPLOY.txt
+  environment-settings-AIL-TEST.conf.snippet
+  AIL_Programming_Design.pdf          (optional reference)
+
+  eip-root/
+    interfaces/Clients/interfaces/AmericanIncomeLife/
+      environment-settings.conf
+      formats/          (AIL 1122, 121 sync/failure/reject)
+      routes/
+        1 - 121 Incoming/     (route.xml, auth-test.txt, auth-prod.txt, …)
+        2 - 121 Response/
+        3 - 1122 Status or Result POST/
+        4 - 1122 POST Response/
+        ProcessStatus/        (retained; Status.4 now uses route 3)
+    interfaces/Status/routes/4 - Route to client specific/
+      route.xml               (AIL → ServiceName AIL 1122 Status)
+      pools.xml
+
+
+TEST CREDENTIALS (HTTP basic auth)
+---------------------------------
+  URL:      https://plus.intg.crlcorp.com/http-post/ail
+  Username: ail
+  Password: AIL-TEST-qYTc-nc0N-6DUN
+
+  File: AmericanIncomeLife/routes/1 - 121 Incoming/auth-test.txt
+  Env:  AILIncomingAuthFile=auth-test.txt
+
+
+PRE-REQUISITES
+--------------
+  1. Backup TEST before overwrite:
+       - interfaces/Clients/interfaces/AmericanIncomeLife/ (if present)
+       - interfaces/Status/routes/4 - Route to client specific/route.xml
+       - TEST eip-root environment-settings.conf (or wherever $$ props live)
+  2. Confirm TEST reverse-proxy / HttpPostListener path "ail" matches siblings
+     (same pattern as Ladder/FGLI under plus.intg.crlcorp.com/http-post/…).
+  3. Short maintenance window (EIP restart after copy).
+
+
+DEPLOY STEPS
+------------
+A) Copy interface files into TEST eip-root
+   Preserve paths under the TEST eip-root:
+
+     interfaces/Clients/interfaces/AmericanIncomeLife/
+       → copy/overwrite entire folder from this package
+
+     interfaces/Status/routes/4 - Route to client specific/route.xml
+       → overwrite (keeps other clients; updates AIL ServiceName)
+
+B) Merge environment properties
+   Add/update keys from environment-settings-AIL-TEST.conf.snippet into the
+   TEST eip-root environment-settings.conf (or host-specific props store):
+
+     AILIncomingAuthFile=auth-test.txt
+     AILOutgoingWsURL=…
+     AILOutgoingWsUserName=…
+     AILOutgoingWsPassword=…
+
+   Outbound 1122 currently uses a sandbox placeholder URL. Leave as-is (or
+   point at a mock) until AIL provides their status endpoint. Inbound 121
+   does not depend on outbound working.
+
+C) Restart eiPlatform / Tomcat on TEST
+   So new routes, Status.4 wiring, and auth file are loaded.
+
+D) Smoke test
+   curl -u 'ail:AIL-TEST-qYTc-nc0N-6DUN' \
+     -H 'Content-Type: text/xml' \
+     --data-binary @sample-121.xml \
+     "https://plus.intg.crlcorp.com/http-post/ail"
+
+   Confirm:
+     1) HTTP 200 / sync 121 response (not 401)
+     2) Transaction archives under AIL
+     3) Status.4 routes sourceClient=AIL to AIL 1122 Status
+
+
+ROLLBACK
+--------
+  1. Restore backed-up AmericanIncomeLife folder (or delete new routes if none)
+  2. Restore Status.4 route.xml
+  3. Remove/revert AIL* props from environment-settings.conf
+  4. Restart EIP
+
+
+NOTES
+-----
+  - auth-prod.txt is included but NOT active while AILIncomingAuthFile=auth-test.txt
+  - Do not email PROD credentials with this package
+  - Design PDF: Clients/CRL Plus/AIL_Programming_Design.pdf
+
+
+SOURCE
+------
+  Sandbox: Clients/CRL Plus/eip-root/… (2026-08-07)
+================================================================================

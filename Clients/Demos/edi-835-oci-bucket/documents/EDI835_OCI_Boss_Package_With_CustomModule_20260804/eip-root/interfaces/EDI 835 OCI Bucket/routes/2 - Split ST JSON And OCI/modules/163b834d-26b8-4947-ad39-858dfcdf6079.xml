@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="163b834d-26b8-4947-ad39-858dfcdf6079" name="Poll Staged EDI And Fork ST" type="Directory / File" tag="Listener" class="com.pilotfish.eip.modules.file.DirectoryListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <CLIAllowed>false</CLIAllowed>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <StopWhenPollingFailure>true</StopWhenPollingFailure>
+      
+        
+      <FIFOQueueName/>
+      
+        
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      
+        
+      <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      
+        
+      <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+      
+        
+      <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+      
+        
+      <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      
+        
+      <PollingInterval>5</PollingInterval>
+      
+        
+      <PollingDirectory>$$STAGED_EDI_DIRECTORY</PollingDirectory>
+      
+        
+      <FileNameRestriction/>
+      
+        
+      <FileExtensionRestriction>edi,835,txt</FileExtensionRestriction>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <PostProcessOperation>Delete</PostProcessOperation>
+      
+        
+      <TargetDirectory/>
+      
+        
+      <Tokenizers/>
+      
+        
+      <SerializedTransactionsTag>50</SerializedTransactionsTag>
+      
+        
+      <SubFolderIterationTag>false</SubFolderIterationTag>
+      
+        
+      <FullFolderPathRestrictionsTag/>
+      
+        
+      <HiddenFilesTag>false</HiddenFilesTag>
+      
+        
+      <SchedulerStartTag/>
+      
+        
+      <SchedulerEndTag/>
+      
+        
+      <ExcludeDaysTag/>
+      
+        
+      <ExcludeDatesTag/>
+      
+        
+      <TimeZone>System Default</TimeZone>
+      
+        
+      <MinSecondsSinceFileModified>1</MinSecondsSinceFileModified>
+      
+        
+      <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+      
+        
+      <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+      
+        
+      <CombineFiles>false</CombineFiles>
+      
+        
+      <HeaderLines>0</HeaderLines>
+      
+      
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,109 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-edi278pa-sqlserver
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "PilotFish_Demo1!"
+      MSSQL_PID: Developer
+    ports:
+      - "14340:1433"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"PilotFish_Demo1!\" -C -Q \"SELECT 1\" || exit 1",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  sqlserver-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-edi278pa-sqlserver-init
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ./sql:/sql:ro
+    entrypoint:
+      - /bin/bash
+      - -lc
+      - |
+        set -euo pipefail
+        echo "Initializing EDI 278 Prior Auth database..."
+        /opt/mssql-tools18/bin/sqlcmd \
+          -S sqlserver \
+          -U sa \
+          -P 'PilotFish_Demo1!' \
+          -C \
+          -i /sql/01_init.sql
+        echo "SQL Server seed complete."
+
+  pilotfish:
+    build:
+      context: ./pilotfish
+    image: pilotfish-edi278-prior-auth:23R1
+    container_name: pf-edi278pa-pilotfish
+    restart: unless-stopped
+    depends_on:
+      sqlserver-init:
+        condition: service_completed_successfully
+    environment:
+      CATALINA_OPTS: "-Xms512M -Xmx2048M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8120:8080"
+    volumes:
+      - ./input:/opt/pilotfish/input
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+
+  webui:
+    build:
+      context: ./webui
+    image: pilotfish-edi278pa-webui:latest
+    container_name: pf-edi278pa-webui
+    restart: unless-stopped
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      pilotfish:
+        condition: service_started
+    environment:
+      WEBUI_PORT: "8121"
+      DB_HOST: sqlserver
+      DB_PORT: "1433"
+      DB_USER: sa
+      DB_PASSWORD: "PilotFish_Demo1!"
+      DB_NAME: Edi278PriorAuth
+      INBOUND_DIR: /inbound
+      APPROVED_DIR: /output/approved
+      DENIED_DIR: /output/denied
+      INCOMPLETE_DIR: /output/incomplete
+      PENDED_DIR: /output/pended
+      RESPONSE_DIR: /output/responses
+      EHR_NOTICE_DIR: /output/ehr-notices
+      ARCHIVE_DIR: /output/archive
+      DEBUG_DIR: /output/debug
+      SAMPLE_DIR: /samples
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      ROUTE_PDF_NAME: EDI278_Prior_Auth_V2_Route_Diagrams.pdf
+      CAPABILITY_PDF_NAME: EDI278_Prior_Auth_Capability_Brief.pdf
+      ENV_SETTINGS_FILE: /environment-settings.conf
+      LAN_HINT: "http://192.168.68.52:8121/"
+      EIP_PUBLIC_URL: "http://192.168.68.52:8120/eip/"
+    ports:
+      - "8121:8121"
+    volumes:
+      - ./input/inbound:/inbound
+      - ./output:/output
+      - ./samples:/samples:ro
+      - ./documents:/documents:ro
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/environment-settings.conf:ro
+      # Prefer demo-eip-root (no spaces in parent path). Docker Desktop bind mounts
+      # of ".../EDI 278 Prior Auth/routes" can appear empty in the container.
+      - ./pilotfish/demo-eip-root/routes:/routes:ro

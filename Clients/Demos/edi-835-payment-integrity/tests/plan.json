@@ -1,0 +1,195 @@
+{
+  "version": 1,
+  "interface": "EDI 835 Payment Integrity",
+  "description": "Directory drop EDI 835 → Open AR match → matched/exception buckets + underpay CSV.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8111",
+    "eip": "http://127.0.0.1:8110/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8111/",
+    "http://127.0.0.1:8111/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": {
+            "url": "{webui}/"
+          },
+          "expect": {
+            "status": 200,
+            "contains": [
+              "Payment Integrity",
+              "835"
+            ]
+          }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "{webui}/api/health"
+          },
+          "expect": {
+            "status": 200
+          }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "{webui}/api/v2/routes"
+          },
+          "expect": {
+            "status": 200,
+            "contains": [
+              "routes"
+            ]
+          }
+        },
+        {
+          "id": "open-ar",
+          "name": "Open AR seeded",
+          "type": "http",
+          "request": {
+            "method": "GET",
+            "url": "{webui}/api/open-ar"
+          },
+          "expect": {
+            "status": 200,
+            "contains": [
+              "PATCLAIM001",
+              "ExpectedPaid"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "integrity",
+      "name": "Remit matching",
+      "tests": [
+        {
+          "id": "reset-outputs",
+          "name": "Clear prior bucket files",
+          "type": "shell",
+          "shell": {
+            "command": "rm -f output/matched/*.xml output/exceptions/*.xml && printf '%s\\n' 'ClaimControlNumber,PatientName,ExpectedPaid,PaidAmount,Variance,CasCodes,Reason,SourceFile' > output/underpay/underpay_alerts.csv && docker compose exec -T sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'PilotFish_Demo1!' -C -d Edi835PaymentIntegrity -Q \"UPDATE dbo.OpenAR SET Status=N'OPEN', Notes=CASE ClaimControlNumber WHEN N'PATCLAIM001' THEN N'Full expected allowed — remit underpays' WHEN N'PATCLAIM002' THEN N'Contracted allowed amount — exact match' WHEN N'PATCLAIM003' THEN N'Contracted allowed — exact match' ELSE Notes END, UpdatedAt=SYSUTCDATETIME();\""
+          },
+          "expect": {
+            "exit_code": 0
+          }
+        },
+        {
+          "id": "drop-sample",
+          "name": "Copy sample 835 into inbound",
+          "type": "shell",
+          "shell": {
+            "command": "mkdir -p input/inbound && cp -f samples/sample_835_underpays.edi input/inbound/"
+          },
+          "expect": {
+            "exit_code": 0
+          }
+        },
+        {
+          "id": "matched-out",
+          "name": "Matched decisions appear",
+          "type": "file",
+          "file": {
+            "path": "output/matched/PATCLAIM002_matched.xml",
+            "exists": true,
+            "timeout_sec": 120,
+            "contains": [
+              "MATCHED",
+              "matched"
+            ]
+          }
+        },
+        {
+          "id": "underpay-exception",
+          "name": "Underpay exception for PATCLAIM001",
+          "type": "file",
+          "file": {
+            "path": "output/exceptions/PATCLAIM001_exception.xml",
+            "exists": true,
+            "timeout_sec": 120,
+            "contains": [
+              "UNDERPAY",
+              "exception"
+            ]
+          }
+        },
+        {
+          "id": "no-ar-exception",
+          "name": "NO_AR exception for PATCLAIM999",
+          "type": "file",
+          "file": {
+            "path": "output/exceptions/PATCLAIM999_exception.xml",
+            "exists": true,
+            "timeout_sec": 120,
+            "contains": [
+              "NO_AR"
+            ]
+          }
+        },
+        {
+          "id": "underpay-csv",
+          "name": "Underpay alert CSV has PATCLAIM001",
+          "type": "file",
+          "file": {
+            "path": "output/underpay/underpay_alerts.csv",
+            "exists": true,
+            "timeout_sec": 120,
+            "contains": [
+              "PATCLAIM001",
+              "UNDERPAY"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": {
+            "path": "documents/EDI835_Payment_Integrity_V2_Route_Diagrams.pdf",
+            "exists": true
+          }
+        },
+        {
+          "id": "brief-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": {
+            "path": "documents/EDI835_Payment_Integrity_Capability_Brief.pdf",
+            "exists": true
+          }
+        },
+        {
+          "id": "test-plan-pdf",
+          "name": "Test Plan PDF on disk",
+          "type": "file",
+          "file": {
+            "path": "documents/EDI835_Payment_Integrity_Test_Plan.pdf",
+            "exists": true
+          }
+        }
+      ]
+    }
+  ]
+}

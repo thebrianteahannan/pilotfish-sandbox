@@ -1,0 +1,22 @@
+{
+  "groups": [
+    {
+      "id": "extract",
+      "title": "Extract CLP",
+      "description": "Pull claim control #, paid/charge, and CAS codes from the forked ST.",
+      "labels": ["Extract CLP Remit Fields", "Debug Write Forked Transaction"]
+    },
+    {
+      "id": "enrich",
+      "title": "Open AR Match",
+      "description": "SQL lookup against OpenAR and score matched vs underpay/exception.",
+      "labels": ["Lookup Open AR", "Extract Open AR Fields", "Compose Patient Name"]
+    },
+    {
+      "id": "decide",
+      "title": "Remit Decision",
+      "description": "Build RemitDecision XML and stage for bucket routing.",
+      "labels": ["Build Remit Decision XML", "Debug Write Remit Decision"]
+    }
+  ]
+}

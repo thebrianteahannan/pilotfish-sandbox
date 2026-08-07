@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="fec837a9-416a-4395-924f-07f34585d958" name="Emit EHR ORU Notice" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory>$$EHR_NOTICE_OUTPUT_DIRECTORY</TargetDirectory>
+      
+        
+      <FileName>{ognl:(getAttribute('AuthTraceNumber') != null ? getAttribute('AuthTraceNumber') : 'unknown') + '_auth_decided.oru'}</FileName>
+      
+        
+      <FileExtension>hl7</FileExtension>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <AppendToFile>Overwrite</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

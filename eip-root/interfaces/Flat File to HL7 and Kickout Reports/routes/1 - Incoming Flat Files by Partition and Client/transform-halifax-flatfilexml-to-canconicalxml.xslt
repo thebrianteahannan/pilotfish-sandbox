@@ -22,40 +22,11 @@
               <xsl:value-of select="Demographics/XCSRecord[1]/PAT_STATE" />
             </admpatstate>
             <absAdmitdate>
-              <xsl:variable name="AdmitDate">
-                <xsl:choose>
-                  <xsl:when test="string-length(Demographics/XCSRecord[1]/ADM_DATE_TIME) != 10">
-                    <!--WE KNOW WE NEED TO PAD WITH ZERO-->
-                    <xsl:value-of select="pf:padDate(Demographics/XCSRecord[1]/ADM_DATE)" />
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <xsl:value-of select="Demographics/XCSRecord[1]/ADM_DATE" />
-                  </xsl:otherwise>
-                </xsl:choose>
-              </xsl:variable>
-              <xsl:if test="string-length($AdmitDate) != 0 and not(contains($AdmitDate,'NaN'))">
-                <xsl:if test="string-length(translate($AdmitDate, '/', '')) != 0">
-                  <xsl:value-of select="dtFormatter:format(translate($AdmitDate, '/', ''),'MMddyyyy','yyyyMMdd')" />
-                </xsl:if>
-              </xsl:if>
+              <xsl:value-of select="pf:formatToYyyyMmDd(Demographics/XCSRecord[1]/ADM_DATE)" />
             </absAdmitdate>
             <absattendingdocupin />
             <absdischargedate>
-              <xsl:variable name="DischargeDate">
-                <xsl:choose>
-                  <xsl:when test="string-length(Demographics/XCSRecord[1]/DISCH_DATE_TIME) != 10">
-                    <xsl:value-of select="pf:padDate(Demographics/XCSRecord[1]/DISCH_DATE_TIME)" />
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <xsl:value-of select="Demographics/XCSRecord[1]/DISCH_DATE_TIME" />
-                  </xsl:otherwise>
-                </xsl:choose>
-              </xsl:variable>
-              <xsl:if test="string-length($DischargeDate) != 0 and not(contains($DischargeDate,'NaN'))">
-                <xsl:if test="string-length(translate($DischargeDate, '/', '')) != 0">
-                  <xsl:value-of select="dtFormatter:format(translate($DischargeDate, '/', ''),'MMddyyyy','yyyyMMdd')" />
-                </xsl:if>
-              </xsl:if>
+              <xsl:value-of select="pf:formatToYyyyMmDd(Demographics/XCSRecord[1]/DISCH_DATE_TIME)" />
             </absdischargedate>
             <admemplname />
             <admzipcode>
@@ -207,23 +178,8 @@
                 <xsl:value-of select="QUANTITY" />
               </radNumOfTimes>
               <radExamServDate>
-                <xsl:variable name="ServiceDateVal" select="SERVICE_DATE" />
-                <xsl:if test="string-length(translate($ServiceDateVal, '/', '')) != 0">
-                  <xsl:variable name="CollectionDate">
-                    <xsl:choose>
-                      <xsl:when test="string-length($ServiceDateVal) != 10">
-                        <!--WE KNOW WE NEED TO PAD WITH ZERO-->
-                        <xsl:value-of select="pf:padDate($ServiceDateVal)" />
-                      </xsl:when>
-                      <xsl:otherwise>
-                        <xsl:value-of select="$ServiceDateVal" />
-                      </xsl:otherwise>
-                    </xsl:choose>
-                  </xsl:variable>
-                  <xsl:if test="string-length($CollectionDate) != 0 and not(contains($CollectionDate,'NaN'))">
-                    <xsl:value-of select="dtFormatter:format(translate($CollectionDate, '/', ''),'MMddyyyy','yyyyMMdd')" />
-                  </xsl:if>
-                </xsl:if>
+                <!-- Accept MM/dd/yyyy (daily) and yyyy-MM-dd (historical HAL exports). -->
+                <xsl:value-of select="pf:formatToYyyyMmDd(SERVICE_DATE)" />
               </radExamServDate>
               <radPatientName>
                 <xsl:value-of select="HSP_ACCOUNT_NAME" />
@@ -675,6 +631,65 @@
     <xsl:param as="xs:string" name="date" />
     <xsl:variable name="parts" select="tokenize($date, '/')" />
     <xsl:value-of select="concat(format-number(number($parts[1]), '00'),'/',format-number(number($parts[2]),'00'),'/',$parts[3])" />
+  </xsl:function>
+  <!-- Normalize HAL date strings to yyyyMMdd for HL7. Handles:
+       - yyyy-MM-dd (historical charge SERVICE_DATE)
+       - yyyyMMdd already
+       - MMddyyyy (8 digits)
+       - M/d/yyyy or MM/dd/yyyy (daily feeds; padDate used when needed)
+       Does NOT parse ISO with MMddyyyy (that produced 00030826 → year 2001/2002). -->
+  <xsl:function as="xs:string" name="pf:formatToYyyyMmDd">
+    <xsl:param as="item()*" name="date" />
+    <xsl:variable as="xs:string" name="raw" select="normalize-space(if (empty($date)) then '' else string($date[1]))" />
+    <xsl:choose>
+      <xsl:when test="$raw = '' or contains($raw, 'NaN')">
+        <xsl:value-of select="''" />
+      </xsl:when>
+      <!-- ISO yyyy-MM-dd -->
+      <xsl:when test="string-length($raw) = 10 and substring($raw, 5, 1) = '-' and substring($raw, 8, 1) = '-'">
+        <xsl:value-of select="dtFormatter:format($raw, 'yyyy-MM-dd', 'yyyyMMdd')" />
+      </xsl:when>
+      <!-- Already yyyyMMdd -->
+      <xsl:when test="string-length($raw) = 8 and translate($raw, '0123456789', '') = '' and (starts-with($raw, '19') or starts-with($raw, '20'))">
+        <xsl:value-of select="$raw" />
+      </xsl:when>
+      <!-- MMddyyyy digits -->
+      <xsl:when test="string-length($raw) = 8 and translate($raw, '0123456789', '') = ''">
+        <xsl:value-of select="dtFormatter:format($raw, 'MMddyyyy', 'yyyyMMdd')" />
+      </xsl:when>
+      <!-- MM/dd/yyyy (pad if unpadded) -->
+      <xsl:when test="contains($raw, '/')">
+        <xsl:variable name="padded">
+          <xsl:choose>
+            <xsl:when test="string-length($raw) != 10">
+              <xsl:value-of select="pf:padDate($raw)" />
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="$raw" />
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        <xsl:choose>
+          <xsl:when test="$padded = '' or contains($padded, 'NaN')">
+            <xsl:value-of select="''" />
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:variable name="digits" select="translate($padded, '/', '')" />
+            <xsl:choose>
+              <xsl:when test="string-length($digits) = 8 and translate($digits, '0123456789', '') = ''">
+                <xsl:value-of select="dtFormatter:format($digits, 'MMddyyyy', 'yyyyMMdd')" />
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="''" />
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="''" />
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
 </xsl:stylesheet>
 

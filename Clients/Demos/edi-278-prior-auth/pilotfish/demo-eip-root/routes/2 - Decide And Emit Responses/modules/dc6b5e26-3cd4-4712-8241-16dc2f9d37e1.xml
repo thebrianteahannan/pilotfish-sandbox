@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="dc6b5e26-3cd4-4712-8241-16dc2f9d37e1" name="Map Decision To ORU HL7 XML" type="XSLT Transformation" tag="Processor" class="com.pilotfish.eip.modules.transform.XSLTProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <XSLTPath>transform-decision-to-oru-hl7-xml.xslt</XSLTPath>
+      
+          
+      <CacheXSLTToXML>false</CacheXSLTToXML>
+      
+          
+      <XSLTEngine>Saxon</XSLTEngine>
+      
+          
+      <XSLTParameters>null</XSLTParameters>
+      
+          
+      <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+      
+          
+      <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+      
+        
+   </ModuleConfig>
+</Module>

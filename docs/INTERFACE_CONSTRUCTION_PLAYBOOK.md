@@ -80,6 +80,7 @@ Best source for **end-to-end patterns** that already run in Docker:
 | Demo | Pattern |
 |------|---------|
 | `Clients/Demos/edi-837-snip-sqlserver/` | SQL poll → EIP handoff → fork → EDI + SNIP |
+| `Clients/Demos/edi-278-prior-auth/` | Completeness + simulated PA; EDI XML→EDI + HL7 XML→ER7 (§3.5) |
 | `Clients/Demos/hl7-healthcare-automation/` | Directory → validate → router fan-out → SQL + file |
 
 **Default assembly method:** choose modules via Documentation + V2 → copy a Sandbox `route.xml` fragment when one exists for that class → otherwise build V1 XML from looked-up config items → convert to V2 for diagrams.
@@ -265,9 +266,12 @@ If runtime and diagrams diverge, fix or document the divergence in `DESIGN.md` �
 
 Reference implementations:
 
-- `Clients/Demos/edi-837-snip-sqlserver/` — SQL poll → EIP handoff → fork → EDI + SNIP
+- `Clients/Demos/edi-837-snip-sqlserver/` — SQL poll → EIP handoff → fork → EDI XML→EDI + SNIP
+- `Clients/Demos/edi-270-271-eligibility/` — EligibilityRequest → EDI XML → `EDITransformationProcessor` (XML→EDI) → 270
+- `Clients/Demos/edi-278-prior-auth/` — AuthDecision → EDI XML→EDI (278) + HL7 XML→ER7 (ORU); no hardcoded wire text
 - `Clients/Demos/hl7-healthcare-automation/` — directory listen → validate → router fan-out → SQL + file
 - `Clients/Demos/fhir-r4-platform/` — Call Route auth, docs-only **Processor Groups** (`diagram-groups.json` + overview/detail route PDF)
+- Med Rec Flat File to HL7 (`eip-root/interfaces/Flat File to HL7 and Kickout Reports/`) — XSLT HL7 XML → `HL7TransformationProcessor` (XML→HL7 2.X)
 
 ---
 
@@ -324,6 +328,9 @@ Then run `tools/convert_routes_to_v2.py` (or demo equivalent) so `route.v2.xml` 
 8. **Poison / kickout:**  
    Explicit fail directory or status; don’t Move-to-archive on exception-only paths.
 
+9. **EDI / HL7 emission:**  
+   Outbound X12 or HL7 v2 **must** use structured PilotFish EDI/HL7 XML + the matching Transformation processor (§3.5). Hardcoded `ISA*` / `MSH|` text in XSLT is not allowed for new work.
+
 ### 3.4 Prefer PilotFish routes/interfaces over custom modules (**default**)
 
 **Bias: build it as a PF route (or callout route) first.** Custom Java modules (`custom-modules/*`, fat JARs into `WEB-INF/lib`) are a **last resort**, not a convenience shortcut.
@@ -344,6 +351,47 @@ Then run `tools/convert_routes_to_v2.py` (or demo equivalent) so `route.v2.xml` 
 5. Keep the custom surface minimal; prefer route-owned wiring around a tiny processor over a mega-module.
 
 **Good example (this Sandbox):** FHIR Keycloak auth was moved from `FhirJwtAuthProcessor` to route `0 - Keycloak JWT Auth` (Call Route + HTTP Post introspection). Validation/Bulk may remain custom while HAPI/Bulk semantics stay hard to express in stock modules alone.
+
+### 3.5 Emit X12 / HL7 via PilotFish transform modules (**required**)
+
+When an interface **generates** X12 EDI or HL7 v2 wire (outbound file, HTTP body, LLP payload, response envelope), **do not** build the wire as concatenated text in XSLT (`ISA*…`, `MSH|…`, `xsl:output method="text"` with delimiters). That hides PilotFish’s product value and is harder to maintain.
+
+**Required pattern**
+
+```text
+Business / decision XML
+  → XSLT (method="xml") builds PilotFish structured EDI XML or HL7 XML
+  → EDITransformationProcessor  (TransformationDirection = "XML to EDI")
+     or HL7TransformationProcessor (TransformationDirection = "XML to HL7 2.X")
+  → transport / file write (optional EOLProcessor for HL7 LF)
+```
+
+| Standard | Intermediate XML | Transformation processor | FQCN |
+|----------|------------------|---------------------------|------|
+| **X12 EDI** | `XCSData` → `Interchange` → `Group` → `Transaction` with **named segments** (`ST`, `BHT`, `NM1`, …) and composites (`SV101/SV101_1`, `HI01/HI01_1`, …) | `EDITransformationProcessor` · `XML to EDI` | `com.pilotfish.eip.modules.transform.EDITransformationProcessor` |
+| **HL7 v2** | Message root (`ORU_R01`, `ADT_A01`, …) with `MSH.1`/`MSH.2`/`MSH.9/MSG.*`, `PID.*`, `OBX.*`, datatype components (`CE.1`, `XPN.1`, …) | `HL7TransformationProcessor` · `XML to HL7 2.X` · set `HL7Version` (e.g. `2.5.1`) | `com.pilotfish.eip.modules.transform.hl7.HL7TransformationProcessor` |
+
+**XSLT rules for these maps**
+
+- Output **XML only** (`xsl:output method="xml"`). Populate structure and business values; let the transform module own delimiters, envelopes, and segment encoding.
+- Include an explicit `<ST>…</ST>` on modern X12 outbound XML (23R1 does **not** auto-inject ST from `@DocType` without legacy shape).
+- Prefer `UseInternalData=false` + `UseProvidedDelimiters=true` on EDI XML→EDI for `pilotfish-eip:23R1` (trial X12 tables may be expired). Call version skew out in `DESIGN.md`.
+- For HL7: `USE_FRIENDLY_NAMES=false`, `USE_NAMESPACE=false`, match `MSH.12` to `HL7Version`. Optional `EOLProcessor` (`EndlineSequence=\n`) when file consumers prefer LF.
+- Write intermediate EDI/HL7 XML to a debug/audit folder in demos so the XSLT tab and reviewers can see the structured map.
+
+**Allowed exceptions** (must be labeled in `DESIGN.md` Risks)
+
+- Pure **relay** of partner-supplied wire already in the stream (no generation).
+- Tiny **demo shims** outside EIP (e.g. Web UI ST inject) when the route path itself still uses the transform module.
+- User explicitly waives the rule for a throwaway spike.
+
+**Reference assemblies**
+
+- X12 XML→EDI: `Clients/Demos/edi-270-271-eligibility/`, `Clients/Demos/edi-837-snip-sqlserver/`, `Clients/Demos/edi-278-prior-auth/` (278 response)
+- HL7 XML→ER7: Med Rec / Flat File to HL7 (`eip-root/interfaces/Flat File to HL7 and Kickout Reports/`), `Clients/Demos/edi-278-prior-auth/` (ORU notice)
+- Structured dialect docs: `/Users/brianhannan/Documents/PilotFish Documentation/Documents/Processors/…/PilotFish-EDI-XML-Guide-*.md`
+
+**Anti-example (do not copy for new work):** XSLT that emits `ISA*00*…` or `MSH|^~\&|…` as text. Legacy demos that still do this (`hl7-healthcare-automation` event→HL7 text, older doc-healthcare maps) are **not** the construction standard going forward—refactor when touching those emitters.
 
 ---
 
@@ -677,6 +725,7 @@ Announce browser URLs per §6.2 for the Test Plan PDF and results HTML.
 - Runtime vs `eip-root` config drift
 - Secrets / PHI on permissive mounts
 - Partner transport missing (e.g. no MLLP/ACK when story implies it)
+- Hardcoded EDI/HL7 wire text instead of XML + Transformation processor (§3.5)
 
 ---
 
@@ -712,6 +761,8 @@ Every interface README must include:
 | Leaving a review PDF only on disk / in git / Drive | Serve via Web UI `/documents/…` and paste LAN browser URL (§6.2) |
 | Relying solely on Google Drive for PDF review | Drive is optional; LAN HTTP link is required even when Drive works |
 | Jumping to a custom Java module for auth, HTTP callouts, mapping, or routing | Prefer PF Call Route / HTTP / Attribute / XSLT first (§3.4); custom only when PF-only is extremely hard |
+| Hardcoding X12 (`ISA*…`) or HL7 (`MSH|…`) as text in XSLT | XSLT → PilotFish EDI/HL7 XML → `EDITransformationProcessor` / `HL7TransformationProcessor` (§3.5) |
+| Emitting EDI/HL7 without an intermediate structured XML audit in demos | Write EDI/HL7 XML to debug/output next to the wire file |
 
 ---
 
@@ -731,7 +782,8 @@ An interface construct is done when:
 6d. **Automated test run** completed (`run_interface_tests.py`) with results published under `documents/test-results.*` (pass/fail list + PDF).  
 7. **LAN URL** is set (`LAN_HINT`) and both localhost + `192.x` URLs are listed when the UI is running (§1.1).  
 8. **Every review PDF** has a working browser link on localhost **and** `192.x` (§6.2), pasted in the agent summary.  
-9. Agent summary lists known limitations in plain language (no compliance theater).
+9. Agent summary lists known limitations in plain language (no compliance theater).  
+10. **Outbound X12 / HL7** (when applicable) uses structured EDI/HL7 XML + Transformation processors (§3.5)—not hardcoded wire text.
 
 ---
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7f5ce7ce-aea6-4274-8004-2d766ec5a4b1" name="Archive JSON Object" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$JSON_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('OciObjectName')}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

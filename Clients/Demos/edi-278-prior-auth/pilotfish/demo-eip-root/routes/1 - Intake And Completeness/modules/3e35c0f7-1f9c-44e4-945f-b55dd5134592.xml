@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="3e35c0f7-1f9c-44e4-945f-b55dd5134592" name="Lookup Auth Catalog" type="Database (SQL)" tag="Processor" class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor">
+   <ModuleConfig>
+      <InputFile/>
+      
+          
+      <WriteQuery>true</WriteQuery>
+      
+          
+      <Query>SELECT TOP 1 ProcedureCode, RequiresDiagnosis, RequiresAttachment, DefaultDisposition, Notes FROM dbo.AuthCatalog WHERE ProcedureCode = ?</Query>
+      
+          
+      <QueryParams>[eip_pair:ProcedureCode:eip_name:{ognl:getAttribute('ProcedureCode')}:eip_value]</QueryParams>
+      
+          
+      <UserName>$$sqlserver.username</UserName>
+      
+          
+      <Password>$$sqlserver.password</Password>
+      
+          
+      <UseDataSource>false</UseDataSource>
+      
+          
+      <DataSource/>
+      
+          
+      <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+      
+          
+      <JdbcURL>$$sqlserver.url</JdbcURL>
+      
+          
+      <KeepConnection>false</KeepConnection>
+      
+          
+      <Autocommit>true</Autocommit>
+      
+          
+      <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+      
+          
+      <Timeout>60</Timeout>
+      
+          
+      <RestrictMetaDataToCatalog/>
+      
+          
+      <RestrictMetaDataToSchema/>
+      
+          
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+          
+      <UseSingleOutputStream>true</UseSingleOutputStream>
+      
+          
+      <RefreshHandler>false</RefreshHandler>
+      
+          
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+          
+      <JDBCProperties>null</JDBCProperties>
+      
+          
+      <LogMetadata>false</LogMetadata>
+      
+          
+      <LogSQL>true</LogSQL>
+      
+        
+   </ModuleConfig>
+</Module>

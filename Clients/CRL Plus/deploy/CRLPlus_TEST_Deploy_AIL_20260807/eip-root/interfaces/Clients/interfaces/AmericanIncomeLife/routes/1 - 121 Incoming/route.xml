@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2026-05-01T09:54:16-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="LL.1 - 121 Incoming.Transaction Monitor">
+      <ModuleConfig>
+        <ErrorListenerName>Error On Incoming Routes Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <MustContainString />
+        <MustNotContainString />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="From ACORD Test Harness, or HTTP Post">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.http.HttpPostListener" enabled="true" name="AIL - 121 Incoming - HTTP Post Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <RequestPath>ail</RequestPath>
+        <Timeout>600</Timeout>
+        <TimeoutHandlingMechanism>Send timeout message</TimeoutHandlingMechanism>
+        <Synchronous>true</Synchronous>
+        <RequireSSL>false</RequireSSL>
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/xml;charset=UTF-8:eip_value]</HTTPHeaders>
+        <WsdlFile />
+        <WsdlContentType>application/wsdl+xml</WsdlContentType>
+        <ValidateAtListenerLevel>false</ValidateAtListenerLevel>
+        <USE_BASIC_AUTH>true</USE_BASIC_AUTH>
+        <AUTH_FILE>$$AILIncomingAuthFile</AUTH_FILE>
+        <REALM>PilotFish</REALM>
+        <AdditionalResources />
+        <MonitoringTime>12:39-12:39</MonitoringTime>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <InactivityPolling>500</InactivityPolling>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.RegExProcessor" name="AIL - Remove External Entities">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Encoding>UTF-8</Encoding>
+          <REGEX_TABLE_TAG>[eip_pair:&lt;!ENTITY[^&gt;]*&gt;:eip_name::eip_value][eip_pair:&lt;!DOCTYPE[^&gt;]*&gt;:eip_name::eip_value][eip_pair:&lt;!ENTITY:eip_name:&lt;!--:eip_value][eip_pair:&lt;!DOCTYPE:eip_name:&lt;!--:eip_value]</REGEX_TABLE_TAG>
+          <PostProcessOptions>Replace all \n with newlines</PostProcessOptions>
+          <UseDefaultEncoding>false</UseDefaultEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="LL.1 - set sourceClient">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>sourceClient</AttributeName>
+          <Expression>AIL</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:sourceClient:eip_name:AIL:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor" name="LL.1 - set FileName">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <RegEx>&lt;TrackingID&gt;(.*)&lt;/TrackingID&gt;</RegEx>
+          <AttributeName>com.pilotfish.FileName</AttributeName>
+          <MatchGroupNumber>1</MatchGroupNumber>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="AmericanIncomeLife.Processor-Copy-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>RouteName</AttributeName>
+          <Expression>{ognl:'Clients.AmericanIncomeLife-' + getAttribute('com.pilotfish.FileName') + '-1 - 121 Incoming'}</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.CallRouteProcessor" name="AmericanIncomeLife.1 - 121 Incoming.Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener>WellnessElectronicOrderInterface.999 - Capture Requests and Responses.Programmable (Trigger) Listener</Listener>
+          <Synchronous>false</Synchronous>
+          <Timeout>60</Timeout>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="" name="From File System">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="AIL - 121 Incoming - Dir Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <PollingInterval>5</PollingInterval>
+        <PollingDirectory>{ognl:@com.pilotfish.eip.config.EnvironmentConfigReader@getValue(#transaction,null,"inputDir") + "/ail"}</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction />
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Delete</PostProcessOperation>
+        <TargetDirectory />
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+        <MonitoringTime>12:39-12:39</MonitoringTime>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <SynchResponse>false</SynchResponse>
+        <FileSortingDirection>Ascending</FileSortingDirection>
+        <CheckInactivity>false</CheckInactivity>
+        <Timeout>60</Timeout>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <CompatModeMoved>true</CompatModeMoved>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <FileSortingMethod>System Default</FileSortingMethod>
+        <InactivityPolling>500</InactivityPolling>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set SourceClient">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>sourceClient</AttributeName>
+          <Expression>AIL</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:sourceClient:eip_name:AIL:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.RegExIntoTransactionAttributeProcessor" name="LL.1 - set FileName-1">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <RegEx>&lt;TrackingID&gt;(.*)&lt;/TrackingID&gt;</RegEx>
+          <AttributeName>com.pilotfish.FileName</AttributeName>
+          <MatchGroupNumber>1</MatchGroupNumber>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="To DocType Discovery Route">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="AIL - 121 Incoming - Route to Route Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>Source Document Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>600</Timeout>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="LL.1 - set inboundClient">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>inboundClient</AttributeName>
+          <Expression>AIL</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:inboundClient:eip_name:AIL:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="LL.1 - set defaultSourceInfoName">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>defaultSourceInfoName</AttributeName>
+          <Expression>AIL</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:defaultSourceInfoName:eip_name:AIL:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="LL.1 - set defaultSourceInfoDescr">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>defaultSourceInfoDescr</AttributeName>
+          <Expression>American Income Life</Expression>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+          <AttributePairs>[eip_pair:defaultSourceInfoDescr:eip_name:AIL:eip_value]</AttributePairs>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Description>&lt;p&gt;
+      *Note: there must be http headers when the message comes in or the order 
+      will be rejected:
+    &lt;/p&gt;
+    &lt;p&gt;
+      1. To http header goes into com.pilotfish.To via the HTTP Post Listener
+    &lt;/p&gt;
+    &lt;p&gt;
+      2. ToService goes into com.pilotfish.ToService via the HTTP Post Listener
+    &lt;/p&gt;
+    &lt;p&gt;
+      3. From goes into com.pilotfish.From via the HTTP Post Listener
+    &lt;/p&gt;
+    &lt;p&gt;
+      4. FromService goes into com.pilotfish.FromService via the HTTP Post 
+      Listener
+    &lt;/p&gt;</Description>
+</Route>
+

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "env CURSOR_PLUGIN_ROOT=\"/Users/brianhannan/Documents/PilotFish Sandbox/.cursor-plugin/hindsight-memory\" /opt/homebrew/bin/python3 \"/Users/brianhannan/Documents/PilotFish Sandbox/.cursor-plugin/hindsight-memory/scripts/session_start.py\"",
+        "timeout": 30
+      }
+    ],
+    "stop": [
+      {
+        "command": "env CURSOR_PLUGIN_ROOT=\"/Users/brianhannan/Documents/PilotFish Sandbox/.cursor-plugin/hindsight-memory\" /opt/homebrew/bin/python3 \"/Users/brianhannan/Documents/PilotFish Sandbox/.cursor-plugin/hindsight-memory/scripts/retain.py\"",
+        "timeout": 45
+      }
+    ]
+  }
+}

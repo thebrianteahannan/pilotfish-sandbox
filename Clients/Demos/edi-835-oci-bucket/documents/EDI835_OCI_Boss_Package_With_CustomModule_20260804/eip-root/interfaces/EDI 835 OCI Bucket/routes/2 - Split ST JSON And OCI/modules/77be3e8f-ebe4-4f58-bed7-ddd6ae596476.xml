@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="77be3e8f-ebe4-4f58-bed7-ddd6ae596476" name="Map Transaction XML To JSON" type="XSLT Transformation" tag="Processor" class="com.pilotfish.eip.modules.transform.XSLTProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <XSLTPath>transform-transaction-to-json.xslt</XSLTPath>
+      
+          
+      <CacheXSLTToXML>false</CacheXSLTToXML>
+      
+          
+      <XSLTEngine>Saxon</XSLTEngine>
+      
+          
+      <XSLTParameters>null</XSLTParameters>
+      
+          
+      <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+      
+          
+      <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+      
+        
+   </ModuleConfig>
+</Module>

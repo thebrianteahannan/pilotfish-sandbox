@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="true">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Emit 278 Response" />
+            <TransportTarget name="Emit EHR ORU Notice" />
+            <TransportTarget name="Update Auth Request Status" />
+          </Targets>
+          <Condition>
+            <Expression>
+              boolean(//DecisionBucket)
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Write Approved" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //DecisionBucket = 'approved'
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Write Denied" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //DecisionBucket = 'denied'
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Write Incomplete" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //DecisionBucket = 'incomplete'
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Write Pended" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //DecisionBucket = 'pended'
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="Staged Auth Decisions">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="Poll Staged Auth Decisions">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <PollingInterval>3</PollingInterval>
+        <PollingDirectory>$$STAGED_DECISION_DIRECTORY</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction>xml</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Delete</PostProcessOperation>
+        <TargetDirectory />
+        <Tokenizers />
+        <SerializedTransactionsTag>1</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>1</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Extract Decision Attributes">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:AuthTraceNumber:eip_name:normalize-space(string((//AuthTraceNumber)[1])):eip_value][eip_pair:DecisionBucket:eip_name:normalize-space(string((//DecisionBucket)[1])):eip_value][eip_pair:Reason:eip_name:normalize-space(string((//Reason)[1])):eip_value][eip_pair:StatusValue:eip_name:upper-case(normalize-space(string((//DecisionBucket)[1]))):eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="278 Response">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Emit 278 Response" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$RESPONSE_OUTPUT_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:(getAttribute('AuthTraceNumber') != null ? getAttribute('AuthTraceNumber') : 'unknown') + '_278_response'}</FileName>
+        <FileExtension>edi</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Map Decision To 278 EDI XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform-decision-to-278-edi-xml.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Debug Write 278 EDI XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:(getAttribute('AuthTraceNumber') != null ? getAttribute('AuthTraceNumber') : 'unknown') + '_278_edi.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.EDITransformationProcessor" name="XML to EDI 278 Response">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <ExecuteTransformation>true</ExecuteTransformation>
+          <TransformationDirection>XML to EDI</TransformationDirection>
+          <UseInternalData>false</UseInternalData>
+          <FriendlyNamesLevel>None</FriendlyNamesLevel>
+          <CODE_DEFS>false</CODE_DEFS>
+          <SegmentIndexing>true</SegmentIndexing>
+          <OutputEndlines>true</OutputEndlines>
+          <UseProvidedDelimiters>true</UseProvidedDelimiters>
+          <DataDelimiter>*</DataDelimiter>
+          <SubDelimiter>:</SubDelimiter>
+          <RepetitionDelimiter>^</RepetitionDelimiter>
+          <RecordDelimiter>~</RecordDelimiter>
+          <USE_LEGACY_FORMAT>false</USE_LEGACY_FORMAT>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="EHR ORU Notice">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Emit EHR ORU Notice" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$EHR_NOTICE_OUTPUT_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:(getAttribute('AuthTraceNumber') != null ? getAttribute('AuthTraceNumber') : 'unknown') + '_auth_decided.oru'}</FileName>
+        <FileExtension>hl7</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Map Decision To ORU HL7 XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform-decision-to-oru-hl7-xml.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Debug Write ORU HL7 XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:(getAttribute('AuthTraceNumber') != null ? getAttribute('AuthTraceNumber') : 'unknown') + '_oru_hl7.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.hl7.HL7TransformationProcessor" name="XML to HL7 ORU">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TransformationDirection>XML to HL7 2.X</TransformationDirection>
+          <ExecuteTransformation>true</ExecuteTransformation>
+          <SUBCOMPONETS_CONFIG>Default</SUBCOMPONETS_CONFIG>
+          <FIELDS_TO_FORCE_CHILD_POPULATION />
+          <FIELDS_TO_AVOID_CHILD_POPULATION />
+          <PUT_FIRST_CHILD_TO_ATTRIBUTE>false</PUT_FIRST_CHILD_TO_ATTRIBUTE>
+          <REBUILD_FORMAT_FOR_UNEXPECTED_VERSION>false</REBUILD_FORMAT_FOR_UNEXPECTED_VERSION>
+          <USE_ALTERNATIVE_CACHE>false</USE_ALTERNATIVE_CACHE>
+          <HL7Version>2.5.1</HL7Version>
+          <CACHE_SIZE>20</CACHE_SIZE>
+          <CACHE_ON_START>true</CACHE_ON_START>
+          <FOLDER_WITH_ADDITIONAL_XSD />
+          <FAIL_IF_REQUIRED_NOT_FOUND>false</FAIL_IF_REQUIRED_NOT_FOUND>
+          <DETECT_LINE_SEPARATOR_TAG>false</DETECT_LINE_SEPARATOR_TAG>
+          <IGNORE_UNKNOWN_Z_SEGMNENTS>false</IGNORE_UNKNOWN_Z_SEGMNENTS>
+          <IGNORE_SEGMNENTS_MAX_OCCURS>true</IGNORE_SEGMNENTS_MAX_OCCURS>
+          <INCLUDE_EMPTY_FIELDS>false</INCLUDE_EMPTY_FIELDS>
+          <USE_FRIENDLY_NAMES>false</USE_FRIENDLY_NAMES>
+          <USE_ATTRIBUTE_FRIENDLY_NAMES>false</USE_ATTRIBUTE_FRIENDLY_NAMES>
+          <USE_NAMESPACE>false</USE_NAMESPACE>
+          <CustomMessageStructure />
+          <USE_COMPATIBILITY_SCHEMAS>false</USE_COMPATIBILITY_SCHEMAS>
+          <FILL_FORMAT_FIELDS>false</FILL_FORMAT_FIELDS>
+          <ADD_BATCH_SEGMENTS>false</ADD_BATCH_SEGMENTS>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.EOLProcessor" name="Normalize ORU Endlines">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <EndlineSequence>\n</EndlineSequence>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Update Auth Request">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.other.NullTransport" name="Update Auth Request Status" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Mark Auth Request Status">
+        <ModuleConfig>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>UPDATE dbo.AuthRequest SET Status = ?, Notes = CONCAT(ISNULL(Notes, N''), N' | ', ?), UpdatedAt = SYSUTCDATETIME() WHERE AuthTraceNumber = ?; SELECT @@ROWCOUNT AS RowsAffected;</Query>
+          <QueryParams>[eip_pair:StatusValue:eip_name:{ognl:getAttribute('StatusValue')}:eip_value][eip_pair:Reason:eip_name:{ognl:getAttribute('Reason')}:eip_value][eip_pair:AuthTraceNumber:eip_name:{ognl:getAttribute('AuthTraceNumber')}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <UseJdbcGeneratedKeys>false</UseJdbcGeneratedKeys>
+          <Timeout>60</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <RefreshHandler>false</RefreshHandler>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <JDBCProperties>null</JDBCProperties>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Approved">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Write Approved" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$APPROVED_OUTPUT_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:(getAttribute('AuthTraceNumber') != null ? getAttribute('AuthTraceNumber') : 'unknown') + '_approved'}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Denied">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Write Denied" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$DENIED_OUTPUT_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:(getAttribute('AuthTraceNumber') != null ? getAttribute('AuthTraceNumber') : 'unknown') + '_denied'}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Incomplete">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Write Incomplete" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$INCOMPLETE_OUTPUT_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:(getAttribute('AuthTraceNumber') != null ? getAttribute('AuthTraceNumber') : 'unknown') + '_incomplete'}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="Pended">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Write Pended" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$PENDED_OUTPUT_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:(getAttribute('AuthTraceNumber') != null ? getAttribute('AuthTraceNumber') : 'unknown') + '_pended'}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>

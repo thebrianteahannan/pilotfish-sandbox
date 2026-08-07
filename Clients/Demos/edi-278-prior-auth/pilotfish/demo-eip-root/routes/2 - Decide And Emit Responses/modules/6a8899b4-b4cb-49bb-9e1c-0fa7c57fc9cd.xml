@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="6a8899b4-b4cb-49bb-9e1c-0fa7c57fc9cd" name="Debug Write ORU HL7 XML" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:(getAttribute('AuthTraceNumber') != null ? getAttribute('AuthTraceNumber') : 'unknown') + '_oru_hl7.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

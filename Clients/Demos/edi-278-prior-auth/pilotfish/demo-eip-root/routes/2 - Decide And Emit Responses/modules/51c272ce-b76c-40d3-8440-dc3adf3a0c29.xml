@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="51c272ce-b76c-40d3-8440-dc3adf3a0c29" name="XML to EDI 278 Response" type="EDI" tag="Processor" class="com.pilotfish.eip.modules.transform.EDITransformationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <ExecuteTransformation>true</ExecuteTransformation>
+      
+          
+      <TransformationDirection>XML to EDI</TransformationDirection>
+      
+          
+      <UseInternalData>false</UseInternalData>
+      
+          
+      <FriendlyNamesLevel>None</FriendlyNamesLevel>
+      
+          
+      <CODE_DEFS>false</CODE_DEFS>
+      
+          
+      <SegmentIndexing>true</SegmentIndexing>
+      
+          
+      <OutputEndlines>true</OutputEndlines>
+      
+          
+      <UseProvidedDelimiters>true</UseProvidedDelimiters>
+      
+          
+      <DataDelimiter>*</DataDelimiter>
+      
+          
+      <SubDelimiter>:</SubDelimiter>
+      
+          
+      <RepetitionDelimiter>^</RepetitionDelimiter>
+      
+          
+      <RecordDelimiter>~</RecordDelimiter>
+      
+          
+      <USE_LEGACY_FORMAT>false</USE_LEGACY_FORMAT>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -50,3 +50,8 @@ __pycache__/
 .env
 .env.*
 node_modules/
+
+# Hindsight (Cursor long-term memory) — keep secrets & session state local
+.cursor/mcp.json
+.cursor/rules/hindsight-session.mdc
+.agents/

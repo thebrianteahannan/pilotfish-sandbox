@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c9e56e0a-71bc-4e92-8634-9e2b62ebe777" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="ea82bc4b-6c78-4b33-904f-436e64e3e2e1" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="042beeae-25ea-4295-ba63-91f0f815ecec" name="Rule 1 - Emit 278 Response, Emit EHR ORU Notice, Update Auth Request Status" type="XPATH">
+               <condition>boolean(//DecisionBucket)</condition>
+            </output>
+            <output id="f17af29c-c848-45f7-b6eb-82928943c568" name="Rule 2 - Write Approved" type="XPATH">
+               <condition>//DecisionBucket = 'approved'</condition>
+            </output>
+            <output id="9aaa5da1-6f91-4237-989d-534833b0cef9" name="Rule 3 - Write Denied" type="XPATH">
+               <condition>//DecisionBucket = 'denied'</condition>
+            </output>
+            <output id="8e544924-9c3b-45c5-8785-33f3cdcebaeb" name="Rule 4 - Write Incomplete" type="XPATH">
+               <condition>//DecisionBucket = 'incomplete'</condition>
+            </output>
+            <output id="717aac52-734a-4088-8088-7d76d966decd" name="Rule 5 - Write Pended" type="XPATH">
+               <condition>//DecisionBucket = 'pended'</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

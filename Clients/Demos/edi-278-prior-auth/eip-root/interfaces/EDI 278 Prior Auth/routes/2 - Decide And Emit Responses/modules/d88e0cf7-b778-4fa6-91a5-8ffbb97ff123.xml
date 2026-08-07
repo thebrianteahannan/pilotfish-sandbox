@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="d88e0cf7-b778-4fa6-91a5-8ffbb97ff123" name="Emit 278 Response" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory>$$RESPONSE_OUTPUT_DIRECTORY</TargetDirectory>
+      
+        
+      <FileName>{ognl:(getAttribute('AuthTraceNumber') != null ? getAttribute('AuthTraceNumber') : 'unknown') + '_278_response'}</FileName>
+      
+        
+      <FileExtension>edi</FileExtension>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <AppendToFile>Overwrite</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

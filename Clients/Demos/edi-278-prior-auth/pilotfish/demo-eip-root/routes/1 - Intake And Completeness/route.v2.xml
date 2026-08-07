@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="fc361442-1d75-4055-a398-6c5333e35370" name="1 - Intake And Completeness">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="334b8272-d0da-435b-a6ca-efcebf4b1f3b" moduleId="9c712ae0-8617-40ac-a327-d756f0c38ac6" label="Poll EDI 278 Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="18b2b08b-0b53-475f-bda9-b22353dee432" moduleId="25384443-616d-45cb-853d-e0989147b284" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="729ff14e-9ea6-4233-9c23-2a71022337ea" moduleId="32f52d12-3ac2-4f48-a578-15705d815186" label="Extract 278 Auth Fields" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="b481ff81-3cd9-4801-a73f-2f6da8c27b90" moduleId="5fc7394b-2036-4a11-a447-47dda9687d96" label="Debug Write Forked Transaction" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="1319277d-ce58-4a82-a509-8fa826644eb0" moduleId="3e35c0f7-1f9c-44e4-945f-b55dd5134592" label="Lookup Auth Catalog" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="3174250e-f040-4f8c-b180-fa4da02baa4d" moduleId="c1e1b02f-66b5-447d-b830-43d3494d1c81" label="Extract Auth Catalog Fields" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="5539db46-8041-4cf9-806b-1941632bdfa8" moduleId="5a6b8be7-8859-487e-923b-df77074888c8" label="Build Auth Decision XML" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="690efb92-8ea5-4b0b-945a-2a885fa620eb" moduleId="9f1030eb-81f6-4b55-afdd-3333711d21c1" label="Debug Write Auth Decision" x="2600.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="367c126b-ff33-4265-bf8e-1c5061541437" moduleId="4f2096f6-2c24-4012-aafa-fa62c0be1a7c" label="Stage Auth Decision" x="2860.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="76109008-7bf1-43cb-aaa9-c303ae39c2ed" sourceNodeId="334b8272-d0da-435b-a6ca-efcebf4b1f3b" targetNodeId="18b2b08b-0b53-475f-bda9-b22353dee432" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="9eec3f7e-6520-48cc-b10c-596432c2339f" sourceNodeId="729ff14e-9ea6-4233-9c23-2a71022337ea" targetNodeId="b481ff81-3cd9-4801-a73f-2f6da8c27b90" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="31fca37d-bff9-40cf-86c3-e203c83e9468" sourceNodeId="b481ff81-3cd9-4801-a73f-2f6da8c27b90" targetNodeId="1319277d-ce58-4a82-a509-8fa826644eb0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="7e4e8421-0406-463c-a317-bdf0305239a1" sourceNodeId="1319277d-ce58-4a82-a509-8fa826644eb0" targetNodeId="3174250e-f040-4f8c-b180-fa4da02baa4d" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="c8225599-33c4-4f19-8bbf-cc2eb081ecb3" sourceNodeId="3174250e-f040-4f8c-b180-fa4da02baa4d" targetNodeId="5539db46-8041-4cf9-806b-1941632bdfa8" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="3f1ec013-d61a-4295-ba1c-480f9fe90cc1" sourceNodeId="5539db46-8041-4cf9-806b-1941632bdfa8" targetNodeId="690efb92-8ea5-4b0b-945a-2a885fa620eb" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="5358cbb7-e0b9-446a-a5dd-5e9d2dd8ffd5" sourceNodeId="690efb92-8ea5-4b0b-945a-2a885fa620eb" targetNodeId="367c126b-ff33-4265-bf8e-1c5061541437" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="4962c0e1-0a94-4f0b-af3e-79ea1e2ecd77" sourceNodeId="18b2b08b-0b53-475f-bda9-b22353dee432" targetNodeId="729ff14e-9ea6-4233-9c23-2a71022337ea" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="95df2a3e-26fd-4b98-a985-97291608452a" name="Build Remit Decision XML" type="XSLT Transformation" tag="Processor" class="com.pilotfish.eip.modules.transform.XSLTProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <XSLTPath>build-remit-decision.xslt</XSLTPath>
+      
+          
+      <CacheXSLTToXML>false</CacheXSLTToXML>
+      
+          
+      <XSLTEngine>Saxon</XSLTEngine>
+      
+          
+      <XSLTParameters>[eip_pair:ClaimControlNumber:eip_name:{ognl:getAttribute('ClaimControlNumber')}:eip_value][eip_pair:PaidAmount:eip_name:{ognl:getAttribute('PaidAmount')}:eip_value][eip_pair:ChargeAmount:eip_name:{ognl:getAttribute('ChargeAmount')}:eip_value][eip_pair:CasCodes:eip_name:{ognl:getAttribute('CasCodes')}:eip_value][eip_pair:ExpectedPaid:eip_name:{ognl:getAttribute('ExpectedPaid')}:eip_value][eip_pair:PatientName:eip_name:{ognl:getAttribute('PatientName')}:eip_value][eip_pair:SourceFile:eip_name:{ognl:getAttribute('com.pilotfish.FileName')}:eip_value]</XSLTParameters>
+      
+          
+      <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+      
+          
+      <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+      
+        
+   </ModuleConfig>
+</Module>
