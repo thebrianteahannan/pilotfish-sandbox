@@ -12,6 +12,7 @@ cp -R "$SRC"/* "$STAGE"/
 docker rm -f orbit-disc-lan >/dev/null 2>&1 || true
 docker run -d --name orbit-disc-lan -p 5174:80 \
   -v "${STAGE}:/usr/share/nginx/html:ro" \
+  -v "${STAGE}/nginx-default.conf:/etc/nginx/conf.d/default.conf:ro" \
   nginx:alpine >/dev/null
 
-echo "Orbit Disc LAN: http://${IP}:5174/"
+echo "Orbit Disc LAN: http://${IP}:5174/?v=$(date +%s)"

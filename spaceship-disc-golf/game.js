@@ -310,6 +310,8 @@ function frame() {
 function hideStart() {
   startScreen.hidden = true;
   startScreen.setAttribute("aria-hidden", "true");
+  startScreen.style.cssText = "display:none!important;visibility:hidden;pointer-events:none";
+  startScreen.classList.add("is-gone");
 }
 
 function startGame(e) {
@@ -325,6 +327,7 @@ function startGame(e) {
   playing = true;
   hideStart();
   touchControls.hidden = false;
+  touchControls.style.cssText = "display:flex;pointer-events:none";
   showToast(isCoarse ? "Fly to the glowing basket" : "Hole 1 — chase the beacon");
   if (!isCoarse) {
     try {
@@ -333,11 +336,16 @@ function startGame(e) {
   }
 }
 
-startBtn.addEventListener("click", startGame);
-startBtn.addEventListener("pointerup", (e) => {
-  // iOS Safari sometimes needs pointerup; ignore if already playing
-  if (!playing) startGame(e);
-});
+let launchArmed = true;
+function onLaunch(e) {
+  e?.preventDefault?.();
+  e?.stopPropagation?.();
+  if (!launchArmed || playing) return;
+  launchArmed = false;
+  startGame(e);
+}
+startBtn.addEventListener("click", onLaunch, { passive: false });
+startBtn.addEventListener("touchend", onLaunch, { passive: false });
 
 throwBtn.addEventListener("pointerdown", (e) => {
   e.preventDefault();

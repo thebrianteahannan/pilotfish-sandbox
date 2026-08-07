@@ -3,11 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Orbit Disc - Spaceship Disc Golf</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Exo+2:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v2" />
   <script type="importmap">
     {
       "imports": {
@@ -39,7 +42,7 @@
 
   <div id="start-screen">
     <div class="panel">
-      <p class="eyebrow">LAN arcade</p>
+      <p class="eyebrow">LAN arcade · build v2</p>
       <h2>Orbit Disc</h2>
       <p>Pilot a skiff through alpine peaks and fire discs into mountain-top baskets.</p>
       <button id="start-btn" type="button">Launch</button>
@@ -59,6 +62,6 @@
   </div>
 
   <canvas id="c"></canvas>
-  <script type="module" src="game.js"></script>
+  <script type="module" src="game.js?v2"></script>
 </body>
 </html>
