@@ -528,15 +528,13 @@
     el.svg.style.width = el.world.style.width;
     el.svg.style.height = el.world.style.height;
 
-    // Embedded docs (UI iframe): scale so side transports / wide pipelines stay on canvas.
+    // Embedded docs (UI iframe): scale to fit WIDTH so side transports stay on canvas.
+    // Height grows via postMessage → parent iframe resize (don't squash tall pipelines).
     // bare/print (PDF capture): keep 1:1 content size.
     let scale = 1;
     if (!docsBare) {
-      const top = document.querySelector(".topbar");
-      const topH = top ? Math.max(top.offsetHeight, top.scrollHeight) : 0;
       const vw = Math.max((window.innerWidth || el.editor.clientWidth || 800) - 8, 280);
-      const vh = Math.max((window.innerHeight || 600) - topH - 8, 200);
-      scale = Math.min(vw / Math.max(worldW, 1), vh / Math.max(worldH, 1), 1);
+      scale = Math.min(vw / Math.max(worldW, 1), 1);
       scale = Math.max(0.35, scale);
     }
     state.scale = scale;
