@@ -138,27 +138,34 @@
     </main>
   </div>
 
-  <div id="tab-routes" hidden>
-    <main>
-      <section class="panel">
-        <div class="row-head">
-          <h2>Routes</h2>
-          <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noopener">Route design PDF</a>
-        </div>
-        <iframe id="route-viewer-frame" title="Route viewer" src="/static/route-viewer/index.html?mode=docs&amp;layout=pipeline&amp;config=compact&amp;groups=1&amp;collapse=all" style="width:100%;min-height:720px;border:0;background:#0b1220"></iframe>
-      </section>
-    </main>
+  <div id="tab-routes" class="routes-tab" hidden>
+    <div class="routes-toolbar">
+      <label for="route-select">V2 route
+        <select id="route-select"></select>
+      </label>
+      <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noopener">Route design PDF</a>
+      <a class="btn" id="routes-docs-link" href="/static/route-viewer/docs.html?config=compact" target="_blank" rel="noopener">All routes (print)</a>
+      <span id="routes-status" class="status"></span>
+    </div>
+    <iframe id="route-viewer-frame" class="route-viewer-frame" title="V2 route graph viewer" src="about:blank"></iframe>
   </div>
 
   {% if has_xslt %}
-  <div id="tab-xslt" hidden>
-    <main>
-      <section class="panel">
-        <h2>XSLT</h2>
-        <div id="xslt-list" class="file-list"></div>
-        <pre id="xslt-view" class="viewer"></pre>
-      </section>
-    </main>
+  <div id="tab-xslt" class="xslt-tab" hidden>
+    <aside class="xslt-sidebar">
+      <div class="xslt-sidebar-head">
+        <h2>XSLT files</h2>
+        <span id="xslt-status" class="status"></span>
+      </div>
+      <ul id="xslt-file-list" class="xslt-file-list"></ul>
+    </aside>
+    <section class="xslt-viewer">
+      <div class="xslt-viewer-head">
+        <code id="xslt-path" class="xslt-path">Select an XSLT file</code>
+        <span id="xslt-meta" class="muted"></span>
+      </div>
+      <pre class="xslt-source"><code id="xslt-code"></code></pre>
+    </section>
   </div>
   {% endif %}
 

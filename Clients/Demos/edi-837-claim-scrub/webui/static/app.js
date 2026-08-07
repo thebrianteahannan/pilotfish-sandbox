@@ -220,7 +220,9 @@ function loadRouteFrame(routeId) {
   const layout = "pipeline";
   frame.style.height = "";
   frame.style.minHeight = "";
-  frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(routeId)}&mode=docs&layout=${encodeURIComponent(layout)}&cols=4`;
+  frame.src =
+    `/static/route-viewer/index.html?route=${encodeURIComponent(routeId)}` +
+    `&mode=docs&layout=${encodeURIComponent(layout)}&config=compact&groups=1&cols=4`;
 }
 
 
@@ -243,6 +245,9 @@ async function loadRoutesTab() {
   bindRouteViewerResize();
   const status = document.getElementById("routes-status");
   const select = document.getElementById("route-select");
+  if (!status || !select) {
+    throw new Error("Routes tab markup missing route-select / routes-status (rebuild Web UI).");
+  }
   if (!routesLoaded) {
     status.textContent = "Loading routes…";
     const data = await getJson("/api/v2/routes");
