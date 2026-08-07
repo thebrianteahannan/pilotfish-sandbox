@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FHIR R4 Expandable Platform</title>
   <link rel="stylesheet" href="/static/app.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css" />
+  <link rel="stylesheet" href="/static/code-highlight.css" />
 </head>
 <body>
   <header class="top">
@@ -140,6 +142,9 @@
     <p class="sub muted">See <a href="/documents/capability-brief.pdf" target="_blank" rel="noreferrer">Capability Brief</a> (stakeholder), <a href="/documents/expert-due-diligence.pdf" target="_blank" rel="noreferrer">Expert Due Diligence</a> (hard FHIR-server questions), <a href="/documents/aws-deployment-guide.pdf" target="_blank" rel="noreferrer">AWS Deploy Guide</a> (real environment), <a href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a> (technical), and <code>DESIGN.md</code> for Phase 6 scope and roadmap. Keycloak: <code>{{ oauth_token_url }}</code></p>
   </main>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
+  <script src="/static/code-highlight.js"></script>
   <script src="/static/app.js"></script>
 </body>
 </html>

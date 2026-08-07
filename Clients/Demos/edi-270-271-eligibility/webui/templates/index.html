@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EDI 270/271 Eligibility Demo</title>
   <link rel="stylesheet" href="/static/app.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css" />
+  <link rel="stylesheet" href="/static/code-highlight.css" />
   <style>
     .theater-aaa { border: 1px solid #f87171; background: rgba(248,113,113,.12); border-radius: 12px; padding: .85rem 1rem; }
     .theater-ok { border: 1px solid #34d399; background: rgba(52,211,153,.12); border-radius: 12px; padding: .85rem 1rem; }
@@ -113,6 +115,9 @@
   <script>
     window.ELIG_PRESETS = {{ presets | tojson }};
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
+  <script src="/static/code-highlight.js"></script>
   <script src="/static/app.js"></script>
 </body>
 </html>

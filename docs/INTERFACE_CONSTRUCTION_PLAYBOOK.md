@@ -693,6 +693,17 @@ When a demo writes SNIP results (`output/snip/*_snip.xml` or similar), the Web U
 
 Copy the SNIP report stack from `edi-837-snip-sqlserver` (or another demo that already passes this check) rather than reimplementing.
 
+### 6.4 XML / XSLT syntax highlighting in the Web UI (**required when showing source**)
+
+When the Web UI shows XML or XSLT source (XSLT tab, kickout/decision viewers, SNIP raw XML, etc.), use syntax highlighting.
+
+**Shared assets** (copy into each demo’s `webui/static/`):
+
+- `Clients/Demos/_shared/webui/code-highlight.js`
+- `Clients/Demos/_shared/webui/code-highlight.css`
+
+Load Highlight.js (XML) + those assets in `templates/index.html` **before** `app.js`. The helper auto-highlights common viewers (`#xslt-code`, `#xslt-view`, `pre.viewer`, `#snip-view`, …) when content changes — no per-view rewrite required.
+
 ---
 
 ## 7. Smoke test (required before “done”)
