@@ -6,11 +6,11 @@ Client package for MedReceivables Flat File → HL7 interfaces.
 
 | Path | Purpose |
 |------|---------|
-| `eip-root/` | Interface package (copy of sandbox `eip-root`). Use this when spinning a Docker image for Med Rec. |
+| `eip-root/` | Interface package (Flat File → HL7). Canonical source for the base `pilotfish-eip:23R1` image (`Dockerfile` copies this tree). |
 | `database/` | H2 seeds (`medreceivables.mv.db` = H2 2.1 / Docker; `medreceivables-h2-1.4.mv.db` = Windows/older H2) |
 | `data/` | Interface runtime data: `input/`, `output/`, `archive/` (samples), `database/` (Docker volume) |
 | `deploy/` | SQL + deploy notes for CAT/GAN onboarding |
 | `reports/` | CLIENT_SPLITS extracts |
 | `*.pdf` / plans | Facility onboarding and change docs |
 
-Sandbox root `data/{in,out,archive}` stays empty for everyday drop folders. Default `docker-run.sh` mounts those plus this client’s `data/database`. Over time, point Docker at a client’s `eip-root` (and its `data/`) for client-specific images.
+Sandbox root `data/{in,out,archive}` stays empty for everyday drop folders. Default `docker-run.sh` mounts those plus this client’s `data/database`. The base Docker image bakes this `eip-root/` (overridden at runtime only when a demo mounts its own package, e.g. XML→EDI 834).

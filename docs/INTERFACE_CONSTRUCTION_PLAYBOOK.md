@@ -273,7 +273,7 @@ Reference implementations:
 - `Clients/Demos/edi-278-prior-auth/` — AuthDecision → EDI XML→EDI (278) + HL7 XML→ER7 (ORU); no hardcoded wire text
 - `Clients/Demos/hl7-healthcare-automation/` — directory listen → validate → router fan-out → SQL + file
 - `Clients/Demos/fhir-r4-platform/` — Call Route auth, docs-only **Processor Groups** (`diagram-groups.json` + overview/detail route PDF)
-- Med Rec Flat File to HL7 (`eip-root/interfaces/Flat File to HL7 and Kickout Reports/`) — XSLT HL7 XML → `HL7TransformationProcessor` (XML→HL7 2.X)
+- Med Rec Flat File to HL7 (`Clients/Med Rec/eip-root/interfaces/Flat File to HL7 and Kickout Reports/`) — XSLT HL7 XML → `HL7TransformationProcessor` (XML→HL7 2.X)
 
 ---
 
@@ -390,7 +390,7 @@ Business / decision XML
 **Reference assemblies**
 
 - X12 XML→EDI: `Clients/Demos/edi-270-271-eligibility/`, `Clients/Demos/edi-837-snip-sqlserver/`, `Clients/Demos/edi-278-prior-auth/` (278 response)
-- HL7 XML→ER7: Med Rec / Flat File to HL7 (`eip-root/interfaces/Flat File to HL7 and Kickout Reports/`), `Clients/Demos/edi-278-prior-auth/` (ORU notice)
+- HL7 XML→ER7: Med Rec / Flat File to HL7 (`Clients/Med Rec/eip-root/interfaces/Flat File to HL7 and Kickout Reports/`), `Clients/Demos/edi-278-prior-auth/` (ORU notice)
 - Structured dialect docs: `/Users/brianhannan/Documents/PilotFish Documentation/Documents/Processors/…/PilotFish-EDI-XML-Guide-*.md`
 
 **Anti-example (do not copy for new work):** XSLT that emits `ISA*00*…` or `MSH|^~\&|…` as text. Legacy demos that still do this (`hl7-healthcare-automation` event→HL7 text, older doc-healthcare maps) are **not** the construction standard going forward—refactor when touching those emitters.

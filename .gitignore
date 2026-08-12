@@ -26,8 +26,6 @@ logs-834/
 
 # Keep committed H2 DB under Clients/Med Rec/database/; ignore other copies
 /medreceivables.mv.db
-eip-root/*.mv.db
-eip-root/*.trace.db
 Clients/**/eip-root/*.mv.db
 Clients/**/eip-root/*.trace.db
 Clients/Med Rec/database/medreceivables-original.mv.db
@@ -39,6 +37,7 @@ Clients/Med Rec/funky-chars-issues/
 Clients/Demos/**/output/**
 !Clients/Demos/**/output/**/.gitkeep
 Clients/Demos/**/input/**
+Clients/Demos/**/data/**
 Clients/Demos/**/Chat_User_Prompts*.pdf
 
 # Local process logs / helpers

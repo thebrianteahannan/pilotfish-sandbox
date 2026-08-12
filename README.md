@@ -30,3 +30,6 @@ Agents constructing any interface under `Clients/` must follow:
 | EDI 270/271 Eligibility | `Clients/Demos/edi-270-271-eligibility/` |
 | FHIR R4 Expandable Platform | `Clients/Demos/fhir-r4-platform/` |
 | CSV to JSON | `Clients/Demos/csv-to-json/` |
+| XML → EDI 834 | `Clients/Demos/xml-to-edi-834/` (`./docker-run-834.sh`) |
+| FTP Named Download Trigger | `Clients/Demos/ftp-named-download-trigger/` |
+| EDI 837P → QCare | `Clients/Demos/edi-837p-qcare/` |

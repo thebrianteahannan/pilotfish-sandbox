@@ -27,8 +27,8 @@ RUN cd /usr/local/tomcat/webapps/eip \
 # License key (guide: copy into webapps/eip)
 COPY pflicense.key /usr/local/tomcat/webapps/eip/pflicense.key
 
-# Interface package -> eip-root
-COPY eip-root/ /usr/local/tomcat/webapps/eip/eip-root/
+# Interface package -> eip-root (canonical Med Rec package)
+COPY ["Clients/Med Rec/eip-root/", "/usr/local/tomcat/webapps/eip/eip-root/"]
 COPY docker/environment-settings.conf /usr/local/tomcat/webapps/eip/eip-root/environment-settings.conf
 
 # Convert hardcoded Windows PilotFish paths (without breaking regex escapes),
