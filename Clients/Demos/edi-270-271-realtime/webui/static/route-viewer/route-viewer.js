@@ -931,14 +931,32 @@
 
   async function boot() {
     wireControls();
-    if (!routeKey && BASE !== ".") {
+    let key = routeKey;
+    // Parent iframe often omits ?route=; resolve the first V2 route so diagrams always render.
+    if (!key) {
+      try {
+        const listRes = await fetch("/api/v2/routes");
+        if (listRes.ok) {
+          const list = await listRes.json();
+          const first = (list.routes || [])[0];
+          if (first && first.id) key = String(first.id);
+        }
+      } catch (err) {
+        console.warn("route list lookup failed", err);
+      }
+    }
+    if (!key) {
       el.status.textContent = "No route selected";
-      el.config.innerHTML = `<p class="config-empty">Choose a route from the picker above.</p>`;
+      el.config.innerHTML = `<p class="config-empty">Choose a route from the picker above, or ensure <code>/api/v2/routes</code> returns a route.v2.xml.</p>`;
       return;
     }
+    const base = `/api/v2/routes/${encodeURIComponent(key)}`;
+    window.ROUTE_VIEWER_BASE = base;
+    const xmlUrl = `${base}/route.v2.xml`;
+    const groupsUrl = `${base}/diagram-groups.json`;
     el.status.textContent = "Loading route.v2.xml…";
     try {
-      const res = await fetch(XML_URL);
+      const res = await fetch(xmlUrl);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const text = await res.text();
       const route = parseRoute(text);
@@ -954,7 +972,7 @@
       let groupNote = "";
       if (groupsEnabled && window.RouteDiagramGroups) {
         try {
-          const gres = await fetch(GROUPS_URL);
+          const gres = await fetch(groupsUrl);
           if (gres.ok) {
             const spec = await gres.json();
             if (focusGroupId) {

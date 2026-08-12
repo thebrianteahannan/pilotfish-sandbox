@@ -87,7 +87,7 @@ services:
       DOCUMENTS_DIR: /documents
       ROUTE_PDF_NAME: EDI837_V2_Route_Diagrams.pdf
       ENV_SETTINGS_FILE: /environment-settings.conf
-      LAN_HINT: "http://192.168.68.52:8095/"
+      LAN_HINT: "http://192.168.68.62:8095/"
     ports:
       - "8095:8095"
     volumes:

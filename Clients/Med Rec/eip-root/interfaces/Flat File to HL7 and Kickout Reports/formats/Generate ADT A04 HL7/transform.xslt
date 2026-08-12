@@ -1095,13 +1095,22 @@
                             </XPN.1>
                             <XPN.2 />
                           </xsl:when>
-                          <xsl:when test="$partitionName = ('SPG','ARA') and string-length(Insurance1/adminsinsuredname) = 0">
+                          <xsl:when test="$partitionName = 'SPG' and string-length(normalize-space(Insurance1/adminsinsuredname)) = 0">
                             <XPN.1>
                               <xsl:value-of select="normalize-space(substring-before(PatientDemographics/admname, ','))" />
                             </XPN.1>
                             <XPN.2>
                               <xsl:value-of select="normalize-space(substring-after(PatientDemographics/admname, ','))" />
                             </XPN.2>
+                          </xsl:when>
+                          <!-- ARA: use XCN (not XPN) so HL7TransformationProcessor emits IN1.16; fall back to patient name when blank. -->
+                          <xsl:when test="$partitionName = 'ARA' and string-length(normalize-space(Insurance1/adminsinsuredname)) = 0">
+                            <XCN.1>
+                              <xsl:value-of select="normalize-space(substring-before(PatientDemographics/admname, ','))" />
+                            </XCN.1>
+                            <XCN.2>
+                              <xsl:value-of select="normalize-space(substring-after(PatientDemographics/admname, ','))" />
+                            </XCN.2>
                           </xsl:when>
                           <xsl:otherwise>
                             <XCN.1>

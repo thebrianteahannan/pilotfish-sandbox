@@ -1,0 +1,97 @@
+{
+  "interface": "FTP Named Download Trigger",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/ftp-named-download-trigger",
+  "started_at": "2026-08-12T16:28:57.978751+00:00",
+  "finished_at": "2026-08-12T16:29:02.572017+00:00",
+  "summary": {
+    "pass": 9,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 9
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 5,
+      "message": "UI OK (http://127.0.0.1:8113/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 1,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "seed-remote",
+      "name": "Ensure remote payload on SFTP seed",
+      "suite": "Named download",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/ftp-named-download-trigger/sftp-seed/upload/invoice-20260407.dat",
+      "detail": ""
+    },
+    {
+      "id": "drop-control",
+      "name": "Copy control file into inbound",
+      "suite": "Named download",
+      "status": "pass",
+      "duration_ms": 16,
+      "message": "ok",
+      "detail": ""
+    },
+    {
+      "id": "download-out",
+      "name": "Named file appears in downloaded",
+      "suite": "Named download",
+      "status": "pass",
+      "duration_ms": 4553,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/ftp-named-download-trigger/output/downloaded/invoice-20260407.dat",
+      "detail": ""
+    },
+    {
+      "id": "decoy-absent",
+      "name": "Decoy was not downloaded",
+      "suite": "Named download",
+      "status": "pass",
+      "duration_ms": 12,
+      "message": "ok",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/ftp-named-download-trigger/documents/FTP_Named_Download_Trigger_V2_Route_Diagrams.pdf",
+      "detail": ""
+    },
+    {
+      "id": "brief-pdf",
+      "name": "Capability Brief PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/ftp-named-download-trigger/documents/FTP_Named_Download_Trigger_Capability_Brief.pdf",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/ftp-named-download-trigger/tests/plan.json"
+}

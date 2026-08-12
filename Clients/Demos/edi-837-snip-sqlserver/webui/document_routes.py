@@ -121,14 +121,29 @@ def ensure_document_routes(
 
         @app.get("/documents/<path:name>")
         def _info_documents_file(name: str):
-            safe = Path(name).name
-            if safe != name or ".." in name:
+            # Allow top-level files and documents/module-docs/*.pdf (synced module deep-dives).
+            rel = Path(name)
+            parts = rel.parts
+            if not parts or ".." in parts or rel.is_absolute():
+                return Response("Invalid document name", status=400)
+            if len(parts) == 1:
+                pass
+            elif len(parts) == 2 and parts[0] == "module-docs":
+                pass
+            else:
                 return Response("Invalid document name", status=400)
             for base in _bases(documents_dir):
-                path = base / safe
+                path = (base / rel).resolve()
+                try:
+                    path.relative_to(base.resolve())
+                except ValueError:
+                    continue
                 if path.is_file():
                     return send_file(path, as_attachment=False)
-            return Response(f"Document not found: {safe}", status=404)
+            return Response(f"Document not found: {name}", status=404)
+
+    # Module deep-dive PDFs (documents/module-docs/) — API + Info tab links
+    ensure_module_docs_api(app, documents_dir)
 
 
 def ensure_build_timing_api(app: Flask, documents_dir: Path) -> None:
@@ -152,3 +167,73 @@ def ensure_build_timing_api(app: Flask, documents_dir: Path) -> None:
                     return jsonify({"ok": False, "error": str(exc)}), 500
                 return jsonify({"ok": True, "path": str(path), "timing": data})
         return jsonify({"ok": False, "error": "documents/build-timing.json not found"}), 404
+
+
+def ensure_module_docs_api(app: Flask, documents_dir: Path) -> None:
+    """GET /api/module-docs → documents/module-docs/manifest.json + Info-tab context."""
+    import json
+
+    from flask import jsonify
+
+    existing = {rule.rule for rule in app.url_map.iter_rules()}
+
+    def _load_manifest() -> dict | None:
+        for base in _bases(documents_dir):
+            path = base / "module-docs" / "manifest.json"
+            if path.is_file():
+                try:
+                    return json.loads(path.read_text(encoding="utf-8"))
+                except (OSError, json.JSONDecodeError):
+                    return None
+        return None
+
+    if "/api/module-docs" not in existing:
+
+        @app.get("/api/module-docs")
+        def _api_module_docs():
+            data = _load_manifest()
+            if not data:
+                return jsonify(
+                    {
+                        "ok": False,
+                        "error": "documents/module-docs/manifest.json not found. "
+                        "Run: python3 tools/sync_module_docs.py",
+                    }
+                ), 404
+            return jsonify({"ok": True, "manifest": data})
+
+    # Avoid stacking duplicate context processors on repeated ensure_* calls
+    if getattr(app, "_pf_module_docs_ctx", False):
+        return
+    app._pf_module_docs_ctx = True  # type: ignore[attr-defined]
+
+    @app.context_processor
+    def _module_docs_info_context():
+        data = _load_manifest() or {}
+        modules = [
+            m
+            for m in (data.get("modules") or [])
+            if m.get("pdf") and m.get("status") == "ok"
+        ]
+        seen: set[str] = set()
+        items: list[str] = []
+        for m in modules:
+            pdf = m["pdf"]
+            if pdf in seen:
+                continue
+            seen.add(pdf)
+            label = f"{m.get('kind') or ''}: {m.get('ui_type') or Path(pdf).name}"
+            items.append(
+                f'<a href="/documents/{pdf}" target="_blank" rel="noopener">{label}</a>'
+            )
+        sections = []
+        if items:
+            sections.append(
+                {
+                    "title": "Module documentation (deep-dives)",
+                    "items": items,
+                    "note": "Copied from the PilotFish Documentation library for every module in this interface. "
+                    "Re-sync with <code>python3 tools/sync_module_docs.py</code> after route changes.",
+                }
+            )
+        return {"module_docs_sections": sections}

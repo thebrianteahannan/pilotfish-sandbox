@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "interface": "EDI 837P to QCare",
+  "description": "Directory poll 837P → QCare 2100-byte flat file via EDI TableData + XSLT.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8125",
+    "eip": "http://127.0.0.1:8123/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8125/",
+    "http://127.0.0.1:8125/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["837P", "QCare"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["routes"] }
+        }
+      ]
+    },
+    {
+      "id": "map",
+      "name": "Map sample 803",
+      "tests": [
+        {
+          "id": "drop-sample",
+          "name": "Copy sample 837P into inbound",
+          "type": "shell",
+          "shell": {
+            "command": "mkdir -p input/inbound output/qcare && rm -f output/qcare/*_qcare.txt && cp -f samples/MCQRQ74837PS803.TXT input/inbound/"
+          },
+          "expect": { "exit_code": 0 }
+        },
+        {
+          "id": "qcare-out",
+          "name": "QCare output appears with STONE and length 2100",
+          "type": "shell",
+          "shell": {
+            "command": "python3 - <<'PY'\nimport time, pathlib\ndeadline=time.time()+120\nroot=pathlib.Path('output/qcare')\nwhile time.time()<deadline:\n  files=list(root.glob('*_qcare.txt'))\n  for f in files:\n    text=f.read_text(encoding='latin-1')\n    line=text.splitlines()[0] if text.strip() else ''\n    if len(line)==2100 and 'STONE' in line and 'SHARON' in line and '70487' in line:\n      print('OK', f.name, len(line)); raise SystemExit(0)\n  time.sleep(1)\nraise SystemExit('timeout waiting for QCare 2100-byte STONE record')\nPY"
+          },
+          "expect": { "exit_code": 0 }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837P_QCare_V2_Route_Diagrams.pdf", "exists": true }
+        },
+        {
+          "id": "brief-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837P_QCare_Capability_Brief.pdf", "exists": true }
+        },
+        {
+          "id": "test-plan-pdf",
+          "name": "Test Plan PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837P_QCare_Test_Plan.pdf", "exists": true }
+        }
+      ]
+    }
+  ]
+}

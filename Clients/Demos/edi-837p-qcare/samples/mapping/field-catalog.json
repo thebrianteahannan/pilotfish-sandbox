@@ -1,0 +1,2690 @@
+[
+  {
+    "start": 1,
+    "len": 2,
+    "name": ":HCF:-0950-FORM-TYPE",
+    "pic": "PIC X(02)",
+    "rule": "\"OT\"",
+    "words": "\"OT\""
+  },
+  {
+    "start": 3,
+    "len": 4,
+    "name": ":HCF:-1093-OP-ID",
+    "pic": "PIC X(04)",
+    "rule": "\"B837\"",
+    "words": "\"B837\""
+  },
+  {
+    "start": 7,
+    "len": 4,
+    "name": ":HCF:-0003-CLAIM-SITE",
+    "pic": "PIC X(04)",
+    "rule": "\"*\" + DATETOTEXT ( Date_Stamp Element:REPOSHDR_DateTime_Stamp )",
+    "words": "\"*\" + DateToStr ( REPOSHDR_DateTime_Stamp.Date_Stamp)"
+  },
+  {
+    "start": 11,
+    "len": 2,
+    "name": ":HCF:-1001-JULIAN-CC-N",
+    "pic": "PIC 9(02)",
+    "rule": "LEFT(TIMETOTEXT(Time_Stamp Element:REPOSHDR_DateTime_Stamp) + FILLLEFT(NUMBERTOTEXT( RecordSequence# +1), \"0\", 6), 2)",
+    "words": "LEFT(TimeToStr(REPOSHDR_DateTime_Stamp.Time_Stamp) + PadLeft(ToString( RecordSequence# +1), \"0\", 6), 2)"
+  },
+  {
+    "start": 13,
+    "len": 2,
+    "name": ":HCF:-1001-JULIAN-YR-N",
+    "pic": "PIC 9(02)",
+    "rule": "MID(TIMETOTEXT(Time_Stamp Element:REPOSHDR_DateTime_Stamp) + FILLLEFT(NUMBERTOTEXT(RecordSequence# +1) , \"0\", 6), 3, 2)",
+    "words": "MID(TimeToStr(REPOSHDR_DateTime_Stamp.Time_Stamp) + PadLeft(ToString(RecordSequence# +1) , \"0\", 6), 3, 2)"
+  },
+  {
+    "start": 15,
+    "len": 3,
+    "name": ":HCF:-1001-JULIAN-DAY-N",
+    "pic": "PIC 9(03)",
+    "rule": "MID(TIMETOTEXT(Time_Stamp Element:REPOSHDR_DateTime_Stamp) + FILLLEFT(NUMBERTOTEXT(RecordSequence# +1), \"0\",6), 5, 3)",
+    "words": "MID(TimeToStr(REPOSHDR_DateTime_Stamp.Time_Stamp) + PadLeft(ToString(RecordSequence# +1), \"0\",6), 5, 3)"
+  },
+  {
+    "start": 18,
+    "len": 1,
+    "name": ":HCF:-1001-SOURCE-IND-N",
+    "pic": "PIC 9(01)",
+    "rule": "MID(TIMETOTEXT(Time_Stamp Element:REPOSHDR_DateTime_Stamp) + FILLLEFT(NUMBERTOTEXT(RecordSequence# +1), \"0\", 6), 8, 1)",
+    "words": "MID(TimeToStr(REPOSHDR_DateTime_Stamp.Time_Stamp) + PadLeft(ToString(RecordSequence# +1), \"0\", 6), 8, 1)"
+  },
+  {
+    "start": 19,
+    "len": 5,
+    "name": ":HCF:-1001-DOC-NO",
+    "pic": "PIC 9(05)",
+    "rule": "MID(TIMETOTEXT(Time_Stamp Element:REPOSHDR_DateTime_Stamp) + FILLLEFT(NUMBERTOTEXT(RecordSequence# +1), \"0\", 6), 9, 5) + \"*\"",
+    "words": "MID(TimeToStr(REPOSHDR_DateTime_Stamp.Time_Stamp) + PadLeft(ToString(RecordSequence# +1), \"0\", 6), 9, 5) + \"*\""
+  },
+  {
+    "start": 24,
+    "len": 2,
+    "name": ":HCF:-1001-LINE-NO",
+    "pic": "PIC 9(02)",
+    "rule": "FILLLEFT(NUMBERTOTEXT(Assigned# Element:LX Segment:2400_ClaimLine),\"0\",2)",
+    "words": "PadLeft(ToString(LX.Assigned#),\"0\",2)"
+  },
+  {
+    "start": 26,
+    "len": 2,
+    "name": ":HCF:-1001-REVISION-NO",
+    "pic": "PIC 9(02)",
+    "rule": "\"00\"",
+    "words": "\"00\""
+  },
+  {
+    "start": 28,
+    "len": 12,
+    "name": ":HCF:-2001-PROV-NUM",
+    "pic": "PIC X(12)",
+    "rule": "LEFT( EITHER( IDCd Element:IDCd Element MComposite:NM1_82_Rendering_Provider NM1 Segment:Service_Line_Level Rendering_Provider NM1 Loop:Service_Line_Level Names Unordered_Group:2400_ClaimLine, IDCd Element:IDCd Element MComposite:NM1_82_Rendering_Provider NM1 Segment:Claim_Level Rendering_Provider NM1 Loop:Claim_Level Names Unordered_Group:2300_Claim, IDCd Element:IDCd Element MComposite:NM1_85_Billing_Provider NM1 Segment:Provider_Level Billing_Provider NM1 Loop:Provider_Level Names Unordered_Group:2000A_Provider), 12)",
+    "words": "LEFT( Coalesce( NM1_82_Rendering_Provider.IDCd, NM1_82_Rendering_Provider.IDCd, NM1_85_Billing_Provider.IDCd), 12)"
+  },
+  {
+    "start": 40,
+    "len": 3,
+    "name": ":HCF:-2001-PROV-SUFFIX",
+    "pic": "PIC X(03)",
+    "rule": "MID( EITHER( IDCd Element:IDCd Element MComposite:NM1_82_Rendering_Provider NM1 Segment:Service_Line_Level Rendering_Provider NM1 Loop:Service_Line_Level Names Unordered_Group:2400_ClaimLine, IDCd Element:IDCd Element MComposite:NM1_82_Rendering_Provider NM1 Segment:Claim_Level Rendering_Provider NM1 Loop:Claim_Level Names Unordered_Group:2300_Claim, IDCd Element:IDCd Element MComposite:NM1_85_Billing_Provider NM1 Segment:Provider_Level Billing_Provider NM1 Loop:Provider_Level Names Unordered_Group:2000A_Provider), 13,3)",
+    "words": "MID( Coalesce( NM1_82_Rendering_Provider.IDCd, NM1_82_Rendering_Provider.IDCd, NM1_85_Billing_Provider.IDCd), 13,3)"
+  },
+  {
+    "start": 43,
+    "len": 12,
+    "name": ":HCF:-2029-AFFIL-NUM",
+    "pic": "PIC X(12)",
+    "rule": "LEFT(Ref# Element:REF_EI_Employers_Id REF Segment:Payer_Number REF Choice_Group:.:2000B_Subscriber,12)",
+    "words": "LEFT(REF_EI_Employers_Id.Ref#,12)"
+  },
+  {
+    "start": 55,
+    "len": 3,
+    "name": ":HCF:-2029-AFFIL-SUFFIX",
+    "pic": "PIC X(03)",
+    "rule": "MID(Ref# Element:REF_EI_Employers_Id REF Segment:Payer_Number REF Choice_Group:.:2000B_Subscriber,13,3)",
+    "words": "MID(REF_EI_Employers_Id.Ref#,13,3)"
+  },
+  {
+    "start": 58,
+    "len": 1,
+    "name": ":HCF:-3001-MBR-ID-1",
+    "pic": "PIC X(01)",
+    "rule": "UPPERCASE(LEFT(IDCd Element:IDCd Element MComposite:NM1_IL_Subscriber NM1 Segment:Subscriber_Level Subscriber NM1 Loop:Subscriber_Level Names Unordered_Group:2000B_Subscriber,1))",
+    "words": "Upper(LEFT(NM1_IL_Subscriber.IDCd,1))"
+  },
+  {
+    "start": 59,
+    "len": 2,
+    "name": "FILLER-1",
+    "pic": "PIC X(2)",
+    "rule": "",
+    "words": ""
+  },
+  {
+    "start": 61,
+    "len": 2,
+    "name": ":HCF:-3001-MBR-ID-4-5-N",
+    "pic": "PIC X(02)",
+    "rule": "UPPERCASE(MID(IDCd Element:IDCd Element MComposite:NM1_IL_Subscriber NM1 Segment:Subscriber_Level Subscriber NM1 Loop:Subscriber_Level Names Unordered_Group:2000B_Subscriber,4,2))",
+    "words": "Upper(MID(NM1_IL_Subscriber.IDCd,4,2))"
+  },
+  {
+    "start": 63,
+    "len": 4,
+    "name": ":HCF:-3001-MBR-ID-6-9-N",
+    "pic": "PIC X(04)",
+    "rule": "UPPERCASE(MID(IDCd Element:IDCd Element MComposite:NM1_IL_Subscriber NM1 Segment:Subscriber_Level Subscriber NM1 Loop:Subscriber_Level Names Unordered_Group:2000B_Subscriber,6,4))",
+    "words": "Upper(MID(NM1_IL_Subscriber.IDCd,6,4))"
+  },
+  {
+    "start": 67,
+    "len": 3,
+    "name": ":HCF:-3001-MBR-SUFF-1",
+    "pic": "PIC X(03)",
+    "rule": "IF(LEFT(_HCF__3001_MBR_ID_1 Field:_HCF__3001_MBR_ID_1_3_N:_HCF__3001_MBR_ID_1_3:_HCF__3001_MEMBER_ID Group:Out,1) = \"U\", \"01\", UPPERCASE(MID(IDCd Element:IDCd Element MComposite:NM1_IL_Subscriber NM1 Segment:Subscriber_Level Subscriber NM1 Loop:Subscriber_Level Names Unordered_Group:2000B_Subscriber,10,3)))",
+    "words": "IF(LEFT(_HCF__3001_MBR_ID_1 Field:_HCF__3001_MBR_ID_1_3_N:_HCF__3001_MBR_ID_1_3:_HCF__3001_MEMBER_ID Group:Out,1) = \"U\", \"01\", Upper(MID(NM1_IL_Subscriber.IDCd,10,3)))"
+  },
+  {
+    "start": 70,
+    "len": 2,
+    "name": ":HCF:-3001-MBR-SUFF-2",
+    "pic": "PIC X(02)",
+    "rule": "IF(LEFT(_HCF__3001_MBR_ID_1 Field:_HCF__3001_MBR_ID_1_3_N:_HCF__3001_MBR_ID_1_3:_HCF__3001_MEMBER_ID Group:Out,1) = \"U\", NONE, UPPERCASE(MID(IDCd Element:IDCd Element MComposite:NM1_IL_Subscriber NM1 Segment:Subscriber_Level Subscriber NM1 Loop:Subscriber_Level Names Unordered_Group:2000B_Subscriber,13,2)))",
+    "words": "IF(LEFT(_HCF__3001_MBR_ID_1 Field:_HCF__3001_MBR_ID_1_3_N:_HCF__3001_MBR_ID_1_3:_HCF__3001_MEMBER_ID Group:Out,1) = \"U\", (blank), Upper(MID(NM1_IL_Subscriber.IDCd,13,2)))"
+  },
+  {
+    "start": 72,
+    "len": 15,
+    "name": ":HCF:-3005-EDI-PAT-LAST-NAME",
+    "pic": "PIC X(15)",
+    "rule": "TEXT( IF(NameLastOrgName Element:NM1_QC_Patient NM1 Segment:.:2000C_Patient = \"DUMMYNAME\", NameLastOrgName Element:NM1_IL_Subscriber NM1 Segment:Subscriber_Level Subscriber NM1 Loop:Subscriber_Level Names Unordered_Group:2000B_Subscriber, NameLastOrgName Element:NM1_QC_Patient NM1 Segment:.:2000C_Patient))",
+    "words": "ToString( IF(NM1_QC_Patient.NameLastOrgName= \"DUMMYNAME\", NM1_IL_Subscriber.NameLastOrgName, NM1_QC_Patient.NameLastOrgName))"
+  },
+  {
+    "start": 87,
+    "len": 15,
+    "name": ":HCF:-3005-EDI-PAT-FIRST-NAME",
+    "pic": "PIC X(15)",
+    "rule": "TEXT( IF(NameLastOrgName Element:NM1_QC_Patient NM1 Segment:.:2000C_Patient = \"DUMMYNAME\", NameFirst Element:NM1_IL_Subscriber NM1 Segment:Subscriber_Level Subscriber NM1 Loop:Subscriber_Level Names Unordered_Group:2000B_Subscriber, NameFirst Element:NM1_QC_Patient NM1 Segment:.:2000C_Patient))",
+    "words": "ToString( IF(NM1_QC_Patient.NameLastOrgName= \"DUMMYNAME\", NM1_IL_Subscriber.NameFirst, NM1_QC_Patient.NameFirst))"
+  },
+  {
+    "start": 102,
+    "len": 1,
+    "name": ":HCF:-3005-EDI-PAT-MIDDLE-INIT",
+    "pic": "PIC X(01)",
+    "rule": "TEXT( IF(NameLastOrgName Element:NM1_QC_Patient NM1 Segment:.:2000C_Patient = \"DUMMYNAME\", NameMiddle Element:NM1_IL_Subscriber NM1 Segment:Subscriber_Level Subscriber NM1 Loop:Subscriber_Level Names Unordered_Group:2000B_Subscriber, NameMiddle Element:NM1_QC_Patient NM1 Segment:.:2000C_Patient))",
+    "words": "ToString( IF(NM1_QC_Patient.NameLastOrgName= \"DUMMYNAME\", NM1_IL_Subscriber.NameMiddle, NM1_QC_Patient.NameMiddle))"
+  },
+  {
+    "start": 103,
+    "len": 15,
+    "name": ":HCF:-2003-EDI-REF-LAST-NAME",
+    "pic": "PIC X(15)",
+    "rule": "LEFT(EITHER( NameLastOrgName Element:NM1_P3_Primary_Care_Provider NM1 Segment:.:2400_ClaimLine, NameLastOrgName Element:NM1_DN_Referring_Provider NM1 Segment:.:2400_ClaimLine, NameLastOrgName Element:NM1_P3_Primary_Care_Provider NM1 Segment:.:Claim_Level Referring_Provider NM1 Loop:.:2300_Claim, NameLastOrgName Element:NM1_DN_Referring_Provider NM1 Segment:.:Claim_Level Referring_Provider NM1 Loop:.:2300_Claim),15)",
+    "words": "LEFT(Coalesce( NM1_P3_Primary_Care_Provider.NameLastOrgName, NM1_DN_Referring_Provider.NameLastOrgName, NM1_P3_Primary_Care_Provider.NameLastOrgName, NM1_DN_Referring_Provider.NameLastOrgName),15)"
+  },
+  {
+    "start": 118,
+    "len": 15,
+    "name": ":HCF:-2003-EDI-REF-FIRST-NAME",
+    "pic": "PIC X(15)",
+    "rule": "LEFT(EITHER( NameFirst Element:NM1_P3_Primary_Care_Provider NM1 Segment:.:2400_ClaimLine, NameFirst Element:NM1_DN_Referring_Provider NM1 Segment:.:2400_ClaimLine, NameFirst Element:NM1_P3_Primary_Care_Provider NM1 Segment:.:Claim_Level Referring_Provider NM1 Loop:.:2300_Claim, NameFirst Element:NM1_DN_Referring_Provider NM1 Segment:.:Claim_Level Referring_Provider NM1 Loop:.:2300_Claim),15)",
+    "words": "LEFT(Coalesce( NM1_P3_Primary_Care_Provider.NameFirst, NM1_DN_Referring_Provider.NameFirst, NM1_P3_Primary_Care_Provider.NameFirst, NM1_DN_Referring_Provider.NameFirst),15)"
+  },
+  {
+    "start": 133,
+    "len": 1,
+    "name": ":HCF:-2003-EDI-REF-MIDDLE-INIT",
+    "pic": "PIC X(01)",
+    "rule": "LEFT(EITHER( NameMiddle Element:NM1_P3_Primary_Care_Provider NM1 Segment:.:2400_ClaimLine, NameMiddle Element:NM1_DN_Referring_Provider NM1 Segment:.:2400_ClaimLine, NameMiddle Element:NM1_P3_Primary_Care_Provider NM1 Segment:.:Claim_Level Referring_Provider NM1 Loop:.:2300_Claim, NameMiddle Element:NM1_DN_Referring_Provider NM1 Segment:.:Claim_Level Referring_Provider NM1 Loop:.:2300_Claim),15)",
+    "words": "LEFT(Coalesce( NM1_P3_Primary_Care_Provider.NameMiddle, NM1_DN_Referring_Provider.NameMiddle, NM1_P3_Primary_Care_Provider.NameMiddle, NM1_DN_Referring_Provider.NameMiddle),15)"
+  },
+  {
+    "start": 134,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(1)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 136,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(1)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 143,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(2)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 145,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(2)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 152,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(3)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 154,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(3)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 161,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(4)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 163,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(4)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 170,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(5)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 172,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(5)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 179,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(6)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 181,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(6)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 188,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(7)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 190,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(7)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 197,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(8)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 199,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(8)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 206,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(9)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 208,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(9)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 215,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(10)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 217,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(10)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 224,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(11)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 226,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(11)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 233,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(12)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 235,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(12)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 242,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(13)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 244,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(13)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 251,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(14)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 253,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(14)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 260,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(15)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 262,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(15)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 269,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(16)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 271,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(16)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 278,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(17)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 280,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(17)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 287,
+    "len": 2,
+    "name": ":HCF:-1208-DIAG-VERSION(18)",
+    "pic": "PIC X(02)",
+    "rule": "IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BK\" |CdListQual'rCd Sub_Element:Diagnosis_Segment=\"BF\",\"09\", IF(CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABK\"| CdListQual'rCd Sub_Element:Diagnosis_Segment=\"ABF\",\"10\"))",
+    "words": "IF(Diagnosis_Segment.CdListQual'rCd=\"BK\" |Diagnosis_Segment.CdListQual'rCd=\"BF\",\"09\", IF(Diagnosis_Segment.CdListQual'rCd=\"ABK\"| Diagnosis_Segment.CdListQual'rCd=\"ABF\",\"10\"))"
+  },
+  {
+    "start": 289,
+    "len": 7,
+    "name": ":HCF:-1208-DIAG(18)",
+    "pic": "PIC X(7)",
+    "rule": "UPPERCASE(SUBSTITUTE(LEFT(IndustryCd Sub_Element:Diagnosis_Segment,7), \".\", \"\"))",
+    "words": "Upper(Replace(LEFT(Diagnosis_Segment.IndustryCd,7), \".\", \"\"))"
+  },
+  {
+    "start": 296,
+    "len": 2,
+    "name": ":HCF:-1210-DIAG-POINTER(1)",
+    "pic": "PIC X(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 298,
+    "len": 2,
+    "name": ":HCF:-1210-DIAG-POINTER(2)",
+    "pic": "PIC X(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 300,
+    "len": 2,
+    "name": ":HCF:-1210-DIAG-POINTER(3)",
+    "pic": "PIC X(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 302,
+    "len": 2,
+    "name": ":HCF:-1210-DIAG-POINTER(4)",
+    "pic": "PIC X(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 304,
+    "len": 2,
+    "name": "FILLER-3",
+    "pic": "PIC X(2)",
+    "rule": "",
+    "words": ""
+  },
+  {
+    "start": 306,
+    "len": 4,
+    "name": ":HCF:-3101-MEMBER-BIRTH-DT-CCY",
+    "pic": "PIC 9(4)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 310,
+    "len": 2,
+    "name": ":HCF:-3101-MEMBER-BIRTH-DT-MM",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER( MID( DATETOTEXT( IF(NameLastOrgName Element:NM1_QC_Patient NM1 Segment:.:2000C_Patient = \"DUMMYNAME\", D8 Date_Time_Period Element:D8 Date_Time_Period Element MComposite:.:Subscriber_Level Subscriber NM1 Loop:.:2000B_Subscriber, D8 Date_Time_Period Element:D8 Date_Time_Period Element MComposite:Healthcare_Claim DMG Segment:.:2000C_Patient)), 5, 2))",
+    "words": "ToNumber( MID( DateToStr( IF(NM1_QC_Patient.NameLastOrgName= \"DUMMYNAME\", Subscriber_Level.Date_Time_Period, Healthcare_Claim.Date_Time_Period)), 5, 2))"
+  },
+  {
+    "start": 312,
+    "len": 2,
+    "name": ":HCF:-3101-MEMBER-BIRTH-DT-DD",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER( MID( DATETOTEXT( IF(NameLastOrgName Element:NM1_QC_Patient NM1 Segment:.:2000C_Patient = \"DUMMYNAME\", D8 Date_Time_Period Element:D8 Date_Time_Period Element MComposite:.:Subscriber_Level Subscriber NM1 Loop:.:2000B_Subscriber, D8 Date_Time_Period Element:D8 Date_Time_Period Element MComposite:Healthcare_Claim DMG Segment:.:2000C_Patient)), 7, 2))",
+    "words": "ToNumber( MID( DateToStr( IF(NM1_QC_Patient.NameLastOrgName= \"DUMMYNAME\", Subscriber_Level.Date_Time_Period, Healthcare_Claim.Date_Time_Period)), 7, 2))"
+  },
+  {
+    "start": 306,
+    "len": 8,
+    "name": ":HCF:-3101-MEMBER-BIRTH-DATE-N",
+    "pic": "PIC 9(8)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 314,
+    "len": 1,
+    "name": ":HCF:-3103-MEMBER-SEX",
+    "pic": "PIC X(01)",
+    "rule": "IF(NameLastOrgName Element:NM1_QC_Patient NM1 Segment:.:2000C_Patient = \"DUMMYNAME\", GenderCd Element:.:Subscriber_Level Subscriber NM1 Loop:.:2000B_Subscriber, GenderCd Element:Healthcare_Claim DMG Segment:Dependent_Level Patient NM1:2000C_Patient)",
+    "words": "IF(NM1_QC_Patient.NameLastOrgName= \"DUMMYNAME\", Subscriber_Level.GenderCd, Healthcare_Claim.GenderCd)"
+  },
+  {
+    "start": 315,
+    "len": 2,
+    "name": ":HCF:-3127-DEPENDANT-RELATION",
+    "pic": "PIC X(02)",
+    "rule": "IF(NameLastOrgName Element:NM1_QC_Patient NM1 Segment:.:2000C_Patient = \"DUMMYNAME\", Indiv'lRelationshipCd Element:.:2300_Claim, Indiv'lRelationshipCd Element:Healthcare_Claim PAT Segment:2000C_Patient)",
+    "words": "IF(NM1_QC_Patient.NameLastOrgName= \"DUMMYNAME\", 2300_Claim.Indiv'lRelationshipCd, Healthcare_Claim.Indiv'lRelationshipCd)"
+  },
+  {
+    "start": 317,
+    "len": 7,
+    "name": ":HCF:-4303-EMP-GRP-ID",
+    "pic": "PIC X(07)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 324,
+    "len": 3,
+    "name": ":HCF:-4304-EMP-GRP-MOD",
+    "pic": "PIC X(03)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 327,
+    "len": 1,
+    "name": ":HCF:-1203-EMPLOYMENT-IND",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 328,
+    "len": 1,
+    "name": ":HCF:-3165-EMERGENCY-IND",
+    "pic": "PIC X(01)",
+    "rule": "LEFT(Emergency YesNoCd Element:Healthcare_Claim SV1 Segment:2400_ClaimLine,1)",
+    "words": "LEFT(Emergency Healthcare_Claim.YesNoCd,1)"
+  },
+  {
+    "start": 329,
+    "len": 1,
+    "name": ":HCF:-1278-EMP-ACCIDENT-IND",
+    "pic": "PIC X(01)",
+    "rule": "IF(RelatedCausesCd Sub_Element[1]:RelatedCauses XComposite Element:Professional_Claim CLM Segment:2300_Claim = \"EM\" | RelatedCausesCd Sub_Element[2]:RelatedCauses XComposite Element:Professional_Claim CLM Segment:2300_Claim = \"EM\" | RelatedCausesCd Sub_Element[3]:RelatedCauses XComposite Element:Professional_Claim CLM Segment:2300_Claim = \"EM\", \"Y\")",
+    "words": "IF(Professional_Claim.RelatedCausesCd[1]= \"EM\" | Professional_Claim.RelatedCausesCd[2]= \"EM\" | Professional_Claim.RelatedCausesCd[3]= \"EM\", \"Y\")"
+  },
+  {
+    "start": 330,
+    "len": 1,
+    "name": ":HCF:-1279-AUTO-ACCIDENT-IND",
+    "pic": "PIC X(01)",
+    "rule": "IF(RelatedCausesCd Sub_Element[1]:RelatedCauses XComposite Element:Professional_Claim CLM Segment:2300_Claim = \"AA\" | RelatedCausesCd Sub_Element[2]:RelatedCauses XComposite Element:Professional_Claim CLM Segment:2300_Claim = \"AA\" | RelatedCausesCd Sub_Element[3]:RelatedCauses XComposite Element:Professional_Claim CLM Segment:2300_Claim = \"AA\", \"Y\")",
+    "words": "IF(Professional_Claim.RelatedCausesCd[1]= \"AA\" | Professional_Claim.RelatedCausesCd[2]= \"AA\" | Professional_Claim.RelatedCausesCd[3]= \"AA\", \"Y\")"
+  },
+  {
+    "start": 331,
+    "len": 1,
+    "name": ":HCF:-1281-OTHER-ACCIDENT-IND",
+    "pic": "PIC X(01)",
+    "rule": "IF(RelatedCausesCd Sub_Element[1]:RelatedCauses XComposite Element:Professional_Claim CLM Segment:2300_Claim = \"OA\" | RelatedCausesCd Sub_Element[2]:RelatedCauses XComposite Element:Professional_Claim CLM Segment:2300_Claim = \"OA\" | RelatedCausesCd Sub_Element[3]:RelatedCauses XComposite Element:Professional_Claim CLM Segment:2300_Claim = \"OA\", \"Y\")",
+    "words": "IF(Professional_Claim.RelatedCausesCd[1]= \"OA\" | Professional_Claim.RelatedCausesCd[2]= \"OA\" | Professional_Claim.RelatedCausesCd[3]= \"OA\", \"Y\")"
+  },
+  {
+    "start": 332,
+    "len": 1,
+    "name": ":HCF:-1410-RELEASE-INFO-CD",
+    "pic": "PIC X(01)",
+    "rule": "LEFT(ReleaseOfInfoCd Element:Professional_Claim CLM Segment:2300_Claim,1)",
+    "words": "LEFT(Professional_Claim.ReleaseOfInfoCd,1)"
+  },
+  {
+    "start": 333,
+    "len": 1,
+    "name": ":HCF:-1019-OTHER-INS-IND",
+    "pic": "PIC X(01)",
+    "rule": "IF(PrepaidFlag = \"YES\", \"N\", IF(YesNoCd Element:Healthcare_Claim OI Segment:Other_Subscriber SBR:2300_Claim=\"Y\", IF (MEMBER(ClaimFilingIndicatorCd Element:Other_Subscriber_Level SBR Segment:Other_Subscriber SBR:2300_Claim,{\"MA\",\"MB\"}), \"M\", \"I\"), \"N\") )",
+    "words": "IF(PrepaidFlag = \"YES\", \"N\", IF(Healthcare_Claim.YesNoCd=\"Y\", IF (InSet(Other_Subscriber_Level.ClaimFilingIndicatorCd,{\"MA\",\"MB\"}), \"M\", \"I\"), \"N\") )"
+  },
+  {
+    "start": 334,
+    "len": 1,
+    "name": ":HCF:-1701-ALT-PRICE-IND",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 335,
+    "len": 1,
+    "name": ":HCF:-3160-CHAMPUS-SPONSOR-STA",
+    "pic": "PIC X(1)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 336,
+    "len": 1,
+    "name": ":HCF:-3161-CHAMPUS-BRANCH-OF-S",
+    "pic": "PIC X(1)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 337,
+    "len": 2,
+    "name": ":HCF:-3172-CHAMPUS-SPONSOR-GRA",
+    "pic": "PIC X(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 339,
+    "len": 2,
+    "name": ":HCF:-3162-ORIG-INCIDENT-CC",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 341,
+    "len": 2,
+    "name": ":HCF:-3162-ORIG-INCIDENT-YY",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 343,
+    "len": 2,
+    "name": ":HCF:-3162-ORIG-INCIDENT-MM",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 345,
+    "len": 2,
+    "name": ":HCF:-3162-ORIG-INCIDENT-DD",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 347,
+    "len": 8,
+    "name": ":HCF:-3163-FIRST-CONSULT-DT-N",
+    "pic": "PIC 9(08)",
+    "rule": "TEXTTONUMBER(FROMDATETIME(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_444_Prop_Cas_First_Contact DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim,\"{CCYYMMDD}\"))",
+    "words": "ToNumber(ParseDate(DTP_444_Prop_Cas_First_Contact.Date_Time_Period,\"{CCYYMMDD}\"))"
+  },
+  {
+    "start": 355,
+    "len": 8,
+    "name": ":HCF:-3164-SAME-PREV-DIAG-DT-N",
+    "pic": "PIC 9(08)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 363,
+    "len": 8,
+    "name": ":HCF:-3166-RETURN-TO-WORK-DT-N",
+    "pic": "PIC 9(08)",
+    "rule": "TEXTTONUMBER(FROMDATETIME(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_296_Return_to_Work DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim,\"{CCYYMMDD}\"))",
+    "words": "ToNumber(ParseDate(DTP_296_Return_to_Work.Date_Time_Period,\"{CCYYMMDD}\"))"
+  },
+  {
+    "start": 371,
+    "len": 8,
+    "name": ":HCF:-1502-TOTL-DISAB-BEG-DT-N",
+    "pic": "PIC 9(08)",
+    "rule": "TEXTTONUMBER(FROMDATETIME(EITHER( D8[1]:RD8 Date_Time_Period Element:RD8<>Date_Time_Period Element MComposite:DTP_314_Disability DTP Segment:Disability DTP Choice_Group:Claim_Level DTPs Unordered_Group:2300_Claim, D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_360_Disability_Begin DTP Segment:Disability DTP Choice_Group:Claim_Level DTPs Unordered_Group:2300_Claim),\"{CCYYMMDD}\"))",
+    "words": "ToNumber(ParseDate(Coalesce( D8[1]:DTP_314_Disability.Date_Time_Period, DTP_360_Disability_Begin.Date_Time_Period),\"{CCYYMMDD}\"))"
+  },
+  {
+    "start": 379,
+    "len": 8,
+    "name": ":HCF:-1501-TOTL-DISAB-END-DT-N",
+    "pic": "PIC 9(08)",
+    "rule": "TEXTTONUMBER(FROMDATETIME(EITHER( D8[2]:RD8 Date_Time_Period Element:RD8<>Date_Time_Period Element MComposite:DTP_314_Disability DTP Segment:Disability DTP Choice_Group:Claim_Level DTPs Unordered_Group:2300_Claim, D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_361_Disability_End DTP Segment:Disability DTP Choice_Group:Claim_Level DTPs Unordered_Group:2300_Claim),\"{CCYYMMDD}\"))",
+    "words": "ToNumber(ParseDate(Coalesce( D8[2]:DTP_314_Disability.Date_Time_Period, DTP_361_Disability_End.Date_Time_Period),\"{CCYYMMDD}\"))"
+  },
+  {
+    "start": 387,
+    "len": 8,
+    "name": ":HCF:-1502-PART-DISAB-BEG-DT-N",
+    "pic": "PIC 9(08)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 395,
+    "len": 8,
+    "name": ":HCF:-1501-PART-DISAB-END-DT-N",
+    "pic": "PIC 9(08)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 403,
+    "len": 12,
+    "name": ":HCF:-1027-REF-PROV-ID",
+    "pic": "PIC X(12)",
+    "rule": "LEFT(EITHER( IDCd Element:IDCd Element MComposite:NM1_P3_Primary_Care_Provider NM1 Segment:Referring_or_Primary NM1 Choice_Group:Service_Line_Level Referring_Provider NM1 Loop:Service_Line_Level Names Unordered_Group:2400_ClaimLine, IDCd Element:IDCd Element MComposite:NM1_DN_Referring_Provider NM1 Segment:Referring_or_Primary NM1 Choice_Group:Service_Line_Level Referring_Provider NM1 Loop:Service_Line_Level Names Unordered_Group:2400_ClaimLine, IDCd Element:IDCd Element MComposite:NM1_P3_Primary_Care_Provider NM1 Segment:Referring_or_Primary NM1 Choice_Group:Claim_Level Referring_Provider NM1 Loop:Claim_Level Names Unordered_Group:2300_Claim, IDCd Element:IDCd Element MComposite:NM1_DN_Referring_Provider NM1 Segment:Referring_or_Primary NM1 Choice_Group:Claim_Level Referring_Provider NM1 Loop:Claim_Level Names Unordered_Group:2300_Claim),12)",
+    "words": "LEFT(Coalesce( NM1_P3_Primary_Care_Provider.IDCd, NM1_DN_Referring_Provider.IDCd, NM1_P3_Primary_Care_Provider.IDCd, NM1_DN_Referring_Provider.IDCd),12)"
+  },
+  {
+    "start": 415,
+    "len": 3,
+    "name": ":HCF:-1027-REF-PROV-SUFFIX",
+    "pic": "PIC X(03)",
+    "rule": "IF(MID(EITHER( IDCd Element:IDCd Element MComposite:NM1_P3_Primary_Care_Provider NM1 Segment:Referring_or_Primary NM1 Choice_Group:Service_Line_Level Referring_Provider NM1 Loop:Service_Line_Level Names Unordered_Group:2400_ClaimLine, IDCd Element:IDCd Element MComposite:NM1_DN_Referring_Provider NM1 Segment:Referring_or_Primary NM1 Choice_Group:Service_Line_Level Referring_Provider NM1 Loop:Service_Line_Level Names Unordered_Group:2400_ClaimLine, IDCd Element:IDCd Element MComposite:NM1_P3_Primary_Care_Provider NM1 Segment:Referring_or_Primary NM1 Choice_Group:Claim_Level Referring_Provider NM1 Loop:Claim_Level Names Unordered_Group:2300_Claim, IDCd Element:IDCd Element MComposite:NM1_DN_Referring_Provider NM1 Segment:Referring_or_Primary NM1 Choice_Group:Claim_Level Referring_Provider NM1 Loop:Claim_Level Names Unordered_Group:2300_Claim),13,3)=\"\",\" \", MID(EITHER( IDCd Element:IDCd Element MComposite:NM1_P3_Primary_Care_Provider NM1 Segment:Referring_or_Primary NM1 Choice_Group:Service_Line_Level Referring_Provider NM1 Loop:Service_Line_Level Names Unordered_Group:2400_ClaimLine, IDCd Element:IDCd Element MComposite:NM1_DN_Referring_Provider NM1 Segment:Referring_or_Primary NM1 Choice_Group:Service_Line_Level Referring_Provider NM1 Loop:Service_Line_Level Names Unordered_Group:2400_ClaimLine, IDCd Element:IDCd Element MComposite:NM1_P3_Primary_Care_Provider NM1 Segment:Referring_or_Primary NM1 Choice_Group:Claim_Level Referring_Provider NM1 Loop:Claim_Level Names Unordered_Group:2300_Claim, IDCd Element:IDCd Element MComposite:NM1_DN_Referring_Provider NM1 Segment:Referring_or_Primary NM1 Choice_Group:Claim_Level Referring_Provider NM1 Loop:Claim_Level Names Unordered_Group:2300_Claim),13,3))",
+    "words": "IF(MID(Coalesce( NM1_P3_Primary_Care_Provider.IDCd, NM1_DN_Referring_Provider.IDCd, NM1_P3_Primary_Care_Provider.IDCd, NM1_DN_Referring_Provider.IDCd),13,3)=\"\",\" \", MID(Coalesce( NM1_P3_Primary_Care_Provider.IDCd, NM1_DN_Referring_Provider.IDCd, NM1_P3_Primary_Care_Provider.IDCd, NM1_DN_Referring_Provider.IDCd),13,3))"
+  },
+  {
+    "start": 418,
+    "len": 2,
+    "name": ":HCF:-1503-HOSP-ADMIT-CC",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(LEFT(DATETOTEXT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_435_Admission DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),2))",
+    "words": "ToNumber(LEFT(DateToStr(DTP_435_Admission.Date_Time_Period),2))"
+  },
+  {
+    "start": 420,
+    "len": 2,
+    "name": ":HCF:-1503-HOSP-ADMIT-YY",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(MID(DATETOTEXT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_435_Admission DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),3,2))",
+    "words": "ToNumber(MID(DateToStr(DTP_435_Admission.Date_Time_Period),3,2))"
+  },
+  {
+    "start": 422,
+    "len": 2,
+    "name": ":HCF:-1503-HOSP-ADMIT-MM",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(MID(DATETOTEXT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_435_Admission DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),5,2))",
+    "words": "ToNumber(MID(DateToStr(DTP_435_Admission.Date_Time_Period),5,2))"
+  },
+  {
+    "start": 424,
+    "len": 2,
+    "name": ":HCF:-1503-HOSP-ADMIT-DD",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(MID(DATETOTEXT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_435_Admission DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),7,2))",
+    "words": "ToNumber(MID(DateToStr(DTP_435_Admission.Date_Time_Period),7,2))"
+  },
+  {
+    "start": 418,
+    "len": 8,
+    "name": ":HCF:-1503-HOSP-ADMIT-DT-N",
+    "pic": "PIC 9(8)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 426,
+    "len": 2,
+    "name": ":HCF:-1504-HOSP-DISCHARGE-CC",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(LEFT(DATETOTEXT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_096_Discharge DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),2))",
+    "words": "ToNumber(LEFT(DateToStr(DTP_096_Discharge.Date_Time_Period),2))"
+  },
+  {
+    "start": 428,
+    "len": 2,
+    "name": ":HCF:-1504-HOSP-DISCHARGE-YY",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(MID(DATETOTEXT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_096_Discharge DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),3,2))",
+    "words": "ToNumber(MID(DateToStr(DTP_096_Discharge.Date_Time_Period),3,2))"
+  },
+  {
+    "start": 430,
+    "len": 2,
+    "name": ":HCF:-1504-HOSP-DISCHARGE-MM",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(MID(DATETOTEXT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_096_Discharge DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),5,2))",
+    "words": "ToNumber(MID(DateToStr(DTP_096_Discharge.Date_Time_Period),5,2))"
+  },
+  {
+    "start": 432,
+    "len": 2,
+    "name": ":HCF:-1504-HOSP-DISCHARGE-DD",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(MID(DATETOTEXT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_096_Discharge DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),7,2))",
+    "words": "ToNumber(MID(DateToStr(DTP_096_Discharge.Date_Time_Period),7,2))"
+  },
+  {
+    "start": 426,
+    "len": 8,
+    "name": ":HCF:-1504-HOSP-DISCHARGE-DT-N",
+    "pic": "PIC 9(8)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 434,
+    "len": 25,
+    "name": ":HCF:-1217-PLACE-OF-SERVICE-NA",
+    "pic": "PIC X(25)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 459,
+    "len": 1,
+    "name": ":HCF:-1215-OUTSIDE-LAB-IND",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 460,
+    "len": 2,
+    "name": ":HCF:-1502-SERVICE-BEG-CC",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(LEFT(DATETOTEXT( EITHER(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine, D8[1]:RD8 Date_Time_Period Element:RD8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine)),2))",
+    "words": "ToNumber(LEFT(DateToStr( Coalesce(DTP_472_Service.Date_Time_Period, D8[1]:DTP_472_Service.Date_Time_Period)),2))"
+  },
+  {
+    "start": 462,
+    "len": 2,
+    "name": ":HCF:-1502-SERVICE-BEG-YY",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(MID(DATETOTEXT( EITHER(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine, D8[1]:RD8 Date_Time_Period Element:RD8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine)),3,2))",
+    "words": "ToNumber(MID(DateToStr( Coalesce(DTP_472_Service.Date_Time_Period, D8[1]:DTP_472_Service.Date_Time_Period)),3,2))"
+  },
+  {
+    "start": 464,
+    "len": 2,
+    "name": ":HCF:-1502-SERVICE-BEG-MM",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(MID(DATETOTEXT( EITHER(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine, D8[1]:RD8 Date_Time_Period Element:RD8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine)),5,2))",
+    "words": "ToNumber(MID(DateToStr( Coalesce(DTP_472_Service.Date_Time_Period, D8[1]:DTP_472_Service.Date_Time_Period)),5,2))"
+  },
+  {
+    "start": 466,
+    "len": 2,
+    "name": ":HCF:-1502-SERVICE-BEG-DD",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(MID(DATETOTEXT( EITHER(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine, D8[1]:RD8 Date_Time_Period Element:RD8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine)),7,2))",
+    "words": "ToNumber(MID(DateToStr( Coalesce(DTP_472_Service.Date_Time_Period, D8[1]:DTP_472_Service.Date_Time_Period)),7,2))"
+  },
+  {
+    "start": 460,
+    "len": 8,
+    "name": ":HCF:-1502-SERVICE-BEG-DT-N",
+    "pic": "PIC 9(8)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 468,
+    "len": 2,
+    "name": ":HCF:-1501-SERVICE-END-CC",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(LEFT(DATETOTEXT( EITHER(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine, D8[2]:RD8 Date_Time_Period Element:RD8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine)),2))",
+    "words": "ToNumber(LEFT(DateToStr( Coalesce(DTP_472_Service.Date_Time_Period, D8[2]:DTP_472_Service.Date_Time_Period)),2))"
+  },
+  {
+    "start": 470,
+    "len": 2,
+    "name": ":HCF:-1501-SERVICE-END-YY",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(MID(DATETOTEXT( EITHER(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine, D8[2]:RD8 Date_Time_Period Element:RD8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine)),3,2))",
+    "words": "ToNumber(MID(DateToStr( Coalesce(DTP_472_Service.Date_Time_Period, D8[2]:DTP_472_Service.Date_Time_Period)),3,2))"
+  },
+  {
+    "start": 472,
+    "len": 2,
+    "name": ":HCF:-1501-SERVICE-END-MM",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(MID(DATETOTEXT( EITHER(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine, D8[2]:RD8 Date_Time_Period Element:RD8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine)),5,2))",
+    "words": "ToNumber(MID(DateToStr( Coalesce(DTP_472_Service.Date_Time_Period, D8[2]:DTP_472_Service.Date_Time_Period)),5,2))"
+  },
+  {
+    "start": 474,
+    "len": 2,
+    "name": ":HCF:-1501-SERVICE-END-DD",
+    "pic": "PIC 9(02)",
+    "rule": "TEXTTONUMBER(MID(DATETOTEXT( EITHER(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine, D8[2]:RD8 Date_Time_Period Element:RD8<>Date_Time_Period Element MComposite:DTP_472_Service DTP Segment:Service_Line_Level DTPs Unordered_Group:2400_ClaimLine)),7,2))",
+    "words": "ToNumber(MID(DateToStr( Coalesce(DTP_472_Service.Date_Time_Period, D8[2]:DTP_472_Service.Date_Time_Period)),7,2))"
+  },
+  {
+    "start": 468,
+    "len": 8,
+    "name": ":HCF:-1501-SERVICE-END-DT-N",
+    "pic": "PIC 9(8)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 476,
+    "len": 2,
+    "name": ":HCF:-1207-PLACE-OF-SERVICE",
+    "pic": "PIC X(02)",
+    "rule": "EITHER( FacilityCd Element:Healthcare_Claim SV1 Segment:2400_ClaimLine, FacilityCd Sub_Element:HealthCareSvcLoc XComposite Element:Professional_Claim CLM Segment:2300_Claim)",
+    "words": "Coalesce( Healthcare_Claim.FacilityCd, Professional_Claim.FacilityCd)"
+  },
+  {
+    "start": 478,
+    "len": 9,
+    "name": ":HCF:-1220-PROCEDURE-CODE",
+    "pic": "PIC X(9)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 478,
+    "len": 5,
+    "name": ":HCF:-1218-PROC-CODE",
+    "pic": "PIC X(05)",
+    "rule": "EITHER( ProdServiceID Sub_Element:MedicalProcedureID XComposite Element:Healthcare_Claim SV5 Segment:2400_ClaimLine, ProdServiceID Sub_Element:MedicalProcedureID XComposite Element:SVD Segment:Adjudication_Information SVD:2400_ClaimLine, ProdServiceID Sub_Element:MedicalProcedureID XComposite Element:Healthcare_Claim SV1 Segment:2400_ClaimLine, IndustryCd Sub_Element:Health_Care_Code_Info XComposite Element[1]:HI_BP_Anesthesia_Procedure HI Segment:Claim_Level HIs Unordered_Group:2300_Claim)",
+    "words": "Coalesce( Healthcare_Claim.ProdServiceID, SVD.ProdServiceID, Healthcare_Claim.ProdServiceID, HI_BP_Anesthesia_Procedure.IndustryCd)"
+  },
+  {
+    "start": 483,
+    "len": 2,
+    "name": ":HCF:-1219-PROC-MOD1",
+    "pic": "PIC X(02)",
+    "rule": "EITHER(ProcedureModifier Sub_Element[1]:MedicalProcedureID XComposite Element:SVD Segment:Adjudication_Information SVD:2400_ClaimLine, ProcedureModifier Sub_Element[1]:MedicalProcedureID XComposite Element:Healthcare_Claim SV1 Segment:2400_ClaimLine)",
+    "words": "Coalesce(SVD.ProcedureModifier[1], Healthcare_Claim.ProcedureModifier[1])"
+  },
+  {
+    "start": 485,
+    "len": 2,
+    "name": ":HCF:-1219-PROC-MOD2",
+    "pic": "PIC X(02)",
+    "rule": "EITHER(ProcedureModifier Sub_Element[2]:MedicalProcedureID XComposite Element:SVD Segment:Adjudication_Information SVD:2400_ClaimLine, ProcedureModifier Sub_Element[2]:MedicalProcedureID XComposite Element:Healthcare_Claim SV1 Segment:2400_ClaimLine)",
+    "words": "Coalesce(SVD.ProcedureModifier[2], Healthcare_Claim.ProcedureModifier[2])"
+  },
+  {
+    "start": 487,
+    "len": 5,
+    "name": ":HCF:-4045-NDC-LABELER",
+    "pic": "PIC X(05)",
+    "rule": "LEFT(ProdServiceID, 5)",
+    "words": "LEFT(ProdServiceID, 5)"
+  },
+  {
+    "start": 492,
+    "len": 4,
+    "name": ":HCF:-4046-NDC-PRODUCT",
+    "pic": "PIC X(04)",
+    "rule": "MID(ProdServiceID, 6, 4)",
+    "words": "MID(ProdServiceID, 6, 4)"
+  },
+  {
+    "start": 496,
+    "len": 2,
+    "name": ":HCF:-4047-NDC-PACKAGE",
+    "pic": "PIC X(02)",
+    "rule": "MID(ProdServiceID,10, 2)",
+    "words": "MID(ProdServiceID,10, 2)"
+  },
+  {
+    "start": 498,
+    "len": 1,
+    "name": ":HCF:-5618-POSS-DENTAL-PROC-IN",
+    "pic": "PIC X(1)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 499,
+    "len": 1,
+    "name": ":HCF:-1902-RECORD-TYPE-DISP",
+    "pic": "PIC X(01)",
+    "rule": "IF(ClaimFreqTypeCd Sub_Element:HealthCareSvcLoc XComposite Element:Professional_Claim CLM Segment:2300_Claim=\"6\",\"A\", IF(ClaimFreqTypeCd Sub_Element:HealthCareSvcLoc XComposite Element:Professional_Claim CLM Segment:2300_Claim=\"7\",\"R\", IF(ClaimFreqTypeCd Sub_Element:HealthCareSvcLoc XComposite Element:Professional_Claim CLM Segment:2300_Claim=\"8\",\"V\")))",
+    "words": "IF(Professional_Claim.ClaimFreqTypeCd=\"6\",\"A\", IF(Professional_Claim.ClaimFreqTypeCd=\"7\",\"R\", IF(Professional_Claim.ClaimFreqTypeCd=\"8\",\"V\")))"
+  },
+  {
+    "start": 500,
+    "len": 1,
+    "name": ":HCF:-1703-OVERRIDE-4-8-IND",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 501,
+    "len": 2,
+    "name": ":HCF:-1219-PROC-MOD3",
+    "pic": "PIC X(02)",
+    "rule": "EITHER(ProcedureModifier Sub_Element[3]:MedicalProcedureID XComposite Element:SVD Segment:Adjudication_Information SVD:2400_ClaimLine, ProcedureModifier Sub_Element[3]:MedicalProcedureID XComposite Element:Healthcare_Claim SV1 Segment:2400_ClaimLine)",
+    "words": "Coalesce(SVD.ProcedureModifier[3], Healthcare_Claim.ProcedureModifier[3])"
+  },
+  {
+    "start": 503,
+    "len": 2,
+    "name": ":HCF:-1219-PROC-MOD4",
+    "pic": "PIC X(02)",
+    "rule": "EITHER(ProcedureModifier Sub_Element[4]:MedicalProcedureID XComposite Element:SVD Segment:Adjudication_Information SVD:2400_ClaimLine, ProcedureModifier Sub_Element[4]:MedicalProcedureID XComposite Element:Healthcare_Claim SV1 Segment:2400_ClaimLine)",
+    "words": "Coalesce(SVD.ProcedureModifier[4], Healthcare_Claim.ProcedureModifier[4])"
+  },
+  {
+    "start": 505,
+    "len": 6,
+    "name": "FILLER-5",
+    "pic": "PIC X(6)",
+    "rule": "",
+    "words": ""
+  },
+  {
+    "start": 511,
+    "len": 7,
+    "name": ":HCF:-1037-AMOUNT-BILLED-N",
+    "pic": "PIC 9(7)V99",
+    "rule": "REFORMAT(Submitted M'Amt Element:Healthcare_Claim SV1 Segment:2400_ClaimLine)",
+    "words": "ReformatAmt(Submitted Healthcare_Claim.M'Amt)"
+  },
+  {
+    "start": 520,
+    "len": 3,
+    "name": ":HCF:-1221-UNITS-N",
+    "pic": "PIC 9(03)",
+    "rule": "IF(Qty Element:Service UnitQty Element MComposite:Healthcare_Claim SV1 Segment:2400_ClaimLine > 999, 999, Qty Element:Service UnitQty Element MComposite:Healthcare_Claim SV1 Segment:2400_ClaimLine)",
+    "words": "IF(Healthcare_Claim.Qty, 999, Healthcare_Claim.Qty)"
+  },
+  {
+    "start": 523,
+    "len": 2,
+    "name": ":HCF:-1206-TYPE-OF-SERVICE",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 525,
+    "len": 20,
+    "name": ":HCF:-1508-PATIENT-CONTROL-NO",
+    "pic": "PIC X(20)",
+    "rule": "LEFT(ClaimSubmitterID Element:Professional_Claim CLM Segment:2300_Claim,20)",
+    "words": "LEFT(Professional_Claim.ClaimSubmitterID,20)"
+  },
+  {
+    "start": 545,
+    "len": 1,
+    "name": ":HCF:-1161-ESPDT-IND",
+    "pic": "PIC X(01)",
+    "rule": "EPSDT YesNoCd Element:Healthcare_Claim SV1 Segment:2400_ClaimLine",
+    "words": "EPSDT Healthcare_Claim.YesNoCd"
+  },
+  {
+    "start": 546,
+    "len": 1,
+    "name": ":HCF:-1162-FAMILY-PLANNING-IND",
+    "pic": "PIC X(01)",
+    "rule": "FamilyPlanning YesNoCd Element:Healthcare_Claim SV1 Segment:2400_ClaimLine",
+    "words": "FamilyPlanning Healthcare_Claim.YesNoCd"
+  },
+  {
+    "start": 547,
+    "len": 2,
+    "name": ":HCF:-6001-CENTURY",
+    "pic": "PIC X(02)",
+    "rule": "LEFT(Ref# Element:REF_G1_Prior_Auth'n REF Segment:Service_Line_Level REFs Unordered_Group:2400_ClaimLine, 2)",
+    "words": "LEFT(REF_G1_Prior_Auth'n.Ref#, 2)"
+  },
+  {
+    "start": 549,
+    "len": 2,
+    "name": ":HCF:-6001-YEAR",
+    "pic": "PIC X(02)",
+    "rule": "MID(Ref# Element:REF_G1_Prior_Auth'n REF Segment:Service_Line_Level REFs Unordered_Group:2400_ClaimLine,3,2)",
+    "words": "MID(REF_G1_Prior_Auth'n.Ref#,3,2)"
+  },
+  {
+    "start": 551,
+    "len": 3,
+    "name": ":HCF:-6001-JULIAN-DATE",
+    "pic": "PIC X(03)",
+    "rule": "MID(Ref# Element:REF_G1_Prior_Auth'n REF Segment:Service_Line_Level REFs Unordered_Group:2400_ClaimLine,5,3)",
+    "words": "MID(REF_G1_Prior_Auth'n.Ref#,5,3)"
+  },
+  {
+    "start": 554,
+    "len": 4,
+    "name": ":HCF:-6001-OPERATOR-ID",
+    "pic": "PIC X(04)",
+    "rule": "MID(Ref# Element:REF_G1_Prior_Auth'n REF Segment:Service_Line_Level REFs Unordered_Group:2400_ClaimLine,8,4)",
+    "words": "MID(REF_G1_Prior_Auth'n.Ref#,8,4)"
+  },
+  {
+    "start": 558,
+    "len": 1,
+    "name": ":HCF:-6001-SRCE-TYPE",
+    "pic": "PIC X(01)",
+    "rule": "MID(Ref# Element:REF_G1_Prior_Auth'n REF Segment:Service_Line_Level REFs Unordered_Group:2400_ClaimLine,12,1)",
+    "words": "MID(REF_G1_Prior_Auth'n.Ref#,12,1)"
+  },
+  {
+    "start": 559,
+    "len": 4,
+    "name": ":HCF:-6001-SEQUENCE",
+    "pic": "PIC X(04)",
+    "rule": "MID(Ref# Element:REF_G1_Prior_Auth'n REF Segment:Service_Line_Level REFs Unordered_Group:2400_ClaimLine,13,4)",
+    "words": "MID(REF_G1_Prior_Auth'n.Ref#,13,4)"
+  },
+  {
+    "start": 563,
+    "len": 2,
+    "name": ":HCF:-6001-REVISION",
+    "pic": "PIC X(02)",
+    "rule": "MID(Ref# Element:REF_G1_Prior_Auth'n REF Segment:Service_Line_Level REFs Unordered_Group:2400_ClaimLine,17,2)",
+    "words": "MID(REF_G1_Prior_Auth'n.Ref#,17,2)"
+  },
+  {
+    "start": 565,
+    "len": 2,
+    "name": ":HCF:-6001-LINE-NUMBER",
+    "pic": "PIC X(02)",
+    "rule": "MID(Ref# Element:REF_G1_Prior_Auth'n REF Segment:Service_Line_Level REFs Unordered_Group:2400_ClaimLine,19,2)",
+    "words": "MID(REF_G1_Prior_Auth'n.Ref#,19,2)"
+  },
+  {
+    "start": 567,
+    "len": 4,
+    "name": ":HCF:-1227-MCARE-DENIAL-RSN",
+    "pic": "PIC X(04)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 571,
+    "len": 7,
+    "name": ":HCF:-1039-OTHER-INS-PAID-N",
+    "pic": "PIC 9(7)V99",
+    "rule": "IF(PrepaidFlag = \"NO\", 1039_OTHER_INS_PAID(M'Amt Element:SVD Segment:Adjudication_Information SVD:2400_ClaimLine))",
+    "words": "IF(PrepaidFlag = \"NO\", 1039_OTHER_INS_PAID(SVD.M'Amt))"
+  },
+  {
+    "start": 580,
+    "len": 5,
+    "name": ":HCF:-1051-MEDI-DEDUCTIBLE-N",
+    "pic": "PIC 9(5)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 587,
+    "len": 7,
+    "name": ":HCF:-1052-MEDI-COINSURANCE-N",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 596,
+    "len": 7,
+    "name": ":HCF:-1053-MEDI-ALLOWED-N",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 605,
+    "len": 7,
+    "name": ":HCF:-1223-MCARE-PAID-AMT-N",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 614,
+    "len": 1,
+    "name": ":HCF:-2616-PAYEE-IND",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 615,
+    "len": 1,
+    "name": ":HCF:-1083-SPEC-PRIC-IND",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 616,
+    "len": 1,
+    "name": ":HCF:-1084-CLM-TRACER",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 617,
+    "len": 12,
+    "name": ":HCF:-0506-FACILITY-NO",
+    "pic": "PIC X(12)",
+    "rule": "IF(IDCdQual'r Element:.:Service_Location = \"XX\", LEFT(IDCd Element:IDCd Element MComposite:Service_Location ,12))",
+    "words": "IF(Service_Location.IDCdQual'r= \"XX\", LEFT(Service_Location.IDCd,12))"
+  },
+  {
+    "start": 629,
+    "len": 3,
+    "name": ":HCF:-0506-FACILITY-SUF",
+    "pic": "PIC X(03)",
+    "rule": "IF(IDCdQual'r Element:.:Service_Location = \"XX\", MID(IDCd Element:IDCd Element MComposite:Service_Location ,13,3))",
+    "words": "IF(Service_Location.IDCdQual'r= \"XX\", MID(Service_Location.IDCd,13,3))"
+  },
+  {
+    "start": 632,
+    "len": 7,
+    "name": ":HCF:-1274-USER-TOTAL-BILLED-N",
+    "pic": "PIC 9(07)V99",
+    "rule": "REFORMAT(M'Amt Element:Professional_Claim CLM Segment:2300_Claim)",
+    "words": "ReformatAmt(Professional_Claim.M'Amt)"
+  },
+  {
+    "start": 641,
+    "len": 1,
+    "name": ":HCF:-1275-PATIENT-AUTH-IND",
+    "pic": "PIC X(01)",
+    "rule": "AssignmentOfBenefits YesNoCd Element:Professional_Claim CLM Segment:2300_Claim",
+    "words": "AssignmentOfBenefits Professional_Claim.YesNoCd"
+  },
+  {
+    "start": 642,
+    "len": 1,
+    "name": ":HCF:-1409-ASSIGNMENT-CD",
+    "pic": "PIC X(01)",
+    "rule": "EITHER( IF(MEMBER(ProviderAcceptAssignmentCd Element:Professional_Claim CLM Segment:2300_Claim,{\"A\",\"C\"}), LEFT(ProviderAcceptAssignmentCd Element:Professional_Claim CLM Segment:2300_Claim,1)), LEFT(YesNoCd Element:Healthcare_Claim OI Segment:Other_Subscriber SBR:2300_Claim,1))",
+    "words": "Coalesce( IF(InSet(Professional_Claim.ProviderAcceptAssignmentCd,{\"A\",\"C\"}), LEFT(Professional_Claim.ProviderAcceptAssignmentCd,1)), LEFT(Healthcare_Claim.YesNoCd,1))"
+  },
+  {
+    "start": 643,
+    "len": 8,
+    "name": ":HCF:-1541-OCCURRENCE-DATE-N",
+    "pic": "PIC 9(08)",
+    "rule": "TEXTTONUMBER( FROMDATETIME( IF(MEMBER(RelatedCausesCd Sub_Element:.:2300_Claim, {\"AA\", \"OA\"}), D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_439_Accident DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim, EITHER( D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_431_Current_Onset DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim, D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_453_Acute_Manifestation DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim)), \"CCYYMMDD\"))",
+    "words": "ToNumber( ParseDate( IF(InSet(2300_Claim.RelatedCausesCd, {\"AA\", \"OA\"}), DTP_439_Accident.Date_Time_Period, Coalesce( DTP_431_Current_Onset.Date_Time_Period, DTP_453_Acute_Manifestation.Date_Time_Period)), \"CCYYMMDD\"))"
+  },
+  {
+    "start": 643,
+    "len": 2,
+    "name": ":HCF:-1541-OCCURRENCE-CC",
+    "pic": "PIC 9(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 645,
+    "len": 2,
+    "name": ":HCF:-1541-OCCURRENCE-YY",
+    "pic": "PIC 9(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 647,
+    "len": 2,
+    "name": ":HCF:-1541-OCCURRENCE-MM",
+    "pic": "PIC 9(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 649,
+    "len": 2,
+    "name": ":HCF:-1541-OCCURRENCE-DD",
+    "pic": "PIC 9(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 651,
+    "len": 15,
+    "name": ":HCF:-1715-SUBMITTER-ID",
+    "pic": "PIC X(15)",
+    "rule": "LEFT(1000A_Submitter_NM109,15)",
+    "words": "LEFT(1000A_Submitter_NM109,15)"
+  },
+  {
+    "start": 666,
+    "len": 45,
+    "name": ":HCF:-2001-SERV-PROV-NAME",
+    "pic": "PIC X(45)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 711,
+    "len": 1,
+    "name": ":HCF:-1271-OCCURRENCE-CODE",
+    "pic": "PIC X(01)",
+    "rule": "IF(PRESENT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_431_Current_Onset DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),\"O\", IF(PRESENT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_453_Acute_Manifestation DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),\"L\"))",
+    "words": "IF(Exists(DTP_431_Current_Onset.Date_Time_Period),\"O\", IF(Exists(DTP_453_Acute_Manifestation.Date_Time_Period),\"L\"))"
+  },
+  {
+    "start": 712,
+    "len": 1,
+    "name": ":HCF:-1209-PA-POINTER",
+    "pic": "PIC 9(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 713,
+    "len": 15,
+    "name": ":HCF:-1098-CONVERTED-CLAIM-NO",
+    "pic": "PIC X(15)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 728,
+    "len": 15,
+    "name": ":HCF:-1270-ALT-CLM-NO",
+    "pic": "PIC X(15)",
+    "rule": "EITHER( Ref# Element:REF_9B_Repriced_Reference_Number REF Segment:Service_Line_Level REFs Unordered_Group:2400_ClaimLine, Ref# Element:REF_9D_Adjusted_Reference_Number REF Segment:Service_Line_Level REFs Unordered_Group:2400_ClaimLine, Ref# Element:REF_9A_Repriced_Claim_Number REF Segment:Claim_Level REFs Unordered_Group:2300_Claim, Ref# Element:REF_9C_Adjusted_Claim_Number REF Segment:Claim_Level REFs Unordered_Group:2300_Claim)",
+    "words": "Coalesce( REF_9B_Repriced_Reference_Number.Ref#, REF_9D_Adjusted_Reference_Number.Ref#, REF_9A_Repriced_Claim_Number.Ref#, REF_9C_Adjusted_Claim_Number.Ref#)"
+  },
+  {
+    "start": 743,
+    "len": 2,
+    "name": ":HCF:-1110-CHECK-CC",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 745,
+    "len": 2,
+    "name": ":HCF:-1110-CHECK-YY",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 747,
+    "len": 2,
+    "name": ":HCF:-1110-CHECK-MM",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 749,
+    "len": 2,
+    "name": ":HCF:-1110-CHECK-DD",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 751,
+    "len": 11,
+    "name": ":HCF:-1109-CHECK-NUMBER-N",
+    "pic": "PIC 9(11)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 762,
+    "len": 10,
+    "name": ":HCF:-4391-AP-ABA-NUMBER",
+    "pic": "PIC X(10)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 772,
+    "len": 9,
+    "name": ":HCF:-4391-AP-BANK-ACCT",
+    "pic": "PIC X(09)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 781,
+    "len": 11,
+    "name": ":HCF:-1031-REMITT-NUMBER",
+    "pic": "PIC 9(11)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 792,
+    "len": 3,
+    "name": ":HCF:-1112-EOC-CODE",
+    "pic": "PIC X(03)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 795,
+    "len": 1,
+    "name": ":HCF:-1048-FFS-OR-CAP-IND",
+    "pic": "PIC X(01)",
+    "rule": "IF(BHT06_Transc'nTypeCd=\"CH\",\"F\", IF(BHT06_Transc'nTypeCd=\"RP\",\"C\"))",
+    "words": "IF(BHT06_Transc'nTypeCd=\"CH\",\"F\", IF(BHT06_Transc'nTypeCd=\"RP\",\"C\"))"
+  },
+  {
+    "start": 796,
+    "len": 7,
+    "name": ":HCF:-1042-AMOUNT-APPROVED",
+    "pic": "PIC 9(7)V99",
+    "rule": "IF(PrepaidFlag = \"NO\", 1042_AMOUNT_APPROVED(AllowSavings M'Amt Element:.:2400_ClaimLine))",
+    "words": "IF(PrepaidFlag = \"NO\", 1042_AMOUNT_APPROVED(AllowSavings 2400_ClaimLine.M'Amt))"
+  },
+  {
+    "start": 805,
+    "len": 5,
+    "name": ":HCF:-1040-CO-PAY",
+    "pic": "PIC 9(5)V99",
+    "rule": "IF(PrepaidFlag = \"YES\", 1040_COPAY( Adjudication_Information SVD[1]:2400_ClaimLine, Adjudication_Information SVD[1]:2400_ClaimLine))",
+    "words": "IF(PrepaidFlag = \"YES\", 1040_COPAY( Adjudication_Information SVD[1]:2400_ClaimLine, Adjudication_Information SVD[1]:2400_ClaimLine))"
+  },
+  {
+    "start": 812,
+    "len": 5,
+    "name": ":HCF:-1056-DEDUCTIBLE",
+    "pic": "PIC 9(5)V99",
+    "rule": "IF(PrepaidFlag = \"YES\", 1056_DEDUCTIBLE( Adjudication_Information SVD[1]:2400_ClaimLine, Adjudication_Information SVD[1]:2400_ClaimLine))",
+    "words": "IF(PrepaidFlag = \"YES\", 1056_DEDUCTIBLE( Adjudication_Information SVD[1]:2400_ClaimLine, Adjudication_Information SVD[1]:2400_ClaimLine))"
+  },
+  {
+    "start": 819,
+    "len": 7,
+    "name": ":HCF:-1047-COINSURANCE",
+    "pic": "PIC 9(7)V99",
+    "rule": "IF(PrepaidFlag = \"YES\" & IDCd Element:IDCd Element MComposite:.:Provider_Level Billing_Provider NM1 Loop:.:2000A_Provider = \"1811134950\", 1047_COINSURANCE_HearingCare( Adjudication_Information SVD[1]:2400_ClaimLine, Adjudication_Information SVD[1]:2400_ClaimLine), IF(PrepaidFlag = \"YES\" , 1047_COINSURANCE( Adjudication_Information SVD[1]:2400_ClaimLine, Adjudication_Information SVD[1]:2400_ClaimLine)))",
+    "words": "IF(PrepaidFlag = \"YES\" & Provider_Level.IDCd= \"1811134950\", 1047_COINSURANCE_HearingCare( Adjudication_Information SVD[1]:2400_ClaimLine, Adjudication_Information SVD[1]:2400_ClaimLine), IF(PrepaidFlag = \"YES\" , 1047_COINSURANCE( Adjudication_Information SVD[1]:2400_ClaimLine, Adjudication_Information SVD[1]:2400_ClaimLine)))"
+  },
+  {
+    "start": 828,
+    "len": 7,
+    "name": ":HCF:-1043-TOTAL-PAID",
+    "pic": "PIC 9(7)V99",
+    "rule": "IF(PrepaidFlag = \"YES\", M'Amt Element:SVD Segment:.:2400_ClaimLine)",
+    "words": "IF(PrepaidFlag = \"YES\", SVD.M'Amt)"
+  },
+  {
+    "start": 837,
+    "len": 7,
+    "name": ":HCF:-1046-ENCOUNTER-AMOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 846,
+    "len": 1,
+    "name": ":HCF:-1114-CONVERSION-FLAG",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 847,
+    "len": 1,
+    "name": ":HCF:-1115-ENCOUNTER-FLAG",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 848,
+    "len": 1,
+    "name": ":HCF:-1116-PRE-PAID-FLAG",
+    "pic": "PIC X(01)",
+    "rule": "IF(PrepaidFlag = \"YES\", \"Y\")",
+    "words": "IF(PrepaidFlag = \"YES\", \"Y\")"
+  },
+  {
+    "start": 849,
+    "len": 1,
+    "name": ":HCF:-1238-PRE-PRICE-CLM-IND",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 850,
+    "len": 1,
+    "name": ":HCF:-1097-CLAIM-SOURCE",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 851,
+    "len": 1,
+    "name": ":HCF:-1089-ITS-STATUS-IND",
+    "pic": "PIC X(01)",
+    "rule": "TestIndicator Element:.:ISA",
+    "words": "ISA.TestIndicator"
+  },
+  {
+    "start": 852,
+    "len": 3,
+    "name": ":HCF:-1025-CICS-CLAIM-STATUS",
+    "pic": "PIC X(03)",
+    "rule": "RejectReasonCd Element:.:2400_ClaimLine",
+    "words": "2400_ClaimLine.RejectReasonCd"
+  },
+  {
+    "start": 855,
+    "len": 7,
+    "name": ":HCF:-1292-UCR-AMOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 864,
+    "len": 7,
+    "name": ":HCF:-1057-DISCOUNT-AMOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 873,
+    "len": 7,
+    "name": ":HCF:-1222-CPT4-AMOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 882,
+    "len": 7,
+    "name": ":HCF:-1044-ALLOWED-AMOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "IF(PrepaidFlag = \"YES\", EITHER( AllowSavings M'Amt Element:Healthcare_Claim HCP Segment:2400_ClaimLine, M'Amt Element:SVD Segment:.:2400_ClaimLine))",
+    "words": "IF(PrepaidFlag = \"YES\", Coalesce( AllowSavings Healthcare_Claim.M'Amt, SVD.M'Amt))"
+  },
+  {
+    "start": 891,
+    "len": 7,
+    "name": ":HCF:-1529-OVER-LIMIT-DOLLARS",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 900,
+    "len": 7,
+    "name": ":HCF:-1290-PAC-NMN-AMOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 909,
+    "len": 2,
+    "name": ":HCF:-1034-CLAIM-STATUS",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 911,
+    "len": 2,
+    "name": ":HCF:-1017-RECV-CC",
+    "pic": "PIC X(02)",
+    "rule": "LEFT(DATETOTEXT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_050_Repricer_Received DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),2)",
+    "words": "LEFT(DateToStr(DTP_050_Repricer_Received.Date_Time_Period),2)"
+  },
+  {
+    "start": 913,
+    "len": 2,
+    "name": ":HCF:-1017-RECV-YY",
+    "pic": "PIC X(02)",
+    "rule": "MID(DATETOTEXT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_050_Repricer_Received DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),3,2)",
+    "words": "MID(DateToStr(DTP_050_Repricer_Received.Date_Time_Period),3,2)"
+  },
+  {
+    "start": 915,
+    "len": 2,
+    "name": ":HCF:-1017-RECV-MM",
+    "pic": "PIC X(02)",
+    "rule": "MID(DATETOTEXT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_050_Repricer_Received DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),5,2)",
+    "words": "MID(DateToStr(DTP_050_Repricer_Received.Date_Time_Period),5,2)"
+  },
+  {
+    "start": 917,
+    "len": 2,
+    "name": ":HCF:-1017-RECV-DD",
+    "pic": "PIC X(02)",
+    "rule": "MID(DATETOTEXT(D8 Date_Time_Period Element:D8<>Date_Time_Period Element MComposite:DTP_050_Repricer_Received DTP Segment:Claim_Level DTPs Unordered_Group:2300_Claim),7,2)",
+    "words": "MID(DateToStr(DTP_050_Repricer_Received.Date_Time_Period),7,2)"
+  },
+  {
+    "start": 911,
+    "len": 8,
+    "name": ":HCF:-1017-DT-RECEIVED-N",
+    "pic": "PIC 9(8)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 919,
+    "len": 1,
+    "name": ":HCF:-1132-REFERRAL-FLAG",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 920,
+    "len": 1,
+    "name": ":HCF:-1135-OTHER-INS-DISP-IND",
+    "pic": "PIC X(01)",
+    "rule": "IF(PRESENT(_HCF__1039_OTHER_INS_PAID_N Field:_HCF__1039_OTHER_INS_PAID Group:Out), IF(_HCF__1039_OTHER_INS_PAID_N Field:_HCF__1039_OTHER_INS_PAID Group:Out=0,\"Y\"))",
+    "words": "IF(Exists(_HCF__1039_OTHER_INS_PAID_N Field:_HCF__1039_OTHER_INS_PAID Group:Out), IF(_HCF__1039_OTHER_INS_PAID_N Field:_HCF__1039_OTHER_INS_PAID Group:Out=0,\"Y\"))"
+  },
+  {
+    "start": 921,
+    "len": 1,
+    "name": ":HCF:-1290-PAC-NMN-IND",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 921,
+    "len": 1,
+    "name": ":HCF:-1290-PAC-PSR-IND",
+    "pic": "PIC X(1)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 922,
+    "len": 1,
+    "name": ":HCF:-1291-NETWORK-IND",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 923,
+    "len": 7,
+    "name": ":HCF:-1232-REVIEWED-AMOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 932,
+    "len": 7,
+    "name": ":HCF:-1231-COB-PAYOUT-AMOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "IF(PrepaidFlag = \"YES\", NONE, M'Amt Element:AMT_D_Payor_Amount_Paid AMT Segment:.:2300_Claim)",
+    "words": "IF(PrepaidFlag = \"YES\", (blank), AMT_D_Payor_Amount_Paid.M'Amt)"
+  },
+  {
+    "start": 941,
+    "len": 7,
+    "name": ":HCF:-1230-COB-SAVINGS-AMOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 950,
+    "len": 7,
+    "name": ":HCF:-1235-COULD-PAY",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 959,
+    "len": 7,
+    "name": ":HCF:-1224-WITHHOLD",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 968,
+    "len": 7,
+    "name": ":HCF:-1059-PROMPT-PAY-DISCOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "IF(PrepaidFlag = \"YES\", 1059_PROMPT_PAY_DISCOUNT( Adjudication_Information SVD[1]:2400_ClaimLine, Adjudication_Information SVD[1]:2400_ClaimLine))",
+    "words": "IF(PrepaidFlag = \"YES\", 1059_PROMPT_PAY_DISCOUNT( Adjudication_Information SVD[1]:2400_ClaimLine, Adjudication_Information SVD[1]:2400_ClaimLine))"
+  },
+  {
+    "start": 977,
+    "len": 7,
+    "name": ":HCF:-1293-PD-BEFOR-DISCOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 986,
+    "len": 7,
+    "name": ":HCF:-1045-ADJUDICATED-AMOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 995,
+    "len": 7,
+    "name": ":HCF:-1258-BENEFIT-AMOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1004,
+    "len": 7,
+    "name": ":HCF:-1056-DTL-DEDUCTIBLE",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1013,
+    "len": 7,
+    "name": ":HCF:-1056-EQV-DEDUCTIBLE",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1022,
+    "len": 7,
+    "name": ":HCF:-1056-BSL-DEDUCTIBLE",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1031,
+    "len": 7,
+    "name": ":HCF:-1056-FAC-DEDUCTIBLE",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1040,
+    "len": 7,
+    "name": ":HCF:-1056-MED-DEDUCTIBLE",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1049,
+    "len": 7,
+    "name": ":HCF:-4009-MBR-BSL-DEDUCT-AMT",
+    "pic": "PIC 9(7)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1056,
+    "len": 7,
+    "name": ":HCF:-4009-FAM-BSL-DEDUCT-AMT",
+    "pic": "PIC 9(7)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1063,
+    "len": 7,
+    "name": ":HCF:-4024-MBR-FAC-DEDUCT-AMT",
+    "pic": "PIC 9(7)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1070,
+    "len": 7,
+    "name": ":HCF:-4024-FAM-FAC-DEDUCT-AMT",
+    "pic": "PIC 9(7)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1077,
+    "len": 7,
+    "name": ":HCF:-4025-MBR-MED-DEDUCT-AMT",
+    "pic": "PIC 9(7)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1084,
+    "len": 7,
+    "name": ":HCF:-4025-FAM-MED-DEDUCT-AMT",
+    "pic": "PIC 9(7)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1091,
+    "len": 7,
+    "name": ":HCF:-4025-MBR-DNT-DEDUCT-AMT",
+    "pic": "PIC 9(7)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1098,
+    "len": 7,
+    "name": ":HCF:-4025-FAM-DNT-DEDUCT-AMT",
+    "pic": "PIC 9(7)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1105,
+    "len": 7,
+    "name": ":HCF:-4025-MBR-RX-DEDUCT-AMT",
+    "pic": "PIC 9(7)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1112,
+    "len": 7,
+    "name": ":HCF:-4025-FAM-RX-DEDUCT-AMT",
+    "pic": "PIC 9(7)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1119,
+    "len": 7,
+    "name": ":HCF:-1391-UCR-SAVING",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1128,
+    "len": 7,
+    "name": ":HCF:-1392-SCHED-SAVING",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1137,
+    "len": 7,
+    "name": ":HCF:-1393-MEDI-SAVING",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1146,
+    "len": 7,
+    "name": ":HCF:-1394-SSO-SAVING",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1155,
+    "len": 7,
+    "name": ":HCF:-1395-OPIP-SAVING",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1164,
+    "len": 7,
+    "name": ":HCF:-1396-MEMBER-LIAB",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1173,
+    "len": 7,
+    "name": ":HCF:-1397-PROVIDER-LIAB",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1182,
+    "len": 1,
+    "name": ":HCF:-1229-RSN-ON-FILE-IND",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1183,
+    "len": 7,
+    "name": ":HCF:-1033-MBR-PEC-LIAB-AMT",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1192,
+    "len": 1,
+    "name": ":HCF:-1342-PA-AUTOSELEC-CD",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1193,
+    "len": 1,
+    "name": ":HCF:-1348-PA-SOURCE-CODE",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1194,
+    "len": 7,
+    "name": ":HCF:-4206-MCARE-LIMIT-CHARGE",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1203,
+    "len": 1,
+    "name": ":HCF:-1154-ABUSE-IND",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1204,
+    "len": 17,
+    "name": ":HCF:-1183-3RD-PARTY-REFER-INF",
+    "pic": "PIC X(17)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1221,
+    "len": 1,
+    "name": ":HCF:-1264-STATE-GENERATED-IND",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1222,
+    "len": 15,
+    "name": ":HCF:-1253-STATE-CLAIM-NUMBER",
+    "pic": "PIC X(15)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1237,
+    "len": 31,
+    "name": ":HCF:-3132-OTHER-INS-CARRIER-N",
+    "pic": "PIC X(31)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1268,
+    "len": 25,
+    "name": ":HCF:-3138-OTHER-INS-CARR-ADDR",
+    "pic": "PIC X(25)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1293,
+    "len": 25,
+    "name": ":HCF:-3139-OTHER-INS-CARR-ADDR",
+    "pic": "PIC X(25)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1318,
+    "len": 18,
+    "name": ":HCF:-3140-OTHER-INS-CARR-CITY",
+    "pic": "PIC X(18)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1336,
+    "len": 2,
+    "name": ":HCF:-3141-OTHER-INS-CARR-STAT",
+    "pic": "PIC X(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1338,
+    "len": 9,
+    "name": ":HCF:-3142-OTHER-INS-CARR-ZIP",
+    "pic": "PIC 9(09)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1347,
+    "len": 10,
+    "name": ":HCF:-3143-OTHER-INS-GROUP-NO",
+    "pic": "PIC X(10)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1357,
+    "len": 20,
+    "name": ":HCF:-3115-OTHER-INS-POLICY-NU",
+    "pic": "PIC X(20)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1377,
+    "len": 2,
+    "name": ":HCF:-3127-OTHER-REL-TO-INSURE",
+    "pic": "PIC X(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1379,
+    "len": 1,
+    "name": "FILLER-9",
+    "pic": "PIC X(1)",
+    "rule": "",
+    "words": ""
+  },
+  {
+    "start": 1380,
+    "len": 2,
+    "name": ":HCF:-3148-OTHR-INS-DISP-CC",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1382,
+    "len": 2,
+    "name": ":HCF:-3148-OTHR-INS-DISP-YY",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1384,
+    "len": 2,
+    "name": ":HCF:-3148-OTHR-INS-DISP-MM",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1386,
+    "len": 2,
+    "name": ":HCF:-3148-OTHR-INS-DISP-DD",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1388,
+    "len": 20,
+    "name": ":HCF:-3175-INSURED-LAST-NAME",
+    "pic": "PIC X(20)",
+    "rule": "LEFT(NameLastOrgName Element:NM1_IL_Subscriber NM1 Segment:Other_Subscriber_Level Subscriber NM1 Loop:Other_Subscriber_Level Names Unordered_Group:Other_Subscriber SBR:2300_Claim,20)",
+    "words": "LEFT(NM1_IL_Subscriber.NameLastOrgName,20)"
+  },
+  {
+    "start": 1408,
+    "len": 20,
+    "name": ":HCF:-3175-INSURED-FIRST-NAME",
+    "pic": "PIC X(20)",
+    "rule": "LEFT(NameFirst Element:NM1_IL_Subscriber NM1 Segment:Other_Subscriber_Level Subscriber NM1 Loop:Other_Subscriber_Level Names Unordered_Group:Other_Subscriber SBR:2300_Claim,20)",
+    "words": "LEFT(NM1_IL_Subscriber.NameFirst,20)"
+  },
+  {
+    "start": 1428,
+    "len": 1,
+    "name": ":HCF:-3175-INSURED-MID-INITIA",
+    "pic": "PIC X(1)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1429,
+    "len": 2,
+    "name": ":HCF:-3177-INSURED-BIRTH-DT-C",
+    "pic": "PIC 9(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1431,
+    "len": 2,
+    "name": ":HCF:-3177-INSURED-BIRTH-DT-Y",
+    "pic": "PIC 9(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1433,
+    "len": 2,
+    "name": ":HCF:-3177-INSURED-BIRTH-DT-M",
+    "pic": "PIC 9(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1435,
+    "len": 2,
+    "name": ":HCF:-3177-INSURED-BIRTH-DT-D",
+    "pic": "PIC 9(2)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1429,
+    "len": 8,
+    "name": ":HCF:-3177-INSURED-BIRTH-DATE-",
+    "pic": "PIC 9(8)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1437,
+    "len": 1,
+    "name": ":HCF:-3176-INSURED-SEX",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1438,
+    "len": 1,
+    "name": ":HCF:-1594-MCARE-PART-IND",
+    "pic": "PIC X(01)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1439,
+    "len": 4,
+    "name": ":HCF:-1611-ANESTHESIA-MINUTES",
+    "pic": "PIC 9(04)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1443,
+    "len": 2,
+    "name": ":HCF:-1633-CLAIM-COVERAGE-TYPE",
+    "pic": "PIC X(02)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1445,
+    "len": 1,
+    "name": ":HCF:-1150-PAYER-SEQUENCE",
+    "pic": "PIC X(01)",
+    "rule": "PayorRspSequence#Cd Element:Subscriber_Level SBR Segment:2000B_Subscriber",
+    "words": "Subscriber_Level.PayorRspSequence#Cd"
+  },
+  {
+    "start": 1446,
+    "len": 3,
+    "name": ":HCF:-1151-INSURANCE-TYPE",
+    "pic": "PIC X(03)",
+    "rule": "InsTypeCd Element:Subscriber_Level SBR Segment:2000B_Subscriber",
+    "words": "Subscriber_Level.InsTypeCd"
+  },
+  {
+    "start": 1449,
+    "len": 7,
+    "name": ":HCF:-1152-PAT-RESP",
+    "pic": "PIC 9(7)V99",
+    "rule": "EITHER(M'Amt Element:AMT_EAF_Amount_Owed AMT Segment:Adjudication_Information SVD:2400_ClaimLine, M'Amt Element:AMT_EAF_Amount_Owed AMT Segment:Other_Subscriber AMTs Unordered_Group:Other_Subscriber SBR:2300_Claim)",
+    "words": "Coalesce(AMT_EAF_Amount_Owed.M'Amt, AMT_EAF_Amount_Owed.M'Amt)"
+  },
+  {
+    "start": 1458,
+    "len": 7,
+    "name": ":HCF:-1153-PAT-PENALTY",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1467,
+    "len": 7,
+    "name": ":HCF:-1155-BILL-LIMIT-CHARGE",
+    "pic": "PIC 9(7)V99",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1476,
+    "len": 7,
+    "name": ":HCF:-0723-SEQUEST-AMOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "IF(PrepaidFlag = \"YES\", 0723_SEQUEST_AMOUNT( LOOKUP(CAS Segment:.:2400_ClaimLine WHERE ClaimAdj'tGroupCd Element:.:2400_ClaimLine = \"CO\" & ClaimAdj'tReasonCd Element IN CAS Segment:.:2400_ClaimLine = \"253\")))",
+    "words": "IF(PrepaidFlag = \"YES\", 0723_SEQUEST_AMOUNT( Lookup(CAS Segment:.:2400_ClaimLine WHERE 2400_ClaimLine.ClaimAdj'tGroupCd= \"CO\" & ClaimAdj'tReasonCd Element IN CAS Segment:.:2400_ClaimLine = \"253\")))"
+  },
+  {
+    "start": 1485,
+    "len": 1,
+    "name": ":HCF:-0000-MIPS-AMT-SIGN",
+    "pic": "PIC X(1)",
+    "rule": "IF(ClaimAdj'tReasonCd Element:CAS_Segment = \"237\", \"-\", IF(LOOKUP(ClaimAdj'tReasonCd Element:ClaimAdj'tReason Element MComposite:CAS_Segment WHERE ClaimAdj'tReasonCd Element:ClaimAdj'tReason Element MComposite:CAS_Segment = \"237\") = \"237\", \"-\", \"\"))",
+    "words": "IF(CAS_Segment.ClaimAdj'tReasonCd= \"237\", \"-\", IF(Lookup(CAS_Segment.ClaimAdj'tReasonCd= \"237\") = \"237\", \"-\", \"\"))"
+  },
+  {
+    "start": 1486,
+    "len": 7,
+    "name": ":HCF:-0000-MIPS-AMOUNT",
+    "pic": "PIC 9(7)V99",
+    "rule": "IF(MEMBER(ClaimAdj'tReasonCd Element:CAS_Segment, {\"144\", \"237\"}), M'Amt Element:CAS_Segment, LOOKUP(M'Amt Element:ClaimAdj'tReason Element MComposite:CAS_Segment WHERE MEMBER(ClaimAdj'tReasonCd Element:ClaimAdj'tReason Element MComposite:CAS_Segment, {\"144\", \"237\"})))",
+    "words": "IF(InSet(CAS_Segment.ClaimAdj'tReasonCd, {\"144\", \"237\"}), CAS_Segment.M'Amt, Lookup(CAS_Segment.M'Amt, {\"144\", \"237\"})))"
+  },
+  {
+    "start": 1495,
+    "len": 11,
+    "name": "FILLER-11",
+    "pic": "PIC X(11)",
+    "rule": "",
+    "words": ""
+  },
+  {
+    "start": 1506,
+    "len": 3,
+    "name": ":HCF:-1390-REMARK-CODE",
+    "pic": "PIC X(003)",
+    "rule": "IF(PrepaidFlag = \"YES\", Desc'n Element:NTE_TPO_TPO_Notes NTE Segment:Service_Line_Level NTEs Unordered_Group:2400_ClaimLine)",
+    "words": "IF(PrepaidFlag = \"YES\", NTE_TPO_TPO_Notes.Desc'n)"
+  },
+  {
+    "start": 1509,
+    "len": 1,
+    "name": ":HCF:-2646-SEQUESTRATION-BYPAS",
+    "pic": "PIC X(1)",
+    "rule": "IF(PrepaidFlag = \"YES\", UB4_2646_SEQUESTRATION_BYPASS( Adjudication_Information SVD[1]:2400_ClaimLine, Adjudication_Information SVD[1]:2400_ClaimLine, 2400_ClaimLine))",
+    "words": "IF(PrepaidFlag = \"YES\", CustomFn_UB4_2646_SequestrationBypass(SVD[1].AdjudicationInfo, 2400_ClaimLine))  // PIC X(1); prepaid only"
+  },
+  {
+    "start": 1510,
+    "len": 1,
+    "name": ":HCF:-9471-FINAL-NET-IN-OUT-IN",
+    "pic": "PIC X(1)",
+    "rule": "IF(PrepaidFlag = \"YES\", UB4_9471_FINAL_NET_IN_OUT_IND(Adjudication_Information SVD[1]:2400_ClaimLine))",
+    "words": "IF(PrepaidFlag = \"YES\", CustomFn_9471_FinalNetInOutInd(SVD[1].AdjudicationInfo from ClaimLine))  // PIC X(1); only populated for prepaid claims"
+  },
+  {
+    "start": 1511,
+    "len": 2,
+    "name": ":HCF:-1123-CAGC1",
+    "pic": "PIC X(2)",
+    "rule": "IF(PrepaidFlag = \"YES\", 1123_CAGC_PREPAID( 2400_ClaimLine, IF(COUNTSTRING(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \") = 1, EITHER( TRIMLEFT(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), EITHER( 1123_CAGC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CAGC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))",
+    "words": "IF(PrepaidFlag = \"YES\", 1123_CAGC_PREPAID( 2400_ClaimLine, IF(CountStr(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \") = 1, Coalesce( TrimLeft(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), Coalesce( 1123_CAGC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CAGC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))"
+  },
+  {
+    "start": 1513,
+    "len": 2,
+    "name": ":HCF:-1123-CAGC2",
+    "pic": "PIC X(2)",
+    "rule": "IF(PrepaidFlag = \"YES\", 1123_CAGC_PREPAID( 2400_ClaimLine, IF(COUNTSTRING(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \") = 1, EITHER( TRIMLEFT(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), EITHER( 1123_CAGC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CAGC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))",
+    "words": "IF(PrepaidFlag = \"YES\", 1123_CAGC_PREPAID( 2400_ClaimLine, IF(CountStr(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \") = 1, Coalesce( TrimLeft(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), Coalesce( 1123_CAGC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CAGC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))"
+  },
+  {
+    "start": 1515,
+    "len": 2,
+    "name": ":HCF:-1123-CAGC3",
+    "pic": "PIC X(2)",
+    "rule": "IF(PrepaidFlag = \"YES\", 1123_CAGC_PREPAID( 2400_ClaimLine, IF(COUNTSTRING(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \") = 1, EITHER( TRIMLEFT(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), EITHER( 1123_CAGC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CAGC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))",
+    "words": "IF(PrepaidFlag = \"YES\", 1123_CAGC_PREPAID( 2400_ClaimLine, IF(CountStr(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \") = 1, Coalesce( TrimLeft(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), Coalesce( 1123_CAGC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CAGC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))"
+  },
+  {
+    "start": 1517,
+    "len": 2,
+    "name": ":HCF:-1123-CAGC4",
+    "pic": "PIC X(2)",
+    "rule": "IF(PrepaidFlag = \"YES\", 1123_CAGC_PREPAID( 2400_ClaimLine, IF(COUNTSTRING(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \") = 1, EITHER( TRIMLEFT(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), EITHER( 1123_CAGC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CAGC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))",
+    "words": "IF(PrepaidFlag = \"YES\", 1123_CAGC_PREPAID( 2400_ClaimLine, IF(CountStr(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \") = 1, Coalesce( TrimLeft(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), Coalesce( 1123_CAGC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CAGC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))"
+  },
+  {
+    "start": 1519,
+    "len": 4,
+    "name": ":HCF:-1133-CARC1",
+    "pic": "PIC X(4)",
+    "rule": "IF(PrepaidFlag = \"YES\", 1123_CARC_PREPAID( 2400_ClaimLine, IF(COUNTSTRING(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \") = 1, EITHER( TRIMLEFT(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), EITHER( 1123_CARC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CARC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))",
+    "words": "IF(PrepaidFlag = \"YES\", 1123_CARC_PREPAID( 2400_ClaimLine, IF(CountStr(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \") = 1, Coalesce( TrimLeft(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), Coalesce( 1123_CARC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CARC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))"
+  },
+  {
+    "start": 1523,
+    "len": 4,
+    "name": ":HCF:-1133-CARC2",
+    "pic": "PIC X(4)",
+    "rule": "IF(PrepaidFlag = \"YES\", 1123_CARC_PREPAID( 2400_ClaimLine, IF(COUNTSTRING(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \") = 1, EITHER( TRIMLEFT(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), EITHER( 1123_CARC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CARC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))",
+    "words": "IF(PrepaidFlag = \"YES\", 1123_CARC_PREPAID( 2400_ClaimLine, IF(CountStr(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \") = 1, Coalesce( TrimLeft(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), Coalesce( 1123_CARC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CARC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))"
+  },
+  {
+    "start": 1527,
+    "len": 4,
+    "name": ":HCF:-1133-CARC3",
+    "pic": "PIC X(4)",
+    "rule": "IF(PrepaidFlag = \"YES\", 1123_CARC_PREPAID( 2400_ClaimLine, IF(COUNTSTRING(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \") = 1, EITHER( TRIMLEFT(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), EITHER( 1123_CARC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CARC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))",
+    "words": "IF(PrepaidFlag = \"YES\", 1123_CARC_PREPAID( 2400_ClaimLine, IF(CountStr(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \") = 1, Coalesce( TrimLeft(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), Coalesce( 1123_CARC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CARC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))"
+  },
+  {
+    "start": 1531,
+    "len": 4,
+    "name": ":HCF:-1133-CARC4",
+    "pic": "PIC X(4)",
+    "rule": "IF(PrepaidFlag = \"YES\", 1123_CARC_PREPAID( 2400_ClaimLine, IF(COUNTSTRING(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \") = 1, EITHER( TRIMLEFT(Desc'n Element:NTE_ADD_Additional NTE Segment:.:2400_ClaimLine, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), EITHER( 1123_CARC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CARC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))",
+    "words": "IF(PrepaidFlag = \"YES\", 1123_CARC_PREPAID( 2400_ClaimLine, IF(CountStr(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \") = 1, Coalesce( TrimLeft(NTE_ADD_Additional.Desc'n, \"ZERO-VALUE CAS \"), \"NO-CAGC_CARC\"), \"NO-NTE-ADD\") ), Coalesce( 1123_CARC(Adjudication_Information SVD[1]:2400_ClaimLine), 1123_CARC_NTE(NTE_ADD_Additional NTE Segment:.:2400_ClaimLine)))"
+  },
+  {
+    "start": 1535,
+    "len": 8,
+    "name": ":HCF:-1269-PROCESS-DATE-N",
+    "pic": "PIC 9(8)",
+    "rule": "IF(PrepaidFlag = \"YES\", 1269_PROCESS_DATE(DTP_573_Date_Claim_Paid DTP Segment:Adjudication_Information SVD[1]:2400_ClaimLine))",
+    "words": "IF(PrepaidFlag = \"YES\", CustomFn_1269_ProcessDate(SVD[1].DTP_573_Date_Claim_Paid from ClaimLine))  // prepaid only"
+  },
+  {
+    "start": 1543,
+    "len": 25,
+    "name": ":HCF:-2011-PAY2-STREET1",
+    "pic": "PIC X(25)",
+    "rule": "EITHER( AddressInfo Element[1]:N3 Segment:Pay_To_Address NM1 Loop:Provider_Level Names Unordered_Group:2000A_Provider, AddressInfo Element[1]:N3 Segment:Provider_Level Billing_Provider NM1 Loop:Provider_Level Names Unordered_Group:2000A_Provider)",
+    "words": "Coalesce( N3.AddressInfo, N3.AddressInfo)"
+  },
+  {
+    "start": 1568,
+    "len": 18,
+    "name": ":HCF:-2014-PAY2-CITY",
+    "pic": "PIC X(18)",
+    "rule": "IF(PRESENT(AddressInfo Element:N3 Segment[1]:Pay_To_Address NM1 Loop:Provider_Level Names Unordered_Group:2000A_Provider), CityName Element:Healthcare_Claim N4 Segment:Pay_To_Address NM1 Loop:Provider_Level Names Unordered_Group:2000A_Provider, CityName Element:Healthcare_Claim N4 Segment:Provider_Level Billing_Provider NM1 Loop:Provider_Level Names Unordered_Group:2000A_Provider)",
+    "words": "IF(Exists(N3.AddressInfo), Healthcare_Claim.CityName, Healthcare_Claim.CityName)"
+  },
+  {
+    "start": 1586,
+    "len": 2,
+    "name": ":HCF:-2015-PAY2-STATE",
+    "pic": "PIC X(02)",
+    "rule": "IF(PRESENT(AddressInfo Element:N3 Segment[1]:Pay_To_Address NM1 Loop:Provider_Level Names Unordered_Group:2000A_Provider), StateProvinceCd Element:Healthcare_Claim N4 Segment:Pay_To_Address NM1 Loop:Provider_Level Names Unordered_Group:2000A_Provider, StateProvinceCd Element:Healthcare_Claim N4 Segment:Provider_Level Billing_Provider NM1 Loop:Provider_Level Names Unordered_Group:2000A_Provider)",
+    "words": "IF(Exists(N3.AddressInfo), Healthcare_Claim.StateProvinceCd, Healthcare_Claim.StateProvinceCd)"
+  },
+  {
+    "start": 1588,
+    "len": 5,
+    "name": ":HCF:-2016-PAY2-ZIP-CODE-N",
+    "pic": "PIC 9(5)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1593,
+    "len": 4,
+    "name": ":HCF:-2016-PAY2-ZIP4-N",
+    "pic": "PIC 9(4)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1597,
+    "len": 10,
+    "name": ":HCF:-2054-RENDER-NPI",
+    "pic": "PIC X(10)",
+    "rule": "EITHER( IDCd Element:IDCd Element MComposite:NM1_82_Rendering_Provider NM1 Segment:.:2400_ClaimLine, IDCd Element:IDCd Element MComposite:.:Claim_Level Rendering_Provider NM1 Loop:.:2300_Claim, IDCd Element:IDCd Element MComposite:.:Provider_Level Billing_Provider NM1 Loop:.:2000A_Provider)",
+    "words": "Coalesce( NM1_82_Rendering_Provider.IDCd, Claim_Level.IDCd, Provider_Level.IDCd)"
+  },
+  {
+    "start": 1607,
+    "len": 10,
+    "name": ":HCF:-2055-BILLING-NPI",
+    "pic": "PIC X(10)",
+    "rule": "TEXT(IDCd Element:IDCd Element MComposite:NM1_85_Billing_Provider NM1 Segment:Provider_Level Billing_Provider NM1 Loop:Provider_Level Names Unordered_Group:2000A_Provider)",
+    "words": "ToString(NM1_85_Billing_Provider.IDCd)"
+  },
+  {
+    "start": 1617,
+    "len": 30,
+    "name": ":HCF:-1026-ORIG-CLAIM-NUMBER",
+    "pic": "PIC X(30)",
+    "rule": "TEXT(Ref# Element:REF_F8_Original_Reference_Number REF Segment:Claim_Level REFs Unordered_Group:.:2300_Claim)",
+    "words": "ToString(REF_F8_Original_Reference_Number.Ref#)"
+  },
+  {
+    "start": 1647,
+    "len": 3,
+    "name": ":HCF:-1112-EOC-CODE-2",
+    "pic": "PIC X(03)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1650,
+    "len": 3,
+    "name": ":HCF:-1112-EOC-CODE-3",
+    "pic": "PIC X(03)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1653,
+    "len": 3,
+    "name": ":HCF:-1112-EOC-CODE-4",
+    "pic": "PIC X(03)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1656,
+    "len": 15,
+    "name": ":HCF:-2642-EDI-PAYOR",
+    "pic": "PIC X(15)",
+    "rule": "LEFT(IDCd Element:IDCd Element MComposite:.:Subscriber_Level Payer NM1 Loop:.:2000B_Subscriber,15)",
+    "words": "LEFT(Subscriber_Level.IDCd,15)"
+  },
+  {
+    "start": 1671,
+    "len": 2,
+    "name": ":HCF:-1048-CH-RP-IND",
+    "pic": "PIC X(02)",
+    "rule": "BHT06_Transc'nTypeCd",
+    "words": "BHT06_Transc'nTypeCd"
+  },
+  {
+    "start": 1673,
+    "len": 10,
+    "name": ":HCF:-1245-BILL-PRV-TAXON",
+    "pic": "PIC X(10)",
+    "rule": "LEFT(Ref# Element:PRV_BI_Billing PRV Segment:2000A_Provider,10)",
+    "words": "LEFT(PRV_BI_Billing.Ref#,10)"
+  },
+  {
+    "start": 1683,
+    "len": 4,
+    "name": ":HCF:-2603-BILL-PRV-SPEC",
+    "pic": "PIC X(04)",
+    "rule": "LEFT(Ref# Element:PRV_BI_Billing PRV Segment:2000A_Provider,4)",
+    "words": "LEFT(PRV_BI_Billing.Ref#,4)"
+  },
+  {
+    "start": 1687,
+    "len": 10,
+    "name": ":HCF:-1245-REND-PRV-TAXON",
+    "pic": "PIC X(10)",
+    "rule": "IF(ProviderCd Element:.:2400_ClaimLine=\"PE\" & Ref#Qual'r Element:PRV_PE_Performing PRV Segment:.:2400_ClaimLine=\"PXC\", Ref# Element:PRV_PE_Performing PRV Segment:Service_Line_Level Rendering_Provider NM1 Loop:Service_Line_Level Names Unordered_Group:2400_ClaimLine, IF(ProviderCd Element:.:Claim_Level Rendering_Provider NM1 Loop:.:2300_Claim=\"PE\" & Ref#Qual'r Element:PRV_PE_Performing PRV Segment:Claim_Level Rendering_Provider NM1 Loop:.:2300_Claim=\"PXC\", Ref# Element:PRV_PE_Performing PRV Segment:Claim_Level Rendering_Provider NM1 Loop:.:2300_Claim))",
+    "words": "IF(2400_ClaimLine.ProviderCd=\"PE\" & PRV_PE_Performing.Ref#Qual'r=\"PXC\", PRV_PE_Performing.Ref#, IF(Claim_Level.ProviderCd=\"PE\" & PRV_PE_Performing.Ref#Qual'r=\"PXC\", PRV_PE_Performing.Ref#))"
+  },
+  {
+    "start": 1697,
+    "len": 4,
+    "name": ":HCF:-2603-REND-PRV-SPEC",
+    "pic": "PIC X(04)",
+    "rule": "IF(ProviderCd Element:.:2400_ClaimLine=\"PE\" & Ref#Qual'r Element:PRV_PE_Performing PRV Segment:.:2400_ClaimLine=\"PXC\", Ref# Element:PRV_PE_Performing PRV Segment:Service_Line_Level Rendering_Provider NM1 Loop:Service_Line_Level Names Unordered_Group:2400_ClaimLine, IF(ProviderCd Element:.:Claim_Level Rendering_Provider NM1 Loop:.:2300_Claim=\"PE\" & Ref#Qual'r Element:PRV_PE_Performing PRV Segment:Claim_Level Rendering_Provider NM1 Loop:.:2300_Claim=\"PXC\", Ref# Element:PRV_PE_Performing PRV Segment:Claim_Level Rendering_Provider NM1 Loop:.:2300_Claim))",
+    "words": "IF(2400_ClaimLine.ProviderCd=\"PE\" & PRV_PE_Performing.Ref#Qual'r=\"PXC\", PRV_PE_Performing.Ref#, IF(Claim_Level.ProviderCd=\"PE\" & PRV_PE_Performing.Ref#Qual'r=\"PXC\", PRV_PE_Performing.Ref#))"
+  },
+  {
+    "start": 1701,
+    "len": 11,
+    "name": ":HCF:-0154-PATIENT-PAID-AMT",
+    "pic": "PIC S9(11)V99",
+    "rule": "M'Amt Element:AMT_F5_Patient_Paid AMT Segment:2300_Claim",
+    "words": "AMT_F5_Patient_Paid.M'Amt"
+  },
+  {
+    "start": 1714,
+    "len": 5,
+    "name": ":HCF:-1740-SVC-FACILITY-ZIP-CO",
+    "pic": "PIC X(5)",
+    "rule": "TEXT(EITHER(PostalCd Element:.:Service_Line_Level Service_Facility NM1 Loop:.:2400_ClaimLine, PostalCd Element:.:Claim_Level Service_Facility NM1 Loop:.:2300_Claim))",
+    "words": "ToString(Coalesce( Service_Line_Level.PostalCd from 2400_ClaimLine, Claim_Level.PostalCd from 2300_Claim))"
+  },
+  {
+    "start": 1719,
+    "len": 5,
+    "name": ":HCF:-1740-BILLING-PROV-ZIP-CO",
+    "pic": "PIC X(5)",
+    "rule": "TEXT(PostalCd Element:.:Provider_Level Billing_Provider NM1 Loop:.:2000A_Provider)",
+    "words": "ToString(Provider_Level.PostalCd from 2000A_Provider)"
+  },
+  {
+    "start": 1724,
+    "len": 5,
+    "name": ":HCF:-1740-SUBSCRIBER-ZIP-CODE",
+    "pic": "PIC X(5)",
+    "rule": "TEXT(PostalCd Element:.:Subscriber_Level Subscriber NM1 Loop:.:2000B_Subscriber)",
+    "words": "ToString(Subscriber_Level.PostalCd)"
+  },
+  {
+    "start": 1729,
+    "len": 25,
+    "name": ":HCF:-2042-PAY2-STREET2",
+    "pic": "PIC X(25)",
+    "rule": "EITHER( AddressInfo Element[2]:N3 Segment:Pay_To_Address NM1 Loop:Provider_Level Names Unordered_Group:2000A_Provider, AddressInfo Element[2]:N3 Segment:Provider_Level Billing_Provider NM1 Loop:Provider_Level Names Unordered_Group:2000A_Provider)",
+    "words": "Coalesce( N3.AddressInfo, N3.AddressInfo)"
+  },
+  {
+    "start": 1754,
+    "len": 25,
+    "name": ":HCF:-2057-BILL-STREET1",
+    "pic": "PIC X(25)",
+    "rule": "TEXT(AddressInfo Element[1]:.:In1)",
+    "words": "ToString(In1.AddressInfo)"
+  },
+  {
+    "start": 1779,
+    "len": 25,
+    "name": ":HCF:-2058-BILL-STREET2",
+    "pic": "PIC X(25)",
+    "rule": "TEXT(AddressInfo Element[2]:.:In1)",
+    "words": "ToString(In1.AddressInfo)"
+  },
+  {
+    "start": 1804,
+    "len": 18,
+    "name": ":HCF:-2059-BILL-CITY",
+    "pic": "PIC X(18)",
+    "rule": "TEXT(CityName Element:.:In1)",
+    "words": "ToString(In1.CityName)"
+  },
+  {
+    "start": 1822,
+    "len": 2,
+    "name": ":HCF:-2060-BILL-STATE",
+    "pic": "PIC X(2)",
+    "rule": "TEXT(StateProvinceCd Element:.:In1)",
+    "words": "ToString(In1.StateProvinceCd)"
+  },
+  {
+    "start": 1824,
+    "len": 5,
+    "name": ":HCF:-2061-BILL-ZIP-CODE-N",
+    "pic": "PIC 9(5)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1829,
+    "len": 4,
+    "name": ":HCF:-2061-BILL-ZIP4-N",
+    "pic": "PIC 9(4)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1833,
+    "len": 25,
+    "name": ":HCF:-2063-SVCF-STREET1",
+    "pic": "PIC X(25)",
+    "rule": "TEXT(AddressInfo Element[1]:.:In1)",
+    "words": "ToString(In1.AddressInfo)"
+  },
+  {
+    "start": 1858,
+    "len": 25,
+    "name": ":HCF:-2064-SVCF-STREET2",
+    "pic": "PIC X(25)",
+    "rule": "TEXT(AddressInfo Element[2]:.:In1)",
+    "words": "ToString(In1.AddressInfo)"
+  },
+  {
+    "start": 1883,
+    "len": 18,
+    "name": ":HCF:-2065-SVCF-CITY",
+    "pic": "PIC X(18)",
+    "rule": "TEXT(CityName Element:.:In1)",
+    "words": "ToString(In1.CityName)"
+  },
+  {
+    "start": 1901,
+    "len": 2,
+    "name": ":HCF:-2066-SVCF-STATE",
+    "pic": "PIC X(2)",
+    "rule": "TEXT(StateProvinceCd Element:.:In1)",
+    "words": "ToString(In1.StateProvinceCd)"
+  },
+  {
+    "start": 1903,
+    "len": 5,
+    "name": ":HCF:-2067-SVCF-ZIP-CODE-N",
+    "pic": "PIC 9(5)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1908,
+    "len": 4,
+    "name": ":HCF:-2067-SVCF-ZIP4-N",
+    "pic": "PIC 9(4)",
+    "rule": "NONE",
+    "words": "(not mapped)"
+  },
+  {
+    "start": 1912,
+    "len": 189,
+    "name": "FILLER",
+    "pic": "PIC X(189)",
+    "rule": "",
+    "words": ""
+  }
+]

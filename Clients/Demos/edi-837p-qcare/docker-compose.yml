@@ -1,0 +1,50 @@
+services:
+  pilotfish:
+    build:
+      context: ./pilotfish
+    image: pilotfish-edi-837p-qcare:23R1
+    container_name: pf-edi837pqcare-pilotfish
+    restart: unless-stopped
+    environment:
+      CATALINA_OPTS: "-Xms512M -Xmx2048M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8123:8080"
+    volumes:
+      - ./input:/opt/pilotfish/input
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+      - ../../../EDI/TableData/x12:/usr/local/tomcat/webapps/eip/eip-root/edi-tabledata:ro
+
+  webui:
+    build:
+      context: ./webui
+    image: pilotfish-edi837pqcare-webui:latest
+    container_name: pf-edi837pqcare-webui
+    restart: unless-stopped
+    depends_on:
+      pilotfish:
+        condition: service_started
+    environment:
+      WEBUI_PORT: "8125"
+      INBOUND_DIR: /inbound
+      QCARE_DIR: /output/qcare
+      ARCHIVE_DIR: /output/archive
+      DEBUG_DIR: /output/debug
+      SAMPLE_DIR: /samples
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      ROUTE_PDF_NAME: EDI837P_QCare_V2_Route_Diagrams.pdf
+      CAPABILITY_PDF_NAME: EDI837P_QCare_Capability_Brief.pdf
+      ENV_SETTINGS_FILE: /environment-settings.conf
+      LAN_HINT: "http://192.168.68.62:8125/"
+      EIP_PUBLIC_URL: "http://192.168.68.62:8123/eip/"
+    ports:
+      - "8125:8125"
+    volumes:
+      - ./input/inbound:/inbound
+      - ./output:/output:ro
+      - ./samples:/samples:ro
+      - ./documents:/documents:ro
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/environment-settings.conf:ro
+      - ./eip-root/interfaces/EDI 837P to QCare/routes:/routes:ro

@@ -109,7 +109,11 @@
           <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noopener">Route design PDF</a>
         </div>
         <p class="section-lead">V2 diagram of the payment integrity route.</p>
-        <iframe id="route-viewer-frame" title="Route viewer" src="/static/route-viewer/index.html?mode=docs&amp;layout=pipeline&amp;config=compact&amp;groups=1&amp;collapse=all" style="width:100%;min-height:720px;border:0;background:#0b1220"></iframe>
+        <div class="routes-toolbar">
+          <label>V2 route <select id="route-select"></select></label>
+          <span id="routes-status" class="muted"></span>
+        </div>
+        <iframe id="route-viewer-frame" class="route-viewer-frame" title="Route viewer" src="about:blank" style="width:100%;min-height:720px;border:0;background:#0b1220"></iframe>
       </section>
     </main>
   </div>

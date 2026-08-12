@@ -308,7 +308,8 @@
       </Processor>
       <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Strip Charges If radExamServeDate Before DATE_RANGE from DB">
         <ModuleConfig>
-          <ExecuteProcessor>{ognl:(getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'ANC') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'FTW') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'ARL') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'NOH') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'PLA') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'FRI') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'SAC') || (getAttribute('Partition') == 'PPA') || (getAttribute('Partition') == 'IRL' &amp;&amp; getAttribute('Client') == 'COX') || (getAttribute('Partition') == 'IRL' &amp;&amp; getAttribute('Client') == 'JFX') || (getAttribute('Partition') == 'IRL' &amp;&amp; getAttribute('Client') == 'LWX') || (getAttribute('Partition') == 'IRL' &amp;&amp; getAttribute('Client') == 'PWX') || getAttribute('Client') == 'ARA' || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'DEC')}</ExecuteProcessor>
+          <!-- NTX FRI removed from strip-before: end-date only (strip-after) as of 2026-08-07 Karen #5 -->
+          <ExecuteProcessor>{ognl:(getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'ANC') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'FTW') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'ARL') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'NOH') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'PLA') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'SAC') || (getAttribute('Partition') == 'PPA') || (getAttribute('Partition') == 'IRL' &amp;&amp; getAttribute('Client') == 'COX') || (getAttribute('Partition') == 'IRL' &amp;&amp; getAttribute('Client') == 'JFX') || (getAttribute('Partition') == 'IRL' &amp;&amp; getAttribute('Client') == 'LWX') || (getAttribute('Partition') == 'IRL' &amp;&amp; getAttribute('Client') == 'PWX') || getAttribute('Client') == 'ARA' || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'DEC')}</ExecuteProcessor>
           <XSLTPath>transform-strip-before-date-range.xslt</XSLTPath>
           <CacheXSLTToXML>false</CacheXSLTToXML>
           <XSLTEngine>Saxon</XSLTEngine>
@@ -319,7 +320,8 @@
       </Processor>
       <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Strip Charges If radExamServDate After DATE_RANGE from DB">
         <ModuleConfig>
-          <ExecuteProcessor>{ognl:getAttribute('Partition') == 'WCH' || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'MED')}</ExecuteProcessor>
+          <!-- NTX FRI end-date (Karen #5): same pattern as NTX MED — strip DOS after CLIENT_SPLITS.DATE_RANGE -->
+          <ExecuteProcessor>{ognl:getAttribute('Partition') == 'WCH' || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'MED') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'FRI')}</ExecuteProcessor>
           <XSLTPath>transform-strip-after-date-range.xslt</XSLTPath>
           <CacheXSLTToXML>false</CacheXSLTToXML>
           <XSLTEngine>Saxon</XSLTEngine>

@@ -234,6 +234,7 @@ Create under `Clients/Demos/<slug>/` (or `Clients/<Client>/<slug>/` for client w
       route-viewer/              # copy from an existing demo; keep in sync
   tools/
     convert_routes_to_v2.py      # if needed
+    sync_module_docs.py          # copy module deep-dive PDFs → documents/module-docs/
     export_route_diagrams.py     # PDF: overview (collapsed groups) + detail pages → documents/
     export_stakeholder_brief.py  # stakeholder Capability Brief PDF → documents/
     export_test_plan_pdf.py      # Test Plan PDF from tests/plan.json
@@ -435,6 +436,7 @@ Work in this order unless the user specifies otherwise:
 7. **Router + transports** with kickout path tested once.
 8. **Web UI** inject/submit + status views matching the demo story, including the standard **Info** tab (§6.5) with PDF aliases and the **Timing** tab (§6.6).
 9. **V2 convert** into `eip-root` + Routes tab / docs.
+9b. **Module deep-dive PDFs (required):** run `python3 tools/sync_module_docs.py` (from Sandbox root with `--root Clients/Demos/<slug>`, or from the demo root) so `documents/module-docs/` contains the PilotFish Documentation PDF for every Listener / Processor / Transport / Routing module used in the routes. Re-run whenever routes change (also auto-runs from `tools/run_interface_tests.py` and after `convert_routes_to_v2.py` when wired). See §6.1c.
 10. **Route design PDF (required):** with Web UI up, author `diagram-groups.json` for long chains (§6.1b), then run `python3 tools/export_route_diagrams.py --config compact` (or `--config changed`) so `documents/` gets an **overview (collapsed groups) + later detail pages** PDF (see §6 / §6.1b).
 10b. **Stakeholder Capability Brief PDF (required):** run `python3 tools/export_stakeholder_brief.py` so `documents/<ShortName>_Capability_Brief.pdf` is generated from `DESIGN.md` + routes (+ CapabilityStatement when FHIR). See §6.1a.
 10c. **Test plan PDF + automated run (required):** maintain `tests/plan.json`, run `python3 tools/export_test_plan_pdf.py` and `python3 tools/run_interface_tests.py --wait` (see §7.1). Update the plan as capabilities are added.
@@ -557,6 +559,25 @@ Any time you **create a new interface** (or add/change routes enough that diagra
 7. Mention the PDF path in `README.md` **and** announce browser URLs per §6.2.
 
 Skipping the PDF requires the user to opt out explicitly; “optional” is not the default.
+
+### 6.1c Module deep-dive PDFs → `documents/module-docs/` (**required**)
+
+Every interface must ship the **PilotFish module documentation PDFs** for the modules it actually uses, so developers can open deep-dives without leaving the demo.
+
+1. After routes are authored or changed, run:
+   ```bash
+   python3 tools/sync_module_docs.py --root Clients/Demos/<slug>
+   # or from the demo directory:
+   python3 ../../../tools/sync_module_docs.py
+   # or all demos:
+   python3 tools/sync_module_docs.py --all-demos
+   ```
+2. The tool scans `eip-root/**/route.xml`, `route.v2.xml`, and `modules/*.xml`, resolves each Listener / Processor / Transport / Routing class against the external PilotFish Documentation library (`PilotFish_Documentation/DOCUMENTATION_LOCATION.txt`), and copies matching `PilotFish-*-Reference-*.pdf` files into:
+   - `documents/module-docs/`
+   - plus `documents/module-docs/INDEX.md` and `manifest.json`
+3. Stale PDFs for modules no longer in the routes are removed on sync.
+4. The Web UI Info tab lists these PDFs (served under `/documents/module-docs/…`). `tools/run_interface_tests.py` re-syncs automatically; wire `convert_routes_to_v2.py` to call sync after conversion.
+5. If a module has no deep-dive yet, it appears under **Missing** in the manifest — note that in DESIGN.md Risks; do not invent documentation.
 
 ### 6.1b Processor Groups for long diagrams (**required when chains are long**)
 
@@ -787,6 +808,7 @@ Minimum bar:
 - [ ] Kickout / fail path exercised once **or** explicitly marked “not implemented” in DESIGN.md
 - [ ] Routes tab renders `route.v2.xml`
 - [ ] **Processor Groups** authored (`diagram-groups.json`) for every long chain (§6.1b), or N/A documented when all chains are short
+- [ ] **Module deep-dive PDFs** synced under `documents/module-docs/` (`tools/sync_module_docs.py`; Info tab lists them)
 - [ ] **Route design PDF** written under `documents/` with **overview (collapsed groups) + detail pages** (`--config compact` preferred)
 - [ ] **Stakeholder Capability Brief PDF** written under `documents/` (`tools/export_stakeholder_brief.py`)
 - [ ] **Test Plan PDF** written under `documents/` (`tools/export_test_plan_pdf.py`)
@@ -982,6 +1004,7 @@ An interface construct is done when:
 4. Runtime config and diagrams agree **or** drift is documented.  
 5. Web/route viewer present when routes are part of the deliverable.  
 6. **Route design PDF** exists under `documents/` (overview + group detail pages when §6.1b applies; prefer `--config compact`).  
+6b. **Module deep-dive PDFs** exist under `documents/module-docs/` for every module used in the routes (§6.1c); re-synced after route changes.  
 6a. **`diagram-groups.json`** present for long processor chains (or N/A if all chains are short).  
 6b. **Stakeholder Capability Brief PDF** exists under `documents/` (generated with `tools/export_stakeholder_brief.py`).  
 6c. **Test Plan PDF** exists under `documents/` and `tests/plan.json` is current.  
@@ -1009,6 +1032,7 @@ echo "LAN:   http://${LAN_IP}:<webui-port>/"
 docker compose logs -f pilotfish
 # happy path: drop sample or use Web UI
 ls -la output/*
+python3 tools/sync_module_docs.py
 python3 tools/export_route_diagrams.py --config compact
 # Expect overview pages (collapsed Processor Groups) then detail pages per group (§6.1b)
 python3 tools/export_stakeholder_brief.py

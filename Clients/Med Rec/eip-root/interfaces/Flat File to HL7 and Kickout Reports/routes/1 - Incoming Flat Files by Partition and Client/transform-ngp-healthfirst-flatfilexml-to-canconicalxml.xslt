@@ -415,7 +415,15 @@
             <adminsPaCode />
             <absPatientUnit />
             <admInsName>
-              <xsl:value-of select="PRIMARY_CVG_PAYER" />
+              <!-- Prefer Primary Payer; fall back to Primary Cvg Payer when blank (Karen IN1.4). -->
+              <xsl:choose>
+                <xsl:when test="string-length(normalize-space(PRIMARY_PAYER)) != 0">
+                  <xsl:value-of select="normalize-space(PRIMARY_PAYER)" />
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="normalize-space(PRIMARY_CVG_PAYER)" />
+                </xsl:otherwise>
+              </xsl:choose>
             </admInsName>
             <admAcctNum />
             <adminsinsuredrel>

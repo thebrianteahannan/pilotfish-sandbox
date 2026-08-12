@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="a2d82bcc-20d4-4c28-bf65-5cd7114e5289" name="1 - Parse Control And Trigger Download">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="ae74e6b7-b328-402e-bb23-6098f63ce6ed" moduleId="7cfb550d-668e-4d74-bf6f-24fd6da9b394" label="Poll Control Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="544ac392-7666-4580-b60a-cdc258294410" moduleId="420405c3-84a9-416b-9a74-d5635a46352f" label="Save Control Body To Attribute" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="f59a539a-067b-4c23-887a-52b135c280ec" moduleId="53374a6c-a1e6-432a-be26-f48eb18d1067" label="Set Remote File Name" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="2aca648f-409a-4ee5-8ae5-fd7aa8378afe" moduleId="7e344641-3ed2-4636-bcda-7ed4a434b937" label="Set Remote Full Path" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="9ff24a12-a310-40b3-96d4-aee3bfc609ca" moduleId="e3ed64a4-c29d-4023-aa32-5ea48f85762f" label="Trigger FTP Download Listener" x="1040.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="407166cd-05d1-4773-9fd5-1e7197949bcb" moduleId="7a1dfe45-49bc-47b5-84d3-06d34d57374d" label="No Outbound (Trigger Only)" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="fda82636-fcbb-4946-bb46-b6cefc821407" sourceNodeId="ae74e6b7-b328-402e-bb23-6098f63ce6ed" targetNodeId="544ac392-7666-4580-b60a-cdc258294410" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="e8f7c933-3728-4d87-857f-940b5ba0ef3f" sourceNodeId="544ac392-7666-4580-b60a-cdc258294410" targetNodeId="f59a539a-067b-4c23-887a-52b135c280ec" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="6dbafacc-9f31-4993-abc3-cd7318b65441" sourceNodeId="f59a539a-067b-4c23-887a-52b135c280ec" targetNodeId="2aca648f-409a-4ee5-8ae5-fd7aa8378afe" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="9d02ec2f-16ce-4b9f-b822-3a953ec367d9" sourceNodeId="2aca648f-409a-4ee5-8ae5-fd7aa8378afe" targetNodeId="9ff24a12-a310-40b3-96d4-aee3bfc609ca" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="27ea7a11-f815-42c2-828e-5cdbf86f610f" sourceNodeId="9ff24a12-a310-40b3-96d4-aee3bfc609ca" targetNodeId="407166cd-05d1-4773-9fd5-1e7197949bcb" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

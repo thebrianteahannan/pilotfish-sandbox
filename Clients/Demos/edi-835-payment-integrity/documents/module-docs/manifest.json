@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "demo": "edi-835-payment-integrity",
+  "path": "Clients/Demos/edi-835-payment-integrity",
+  "synced_at": "2026-08-12T16:56:41Z",
+  "documentation_root": "/Users/brianhannan/Documents/PilotFish Documentation/Documents",
+  "modules": [
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.DirectoryListener",
+      "kind": "Listener",
+      "ui_type": "Directory / File",
+      "pdf": "module-docs/PilotFish-Directory-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-Directory-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor",
+      "kind": "Processor",
+      "ui_type": "Attribute Population",
+      "pdf": "module-docs/PilotFish-Attribute-Population-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-Attribute-Population-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.db.DatabaseSqlProcessor",
+      "kind": "Processor",
+      "ui_type": "Database (SQL)",
+      "pdf": "module-docs/PilotFish-Database-SQL-Processor-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-Database-SQL-Processor-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.FileWriteProcessor",
+      "kind": "Processor",
+      "ui_type": "File Writing",
+      "pdf": "module-docs/PilotFish-File-Writing-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-File-Writing-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.other.XPathForkingProcessor",
+      "kind": "Processor",
+      "ui_type": "XPath",
+      "pdf": "module-docs/PilotFish-XPath-Forking-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-XPath-Forking-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.other.XPathEvaluatorProcessor",
+      "kind": "Processor",
+      "ui_type": "XPath Evaluation",
+      "pdf": "module-docs/PilotFish-XPath-Evaluation-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-XPath-Evaluation-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.transform.XSLTProcessor",
+      "kind": "Processor",
+      "ui_type": "XSLT Transformation",
+      "pdf": "module-docs/PilotFish-XSLT-Transformation-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-XSLT-Transformation-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule",
+      "kind": "Routing",
+      "ui_type": "Conditional Node Router",
+      "pdf": "module-docs/PilotFish-Conditional-Node-Router-Reference-26R1.11.pdf",
+      "source": "Routing/26R1.11/PilotFish-Conditional-Node-Router-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.routing.XPathRoutingModule",
+      "kind": "Routing",
+      "ui_type": "Conditional Node Router",
+      "pdf": "module-docs/PilotFish-Conditional-Node-Router-Reference-26R1.11.pdf",
+      "source": "Routing/26R1.11/PilotFish-Conditional-Node-Router-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.DirectoryTransport",
+      "kind": "Transport",
+      "ui_type": "Directory / File",
+      "pdf": "module-docs/PilotFish-Directory-File-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-Directory-File-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.other.NullTransport",
+      "kind": "Transport",
+      "ui_type": "NULL Transport",
+      "pdf": "module-docs/PilotFish-NULL-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-NULL-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    }
+  ],
+  "missing": [],
+  "note": "Auto-synced from route.xml / modules/*.xml. Re-run tools/sync_module_docs.py after route changes."
+}

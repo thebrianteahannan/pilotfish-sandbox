@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDI 837P → QCare — PilotFish Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/app.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css" />
+  <link rel="stylesheet" href="/static/code-highlight.css" />
+  <link rel="stylesheet" href="/static/timing-tab.css" />
+</head>
+<body>
+  <header>
+    <div class="app-bar">
+      <p class="brand">PilotFish · EDI 837P → QCare</p>
+      <div class="main-tabs" role="tablist" aria-label="App views">
+        <button type="button" class="main-tab active" data-main-tab="demo" role="tab" aria-selected="true">Demo</button>
+        <button type="button" class="main-tab" data-main-tab="routes" role="tab" aria-selected="false">Routes</button>
+        {% if has_xslt %}
+        <button type="button" class="main-tab" data-main-tab="xslt" role="tab" aria-selected="false">XSLT</button>
+        {% endif %}
+        <button type="button" class="main-tab" data-main-tab="timing" role="tab" aria-selected="false">Timing</button>
+        <button type="button" class="main-tab" data-main-tab="info" role="tab" aria-selected="false">Info</button>
+      </div>
+    </div>
+    <nav class="nav" id="demo-nav">
+      <a href="#pipeline">Pipeline</a>
+      <a href="#inject">Submit 837P</a>
+      <a href="#results">Results</a>
+    </nav>
+  </header>
+
+  <div id="tab-demo">
+    <main>
+      <section class="panel" id="pipeline">
+        <h2>Pipeline</h2>
+        <p class="section-lead">Directory listen → EDI→XML (837-Q1) → XSLT QCare 2100-byte map → directory write.</p>
+        <div class="pipeline">
+          <div class="pipe-node src"><strong>837P drop</strong><span>input/inbound<br/>.txt / .edi</span></div>
+          <div class="pipe-node eng"><strong>EDI to XML</strong><span>TableData 837-Q1<br/>fork Transaction</span></div>
+          <div class="pipe-node eng"><strong>QCare map</strong><span>XSLT text<br/>2100-byte OT/B837</span></div>
+          <div class="pipe-node out"><strong>QCare out</strong><span>output/qcare<br/>.txt files</span></div>
+        </div>
+      </section>
+
+      <section class="panel" id="inject">
+        <h2>Submit 837P</h2>
+        <p class="section-lead">Copies a sample (or pasted EDI) into the inbound folder. Route polls every 5s.</p>
+        <form id="inject-form" class="form-grid">
+          <label>Sample file
+            <select name="sample" id="sample">
+              <option value="">(custom / paste below)</option>
+            </select>
+          </label>
+          <label class="wide">837P content
+            <textarea name="edi" id="edi" rows="8" placeholder="ISA*00*…"></textarea>
+          </label>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary" id="submit-btn">Map to QCare</button>
+            <span id="status" class="status"></span>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" id="results">
+        <div class="row-head">
+          <h2>Results</h2>
+          <button type="button" class="btn" id="refresh-btn">Refresh</button>
+        </div>
+        <div class="split">
+          <div>
+            <h3>QCare output</h3>
+            <div id="qcare-list" class="file-list"></div>
+            <pre id="qcare-view" class="viewer"></pre>
+          </div>
+          <div>
+            <h3>Archived 837P</h3>
+            <div id="archive-list" class="file-list"></div>
+            <pre id="archive-view" class="viewer"></pre>
+          </div>
+        </div>
+        <div class="split" style="margin-top:1rem">
+          <div>
+            <h3>Debug EDI XML</h3>
+            <div id="debug-list" class="file-list"></div>
+            <pre id="debug-view" class="viewer"></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="tab-routes" class="routes-tab" hidden>
+    <div class="routes-toolbar">
+      <label>V2 route <select id="route-select"></select></label>
+      <span id="routes-status" class="muted"></span>
+    </div>
+    <iframe id="route-viewer-frame" class="route-viewer-frame" title="Route viewer" src="about:blank"></iframe>
+    <p class="routes-docs-link">
+      <a href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route design PDF</a>
+    </p>
+  </div>
+
+  {% if has_xslt %}
+  <div id="tab-xslt" hidden>
+    <main>
+      <section class="panel">
+        <h2>XSLT</h2>
+        <p class="section-lead">Maps under the route directories (QCare fixed-width transform).</p>
+        <div id="xslt-list" class="file-list"></div>
+        <pre id="xslt-view" class="viewer"></pre>
+      </section>
+    </main>
+  </div>
+  {% endif %}
+
+  {% include 'partials/timing_tab.html' %}
+  {% include 'partials/info_tab.html' %}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
+  <script src="/static/code-highlight.js"></script>
+  <script src="/static/timing-tab.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

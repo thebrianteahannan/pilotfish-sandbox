@@ -36,13 +36,41 @@
       .join("")}</ul></div>`;
   }
 
+  function deriveSummary(t, phases) {
+    // Wall-clock from earliest start → latest end when top-level fields were left null.
+    let started = t.started_at || null;
+    let completed = t.completed_at || null;
+    for (const p of phases) {
+      if (p.started_at && (!started || p.started_at < started)) started = p.started_at;
+      if (p.ended_at && (!completed || p.ended_at > completed)) completed = p.ended_at;
+    }
+    let mins = Number(t.duration_minutes);
+    if (!Number.isFinite(mins) || mins <= 0) {
+      if (started && completed) {
+        mins = Math.max(
+          1,
+          Math.round((new Date(completed) - new Date(started)) / 60000)
+        );
+      } else {
+        mins = null;
+      }
+    }
+    return {
+      started_at: started,
+      completed_at: completed,
+      duration_minutes: mins,
+      completed_by: t.completed_by || null,
+    };
+  }
+
   function renderTiming(data) {
     const t = data.timing || data;
     const phases = Array.isArray(t.phases) ? t.phases : [];
+    const summary = deriveSummary(t, phases);
     const maxMin = Math.max(
       1,
       ...phases.map((p) => Number(p.duration_minutes) || 0),
-      Number(t.duration_minutes) || 0
+      Number(summary.duration_minutes) || 0
     );
     const docker = t.docker_at_completion || {};
     const slow = Array.isArray(t.slowest_phases) ? t.slowest_phases : [];

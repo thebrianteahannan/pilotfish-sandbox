@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "demo": "medical-device-hl7-ehr",
+  "path": "Clients/Demos/medical-device-hl7-ehr",
+  "synced_at": "2026-08-12T16:56:41Z",
+  "documentation_root": "/Users/brianhannan/Documents/PilotFish Documentation/Documents",
+  "modules": [
+    {
+      "fqcn": "com.pilotfish.eip.modules.hl7.HL7TCPListener",
+      "kind": "Listener",
+      "ui_type": "HL7 LLP",
+      "pdf": "module-docs/PilotFish-HL7-LLP-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-HL7-LLP-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.FileWriteProcessor",
+      "kind": "Processor",
+      "ui_type": "File Writing",
+      "pdf": "module-docs/PilotFish-File-Writing-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-File-Writing-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.hl7.HL7ValidationProcessor",
+      "kind": "Processor",
+      "ui_type": "HL7 Validation",
+      "pdf": "module-docs/PilotFish-HL7-Validation-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-HL7-Validation-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.hl7.HL7SimpleTransport",
+      "kind": "Transport",
+      "ui_type": "HL7 MLLP (Simple)",
+      "pdf": "module-docs/PilotFish-HL7-MLLP-Simple-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-HL7-MLLP-Simple-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    }
+  ],
+  "missing": [],
+  "note": "Auto-synced from route.xml / modules/*.xml. Re-run tools/sync_module_docs.py after route changes."
+}

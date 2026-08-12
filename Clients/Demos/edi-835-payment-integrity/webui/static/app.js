@@ -126,6 +126,39 @@ function bindRouteViewerResize() {
   });
 }
 
+let routesLoaded = false;
+
+async function loadRoutesTab() {
+  const select = document.getElementById("route-select");
+  const frame = document.getElementById("route-viewer-frame");
+  const status = document.getElementById("routes-status");
+  if (!select || !frame) return;
+  bindRouteViewerResize();
+  if (!routesLoaded) {
+    const data = await getJson("/api/v2/routes");
+    select.innerHTML = (data.routes || [])
+      .map((r) => `<option value="${r.id}">${r.name}</option>`)
+      .join("");
+    routesLoaded = true;
+    select.addEventListener("change", () => {
+      if (!select.value) return;
+      frame.style.height = "";
+      frame.src =
+        `/static/route-viewer/index.html?route=${encodeURIComponent(select.value)}` +
+        `&mode=docs&layout=pipeline&config=compact&groups=1&collapse=all`;
+    });
+  }
+  if (select.options.length) {
+    frame.style.height = "";
+    frame.src =
+      `/static/route-viewer/index.html?route=${encodeURIComponent(select.value)}` +
+      `&mode=docs&layout=pipeline&config=compact&groups=1&collapse=all`;
+    if (status) status.textContent = `${select.options.length} route(s)`;
+  } else if (status) {
+    status.textContent = "No route.v2.xml yet";
+  }
+}
+
 function bindMainTabs() {
   const tabs = [...document.querySelectorAll(".main-tab")];
   tabs.forEach((tab) => {
@@ -142,7 +175,12 @@ function bindMainTabs() {
       });
       const nav = document.getElementById("demo-nav");
       if (nav) nav.style.display = id === "demo" ? "" : "none";
-      if (id === "routes") bindRouteViewerResize();
+      if (id === "routes") {
+        loadRoutesTab().catch((err) => {
+          const status = document.getElementById("routes-status");
+          if (status) status.textContent = err.message || String(err);
+        });
+      }
       if (id === "xslt") loadXslt().catch(() => {});
     });
   });

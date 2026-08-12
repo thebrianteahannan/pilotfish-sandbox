@@ -51,7 +51,7 @@
     </section>
     {% endif %}
 
-    {% for sec in info_extra_sections or [] %}
+    {% for sec in (info_extra_sections or []) + (module_docs_sections or []) %}
     <section class="panel">
       <h2>{{ sec.title }}</h2>
       {% if sec['items'] %}

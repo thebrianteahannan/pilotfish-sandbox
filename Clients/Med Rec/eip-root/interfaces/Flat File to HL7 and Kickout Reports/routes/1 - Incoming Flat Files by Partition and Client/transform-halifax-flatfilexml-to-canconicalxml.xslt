@@ -64,25 +64,240 @@
               </xsl:if>
             </admbirthdate>
             <admLocation>
+              <!-- Karen #2 Halifax LocationAbbreviation crosswalk (HAX). Source: Halifax Location Crosswalk.xlsx -->
+              <!-- Legacy EMSHM/EMSHC/HPO kept: those codes are not in the new crosswalk. Unknown → HAX. -->
               <xsl:variable name="deptAbbr" select="Demographics/XCSRecord[1]/DEPARTMENT_ABBR" />
               <xsl:variable name="locationAbbr" select="Demographics/XCSRecord[1]/LOCATION_ABBR" />
               <xsl:choose>
+                <!-- Legacy dept+location pairs (pre-crosswalk) -->
                 <xsl:when test="$locationAbbr = 'EMSHM' and $deptAbbr = 'ND FSED ED'">
                   <xsl:value-of select="'HED'" />
                 </xsl:when>
                 <xsl:when test="$locationAbbr = 'EMSHM' and $deptAbbr = 'PO FSED ED'">
                   <xsl:value-of select="'PXE'" />
                 </xsl:when>
-                <xsl:when test="$locationAbbr = 'HMC'">
-                  <xsl:value-of select="'HAX'" />
-                </xsl:when>
-                <xsl:when test="$locationAbbr = 'MCD'">
-                  <xsl:value-of select="'DEX'" />
+                <xsl:when test="$locationAbbr = 'EMSHC'">
+                  <xsl:value-of select="'PXE'" />
                 </xsl:when>
                 <xsl:when test="$locationAbbr = 'HPO'">
                   <xsl:value-of select="'POX'" />
                 </xsl:when>
-                <xsl:when test="$locationAbbr = 'EMSHC'">
+                <!-- Crosswalk → DEX -->
+                <xsl:when test="$locationAbbr = 'MCD'">
+                  <xsl:value-of select="'DEX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'MCD CT'">
+                  <xsl:value-of select="'DEX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'MCD IR'">
+                  <xsl:value-of select="'DEX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'MCD MC P'">
+                  <xsl:value-of select="'DEX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'MCD MOB'">
+                  <xsl:value-of select="'DEX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'MCD MR'">
+                  <xsl:value-of select="'DEX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'MCD NM'">
+                  <xsl:value-of select="'DEX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'MCD OR'">
+                  <xsl:value-of select="'DEX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'MCD US'">
+                  <xsl:value-of select="'DEX'" />
+                </xsl:when>
+                <!-- Crosswalk → HAX -->
+                <xsl:when test="$locationAbbr = 'ANES'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'EHSMC'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'EMIRF'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'GI'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HH'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HH HMC Non-OR Procedures'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HH HPC'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HH IPM'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HHECDBS'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HHECDT'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HHECOB'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HHECPO'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC 201'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC CT'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC EC P'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC HBS'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC IR'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC MC P'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC MR'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC NM'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC OBGYN'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC OPH'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC OR'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC PEDIATRICS'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC PS P'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC PULM'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC US'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HSPC'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HSPL'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'IRFP'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'L&amp;D OR'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'NO PC'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'NSB FAM'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'NSB HGC   E'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'OR TL'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'ORM CCH'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'ORM CMC'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'PC CMC'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'PIC TFK'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'PO CAH P'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'TL GI'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <!-- Crosswalk → HED -->
+                <xsl:when test="$locationAbbr = 'HMC DBN ED'">
+                  <xsl:value-of select="'HED'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'ND FSED CT'">
+                  <xsl:value-of select="'HED'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'ND FSED US'">
+                  <xsl:value-of select="'HED'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'ND FSED XR'">
+                  <xsl:value-of select="'HED'" />
+                </xsl:when>
+                <!-- Crosswalk → POX -->
+                <xsl:when test="$locationAbbr = 'HPO CT'">
+                  <xsl:value-of select="'POX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HPO IR'">
+                  <xsl:value-of select="'POX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HPO MC'">
+                  <xsl:value-of select="'POX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HPO MR'">
+                  <xsl:value-of select="'POX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HPO NM'">
+                  <xsl:value-of select="'POX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HPO OR'">
+                  <xsl:value-of select="'POX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HPO US'">
+                  <xsl:value-of select="'POX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'PO CCH'">
+                  <xsl:value-of select="'POX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'PO HSPC'">
+                  <xsl:value-of select="'POX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'PO MC P'">
+                  <xsl:value-of select="'POX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'PO PC'">
+                  <xsl:value-of select="'POX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'PODTW'">
+                  <xsl:value-of select="'POX'" />
+                </xsl:when>
+                <!-- Crosswalk → PXE -->
+                <xsl:when test="$locationAbbr = 'PO ED'">
+                  <xsl:value-of select="'PXE'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'PO FSED CT'">
+                  <xsl:value-of select="'PXE'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'PO FSED US'">
+                  <xsl:value-of select="'PXE'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'PO FSED XR'">
                   <xsl:value-of select="'PXE'" />
                 </xsl:when>
                 <xsl:otherwise>

@@ -87,7 +87,11 @@
   </div>
 
   <div id="tab-routes" class="routes-tab" hidden>
-    <iframe id="route-viewer-frame" class="route-viewer-frame" title="Route viewer" src="/static/route-viewer/index.html?mode=docs&layout=pipeline&config=changed"></iframe>
+    <div class="routes-toolbar">
+      <label>V2 route <select id="route-select"></select></label>
+      <span id="routes-status" class="muted"></span>
+    </div>
+    <iframe id="route-viewer-frame" class="route-viewer-frame" title="Route viewer" src="about:blank"></iframe>
     <p class="routes-docs-link">
       <a href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route design PDF</a>
     </p>

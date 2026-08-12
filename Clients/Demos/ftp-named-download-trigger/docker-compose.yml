@@ -1,0 +1,69 @@
+services:
+  sftp:
+    image: atmoz/sftp:alpine
+    platform: linux/amd64
+    container_name: pf-ftp-dl-sftp
+    restart: unless-stopped
+    ports:
+      - "2223:22"
+    volumes:
+      - ./sftp-seed/upload:/home/demo/upload
+      # Old JSCH in PilotFish 23R1 fails modern OpenSSH defaults ("Algorithm negotiation fail")
+      - ./sftp/sshd_config:/etc/ssh/sshd_config:ro
+    command: demo:demo:1001:1001:upload
+
+  pilotfish:
+    build:
+      context: ./pilotfish
+    image: pilotfish-ftp-named-download:23R1
+    container_name: pf-ftp-dl-pilotfish
+    restart: unless-stopped
+    depends_on:
+      sftp:
+        condition: service_started
+    environment:
+      CATALINA_OPTS: "-Xms256M -Xmx1024M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8112:8080"
+    volumes:
+      - ./input:/opt/pilotfish/input
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+
+  webui:
+    build:
+      context: ./webui
+    image: pilotfish-ftp-dl-webui:latest
+    container_name: pf-ftp-dl-webui
+    restart: unless-stopped
+    depends_on:
+      pilotfish:
+        condition: service_started
+      sftp:
+        condition: service_started
+    environment:
+      WEBUI_PORT: "8113"
+      CONTROL_DIR: /inbound
+      DOWNLOAD_DIR: /output/downloaded
+      ARCHIVE_DIR: /output/archive
+      SAMPLE_DIR: /samples
+      SFTP_UPLOAD_DIR: /sftp-upload
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      ROUTE_PDF_NAME: FTP_Named_Download_Trigger_V2_Route_Diagrams.pdf
+      CAPABILITY_PDF_NAME: FTP_Named_Download_Trigger_Capability_Brief.pdf
+      ENV_SETTINGS_FILE: /environment-settings.conf
+      LAN_HINT: "http://192.168.68.62:8113/"
+      EIP_PUBLIC_URL: "http://192.168.68.62:8112/eip/"
+      SFTP_HINT: "localhost:2223 user demo/demo, dir upload"
+    ports:
+      - "8113:8113"
+    volumes:
+      - ./input/control:/inbound
+      - ./output:/output
+      - ./samples:/samples:ro
+      - ./documents:/documents:ro
+      - ./sftp-seed/upload:/sftp-upload
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/environment-settings.conf:ro
+      - ./eip-root/interfaces/FTP Named Download Trigger/routes:/routes:ro

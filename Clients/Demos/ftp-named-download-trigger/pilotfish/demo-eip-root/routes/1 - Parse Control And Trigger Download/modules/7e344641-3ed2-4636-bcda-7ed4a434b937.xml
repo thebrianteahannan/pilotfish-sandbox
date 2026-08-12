@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7e344641-3ed2-4636-bcda-7ed4a434b937" name="Set Remote Full Path" type="Transaction Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeName>demo.ftp.RemoteFullPath</AttributeName>
+      
+          
+      <Expression>{ognl:'upload/' + getAttribute('demo.ftp.RemoteFileName').toString().trim()}</Expression>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+        
+   </ModuleConfig>
+</Module>

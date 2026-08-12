@@ -529,6 +529,20 @@ def main():
             print("Converting", target.name, "→", route.name)
             Converter(route, formats_dir).convert()
 
+    try:
+        import sys
+        from pathlib import Path as _P
+
+        tools = _P("/Users/brianhannan/Documents/PilotFish Sandbox/tools")
+        if str(tools) not in sys.path:
+            sys.path.insert(0, str(tools))
+        from sync_module_docs import sync_demo
+
+        sync_demo(root)
+        print("Synced documents/module-docs/")
+    except Exception as exc:
+        print(f"WARNING: sync_module_docs skipped ({exc})")
+
 
 if __name__ == "__main__":
     main()

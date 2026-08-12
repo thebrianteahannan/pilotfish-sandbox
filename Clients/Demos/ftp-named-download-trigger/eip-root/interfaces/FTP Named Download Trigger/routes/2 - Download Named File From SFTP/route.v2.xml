@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="4b80e639-179b-4fc7-b66a-6a39b226850e" name="2 - Download Named File From SFTP">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="ac74d9c6-4905-4c8b-bff3-2608b84a93b7" moduleId="d476e484-f486-403f-b617-1a7ef019b2fe" label="Download Named File From SFTP.FTP Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="5c5d09f2-65ab-4ec4-ad6d-c6563b8ccc21" moduleId="64e96e56-00f5-474b-bdc8-51f75989314e" label="Write Downloaded File" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="083c1b47-e0f1-45b6-8329-f3249bfc51b4" sourceNodeId="ac74d9c6-4905-4c8b-bff3-2608b84a93b7" targetNodeId="5c5d09f2-65ab-4ec4-ad6d-c6563b8ccc21" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

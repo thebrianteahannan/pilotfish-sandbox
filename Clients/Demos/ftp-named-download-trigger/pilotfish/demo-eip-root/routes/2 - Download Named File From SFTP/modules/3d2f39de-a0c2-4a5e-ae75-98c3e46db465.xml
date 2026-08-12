@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="3d2f39de-a0c2-4a5e-ae75-98c3e46db465" name="Write Downloaded File" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory>$$DOWNLOAD_OUTPUT_DIRECTORY</TargetDirectory>
+      
+        
+      <FileName>downloaded</FileName>
+      
+        
+      <FileExtension>dat</FileExtension>
+      
+        
+      <UseFullFilePath>Enabled</UseFullFilePath>
+      
+        
+      <FullPathToFile>{ognl:'/opt/pilotfish/output/downloaded/' + getAttribute('demo.ftp.RemoteFileName').toString().trim()}</FullPathToFile>
+      
+        
+      <AppendToFile>Overwrite</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

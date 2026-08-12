@@ -51,7 +51,7 @@ Wait ~60–90s for SQL init + first poll, then open the web UI.
 | PilotFish  | 8093      |
 | Demo Web UI| 8095      |
 
-- Web UI (LAN): http://192.168.68.52:8095/
+- Web UI (LAN): http://192.168.68.62:8095/
 - Web UI (local): http://localhost:8095/
 - PilotFish EIP: http://localhost:8093/eip/
 

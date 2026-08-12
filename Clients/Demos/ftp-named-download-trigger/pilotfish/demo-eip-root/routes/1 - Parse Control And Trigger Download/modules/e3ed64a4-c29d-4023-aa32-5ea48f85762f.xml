@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="e3ed64a4-c29d-4023-aa32-5ea48f85762f" name="Trigger FTP Download Listener" type="Listener Trigger" tag="Processor" class="com.pilotfish.eip.modules.internal.ListenerTriggeringProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <ServiceName>2 - Download Named File From SFTP::Download Named File From SFTP.FTP Listener</ServiceName>
+      
+          
+      <RUN_ONCE>true</RUN_ONCE>
+      
+          
+      <ENABLE_LISTENER_ACTION>false</ENABLE_LISTENER_ACTION>
+      
+          
+      <DISABLE_LISTENER_ACTION>false</DISABLE_LISTENER_ACTION>
+      
+          
+      <ACTION_WAIT_TIME>30</ACTION_WAIT_TIME>
+      
+        
+   </ModuleConfig>
+</Module>

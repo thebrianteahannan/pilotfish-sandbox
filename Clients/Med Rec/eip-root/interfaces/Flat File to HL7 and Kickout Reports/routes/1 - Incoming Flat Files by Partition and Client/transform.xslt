@@ -125,9 +125,18 @@
               <xsl:value-of select="xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:SubscriberId | InsuranceInfo[PayorPriority='1']/SubscriberId" />
             </adminspolicy>
             <subscribername>
-              <xsl:if test="concat(xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:InsuredName/types:LastName | InsuranceInfo[PayorPriority='1']/InsuredName/LastName, ',',xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:InsuredName/types:FirstName | InsuranceInfo[PayorPriority='1']/InsuredName/FirstName) != ','">
-                <xsl:value-of select="concat(xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:InsuredName/types:LastName | InsuranceInfo[PayorPriority='1']/InsuredName/LastName, ',',xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:InsuredName/types:FirstName | InsuranceInfo[PayorPriority='1']/InsuredName/FirstName)" />
-              </xsl:if>
+              <xsl:variable name="ins1Last" select="normalize-space((xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:InsuredName/types:LastName | InsuranceInfo[PayorPriority='1']/InsuredName/types:LastName | InsuranceInfo[PayorPriority='1']/InsuredName/LastName)[1])" />
+              <xsl:variable name="ins1First" select="normalize-space((xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:InsuredName/types:FirstName | InsuranceInfo[PayorPriority='1']/InsuredName/types:FirstName | InsuranceInfo[PayorPriority='1']/InsuredName/FirstName)[1])" />
+              <xsl:variable name="patLast" select="normalize-space((xifin:PatientInfo/xifin:Person/types:Name/types:LastName | PatientInfo/Person/Name/types:LastName | PatientInfo/Person/Name/LastName)[1])" />
+              <xsl:variable name="patFirst" select="normalize-space((xifin:PatientInfo/xifin:Person/types:Name/types:FirstName | PatientInfo/Person/Name/types:FirstName | PatientInfo/Person/Name/FirstName)[1])" />
+              <xsl:choose>
+                <xsl:when test="string-length($ins1Last) != 0 or string-length($ins1First) != 0">
+                  <xsl:value-of select="concat($ins1Last, ',', $ins1First)" />
+                </xsl:when>
+                <xsl:when test="string-length($patLast) != 0 or string-length($patFirst) != 0">
+                  <xsl:value-of select="concat($patLast, ',', $patFirst)" />
+                </xsl:when>
+              </xsl:choose>
             </subscribername>
             <adminszip>
               <xsl:value-of select="xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:Address/types:ZIP | InsuranceInfo[PayorPriority='1']/Address/ZIP" />
@@ -151,9 +160,19 @@
               <xsl:value-of select="xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:PayorId | InsuranceInfo[xifin:PayorPriority='1']/PayorId" />
             </adminsmne>
             <adminsinsuredname>
-              <xsl:if test="concat(xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:InsuredName/types:LastName | InsuranceInfo[xifin:PayorPriority='1']/InsuredName/LastName, ',',xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:InsuredName/types:FirstName | InsuranceInfo[xifin:PayorPriority='1']/InsuredName/FirstName       ) != ','">
-                <xsl:value-of select="concat(xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:InsuredName/types:LastName | InsuranceInfo[xifin:PayorPriority='1']/InsuredName/LastName, ',',xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:InsuredName/types:FirstName | InsuranceInfo[xifin:PayorPriority='1']/InsuredName/FirstName       )" />
-              </xsl:if>
+              <!-- Map InsuredName; if blank, use patient name (Cerner needs IN1.16 for SELFPAY). -->
+              <xsl:variable name="ins1Last" select="normalize-space((xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:InsuredName/types:LastName | InsuranceInfo[PayorPriority='1']/InsuredName/types:LastName | InsuranceInfo[PayorPriority='1']/InsuredName/LastName)[1])" />
+              <xsl:variable name="ins1First" select="normalize-space((xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:InsuredName/types:FirstName | InsuranceInfo[PayorPriority='1']/InsuredName/types:FirstName | InsuranceInfo[PayorPriority='1']/InsuredName/FirstName)[1])" />
+              <xsl:variable name="patLast" select="normalize-space((xifin:PatientInfo/xifin:Person/types:Name/types:LastName | PatientInfo/Person/Name/types:LastName | PatientInfo/Person/Name/LastName)[1])" />
+              <xsl:variable name="patFirst" select="normalize-space((xifin:PatientInfo/xifin:Person/types:Name/types:FirstName | PatientInfo/Person/Name/types:FirstName | PatientInfo/Person/Name/FirstName)[1])" />
+              <xsl:choose>
+                <xsl:when test="string-length($ins1Last) != 0 or string-length($ins1First) != 0">
+                  <xsl:value-of select="concat($ins1Last, ',', $ins1First)" />
+                </xsl:when>
+                <xsl:when test="string-length($patLast) != 0 or string-length($patFirst) != 0">
+                  <xsl:value-of select="concat($patLast, ',', $patFirst)" />
+                </xsl:when>
+              </xsl:choose>
             </adminsinsuredname>
             <admInsPhone>
               <xsl:value-of select="xifin:InsuranceInfo[xifin:PayorPriority='1']/xifin:Phone/types:HomePhone | InsuranceInfo[xifin:PayorPriority='1']/Phone/HomePhone" />

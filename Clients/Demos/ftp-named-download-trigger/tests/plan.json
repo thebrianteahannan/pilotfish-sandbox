@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "interface": "FTP Named Download Trigger",
+  "description": "Control file names a remote SFTP object; Listener Trigger fires a separate FTP Listener route to download it (no FTP Operation Download).",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8113",
+    "eip": "http://127.0.0.1:8112/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8113/",
+    "http://127.0.0.1:8113/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": {
+            "status": 200,
+            "contains": ["FTP", "Listener Trigger"]
+          }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": {
+            "status": 200,
+            "contains": ["routes"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "download",
+      "name": "Named download",
+      "tests": [
+        {
+          "id": "seed-remote",
+          "name": "Ensure remote payload on SFTP seed",
+          "type": "file",
+          "file": {
+            "path": "sftp-seed/upload/invoice-20260407.dat",
+            "exists": true,
+            "contains": ["remote payload"]
+          }
+        },
+        {
+          "id": "drop-control",
+          "name": "Copy control file into inbound",
+          "type": "shell",
+          "shell": {
+            "command": "mkdir -p input/control output/downloaded && rm -f output/downloaded/invoice-20260407.dat && cp -f samples/control/fetch-invoice.ctl input/control/"
+          },
+          "expect": { "exit_code": 0 }
+        },
+        {
+          "id": "download-out",
+          "name": "Named file appears in downloaded",
+          "type": "file",
+          "file": {
+            "path": "output/downloaded/invoice-20260407.dat",
+            "exists": true,
+            "timeout_sec": 120,
+            "contains": ["remote payload"]
+          }
+        },
+        {
+          "id": "decoy-absent",
+          "name": "Decoy was not downloaded",
+          "type": "shell",
+          "shell": {
+            "command": "test ! -f output/downloaded/decoy-do-not-download.txt"
+          },
+          "expect": { "exit_code": 0 }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": {
+            "path": "documents/FTP_Named_Download_Trigger_V2_Route_Diagrams.pdf",
+            "exists": true
+          }
+        },
+        {
+          "id": "brief-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": {
+            "path": "documents/FTP_Named_Download_Trigger_Capability_Brief.pdf",
+            "exists": true
+          }
+        }
+      ]
+    }
+  ]
+}

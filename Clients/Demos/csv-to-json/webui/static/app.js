@@ -102,6 +102,38 @@ function bindRouteViewerResize() {
   });
 }
 
+let routesLoaded = false;
+
+async function loadRoutesTab() {
+  const select = document.getElementById("route-select");
+  const frame = document.getElementById("route-viewer-frame");
+  const status = document.getElementById("routes-status");
+  if (!select || !frame) return;
+  const layout = "pipeline";
+  bindRouteViewerResize();
+  if (!routesLoaded) {
+    const data = await getJson("/api/v2/routes");
+    select.innerHTML = (data.routes || [])
+      .map((r) => `<option value="${r.id}">${r.name}</option>`)
+      .join("");
+    routesLoaded = true;
+    select.addEventListener("change", () => {
+      if (!select.value) return;
+      frame.style.height = "";
+      frame.style.minHeight = "";
+      frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(select.value)}&mode=docs&layout=${layout}&config=changed`;
+    });
+  }
+  if (select.options.length) {
+    frame.style.height = "";
+    frame.style.minHeight = "";
+    frame.src = `/static/route-viewer/index.html?route=${encodeURIComponent(select.value)}&mode=docs&layout=${layout}&config=changed`;
+    if (status) status.textContent = `${select.options.length} route(s)`;
+  } else if (status) {
+    status.textContent = "No route.v2.xml yet";
+  }
+}
+
 document.querySelectorAll(".main-tab").forEach((btn) => {
   btn.addEventListener("click", () => {
     const tab = btn.dataset.mainTab;
@@ -119,14 +151,10 @@ document.querySelectorAll(".main-tab").forEach((btn) => {
     const nav = document.getElementById("demo-nav");
     if (nav) nav.hidden = tab !== "demo";
     if (tab === "routes") {
-      bindRouteViewerResize();
-      const frame = document.getElementById("route-viewer-frame");
-      if (frame && (!frame.dataset.docsSrc || frame.src.includes("about:blank"))) {
-        frame.style.height = "";
-        frame.style.minHeight = "";
-        frame.src = "/static/route-viewer/index.html?mode=docs&layout=pipeline&config=changed";
-        frame.dataset.docsSrc = "1";
-      }
+      loadRoutesTab().catch((err) => {
+        const status = document.getElementById("routes-status");
+        if (status) status.textContent = err.message || String(err);
+      });
     }
   });
 });

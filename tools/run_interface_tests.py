@@ -47,6 +47,15 @@ def wait_health(urls: list[str], timeout: float = 90.0) -> None:
 
 
 def run_once(root: Path, wait: bool) -> int:
+    # Keep module deep-dive PDFs aligned with current routes (playbook §6.1c).
+    try:
+        from sync_module_docs import sync_demo  # noqa: WPS433
+
+        sync_demo(root)
+        print("Synced documents/module-docs/ from route modules")
+    except Exception as exc:
+        print(f"WARNING: sync_module_docs skipped ({exc})")
+
     plan_path = find_plan(root)
     plan = load_plan(plan_path)
     if wait:

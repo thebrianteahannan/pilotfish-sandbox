@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "demo": "ftp-named-download-trigger",
+  "path": "Clients/Demos/ftp-named-download-trigger",
+  "synced_at": "2026-08-12T16:56:41Z",
+  "documentation_root": "/Users/brianhannan/Documents/PilotFish Documentation/Documents",
+  "modules": [
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.DirectoryListener",
+      "kind": "Listener",
+      "ui_type": "Directory / File",
+      "pdf": "module-docs/PilotFish-Directory-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-Directory-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.ftp.FTPListener",
+      "kind": "Listener",
+      "ui_type": "FTP / SFTP",
+      "pdf": "module-docs/PilotFish-FTP-SFTP-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-FTP-SFTP-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor",
+      "kind": "Processor",
+      "ui_type": "Attribute Population",
+      "pdf": "module-docs/PilotFish-Attribute-Population-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-Attribute-Population-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor",
+      "kind": "Processor",
+      "ui_type": "Data Attribute Swapper",
+      "pdf": "module-docs/PilotFish-Data-Attribute-Swapper-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-Data-Attribute-Swapper-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.internal.ListenerTriggeringProcessor",
+      "kind": "Processor",
+      "ui_type": "Listener Trigger",
+      "pdf": "module-docs/PilotFish-Listener-Trigger-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-Listener-Trigger-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.DirectoryTransport",
+      "kind": "Transport",
+      "ui_type": "Directory / File",
+      "pdf": "module-docs/PilotFish-Directory-File-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-Directory-File-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.other.NullTransport",
+      "kind": "Transport",
+      "ui_type": "NULL Transport",
+      "pdf": "module-docs/PilotFish-NULL-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-NULL-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    }
+  ],
+  "missing": [],
+  "note": "Auto-synced from route.xml / modules/*.xml. Re-run tools/sync_module_docs.py after route changes."
+}

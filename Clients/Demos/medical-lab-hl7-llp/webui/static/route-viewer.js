@@ -889,14 +889,32 @@
 
   async function boot() {
     wireControls();
-    if (!routeKey && BASE !== ".") {
+    let key = routeKey;
+    // Parent iframe often omits ?route=; resolve the first V2 route so diagrams always render.
+    if (!key) {
+      try {
+        const listRes = await fetch("/api/v2/routes");
+        if (listRes.ok) {
+          const list = await listRes.json();
+          const first = (list.routes || [])[0];
+          if (first && first.id) key = String(first.id);
+        }
+      } catch (err) {
+        console.warn("route list lookup failed", err);
+      }
+    }
+    if (!key) {
       el.status.textContent = "No route selected";
-      el.config.innerHTML = `<p class="config-empty">Choose a route from the picker above.</p>`;
+      el.config.innerHTML = `<p class="config-empty">Choose a route from the picker above, or ensure <code>/api/v2/routes</code> returns a route.v2.xml.</p>`;
       return;
     }
+    const base = `/api/v2/routes/${encodeURIComponent(key)}`;
+    window.ROUTE_VIEWER_BASE = base;
+    const xmlUrl = `${base}/route.v2.xml`;
+    const groupsUrl = `${base}/diagram-groups.json`;
     el.status.textContent = "Loading route.v2.xml…";
     try {
-      const res = await fetch(XML_URL);
+      const res = await fetch(xmlUrl);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const text = await res.text();
       const route = parseRoute(text);
@@ -907,6 +925,27 @@
       const moduleIds = route.nodes.map((n) => n.moduleId).filter(Boolean);
       state.modules = await window.RouteModuleConfig.loadModules(moduleIds);
       route.nodes.forEach((n) => applyModuleMeta(n, state.modules.get(n.moduleId)));
+
+      // Optional docs-only Processor Groups (overview collapse / detail focus)
+      let groupNote = "";
+      if (groupsEnabled && window.RouteDiagramGroups) {
+        try {
+          const gres = await fetch(groupsUrl);
+          if (gres.ok) {
+            const spec = await gres.json();
+            if (focusGroupId) {
+              window.RouteDiagramGroups.focusGroup(route, spec, focusGroupId, docsMode);
+              groupNote = ` · group detail: ${focusGroupId}`;
+            } else if (collapseMode === "all") {
+              window.RouteDiagramGroups.collapseAll(route, spec, docsMode);
+              groupNote = " · groups collapsed";
+            }
+            state.connections = route.connections;
+          }
+        } catch (err) {
+          console.warn("diagram-groups load failed", err);
+        }
+      }
 
       if (layoutMode === "pipeline") {
         autoLayoutPipeline(route, { keepSizes: true });
@@ -928,7 +967,7 @@
             ? " · all config"
             : "";
       el.title.textContent = route.name;
-      el.meta.textContent = `${route.nodes.length} modules (${loaded} configs) · ${route.connections.length} connections · v${route.version}${layoutLabel}${cfgLabel}`;
+      el.meta.textContent = `${route.nodes.length} modules (${loaded} configs) · ${route.connections.length} connections · v${route.version}${layoutLabel}${cfgLabel}${groupNote}`;
       renderTree();
       renderNodes();
       renderConnections();

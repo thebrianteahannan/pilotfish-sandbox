@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule">
+    <ModuleConfig />
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="SFTP Named Fetch">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.file.ftp.FTPListener" enabled="true" name="Download Named File From SFTP.FTP Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>true</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <FTPListenerType>Encrypted FTP (JSCH SSH/SFTP)</FTPListenerType>
+        <Host>$$SFTP_HOST</Host>
+        <Port>$$SFTP_PORT</Port>
+        <PollingInterval>3600</PollingInterval>
+        <PollingDirectory>$$SFTP_POLL_DIR</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction />
+        <UseFullFilePath>Enabled</UseFullFilePath>
+        <FullPathToFile>{ognl:getAttribute('demo.ftp.RemoteFullPath')}</FullPathToFile>
+        <FilenameIsMvsDsn>false</FilenameIsMvsDsn>
+        <SerializedTransactionsTag>1</SerializedTransactionsTag>
+        <Timeout>120</Timeout>
+        <Sftp_SocketTimeout>0</Sftp_SocketTimeout>
+        <RetryConnection>true</RetryConnection>
+        <RetryDelay>3</RetryDelay>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private (P)</Protection>
+        <FileType>Binary</FileType>
+        <StopWhenPollingFailure>false</StopWhenPollingFailure>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <UseChangeDirectoryCommand>false</UseChangeDirectoryCommand>
+        <ReconnectAfterBytes>102400</ReconnectAfterBytes>
+        <CacheType>File Cache</CacheType>
+        <PostProcessOperation>Keep</PostProcessOperation>
+        <TargetDirectory />
+        <UserName>$$SFTP_USER</UserName>
+        <Password>$$SFTP_PASSWORD</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <CheckFTPPermissions>false</CheckFTPPermissions>
+        <CheckPreviouslyProcessed>false</CheckPreviouslyProcessed>
+        <CheckWriteInProgress>false</CheckWriteInProgress>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+      </ModuleConfig>
+    </Listener>
+    <Processors />
+  </Source>
+  <Target icon="" name="Local Download">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Write Downloaded File" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$DOWNLOAD_OUTPUT_DIRECTORY</TargetDirectory>
+        <FileName>downloaded</FileName>
+        <FileExtension>dat</FileExtension>
+        <UseFullFilePath>Enabled</UseFullFilePath>
+        <FullPathToFile>{ognl:'/opt/pilotfish/output/downloaded/' + getAttribute('demo.ftp.RemoteFileName').toString().trim()}</FullPathToFile>
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors />
+  </Target>
+</Route>
