@@ -445,16 +445,23 @@ if ensure_document_routes is not None:
     )
 
 try:
-    from document_routes import ensure_build_timing_api
+    from document_routes import ensure_build_status_api, ensure_build_timing_api
 except ImportError:
     ensure_build_timing_api = None  # type: ignore
+    ensure_build_status_api = None  # type: ignore
 if ensure_build_timing_api is not None:
     from pathlib import Path as _PathTiming
     import os as _os_timing
 
-    ensure_build_timing_api(
+    _docs_dir = _PathTiming(_os_timing.environ.get("DOCUMENTS_DIR", "/documents"))
+    ensure_build_timing_api(app, _docs_dir)
+if ensure_build_status_api is not None:
+    from pathlib import Path as _PathTiming2
+    import os as _os_timing2
+
+    ensure_build_status_api(
         app,
-        _PathTiming(_os_timing.environ.get("DOCUMENTS_DIR", "/documents")),
+        _PathTiming2(_os_timing2.environ.get("DOCUMENTS_DIR", "/documents")),
     )
 
 if __name__ == "__main__":

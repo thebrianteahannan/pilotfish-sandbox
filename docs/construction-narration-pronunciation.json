@@ -1,0 +1,236 @@
+{
+  "version": 1,
+  "title": "Construction narration pronunciation",
+  "purpose": "How PilotFish Sandbox construction videos should pronounce technical terms and paths. Display text (transcript/PDF overlay) stays normal; TTS speech is rewritten from these rules.",
+  "display_vs_speech": "Keep human-readable spelling in build-replay detail and transcript PDFs (SFTP, /opt/...). Apply this guide only when synthesizing voiceover.",
+  "path_rules": {
+    "never_say_slash": true,
+    "never_say_backslash": true,
+    "unix_path_speak": "Speak folder segments as words separated by short pauses (commas). Example: /opt/pilotfish/input/staged \u2192 opt, pilotfish, input, staged.",
+    "windows_path_speak": "Same for backslash paths. Example: C:\\data\\in \u2192 C, data, in.",
+    "prefer_friendly_folder": "When a well-known env folder is meant, prefer the role name in speech: staged folder, archive folder, upload folder \u2014 and only spell the full path when the exact location matters.",
+    "file_extensions": "Leading dot extensions: say 'dot' then spell the letters. Example: .csv \u2192 dot C S V."
+  },
+  "replacements": [
+    {
+      "id": "csv-to-sqlxml",
+      "match": "\\bcsv-to-sqlxml\\b",
+      "flags": "i",
+      "speak": "C S V to S Q L X M L",
+      "notes": "Demo stylesheet basename without extension."
+    },
+    {
+      "id": "sftp",
+      "match": "\\bSFTP\\b",
+      "flags": "",
+      "speak": "F T P",
+      "notes": "Say FTP (letter-by-letter). The S is just secure — do not say S F T P."
+    },
+    {
+      "id": "sftp-lower",
+      "match": "\\bsftp\\b",
+      "flags": "",
+      "speak": "F T P",
+      "notes": "Lowercase protocol word → FTP. Hostnames like a docker service named sftp also become F T P, which is fine in demos."
+    },
+    {
+      "id": "ftp",
+      "match": "\\bFTP\\b",
+      "flags": "",
+      "speak": "F T P",
+      "notes": "Letter-by-letter."
+    },
+    {
+      "id": "ssh",
+      "match": "\\bSSH\\b",
+      "flags": "",
+      "speak": "S S H",
+      "notes": ""
+    },
+    {
+      "id": "jsch",
+      "match": "\\bJSCH\\b",
+      "flags": "",
+      "speak": "J S C H",
+      "notes": "PilotFish encrypted SFTP library."
+    },
+    {
+      "id": "jdbc",
+      "match": "\\bJDBC\\b",
+      "flags": "",
+      "speak": "J D B C",
+      "notes": ""
+    },
+    {
+      "id": "sqlxml",
+      "match": "\\bSQLXML\\b",
+      "flags": "",
+      "speak": "S Q L X M L",
+      "notes": "Spell fully; do not say 'sequel XML'."
+    },
+    {
+      "id": "sql-server",
+      "match": "\\bSQL\\s*Server\\b",
+      "flags": "i",
+      "speak": "sequel Server",
+      "notes": "Product name uses 'sequel'."
+    },
+    {
+      "id": "sqlserver-host",
+      "match": "\\bsqlserver\\b",
+      "flags": "i",
+      "speak": "sequel Server",
+      "notes": "Docker service / hostname for SQL Server \u2014 do not letter-spell."
+    },
+    {
+      "id": "sql",
+      "match": "\\bSQL\\b",
+      "flags": "",
+      "speak": "sequel",
+      "notes": "Standalone SQL \u2192 sequel. Applied after SQLXML / SQL Server rules."
+    },
+    {
+      "id": "csv",
+      "match": "\\bCSV\\b",
+      "flags": "",
+      "speak": "C S V",
+      "notes": ""
+    },
+    {
+      "id": "xml",
+      "match": "\\bXML\\b",
+      "flags": "",
+      "speak": "X M L",
+      "notes": ""
+    },
+    {
+      "id": "xslt",
+      "match": "\\bXSLT\\b",
+      "flags": "",
+      "speak": "X S L T",
+      "notes": ""
+    },
+    {
+      "id": "xpath",
+      "match": "\\bXPath\\b",
+      "flags": "i",
+      "speak": "X Path",
+      "notes": ""
+    },
+    {
+      "id": "json",
+      "match": "\\bJSON\\b",
+      "flags": "i",
+      "speak": "jay son",
+      "notes": ""
+    },
+    {
+      "id": "api",
+      "match": "\\bAPI\\b",
+      "flags": "",
+      "speak": "A P I",
+      "notes": ""
+    },
+    {
+      "id": "http",
+      "match": "\\bHTTPS?\\b",
+      "flags": "i",
+      "speak_map": {
+        "HTTP": "H T T P",
+        "HTTPS": "H T T P S",
+        "http": "H T T P",
+        "https": "H T T P S"
+      },
+      "notes": ""
+    },
+    {
+      "id": "eiplatform",
+      "match": "\\beiPlatform\\b",
+      "flags": "i",
+      "speak": "E I Platform",
+      "notes": ""
+    },
+    {
+      "id": "eiconsole",
+      "match": "\\beiConsole\\b",
+      "flags": "i",
+      "speak": "E I Console",
+      "notes": ""
+    },
+    {
+      "id": "ognl",
+      "match": "\\bOGNL\\b",
+      "flags": "",
+      "speak": "O G N L",
+      "notes": ""
+    },
+    {
+      "id": "fqcn",
+      "match": "\\bFQCN\\b",
+      "flags": "i",
+      "speak": "fully qualified class name",
+      "notes": ""
+    },
+    {
+      "id": "dbo",
+      "match": "\\bdbo\\.",
+      "flags": "i",
+      "speak": "D B O dot ",
+      "notes": "Schema qualifier before a table name."
+    },
+    {
+      "id": "localhost",
+      "match": "\\blocalhost\\b",
+      "flags": "i",
+      "speak": "local host",
+      "notes": ""
+    },
+    {
+      "id": "uuid-ish",
+      "match": "\\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\b",
+      "flags": "i",
+      "speak": "module id",
+      "notes": "Do not read UUID hex aloud."
+    }
+  ],
+  "friendly_paths": [
+    {
+      "match": "/opt/pilotfish/input/staged",
+      "speak": "the staged input folder"
+    },
+    {
+      "match": "/opt/pilotfish/output/archive",
+      "speak": "the archive output folder"
+    },
+    {
+      "match": "/opt/pilotfish/output/staged-archive",
+      "speak": "the staged-archive output folder"
+    },
+    {
+      "match": "input/staged",
+      "speak": "the staged input folder"
+    },
+    {
+      "match": "output/archive",
+      "speak": "the archive folder"
+    }
+  ],
+  "examples": [
+    {
+      "display": "Connects to FTP host, port 22, folder upload.",
+      "speak": "Connects to F T P host, port 22, folder upload."
+    },
+    {
+      "display": "Writes to /opt/pilotfish/input/staged.",
+      "speak": "Writes to the staged input folder."
+    },
+    {
+      "display": "Uses stylesheet csv-to-sqlxml.xslt on Saxon.",
+      "speak": "Uses stylesheet C S V to S Q L X M L dot X S L T on Saxon."
+    },
+    {
+      "display": "JDBC to sqlserver, database CsvSftpDemo.",
+      "speak": "J D B C to sequel Server, database Csv Sftp Demo."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="64f1dee8-c82f-4d84-9746-1e6f0dc1876b" name="Write Error" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory>$$ERROR_OUTPUT_DIRECTORY</TargetDirectory>
+      
+        
+      <FileName>{ognl:(getAttribute('TraceNumber') != null ? getAttribute('TraceNumber') : 'unknown') + '_error'}</FileName>
+      
+        
+      <FileExtension>xml</FileExtension>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <AppendToFile>Overwrite</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

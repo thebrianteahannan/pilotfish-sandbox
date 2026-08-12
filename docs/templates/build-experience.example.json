@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "title": "Interface construction experience",
+  "demo": "example-demo",
+  "updated_at": "2026-08-12T18:00:00Z",
+  "events": [
+    {
+      "id": "e001",
+      "kind": "phase",
+      "title": "Scaffold stage Web UI",
+      "summary": "Opened the live stage UI before routes existed.",
+      "detail": "Stakeholders can watch Routes / Timing / Info while the agent builds.",
+      "rationale": "Visibility-first: a 15–20 minute black-box build loses the room. Stage UI first costs minutes and pays back in trust.",
+      "at": "2026-08-12T18:00:00Z",
+      "links": [{"label": "Web UI", "href": "http://localhost:8129/"}]
+    },
+    {
+      "id": "e002",
+      "kind": "decision",
+      "title": "Chose Directory Listener over HTTP for inbound EDI",
+      "summary": "Poll a drop folder for .edi / .999 / .ta1 files.",
+      "detail": "Clearinghouses often drop acknowledgment files; folder intake matches ops reality for this demo.",
+      "rationale": "HTTP is better for real-time façades (270/271). For batch acks, Directory Listener + archive move is the stock PilotFish pattern and easier to smoke-test.",
+      "alternatives": ["HTTP Post listener", "SFTP poll"],
+      "at": "2026-08-12T18:01:00Z"
+    },
+    {
+      "id": "e003",
+      "kind": "route",
+      "title": "Published Route 1 scaffold",
+      "summary": "Listener + stage transport visible in the Routes tab.",
+      "replay_step": "0001",
+      "route_id": "1-intake-and-classify",
+      "at": "2026-08-12T18:02:00Z"
+    },
+    {
+      "id": "e004",
+      "kind": "sql",
+      "title": "Seeded lookup table",
+      "summary": "Inserted demo rows used by the decision XSLT / SQL processor.",
+      "detail": "Example:\nINSERT INTO claim_status (claim_id, status) VALUES ('C1', 'found');",
+      "rationale": "SQL is shown when the interface actually uses a database. Demos without SQL skip this kind.",
+      "at": "2026-08-12T18:03:00Z"
+    },
+    {
+      "id": "e005",
+      "kind": "test",
+      "title": "Ran automated interface tests",
+      "summary": "plan.json cases executed with --wait.",
+      "detail": "Pass/fail list lands in documents/ as Test Results PDF.",
+      "at": "2026-08-12T18:10:00Z"
+    }
+  ]
+}

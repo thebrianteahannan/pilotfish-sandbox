@@ -1,0 +1,25 @@
+-- CSV SFTP To SQL demo
+IF DB_ID(N'CsvSftpDemo') IS NULL
+BEGIN
+  CREATE DATABASE CsvSftpDemo;
+END
+GO
+
+USE CsvSftpDemo;
+GO
+
+IF OBJECT_ID(N'dbo.CsvPatients', N'U') IS NOT NULL DROP TABLE dbo.CsvPatients;
+GO
+
+CREATE TABLE dbo.CsvPatients (
+  RowId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  PatientId NVARCHAR(64) NOT NULL,
+  FirstName NVARCHAR(100) NULL,
+  LastName NVARCHAR(100) NULL,
+  DateOfBirth DATE NULL,
+  City NVARCHAR(100) NULL,
+  StateCode NVARCHAR(8) NULL,
+  SourceFile NVARCHAR(260) NULL,
+  LoadedAt DATETIME2 NOT NULL CONSTRAINT DF_CsvPatients_LoadedAt DEFAULT (SYSUTCDATETIME())
+);
+GO

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="59626374-4eea-464b-9dec-00a368262c92" name="2 - CSV To SQL">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="750bc44c-e721-4f9d-8dbe-4dd268a881d3" moduleId="9e483bf1-334a-4ca3-afb9-e578f9a965bb" label="Poll Staged CSV" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="266c35b8-01eb-460a-95a0-5f1714f739ec" moduleId="008b3ce7-909f-416c-ac14-b626dae562df" label="CSV to XML" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="adde6356-99c1-47bd-af52-7b2a0eddbe19" moduleId="557028a4-6b76-4e51-ad22-eb1b01ac37e0" label="Map CSV XML To SQLXML" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="4debfe2d-78bf-45c3-8802-9af1d1cf1983" moduleId="99222900-4d93-4f6b-96b4-63e518fad90a" label="Insert Patients SQL" x="1560.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="a0dee6b2-1330-4699-afe5-1a921d464b43" sourceNodeId="750bc44c-e721-4f9d-8dbe-4dd268a881d3" targetNodeId="266c35b8-01eb-460a-95a0-5f1714f739ec" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="eda53e6e-7a7a-4535-bde6-b4ee9f79a02e" sourceNodeId="adde6356-99c1-47bd-af52-7b2a0eddbe19" targetNodeId="4debfe2d-78bf-45c3-8802-9af1d1cf1983" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="8d8469a1-5cb0-4f05-b426-e7f25f5d48b7" sourceNodeId="266c35b8-01eb-460a-95a0-5f1714f739ec" targetNodeId="adde6356-99c1-47bd-af52-7b2a0eddbe19" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

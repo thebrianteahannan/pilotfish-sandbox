@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "demo": "csv-sftp-to-sql",
+  "path": "Clients/Demos/csv-sftp-to-sql",
+  "synced_at": "2026-08-12T19:23:09Z",
+  "documentation_root": "/Users/brianhannan/Documents/PilotFish Documentation/Documents",
+  "modules": [
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.DirectoryListener",
+      "kind": "Listener",
+      "ui_type": "Directory / File",
+      "pdf": "module-docs/PilotFish-Directory-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-Directory-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.ftp.FTPListener",
+      "kind": "Listener",
+      "ui_type": "FTP / SFTP",
+      "pdf": "module-docs/PilotFish-FTP-SFTP-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-FTP-SFTP-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.transform.CSVTransformationProcessor",
+      "kind": "Processor",
+      "ui_type": "CSV",
+      "pdf": "module-docs/PilotFish-CSV-XML-Guide-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-CSV-XML-Guide-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.FileWriteProcessor",
+      "kind": "Processor",
+      "ui_type": "File Writing",
+      "pdf": "module-docs/PilotFish-File-Writing-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-File-Writing-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.transform.XSLTProcessor",
+      "kind": "Processor",
+      "ui_type": "XSLT Transformation",
+      "pdf": "module-docs/PilotFish-XSLT-Transformation-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-XSLT-Transformation-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.db.DatabaseSqlTransport",
+      "kind": "Transport",
+      "ui_type": "Database (SQL)",
+      "pdf": "module-docs/PilotFish-Database-SQL-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-Database-SQL-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.DirectoryTransport",
+      "kind": "Transport",
+      "ui_type": "Directory / File",
+      "pdf": "module-docs/PilotFish-Directory-File-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-Directory-File-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    }
+  ],
+  "missing": [],
+  "note": "Auto-synced from route.xml / modules/*.xml. Re-run tools/sync_module_docs.py after route changes."
+}

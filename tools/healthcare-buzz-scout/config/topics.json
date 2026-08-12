@@ -1,0 +1,83 @@
+{
+      "user_agent": "PilotFishSandboxHealthcareBuzzScout/1.0 (local research; contact: sandbox)",
+      "poll_interval_seconds": 3600,
+      "min_score_to_keep": 18,
+      "max_posts_per_query": 25,
+  "max_g2_reviews_per_product": 20,
+  "subreddits": [
+    "healthcareIT",
+    "healthIT",
+    "fhir",
+    "HL7",
+    "HealthInformatics",
+    "medicalbilling",
+    "healthinsurance",
+    "lifeinsurance",
+    "EHR",
+    "epic"
+  ],
+  "queries": [
+    "EDI OR X12 OR \"837\" OR \"835\" OR \"834\" OR \"270\" OR \"271\" OR \"278\" integration",
+    "HL7 OR ADT OR ORU OR MLLP interface OR integration",
+    "FHIR OR \"SMART on FHIR\" OR \"Bulk FHIR\" integration",
+    "ACORD OR TxLife OR eApp OR \"life insurance\" XML OR STP"
+  ],
+  "capability_map": [
+    {
+      "id": "edi_claims",
+      "label": "EDI claims / remits (837/835/SNIP)",
+      "keywords": ["837", "835", "snip", "claims", "remit", "835era", "x12", "edi", "clearinghouse", "companion guide", "999", "277ca"],
+      "demo_hints": ["edi-837-snip-sqlserver", "edi-837-claim-scrub", "edi-835-payment-integrity", "edi-835-oci-bucket"],
+      "pitch_refs": ["2.2 claim scrub", "2.5 payment integrity"]
+    },
+    {
+      "id": "edi_eligibility_auth",
+      "label": "Eligibility / prior auth (270/271/278)",
+      "keywords": ["270", "271", "278", "eligibility", "prior auth", "prior authorization", "pas", "coverageeligibility"],
+      "demo_hints": ["edi-270-271-eligibility", "edi-270-271-realtime", "edi-278-prior-auth"],
+      "pitch_refs": ["2.1 prior auth", "2.4 eligibility"]
+    },
+    {
+      "id": "edi_enrollment",
+      "label": "Enrollment (834)",
+      "keywords": ["834", "enrollment", "member file", "eligibility file", "benefit enrollment"],
+      "demo_hints": ["xml-to-edi-834"],
+      "pitch_refs": ["2.3 enrollment"]
+    },
+    {
+      "id": "hl7_adt_oru",
+      "label": "HL7 ADT/ORU / MLLP",
+      "keywords": ["hl7", "adt", "oru", "orm", "mllp", "llp", "siu", "dft", "a04", "a08", "meditech"],
+      "demo_hints": ["hl7-healthcare-automation", "medical-lab-hl7-llp", "medical-device-hl7-ehr", "doc-healthcare-hl7-workflow"],
+      "pitch_refs": ["hospital HL7", "lab ORU"]
+    },
+    {
+      "id": "fhir",
+      "label": "FHIR / SMART / Bulk",
+      "keywords": ["fhir", "smart on fhir", "bulk fhir", "ndjson", "patient.$everything", "us core", "da vinci", "documentreference"],
+      "demo_hints": ["fhir-r4-platform"],
+      "pitch_refs": ["2.6 quality", "2.8 bulk / regulation"]
+    },
+    {
+      "id": "ehr_emr",
+      "label": "EHR/EMR integration pain",
+      "keywords": ["ehr", "emr", "epic", "cerner", "oracle health", "meditech", "athena", "eclinicalworks", "interface engine", "mirth", "rhapsody", "cloverleaf", "corepoint"],
+      "demo_hints": ["fhir-r4-platform", "hl7-healthcare-automation"],
+      "pitch_refs": ["EHR bridge"]
+    },
+    {
+      "id": "acord_txlife",
+      "label": "ACORD / TxLife / life insurance STP",
+      "keywords": ["acord", "txlife", "tx life", "eapp", "life insurance", "new business", "underwriting", "policy admin", "stp", "straight through"],
+      "demo_hints": [],
+      "pitch_refs": ["ACORD / eApp STP", "workers comp / P&C"]
+    },
+    {
+      "id": "rcm_ops",
+      "label": "RCM / billing ops integrations",
+      "keywords": ["rcm", "medical billing", "denial", "underpay", "ar aging", "charge capture", "coding"],
+      "demo_hints": ["edi-835-payment-integrity", "edi-837-claim-scrub"],
+      "pitch_refs": ["2.5 payment integrity"]
+    }
+  ]
+}

@@ -424,27 +424,79 @@ This is the Sandbox’s licensed-style WPC implementation-guide **table data** (
 
 ## 4. Implementation order (agent checklist)
 
+**Visibility-first:** the **first** construction action is create `Clients/Demos/<slug>/` and spin up the stage Web UI so stakeholders see something immediately. Docs and routes appear progressively afterward—not only at the end. Typical builds are 15–20 minutes; the long pole must not be a black box.
+
 Work in this order unless the user specifies otherwise:
 
-0. **Start timing (§4.1):** create/update `documents/build-timing.json` with `started_at` (UTC) as soon as the user asks for a new demo.
-1. **DESIGN.md** filled from §8 (can be draft; must exist before claiming “done”).
+0. **Create demo folder + stage Web UI (required first):** run  
+   `python3 tools/scaffold_demo_stage.py --slug … --title … --port …`  
+   This creates `Clients/Demos/<slug>/` (timing + `build-status.json` active) and **by default** runs `docker compose --profile stage up -d --build`, then announces **localhost + LAN** URLs (§1.1). Use `--no-up` only when Docker cannot run. Do **not** spend the first minutes on DESIGN/modules/routes while the user has nothing open in a browser.
+0b. Confirm the UI loads (Routes / Timing / Info + **build-live** polling). Paste both URLs in chat.
+1. **DESIGN.md** filled from §8 (can be draft; must exist before claiming “done”). Extend the stage UI later with Demo inject + Experience as the story firms up.
 2. **Module selection** via external PilotFish Documentation tracker/deep-dives + `PilotFish_V2` (`modules.conf` / module Java). Record chosen FQCNs in DESIGN.md Pipeline table. **Do not invent a custom module** until §3.4 is satisfied.
 3. **SQL init + samples** (if applicable).
-4. **environment-settings.conf + compose + Dockerfile** (ports, volumes, heap if SNIP).
+4. **environment-settings.conf + EIP compose / Dockerfile** (ports, volumes, heap if SNIP) under profile `full` when runtime is ready — scaffold already created the stage `webui` + `docker-compose.yml`.
 5. **Minimal Route 1** V1 `route.xml` (listener → snapshot/file) green — copy Sandbox skeleton when possible. Prefer callout routes (Call Route + TriggerableListener) for reusable auth/utility steps.
-6. **Downstream routes / transforms** one stage at a time (still V1 runtime).
+5b. **Publish Route 1 → V2 immediately (and keep publishing):** into the tree the Web UI mounts as `ROUTES_DIR` (prefer `pilotfish/demo-eip-root/routes` — no spaces). Use `python3 tools/publish_route_progress.py --root … --route "<Route folder>" --message "…"`. Confirm the Routes tab shows it without a manual browser refresh (poll ≤ ~3s).
+5c. **Module-by-module theater (required while stakeholders watch):** do **not** wait until a route is finished before converting. After each meaningful module (or every 1–2 processors), re-run `publish_route_progress.py` so `route.v2.xml` mtime changes and the live diagram grows. Banner message should name the module just added (e.g. `Route 1: adding “Build Claim Status Decision XML” (3/5)`). Optional dry-run theater: `--replay-stages --pause 3`.
+6. **Downstream routes / transforms** one stage at a time (still V1 runtime). Keep publishing after each stage; `--add-route` via publish helper; optional `sync_module_docs.py` for modules so far. Keep `build-status.json` message current.
 7. **Router + transports** with kickout path tested once.
-8. **Web UI** inject/submit + status views matching the demo story, including the standard **Info** tab (§6.5) with PDF aliases and the **Timing** tab (§6.6).
-9. **V2 convert** into `eip-root` + Routes tab / docs.
+8. **Web UI inject/submit + status views** matching the demo story (extend the stage UI), including the standard **Info** tab (§6.5) with PDF aliases and the **Timing** tab (§6.6). Bring EIP up under profile `full` when smoke needs it.
+9. **V2 convert** (remaining / final pass) into `eip-root` + Routes tab / docs.
 9b. **Module deep-dive PDFs (required):** run `python3 tools/sync_module_docs.py` (from Sandbox root with `--root Clients/Demos/<slug>`, or from the demo root) so `documents/module-docs/` contains the PilotFish Documentation PDF for every Listener / Processor / Transport / Routing module used in the routes. Re-run whenever routes change (also auto-runs from `tools/run_interface_tests.py` and after `convert_routes_to_v2.py` when wired). See §6.1c.
-10. **Route design PDF (required):** with Web UI up, author `diagram-groups.json` for long chains (§6.1b), then run `python3 tools/export_route_diagrams.py --config compact` (or `--config changed`) so `documents/` gets an **overview (collapsed groups) + later detail pages** PDF (see §6 / §6.1b).
-10b. **Stakeholder Capability Brief PDF (required):** run `python3 tools/export_stakeholder_brief.py` so `documents/<ShortName>_Capability_Brief.pdf` is generated from `DESIGN.md` + routes (+ CapabilityStatement when FHIR). See §6.1a.
+10. **Route design PDF (required):** with Web UI up, author `diagram-groups.json` for long chains (§6.1b), then run `python3 tools/export_route_diagrams.py --config compact` (or `--config changed`) so `documents/` gets an **overview (collapsed groups) + later detail pages** PDF (see §6 / §6.1b). Prefer a debounced re-export after major route changes—not only once at the very end.
+10b. **Stakeholder Capability Brief PDF (required):** run `python3 tools/export_stakeholder_brief.py` so `documents/<ShortName>_Capability_Brief.pdf` is generated from `DESIGN.md` + routes (+ CapabilityStatement when FHIR). See §6.1a. Early draft regenerations are encouraged once DESIGN has purpose + actors.
 10c. **Test plan PDF + automated run (required):** maintain `tests/plan.json`, run `python3 tools/export_test_plan_pdf.py` and `python3 tools/run_interface_tests.py --wait` (see §7.1). Update the plan as capabilities are added.
 11. **README.md** (run, ports, smoke commands; link to `documents/*.pdf`).
 12. **Smoke / automated tests** (§7 / §7.1) and paste pass/fail summary into the chat (and update DESIGN.md Risks if findings).
-13. **Finalize timing + Docker inventory (§4.1 / §5.1):** complete `build-timing.json`, run `python3 tools/list_sandbox_demo_docker.py`, retain Hindsight note when the user marks the demo done.
+13. **Finalize timing + Docker inventory (§4.1 / §5.1):** complete `build-timing.json`, run `python3 tools/update_build_status.py --root … --complete` (records **construction-replay.mp4** by default when the Web UI is up and `documents/build-replay/` has steps; use `--no-video` to skip), run `python3 tools/list_sandbox_demo_docker.py`, retain Hindsight note when the user marks the demo done.
 
 Do not refactor unrelated demos. Prefer copying the closest existing demo assembly after modules are chosen from Documentation/V2.
+
+## 4.0b Build experience narrative (`build-experience.json`)
+
+**Artifact:** `documents/build-experience.json` (schema: `docs/templates/build-experience.example.json`)
+
+Narrated construction log for the **Experience** tab — phases, decisions (with rationale + rejected alternatives), SQL/data kickoffs, route publishes, tests, and docs. Route publishes via `publish_route_progress.py` append `kind=route` events automatically (linked to `build-replay` steps).
+
+**Helper:** `python3 tools/log_build_experience.py --root Clients/Demos/<slug> --kind decision --title "…" --rationale "…" --alternative "…"`
+
+**UI modes:** while `active=true`, show the live build banner and prefer the Routes tab. When complete (`--complete`), **Demo** (inject/results) is home; Routes keeps **Replay construction** and Experience stays a normal tab — do not replace the test Web UI with a barren construction-only shell.
+
+
+### 4.0 Progressive build status (`build-status.json`)
+
+**Artifact:** `documents/build-status.json` (schema: `docs/templates/build-status.example.json`)
+
+| Field | Purpose |
+|-------|---------|
+| `active` | When `true`, Web UI shows the build banner and polls Routes every ~4s |
+| `phase` | `scaffold` / `design` / `routes` / `webui` / `docs` / `tests` / `complete` / `idle` |
+| `current_route` | Route id being authored (Routes tab prefers this) |
+| `routes_ready` | Ids already converted to `route.v2.xml` and visible |
+| `message` | One-line human status for the banner |
+| `updated_at` | ISO-8601 UTC |
+
+**Helper:** `python3 tools/update_build_status.py --root Clients/Demos/<slug> …`
+
+**Apply to existing demos:** `python3 tools/apply_build_live_standard.py`
+
+Proposal PDF: [`docs/Progressive_Interface_Build_Visibility_Proposal.pdf`](../Progressive_Interface_Build_Visibility_Proposal.pdf)
+
+Implemented tooling:
+- `tools/scaffold_demo_stage.py` — net-new demo with stage Web UI
+- `tools/update_build_status.py` — update `documents/build-status.json` (on `--complete`, records construction video by default)
+- `tools/export_construction_video.py` — Playwright capture of each replay step + neural TTS voiceover → `documents/construction-replay.mp4` (also writes transcript PDF/TXT). TTS pronunciation from `docs/construction-narration-pronunciation.json` via `tools/construction_speech.py`
+- `tools/export_construction_transcript_pdf.py` — `documents/construction-replay-transcript.pdf` (+ `.txt`) from build-replay narration, framed with DESIGN purpose/audience plus Capability Brief, Test Plan, and module-docs
+- `docs/CONSTRUCTION_NARRATION_PRONUNCIATION.pdf` — how to pronounce SFTP, paths (never “slash”), JDBC, etc. for construction videos (`tools/export_construction_narration_pronunciation_pdf.py`)
+- `tools/log_build_experience.py` — append narrated Experience-tab events (decisions, SQL, tests, …)
+- `tools/publish_route_progress.py` — convert V1→V2, sync demo-eip-root, update banner (module-by-module / `--replay-stages`); records `build-replay` + experience route events
+- `tools/record_module_replay.py` — empty→one-module-at-a-time `build-replay` steps
+- `tools/apply_build_live_standard.py` — push build-live assets to existing demos
+- `_shared/webui/static/build-live.js` — reloads the diagram when the **same** route’s `mtime` changes; **Replay construction** button
+- `_shared/webui/static/build-experience.js` — Experience tab + **Replay full experience**
+- `_shared/webui/static/route-viewer/` — replay-capable diagram viewer (`?replayStep=`)
+
 
 ### 4.1 Build timing — track start, end, and slow phases (**required**)
 
@@ -469,9 +521,9 @@ Schema: copy `docs/templates/build-timing.example.json`. Keep updating the file 
 **Required phases to capture** (merge/split if the work is shorter, but cover these concepts):
 
 1. Pre-flight + DESIGN  
-2. Scaffold (compose / SQL / ports)  
-3. Routes + transforms (often the long pole)  
-4. Web UI / inject / kickouts  
+2. Scaffold (compose / SQL / ports) + **webui_early** (stage UI up)  
+3. Progressive routes + transforms (often the long pole; update `build-status.json` per route)  
+4. Web UI inject / kickouts (extend stage)  
 5. V2 convert + route/capability/test PDFs  
 6. Smoke / automated tests + fixes  
 

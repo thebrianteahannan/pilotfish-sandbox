@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "interface": "CSV SFTP To SQL",
+  "short_name": "CSV_SFTP_To_SQL",
+  "description": "Poll patient CSV files from SFTP, stage locally, parse CSV to Dialect A XML, map to SQLXML, and insert into SQL Server dbo.CsvPatients.",
+  "base_urls": {
+    "webui": "http://localhost:8133/",
+    "eip": "http://localhost:8132/eip/"
+  },
+  "cases": [
+    {
+      "id": "inject-csv-rows",
+      "title": "Inject sample CSV via Demo tab reaches SQL",
+      "description": "Drop samples/patients.csv to SFTP upload; EIP stages, parses, and inserts rows into CsvSftpDemo.dbo.CsvPatients.",
+      "steps": [
+        "Open Demo tab and inject patients.csv (or upload to SFTP upload/)",
+        "Wait for Route 1 poll (~10s) then Route 2 (~5s)",
+        "Confirm at least one new row in dbo.CsvPatients"
+      ],
+      "expect": "Rows present for patientId values from samples/patients.csv"
+    },
+    {
+      "id": "routes-diagrams",
+      "title": "Both routes visible in Routes tab",
+      "description": "Web UI Routes tab shows 1 - SFTP Poll And Stage and 2 - CSV To SQL with V2 diagrams.",
+      "steps": [
+        "Open Routes tab",
+        "Select each route and confirm Listener → Processor → Transport topology"
+      ],
+      "expect": "Both route diagrams render without requiring EIP for docs mode"
+    }
+  ]
+}

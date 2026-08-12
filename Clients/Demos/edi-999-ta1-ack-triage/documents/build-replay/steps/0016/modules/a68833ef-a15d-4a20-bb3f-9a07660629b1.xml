@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="a68833ef-a15d-4a20-bb3f-9a07660629b1" name="Write Error" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory>$$ERROR_DIRECTORY</TargetDirectory>
+      
+        
+      <FileName>{ognl:(getAttribute('com.pilotfish.FileName') != null ? getAttribute('com.pilotfish.FileName') : 'ack') + '_error'}</FileName>
+      
+        
+      <FileExtension>xml</FileExtension>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <AppendToFile>Overwrite</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="42957f81-28ce-4d3c-befd-8ede78eb629f" name="2 - Bucket And Report">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="0fad24ab-68ea-476d-887f-88ec3bb7f2af" moduleId="4df12e9c-8ba8-4052-973d-20ec25dacc49" label="Poll Staged Ack Decisions" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="961f508b-ecab-435d-90de-49ce4bc0c3f9" moduleId="f21eee08-df6f-4b57-b9bb-81d4896f79de" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="120.0"/>
+      <Node id="5db310b1-268b-42df-9d2a-46255ef034ed" moduleId="15eb80f1-0a5e-4303-aec5-51114ea020a5" label="Tag Accepted" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="1f66a7ac-f052-4a91-be00-3a16755919a0" moduleId="8ca45497-7aec-4467-b1dc-4a88650b1130" label="Write Accepted" x="1560.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="3cc3dc83-642c-4b89-89f8-1e5d369cfa24" moduleId="4e37426f-de70-4b37-b35f-b1fc4aa26470" label="Write Rejected" x="1300.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="ad50cd3c-499a-4fb5-9b59-6be813cdd153" moduleId="8d9cf0d2-1f0b-4fe8-bcf2-da294b66dbc1" label="Write Error" x="1300.0" y="280.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="dfeb48ef-ccd1-460c-8f78-d221f38ebcf8" moduleId="d4afd79e-bb2b-4a64-a743-d0aee8b3a92b" label="Build Ops Report Summary" x="1300.0" y="420.0" width="180.0" height="64.0"/>
+      <Node id="4d64c12c-3a27-4aec-b47d-0d5d942cf161" moduleId="a6832389-024a-4765-bf48-c050a4bee599" label="Write Ops Report" x="1560.0" y="420.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="9c71ad11-eaad-4981-89b9-d6c851646068" sourceNodeId="5db310b1-268b-42df-9d2a-46255ef034ed" targetNodeId="1f66a7ac-f052-4a91-be00-3a16755919a0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="b1a819f5-e207-4947-8c73-415c8a4c1b23" sourceNodeId="dfeb48ef-ccd1-460c-8f78-d221f38ebcf8" targetNodeId="4d64c12c-3a27-4aec-b47d-0d5d942cf161" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="ceb5a6ce-4926-4d68-a1a8-ca016436f304" sourceNodeId="0fad24ab-68ea-476d-887f-88ec3bb7f2af" targetNodeId="961f508b-ecab-435d-90de-49ce4bc0c3f9" sourceConnector="right-output" targetConnector="router-input:63934b58-ffd6-4726-b496-20e9d705d404" condition="true"/>
+      <Connection id="f0ba9ec0-438f-4c5e-9935-c816367959a7" sourceNodeId="961f508b-ecab-435d-90de-49ce4bc0c3f9" targetNodeId="5db310b1-268b-42df-9d2a-46255ef034ed" sourceConnector="router-output:f973636a-532e-4ef3-b514-75ae884bf57b" targetConnector="left-input" condition="true"/>
+      <Connection id="37b8bc08-20ab-4130-b964-f2ed368dc2d6" sourceNodeId="961f508b-ecab-435d-90de-49ce4bc0c3f9" targetNodeId="3cc3dc83-642c-4b89-89f8-1e5d369cfa24" sourceConnector="router-output:153a5bc2-975c-46c7-9beb-2d67e0baeebf" targetConnector="left-input" condition="true"/>
+      <Connection id="41e30053-b6e3-4801-87e2-56262c082df1" sourceNodeId="961f508b-ecab-435d-90de-49ce4bc0c3f9" targetNodeId="ad50cd3c-499a-4fb5-9b59-6be813cdd153" sourceConnector="router-output:3dea27e2-7831-4ff7-94aa-297f5e1831ac" targetConnector="left-input" condition="true"/>
+      <Connection id="27f2b4a7-0ece-4e36-9cb1-58f1dda01b60" sourceNodeId="961f508b-ecab-435d-90de-49ce4bc0c3f9" targetNodeId="dfeb48ef-ccd1-460c-8f78-d221f38ebcf8" sourceConnector="router-output:a1c8986a-0af0-457b-8c54-dac21ce025f6" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

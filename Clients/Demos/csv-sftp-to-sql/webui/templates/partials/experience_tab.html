@@ -1,0 +1,19 @@
+<section class="panel pf-xp-panel" id="experience-root">
+  <div class="row-head">
+    <h2>Build experience</h2>
+  </div>
+  <p class="muted">
+    Narrated construction log — decisions, SQL/data work, route publishes, tests, and why each tactic was chosen.
+  </p>
+  <div class="pf-xp-toolbar">
+    <button type="button" class="pf-replay-btn" id="pf-xp-replay" disabled>Replay full experience</button>
+    <button type="button" class="pf-replay-stop" id="pf-xp-stop" hidden>Stop</button>
+    <span id="pf-xp-status" class="muted"></span>
+  </div>
+  <p id="pf-xp-empty" class="muted" hidden>
+    No experience events yet. Agents log them with
+    <code>python3 tools/log_build_experience.py</code>
+    (route publishes also append automatically).
+  </p>
+  <div id="pf-xp-list" class="pf-xp-list" aria-live="polite"></div>
+</section>

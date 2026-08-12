@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="a6832389-024a-4765-bf48-c050a4bee599" name="Write Ops Report" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory>$$REPORTS_DIRECTORY</TargetDirectory>
+      
+        
+      <FileName>{ognl:(getAttribute('com.pilotfish.FileName') != null ? getAttribute('com.pilotfish.FileName') : 'ack') + '_report'}</FileName>
+      
+        
+      <FileExtension>xml</FileExtension>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <AppendToFile>Overwrite</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

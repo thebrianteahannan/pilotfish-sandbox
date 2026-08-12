@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="b708fa2b-6743-4c78-8b92-f96a9ce05d9e" name="Debug Write Ack XML" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:(getAttribute('StControlNumber') != null ? getAttribute('StControlNumber') : 'ack') + '_txn.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

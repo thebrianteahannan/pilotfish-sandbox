@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="2ea337ee-1cf3-4a5b-9e76-1a21f364a33b" name="Archive Raw CSV" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$ARCHIVE_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:(getAttribute('com.pilotfish.FileName') != null ? getAttribute('com.pilotfish.FileName') : 'csv') + '_' + @java.lang.System@currentTimeMillis() + '.csv'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

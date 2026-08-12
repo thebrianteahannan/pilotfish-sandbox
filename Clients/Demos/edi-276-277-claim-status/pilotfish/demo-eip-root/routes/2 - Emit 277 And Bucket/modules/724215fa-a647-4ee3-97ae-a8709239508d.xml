@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="724215fa-a647-4ee3-97ae-a8709239508d" name="Write Not Found" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory>$$NOT_FOUND_OUTPUT_DIRECTORY</TargetDirectory>
+      
+        
+      <FileName>{ognl:(getAttribute('TraceNumber') != null ? getAttribute('TraceNumber') : 'unknown') + '_not_found'}</FileName>
+      
+        
+      <FileExtension>xml</FileExtension>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <AppendToFile>Overwrite</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

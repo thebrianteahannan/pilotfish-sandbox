@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="4e37426f-de70-4b37-b35f-b1fc4aa26470" name="Write Rejected" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory>$$REJECTED_DIRECTORY</TargetDirectory>
+      
+        
+      <FileName>{ognl:(getAttribute('com.pilotfish.FileName') != null ? getAttribute('com.pilotfish.FileName') : 'ack') + '_rejected'}</FileName>
+      
+        
+      <FileExtension>xml</FileExtension>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <AppendToFile>Overwrite</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="24ec28a3-214c-495f-8e8c-3ac8de7a0add" name="2 - CSV To SQL">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="4f23055d-e509-4e0a-b850-35ac8d68d0a8" moduleId="ff3b52d4-ea22-4be9-be3f-322d09e22682" label="Poll Staged CSV" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="2c5493fb-75a8-4f2b-a08b-51a6f069a7e2" moduleId="8efa5c54-df30-4f28-8170-e6685ee24c5b" label="CSV to XML" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="caaca2b6-e0aa-4c53-82df-d9d58adac91f" moduleId="a7ec256d-59aa-4101-87bb-6fc8135e7fff" label="Map CSV XML To SQLXML" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="e04b56c0-4f30-4d61-9a98-e2dca44533db" sourceNodeId="4f23055d-e509-4e0a-b850-35ac8d68d0a8" targetNodeId="2c5493fb-75a8-4f2b-a08b-51a6f069a7e2" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="e4f14fc5-3e8c-4dc1-912f-b3b5aa4b120c" sourceNodeId="2c5493fb-75a8-4f2b-a08b-51a6f069a7e2" targetNodeId="caaca2b6-e0aa-4c53-82df-d9d58adac91f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+   
+   </Connections>
+</Route>

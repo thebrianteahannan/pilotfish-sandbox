@@ -169,6 +169,42 @@ def ensure_build_timing_api(app: Flask, documents_dir: Path) -> None:
         return jsonify({"ok": False, "error": "documents/build-timing.json not found"}), 404
 
 
+def ensure_build_status_api(app: Flask, documents_dir: Path) -> None:
+    """GET /api/build-status → documents/build-status.json for live build theater."""
+    import json
+
+    from flask import jsonify
+
+    existing = {rule.rule for rule in app.url_map.iter_rules()}
+    if "/api/build-status" in existing:
+        return
+
+    @app.get("/api/build-status")
+    def _api_build_status():
+        for base in _bases(documents_dir):
+            path = base / "build-status.json"
+            if path.is_file():
+                try:
+                    data = json.loads(path.read_text(encoding="utf-8"))
+                except (OSError, json.JSONDecodeError) as exc:
+                    return jsonify({"ok": False, "error": str(exc)}), 500
+                if not isinstance(data, dict):
+                    return jsonify({"ok": False, "error": "build-status.json must be an object"}), 500
+                data.setdefault("ok", True)
+                data["path"] = str(path)
+                return jsonify(data)
+        # Default: not actively building
+        return jsonify(
+            {
+                "ok": True,
+                "active": False,
+                "phase": "idle",
+                "message": "No documents/build-status.json — treating build as idle.",
+                "routes_ready": [],
+            }
+        )
+
+
 def ensure_module_docs_api(app: Flask, documents_dir: Path) -> None:
     """GET /api/module-docs → documents/module-docs/manifest.json + Info-tab context."""
     import json

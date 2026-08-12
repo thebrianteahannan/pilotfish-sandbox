@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="323138f6-f678-4313-b04f-ff014868f425" name="1 - Intake And Lookup">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="a48b73d5-f02b-405a-91b1-dcccdd8753e8" moduleId="39a5047e-6f1e-42d4-bbd8-73b641b646ec" label="Poll EDI 276 Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="6c4d4920-cf61-4295-ac33-ea0e6e2a688b" moduleId="f79b5d77-a51f-443e-804c-9fea75207dfd" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="4ac0cd34-2890-4871-8bfd-e9646f729257" moduleId="3dffc5cd-6993-4ba0-8a62-da3a924d4c60" label="Extract 276 Claim Status Fields" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="8ed18287-6f45-4771-ae75-e7a42e81d324" moduleId="7b8dd8d6-332f-4802-9c76-a0c731236da0" label="Debug Write Forked Transaction" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="a6828de6-4669-4a91-9d84-7cad05cb226f" moduleId="8e313b5a-0eb2-446f-aa9c-456d13079c78" label="Build Claim Status Decision XML" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="19d855bb-4895-4abf-982e-b1612375abd0" moduleId="f0e26cac-f671-4ee6-9b8c-143adbbe547f" label="Debug Write Claim Status Decision" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="f8b7175d-723c-458e-a3dd-ece7d62498fe" moduleId="9cd4775d-6d7a-4367-9988-772bb4a8ae2f" label="Stage Claim Status Decision" x="2340.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="e202b8b3-f571-4c97-9846-96e27d9f6a2f" sourceNodeId="a48b73d5-f02b-405a-91b1-dcccdd8753e8" targetNodeId="6c4d4920-cf61-4295-ac33-ea0e6e2a688b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="bce926d0-46e0-490e-8afc-f675ba33e1a8" sourceNodeId="4ac0cd34-2890-4871-8bfd-e9646f729257" targetNodeId="8ed18287-6f45-4771-ae75-e7a42e81d324" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="a0ee556e-b14b-48f8-9d6e-cec2267291cc" sourceNodeId="8ed18287-6f45-4771-ae75-e7a42e81d324" targetNodeId="a6828de6-4669-4a91-9d84-7cad05cb226f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="167f6dc8-bf4a-4cfc-b3c1-72312e294d9f" sourceNodeId="a6828de6-4669-4a91-9d84-7cad05cb226f" targetNodeId="19d855bb-4895-4abf-982e-b1612375abd0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="0c76fff8-f5b6-43bb-bc3a-4e2a8ab7949e" sourceNodeId="19d855bb-4895-4abf-982e-b1612375abd0" targetNodeId="f8b7175d-723c-458e-a3dd-ece7d62498fe" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="e9f7edb5-e349-42af-bb0c-f431f3d18ccc" sourceNodeId="6c4d4920-cf61-4295-ac33-ea0e6e2a688b" targetNodeId="4ac0cd34-2890-4871-8bfd-e9646f729257" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

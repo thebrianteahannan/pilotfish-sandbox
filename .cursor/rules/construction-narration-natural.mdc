@@ -1,0 +1,32 @@
+---
+description: Construction video/transcript narration must sound like a human demo presenter
+alwaysApply: true
+---
+
+# Construction narration — sound human
+
+Whenever you author or regenerate construction-replay **narration**, **transcript** PDF/TXT, or theater preamble/outro lines:
+
+## Required pipeline (do not skip)
+1. Run the naturalizer on the demo root **before** shipping transcript or video:
+   `python3 tools/construction_narration_naturalize.py --root Clients/Demos/<slug> --export-transcript`
+2. Transcript export (`tools/export_construction_transcript_pdf.py`) and video export (`tools/export_construction_video.py`) already call `naturalize_spoken` / `naturalize_demo_root` — still re-read the output; if a line still sounds like UI chrome or AI filler, fix the source and re-run.
+3. Prefer **FTP** in spoken/transcript prose (not SFTP letter-soup), even when the stack is SFTP.
+4. Regenerate `documents/construction-replay-transcript.{pdf,txt}` after any narration change; regenerate the MP4 when spoken audio must match.
+
+## Required voice
+- Write like a person giving a live PilotFish demo — short, concrete, conversational.
+- Prefer: “Here is a blank canvas…”, “First up…”, “Here's the flow…”
+- Avoid: rhetorical questions (“Why this demo?”), live-audience banter, choppy catalog fragments (“Stock module — …”), telling the viewer to click UI (“Click Create New…”), “Next I'll create…”, catalog readouts, “Module documentation for this step”, key=value dumps, formal route titles read aloud (“1 - SFTP Poll And Stage”).
+- Talk about the work in front of you in full spoken sentences; leave filler and nonsense to a minimum.
+- Create-interface beat is theater, not instruction: narrate the blank canvas, then animate the button click.
+
+## Where the copy lives
+- Naturalizer: `tools/construction_narration_naturalize.py`
+- Module/route steps: `tools/record_module_replay.py` → `build-replay/manifest.json`
+- Setup / OGNL / systems / create / outro: `tools/export_construction_video.py`
+- Transcript framing: `tools/export_construction_transcript_pdf.py` (use `•` paragraphs — never print the word “bullet”)
+
+## Non-goals
+- Do not pad with jargon to sound technical.
+- Do not invent long pauses or config lectures “for completeness.”

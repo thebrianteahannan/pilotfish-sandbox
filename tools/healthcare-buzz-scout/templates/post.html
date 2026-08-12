@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ post.title }} · Buzz Scout</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <p class="kicker"><a href="{{ url_for('index') }}">← Back</a></p>
+      <h1>{{ post.title }}</h1>
+      <p class="lead">
+        {% if (post.source or 'reddit') == 'g2' %}
+          G2 · {{ post.product_name or post.subreddit }} · relevance {{ post.relevance }} · {{ post.status }}
+        {% else %}
+          r/{{ post.subreddit }} · relevance {{ post.relevance }} · {{ post.status }}
+        {% endif %}
+        {% if signal_count %} · {{ signal_count }} signal{{ 's' if signal_count != 1 else '' }}{% endif %}
+      </p>
+    </div>
+    <div class="actions">
+      <form method="get" action="{{ url_for('post_detail', post_id=post.id) }}">
+        <input type="hidden" name="refresh" value="1" />
+        <button class="btn primary" type="submit">
+          {% if (post.source or 'reddit') == 'g2' %}Refresh curation{% else %}Refresh comments{% endif %}
+        </button>
+      </form>
+      <a class="btn" href="{{ post.permalink }}" target="_blank" rel="noopener">
+        {% if (post.source or 'reddit') == 'g2' %}View on G2{% else %}View on Reddit{% endif %}
+      </a>
+    </div>
+  </header>
+
+  <main class="detail">
+    {% if error %}
+    <p class="banner err">Could not refresh comments: {{ error }}</p>
+    {% endif %}
+
+    <section class="panel">
+      <h2>{% if (post.source or 'reddit') == 'g2' %}G2 review{% else %}Original post{% endif %}</h2>
+      {% if (post.source or 'reddit') == 'g2' %}
+        {% if post.like_text %}
+        <h3 class="subhead">What they like</h3>
+        <pre class="body">{{ post.like_text }}</pre>
+        {% endif %}
+        {% if post.dislike_text %}
+        <h3 class="subhead">Workflow gaps / dislike</h3>
+        <pre class="body gap">{{ post.dislike_text }}</pre>
+        {% endif %}
+        {% if not post.like_text and not post.dislike_text %}
+        <pre class="body">{{ post.selftext or '(no review text)' }}</pre>
+        {% endif %}
+      {% else %}
+      <pre class="body">{{ post.selftext or '(link/outbound post — no self text)' }}</pre>
+      {% endif %}
+      <p class="why">{{ post.why }}</p>
+      {% if post.demo_hints %}
+      <p class="hints"><strong>Nearby demos:</strong> {{ post.demo_hints | join(', ') }}</p>
+      {% endif %}
+      {% if themes %}
+      <p class="hints"><strong>Themes:</strong> {{ themes | join(' · ') }}</p>
+      {% endif %}
+    </section>
+
+    <section class="panel">
+      <h2>Suggested Sandbox demos</h2>
+      <p class="muted">New demos we could build to show PilotFish does what this thread needs.</p>
+      {% if not demo_suggestions %}
+      <p class="empty">No demo suggestions yet — refresh comments once Reddit responds.</p>
+      {% endif %}
+      {% for d in demo_suggestions %}
+      <article class="idea">
+        <h3>{{ d.title }}</h3>
+        <p class="slug muted">{{ d.slug }}</p>
+        <p>{{ d.shows }}</p>
+        <p class="hints"><strong>Modules / pattern:</strong> {{ d.modules }}</p>
+        {% if d.rationale %}<p class="why">{{ d.rationale }}</p>{% endif %}
+        {% if d.nearby_existing %}
+        <p class="hints"><strong>Build from:</strong> {{ d.nearby_existing | join(', ') }}</p>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </section>
+
+    <section class="panel">
+      <h2>{% if (post.source or 'reddit') == 'g2' %}Talk track{% else %}Reply you can send{% endif %}</h2>
+      <p class="muted">
+        {% if (post.source or 'reddit') == 'g2' %}
+        Sales / SE talk track grounded in this paying-user G2 complaint — edit before using.
+        {% else %}
+        Draft grounded in the curated comments — edit before posting.
+        {% endif %}
+      </p>
+      <textarea id="reply-draft" class="reply" rows="14">{{ reply_draft }}</textarea>
+      <div class="row">
+        <button class="btn primary" type="button" id="copy-reply">Copy</button>
+        <span id="copy-status" class="muted"></span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>
+        {% if (post.source or 'reddit') == 'g2' %}
+          Curated review signals <span class="muted">(likes / dislikes)</span>
+        {% else %}
+          Curated comments <span class="muted">(meat &amp; potatoes)</span>
+        {% endif %}
+      </h2>
+      {% if not signal_comments %}
+      <p class="empty">No signal comments yet. Hit <strong>Refresh comments</strong> or check “Other comments” below.</p>
+      {% endif %}
+      {% for c in signal_comments %}
+      <article class="comment signal">
+        <div class="meta">
+          <span class="score">{{ c.relevance }}</span>
+          <span class="sub">u/{{ c.author or 'anon' }}</span>
+          <span class="badge">signal</span>
+          {% if c.permalink %}<a href="{{ c.permalink }}" target="_blank" rel="noopener">link</a>{% endif %}
+        </div>
+        <pre class="cbody">{{ c.body }}</pre>
+        {% if c.matched_caps %}
+        <ul class="tags">
+          {% for m in c.matched_caps %}<li>{{ m.label }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+        <p class="why">{{ c.why }}</p>
+      </article>
+      {% endfor %}
+    </section>
+
+    {% if other_comments %}
+    <section class="panel muted-panel">
+      <h2>Other comments</h2>
+      {% for c in other_comments %}
+      <article class="comment">
+        <div class="meta">
+          <span class="sub">u/{{ c.author or 'anon' }}</span>
+          <span class="muted">rel {{ c.relevance }}</span>
+        </div>
+        <pre class="cbody">{{ c.body }}</pre>
+      </article>
+      {% endfor %}
+    </section>
+    {% endif %}
+
+    <form class="notes panel" method="post" action="{{ url_for('post_status', post_id=post.id) }}">
+      <h2>Your review</h2>
+      <label>Status
+        <select name="status">
+          {% for s in ['new','watching','idea','dismissed'] %}
+          <option value="{{ s }}" {% if post.status==s %}selected{% endif %}>{{ s }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Your notes
+        <textarea name="notes" rows="5" placeholder="Demo idea, customer angle, modules to use…">{{ post.notes }}</textarea>
+      </label>
+      <button class="btn primary" type="submit">Save</button>
+    </form>
+  </main>
+
+  <script>
+    const btn = document.getElementById('copy-reply');
+    const box = document.getElementById('reply-draft');
+    const st = document.getElementById('copy-status');
+    btn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(box.value);
+        st.textContent = 'Copied';
+      } catch (e) {
+        box.select();
+        document.execCommand('copy');
+        st.textContent = 'Copied';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="96fd46c3-5938-42d3-bfb2-91811912a82c" name="1 - Intake And Classify">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="c5531c18-821b-4ffc-bb21-7dc1cbd0305e" moduleId="a5df5626-e4bc-4e2e-9dee-46d1fc982338" label="Poll Inbound 999 TA1 Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="cfad62e9-3ee2-43e9-8b73-791546e2d1d1" moduleId="1ecf517a-e1ba-4f01-ad2e-e970e0fb25c2" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="8e813fea-e773-4933-881a-abe1e8c04bce" moduleId="de447659-f1e8-4b5d-bd1e-29e1b5c798e4" label="Extract Ack Codes" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="daea97da-f492-49e6-bc99-0eb0808fccec" moduleId="da6bdf86-2e05-42a5-b78c-898157387d71" label="Debug Write Ack XML" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="88aa5ed2-359c-467d-9c0b-d2d79f2b3a64" moduleId="f5f36a6b-93aa-4b68-b66b-504f0d03d05c" label="Build Ack Decision XML" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="b9097fc1-958a-4e52-a5c3-8668fd89360b" moduleId="7e0f154d-04c7-4010-9614-97324a9e589d" label="Debug Write Ack Decision" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="40747eac-77bb-4d34-80ea-1eb9e6609391" moduleId="c76d2d54-91ca-40b8-811b-37e6e237da76" label="Stage Ack Decision" x="2340.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="5de67731-e5c6-4f95-8750-9bd01e99e87a" sourceNodeId="c5531c18-821b-4ffc-bb21-7dc1cbd0305e" targetNodeId="cfad62e9-3ee2-43e9-8b73-791546e2d1d1" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="f77991ea-bcf1-4140-82eb-b76827ba5841" sourceNodeId="8e813fea-e773-4933-881a-abe1e8c04bce" targetNodeId="daea97da-f492-49e6-bc99-0eb0808fccec" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="201e4910-cdcd-4a51-8a78-d7d37082462b" sourceNodeId="daea97da-f492-49e6-bc99-0eb0808fccec" targetNodeId="88aa5ed2-359c-467d-9c0b-d2d79f2b3a64" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="23b71fe9-4879-45db-87be-9de7ff877cfd" sourceNodeId="88aa5ed2-359c-467d-9c0b-d2d79f2b3a64" targetNodeId="b9097fc1-958a-4e52-a5c3-8668fd89360b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="d9d8944d-6938-407b-811c-091650f3b460" sourceNodeId="b9097fc1-958a-4e52-a5c3-8668fd89360b" targetNodeId="40747eac-77bb-4d34-80ea-1eb9e6609391" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="38e5ab71-4cb4-4fca-a34e-df0a67a2fb7d" sourceNodeId="cfad62e9-3ee2-43e9-8b73-791546e2d1d1" targetNodeId="8e813fea-e773-4933-881a-abe1e8c04bce" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

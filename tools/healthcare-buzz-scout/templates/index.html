@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Healthcare Buzz Scout · PilotFish</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <p class="kicker">PilotFish Sandbox</p>
+      <h1>Healthcare integration buzz</h1>
+      <p class="lead">Reddit threads <em>and</em> G2 paying-user reviews for EDI / HL7 / FHIR / EHR / ACORD workflow gaps PilotFish could own. Runs hourly.</p>
+    </div>
+    <div class="actions">
+      <button id="run-btn" class="btn primary" type="button">Run scout now</button>
+      <span id="run-status" class="muted"></span>
+    </div>
+  </header>
+
+  <section class="stats">
+    <div><span class="n">{{ stats.total }}</span><span class="l">tracked</span></div>
+    <div><span class="n">{{ stats.by_status.get('new', 0) }}</span><span class="l">new</span></div>
+    <div><span class="n">{{ stats.by_status.get('watching', 0) }}</span><span class="l">watching</span></div>
+    <div><span class="n">{{ stats.by_status.get('idea', 0) }}</span><span class="l">ideas</span></div>
+    <div class="wide muted">
+      {% if stats.last_run %}
+        Last run #{{ stats.last_run.id }}
+        · seen {{ stats.last_run.posts_seen }}
+        · kept {{ stats.last_run.posts_kept }}
+        · new {{ stats.last_run.posts_new }}
+        {% if stats.last_run.finished_at %} · {{ stats.last_run.finished_at }}{% endif %}
+        {% if stats.last_run.error %} · <span class="err">error</span>{% endif %}
+      {% else %}
+        No runs yet — click <strong>Run scout now</strong>.
+      {% endif %}
+      {% if not oauth %} · Reddit RSS mode (optional: set REDDIT_CLIENT_ID / SECRET){% endif %}
+    </div>
+  </section>
+
+  <form class="filters" method="get">
+    <label>Status
+      <select name="status">
+        {% for s in ['new','watching','idea','dismissed','all'] %}
+        <option value="{{ s }}" {% if status==s %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Source
+      <select name="source">
+        {% for s in ['all','reddit','g2'] %}
+        <option value="{{ s }}" {% if source==s %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Capability
+      <select name="capability">
+        <option value="">any</option>
+        {% for c in capabilities %}
+        <option value="{{ c.id }}" {% if capability==c.id %}selected{% endif %}>{{ c.label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label class="grow">Search
+      <input type="search" name="q" value="{{ q }}" placeholder="title, body, notes…" />
+    </label>
+    <button class="btn" type="submit">Filter</button>
+  </form>
+
+  <main class="feed">
+    {% if not posts %}
+      <p class="empty">Nothing in this view yet.</p>
+    {% endif %}
+    {% for p in posts %}
+    <article class="card status-{{ p.status }}">
+      <div class="meta">
+        <span class="score">{{ p.relevance }}</span>
+        {% if (p.source or 'reddit') == 'g2' %}
+        <span class="src g2">G2</span>
+        <span class="sub">{{ p.product_name or p.subreddit }}</span>
+        {% else %}
+        <span class="src reddit">Reddit</span>
+        <span class="sub">r/{{ p.subreddit }}</span>
+        <span class="muted">↑{{ p.score }} · {{ p.num_comments }} comments</span>
+        {% endif %}
+        <span class="badge">{{ p.status }}</span>
+      </div>
+      <h2><a href="{{ p.permalink }}" target="_blank" rel="noopener">{{ p.title }}</a></h2>
+      {% if p.capabilities %}
+      <ul class="tags">
+        {% for c in p.capabilities %}
+        <li>{{ c.label }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <p class="why">{{ p.why }}</p>
+      {% if p.demo_hints %}
+      <p class="hints"><strong>Nearby demos:</strong> {{ p.demo_hints | join(', ') }}</p>
+      {% endif %}
+      {% if p.pitch_refs %}
+      <p class="hints"><strong>Pitch angles:</strong> {{ p.pitch_refs | join(' · ') }}</p>
+      {% endif %}
+      <div class="row">
+        <a class="btn" href="{{ url_for('post_detail', post_id=p.id) }}">Open</a>
+        <form method="post" action="{{ url_for('post_status', post_id=p.id) }}">
+          <input type="hidden" name="status" value="watching" />
+          <button class="btn" type="submit">Watch</button>
+        </form>
+        <form method="post" action="{{ url_for('post_status', post_id=p.id) }}">
+          <input type="hidden" name="status" value="idea" />
+          <button class="btn primary" type="submit">Mark idea</button>
+        </form>
+        <form method="post" action="{{ url_for('post_status', post_id=p.id) }}">
+          <input type="hidden" name="status" value="dismissed" />
+          <button class="btn ghost" type="submit">Dismiss</button>
+        </form>
+      </div>
+    </article>
+    {% endfor %}
+  </main>
+
+  <script>
+    const btn = document.getElementById('run-btn');
+    const st = document.getElementById('run-status');
+    btn?.addEventListener('click', async () => {
+      btn.disabled = true;
+      st.textContent = 'Running (may take a few minutes)…';
+      try {
+        const res = await fetch('/api/run', { method: 'POST' });
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || 'failed');
+        st.textContent = `Done — seen ${data.seen}, kept ${data.kept}, new ${data.new}`;
+        setTimeout(() => location.reload(), 800);
+      } catch (e) {
+        st.textContent = e.message || String(e);
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

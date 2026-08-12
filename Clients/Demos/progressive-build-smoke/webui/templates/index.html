@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title }} — Build Stage</title>
+  <link rel="stylesheet" href="/static/app.css" />
+  <link rel="stylesheet" href="/static/timing-tab.css" />
+  <link rel="stylesheet" href="/static/build-live.css" />
+</head>
+<body>
+  <header>
+    <div class="app-bar">
+      <p class="brand">PilotFish · {{ title }}</p>
+      <div class="main-tabs" role="tablist">
+        <button type="button" class="main-tab active" data-main-tab="routes">Routes</button>
+        <button type="button" class="main-tab" data-main-tab="timing">Timing</button>
+        <button type="button" class="main-tab" data-main-tab="info">Info</button>
+      </div>
+    </div>
+  </header>
+
+  <div id="tab-routes">
+    <section class="panel routes-panel">
+      <div class="row-head">
+        <h2>Routes</h2>
+        <select id="route-select"></select>
+        <span id="routes-status" class="muted">Waiting for route.v2.xml…</span>
+      </div>
+      <iframe id="route-viewer-frame" title="Route viewer" src="about:blank"></iframe>
+    </section>
+  </div>
+
+  <div id="tab-timing" hidden>
+    {% include "partials/timing_tab.html" %}
+  </div>
+  <div id="tab-info" hidden>
+    {% include "partials/info_tab.html" %}
+  </div>
+
+  <script src="/static/timing-tab.js"></script>
+  <script src="/static/build-live.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

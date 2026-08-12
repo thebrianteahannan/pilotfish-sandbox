@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="252c308b-baec-45c5-86f2-32bccdf422a0" name="1 - SFTP Poll And Stage">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="0898e705-4079-4e62-9b0d-e562a1623735" moduleId="a0b784d9-fe75-4fc0-9edd-b9945fe6b19a" label="Poll SFTP for CSV" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="3ca10d2f-0a35-40cf-afb6-5bf1cf3f8cb8" moduleId="2ea337ee-1cf3-4a5b-9e76-1a21f364a33b" label="Archive Raw CSV" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="06674f3a-667d-4d1e-bfec-742b740ee295" moduleId="41bb1356-3213-451c-b64e-26b7a69e2a1d" label="Write Staged CSV" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="c12c88f4-35a1-495b-a397-4f472b8282d6" sourceNodeId="0898e705-4079-4e62-9b0d-e562a1623735" targetNodeId="3ca10d2f-0a35-40cf-afb6-5bf1cf3f8cb8" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="db5d4635-1306-4e8a-9333-34140984a3a4" sourceNodeId="3ca10d2f-0a35-40cf-afb6-5bf1cf3f8cb8" targetNodeId="06674f3a-667d-4d1e-bfec-742b740ee295" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

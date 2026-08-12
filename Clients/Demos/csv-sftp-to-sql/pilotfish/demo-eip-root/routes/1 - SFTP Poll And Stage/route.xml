@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule">
+    <ModuleConfig />
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="SFTP CSV Drop">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.file.ftp.FTPListener" enabled="true" name="Poll SFTP for CSV">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <FTPListenerType>Encrypted FTP (JSCH SSH/SFTP)</FTPListenerType>
+        <Host>$$SFTP_HOST</Host>
+        <Port>$$SFTP_PORT</Port>
+        <PollingInterval>10</PollingInterval>
+        <PollingDirectory>$$SFTP_POLL_DIR</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction>csv</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <FilenameIsMvsDsn>false</FilenameIsMvsDsn>
+        <SerializedTransactionsTag>50</SerializedTransactionsTag>
+        <Timeout>300</Timeout>
+        <Sftp_SocketTimeout>0</Sftp_SocketTimeout>
+        <RetryConnection>true</RetryConnection>
+        <RetryDelay>5</RetryDelay>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private (P)</Protection>
+        <FileType>Binary</FileType>
+        <StopWhenPollingFailure>false</StopWhenPollingFailure>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <UseChangeDirectoryCommand>false</UseChangeDirectoryCommand>
+        <ReconnectAfterBytes>102400</ReconnectAfterBytes>
+        <CacheType>File Cache</CacheType>
+        <PostProcessOperation>Delete</PostProcessOperation>
+        <TargetDirectory />
+        <UserName>$$SFTP_USER</UserName>
+        <Password>$$SFTP_PASSWORD</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <CheckFTPPermissions>false</CheckFTPPermissions>
+        <CheckPreviouslyProcessed>false</CheckPreviouslyProcessed>
+        <CheckWriteInProgress>true</CheckWriteInProgress>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Archive Raw CSV">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$ARCHIVE_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:(getAttribute('com.pilotfish.FileName') != null ? getAttribute('com.pilotfish.FileName') : 'csv') + '_' + @java.lang.System@currentTimeMillis() + '.csv'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="Stage Local">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Write Staged CSV" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$STAGED_CSV_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:(getAttribute('com.pilotfish.FileName') != null ? getAttribute('com.pilotfish.FileName') : 'staged') + '_' + @java.lang.System@currentTimeMillis()}</FileName>
+        <FileExtension>csv</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors />
+  </Target>
+</Route>

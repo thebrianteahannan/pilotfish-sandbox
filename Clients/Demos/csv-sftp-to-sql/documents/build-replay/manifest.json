@@ -1,0 +1,191 @@
+{
+  "version": 1,
+  "title": "Module-by-module construction replay",
+  "steps": [
+    {
+      "route_id": "1-sftp-poll-and-stage",
+      "route_name": "1 - SFTP Poll And Stage",
+      "message": "Pickup first",
+      "detail": "Ops drops a patient CSV and we land the rows in the database \u2014 no hand-loading. Two routes: pickup first, then the load. Starting with pickup: grab the file from FTP, keep a raw archive, and stage a local copy \u2014 before we ever touch the database.",
+      "modules_visible": 0,
+      "focus_label": "",
+      "focus_node_id": "",
+      "external_systems": [
+        "SFTP host sftp, port 22, directory upload, user demo",
+        "SQL Server (Docker service sqlserver), database CsvSftpDemo via JDBC"
+      ],
+      "id": "0001",
+      "seq": 1,
+      "recorded_at": "2026-08-12T23:12:13Z"
+    },
+    {
+      "id": "0002",
+      "seq": 2,
+      "route_id": "1-sftp-poll-and-stage",
+      "route_name": "1 - SFTP Poll And Stage",
+      "message": "FTP listener",
+      "detail": "First up is the FTP listener \u2014 it watches the upload folder on the FTP server. We're only taking .csv files. It checks about every 10 seconds. Once we've got the file, we delete it remotely so it doesn't get picked up again.",
+      "modules_visible": 1,
+      "focus_label": "Poll SFTP for CSV",
+      "focus_node_id": "f453d5d7-2b45-4d21-ba3b-b2a350c63097",
+      "module_type": "FTPListener",
+      "module_tag": "Listener",
+      "module_class": "com.pilotfish.eip.modules.file.ftp.FTPListener",
+      "custom_module": false,
+      "config_highlights": [
+        "Host: sftp",
+        "UserName: demo",
+        "FTPListenerType: Encrypted FTP (JSCH SSH/SFTP)",
+        "PostProcessOperation: Delete",
+        "FileExtensionRestriction: csv",
+        "Port: 22",
+        "PollingDirectory: upload",
+        "PollingInterval: 10"
+      ],
+      "recorded_at": "2026-08-12T23:12:13Z"
+    },
+    {
+      "id": "0003",
+      "seq": 3,
+      "route_id": "1-sftp-poll-and-stage",
+      "route_name": "1 - SFTP Poll And Stage",
+      "message": "Archive step",
+      "detail": "Next we archive the raw file \u2014 an exact copy of whatever arrived, before we touch the data. That lands under /opt/pilotfish/output/archive, original name plus a timestamp.",
+      "modules_visible": 2,
+      "focus_label": "Archive Raw CSV",
+      "focus_node_id": "c5bd626e-c691-493e-9706-6e36ed23cbc9",
+      "module_type": "File Writing",
+      "module_tag": "Processor",
+      "module_class": "com.pilotfish.eip.modules.file.FileWriteProcessor",
+      "custom_module": false,
+      "config_highlights": [
+        "TargetFileName: {sourceFileName}_<timestamp>.csv",
+        "TargetDirectory: /opt/pilotfish/output/archive"
+      ],
+      "recorded_at": "2026-08-12T23:12:13Z"
+    },
+    {
+      "id": "0004",
+      "seq": 4,
+      "route_id": "1-sftp-poll-and-stage",
+      "route_name": "1 - SFTP Poll And Stage",
+      "message": "Stage-to-disk step",
+      "detail": "Then we stage a local copy for the next route, writing to /opt/pilotfish/input/staged, so FTP pickup stays separate from the database work.",
+      "modules_visible": 3,
+      "focus_label": "Write Staged CSV",
+      "focus_node_id": "1c1f9cd1-3135-4469-b134-36b5b9c7bc56",
+      "module_type": "Directory / File",
+      "module_tag": "Transport",
+      "module_class": "com.pilotfish.eip.modules.file.DirectoryTransport",
+      "custom_module": false,
+      "config_highlights": [
+        "FileName: {sourceFileName}_<timestamp>",
+        "FileExtension: csv",
+        "TargetDirectory: /opt/pilotfish/input/staged"
+      ],
+      "recorded_at": "2026-08-12T23:12:13Z"
+    },
+    {
+      "route_id": "2-csv-to-sql",
+      "route_name": "2 - CSV To SQL",
+      "message": "The load route",
+      "detail": "Onto the load route \u2014 this one never talks to FTP. It watches the staged folder, turns each CSV into SQL, and loads the patients table.",
+      "modules_visible": 0,
+      "focus_label": "",
+      "focus_node_id": "",
+      "external_systems": [
+        "SFTP host sftp, port 22, directory upload, user demo",
+        "SQL Server (Docker service sqlserver), database CsvSftpDemo via JDBC"
+      ],
+      "id": "0005",
+      "seq": 5,
+      "recorded_at": "2026-08-12T23:12:13Z"
+    },
+    {
+      "id": "0006",
+      "seq": 6,
+      "route_id": "2-csv-to-sql",
+      "route_name": "2 - CSV To SQL",
+      "message": "Staged-folder listener",
+      "detail": "Next is the staged-folder listener \u2014 it never talks to FTP, just the local stage. It watches /opt/pilotfish/input/staged. Same idea: only .csv files. It polls every 5 seconds. After pickup we move the file aside so the folder stays clean.",
+      "modules_visible": 1,
+      "focus_label": "Poll Staged CSV",
+      "focus_node_id": "4f23055d-e509-4e0a-b850-35ac8d68d0a8",
+      "module_type": "Directory / File",
+      "module_tag": "Listener",
+      "module_class": "com.pilotfish.eip.modules.file.DirectoryListener",
+      "custom_module": false,
+      "config_highlights": [
+        "PostProcessOperation: Move",
+        "FileExtensionRestriction: csv",
+        "PollingDirectory: /opt/pilotfish/input/staged",
+        "TargetDirectory: /opt/pilotfish/output/staged-archive",
+        "PollingInterval: 5"
+      ],
+      "recorded_at": "2026-08-12T23:12:13Z"
+    },
+    {
+      "id": "0007",
+      "seq": 7,
+      "route_id": "2-csv-to-sql",
+      "route_name": "2 - CSV To SQL",
+      "message": "CSV processor",
+      "detail": "Here's the CSV processor \u2014 it turns the file into XML and uses the header row for the column names.",
+      "modules_visible": 2,
+      "focus_label": "CSV to XML",
+      "focus_node_id": "2c5493fb-75a8-4f2b-a08b-51a6f069a7e2",
+      "module_type": "CSV",
+      "module_tag": "Processor",
+      "module_class": "com.pilotfish.eip.modules.transform.CSVTransformationProcessor",
+      "custom_module": false,
+      "config_highlights": [
+        "TransformationDirection: CSV to XML",
+        "Delimiter: ,"
+      ],
+      "recorded_at": "2026-08-12T23:12:13Z"
+    },
+    {
+      "id": "0008",
+      "seq": 8,
+      "route_id": "2-csv-to-sql",
+      "route_name": "2 - CSV To SQL",
+      "message": "Mapping step",
+      "detail": "Now for the mapping \u2014 I'll open the stylesheet. We're using the stock XSLT processor with csv-to-sqlxml.xslt. Watch the for-each over each CSV record and the column mappings: Dialect A tags like PATIENTID into the SQL insert fields, and STATE becomes StateCode.",
+      "modules_visible": 3,
+      "focus_label": "Map CSV XML To SQLXML",
+      "focus_node_id": "caaca2b6-e0aa-4c53-82df-d9d58adac91f",
+      "module_type": "XSLT Transformation",
+      "module_tag": "Processor",
+      "module_class": "com.pilotfish.eip.modules.transform.XSLTProcessor",
+      "custom_module": false,
+      "config_highlights": [
+        "XSLTEngine: Saxon",
+        "XSLTPath: csv-to-sqlxml.xslt"
+      ],
+      "recorded_at": "2026-08-12T23:12:13Z"
+    },
+    {
+      "id": "0009",
+      "seq": 9,
+      "route_id": "2-csv-to-sql",
+      "route_name": "2 - CSV To SQL",
+      "message": "SQL insert",
+      "detail": "And finally we insert into SQL \u2014 those inserts go into the demo database over JDBC. That's it: CSV in, patients in SQL.",
+      "modules_visible": 4,
+      "focus_label": "Insert Patients SQL",
+      "focus_node_id": "ae4c01a5-ac4f-4ca4-b4ac-127542cafffa",
+      "module_type": "Database (SQL)",
+      "module_tag": "Transport",
+      "module_class": "com.pilotfish.eip.modules.db.DatabaseSqlTransport",
+      "custom_module": false,
+      "config_highlights": [
+        "JdbcURL: JDBC to sqlserver, database CsvSftpDemo",
+        "UserName: sa",
+        "JdbcDriver: Microsoft SQL Server JDBC driver"
+      ],
+      "recorded_at": "2026-08-12T23:12:13Z"
+    }
+  ],
+  "updated_at": "2026-08-12T23:12:13Z",
+  "default_pause_ms": 4500
+}

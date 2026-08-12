@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "interface": "EDI 999 TA1 Ack Triage",
+  "slug": "edi-999-ta1-ack-triage",
+  "path": "Clients/Demos/edi-999-ta1-ack-triage",
+  "requested_by": "user",
+  "started_at": "2026-08-12T18:39:39Z",
+  "completed_at": "2026-08-12T19:05:00Z",
+  "completed_by": "agent",
+  "duration_minutes": 25,
+  "compose_project": "edi-999-ta1-ack-triage",
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-12T18:39:39Z",
+      "ended_at": "2026-08-12T18:45:00Z",
+      "duration_minutes": 5,
+      "notes": "Progressive build visibility (stage profile)"
+    },
+    {
+      "id": "design_samples",
+      "name": "DESIGN.md + sample 999/TA1 files",
+      "started_at": "2026-08-12T18:45:00Z",
+      "ended_at": "2026-08-12T18:50:00Z",
+      "duration_minutes": 5,
+      "notes": "Pitch §3 triage buckets; no SQL for v1"
+    },
+    {
+      "id": "routes_v1_v2",
+      "name": "Routes V1 authoring + V2 conversion",
+      "started_at": "2026-08-12T18:50:00Z",
+      "ended_at": "2026-08-12T18:58:00Z",
+      "duration_minutes": 8,
+      "notes": "Intake And Classify + Bucket And Report; demo-eip-root sync"
+    },
+    {
+      "id": "theater_replay",
+      "name": "Module-by-module replay + experience log",
+      "started_at": "2026-08-12T18:58:00Z",
+      "ended_at": "2026-08-12T19:02:00Z",
+      "duration_minutes": 4,
+      "notes": "record_module_replay.py (17 steps); experience narrative"
+    },
+    {
+      "id": "demo_webui",
+      "name": "Integrated Demo test Web UI",
+      "started_at": "2026-08-12T19:02:00Z",
+      "ended_at": "2026-08-12T19:05:00Z",
+      "duration_minutes": 3,
+      "notes": "Demo inject + buckets alongside Routes/Experience/Timing/Info"
+    }
+  ],
+  "slowest_phases": [
+    "routes_v1_v2",
+    "webui_early",
+    "design_samples"
+  ],
+  "bottlenecks": [
+    "Docker Desktop empty mount when eip-root path contains spaces — use pilotfish/demo-eip-root/routes",
+    "Stage-only shell lacked Demo inject until integrated test UI was added"
+  ],
+  "speedup_ideas": [
+    "Scaffold full Demo tab (inject + buckets) in tools/scaffold_demo_stage.py from day one",
+    "Keep Experience + Replay always on Routes; never replace Demo with barren construction-only chrome"
+  ]
+}

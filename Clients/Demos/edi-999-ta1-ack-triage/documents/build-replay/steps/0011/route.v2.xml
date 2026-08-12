@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="3ec07d82-621a-478f-84ea-10f995b1bf15" name="2 - Bucket And Report">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="5bd1f6db-3f79-4862-94ae-ae702d4222ea" moduleId="a40f91ad-e0a1-4638-8d20-4c81474096bf" label="Poll Staged Ack Decisions" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="d0352345-030e-4ae0-b634-d4767e0f3c96" moduleId="a97188be-b0ec-4ad5-8e98-a9753a6a99b1" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="120.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="828dfae7-46ce-46cb-b92a-5affd2a164b6" sourceNodeId="5bd1f6db-3f79-4862-94ae-ae702d4222ea" targetNodeId="d0352345-030e-4ae0-b634-d4767e0f3c96" sourceConnector="right-output" targetConnector="router-input:f3b7067f-5641-405a-907c-f4aa934c84ad" condition="true"/>
+      
+      
+   </Connections>
+</Route>

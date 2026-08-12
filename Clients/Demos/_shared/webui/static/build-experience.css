@@ -1,0 +1,131 @@
+/* Build Experience tab */
+.pf-xp-panel {
+  max-width: 920px;
+}
+.pf-xp-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+  margin: 0 0 1rem;
+}
+.pf-xp-toolbar .pf-replay-btn,
+.pf-xp-toolbar .pf-replay-stop {
+  border: 1px solid #007cba;
+  background: #0797f7;
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.4rem 0.85rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.pf-xp-toolbar .pf-replay-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.pf-xp-toolbar .pf-replay-stop {
+  background: #fff;
+  color: #005a87;
+  border-color: #9bbdd6;
+}
+#pf-xp-status {
+  font-size: 0.85rem;
+  color: #5a6570;
+}
+.pf-xp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.pf-xp-event {
+  border: 1px solid #d5e4ef;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  background: #fff;
+  border-left: 4px solid #9bbdd6;
+}
+.pf-xp-event.is-active {
+  border-color: #0797f7;
+  box-shadow: 0 0 0 2px rgba(7, 151, 247, 0.15);
+}
+.pf-xp-event.kind-decision { border-left-color: #c27b1a; }
+.pf-xp-event.kind-route { border-left-color: #0797f7; }
+.pf-xp-event.kind-sql { border-left-color: #2f6f4e; }
+.pf-xp-event.kind-test { border-left-color: #6b4ea0; }
+.pf-xp-event.kind-phase { border-left-color: #007cba; }
+.pf-xp-event-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+.pf-xp-kind {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #007cba;
+}
+.pf-xp-step {
+  font-size: 0.78rem;
+  color: #5a6570;
+}
+.pf-xp-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  color: #1a3a4f;
+}
+.pf-xp-summary {
+  margin: 0 0 0.5rem;
+  color: #3b3b3b;
+}
+.pf-xp-rationale {
+  background: #fff8ee;
+  border: 1px solid #f0e0c4;
+  border-radius: 6px;
+  padding: 0.55rem 0.7rem;
+  margin: 0.5rem 0;
+}
+.pf-xp-rationale strong,
+.pf-xp-alts strong {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8a5a12;
+  margin-bottom: 0.2rem;
+}
+.pf-xp-rationale p {
+  margin: 0;
+  color: #3b3b3b;
+}
+.pf-xp-alts ul {
+  margin: 0.25rem 0 0;
+  padding-left: 1.1rem;
+  color: #5a6570;
+}
+.pf-xp-detail {
+  margin: 0.5rem 0 0;
+  padding: 0.65rem 0.75rem;
+  background: #0f1720;
+  color: #d7e6f2;
+  border-radius: 6px;
+  overflow: auto;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+.pf-xp-links {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+}
+.pf-xp-time {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 0.75rem;
+  color: #7a8691;
+}
+#pf-xp-empty {
+  color: #5a6570;
+}

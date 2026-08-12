@@ -1,0 +1,24 @@
+services:
+  webui:
+    profiles: ["stage", "full"]
+    build:
+      context: ./webui
+    image: pilotfish-progressive-build-smoke-webui:latest
+    container_name: pf-progressive-build-sm-webui
+    restart: unless-stopped
+    environment:
+      WEBUI_PORT: "8125"
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      LAN_HINT: "http://192.168.68.62:8125/"
+      EIP_PUBLIC_URL: "http://localhost:8124/eip/"
+    ports:
+      - "8125:8125"
+    volumes:
+      - ./documents:/documents:ro
+      - ./eip-root/interfaces/Progressive Build Smoke/routes:/routes:ro
+
+  # Add pilotfish (+ deps) under profile "full" when runtime is ready.
+  # pilotfish:
+  #   profiles: ["full"]
+  #   ...

@@ -1,0 +1,18 @@
+services:
+  healthcare-buzz-scout:
+    build: .
+    image: pilotfish-healthcare-buzz-scout:latest
+    container_name: pf-healthcare-buzz-scout
+    ports:
+      - "8130:8130"
+    environment:
+      WEBUI_PORT: "8130"
+      SCOUT_DB: /data/buzz.sqlite3
+      POLL_INTERVAL_SECONDS: "3600"
+      SCOUT_REQUEST_GAP: "5.0"
+      # Optional — raises Reddit rate limits / reliability:
+      # REDDIT_CLIENT_ID: ""
+      # REDDIT_CLIENT_SECRET: ""
+    volumes:
+      - ./data:/data
+    restart: unless-stopped

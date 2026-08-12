@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "title": "Interface construction experience",
+  "demo": "csv-sftp-to-sql",
+  "events": [
+    {
+      "id": "e001",
+      "kind": "decision",
+      "title": "Two-route SFTP stage then CSV to SQL",
+      "summary": "We split SFTP pickup from CSV parsing and SQL insert so we can archive and stage files in between.",
+      "detail": "Route 1 only polls SFTP, archives the raw CSV, and stages a local copy. Route 2 polls the stage folder, parses CSV, maps to SQLXML, and inserts.",
+      "rationale": "We split SFTP pickup from CSV parsing and SQL insert so we can archive and stage files in between.",
+      "alternatives": [
+        "Single route: SFTP Listener directly into CSV, XSLT, and DatabaseSqlTransport"
+      ],
+      "at": "2026-08-12T19:23:09Z",
+      "keywords": [
+        "two-route",
+        "architecture",
+        "stage"
+      ]
+    },
+    {
+      "id": "e002",
+      "kind": "decision",
+      "title": "JSCH encrypted SFTP (not plain FTP)",
+      "summary": "We use encrypted SFTP with JSCH instead of cleartext FTP.",
+      "detail": "Host/port/user/password and poll directory come from environment-settings $$ tokens so compose can remap without editing modules.",
+      "rationale": "We use encrypted SFTP with JSCH instead of cleartext FTP.",
+      "alternatives": [
+        "Unencrypted FTP",
+        "DirectoryListener on a host-mounted drop folder only (no remote SFTP)"
+      ],
+      "at": "2026-08-12T20:00:00Z",
+      "keywords": [
+        "jsch",
+        "sftp",
+        "ftp",
+        "poll"
+      ]
+    },
+    {
+      "id": "e003",
+      "kind": "decision",
+      "title": "Restrict SFTP poll to .csv and delete after pickup",
+      "summary": "Only CSV files are picked up, and the remote file is deleted after a successful poll.",
+      "detail": "Only CSV files under the remote upload directory become transactions. After a successful poll the remote file is deleted so the same file is not re-ingested every 10 seconds.",
+      "rationale": "Only CSV files are picked up, and the remote file is deleted after a successful poll.",
+      "alternatives": [
+        "PostProcess Move to a remote done/ folder",
+        "Leave files on the server and rely on name uniqueness only"
+      ],
+      "at": "2026-08-12T20:00:01Z",
+      "keywords": [
+        "sftp",
+        "csv",
+        "postprocess",
+        "delete",
+        "poll"
+      ]
+    },
+    {
+      "id": "e004",
+      "kind": "decision",
+      "title": "Archive raw CSV before staging",
+      "summary": "We keep an immutable raw copy on disk before any transform.",
+      "detail": "Archive names keep the original FileName attribute plus a millisecond suffix so ops can compare what arrived vs what SQL received.",
+      "rationale": "We keep an immutable raw copy on disk before any transform.",
+      "alternatives": [
+        "Skip archive and only keep the staged copy",
+        "Archive only after successful SQL insert"
+      ],
+      "at": "2026-08-12T20:00:02Z",
+      "keywords": [
+        "archive",
+        "file writing",
+        "raw"
+      ]
+    },
+    {
+      "id": "e005",
+      "kind": "decision",
+      "title": "Stage locally for DirectoryListener handoff",
+      "summary": "Route 2 only watches the local stage folder, so SFTP pickup stays separate from SQL processing.",
+      "detail": "Route 2 does not talk to SFTP at all \u2014 it only watches the local stage folder. That isolates network pickup from database latency.",
+      "rationale": "Route 2 only watches the local stage folder, so SFTP pickup stays separate from SQL processing.",
+      "alternatives": [
+        "Route 2 also poll SFTP",
+        "In-memory handoff via TransactionAttribute / callout instead of files"
+      ],
+      "at": "2026-08-12T20:00:03Z",
+      "keywords": [
+        "stage",
+        "directory",
+        "transport",
+        "handoff"
+      ]
+    },
+    {
+      "id": "e006",
+      "kind": "decision",
+      "title": "CSV Dialect A with header row",
+      "summary": "CSV to Dialect A XML with headers on, so column tags come from the header row.",
+      "detail": "PilotFish CSV Transformation emits XCSData/XCSRecord Dialect A. With headers on, column tags are UPPERCASE names from the CSV header (for example PATIENTID), which the XSLT must match.",
+      "rationale": "CSV to Dialect A XML with headers on, so column tags come from the header row.",
+      "alternatives": [
+        "Fixed column positions without headers",
+        "Custom CSV callout module"
+      ],
+      "at": "2026-08-12T20:00:04Z",
+      "keywords": [
+        "csv",
+        "dialect",
+        "header",
+        "xml"
+      ]
+    },
+    {
+      "id": "e007",
+      "kind": "decision",
+      "title": "Custom route XSLT csv-to-sqlxml.xslt (Saxon)",
+      "summary": "A custom stylesheet maps those columns into SQLXML inserts for dbo.CsvPatients.",
+      "detail": "The stylesheet maps Dialect A PATIENTID/FIRSTNAME/\u2026 elements into SQLXML insert statements for dbo.CsvPatients. Engine is Saxon.",
+      "rationale": "A custom stylesheet maps those columns into SQLXML inserts for dbo.CsvPatients.",
+      "alternatives": [
+        "Hand-authored SQLXML in a custom Processor module",
+        "DatabaseSqlTransport with a static Query instead of SQLXML from XSLT"
+      ],
+      "at": "2026-08-12T20:00:05Z",
+      "keywords": [
+        "xslt",
+        "sqlxml",
+        "custom",
+        "saxon",
+        "map"
+      ]
+    },
+    {
+      "id": "e008",
+      "kind": "decision",
+      "title": "JDBC SQL Server via environment tokens",
+      "summary": "SQL inserts go to database CsvSftpDemo over JDBC, with connection settings from environment tokens.",
+      "detail": "Target database CsvSftpDemo on Docker service sqlserver:1433. Credentials stay in environment-settings.conf so modules stay portable across stage/full compose.",
+      "rationale": "SQL inserts go to database CsvSftpDemo over JDBC, with connection settings from environment tokens.",
+      "alternatives": [
+        "JNDI DataSource",
+        "HTTP API fa\u00e7ade in front of the database"
+      ],
+      "at": "2026-08-12T20:00:06Z",
+      "keywords": [
+        "sql",
+        "jdbc",
+        "database",
+        "sqlserver"
+      ]
+    },
+    {
+      "id": "e009",
+      "kind": "note",
+      "title": "External systems for this demo",
+      "summary": "SFTP (host sftp:22, user demo, dir upload) and SQL Server (CsvSftpDemo).",
+      "detail": "Host-mapped ports: SFTP localhost:2224, SQL Server localhost:14341. Web UI 8133, EIP 8132.",
+      "rationale": "",
+      "at": "2026-08-12T20:00:07Z",
+      "keywords": [
+        "external",
+        "sftp",
+        "sql"
+      ]
+    },
+    {
+      "id": "e010",
+      "kind": "route",
+      "title": "Route 1: SFTP poll CSV to stage",
+      "summary": "Published diagram for 1 - SFTP Poll And Stage",
+      "detail": "Modules: Poll SFTP for CSV \u2192 Archive Raw CSV \u2192 Write Staged CSV.",
+      "rationale": "",
+      "at": "2026-08-12T19:16:15Z",
+      "route_id": "1-sftp-poll-and-stage",
+      "keywords": [
+        "sftp",
+        "stage"
+      ]
+    },
+    {
+      "id": "e011",
+      "kind": "route",
+      "title": "Route 2: CSV to SQLXML to insert",
+      "summary": "Published diagram for 2 - CSV To SQL",
+      "detail": "Modules: Poll Staged CSV \u2192 CSV to XML \u2192 Map CSV XML To SQLXML \u2192 Insert Patients SQL.",
+      "rationale": "",
+      "at": "2026-08-12T19:16:15Z",
+      "route_id": "2-csv-to-sql",
+      "keywords": [
+        "csv",
+        "sql"
+      ]
+    }
+  ],
+  "updated_at": "2026-08-12T20:05:00Z"
+}

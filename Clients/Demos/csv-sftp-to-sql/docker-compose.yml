@@ -1,0 +1,114 @@
+services:
+  sftp:
+    profiles: ["full"]
+    image: atmoz/sftp:alpine
+    platform: linux/amd64
+    container_name: pf-csv-sftp-to-sql-sftp
+    restart: unless-stopped
+    ports:
+      - "2224:22"
+    volumes:
+      - ./sftp-seed/upload:/home/demo/upload
+      - ./sftp/sshd_config:/etc/ssh/sshd_config:ro
+    command: demo:demo:1001:1001:upload
+
+  sqlserver:
+    profiles: ["full"]
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-csv-sftp-to-sql-sqlserver
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "PilotFish_Demo1!"
+      MSSQL_PID: Developer
+    ports:
+      - "14341:1433"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"PilotFish_Demo1!\" -C -Q \"SELECT 1\" || exit 1",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 25s
+
+  sqlserver-init:
+    profiles: ["full"]
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-csv-sftp-to-sql-sqlserver-init
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ./sql:/sql:ro
+    entrypoint:
+      - /bin/bash
+      - -lc
+      - |
+        set -euo pipefail
+        echo "Initializing CsvSftpDemo..."
+        /opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P 'PilotFish_Demo1!' -C -i /sql/01_init.sql
+        echo "SQL seed complete."
+
+  pilotfish:
+    profiles: ["full"]
+    build:
+      context: ./pilotfish
+    image: pilotfish-csv-sftp-to-sql:23R1
+    container_name: pf-csv-sftp-to-sql-pilotfish
+    restart: unless-stopped
+    depends_on:
+      sqlserver-init:
+        condition: service_completed_successfully
+      sftp:
+        condition: service_started
+    environment:
+      CATALINA_OPTS: "-Xms512M -Xmx2048M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8132:8080"
+    volumes:
+      - ./input:/opt/pilotfish/input
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+      - ./pilotfish/demo-eip-root/routes:/usr/local/tomcat/webapps/eip/eip-root/routes
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/usr/local/tomcat/webapps/eip/eip-root/environment-settings.conf:ro
+
+  webui:
+    profiles: ["stage", "full"]
+    build:
+      context: ./webui
+    image: pilotfish-csv-sftp-to-sql-webui:latest
+    container_name: pf-csv-sftp-to-sql-webui
+    restart: unless-stopped
+    environment:
+      WEBUI_PORT: "8133"
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      SAMPLE_DIR: /samples
+      SFTP_UPLOAD_DIR: /sftp-upload
+      ARCHIVE_DIR: /output/archive
+      STAGED_DIR: /input/staged
+      LAN_HINT: "http://192.168.68.62:8133/"
+      EIP_PUBLIC_URL: "http://localhost:8132/eip/"
+      DB_HOST: sqlserver
+      DB_PORT: "1433"
+      DB_USER: sa
+      DB_PASSWORD: "PilotFish_Demo1!"
+      DB_NAME: CsvSftpDemo
+      SFTP_HINT: "localhost:2224 (user demo/demo, dir upload)"
+    ports:
+      - "8133:8133"
+    volumes:
+      - ./documents:/documents:ro
+      - ./samples:/samples:ro
+      - ./sftp-seed/upload:/sftp-upload
+      - ./output:/output:ro
+      - ./input:/input:ro
+      - ./pilotfish/demo-eip-root/routes:/routes:ro
+      - ./webui/static:/app/static:ro
+      - ./webui/templates:/app/templates:ro
+      - ./webui/app.py:/app/app.py:ro
+      - ./webui/document_routes.py:/app/document_routes.py:ro
