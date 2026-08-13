@@ -136,6 +136,9 @@
                   <xsl:when test="$partitionName = 'ARA'">
                     <xsl:value-of select="concat($facilityCode2, translate(substring(PatientDemographics/admAcctNum, string-length(PatientDemographics/admAcctNum) - 8),'-',''))" />
                   </xsl:when>
+                  <xsl:when test="$partitionName = 'HAL'">
+                    <xsl:value-of select="concat($facilityCode2,PatientDemographics/admAcctNum)" />
+                  </xsl:when>
                   <xsl:otherwise>
                     <!--Add the Facility Code to the front of the Patient Account Number + last 9 digits of the Patient Account Number.  Example: HH123456789-->
                     <xsl:value-of select="concat($facilityCode2, substring(PatientDemographics/admAcctNum, string-length(PatientDemographics/admAcctNum) - 8))" />
