@@ -49,7 +49,7 @@
               <xsl:value-of select="$Client" />
             </Interface_Type>
             <Location>
-              <xsl:value-of select="PatientDemographics/admLocation" />
+              <xsl:value-of select="(PatientDemographics/admLocationAbbr[normalize-space()], PatientDemographics/admLocation)[1]" />
             </Location>
             <AccountNumber>
               <xsl:value-of select="PatientDemographics/admAcctNum" />
