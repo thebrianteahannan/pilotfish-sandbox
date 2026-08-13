@@ -69,3 +69,9 @@ tools/healthcare-buzz-scout/.venv/
 
 # Spoken pronunciation samples (mic clips)
 tools/voices/clips/
+
+# Client email request history + TEST zips (local hub)
+Clients/**/requests/**
+!Clients/**/requests/.gitkeep
+*.bak-req
+tools/.construction-video-worker.log

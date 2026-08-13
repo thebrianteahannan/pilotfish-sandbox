@@ -1,0 +1,169 @@
+{
+  "version": 1,
+  "interface": "EDI 837 NCCI PTP",
+  "short_name": "EDI837_NCCI_PTP",
+  "description": "Directory-drop 837P, PTP pair lookup, pass vs kickout.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8133",
+    "eip": "http://127.0.0.1:8132/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8133/",
+    "http://127.0.0.1:8133/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["NCCI PTP", "inject-form"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["1-poll-and-score-ptp", "2-route-ptp-decisions"] }
+        }
+      ]
+    },
+    {
+      "id": "ptp",
+      "name": "PTP scoring",
+      "tests": [
+        {
+          "id": "wait-sql",
+          "name": "SQL is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"sql\":true"]
+          }
+        },
+        {
+          "id": "wait-eip",
+          "name": "EIP is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"eip\":true"]
+          }
+        },
+        {
+          "id": "ptp-catalog",
+          "name": "PTP catalog seeded",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/ptp-edits",
+            "timeout_sec": 60,
+            "interval_sec": 2,
+            "contains": ["45378", "45380", "93000"]
+          }
+        },
+        {
+          "id": "reset-drop",
+          "name": "Reset then drop sample 837P",
+          "type": "http",
+          "request": { "method": "POST", "url": "{webui}/api/reset" },
+          "expect": { "status": 200, "contains": ["ok"] }
+        },
+        {
+          "id": "inject-sample",
+          "name": "Inject sample 837P",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/inject",
+            "headers": { "Content-Type": "application/json" },
+            "body": { "sample": "sample_837p_ptp.edi" }
+          },
+          "expect": { "status": 200, "contains": ["sample_837p_ptp.edi"] }
+        },
+        {
+          "id": "pass-001",
+          "name": "PTPCLM001 single code pass",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["PTPCLM001_pass.xml"]
+          }
+        },
+        {
+          "id": "kickout-002",
+          "name": "PTPCLM002 pair without modifier",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["PTPCLM002_kickout.xml"]
+          }
+        },
+        {
+          "id": "pass-003",
+          "name": "PTPCLM003 pair with modifier 59",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["PTPCLM003_pass.xml"]
+          }
+        },
+        {
+          "id": "kickout-004",
+          "name": "PTPCLM004 indicator 0 even with 59",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["PTPCLM004_kickout.xml"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837_NCCI_PTP_V2_Route_Diagrams.pdf" }
+        },
+        {
+          "id": "capability-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837_NCCI_PTP_Capability_Brief.pdf" }
+        },
+        {
+          "id": "test-plan-pdf",
+          "name": "Test Plan PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837_NCCI_PTP_Test_Plan.pdf" }
+        }
+      ]
+    }
+  ]
+}

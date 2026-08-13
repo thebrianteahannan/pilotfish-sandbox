@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "interface": "EDI 837 NCCI MUE",
+  "slug": "edi-837-ncci-mue",
+  "path": "Clients/Demos/Insurance/EDI/edi-837-ncci-mue",
+  "requested_by": "user",
+  "started_at": "2026-08-13T12:44:55Z",
+  "completed_at": "2026-08-13T12:56:53Z",
+  "completed_by": "cursor-agent",
+  "duration_minutes": 12,
+  "compose_project": "edi-837-ncci-mue",
+  "docker_at_completion": {
+    "sandbox_compose_projects_running": 1,
+    "sandbox_demo_containers_running": 3,
+    "this_demo_containers": [
+      "pf-edi-837-ncci-mue-pilotfish",
+      "pf-edi-837-ncci-mue-webui",
+      "pf-edi-837-ncci-mue-sqlserver"
+    ],
+    "running_projects": ["edi-837-ncci-mue"],
+    "inventory_command": "python3 tools/list_sandbox_demo_docker.py",
+    "captured_at": "2026-08-13T12:57:10Z"
+  },
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-13T12:44:55Z",
+      "ended_at": "2026-08-13T12:45:00Z",
+      "duration_minutes": 1,
+      "notes": "Progressive build visibility"
+    },
+    {
+      "id": "design_scaffold",
+      "name": "DESIGN + SQL + compose",
+      "started_at": "2026-08-13T12:45:00Z",
+      "ended_at": "2026-08-13T12:48:00Z",
+      "duration_minutes": 3,
+      "notes": "Med Rec MUE_EDITS shape (CPT + max units) on 837P"
+    },
+    {
+      "id": "routes",
+      "name": "Routes / XSLT / V2",
+      "started_at": "2026-08-13T12:48:00Z",
+      "ended_at": "2026-08-13T12:49:00Z",
+      "duration_minutes": 1,
+      "notes": "835 PI fork + SQL lookup skeleton"
+    },
+    {
+      "id": "webui_docs",
+      "name": "Full stack + PDFs",
+      "started_at": "2026-08-13T12:49:00Z",
+      "ended_at": "2026-08-13T12:51:00Z",
+      "duration_minutes": 2,
+      "notes": "pymssql rebuild; route PDF compact + groups"
+    },
+    {
+      "id": "tests",
+      "name": "Live inject tests",
+      "started_at": "2026-08-13T12:51:00Z",
+      "ended_at": "2026-08-13T12:56:53Z",
+      "duration_minutes": 6,
+      "notes": "Em-dash in SQL Description broke XPath router (0x14)"
+    }
+  ],
+  "slowest_phases": [
+    {"id": "tests", "duration_minutes": 6},
+    {"id": "design_scaffold", "duration_minutes": 3},
+    {"id": "webui_docs", "duration_minutes": 2}
+  ],
+  "bottlenecks": [
+    "SQL Description with Unicode em-dash survived debug XML but XML Formatting + XPath router rejected 0x14",
+    "Web UI image cached flask-only requirements until --no-cache rebuild for pymssql"
+  ],
+  "speedup_ideas": [
+    "Keep catalog Description ASCII (hyphens only) when the next processor is XML Formatting + XPath routing",
+    "Copy MUE tree as the PTP skeleton instead of 835 PI"
+  ]
+}

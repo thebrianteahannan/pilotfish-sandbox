@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "interface": "EDI 837 NCCI PTP",
+  "slug": "edi-837-ncci-ptp",
+  "path": "Clients/Demos/Insurance/EDI/edi-837-ncci-ptp",
+  "requested_by": "user",
+  "started_at": "2026-08-13T12:57:35Z",
+  "completed_at": "2026-08-13T13:04:02Z",
+  "completed_by": "cursor-agent",
+  "duration_minutes": 6,
+  "compose_project": "edi-837-ncci-ptp",
+  "docker_at_completion": {
+    "sandbox_compose_projects_running": 1,
+    "sandbox_demo_containers_running": 3,
+    "this_demo_containers": [
+      "pf-edi-837-ncci-ptp-pilotfish",
+      "pf-edi-837-ncci-ptp-webui",
+      "pf-edi-837-ncci-ptp-sqlserver"
+    ],
+    "running_projects": ["edi-837-ncci-ptp"],
+    "inventory_command": "python3 tools/list_sandbox_demo_docker.py",
+    "captured_at": "2026-08-13T13:04:19Z"
+  },
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-13T12:57:35Z",
+      "ended_at": "2026-08-13T12:57:50Z",
+      "duration_minutes": 1,
+      "notes": "Cloned from edi-837-ncci-mue"
+    },
+    {
+      "id": "design_scaffold",
+      "name": "DESIGN + SQL + compose",
+      "started_at": "2026-08-13T12:57:50Z",
+      "ended_at": "2026-08-13T13:00:00Z",
+      "duration_minutes": 2,
+      "notes": "PtpEdits Column1/Column2/ModifierIndicator; ASCII descriptions"
+    },
+    {
+      "id": "routes",
+      "name": "Routes / XSLT / V2",
+      "started_at": "2026-08-13T13:00:00Z",
+      "ended_at": "2026-08-13T13:01:30Z",
+      "duration_minutes": 2,
+      "notes": "Pair extract + symmetric SQL lookup + modifier 59/X{E,P,S,U}"
+    },
+    {
+      "id": "tests",
+      "name": "Live inject tests",
+      "started_at": "2026-08-13T13:01:30Z",
+      "ended_at": "2026-08-13T13:03:00Z",
+      "duration_minutes": 2,
+      "notes": "15/15; leftover MUE route folders removed after clone"
+    },
+    {
+      "id": "closeout",
+      "name": "Replay + transcript",
+      "started_at": "2026-08-13T13:03:00Z",
+      "ended_at": "2026-08-13T13:04:02Z",
+      "duration_minutes": 1,
+      "notes": "record_module_replay then prepare-only (no mp4)"
+    }
+  ],
+  "slowest_phases": [
+    {"id": "design_scaffold", "duration_minutes": 2},
+    {"id": "routes", "duration_minutes": 2},
+    {"id": "tests", "duration_minutes": 2}
+  ],
+  "bottlenecks": [
+    "Clone from MUE left incomplete MUE route folders in eip-root/routes",
+    "Shared XPath decision narration still said underpay flag (835 leftover)"
+  ],
+  "speedup_ideas": [
+    "When cloning a sibling demo, delete the source route directories before converting V2",
+    "Keep catalog Description ASCII (hyphens only) when the next processor is XML Formatting + XPath routing"
+  ]
+}

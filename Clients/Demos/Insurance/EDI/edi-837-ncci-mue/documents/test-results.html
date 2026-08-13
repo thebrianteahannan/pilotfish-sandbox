@@ -1,0 +1,26 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/><title>Test results — EDI 837 NCCI MUE</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:1.5rem;background:#0b1c33;color:#e8eef8}
+h1{font-size:1.25rem} .sum span{margin-right:1rem;font-weight:700}
+table{border-collapse:collapse;width:100%;margin-top:1rem}
+th,td{border-bottom:1px solid #2a4466;padding:.45rem .5rem;text-align:left;vertical-align:top}
+tr.pass td:first-child{color:#3dd68c} tr.fail td:first-child,tr.error td:first-child{color:#ff6b6b}
+tr.skip td:first-child{color:#f0a202}
+</style></head><body>
+<h1>Test results — EDI 837 NCCI MUE</h1>
+<p class="sum">
+<span>pass 15</span>
+<span>fail 0</span>
+<span>error 0</span>
+<span>skip 0</span>
+<span>total 15</span>
+</p>
+<p>Finished 2026-08-13T12:56:25.230976+00:00</p>
+<table><thead><tr><th>Status</th><th>Suite</th><th>Test</th><th>Message</th><th>Time</th></tr></thead>
+<tbody>
+<tr class='pass'><td>PASS</td><td>Health</td><td>Web UI loads</td><td>UI OK (http://127.0.0.1:8131/)</td><td>37ms</td></tr><tr class='pass'><td>PASS</td><td>Health</td><td>API health</td><td>HTTP 200</td><td>23ms</td></tr><tr class='pass'><td>PASS</td><td>Health</td><td>Routes API</td><td>HTTP 200</td><td>3ms</td></tr><tr class='pass'><td>PASS</td><td>MUE scoring</td><td>SQL is reachable</td><td>HTTP 200: {&quot;eip&quot;:true,&quot;ok&quot;:true,&quot;sql&quot;:true}
+</td><td>15ms</td></tr><tr class='pass'><td>PASS</td><td>MUE scoring</td><td>EIP is reachable</td><td>HTTP 200: {&quot;eip&quot;:true,&quot;ok&quot;:true,&quot;sql&quot;:true}
+</td><td>13ms</td></tr><tr class='pass'><td>PASS</td><td>MUE scoring</td><td>MUE catalog seeded</td><td>HTTP 200: {&quot;ok&quot;:true,&quot;rows&quot;:[{&quot;Cpt&quot;:&quot;36415&quot;,&quot;Description&quot;:&quot;Venipuncture - demo MUE max 1&quot;,&quot;Mai&quot;:&quot;2&quot;,&quot;MaxUnits&quot;:1},{&quot;Cpt&quot;:&quot;45378&quot;,&quot;Description&quot;:&quot;Colonoscopy diagnostic - demo MUE max 1&quot;,&quot;Mai&quot;</td><td>11ms</td></tr><tr class='pass'><td>PASS</td><td>MUE scoring</td><td>Reset then drop sample 837P</td><td>HTTP 200</td><td>7ms</td></tr><tr class='pass'><td>PASS</td><td>MUE scoring</td><td>Inject sample 837P</td><td>HTTP 200</td><td>2ms</td></tr><tr class='pass'><td>PASS</td><td>MUE scoring</td><td>MUECLM001 within limit</td><td>HTTP 200: {&quot;kickout&quot;:[{&quot;content&quot;:&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&lt;MueDecision&gt;\n   &lt;ClaimControlNumber&gt;MUECLM004&lt;/ClaimControlNumber&gt;\n   &lt;ProcedureCode&gt;97110&lt;/ProcedureCode&gt;\n   </td><td>15073ms</td></tr><tr class='pass'><td>PASS</td><td>MUE scoring</td><td>MUECLM002 units exceeded</td><td>HTTP 200: {&quot;kickout&quot;:[{&quot;content&quot;:&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&lt;MueDecision&gt;\n   &lt;ClaimControlNumber&gt;MUECLM004&lt;/ClaimControlNumber&gt;\n   &lt;ProcedureCode&gt;97110&lt;/ProcedureCode&gt;\n   </td><td>5ms</td></tr><tr class='pass'><td>PASS</td><td>MUE scoring</td><td>MUECLM003 at MUE max</td><td>HTTP 200: {&quot;kickout&quot;:[{&quot;content&quot;:&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&lt;MueDecision&gt;\n   &lt;ClaimControlNumber&gt;MUECLM004&lt;/ClaimControlNumber&gt;\n   &lt;ProcedureCode&gt;97110&lt;/ProcedureCode&gt;\n   </td><td>5ms</td></tr><tr class='pass'><td>PASS</td><td>MUE scoring</td><td>MUECLM004 units exceeded</td><td>HTTP 200: {&quot;kickout&quot;:[{&quot;content&quot;:&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&lt;MueDecision&gt;\n   &lt;ClaimControlNumber&gt;MUECLM004&lt;/ClaimControlNumber&gt;\n   &lt;ProcedureCode&gt;97110&lt;/ProcedureCode&gt;\n   </td><td>13ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Route PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-mue/documents/EDI837_NCCI_MUE_V2_Route_Diagrams.pdf</td><td>0ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Capability Brief PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-mue/documents/EDI837_NCCI_MUE_Capability_Brief.pdf</td><td>0ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Test Plan PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-mue/documents/EDI837_NCCI_MUE_Test_Plan.pdf</td><td>0ms</td></tr>
+</tbody></table>
+</body></html>

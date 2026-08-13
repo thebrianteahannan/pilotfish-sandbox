@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7421d086-bb94-4dfd-87d4-6aaa7c84413d" name="Extract Claim Identity" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:ClaimControlNumber:eip_name:normalize-space(string((//CLM/CLM01 | //*[local-name()='CLM']/*[local-name()='CLM01'] | //*[local-name()='CLM01'])[1])):eip_value][eip_pair:StControlNumber:eip_name:normalize-space(string((/*[local-name()='Transaction']/@ControlNumber | //*[local-name()='Transaction']/@ControlNumber | //ST/ST02 | //*[local-name()='ST']/*[local-name()='ST02'])[1])):eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>

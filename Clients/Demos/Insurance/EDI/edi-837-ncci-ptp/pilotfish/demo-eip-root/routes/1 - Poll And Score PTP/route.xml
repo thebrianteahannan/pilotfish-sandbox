@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule">
+    <ModuleConfig />
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="Inbound 837P Claims">
+    <FormatProfile name="Split 837P Transactions" />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="Poll EDI 837P Files">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <PollingInterval>5</PollingInterval>
+        <PollingDirectory>$$EDI_INBOUND_DIRECTORY</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction>edi,txt,837</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>$$EDI_ARCHIVE_DIRECTORY</TargetDirectory>
+        <CompatModeMoved>false</CompatModeMoved>
+        <Tokenizers />
+        <SerializedTransactionsTag>1</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>1</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target icon="" name="Score And Stage PTP Decision">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Stage PTP Decision" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$STAGED_DECISION_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:(getAttribute('ClaimControlNumber') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimControlNumber')).trim().isEmpty() ? getAttribute('ClaimControlNumber') : 'unknown') + '_' + (getAttribute('StControlNumber') != null ? getAttribute('StControlNumber') : 'st') + '_decision'}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Extract Claim Identity">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:ClaimControlNumber:eip_name:normalize-space(string((//CLM/CLM01 | //*[local-name()='CLM']/*[local-name()='CLM01'] | //*[local-name()='CLM01'])[1])):eip_value][eip_pair:StControlNumber:eip_name:normalize-space(string((/*[local-name()='Transaction']/@ControlNumber | //*[local-name()='Transaction']/@ControlNumber | //ST/ST02 | //*[local-name()='ST']/*[local-name()='ST02'])[1])):eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Debug Write Forked Transaction">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:(getAttribute('ClaimControlNumber') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimControlNumber')).trim().isEmpty() ? getAttribute('ClaimControlNumber') : 'unknown') + '_' + (getAttribute('StControlNumber') != null ? getAttribute('StControlNumber') : 'st') + '_txn.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Extract Claim Pair XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>extract-claim-pair.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Read Claim Pair Fields">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:ProcedureCode1:eip_name:normalize-space(string((//ProcedureCode1)[1])):eip_value][eip_pair:ProcedureCode2:eip_name:normalize-space(string((//ProcedureCode2)[1])):eip_value][eip_pair:Modifier2:eip_name:normalize-space(string((//Modifier2)[1])):eip_value][eip_pair:ClaimControlNumber:eip_name:normalize-space(string((//ClaimControlNumber)[1])):eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Lookup PTP Catalog">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>SELECT TOP 1 Column1, Column2, ModifierIndicator, Description FROM dbo.PtpEdits WHERE (Column1 = ? AND Column2 = ?) OR (Column1 = ? AND Column2 = ?)</Query>
+          <QueryParams>[eip_pair:Param1:eip_name:{ognl:getAttribute('ProcedureCode1')}:eip_value][eip_pair:Param2:eip_name:{ognl:getAttribute('ProcedureCode2')}:eip_value][eip_pair:Param3:eip_name:{ognl:getAttribute('ProcedureCode2')}:eip_value][eip_pair:Param4:eip_name:{ognl:getAttribute('ProcedureCode1')}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <EnableTimeout>false</EnableTimeout>
+          <Timeout>600</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <CallbackListenerName />
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+          <JDBCProperties>null</JDBCProperties>
+          <UseConnectionPooling>true</UseConnectionPooling>
+          <PermittedDBConnections>5</PermittedDBConnections>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+          <UseJdbcTyping>false</UseJdbcTyping>
+          <TransactionIsolationLevel>Default</TransactionIsolationLevel>
+          <TransactionIsolationDriverSpecific>-1</TransactionIsolationDriverSpecific>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Extract PTP Catalog Fields">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:ModifierIndicator:eip_name:normalize-space(string((//MODIFIERINDICATOR | //ModifierIndicator | //*[local-name()='MODIFIERINDICATOR' or local-name()='ModifierIndicator'])[1])):eip_value][eip_pair:CatalogDescription:eip_name:normalize-space(string((//DESCRIPTION | //Description | //*[local-name()='DESCRIPTION' or local-name()='Description'])[1])):eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Build PTP Decision XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>build-ptp-decision.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:ClaimControlNumber:eip_name:{ognl:getAttribute('ClaimControlNumber')}:eip_value][eip_pair:ProcedureCode1:eip_name:{ognl:getAttribute('ProcedureCode1')}:eip_value][eip_pair:ProcedureCode2:eip_name:{ognl:getAttribute('ProcedureCode2')}:eip_value][eip_pair:Modifier2:eip_name:{ognl:getAttribute('Modifier2')}:eip_value][eip_pair:ModifierIndicator:eip_name:{ognl:getAttribute('ModifierIndicator')}:eip_value][eip_pair:CatalogDescription:eip_name:{ognl:getAttribute('CatalogDescription')}:eip_value][eip_pair:SourceFile:eip_name:{ognl:getAttribute('com.pilotfish.FileName')}:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Debug Write PTP Decision XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:(getAttribute('ClaimControlNumber') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimControlNumber')).trim().isEmpty() ? getAttribute('ClaimControlNumber') : 'unknown') + '_decision.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor" name="Pretty-Print Staged Decision">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>

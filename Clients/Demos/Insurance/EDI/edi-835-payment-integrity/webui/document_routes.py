@@ -404,7 +404,7 @@ def ensure_construction_video_api(app: Flask, documents_dir: Path) -> None:
                     if isinstance(loaded, dict):
                         out["job"] = loaded
                 except (OSError, json.JSONDecodeError):
-                    out["job"] = {"status": "error", "message": "unreadable job file"}
+                    pass
         return out
 
     @app.get("/api/construction-video")

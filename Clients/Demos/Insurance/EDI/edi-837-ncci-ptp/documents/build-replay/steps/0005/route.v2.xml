@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="3acab236-f9ed-49df-97e5-11453350c5a5" name="1 - Poll And Score PTP">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="8bcda934-1556-4476-9435-3ba7de9fa31c" moduleId="e08bf659-a020-4569-a0e0-d7db0ef79abd" label="Poll EDI 837P Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="657a600d-0fdb-4179-a7ac-70c1d6db9ab5" moduleId="8401f6f2-71d1-4551-96ef-c92ecf0b0055" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="f9f34b86-8be2-4c48-9033-95919a2eb551" moduleId="7421d086-bb94-4dfd-87d4-6aaa7c84413d" label="Extract Claim Identity" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="6a21aa51-243c-468e-a9a1-4cfdcb8fa305" moduleId="ab548fff-80ef-4db5-b593-254e9ad52672" label="Debug Write Forked Transaction" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="fd06ff67-2221-41fc-86a5-54f3ccfc492a" sourceNodeId="8bcda934-1556-4476-9435-3ba7de9fa31c" targetNodeId="657a600d-0fdb-4179-a7ac-70c1d6db9ab5" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="9ef7330c-3947-4457-95e5-a4019ceb8ad3" sourceNodeId="f9f34b86-8be2-4c48-9033-95919a2eb551" targetNodeId="6a21aa51-243c-468e-a9a1-4cfdcb8fa305" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="72a0c4eb-f526-4895-9283-79bb1858db28" sourceNodeId="657a600d-0fdb-4179-a7ac-70c1d6db9ab5" targetNodeId="f9f34b86-8be2-4c48-9033-95919a2eb551" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+   
+   </Connections>
+</Route>

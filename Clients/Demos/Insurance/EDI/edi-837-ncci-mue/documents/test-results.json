@@ -1,0 +1,151 @@
+{
+  "interface": "EDI 837 NCCI MUE",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-mue",
+  "started_at": "2026-08-13T12:56:10.018549+00:00",
+  "finished_at": "2026-08-13T12:56:25.230976+00:00",
+  "summary": {
+    "pass": 15,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 15
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 37,
+      "message": "UI OK (http://127.0.0.1:8131/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 23,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 3,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "wait-sql",
+      "name": "SQL is reachable",
+      "suite": "MUE scoring",
+      "status": "pass",
+      "duration_ms": 15,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"sql\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "wait-eip",
+      "name": "EIP is reachable",
+      "suite": "MUE scoring",
+      "status": "pass",
+      "duration_ms": 13,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"sql\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "mue-catalog",
+      "name": "MUE catalog seeded",
+      "suite": "MUE scoring",
+      "status": "pass",
+      "duration_ms": 11,
+      "message": "HTTP 200: {\"ok\":true,\"rows\":[{\"Cpt\":\"36415\",\"Description\":\"Venipuncture - demo MUE max 1\",\"Mai\":\"2\",\"MaxUnits\":1},{\"Cpt\":\"45378\",\"Description\":\"Colonoscopy diagnostic - demo MUE max 1\",\"Mai\"",
+      "detail": ""
+    },
+    {
+      "id": "reset-drop",
+      "name": "Reset then drop sample 837P",
+      "suite": "MUE scoring",
+      "status": "pass",
+      "duration_ms": 7,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "inject-sample",
+      "name": "Inject sample 837P",
+      "suite": "MUE scoring",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "pass-001",
+      "name": "MUECLM001 within limit",
+      "suite": "MUE scoring",
+      "status": "pass",
+      "duration_ms": 15073,
+      "message": "HTTP 200: {\"kickout\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><MueDecision>\\n   <ClaimControlNumber>MUECLM004</ClaimControlNumber>\\n   <ProcedureCode>97110</ProcedureCode>\\n   ",
+      "detail": ""
+    },
+    {
+      "id": "kickout-002",
+      "name": "MUECLM002 units exceeded",
+      "suite": "MUE scoring",
+      "status": "pass",
+      "duration_ms": 5,
+      "message": "HTTP 200: {\"kickout\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><MueDecision>\\n   <ClaimControlNumber>MUECLM004</ClaimControlNumber>\\n   <ProcedureCode>97110</ProcedureCode>\\n   ",
+      "detail": ""
+    },
+    {
+      "id": "pass-003",
+      "name": "MUECLM003 at MUE max",
+      "suite": "MUE scoring",
+      "status": "pass",
+      "duration_ms": 5,
+      "message": "HTTP 200: {\"kickout\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><MueDecision>\\n   <ClaimControlNumber>MUECLM004</ClaimControlNumber>\\n   <ProcedureCode>97110</ProcedureCode>\\n   ",
+      "detail": ""
+    },
+    {
+      "id": "kickout-004",
+      "name": "MUECLM004 units exceeded",
+      "suite": "MUE scoring",
+      "status": "pass",
+      "duration_ms": 13,
+      "message": "HTTP 200: {\"kickout\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><MueDecision>\\n   <ClaimControlNumber>MUECLM004</ClaimControlNumber>\\n   <ProcedureCode>97110</ProcedureCode>\\n   ",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-mue/documents/EDI837_NCCI_MUE_V2_Route_Diagrams.pdf",
+      "detail": ""
+    },
+    {
+      "id": "capability-pdf",
+      "name": "Capability Brief PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-mue/documents/EDI837_NCCI_MUE_Capability_Brief.pdf",
+      "detail": ""
+    },
+    {
+      "id": "test-plan-pdf",
+      "name": "Test Plan PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-mue/documents/EDI837_NCCI_MUE_Test_Plan.pdf",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-mue/tests/plan.json"
+}

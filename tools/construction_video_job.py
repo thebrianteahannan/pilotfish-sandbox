@@ -27,6 +27,14 @@ def job_path(demo: Path) -> Path:
     return demo / "documents" / "construction-video-job.json"
 
 
+def atomic_write_json(path: Path, data: dict) -> None:
+    """Write JSON so a concurrent reader never sees a truncated file."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+    tmp.replace(path)
+
+
 def load_job(demo: Path) -> dict:
     path = job_path(demo)
     if not path.is_file():
@@ -59,9 +67,7 @@ def update_job(demo: Path | None = None, **fields) -> dict:
     data["updated_at"] = utc_now()
     if "slug" not in data:
         data["slug"] = demo.name
-    docs = demo / "documents"
-    docs.mkdir(parents=True, exist_ok=True)
-    job_path(demo).write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+    atomic_write_json(job_path(demo), data)
     return data
 
 

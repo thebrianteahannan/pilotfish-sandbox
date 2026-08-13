@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "id": "extract",
+      "title": "Extract 837 line",
+      "description": "Pull claim control number and the first SV1 CPT plus units from the forked ST.",
+      "labels": [
+        "Extract Claim Identity",
+        "Debug Write Forked Transaction",
+        "Extract Claim Line XML",
+        "Read Claim Line Fields"
+      ]
+    },
+    {
+      "id": "lookup",
+      "title": "MUE catalog lookup",
+      "description": "SQL MueEdits lookup for CPT max units (Med Rec MUE_EDITS shape).",
+      "labels": ["Lookup MUE Catalog", "Extract MUE Catalog Fields"]
+    },
+    {
+      "id": "decide",
+      "title": "MUE decision",
+      "description": "Build MueDecision XML, pretty-print, and stage for routing.",
+      "labels": ["Build MUE Decision XML", "Debug Write MUE Decision", "Pretty-Print Staged Decision"]
+    }
+  ]
+}

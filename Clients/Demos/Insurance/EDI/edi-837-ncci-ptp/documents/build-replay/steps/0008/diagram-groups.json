@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "id": "extract",
+      "title": "Extract 837 pair",
+      "description": "Pull claim control number and the first two SV1 CPT codes plus modifier from the forked ST.",
+      "labels": [
+        "Extract Claim Identity",
+        "Debug Write Forked Transaction",
+        "Extract Claim Pair XML",
+        "Read Claim Pair Fields"
+      ]
+    },
+    {
+      "id": "lookup",
+      "title": "PTP catalog lookup",
+      "description": "SQL PtpEdits lookup for column-1 / column-2 NCCI pairs.",
+      "labels": ["Lookup PTP Catalog", "Extract PTP Catalog Fields"]
+    },
+    {
+      "id": "decide",
+      "title": "PTP decision",
+      "description": "Build PtpDecision XML, pretty-print, and stage for routing.",
+      "labels": ["Build PTP Decision XML", "Debug Write PTP Decision XML", "Pretty-Print Staged Decision"]
+    }
+  ]
+}

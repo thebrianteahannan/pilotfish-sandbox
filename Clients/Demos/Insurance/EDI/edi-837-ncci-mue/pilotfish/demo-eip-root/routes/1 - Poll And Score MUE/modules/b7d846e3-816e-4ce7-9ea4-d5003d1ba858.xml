@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="b7d846e3-816e-4ce7-9ea4-d5003d1ba858" name="Lookup MUE Catalog" type="Database (SQL)" tag="Processor" class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <InputFile/>
+      
+          
+      <WriteQuery>true</WriteQuery>
+      
+          
+      <Query>SELECT TOP 1 Cpt, MaxUnits, Mai, Description FROM dbo.MueEdits WHERE Cpt = ?</Query>
+      
+          
+      <QueryParams>[eip_pair:Param1:eip_name:{ognl:getAttribute('ProcedureCode')}:eip_value]</QueryParams>
+      
+          
+      <UserName>$$sqlserver.username</UserName>
+      
+          
+      <Password>$$sqlserver.password</Password>
+      
+          
+      <UseDataSource>false</UseDataSource>
+      
+          
+      <DataSource/>
+      
+          
+      <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+      
+          
+      <JdbcURL>$$sqlserver.url</JdbcURL>
+      
+          
+      <KeepConnection>false</KeepConnection>
+      
+          
+      <Autocommit>true</Autocommit>
+      
+          
+      <EnableTimeout>false</EnableTimeout>
+      
+          
+      <Timeout>600</Timeout>
+      
+          
+      <RestrictMetaDataToCatalog/>
+      
+          
+      <RestrictMetaDataToSchema/>
+      
+          
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+          
+      <CallbackListenerName/>
+      
+          
+      <UseSingleOutputStream>true</UseSingleOutputStream>
+      
+          
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+          
+      <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+      
+          
+      <JDBCProperties>null</JDBCProperties>
+      
+          
+      <UseConnectionPooling>true</UseConnectionPooling>
+      
+          
+      <PermittedDBConnections>5</PermittedDBConnections>
+      
+          
+      <LogMetadata>false</LogMetadata>
+      
+          
+      <LogSQL>true</LogSQL>
+      
+          
+      <UseJdbcTyping>false</UseJdbcTyping>
+      
+          
+      <TransactionIsolationLevel>Default</TransactionIsolationLevel>
+      
+          
+      <TransactionIsolationDriverSpecific>-1</TransactionIsolationDriverSpecific>
+      
+        
+   </ModuleConfig>
+</Module>

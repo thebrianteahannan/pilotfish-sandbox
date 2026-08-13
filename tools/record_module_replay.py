@@ -1060,7 +1060,7 @@ def explain_module_rich(
             ), None
         if "decision" in lab:
             return speak_ftp(
-                "XPath evaluation copies the match bucket and underpay flag off the decision XML "
+                "XPath evaluation copies the match bucket off the decision XML "
                 "so the router can fan out."
             ), None
         return speak_ftp(

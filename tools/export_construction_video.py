@@ -127,6 +127,17 @@ def xslt_highlight_lines(text: str) -> list[int]:
     return _ctx().xslt_highlight_lines(text)
 
 
+def xslt_overlay_fields(body: str) -> dict:
+    meta = _ctx().xslt_overlay_meta(body)
+    nbeats = max(1, len(meta.get("beats") or []))
+    return {
+        "xslt_subtitle": meta.get("subtitle") or "Stock XSLT · mapping",
+        "xslt_beats": meta.get("beats") or [],
+        "xslt_tour_ms": 3500 + nbeats * 2200,
+        "xslt_narration": meta.get("narration") or "",
+    }
+
+
 def load_demo_display_name(demo: Path) -> str:
     return _ctx().load_demo_display_name(demo)
 
@@ -851,6 +862,18 @@ def prepare_narration(
 
     for i, step in enumerate(steps, start=1):
         text = narration_for_step(step, i, len(steps))
+        module_type = str(step.get("module_type") or "")
+        is_xslt = "xslt" in module_type.lower()
+        xslt_hit = find_demo_xslt(demo, step) if demo and is_xslt else None
+        overlay: dict = {}
+        if is_xslt and xslt_hit:
+            name, body = xslt_hit
+            overlay = xslt_overlay_fields(body)
+            walk = str(overlay.get("xslt_narration") or "")
+            if walk:
+                text = (
+                    f"Now for the mapping — we're using the stock XSLT processor with {name}. {walk}"
+                )
         wav = synthesize_voice(
             text,
             work,
@@ -867,12 +890,8 @@ def prepare_narration(
         tail = empty_post_speech_ms if empty else post_speech_ms
         # Empty canvas: stay on speech length; modules get a tiny beat after TTS
         dwell = max(floor, speech_ms + tail) if empty else max(floor, int(speech_ms * pace) + tail)
-        # XSLT beat needs extra on-screen time for scroll/highlight
-        module_type = str(step.get("module_type") or "")
-        is_xslt = "xslt" in module_type.lower()
-        xslt_hit = find_demo_xslt(demo, step) if demo and is_xslt else None
-        if is_xslt and xslt_hit:
-            dwell = max(dwell, speech_ms + 6500, 14000)
+        if overlay:
+            dwell = max(dwell, speech_ms + 2000, int(overlay.get("xslt_tour_ms") or 12000), 12000)
         pad_ms = max(0, dwell - speech_ms)
         if pad_ms:
             silence = work / f"step_{i:04d}_pad.wav"
@@ -903,6 +922,8 @@ def prepare_narration(
             plan_step["xslt_name"] = name
             plan_step["xslt_text"] = body
             plan_step["xslt_highlight_lines"] = xslt_highlight_lines(body)
+            plan_step["xslt_subtitle"] = overlay.get("xslt_subtitle")
+            plan_step["xslt_beats"] = overlay.get("xslt_beats") or []
         plans.append(plan_step)
         print(f"  narrate {step_id}: {speech_ms}ms speech → {dwell}ms on screen")
         try:
@@ -1110,11 +1131,14 @@ def main() -> int:
                     xslt_hit = find_demo_xslt(demo, step)
                     if xslt_hit:
                         name, body = xslt_hit
+                        overlay = xslt_overlay_fields(body)
                         item["show_xslt"] = True
                         item["xslt_name"] = name
                         item["xslt_text"] = body
                         item["xslt_highlight_lines"] = xslt_highlight_lines(body)
-                        item["dwell_ms"] = max(int(item["dwell_ms"]), 14000)
+                        item["xslt_subtitle"] = overlay.get("xslt_subtitle")
+                        item["xslt_beats"] = overlay.get("xslt_beats") or []
+                        item["dwell_ms"] = max(int(item["dwell_ms"]), int(overlay.get("xslt_tour_ms") or 14000), 14000)
                 plans.append(item)
         else:
             print("Synthesizing narration…")

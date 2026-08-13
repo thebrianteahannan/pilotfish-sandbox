@@ -1,0 +1,169 @@
+{
+  "version": 1,
+  "interface": "EDI 837 NCCI MUE",
+  "short_name": "EDI837_NCCI_MUE",
+  "description": "Directory-drop 837P, MUE catalog lookup, pass vs kickout.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8131",
+    "eip": "http://127.0.0.1:8130/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8131/",
+    "http://127.0.0.1:8131/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["NCCI MUE", "inject-form"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["1-poll-and-score-mue", "2-route-mue-decisions"] }
+        }
+      ]
+    },
+    {
+      "id": "mue",
+      "name": "MUE scoring",
+      "tests": [
+        {
+          "id": "wait-sql",
+          "name": "SQL is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"sql\":true"]
+          }
+        },
+        {
+          "id": "wait-eip",
+          "name": "EIP is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"eip\":true"]
+          }
+        },
+        {
+          "id": "mue-catalog",
+          "name": "MUE catalog seeded",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/mue-edits",
+            "timeout_sec": 60,
+            "interval_sec": 2,
+            "contains": ["99213", "97110"]
+          }
+        },
+        {
+          "id": "reset-drop",
+          "name": "Reset then drop sample 837P",
+          "type": "http",
+          "request": { "method": "POST", "url": "{webui}/api/reset" },
+          "expect": { "status": 200, "contains": ["ok"] }
+        },
+        {
+          "id": "inject-sample",
+          "name": "Inject sample 837P",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/inject",
+            "headers": { "Content-Type": "application/json" },
+            "body": { "sample": "sample_837p_mue.edi" }
+          },
+          "expect": { "status": 200, "contains": ["sample_837p_mue.edi"] }
+        },
+        {
+          "id": "pass-001",
+          "name": "MUECLM001 within limit",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["MUECLM001_pass.xml"]
+          }
+        },
+        {
+          "id": "kickout-002",
+          "name": "MUECLM002 units exceeded",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["MUECLM002_kickout.xml"]
+          }
+        },
+        {
+          "id": "pass-003",
+          "name": "MUECLM003 at MUE max",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["MUECLM003_pass.xml"]
+          }
+        },
+        {
+          "id": "kickout-004",
+          "name": "MUECLM004 units exceeded",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["MUECLM004_kickout.xml"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837_NCCI_MUE_V2_Route_Diagrams.pdf" }
+        },
+        {
+          "id": "capability-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837_NCCI_MUE_Capability_Brief.pdf" }
+        },
+        {
+          "id": "test-plan-pdf",
+          "name": "Test Plan PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837_NCCI_MUE_Test_Plan.pdf" }
+        }
+      ]
+    }
+  ]
+}

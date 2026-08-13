@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7c90935c-a096-4ef8-839d-f25672289311" name="Lookup PTP Catalog" type="Database (SQL)" tag="Processor" class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <InputFile/>
+      
+          
+      <WriteQuery>true</WriteQuery>
+      
+          
+      <Query>SELECT TOP 1 Column1, Column2, ModifierIndicator, Description FROM dbo.PtpEdits WHERE (Column1 = ? AND Column2 = ?) OR (Column1 = ? AND Column2 = ?)</Query>
+      
+          
+      <QueryParams>[eip_pair:Param1:eip_name:{ognl:getAttribute('ProcedureCode1')}:eip_value][eip_pair:Param2:eip_name:{ognl:getAttribute('ProcedureCode2')}:eip_value][eip_pair:Param3:eip_name:{ognl:getAttribute('ProcedureCode2')}:eip_value][eip_pair:Param4:eip_name:{ognl:getAttribute('ProcedureCode1')}:eip_value]</QueryParams>
+      
+          
+      <UserName>$$sqlserver.username</UserName>
+      
+          
+      <Password>$$sqlserver.password</Password>
+      
+          
+      <UseDataSource>false</UseDataSource>
+      
+          
+      <DataSource/>
+      
+          
+      <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+      
+          
+      <JdbcURL>$$sqlserver.url</JdbcURL>
+      
+          
+      <KeepConnection>false</KeepConnection>
+      
+          
+      <Autocommit>true</Autocommit>
+      
+          
+      <EnableTimeout>false</EnableTimeout>
+      
+          
+      <Timeout>600</Timeout>
+      
+          
+      <RestrictMetaDataToCatalog/>
+      
+          
+      <RestrictMetaDataToSchema/>
+      
+          
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+          
+      <CallbackListenerName/>
+      
+          
+      <UseSingleOutputStream>true</UseSingleOutputStream>
+      
+          
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+          
+      <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+      
+          
+      <JDBCProperties>null</JDBCProperties>
+      
+          
+      <UseConnectionPooling>true</UseConnectionPooling>
+      
+          
+      <PermittedDBConnections>5</PermittedDBConnections>
+      
+          
+      <LogMetadata>false</LogMetadata>
+      
+          
+      <LogSQL>true</LogSQL>
+      
+          
+      <UseJdbcTyping>false</UseJdbcTyping>
+      
+          
+      <TransactionIsolationLevel>Default</TransactionIsolationLevel>
+      
+          
+      <TransactionIsolationDriverSpecific>-1</TransactionIsolationDriverSpecific>
+      
+        
+   </ModuleConfig>
+</Module>

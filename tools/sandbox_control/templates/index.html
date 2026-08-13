@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PilotFish Sandbox</title>
+  <link rel="stylesheet" href="/static/app.css?v=27" />
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <strong>PilotFish Sandbox</strong>
+      <span>Control hub — stays up while you switch demos and clients</span>
+    </div>
+    <p class="meta">Local <a href="http://127.0.0.1:{{ port }}/">127.0.0.1:{{ port }}</a>
+      · LAN <a href="http://{{ lan }}:{{ port }}/">{{ lan }}:{{ port }}</a></p>
+  </header>
+  <nav class="tabs" role="tablist">
+    <button type="button" class="tab is-on" data-tab="demos">Demos</button>
+    <button type="button" class="tab" data-tab="clients">Clients</button>
+    <button type="button" class="tab" data-tab="disk">Disk</button>
+    <button type="button" class="tab" data-tab="docker">Docker</button>
+  </nav>
+  <p id="job-banner" class="job-banner" hidden></p>
+
+  <section id="tab-demos" class="tab-panel">
+    <div class="toolbar">
+      <input id="filter" type="search" placeholder="Filter by name, slug, category…" />
+      <label class="check"><input id="running-only" type="checkbox" /> Running only</label>
+      <span id="demo-count" class="muted"></span>
+    </div>
+    <div id="family-chips" class="chips" role="group" aria-label="Folder filters"></div>
+    <div id="category-chips" class="chips" role="group" aria-label="Category filters"></div>
+    <p class="hint">Grouped like <code>Clients/Demos</code> on disk. One stack at a time — Start stops the others first (compose down, never -v). Create video records <code>construction-replay.mp4</code> (starts the demo if needed). One recording at a time.</p>
+    <div id="demo-list" class="demo-list"></div>
+  </section>
+
+  <section id="tab-clients" class="tab-panel" hidden>
+    <div id="client-list-view">
+      <div class="toolbar">
+        <input id="client-filter" type="search" placeholder="Filter clients…" />
+        <span id="client-count" class="muted"></span>
+      </div>
+      <p class="hint">Drop or paste a client email, build a change plan, Start work (applies edits, loads EIP, runs tests), review the diff, then generate the TEST zip to deploy.</p>
+      <div id="client-list" class="demo-list"></div>
+    </div>
+    <div id="client-detail-view" hidden>
+      <div class="toolbar">
+        <button type="button" class="btn" id="client-back">← All clients</button>
+        <span id="client-detail-title" class="muted"></span>
+      </div>
+      <div id="client-detail"></div>
+    </div>
+  </section>
+
+  <section id="tab-disk" class="tab-panel" hidden>
+    <div class="toolbar">
+      <button type="button" class="btn" id="disk-refresh">Refresh sizes</button>
+      <button type="button" class="btn btn-danger" id="disk-videos">Delete all construction videos</button>
+      <span id="disk-total" class="muted"></span>
+    </div>
+    <p class="hint">Allowlisted deletes only: construction-replay.mp4, demo logs/, and demo output/ (not routes, samples, PDFs, or Docker volumes).</p>
+    <div class="grid">
+      <article class="panel">
+        <h2>Repo folders</h2>
+        <div id="disk-folders"></div>
+      </article>
+      <article class="panel">
+        <h2>Regenerable junk</h2>
+        <div id="disk-junk"></div>
+      </article>
+    </div>
+    <article class="panel">
+      <h2>Demos by size</h2>
+      <div id="disk-demos"></div>
+    </article>
+    <article class="panel">
+      <h2>Largest files</h2>
+      <div id="disk-files"></div>
+    </article>
+  </section>
+
+  <section id="tab-docker" class="tab-panel" hidden>
+    <div class="toolbar">
+      <button type="button" class="btn" id="docker-refresh">Refresh</button>
+      <span id="docker-total" class="muted"></span>
+    </div>
+    <p class="hint">Running containers whose compose files or mounts live under <code>Clients/</code> (demos and client sandboxes). Other host Docker is hidden. One demo stack at a time — compose down never <code>-v</code>.</p>
+    <article class="panel">
+      <h2>Running containers</h2>
+      <div id="docker-containers"></div>
+    </article>
+    <article class="panel">
+      <h2>Images in use</h2>
+      <div id="docker-images"></div>
+    </article>
+  </section>
+
+  <div id="file-view" class="file-view" hidden>
+    <div class="file-view-panel">
+      <div class="file-view-bar">
+        <strong id="file-view-name">File</strong>
+        <button type="button" class="btn" id="file-view-before">Before</button>
+        <button type="button" class="btn is-on" id="file-view-after">After</button>
+        <button type="button" class="btn" id="file-view-close">Close</button>
+      </div>
+      <div class="file-view-code" id="file-view-code"></div>
+    </div>
+  </div>
+
+  <script src="/static/app.js?v=11"></script>
+  <script src="/static/docker.js?v=2"></script>
+  <script src="/static/clients.js?v=24"></script>
+  <script src="/static/file-view.js?v=3"></script>
+</body>
+</html>

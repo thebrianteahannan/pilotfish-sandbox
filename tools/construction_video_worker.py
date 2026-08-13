@@ -50,13 +50,12 @@ def resolve_demo(payload: dict) -> Path | None:
 
 
 def write_job(demo: Path, data: dict) -> None:
-    docs = demo / "documents"
-    docs.mkdir(parents=True, exist_ok=True)
+    sys.path.insert(0, str(TOOLS))
+    from construction_video_job import atomic_write_json, job_path
+
     payload = dict(data)
     payload["updated_at"] = utc_now()
-    (docs / "construction-video-job.json").write_text(
-        json.dumps(payload, indent=2) + "\n", encoding="utf-8"
-    )
+    atomic_write_json(job_path(demo), payload)
     global _job
     with _lock:
         _job = dict(payload)

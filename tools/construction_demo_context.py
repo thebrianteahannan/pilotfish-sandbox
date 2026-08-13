@@ -433,30 +433,171 @@ def _human_xpath(expr: str) -> str:
     return step
 
 
-def xslt_talking_points(text: str) -> str:
-    """One spoken sentence from the stylesheet — no for-each / $var dumps."""
-    bits: list[str] = []
+_XSLT_ACRONYMS = {
+    "cpt",
+    "csv",
+    "clm",
+    "edi",
+    "hl7",
+    "mue",
+    "ptp",
+    "sql",
+    "sv1",
+    "xml",
+}
+
+
+_XSLT_SAY = {
+    "mod": "modifier",
+}
+
+
+def _human_ident(name: str) -> str:
+    spaced = re.sub(r"[-_]+", " ", (name or "").strip())
+    spaced = re.sub(r"([a-z])([A-Z])", r"\1 \2", spaced)
+    spaced = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", spaced)
+    words: list[str] = []
+    for w in spaced.split():
+        key = w.lower()
+        if key in _XSLT_ACRONYMS:
+            words.append(key.upper())
+            continue
+        if key in _XSLT_SAY:
+            words.append(_XSLT_SAY[key])
+            continue
+        w = re.sub(r"([A-Za-z])(\d+)", r"\1 \2", w)
+        words.extend(part.lower() for part in w.split() if part)
+    return " ".join(words).strip()
+
+
+def _a(noun: str) -> str:
+    n = (noun or "").strip()
+    if not n:
+        return n
+    return ("an " if n[0].upper() in "AEFHILMNORSX" else "a ") + n
+
+
+def _join_words(items: list[str], cap: int = 5) -> str:
+    items = [i for i in items if i][:cap]
+    if not items:
+        return ""
+    if len(items) == 1:
+        return items[0]
+    if len(items) == 2:
+        return f"{items[0]} and {items[1]}"
+    return ", ".join(items[:-1]) + ", and " + items[-1]
+
+
+def xslt_overlay_meta(text: str) -> dict:
+    """Subtitle, scroll beats, and spoken walkthrough from a stylesheet (any demo)."""
+    lines = (text or "").splitlines()
+    beats: list[dict] = []
+    named: list[str] = []
+    params: list[str] = []
+    kids: list[str] = []
+    root = ""
+    has_foreach = False
+    has_choose = bool(re.search(r"<xsl:(choose|if)\b", text or "", flags=re.I))
+    kick = bool(re.search(r"kickout|matchbucket|pass", text or "", flags=re.I))
+
+    def add_beat(line: int, caption: str) -> None:
+        cap = (caption or "").strip()
+        if not cap:
+            return
+        if beats and beats[-1]["caption"] == cap:
+            return
+        beats.append({"line": line, "caption": cap})
+
+    for i, raw in enumerate(lines, 1):
+        line = raw.strip()
+        nm = re.search(r'<xsl:template\s+name="([^"]+)"', line)
+        if nm:
+            named.append(nm.group(1))
+            add_beat(i, f"Helper — {_human_ident(nm.group(1))}")
+            continue
+        if re.search(r"<xsl:template\s+match=", line):
+            add_beat(i, "Main template — build the output document")
+            continue
+        if re.search(r"<xsl:for-each\b", line):
+            has_foreach = True
+            add_beat(i, "Loop over each source record")
+            continue
+        pm = re.search(r'<xsl:param\s+name="([^"]+)"', line)
+        if pm:
+            params.append(pm.group(1))
+            continue
+        tag_m = re.match(r"<([A-Za-z][\w.-]*)\b", line)
+        if not tag_m:
+            continue
+        tag = tag_m.group(1)
+        if tag.startswith("xsl") or tag.lower() in {"xml"}:
+            continue
+        if not root:
+            root = tag
+            add_beat(i, f"Output — {_human_ident(tag)}")
+        elif tag not in kids and len(kids) < 8:
+            kids.append(tag)
+            if tag in {"MatchBucket", "Reason"}:
+                add_beat(i, "Decide pass or kickout from the catalog result")
+
+    if re.search(r"method\s*=\s*['\"]text['\"]", text or "", flags=re.I):
+        subtitle = "Stock XSLT · writes a text record"
+    elif has_foreach:
+        subtitle = "Stock XSLT · map each record"
+    elif root:
+        subtitle = f"Stock XSLT · {_human_ident(root)}"
+    else:
+        subtitle = "Stock XSLT · mapping"
+
+    parts: list[str] = []
     if re.search(r"method\s*=\s*['\"]text['\"]", text or "", flags=re.I):
         if re.search(r"2100", text or ""):
-            bits.append("The stylesheet writes a 2100-character fixed-width text record.")
+            parts.append("The stylesheet writes a 2100-character fixed-width text record.")
         elif re.search(r"json", text or "", flags=re.I):
-            bits.append("The stylesheet writes JSON as text.")
+            parts.append("The stylesheet writes JSON as text.")
         else:
-            bits.append("The stylesheet writes a text record instead of XML.")
-        return " ".join(bits)
-    shown: list[str] = []
-    for v in re.findall(r'value-of[^>]*select="([^"]+)"', text or "", flags=re.I):
-        if re.match(r"^\$[A-Za-z_]\w*$", (v or "").strip()):
-            continue
-        h = _human_xpath(v)
-        if not h or re.match(r"^[a-z]\d+$", h) or h in shown:
-            continue
-        shown.append(h)
-        if len(shown) >= 3:
-            break
-    if shown:
-        bits.append("It maps " + ", ".join(shown) + ".")
-    return " ".join(bits)
+            parts.append("The stylesheet writes a text record instead of XML.")
+    else:
+        if named:
+            parts.append("Helper templates " + _join_words([_human_ident(n) for n in named], 3) + ".")
+        if has_foreach:
+            parts.append("It loops over each source record and maps the fields.")
+        if params and not named:
+            parts.append("Values from earlier steps come in as parameters.")
+        kid_names = [_human_ident(k) for k in kids if len(k) > 3]
+        if root and kid_names:
+            parts.append(
+                f"The output is {_a(_human_ident(root))} with {_join_words(kid_names, 5)}."
+            )
+        elif root:
+            parts.append(f"The output is {_a(_human_ident(root))}.")
+        if kick and has_choose:
+            parts.append("Then it scores pass or kickout.")
+        elif kick:
+            parts.append("Then it sets pass or kickout.")
+        if not parts:
+            shown: list[str] = []
+            for v in re.findall(r'value-of[^>]*select="([^"]+)"', text or "", flags=re.I):
+                if re.match(r"^\$[A-Za-z_]\w*$", (v or "").strip()):
+                    continue
+                h = _human_xpath(v)
+                if not h or re.match(r"^[a-z]\d+$", h) or h in shown:
+                    continue
+                shown.append(h)
+                if len(shown) >= 3:
+                    break
+            if shown:
+                parts.append("It maps " + _join_words(shown, 3) + ".")
+    return {
+        "subtitle": subtitle,
+        "beats": beats[:6],
+        "narration": " ".join(parts).strip(),
+    }
+
+
+def xslt_talking_points(text: str) -> str:
+    """Spoken walkthrough of the stylesheet — no for-each / $var dumps."""
+    return str(xslt_overlay_meta(text).get("narration") or "")
 
 
 def detect_demo_test(url: str, demo: Path) -> dict | None:
