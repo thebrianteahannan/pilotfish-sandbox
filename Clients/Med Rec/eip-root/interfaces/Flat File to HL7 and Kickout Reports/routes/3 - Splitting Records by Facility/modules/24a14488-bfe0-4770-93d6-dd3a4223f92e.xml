@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="24a14488-bfe0-4770-93d6-dd3a4223f92e" name="Get Split Count - NPS ONLY" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('Partition') == 'NPS'}</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:SplitCount:eip_name:{ognl:getAttribute('SplitCount') != null ? (getAttribute('SplitCount') - 1) : 0}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

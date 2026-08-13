@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="e0345c62-5bb7-4a14-ac36-b3d3f5091301" name="Call Route to generate report for cdm appeding A's" type="CallRouteProcessor" tag="Processor" class="com.pilotfish.eip.modules.internal.CallRouteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('Partition') == 'SPG'}</ExecuteProcessor>
+      
+          
+      <Listener>Flat File to HL7 and Kickout Reports.4d - CDM Appended A Report.Programmable (Trigger) Listener</Listener>
+      
+          
+      <Synchronous>false</Synchronous>
+      
+          
+      <Timeout>60</Timeout>
+      
+        
+   </ModuleConfig>
+</Module>

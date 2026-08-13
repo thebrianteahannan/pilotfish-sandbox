@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="73f8a83d-f913-46be-ab7f-dc46d2c4f610" name="4a5 - Kickout Reports - Accounts With No Date of Service">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="cd15e756-f2a4-4615-b621-245d2cf6f1a9" moduleId="dc610580-7d59-41eb-93ad-85262f904f7d" label="Flat File to HL7 and Kickout Reports.4a5 - Kickout Reports - Accounts With No Date of Service.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="8bdb16f0-569e-4e1b-93c9-2caaca2b7d0d" moduleId="6d4c459f-e406-4ae1-aa33-879fc9a57ce8" label="Flat File to HL7 and Kickout Reports.4a5 - Kickout Reports - Accounts With No Date of Service.Directory / File Transport1" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="e2b2efb3-d09f-4a9c-81b1-e1a5977b034b" sourceNodeId="cd15e756-f2a4-4615-b621-245d2cf6f1a9" targetNodeId="8bdb16f0-569e-4e1b-93c9-2caaca2b7d0d" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

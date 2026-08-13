@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="b41a99cc-65c1-4935-8cd3-c3729876c25d" name="Put Info Into Attrs" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:SoftwareID:eip_name://SOFTWAREID:eip_value][eip_pair:ClientName:eip_name://CLIENTNAME:eip_value][eip_pair:FacilityCode88363:eip_name://FACILITYCODE88363:eip_value][eip_pair:PartitionName:eip_name://PARTITION[1]:eip_value][eip_pair:Client:eip_name://CLIENT[1]:eip_value][eip_pair:FacilityName:eip_name://FACILITY:eip_value][eip_pair:FacilityCode:eip_name://FACILITYCODE:eip_value][eip_pair:DefaultPerfDr:eip_name://DEFAULTPERFDR:eip_value][eip_pair:AccountNumAlpha:eip_name://ACCOUNTNUMALPHA:eip_value][eip_pair:DateRange:eip_name://DATERANGE:eip_value][eip_pair:IsDefault:eip_name://ISDEFAULT:eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>

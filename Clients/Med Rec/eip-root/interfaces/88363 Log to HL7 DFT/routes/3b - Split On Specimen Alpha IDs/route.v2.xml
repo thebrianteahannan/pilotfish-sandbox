@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="b9616bcb-bca6-445b-911b-ff871b69adca" name="3b - Split On Specimen Alpha IDs">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="b35148aa-728a-48ce-8497-9722db178713" moduleId="bb6cc8a9-dd3c-4fc2-95c6-779324a26d8b" label="88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="9ae3ca36-60f5-4f2f-a86f-80f5d9c84ed3" moduleId="1c1ff5b6-6e52-478d-b922-6165f20b2df2" label="Save Orig Data" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="ff27f78a-fa28-42b6-b5b1-c1d4ffcb8fc4" moduleId="620d40c4-a039-4059-9d6c-c07f246ad909" label="Get Split Codes List From DB" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="73523411-eb52-44b8-abce-906387607b63" moduleId="8d71dc6c-f348-4e71-9ff3-4b4a3d42b1e4" label="Convert DB Results XML to SplitList XML" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="d6ad698b-f66c-47c9-bbec-5ea813c22d30" moduleId="a0b016da-db13-4b8c-a647-4ca66012f284" label="Save SplitCodesXML to Trans Attr" x="1040.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="fec4a690-17e2-470c-ba8b-98f88276fd26" moduleId="ad8c2d36-0ccc-413b-8a88-ff39c90a6372" label="Swap Orig Data Back In" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="dc92425a-9e29-47cd-acff-977369a3e19a" moduleId="8a8dd8f2-bc05-4556-a860-19346aa18cff" label="Assign Split Names To Records By Specimen Alpha IDs" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="64334ec7-b842-43f8-8fe0-09776f085ce9" moduleId="a3ffa24e-b9d5-439e-b373-e599e12943f6" label="Group Records By Split Names" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="bf65bfba-f7d6-4eb8-a245-d8c4eef85d05" moduleId="1311279a-1d7a-4750-8165-56c637df1536" label="Set SpecAlphaSplit Boolean" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="3c2e8267-7fc9-436e-a879-765dbc2d4e88" moduleId="c31fe9fa-8335-4342-87a3-d8dfb58c0c15" label="Fork - XPath" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="6dd0858a-751c-4751-a3ef-e2a82e002eca" moduleId="794bb25a-2a10-4572-a862-b1354b24cdb8" label="88363 Log to HL7 DFT.4 - Split On Specimen Alpha IDs.Processor" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="0c450a2b-2153-4323-a405-ba99079e063b" moduleId="f8036050-9083-42ce-b84e-5077236c9272" label="88363 Log to HL7 DFT.2a - Split On Specimen Alpha IDs.Route to Route Transport" x="1560.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="00ff2f8b-eb6a-4e31-bc2c-4437baed9a8c" sourceNodeId="b35148aa-728a-48ce-8497-9722db178713" targetNodeId="9ae3ca36-60f5-4f2f-a86f-80f5d9c84ed3" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="7ec8f8e2-2535-440e-b68a-86ee39795e33" sourceNodeId="9ae3ca36-60f5-4f2f-a86f-80f5d9c84ed3" targetNodeId="ff27f78a-fa28-42b6-b5b1-c1d4ffcb8fc4" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="35b6d95e-f3d9-4c1d-b833-4eda740795a3" sourceNodeId="ff27f78a-fa28-42b6-b5b1-c1d4ffcb8fc4" targetNodeId="73523411-eb52-44b8-abce-906387607b63" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="c51f2aa2-7846-4d51-bc61-c6c81dff800d" sourceNodeId="73523411-eb52-44b8-abce-906387607b63" targetNodeId="d6ad698b-f66c-47c9-bbec-5ea813c22d30" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="2a2f2e16-8761-49a0-bb84-4af11a01dcf6" sourceNodeId="d6ad698b-f66c-47c9-bbec-5ea813c22d30" targetNodeId="fec4a690-17e2-470c-ba8b-98f88276fd26" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="89d3002a-e0e7-4407-a50c-ae14f0cf9d71" sourceNodeId="fec4a690-17e2-470c-ba8b-98f88276fd26" targetNodeId="dc92425a-9e29-47cd-acff-977369a3e19a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="48a85d8b-e787-4dfd-a164-00369e45f9ed" sourceNodeId="dc92425a-9e29-47cd-acff-977369a3e19a" targetNodeId="64334ec7-b842-43f8-8fe0-09776f085ce9" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="6f76dbd1-bf94-4ad8-a8ab-451011e3fd48" sourceNodeId="64334ec7-b842-43f8-8fe0-09776f085ce9" targetNodeId="bf65bfba-f7d6-4eb8-a245-d8c4eef85d05" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="3388fd7a-7a48-459e-b65d-40514d315323" sourceNodeId="bf65bfba-f7d6-4eb8-a245-d8c4eef85d05" targetNodeId="3c2e8267-7fc9-436e-a879-765dbc2d4e88" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="15f8c357-847e-41cb-9f78-a36e47671451" sourceNodeId="6dd0858a-751c-4751-a3ef-e2a82e002eca" targetNodeId="0c450a2b-2153-4323-a405-ba99079e063b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="d2de2523-a5d4-4ee3-bc7c-3a2beef6c661" sourceNodeId="3c2e8267-7fc9-436e-a879-765dbc2d4e88" targetNodeId="6dd0858a-751c-4751-a3ef-e2a82e002eca" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="a3ae4f27-2af8-4f35-9139-e9e09e396391" name="1b - NGP Multi">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="fe7396ab-ba77-475f-84f8-1859f3bdcb0d" moduleId="992450d8-749e-41ea-90af-9468c810776a" label="Flat File to HL7 and Kickout Reports.1b - NGP Multi.Directory / File Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="150a221c-6787-4cb8-a941-c87d8901d415" moduleId="0bf1b562-ad4b-445e-8494-b2b78a40a2ab" label="Flat File to HL7 and Kickout Reports.1b - NGP Multi.Directory / File Listener2" x="0.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="b8772545-c73e-4a55-ab5e-386c29895772" moduleId="74e3c3fe-e900-4513-9f3d-e18599590d16" label="Flat File to HL7 and Kickout Reports.1b - NGP Multi.Directory / File Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="3a8a6b1a-1462-436d-9379-7f080fbac8aa" sourceNodeId="fe7396ab-ba77-475f-84f8-1859f3bdcb0d" targetNodeId="b8772545-c73e-4a55-ab5e-386c29895772" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="a66c4e9c-6bf5-45cd-a0a2-368f8dbb86ad" sourceNodeId="150a221c-6787-4cb8-a941-c87d8901d415" targetNodeId="b8772545-c73e-4a55-ab5e-386c29895772" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

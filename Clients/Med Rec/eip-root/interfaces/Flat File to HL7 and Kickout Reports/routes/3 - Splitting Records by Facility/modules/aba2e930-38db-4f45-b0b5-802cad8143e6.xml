@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="aba2e930-38db-4f45-b0b5-802cad8143e6" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="7e723722-7bf5-423d-9c6b-a12d8bdcd15d" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="85824c8d-baec-4c74-9382-e720e4370569" name="Rule 1 - 2-1 - Split and Strip Records by Facility.Route to Route Transport" type="XPATH">
+               <condition>true()</condition>
+            </output>
+            <output id="0325a72c-03c7-4b79-b871-34a5c14f4c2f" name="Rule 2 - 2-1 - Split Records by Facility.Route to Route Transport2" type="XPATH">
+               <condition>true()</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

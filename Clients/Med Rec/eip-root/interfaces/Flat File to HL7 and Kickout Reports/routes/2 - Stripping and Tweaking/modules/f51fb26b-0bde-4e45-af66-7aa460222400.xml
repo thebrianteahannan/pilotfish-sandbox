@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="f51fb26b-0bde-4e45-af66-7aa460222400" name="Put Blank Data into TransData - PPS ONLY" type="TransactionDataPopulationProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.TransactionDataPopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('Partition') == 'PPS'}</ExecuteProcessor>
+      
+          
+      <Contents>&lt;BlankData /&gt;</Contents>
+      
+          
+      <InputType>Text</InputType>
+      
+          
+      <Encoding>UTF-8</Encoding>
+      
+        
+   </ModuleConfig>
+</Module>

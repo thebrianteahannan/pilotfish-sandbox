@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="8bf2e9b8-65af-4215-b61f-f623813b9a3c" name="Set Partition and Client Name-FPS-CHJ" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('PartitionName') == 'FPS' &amp;&amp; getAttribute('ClientName') == 'CHJ'}</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:Partition:eip_name:FPS:eip_value][eip_pair:Client:eip_name:CHJ:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

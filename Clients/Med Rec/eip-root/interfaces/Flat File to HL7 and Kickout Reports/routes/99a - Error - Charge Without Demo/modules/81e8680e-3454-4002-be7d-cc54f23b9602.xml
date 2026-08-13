@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="81e8680e-3454-4002-be7d-cc54f23b9602" name="Flat File to HL7 and Kickout Reports.99a - Error - Charge Without Demo.Directory / File Transport" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory>$$HL7_TARGET_DIRECTORY</TargetDirectory>
+      
+        
+      <FileName>{ognl:getAttribute('com.pilotfish.FileName') + '_' + 'Error_ChargeWithoutDemo'}</FileName>
+      
+        
+      <FileExtension>txt</FileExtension>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <AppendToFile>Create New</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

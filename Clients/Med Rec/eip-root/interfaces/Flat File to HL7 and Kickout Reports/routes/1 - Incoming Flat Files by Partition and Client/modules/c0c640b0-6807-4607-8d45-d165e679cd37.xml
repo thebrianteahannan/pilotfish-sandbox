@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c0c640b0-6807-4607-8d45-d165e679cd37" name="Set Partition and Client Name-FPS-STB" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('PartitionName') == 'FPS' &amp;&amp; getAttribute('ClientName') == 'STB'}</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:Partition:eip_name:FPS:eip_value][eip_pair:Client:eip_name:STB:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

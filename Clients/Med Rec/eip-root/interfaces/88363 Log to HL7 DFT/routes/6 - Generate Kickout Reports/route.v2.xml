@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="a961bf0a-8e1e-400c-a974-2c14ad972513" name="6 - Generate Kickout Reports">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="1eae9e9e-8479-4ef4-b905-d1d1581358f5" moduleId="4b3ac475-22a2-473c-899f-199cf7f430c2" label="88363 Log to HL7 DFT.6 - Generate Kickout Reports.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="f2449f0e-e9d7-4d3f-85c6-fff8c0c00997" moduleId="ec5b223e-5f00-4e95-84df-245baf1c4905" label="88363 Log to HL7 DFT.6 - Generate Kickout Reports.Directory / File Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="a869ccad-2a09-4e24-97e2-8657e7805cdd" sourceNodeId="1eae9e9e-8479-4ef4-b905-d1d1581358f5" targetNodeId="f2449f0e-e9d7-4d3f-85c6-fff8c0c00997" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

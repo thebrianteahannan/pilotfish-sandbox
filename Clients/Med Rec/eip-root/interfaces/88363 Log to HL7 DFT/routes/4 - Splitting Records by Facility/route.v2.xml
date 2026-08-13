@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="f2d681e1-64b3-4718-a03a-72dea766dafb" name="4 - Splitting Records by Facility">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="8eb5ed98-684d-4048-ab72-43b164362148" moduleId="dfd64fc0-02e2-45b6-a0b5-ef565259bc0d" label="4 - Split and Strip Records by Facility.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="12b4e641-732a-4207-a1f4-0dba30cfe36c" moduleId="ae86521a-c366-4e3b-beb5-925a66af6872" label="Save Data into Temp Trans Attr" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="d13b588c-64f6-4445-a547-458946112726" moduleId="f5389b06-807f-4fdd-b413-1fc8d996586d" label="Query Database for Split Information" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="3151c740-aa53-4d1a-8b7e-fc4d5612a354" moduleId="8330117e-3f78-4dbb-9519-09fba5d6712a" label="DB Results to SplintInfo XML" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="cfefee44-b8af-49b7-a3fb-41480ec7c81d" moduleId="55e30d38-ca7c-4ad3-8a70-b4e69b955508" label="Get Default Split Code" x="1040.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="6680968b-75fb-4f5b-a095-f327bb86833f" moduleId="15275728-c2ab-4b5f-b14c-1650bb8bc376" label="Store Split Database Results to Attribute" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="eaac0724-2fe7-4097-a97f-98d57f3ffceb" moduleId="2758ebd0-6af0-47da-94f4-bdd66132f14e" label="Put Data Back" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="1dd5339d-831b-47df-a828-4b063a0f1240" moduleId="5b895461-a83a-4398-8b5f-c7d074262828" label="Wrap Groups In Client Node with ClientCode" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="d6b8b611-a830-42ef-88d8-665848194cc7" moduleId="0059e09d-0e1c-46b0-a526-5cf572517c3a" label="Assign Split Codes" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="d7e42c0e-8201-4fcb-9ab3-98ad2928260f" moduleId="e4f1ba0f-a10e-44cc-83db-7611fe03290c" label="Remove Duplicates That Don't Have a Split Code Assigned" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="5e63995a-2f6b-4ef0-a071-53f3a793c880" moduleId="e1136058-1659-4243-acd9-5a0ace96db5f" label="Remove Duplicates - Specific Ones" x="2600.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="1e759446-7ac8-4fac-b26a-ab974cb091ba" moduleId="4722d287-e71c-47c2-8935-35691c5e10dd" label="Remove More Duplicates" x="2860.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="fe7b8605-3b22-40aa-90d2-b3dda74e3b61" moduleId="3953459e-8883-4450-aeed-4805f3674e78" label="Remove Default Splits If Non-Default Split Exists For Same Row" x="3120.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="6cc964b0-6813-4866-a7fb-5671065c6951" moduleId="2961b3fe-3875-4b1c-ae95-c7046761e588" label="Group Splits and Clients Together" x="3380.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="e7ca273d-985e-4070-b0a3-33686f509c6b" moduleId="3cff39a0-2b68-4d2e-919c-0aa741bb7d40" label="Get Split Count" x="3640.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="2bd559c0-48bf-4a89-8bee-fe9c8c831e95" moduleId="69e78c4c-4957-47a1-b25e-6ffcde3b1702" label="Save Data Again" x="3900.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="fee077e4-2d04-4fa4-87bf-1ec9c91cb940" moduleId="08513fad-4902-488f-b465-cc15f91d10eb" label="Fork - XPath" x="4160.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="9ae1adb4-1666-4e0f-b7a1-bd349e52a9b9" moduleId="3bcdc3e5-d1cd-47c9-bd90-efcc2d525780" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="72.0"/>
+      <Node id="0e79d853-9a79-4287-b745-1e4565126690" moduleId="55aa8c84-aeaa-4942-b89d-f07ecc47c4db" label="Get SplitCode, Facility Code, AccountNumAlpha Into Trans Attrs" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="69033e65-fb23-45ee-9cdf-e6e04770a65c" moduleId="24746972-ccb6-4e48-abf5-0617a1db1e5e" label="Store Trans Data into tempData Trans Attr" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="0e995d27-eee6-43d6-b2f3-5b933f8a02d4" moduleId="99f4b1e3-2c91-4903-9d8d-58627972d3cc" label="Concatenate Query Results and tempData TransAttrs For Final Split XML" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="9d949d3f-e9db-4b18-a591-9bd6092865ba" moduleId="3350b814-085c-4cbb-8b6a-14f1f8b46104" label="Construct Final Split XML" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="896631cd-7c47-4360-9172-f1bd8655a099" moduleId="7fe8fcf3-6919-4187-aae5-aa5e2e4dcd8b" label="Adapt Split Code From this Type of Splitting to splitShortName Trans Attr For Final File" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="06377d83-f82e-4c9c-baa6-4bae25d56e3e" moduleId="1f2f4ff4-11a6-4a23-a370-205590cb8926" label="2-1 - Split and Strip Records by Facility.Route to Route Transport" x="2600.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="a30ac633-6eb0-4db5-81e2-32bad9104aab" moduleId="256e6635-6777-4785-8923-b2dc3f8f0ab9" label="Put Original Data Back Because We Did Not Split" x="1300.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="f6ed9d42-e694-49c0-a658-ee99ef846bfc" moduleId="6a51672a-7685-46b3-8263-b06af54e2ec1" label="2-1 - Split Records by Facility.Route to Route Transport2" x="1560.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="ada66208-5a2d-42af-b230-da94ccca36e6" sourceNodeId="8eb5ed98-684d-4048-ab72-43b164362148" targetNodeId="12b4e641-732a-4207-a1f4-0dba30cfe36c" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="58d203de-6939-49ca-95c8-901eb61bf81d" sourceNodeId="12b4e641-732a-4207-a1f4-0dba30cfe36c" targetNodeId="d13b588c-64f6-4445-a547-458946112726" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="de67d6f9-324e-4dcf-a656-b929f5941cdd" sourceNodeId="d13b588c-64f6-4445-a547-458946112726" targetNodeId="3151c740-aa53-4d1a-8b7e-fc4d5612a354" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="737b1e6a-28df-42c9-a985-b120f63596a7" sourceNodeId="3151c740-aa53-4d1a-8b7e-fc4d5612a354" targetNodeId="cfefee44-b8af-49b7-a3fb-41480ec7c81d" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="55d174d2-6ac6-4999-9942-01c4d4c96cd0" sourceNodeId="cfefee44-b8af-49b7-a3fb-41480ec7c81d" targetNodeId="6680968b-75fb-4f5b-a095-f327bb86833f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="c291d2b0-2b4b-417a-9547-c293a4a7e53d" sourceNodeId="6680968b-75fb-4f5b-a095-f327bb86833f" targetNodeId="eaac0724-2fe7-4097-a97f-98d57f3ffceb" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="8bc01eae-9029-4b1c-a386-ea5d1b0eae8d" sourceNodeId="eaac0724-2fe7-4097-a97f-98d57f3ffceb" targetNodeId="1dd5339d-831b-47df-a828-4b063a0f1240" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="e1a2babf-2aff-421c-bb13-a652f66c598a" sourceNodeId="1dd5339d-831b-47df-a828-4b063a0f1240" targetNodeId="d6b8b611-a830-42ef-88d8-665848194cc7" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="940d77b2-b91e-4a89-af3b-326073ea074f" sourceNodeId="d6b8b611-a830-42ef-88d8-665848194cc7" targetNodeId="d7e42c0e-8201-4fcb-9ab3-98ad2928260f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="e70428fc-a467-4d32-874e-0ae048340489" sourceNodeId="d7e42c0e-8201-4fcb-9ab3-98ad2928260f" targetNodeId="5e63995a-2f6b-4ef0-a071-53f3a793c880" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="d0771d61-dfdd-4830-ae9b-f850e3ff081c" sourceNodeId="5e63995a-2f6b-4ef0-a071-53f3a793c880" targetNodeId="1e759446-7ac8-4fac-b26a-ab974cb091ba" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="84db1850-f4c6-4cb3-8763-1559c8310bc7" sourceNodeId="1e759446-7ac8-4fac-b26a-ab974cb091ba" targetNodeId="fe7b8605-3b22-40aa-90d2-b3dda74e3b61" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="ac404f33-cfad-4651-a108-000f1d98fbb3" sourceNodeId="fe7b8605-3b22-40aa-90d2-b3dda74e3b61" targetNodeId="6cc964b0-6813-4866-a7fb-5671065c6951" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="42b93a98-addc-403f-a322-76af6078ba8e" sourceNodeId="6cc964b0-6813-4866-a7fb-5671065c6951" targetNodeId="e7ca273d-985e-4070-b0a3-33686f509c6b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="a9345557-e2b5-44e7-a127-8aaae8508066" sourceNodeId="e7ca273d-985e-4070-b0a3-33686f509c6b" targetNodeId="2bd559c0-48bf-4a89-8bee-fe9c8c831e95" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="491b2ab8-eda5-4a8e-afd7-54fd1349db1d" sourceNodeId="2bd559c0-48bf-4a89-8bee-fe9c8c831e95" targetNodeId="fee077e4-2d04-4fa4-87bf-1ec9c91cb940" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="7d75fb0a-24cf-4b3a-b881-6476e5222d45" sourceNodeId="0e79d853-9a79-4287-b745-1e4565126690" targetNodeId="69033e65-fb23-45ee-9cdf-e6e04770a65c" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="2eefccac-436c-440f-88c0-6b038a815023" sourceNodeId="69033e65-fb23-45ee-9cdf-e6e04770a65c" targetNodeId="0e995d27-eee6-43d6-b2f3-5b933f8a02d4" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="8bf0ce14-488e-4bca-a16c-34c0998d3628" sourceNodeId="0e995d27-eee6-43d6-b2f3-5b933f8a02d4" targetNodeId="9d949d3f-e9db-4b18-a591-9bd6092865ba" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="573baa78-062c-45c2-8f34-1242ab29dc1b" sourceNodeId="9d949d3f-e9db-4b18-a591-9bd6092865ba" targetNodeId="896631cd-7c47-4360-9172-f1bd8655a099" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="135e6316-5abc-469b-b999-3b74d016388d" sourceNodeId="896631cd-7c47-4360-9172-f1bd8655a099" targetNodeId="06377d83-f82e-4c9c-baa6-4bae25d56e3e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="984c484a-8a80-4c00-9159-c44018beb887" sourceNodeId="a30ac633-6eb0-4db5-81e2-32bad9104aab" targetNodeId="f6ed9d42-e694-49c0-a658-ee99ef846bfc" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="cfe2589b-1d84-4389-9309-6c9ee2d860ce" sourceNodeId="fee077e4-2d04-4fa4-87bf-1ec9c91cb940" targetNodeId="9ae1adb4-1666-4e0f-b7a1-bd349e52a9b9" sourceConnector="right-output" targetConnector="router-input:142380c8-68cf-489e-a888-5933ccbde9d2" condition="true"/>
+      <Connection id="0945c7a2-5f22-42b0-adca-606f4192244c" sourceNodeId="9ae1adb4-1666-4e0f-b7a1-bd349e52a9b9" targetNodeId="0e79d853-9a79-4287-b745-1e4565126690" sourceConnector="router-output:2dff5fad-eab4-409b-b99c-343ea395c5be" targetConnector="left-input" condition="true"/>
+      <Connection id="42ddd12d-c8cb-421f-b715-31b69e459348" sourceNodeId="9ae1adb4-1666-4e0f-b7a1-bd349e52a9b9" targetNodeId="a30ac633-6eb0-4db5-81e2-32bad9104aab" sourceConnector="router-output:5cc6a486-8821-456c-ae4f-b3792854bf4e" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

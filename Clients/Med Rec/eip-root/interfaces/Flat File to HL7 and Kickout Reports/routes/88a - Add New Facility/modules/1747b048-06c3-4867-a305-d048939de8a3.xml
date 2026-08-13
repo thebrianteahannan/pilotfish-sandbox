@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="1747b048-06c3-4867-a305-d048939de8a3" name="Flat File to HL7 and Kickout Reports.88 - Add New Facility to Database.Directory / File Transport" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory/>
+      
+        
+      <FileName/>
+      
+        
+      <FileExtension/>
+      
+        
+      <UseFullFilePath>Enabled</UseFullFilePath>
+      
+        
+      <FullPathToFile>{ognl:#properties.get('LISTENER_ROUTE_XML_DIR') + @java.io.File@separatorChar + #properties.get('LISTENER_ROUTE_XML_FILENAME')}</FullPathToFile>
+      
+        
+      <AppendToFile>Overwrite</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

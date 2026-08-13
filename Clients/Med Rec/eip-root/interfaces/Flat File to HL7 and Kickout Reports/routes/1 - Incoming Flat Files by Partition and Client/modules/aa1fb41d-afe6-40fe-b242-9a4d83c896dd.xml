@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="aa1fb41d-afe6-40fe-b242-9a4d83c896dd" name="Set Partition and Client Name-FPS-PAS" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('PartitionName') == 'FPS' &amp;&amp; getAttribute('ClientName') == 'PAS'}</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:Partition:eip_name:FPS:eip_value][eip_pair:Client:eip_name:PAS:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

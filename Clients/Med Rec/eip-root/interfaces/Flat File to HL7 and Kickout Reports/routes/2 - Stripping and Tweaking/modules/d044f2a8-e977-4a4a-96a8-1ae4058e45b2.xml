@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="d044f2a8-e977-4a4a-96a8-1ae4058e45b2" name="Write DB Lookup XML to Disk" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$REPORT_TARGET_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('com.pilotfish.FileName') + '_' + 'DB_LookupInfo_' + new java.text.SimpleDateFormat('MMddyyyy').format(new java.util.Date()) + '.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

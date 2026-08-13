@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="cb31ce63-0caf-43e4-a876-217798346551" name="Remove the xml and db query results from attrs to free up memory" type="AttributeRemovalProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.AttributeRemovalProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>false</ExecuteProcessor>
+      
+          
+      <TargetAttributes>[eip_pair:xml:eip_name:don't need anymore:eip_value][eip_pair:feed_info_query_results:eip_name:don't need anymore:eip_value]</TargetAttributes>
+      
+          
+      <GlobalAttributes/>
+      
+        
+   </ModuleConfig>
+</Module>

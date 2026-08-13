@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="85c22ee7-6dfa-445b-beaf-ed32a81c306f" name="Set Facility Name - PPA - NEO" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:FacilityNameShouldBe:eip_name:PPA - NEO - Precision Pathology Associates:eip_value][eip_pair:PartitionName:eip_name:PPA:eip_value][eip_pair:ClientName:eip_name:NEO:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

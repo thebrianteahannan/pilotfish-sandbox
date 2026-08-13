@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="aa530111-cd79-40ac-bf15-1d0ed844e4e9" name="Concat All Records From both sets of cp and ap files together" type="AttributeConcatenationProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.AttributeConcatenationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <Namespace/>
+      
+          
+      <Tags>[eip_pair:AP_Demographics:eip_name:ap_demographics_xml:eip_value][eip_pair:AP_Charges:eip_name:ap_charges_xml:eip_value][eip_pair:CP_Demographics:eip_name:cp_demographics_xml:eip_value][eip_pair:CP_Charges:eip_name:cp_charges_xml:eip_value]</Tags>
+      
+        
+   </ModuleConfig>
+</Module>

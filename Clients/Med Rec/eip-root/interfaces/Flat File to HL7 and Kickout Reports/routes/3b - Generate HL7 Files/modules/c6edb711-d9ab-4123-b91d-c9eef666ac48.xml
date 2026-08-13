@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c6edb711-d9ab-4123-b91d-c9eef666ac48" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor9" type="CallRouteProcessor" tag="Processor" class="com.pilotfish.eip.modules.internal.CallRouteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('Status') == 'ERROR'}</ExecuteProcessor>
+      
+          
+      <Listener>Flat File to HL7 and Kickout Reports.99a - Error - Charge Without Demo.Programmable (Trigger) Listener</Listener>
+      
+          
+      <Synchronous>false</Synchronous>
+      
+          
+      <Timeout>60</Timeout>
+      
+        
+   </ModuleConfig>
+</Module>

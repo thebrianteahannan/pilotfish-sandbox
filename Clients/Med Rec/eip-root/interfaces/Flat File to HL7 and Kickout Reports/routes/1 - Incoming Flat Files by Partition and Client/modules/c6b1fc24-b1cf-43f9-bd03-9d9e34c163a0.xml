@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c6b1fc24-b1cf-43f9-bd03-9d9e34c163a0" name="Set Partition and Client Name-IRL-OCX" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('PartitionName') == 'IRL' &amp;&amp; getAttribute('ClientName') == 'OCX'}</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:Partition:eip_name:IRL:eip_value][eip_pair:Client:eip_name:OCX:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

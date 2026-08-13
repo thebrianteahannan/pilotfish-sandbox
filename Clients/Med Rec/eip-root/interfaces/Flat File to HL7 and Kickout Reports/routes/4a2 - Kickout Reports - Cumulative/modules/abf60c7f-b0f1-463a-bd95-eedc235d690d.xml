@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="abf60c7f-b0f1-463a-bd95-eedc235d690d" name="Write DB Lookup XML to Disk-Copy-45" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$REPORT_TARGET_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('com.pilotfish.FileName') + '_' + 'BeforeRefLocationReport_' + new java.text.SimpleDateFormat('MMddyyyy').format(new java.util.Date()) + '.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

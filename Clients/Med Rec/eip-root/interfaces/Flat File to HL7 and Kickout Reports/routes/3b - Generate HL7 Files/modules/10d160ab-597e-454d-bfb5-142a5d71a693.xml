@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="10d160ab-597e-454d-bfb5-142a5d71a693" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor4" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:demo_count:eip_name:{ognl:@org.apache.commons.lang.StringUtils@countMatches(getAttribute('ADT_data').toString(),"PID|").toString()}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

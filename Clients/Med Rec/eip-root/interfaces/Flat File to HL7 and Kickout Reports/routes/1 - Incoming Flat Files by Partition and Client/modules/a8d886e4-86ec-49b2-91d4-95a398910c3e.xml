@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="a8d886e4-86ec-49b2-91d4-95a398910c3e" name="Go pickup demographics csv for this charges file from input directory - PPS" type="StaticFileProcessor" tag="Processor" class="com.pilotfish.eip.modules.file.StaticFileProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <FileName>{ognl:#properties.get('FLAT_FILE_INPUT_DIRECTORY') + '/' + getAttribute('com.pilotfish.FileName').replace('MedReceivables_Charge_','MedReceivables_Demo_') + '.csv'}</FileName>
+      
+          
+      <PostProcessOperation>Move</PostProcessOperation>
+      
+          
+      <TargetDirectory>$$FLAT_FILE_ARCHIVE_DIRECTORY</TargetDirectory>
+      
+        
+   </ModuleConfig>
+</Module>

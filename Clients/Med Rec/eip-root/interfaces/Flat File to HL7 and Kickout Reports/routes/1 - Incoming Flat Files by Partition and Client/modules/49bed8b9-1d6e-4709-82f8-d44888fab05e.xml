@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="49bed8b9-1d6e-4709-82f8-d44888fab05e" name="Write Orig Transformed XML to Disk" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$HL7_TARGET_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('Partition') + '_' + getAttribute('Client') + '_OrigXML.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

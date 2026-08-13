@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="7d2f176e-c21a-485a-b3f8-f482361681b9" name="88d - Add FLG Locations">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="736a697f-ad71-48d3-96c0-55159ce633aa" moduleId="7279f8b8-1368-4ef7-a924-c8f8598f4d7a" label="Flat File to HL7 and Kickout Reports.77 - Add FLG_LOCATIONS.Directory / File Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="defa4ec3-2a40-471f-b62a-62d5c96f90b8" moduleId="0bdd5074-87f6-411d-94a3-9bf928453997" label="Flat File to HL7 and Kickout Reports.77 - Add FLG_LOCATIONS.Database (SQL) Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="24111070-e4a0-4e4b-867d-9918fec558a6" sourceNodeId="736a697f-ad71-48d3-96c0-55159ce633aa" targetNodeId="defa4ec3-2a40-471f-b62a-62d5c96f90b8" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

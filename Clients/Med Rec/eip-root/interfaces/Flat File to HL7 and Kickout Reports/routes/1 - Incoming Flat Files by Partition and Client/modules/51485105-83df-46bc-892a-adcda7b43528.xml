@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="51485105-83df-46bc-892a-adcda7b43528" name="Flat File to HL7 and Kickout Reports.1 - Incoming Flat Files by Partition and Client.Processor11" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('PartitionName') == 'ARA' || getAttribute('PartitionName') == 'FPS'}</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:AllFacilitiesSame:eip_name:true:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

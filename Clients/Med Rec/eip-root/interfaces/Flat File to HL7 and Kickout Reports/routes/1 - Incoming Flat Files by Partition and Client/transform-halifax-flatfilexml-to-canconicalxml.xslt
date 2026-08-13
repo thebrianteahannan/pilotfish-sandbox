@@ -305,6 +305,9 @@
                 </xsl:otherwise>
               </xsl:choose>
             </admLocation>
+            <admLocationAbbr>
+              <xsl:value-of select="Demographics/XCSRecord[1]/LOCATION_ABBR" />
+            </admLocationAbbr>
             <admpatsex>
               <xsl:value-of select="Demographics/XCSRecord[1]/PAT_SEX" />
             </admpatsex>

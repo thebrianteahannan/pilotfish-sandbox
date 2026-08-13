@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="1e2669c1-d19e-4d9d-9d1b-1a171de2cbbe" name="Flat File to HL7 and Kickout Reports.1 - Incoming Flat Files by Partition and Client.Processor4-Copy-1" type="ExceptionThrowerProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.ExceptionThrowerProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:(getAttribute('FacilityNameShouldBe') != getAttribute('FacilityNameFromFile')) &amp;&amp; getAttribute('PartitionName') != 'PPS' &amp;&amp; getAttribute('PartitionName') != 'NSP'}</ExecuteProcessor>
+      
+          
+      <ExceptionMessage>{ognl:'You are attempting to process the wrong facility based on the filename. Please check the file contents and file name, then reupload.'}</ExceptionMessage>
+      
+        
+   </ModuleConfig>
+</Module>

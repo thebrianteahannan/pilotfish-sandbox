@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="def0abcb-9e0d-4685-8efb-4747728090ad" name="3a - Determine If Splitting Or Not (Specimen Alpha IDs)">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="49bc1cff-4a0a-4212-8849-1eb865800e6e" moduleId="49a8a7a7-407a-4ae9-84da-a0bd475b454a" label="88363 Log to HL7 DFT.3 - Determine If Splitting Or Not.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="429b4a9e-e22f-4df5-bee5-2428308cb924" moduleId="007acfa5-c120-4bed-8543-7362ec0a3cec" label="88363 Log to HL7 DFT.3 - Determine If Splitting Or Not.Processor" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="fe70962d-015c-4279-8233-625d1f845751" moduleId="8a3b175b-9750-4fcd-84a7-f482e5f2c055" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="72.0"/>
+      <Node id="9c2676db-79a4-462d-9944-6e9e68d4f507" moduleId="6731119a-d057-4548-b136-4548faf8feda" label="Do Splits Route to Route Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="6fc9baf2-63a0-45fc-b1ff-093a88daa970" moduleId="41642ad0-62ec-4273-bb60-ee1dd42706b4" label="No Splits Route to Route Transport" x="1300.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="c205b16f-7355-4d3d-9a96-836a55f2dbc7" sourceNodeId="49bc1cff-4a0a-4212-8849-1eb865800e6e" targetNodeId="429b4a9e-e22f-4df5-bee5-2428308cb924" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="d9684819-8c7c-4078-904c-cb91f6d76d71" sourceNodeId="429b4a9e-e22f-4df5-bee5-2428308cb924" targetNodeId="fe70962d-015c-4279-8233-625d1f845751" sourceConnector="right-output" targetConnector="router-input:cf9ce5af-0920-4867-9a35-ba8a2294b606" condition="true"/>
+      <Connection id="e82ddeaa-0546-4efb-a829-c8d38bbf7b9a" sourceNodeId="fe70962d-015c-4279-8233-625d1f845751" targetNodeId="9c2676db-79a4-462d-9944-6e9e68d4f507" sourceConnector="router-output:cface954-0e1b-407c-8860-613962f7ed47" targetConnector="left-input" condition="true"/>
+      <Connection id="453dc6f3-44be-4be2-a383-e396c87f8127" sourceNodeId="fe70962d-015c-4279-8233-625d1f845751" targetNodeId="6fc9baf2-63a0-45fc-b1ff-093a88daa970" sourceConnector="router-output:6f9d4304-1d37-46f9-81ba-8f158c740788" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

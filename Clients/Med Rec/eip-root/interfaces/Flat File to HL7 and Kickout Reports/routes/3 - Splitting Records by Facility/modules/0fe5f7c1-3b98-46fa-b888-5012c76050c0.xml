@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="0fe5f7c1-3b98-46fa-b888-5012c76050c0" name="Swap Query Info Results Into Data - PPA ONLY" type="Data Attribute Swapper" tag="Processor" class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('Client') == 'PPA' || getAttribute('Partition') == 'NGP' || (getAttribute('Partition') == 'HAL' &amp;&amp; getAttribute('Client') == 'HAX')}</ExecuteProcessor>
+      
+          
+      <AttributeName>split_info_query_results</AttributeName>
+      
+          
+      <SAVEOUTTAG>true</SAVEOUTTAG>
+      
+          
+      <SAVEINTAG>false</SAVEINTAG>
+      
+          
+      <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+      
+          
+      <StoreAsStream>false</StoreAsStream>
+      
+          
+      <IsGlobalAttribute>false</IsGlobalAttribute>
+      
+          
+      <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+      
+        
+   </ModuleConfig>
+</Module>

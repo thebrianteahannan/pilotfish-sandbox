@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="cca0c2c7-17d4-4d54-95dd-dd4f77021f7a" name="Set Facility Name - OCX" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:FacilityNameShouldBe:eip_name:HCA FL Ocala Hospital:eip_value][eip_pair:PartitionName:eip_name:IRL:eip_value][eip_pair:ClientName:eip_name:OCX:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

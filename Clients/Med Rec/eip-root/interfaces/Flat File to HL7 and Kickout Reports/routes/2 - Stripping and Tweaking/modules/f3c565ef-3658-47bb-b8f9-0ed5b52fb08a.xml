@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="f3c565ef-3658-47bb-b8f9-0ed5b52fb08a" name="Strip Demographics With All Charges Stripped (NEW) - HEN CHI NTX" type="XSLT Transformation" tag="Processor" class="com.pilotfish.eip.modules.transform.XSLTProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:(getAttribute('Partition') == 'FPS' &amp;&amp; getAttribute('Client') == 'HEN') || (getAttribute('Partition') == 'FPS' &amp;&amp; getAttribute('Client') == 'CHI') || (getAttribute('Partition') == 'NTX')}</ExecuteProcessor>
+      
+          
+      <XSLTPath>transform-remove-groups-with-no-charges - HEN.xslt</XSLTPath>
+      
+          
+      <CacheXSLTToXML>false</CacheXSLTToXML>
+      
+          
+      <XSLTEngine>Saxon</XSLTEngine>
+      
+          
+      <XSLTParameters>null</XSLTParameters>
+      
+          
+      <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+      
+          
+      <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+      
+        
+   </ModuleConfig>
+</Module>

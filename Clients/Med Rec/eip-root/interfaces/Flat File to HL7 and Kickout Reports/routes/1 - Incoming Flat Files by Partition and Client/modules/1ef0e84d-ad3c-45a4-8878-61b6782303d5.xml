@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="1ef0e84d-ad3c-45a4-8878-61b6782303d5" name="Replace funky i characters with tildes as regular i" type="RegExProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.RegExProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <UseDefaultEncoding>false</UseDefaultEncoding>
+      
+          
+      <Encoding>UTF-8</Encoding>
+      
+          
+      <REGEX_TABLE_TAG>[eip_pair:\xCD:eip_name:I:eip_value]</REGEX_TABLE_TAG>
+      
+          
+      <PostProcessOptions>Replace all \n with newlines</PostProcessOptions>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="33a967d5-e27b-4bf2-bbe0-f8b04fd0e147" name="Remove MSH if Debug" type="RegExProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.RegExProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+      
+          
+      <UseDefaultEncoding>false</UseDefaultEncoding>
+      
+          
+      <Encoding>UTF-8</Encoding>
+      
+          
+      <REGEX_TABLE_TAG>[eip_pair:MSH.*:eip_name::eip_value]</REGEX_TABLE_TAG>
+      
+          
+      <PostProcessOptions>Replace all \n with newlines</PostProcessOptions>
+      
+        
+   </ModuleConfig>
+</Module>

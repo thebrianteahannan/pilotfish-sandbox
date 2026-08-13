@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="56d47f3b-f21b-490a-8bc9-cbb1a692e8fe" name="88e - Add MUE Edits">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="05bcfd48-efa5-45c1-8403-8288c07e0c02" moduleId="6b421170-3308-4185-b645-57e82a676937" label="Flat File to HL7 and Kickout Reports.88e - Add MUE Edits.Directory / File Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="3419840a-b0d7-4664-aacd-0f29d7756280" moduleId="a33268bf-7da3-4ff5-94f1-ef3716f04b69" label="Flat File to HL7 and Kickout Reports.88e - Add MUE Edits.Database (SQL) Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="812246ce-ab50-44f9-9ab6-c0d1f7e43ab7" sourceNodeId="05bcfd48-efa5-45c1-8403-8288c07e0c02" targetNodeId="3419840a-b0d7-4664-aacd-0f29d7756280" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

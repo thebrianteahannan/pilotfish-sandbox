@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="0b0d7a14-5863-4921-bd15-35c023ef8171" name="99 - Error - Handle Wrong Facility Name">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="dfa40c9c-ac5f-4411-a3eb-c1fa35cabe14" moduleId="a011804b-2caa-4da7-96bf-a26a5bc25d7b" label="Flat File to HL7 and Kickout Reports.99 - Error - Handle Wrong Facility Name.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="a3bf7680-e932-4098-911e-a25793341210" moduleId="6bd026a2-981a-4731-851f-608ba03dc044" label="Flat File to HL7 and Kickout Reports.99 - Error - Handle Wrong Facility Name.Processor" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="d46c8e15-4151-4bb4-84ef-62fb8457dd92" moduleId="545c279f-3718-49ce-9bfe-ced2dc0da2b6" label="Flat File to HL7 and Kickout Reports.99 - Error - Handle Wrong Facility Name.Processor1" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="d77159ac-b160-4320-b45e-324b8ca6b2f0" moduleId="06798396-d71b-459c-aa27-d311ea8d42b3" label="Flat File to HL7 and Kickout Reports.99 - Error - Handle Wrong Facility Name.Directory / File Transport" x="1820.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="ad2bd06a-fc2a-48c3-ac77-0dd95bd53dfa" sourceNodeId="a3bf7680-e932-4098-911e-a25793341210" targetNodeId="d46c8e15-4151-4bb4-84ef-62fb8457dd92" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="b2e1e929-efea-478a-9119-8022ebc2665b" sourceNodeId="d46c8e15-4151-4bb4-84ef-62fb8457dd92" targetNodeId="d77159ac-b160-4320-b45e-324b8ca6b2f0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="e56b54ee-6a7c-4177-a372-7b1f543c4e10" sourceNodeId="dfa40c9c-ac5f-4411-a3eb-c1fa35cabe14" targetNodeId="a3bf7680-e932-4098-911e-a25793341210" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

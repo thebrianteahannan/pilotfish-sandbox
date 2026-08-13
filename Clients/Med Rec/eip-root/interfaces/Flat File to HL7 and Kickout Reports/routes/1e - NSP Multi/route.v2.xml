@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="f14bf3c7-a0be-45cb-93e6-73fd67bbc44e" name="1e - NSP Multi">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="9dd803ab-a004-41ca-87a3-b78b60fc3c01" moduleId="9fe2681d-f246-4fcc-babe-ba5260ffbc39" label="Flat File to HL7 and Kickout Reports.1e - NSP Multi.Directory / File Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="6082f56a-d9c0-4933-9a7d-047a150f8642" moduleId="48e840fb-f856-4c0d-97b6-8a71cc901480" label="Flat File to HL7 and Kickout Reports.1e - NSP Multi.Directory / File Listener1" x="0.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="570fe74a-3f5d-43be-afa5-c46cd8ca519e" moduleId="8b627ed7-60e6-4b5c-acfc-c2ad6e9df664" label="Flat File to HL7 and Kickout Reports.1e - NSP Multi.Directory / File Listener2" x="0.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="c36385f6-ace4-46c8-8f02-ee225d19ee3a" moduleId="20bfbdec-0ad5-470c-ac22-f9b84c0679d0" label="Flat File to HL7 and Kickout Reports.1e - NSP Multi.Directory / File Listener3" x="0.0" y="420.0" width="180.0" height="64.0"/>
+      <Node id="e596934c-afe4-470d-a82a-92f9029456b7" moduleId="77a229b3-2e3e-4f14-a7da-c8c0f1aea64e" label="Flat File to HL7 and Kickout Reports.1e - NSP Multi.Directory / File Listener2-1" x="0.0" y="560.0" width="180.0" height="64.0"/>
+      <Node id="909a5135-d48e-4b67-a8b3-47a5248d6028" moduleId="3f0dbd2b-62ed-451e-a7ab-13baf1f58af3" label="Flat File to HL7 and Kickout Reports.1e - NSP Multi.Directory / File Listener3-1" x="0.0" y="700.0" width="180.0" height="64.0"/>
+      <Node id="551d6a41-c7d3-4e00-bcb7-70f291db93be" moduleId="e066a602-e7d7-422f-ba65-e83420f2fbe6" label="Flat File to HL7 and Kickout Reports.1e - NSP Multi.Directory / File Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="4348ed5e-8cbb-4a3b-bdfc-109ecd17a3b7" sourceNodeId="9dd803ab-a004-41ca-87a3-b78b60fc3c01" targetNodeId="551d6a41-c7d3-4e00-bcb7-70f291db93be" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="ecce0abd-a051-4bd3-b327-6fdd256fde14" sourceNodeId="6082f56a-d9c0-4933-9a7d-047a150f8642" targetNodeId="551d6a41-c7d3-4e00-bcb7-70f291db93be" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="597c4904-7041-4ad6-a06e-5397868ac363" sourceNodeId="570fe74a-3f5d-43be-afa5-c46cd8ca519e" targetNodeId="551d6a41-c7d3-4e00-bcb7-70f291db93be" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="e90cafa6-a5f4-4549-83e6-1265cbc30acd" sourceNodeId="c36385f6-ace4-46c8-8f02-ee225d19ee3a" targetNodeId="551d6a41-c7d3-4e00-bcb7-70f291db93be" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="0128c969-d4f3-4335-875f-26ddfcac353a" sourceNodeId="e596934c-afe4-470d-a82a-92f9029456b7" targetNodeId="551d6a41-c7d3-4e00-bcb7-70f291db93be" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="d7361ad7-8ac4-4305-9137-61c04c36dac9" sourceNodeId="909a5135-d48e-4b67-a8b3-47a5248d6028" targetNodeId="551d6a41-c7d3-4e00-bcb7-70f291db93be" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

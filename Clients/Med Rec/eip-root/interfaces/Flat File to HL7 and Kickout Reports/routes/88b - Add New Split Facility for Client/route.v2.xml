@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="7e775577-2b50-47bb-9c9e-cdd5ebdc92e1" name="88b - Add New Split Facility for Client">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="7cf9de1f-f042-4409-8277-9ce8ba6ee93d" moduleId="9b2ba631-64c6-4326-8040-7009e0cefcc9" label="Flat File to HL7 and Kickout Reports.88b - Add Split to Facility.Directory / File Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="ba1eec3d-dd9d-4731-bbb0-c39443ca831a" moduleId="cc85c140-c319-4bcf-a1d1-a1806d8664ee" label="Flat File to HL7 and Kickout Reports.88b - Add Split to Facility.Database (SQL) Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="7ee2aea0-5bed-47d1-b3b5-1ed812aed7f6" sourceNodeId="7cf9de1f-f042-4409-8277-9ce8ba6ee93d" targetNodeId="ba1eec3d-dd9d-4731-bbb0-c39443ca831a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

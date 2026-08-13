@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="18bb8475-c2e3-479b-924b-cb2a4486ef4d" name="3d - Generate HL7 Debug Logging - ADT">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="0897ddbe-5012-4377-aef7-ecf71ccaca55" moduleId="36716ce6-721c-44e0-9321-a0e4382eea0f" label="Flat File to HL7 and Kickout Reports.3d - Generate HL7 Debug Logging - ADT.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="8b630f37-c4c6-4e36-a0c5-19a04e503436" moduleId="02fb219e-1e64-4579-aea8-c365378219e5" label="Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Processor3" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="a688ff08-1a09-4beb-8390-7e93dae8b905" moduleId="f4b6102d-c1f5-48dd-bbc0-0dd1a2c25129" label="Get AccountNumber From File" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="e8d0cd0e-409e-4b99-b51a-298f67396f78" moduleId="9f6fedd4-501c-40f5-bef8-2135f088ef9f" label="Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Processor1" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="638291b6-41f6-4c7e-b312-31402489abfc" moduleId="8f885fbd-9071-4008-8bb4-f2b1252aa5ea" label="Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Processor4" x="1040.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="a20ee667-39ee-435b-b83a-286a6defc439" moduleId="2d3a8ba0-6dea-40cf-9c9a-48cb80b985cd" label="Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Processor" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="896e51cd-7613-4fc0-af07-420ecdb48ce2" moduleId="f01d6767-1759-4f0d-a021-cfdda4dcc395" label="Flat File to HL7 and Kickout Reports.3d - Generate HL7 Debug Logging - ADT.Directory / File Transport" x="1560.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="02acb7f4-e3de-44b4-88f0-7e5ed2b6653a" moduleId="b1b46cd3-5a4a-4f17-9e19-ac12129d968a" label="Remove MUE Edits Log XML-Copy-1" x="1300.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="cbcb8d29-612e-4ca1-b38c-c58a51aa9b2e" moduleId="0ec39ff1-a346-4b20-8857-94c86705b1ad" label="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor2-Copy-1" x="1560.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="66fbe8bc-8abb-48b8-8396-7e0e02f145f5" moduleId="67aa98a4-4cbb-4720-8338-ff57533e0e14" label="Flat File to HL7 and Kickout Reports.3d - Generate HL7 Debug Logging - ADT.Directory / File Transport1" x="1820.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="e62cbe4d-7cb1-4ee3-b121-f0389e724f25" sourceNodeId="0897ddbe-5012-4377-aef7-ecf71ccaca55" targetNodeId="8b630f37-c4c6-4e36-a0c5-19a04e503436" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="2e5a83ea-8784-4579-855c-684db9ac38b7" sourceNodeId="8b630f37-c4c6-4e36-a0c5-19a04e503436" targetNodeId="a688ff08-1a09-4beb-8390-7e93dae8b905" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="53231636-c526-4cc9-9efc-520e095a0180" sourceNodeId="a688ff08-1a09-4beb-8390-7e93dae8b905" targetNodeId="e8d0cd0e-409e-4b99-b51a-298f67396f78" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="b9bf9787-500b-4bf6-908c-548ac1c5f7a6" sourceNodeId="e8d0cd0e-409e-4b99-b51a-298f67396f78" targetNodeId="638291b6-41f6-4c7e-b312-31402489abfc" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="277240bc-3f10-4d22-bf21-417ceec59a6a" sourceNodeId="a20ee667-39ee-435b-b83a-286a6defc439" targetNodeId="896e51cd-7613-4fc0-af07-420ecdb48ce2" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="4e920d88-a81c-4524-98b1-7270ba472d24" sourceNodeId="02acb7f4-e3de-44b4-88f0-7e5ed2b6653a" targetNodeId="cbcb8d29-612e-4ca1-b38c-c58a51aa9b2e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="796f938f-fd9c-43f9-a73f-8c5fb317efc2" sourceNodeId="cbcb8d29-612e-4ca1-b38c-c58a51aa9b2e" targetNodeId="66fbe8bc-8abb-48b8-8396-7e0e02f145f5" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="e09f5d22-c056-42a1-80d1-77db716d4754" sourceNodeId="638291b6-41f6-4c7e-b312-31402489abfc" targetNodeId="a20ee667-39ee-435b-b83a-286a6defc439" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="a2dc496c-ae4b-4526-9a13-6ce4eb77c844" sourceNodeId="638291b6-41f6-4c7e-b312-31402489abfc" targetNodeId="02acb7f4-e3de-44b4-88f0-7e5ed2b6653a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="da02e2e5-cf9b-4fbf-b7bc-f94e266850f1" name="for csv testing only" type="CSV" tag="Processor" class="com.pilotfish.eip.modules.transform.CSVTransformationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('is_csv') == 'true'}</ExecuteProcessor>
+      
+          
+      <TransformationDirection>CSV to XML</TransformationDirection>
+      
+          
+      <ExecuteTransformation>{ognl:getAttribute('is_csv')}</ExecuteTransformation>
+      
+          
+      <Delimiter>|</Delimiter>
+      
+          
+      <OutputQuotes>true</OutputQuotes>
+      
+          
+      <OutputColumnHeaders>true</OutputColumnHeaders>
+      
+          
+      <DetectDelimiter>false</DetectDelimiter>
+      
+          
+      <Columns/>
+      
+          
+      <LinesToSkip>0</LinesToSkip>
+      
+          
+      <ColumnsToSuppress/>
+      
+          
+      <SuppressEmptyTags>false</SuppressEmptyTags>
+      
+          
+      <IgnoreQuotes>false</IgnoreQuotes>
+      
+          
+      <UseUTF8Tag>false</UseUTF8Tag>
+      
+        
+   </ModuleConfig>
+</Module>

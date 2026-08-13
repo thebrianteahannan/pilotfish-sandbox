@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="77385c78-6c5d-43e8-8c57-8dc783a56ed3" name="4a1 - Kickout Reports - Stripped and Tweaked">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="7c1bb1d7-9c72-4b9e-ba09-31c91fbaaba8" moduleId="468e695a-4bee-4f5d-95f5-3cd6e79b958a" label="3 - Generate Kickout Reports.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="03712020-4a23-4ae9-ac7d-b80acad76173" moduleId="01816677-25b0-4233-ae55-54bcde005d86" label="Create Stripping And Tweaking Report" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="62405005-e752-4abc-b7a0-5e4efc9ec341" sourceNodeId="7c1bb1d7-9c72-4b9e-ba09-31c91fbaaba8" targetNodeId="03712020-4a23-4ae9-ac7d-b80acad76173" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="1e429133-746e-417e-b4cd-3ec631440c44" name="Flat File to HL7 and Kickout Reports.4a2 - Kickout Reports - Cumulative.Directory / File Transport1" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory>$$REPORT_TARGET_DIRECTORY</TargetDirectory>
+      
+        
+      <FileName>{ognl:getAttribute('Partition') + getAttribute('Client') +  '_RefDr_Phys_NPI_List_Report'}</FileName>
+      
+        
+      <FileExtension>xls</FileExtension>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <AppendToFile>true</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

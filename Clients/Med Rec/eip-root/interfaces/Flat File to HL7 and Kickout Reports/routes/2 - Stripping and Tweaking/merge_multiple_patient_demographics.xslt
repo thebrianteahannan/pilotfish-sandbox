@@ -112,6 +112,14 @@
                 </xsl:if>
               </xsl:for-each>
             </admLocation>
+            <admLocationAbbr>
+              <xsl:for-each select="PatientDemographics/admLocationAbbr[string-length(.) != 0]">
+                <xsl:sort data-type="text" order="descending" select="../absAdmitDate" />
+                <xsl:if test="position() = 1">
+                  <xsl:value-of select="." />
+                </xsl:if>
+              </xsl:for-each>
+            </admLocationAbbr>
             <LabName>
               <xsl:for-each select="PatientDemographics/LabName[string-length(.) != 0]">
                 <xsl:sort data-type="text" order="descending" select="../absAdmitDate" />

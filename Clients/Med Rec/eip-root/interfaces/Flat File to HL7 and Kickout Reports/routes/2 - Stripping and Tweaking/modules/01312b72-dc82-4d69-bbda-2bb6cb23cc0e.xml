@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="01312b72-dc82-4d69-bbda-2bb6cb23cc0e" name="Combine Import XML and Database Query Results" type="AttributeConcatenationProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.AttributeConcatenationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('Partition') != 'PPS'}</ExecuteProcessor>
+      
+          
+      <Namespace/>
+      
+          
+      <Tags>[eip_pair:Import:eip_name:xml:eip_value][eip_pair:query_results:eip_name:feed_info_query_results:eip_value]</Tags>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="ca328939-cd34-4373-aeab-080bdd798076" name="If there is no SplitCode then use the DefaultSplitCode" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('SplitCode') == null || getAttribute('SplitCode').toString().length() == 0}</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:SplitCode:eip_name:{ognl:getAttribute('DefaultSplitCode')}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

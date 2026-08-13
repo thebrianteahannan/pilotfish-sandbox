@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="651a01aa-1882-403a-acb5-da228274cb57" name="Transform Stamford Flat File to XML" type="CSV" tag="Processor" class="com.pilotfish.eip.modules.transform.CSVTransformationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('Client') == 'SPG'}</ExecuteProcessor>
+      
+          
+      <TransformationDirection>CSV to XML</TransformationDirection>
+      
+          
+      <ExecuteTransformation>true</ExecuteTransformation>
+      
+          
+      <Delimiter>^</Delimiter>
+      
+          
+      <OutputQuotes>true</OutputQuotes>
+      
+          
+      <OutputColumnHeaders>true</OutputColumnHeaders>
+      
+          
+      <DetectDelimiter>false</DetectDelimiter>
+      
+          
+      <Columns/>
+      
+          
+      <LinesToSkip>0</LinesToSkip>
+      
+          
+      <ColumnsToSuppress/>
+      
+          
+      <SuppressEmptyTags>false</SuppressEmptyTags>
+      
+          
+      <IgnoreQuotes>false</IgnoreQuotes>
+      
+          
+      <UseUTF8Tag>false</UseUTF8Tag>
+      
+        
+   </ModuleConfig>
+</Module>

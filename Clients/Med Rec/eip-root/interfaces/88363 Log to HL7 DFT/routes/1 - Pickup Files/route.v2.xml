@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="5bcac202-9bae-46a6-9da7-272d3431b60a" name="1 - Pickup Files">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="0a8d9b12-08a5-4c73-b93c-7bd69d09597a" moduleId="e00391c2-3909-4d77-93f6-e4dc71e4b703" label="88363 Log to HL7 DFT.1 - Pickup Files.Directory / File Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="40a8a69c-35f8-4465-8056-23773d4e8323" moduleId="44d38112-9e7e-47d0-b687-2e558eff713d" label="88363 Log to HL7 DFT.1 - Pickup Files.Processor" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="6815235b-ce4f-4e04-b4a7-d86a9ee7053a" moduleId="8a50b079-60b4-4109-8f89-8eaf790ce2a6" label="Get Log Name From File Name" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="2f76a1b4-69f4-4ad1-a074-b6540f716c47" moduleId="c23c3a11-d1c6-4d78-973c-ef55279c8065" label="Get Rest of Info For This Log Name In DB" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="51cb315f-1369-4550-9227-b9cc69eac2e9" moduleId="b41a99cc-65c1-4935-8cd3-c3729876c25d" label="Put Info Into Attrs" x="1040.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="3c86a867-28d6-4278-a467-0401d3a44db2" moduleId="742c299d-e79a-4457-83c1-48513f405f6d" label="88363 Log to HL7 DFT.1 - Pickup Files.Processor1" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="c023715d-0c7c-4684-bfe9-1c9306f8b416" moduleId="372f30e3-04b2-49a0-a549-36818037acdc" label="88363 Log to HL7 DFT.1 - Pickup Files.Route to Route Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="13b65767-6b88-4d30-87f6-dfba30acdf62" sourceNodeId="0a8d9b12-08a5-4c73-b93c-7bd69d09597a" targetNodeId="40a8a69c-35f8-4465-8056-23773d4e8323" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="9dac51a7-3660-4488-bab6-0d13cbef62dc" sourceNodeId="40a8a69c-35f8-4465-8056-23773d4e8323" targetNodeId="6815235b-ce4f-4e04-b4a7-d86a9ee7053a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="45357305-4d47-486b-83f5-27e031b190c9" sourceNodeId="6815235b-ce4f-4e04-b4a7-d86a9ee7053a" targetNodeId="2f76a1b4-69f4-4ad1-a074-b6540f716c47" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="26f6aa32-62a8-401f-a50b-3cee769267d3" sourceNodeId="2f76a1b4-69f4-4ad1-a074-b6540f716c47" targetNodeId="51cb315f-1369-4550-9227-b9cc69eac2e9" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="bf4cb1ab-a4be-4d0a-b90c-4429543966ae" sourceNodeId="51cb315f-1369-4550-9227-b9cc69eac2e9" targetNodeId="3c86a867-28d6-4278-a467-0401d3a44db2" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="4aec3617-9593-4685-b29b-6d978399e6a5" sourceNodeId="3c86a867-28d6-4278-a467-0401d3a44db2" targetNodeId="c023715d-0c7c-4684-bfe9-1c9306f8b416" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

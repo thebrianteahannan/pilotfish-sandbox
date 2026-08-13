@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="b098067c-3a55-4f9e-9b21-6db97433c0a3" name="Flat File to HL7 and Kickout Reports.2 - Stripping and Tweaking.Processor-Copy-1" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>false</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$REPORT_TARGET_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('com.pilotfish.FileName') + '_' + 'StrippingAndTweakingPayload_' + new java.text.SimpleDateFormat('MMddyyyy').format(new java.util.Date()) + '.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

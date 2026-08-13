@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="8dbc6121-b01d-44bc-9a29-4f3d0ff081db" name="Generate Accounts Without Date of Service Report - PPA NEO ONLY" type="CallRouteProcessor" tag="Processor" class="com.pilotfish.eip.modules.internal.CallRouteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('Partition') == 'PPA' and getAttribute('Client') == 'NEO'}</ExecuteProcessor>
+      
+          
+      <Listener>Flat File to HL7 and Kickout Reports.4a5 - Kickout Reports - Accounts With No Date of Service.Programmable (Trigger) Listener</Listener>
+      
+          
+      <Synchronous>false</Synchronous>
+      
+          
+      <Timeout>60</Timeout>
+      
+        
+   </ModuleConfig>
+</Module>

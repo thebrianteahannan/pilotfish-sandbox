@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="d582e64a-008c-4afe-a465-fae57e99328c" name="Flat File to HL7 and Kickout Reports.99a - Error - Charge Without Demo.Processor" type="TransactionDataPopulationProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.TransactionDataPopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <Contents>{ognl:'This file has charges without a demographic associated with it. Please check the file or try to re-run it because something went wrong.'}</Contents>
+      
+          
+      <InputType>Text</InputType>
+      
+          
+      <Encoding>UTF-8</Encoding>
+      
+        
+   </ModuleConfig>
+</Module>

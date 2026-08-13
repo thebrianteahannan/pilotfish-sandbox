@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="58c859e2-32fb-4589-a826-77d902469418" name="4a3 - Kickout Reports - Warnings">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="9d3f6591-fd9b-4079-9372-dde7c3fb8e22" moduleId="e2993170-3058-4c57-a77c-b04ddfe047b9" label="Flat File to HL7 and Kickout Reports.4a3 - Kickout Reports - Warnings.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="5c6cc8e0-3634-480d-a9b8-a9ef9617af04" moduleId="d2a5a5cf-53a7-463b-b6ab-5e20763606f0" label="Flat File to HL7 and Kickout Reports.4a3 - Kickout Reports - Warnings.Directory / File Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="db628cee-4025-4dc1-b111-2abd3194b21a" sourceNodeId="9d3f6591-fd9b-4079-9372-dde7c3fb8e22" targetNodeId="5c6cc8e0-3634-480d-a9b8-a9ef9617af04" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

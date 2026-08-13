@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="9addadc8-d70e-4cba-818e-0a7c09ca93af" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor10-Copy-1" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>{ognl:#properties.get('HL7_TARGET_DIRECTORY')}</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('com.pilotfish.FileName') + '.' + getAttribute('com.pilotfish.FileExtension')}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

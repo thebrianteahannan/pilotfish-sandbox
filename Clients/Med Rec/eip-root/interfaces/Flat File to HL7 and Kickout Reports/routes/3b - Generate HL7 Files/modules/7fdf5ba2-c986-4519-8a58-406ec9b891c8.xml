@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7fdf5ba2-c986-4519-8a58-406ec9b891c8" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Processor10" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>{ognl:#properties.get('HL7_TARGET_DIRECTORY') + @java.io.File@separatorChar + getAttribute('SplitCode') + new java.text.SimpleDateFormat('hhmm').format(new java.util.Date())}</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:'Begin_GenerateHL7Files.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

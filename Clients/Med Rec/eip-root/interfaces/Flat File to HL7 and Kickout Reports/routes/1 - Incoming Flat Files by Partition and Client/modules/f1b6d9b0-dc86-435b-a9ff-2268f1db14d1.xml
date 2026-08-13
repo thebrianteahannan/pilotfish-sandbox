@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="f1b6d9b0-dc86-435b-a9ff-2268f1db14d1" name="Flat File to HL7 and Kickout Reports.1 - Incoming Flat Files by Partition and Client.Processor2" type="FileOperationProcessor" tag="Processor" class="com.pilotfish.eip.modules.file.FileOperationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <FileName>{ognl:#properties.get('FLAT_FILE_INPUT_DIRECTORY') + @java.io.File@separatorChar + getAttribute('com.pilotfish.FileName') + "." + getAttribute('com.pilotfish.FileExtension')}</FileName>
+      
+          
+      <Overwrite>true</Overwrite>
+      
+          
+      <ExceptionOnFailure>true</ExceptionOnFailure>
+      
+          
+      <PostProcessOperation>Move</PostProcessOperation>
+      
+          
+      <TargetDirectory>$$FLAT_FILE_ARCHIVE_DIRECTORY</TargetDirectory>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="53b40ea1-f1c6-4bf6-a485-2e524f5a8760" name="88a - Add New Facility">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="b028691a-5d2d-410a-93dc-fc747e189a33" moduleId="375f704a-8ee0-410d-b4d6-820dcecd577a" label="Flat File to HL7 and Kickout Reports.88 - Add New Facility to Database.Directory / File Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="490f0a76-9d6d-40b5-b62f-8302387761ad" moduleId="ab874a78-b84d-4bb6-a626-ff984e4d0f84" label="Flat File to HL7 and Kickout Reports.88 - Add New Facility to Database.Database (SQL) Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="4a8b52c1-5f5f-4f43-a43b-15a407bfead1" moduleId="8f6fc3f4-ba9b-4e82-8b8e-6a21929cbd5f" label="Get Data from Excel Spreadsheet" x="1300.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="06451ca8-9179-4d15-8883-24d5527abd78" moduleId="399895c6-7abe-4e50-b341-8484772dca42" label="Pickup Listener Route XML File" x="1560.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="0c570bf1-5e74-4d6b-a79b-20079cd19851" moduleId="023ed3a5-6de9-44ee-8830-79c3f21fac04" label="Save Backup of Route XML File" x="1820.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="a0fd07ab-6f06-4b08-aff2-b5a0bdb4a16c" moduleId="c284db30-9e8e-4360-9d4f-9d90ea1d4661" label="Add New Facility Listener in Route XML File" x="2080.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="84929a72-d465-45e5-b575-6771a1f94393" moduleId="cd06703c-0d3e-4d37-bd29-8f7cc12291cb" label="Format XML" x="2340.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="d39f3ba3-1f31-4621-afba-bbba0dbf9ee6" moduleId="1747b048-06c3-4867-a305-d048939de8a3" label="Flat File to HL7 and Kickout Reports.88 - Add New Facility to Database.Directory / File Transport" x="2600.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="87885a5d-3bc4-4bb0-b8a5-277031bc72c1" sourceNodeId="4a8b52c1-5f5f-4f43-a43b-15a407bfead1" targetNodeId="06451ca8-9179-4d15-8883-24d5527abd78" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="854ee25a-82b2-415b-b0c6-eed90c372200" sourceNodeId="06451ca8-9179-4d15-8883-24d5527abd78" targetNodeId="0c570bf1-5e74-4d6b-a79b-20079cd19851" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="2d510b41-9c23-43a5-ae9a-051be0c8fabf" sourceNodeId="0c570bf1-5e74-4d6b-a79b-20079cd19851" targetNodeId="a0fd07ab-6f06-4b08-aff2-b5a0bdb4a16c" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="65acc8a0-cfce-4dca-932e-689139305c37" sourceNodeId="a0fd07ab-6f06-4b08-aff2-b5a0bdb4a16c" targetNodeId="84929a72-d465-45e5-b575-6771a1f94393" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="600ca87f-928b-4a0b-9de9-8f7a88ea2f71" sourceNodeId="84929a72-d465-45e5-b575-6771a1f94393" targetNodeId="d39f3ba3-1f31-4621-afba-bbba0dbf9ee6" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="7a22525d-3677-4c56-b5b8-17835fead542" sourceNodeId="b028691a-5d2d-410a-93dc-fc747e189a33" targetNodeId="490f0a76-9d6d-40b5-b62f-8302387761ad" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="7f929b8c-ae35-46ac-a9ff-6df46e4930a2" sourceNodeId="b028691a-5d2d-410a-93dc-fc747e189a33" targetNodeId="4a8b52c1-5f5f-4f43-a43b-15a407bfead1" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c36f9359-f0b7-49fd-8fa7-5a2c5684cb24" name="Generate Accession Report - PPA NEO HAA NSP PPS ONLY" type="CallRouteProcessor" tag="Processor" class="com.pilotfish.eip.modules.internal.CallRouteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:(getAttribute('Partition') == 'PPA' and getAttribute('Client') == 'NEO') || (getAttribute('Partition') == 'NGP' and getAttribute('Client') == 'CAQ') || (getAttribute('Partition') == 'HAL' and getAttribute('Client') == 'HAA') || getAttribute('Partition') == 'PPS' || getAttribute('Partition') == 'NSP'}</ExecuteProcessor>
+      
+          
+      <Listener>Flat File to HL7 and Kickout Reports.4a6 - Kickout Reports - Accession Log.Programmable (Trigger) Listener</Listener>
+      
+          
+      <Synchronous>false</Synchronous>
+      
+          
+      <Timeout>60</Timeout>
+      
+        
+   </ModuleConfig>
+</Module>

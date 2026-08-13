@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="2cfa133c-5876-4307-858b-5b02592d3b2e" name="Save Data Again" type="Data Attribute Swapper" tag="Processor" class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('Client') != 'PPA'}</ExecuteProcessor>
+      
+          
+      <AttributeName>dataBeforeSplit</AttributeName>
+      
+          
+      <SAVEOUTTAG>false</SAVEOUTTAG>
+      
+          
+      <SAVEINTAG>true</SAVEINTAG>
+      
+          
+      <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+      
+          
+      <StoreAsStream>true</StoreAsStream>
+      
+          
+      <IsGlobalAttribute>false</IsGlobalAttribute>
+      
+          
+      <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+      
+        
+   </ModuleConfig>
+</Module>

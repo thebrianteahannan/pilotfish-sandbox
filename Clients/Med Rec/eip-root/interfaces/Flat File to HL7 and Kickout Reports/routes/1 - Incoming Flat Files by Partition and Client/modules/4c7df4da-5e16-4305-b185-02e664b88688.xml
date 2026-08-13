@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="4c7df4da-5e16-4305-b185-02e664b88688" name="Flat File to HL7 and Kickout Reports.1 - Incoming Flat Files by Partition and Client.Processor13" type="RegExProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.RegExProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <UseDefaultEncoding>false</UseDefaultEncoding>
+      
+          
+      <Encoding>UTF-8</Encoding>
+      
+          
+      <REGEX_TABLE_TAG>[eip_pair:\x{FFFD}:eip_name::eip_value]</REGEX_TABLE_TAG>
+      
+          
+      <PostProcessOptions>Replace all \n with newlines</PostProcessOptions>
+      
+        
+   </ModuleConfig>
+</Module>

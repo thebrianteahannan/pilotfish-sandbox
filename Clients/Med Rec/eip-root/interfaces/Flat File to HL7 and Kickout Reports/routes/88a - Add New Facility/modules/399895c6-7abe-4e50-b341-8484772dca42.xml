@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="399895c6-7abe-4e50-b341-8484772dca42" name="Pickup Listener Route XML File" type="StaticFileProcessor" tag="Processor" class="com.pilotfish.eip.modules.file.StaticFileProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <FileName>{ognl:#properties.get('LISTENER_ROUTE_XML_DIR') + @java.io.File@separatorChar + #properties.get('LISTENER_ROUTE_XML_FILENAME')}</FileName>
+      
+          
+      <PostProcessOperation>Do Nothing</PostProcessOperation>
+      
+          
+      <TargetDirectory/>
+      
+        
+   </ModuleConfig>
+</Module>

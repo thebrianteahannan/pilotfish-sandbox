@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="6e0883f7-9f96-42b1-95a7-6c245cd67984" name="4a4 - Kickout Reports - Ref Phys - Ariana - Ligolab">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="5acc51aa-b6fa-4214-914c-c52fb0296526" moduleId="329fd98d-1af3-4108-a742-dc6893cb2cfb" label="Flat File to HL7 and Kickout Reports.4a4 - Kickout Reports - Ref Phys - Ariana - Ligolab.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="de271b1f-12be-4a2e-8fd8-88a876d936a1" moduleId="912fd925-f914-4907-b865-6e955a5d7ad0" label="Flat File to HL7 and Kickout Reports.4a4 - Kickout Reports - Ref Phys - Ariana - Ligolab.Directory / File Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="f753905b-5153-41b9-b291-e245f5b977bb" sourceNodeId="5acc51aa-b6fa-4214-914c-c52fb0296526" targetNodeId="de271b1f-12be-4a2e-8fd8-88a876d936a1" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

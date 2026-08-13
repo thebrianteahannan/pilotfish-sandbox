@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="822c42b0-81fa-415b-8b6e-35ff461d5950" name="Call Route to Generate SU Kickout Report" type="CallRouteProcessor" tag="Processor" class="com.pilotfish.eip.modules.internal.CallRouteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('SUAccountsCount') != 0}</ExecuteProcessor>
+      
+          
+      <Listener>88363 Log to HL7 DFT.6 - Generate Kickout Reports.Programmable (Trigger) Listener</Listener>
+      
+          
+      <Synchronous>false</Synchronous>
+      
+          
+      <Timeout>60</Timeout>
+      
+        
+   </ModuleConfig>
+</Module>
