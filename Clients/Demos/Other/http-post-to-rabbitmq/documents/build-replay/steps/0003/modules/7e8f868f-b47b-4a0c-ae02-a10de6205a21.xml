@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7e8f868f-b47b-4a0c-ae02-a10de6205a21" name="Publish To Queue" type="RabbitMQ" tag="Transport" class="com.pilotfish.eip.modules.messaging.rabbitmq.RabbitMQTransport">
+   <ModuleConfig>
+      <ConnectionMethod>Host and Port</ConnectionMethod>
+      
+        
+      <URI>amqp://localhost</URI>
+      
+        
+      <HostsAndPorts>$$RABBITMQ_HOSTS</HostsAndPorts>
+      
+        
+      <VirtualHost>/</VirtualHost>
+      
+        
+      <UserName>$$RABBITMQ_USER</UserName>
+      
+        
+      <Password>$$RABBITMQ_PASSWORD</Password>
+      
+        
+      <SSLEnabled>false</SSLEnabled>
+      
+        
+      <Queue>$$RABBITMQ_QUEUE</Queue>
+      
+        
+      <Exchange/>
+      
+        
+      <PointToPointMode>Queue (Point-to-Point)</PointToPointMode>
+      
+        
+      <SyncAck>false</SyncAck>
+      
+        
+      <Declare>true</Declare>
+      
+        
+      <Durable>true</Durable>
+      
+        
+      <Exclusive>false</Exclusive>
+      
+        
+      <AutoDelete>false</AutoDelete>
+      
+        
+      <MessageTTL>0</MessageTTL>
+      
+        
+      <AutoExpire>0</AutoExpire>
+      
+        
+      <MaxLength>0</MaxLength>
+      
+        
+      <DeadLetterExchange/>
+      
+        
+      <com.pilotfish.rabbitmq.ContentType>application/json</com.pilotfish.rabbitmq.ContentType>
+      
+        
+      <com.pilotfish.rabbitmq.ContentEncoding/>
+      
+        
+      <com.pilotfish.rabbitmq.CorrelationId/>
+      
+        
+      <com.pilotfish.rabbitmq.DeliveryMode/>
+      
+        
+      <com.pilotfish.rabbitmq.Expiration/>
+      
+        
+      <com.pilotfish.rabbitmq.MessageId/>
+      
+        
+      <com.pilotfish.rabbitmq.Priority/>
+      
+        
+      <com.pilotfish.rabbitmq.ReplyTo/>
+      
+        
+      <com.pilotfish.rabbitmq.Timestamp/>
+      
+        
+      <com.pilotfish.rabbitmq.Type/>
+      
+        
+      <com.pilotfish.rabbitmq.UserId/>
+      
+        
+      <com.pilotfish.rabbitmq.AppId/>
+      
+        
+      <com.pilotfish.rabbitmq.Headers/>
+      
+      
+   </ModuleConfig>
+</Module>

@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import json
 from datetime import datetime, timezone
+from demo_paths import require_demo
 from pathlib import Path
 
 
@@ -73,7 +74,7 @@ def main() -> int:
     ap.add_argument("--status-message", default="", help="Also update build-status.json message")
     args = ap.parse_args()
 
-    root = Path(args.root).expanduser().resolve()
+    root = require_demo(args.root)
     docs = root / "documents"
     docs.mkdir(parents=True, exist_ok=True)
     path = docs / "build-experience.json"

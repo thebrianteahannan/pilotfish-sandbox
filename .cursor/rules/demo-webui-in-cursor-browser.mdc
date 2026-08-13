@@ -1,0 +1,14 @@
+---
+description: Open Sandbox demo Web UIs in Cursor's IDE browser, never Chrome or macOS open
+alwaysApply: true
+---
+
+# Demo Web UI opens in Cursor
+
+When a Sandbox demo Web UI first comes up (`scaffold_demo_stage.py`, `docker compose --profile stage`, or `full`):
+
+1. **Do not** run macOS `open http://…`, `open -a "Google Chrome"`, or any other host browser.
+2. Open it in **Cursor's IDE browser**: MCP `cursor-ide-browser` → `browser_navigate` with `position: "active"` (the user wants to see it here).
+3. Still paste Local + LAN URLs in chat and on the Info tab Access list.
+
+`tools/scaffold_demo_stage.py` prints the URL only — it must not launch Chrome.

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="735b00c2-5fe3-4b0e-9565-2d00492548a5" name="Extract Open AR Fields" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:ExpectedPaid:eip_name:normalize-space(string((//EXPECTEDPAID | //ExpectedPaid | //*[local-name()='EXPECTEDPAID' or local-name()='ExpectedPaid'])[1])):eip_value][eip_pair:ArPatientLast:eip_name:normalize-space(string((//PATIENTLASTNAME | //PatientLastName | //*[local-name()='PATIENTLASTNAME' or local-name()='PatientLastName'])[1])):eip_value][eip_pair:ArPatientFirst:eip_name:normalize-space(string((//PATIENTFIRSTNAME | //PatientFirstName | //*[local-name()='PATIENTFIRSTNAME' or local-name()='PatientFirstName'])[1])):eip_value][eip_pair:ArStatus:eip_name:normalize-space(string((//STATUS | //Status | //*[local-name()='STATUS' or local-name()='Status'])[1])):eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>

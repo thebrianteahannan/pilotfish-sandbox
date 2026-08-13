@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="2dc28b1e-8e55-4b3b-9051-b42714267fcd" name="1 - Eligibility 270 271 API">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="c643a518-738e-428e-8b92-bca4cb71b8e5" moduleId="b90d0a16-913f-49ad-9ea2-5fed9c2a62ee" label="Eligibility REST" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="3aeec5dd-2b08-4fa9-854a-630c818b33bf" moduleId="31ecf90b-388d-462f-8e70-b14f85648d5f" label="Snapshot Inbound Body" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="23d55fc8-32a2-4f06-b288-8f412c925074" moduleId="41031fd8-840e-41da-8727-50e21130b000" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="96.0"/>
+      
+      
+      <Node id="ef73fb45-500a-4346-9255-be5c080768e0" moduleId="4ed7ceb0-9f5d-4780-9bfc-edc818092eb7" label="Map Request To 270 EDI XML" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="6a9494bd-b973-42ed-9ac3-6570fd97f65a" moduleId="d7be3490-6693-4993-9482-d550b5334863" label="Pretty-Print 270 EDI XML" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="8fe91440-dcb6-470d-af55-cc8dc28ca005" moduleId="079a48fa-2ccd-4b2b-9402-c0579858144d" label="Write 270 EDI XML" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="0c020ed3-c291-41dd-bed8-b96f09459a36" moduleId="1ff02123-428b-4c83-8a59-81f320f1e582" label="XML to EDI 270" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="05acea61-4f4d-41c1-899f-061059181f91" moduleId="39e89892-d2e6-4a66-9474-8f336c7cc849" label="Write 270 EDI Wire" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="435305f1-7aef-4b5a-a764-4254613727d0" moduleId="8f9da3ac-df16-4299-980a-33924c70d3ec" label="Set 200 Build" x="2600.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="eea33e28-cfab-4563-a97e-f2ec262a08bb" moduleId="7374c136-6cb0-4b47-8604-349f2abbce53" label="270 Response Headers" x="2860.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="9dcd3434-7e30-4db6-8b9c-fdfbcc67f82e" moduleId="77d6dadb-cd07-4055-846c-4a1a9b61d0a2" label="Snapshot Raw 271" x="1300.0" y="140.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="00450d4a-dd37-450a-a0bb-29edd4b6749a" moduleId="8dd6230e-d9d2-4461-9cc9-954012037442" label="Map 271 Wire To JSON" x="1560.0" y="140.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="9af1e856-0f98-468b-9164-3c5a916a9c8e" moduleId="7e44b9da-7554-4635-b9b8-c036878bc3f2" label="Write JSON Summary" x="1820.0" y="140.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="41f1492c-a447-45af-8091-64c7ec70478b" moduleId="38e4225b-4905-4f55-8dce-d7deffba9b95" label="Set 200 Parse" x="2080.0" y="140.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="501ffb6e-8a06-48b2-81ba-539d268b7e1f" moduleId="3f956e8c-aa53-4566-a734-42f347e890f8" label="JSON Response Headers" x="2340.0" y="140.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="d897a9f1-a996-4195-9097-4ce6f27368b2" moduleId="c47ede88-1654-4a5b-aba9-9242585d90c5" label="Return Summary" x="2600.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+      
+      
+      <Node id="8afb6c1d-2d20-40b1-afa1-9b7b8b39be55" moduleId="45e0dc15-b7d5-46e0-9536-de5e78385321" label="Empty Error Body" x="1300.0" y="280.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="e1c55c00-d01c-4f46-aa10-dc084317894e" moduleId="c400f09d-f85b-4a51-83f0-dd7a39eb490c" label="Set 405" x="1560.0" y="280.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="48286311-e0fd-4eea-bb13-0353ca2da6aa" moduleId="026197aa-6c10-4018-9584-31e6b1f4292a" label="405 Headers" x="1820.0" y="280.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="077ee8f8-b8b5-436d-ac7f-ced13f522660" moduleId="75accb00-3dcd-4834-84f5-b90298897bc9" label="Method Not Allowed" x="2080.0" y="280.0" width="180.0" height="64.0" retries="1"/>
+      
+   
+   </Nodes>
+   <Connections>
+      <Connection id="cc40dff4-479f-4d0e-9898-178541e9f80d" sourceNodeId="c643a518-738e-428e-8b92-bca4cb71b8e5" targetNodeId="3aeec5dd-2b08-4fa9-854a-630c818b33bf" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="f20f8bbf-d115-4dae-b863-49c026f8981b" sourceNodeId="ef73fb45-500a-4346-9255-be5c080768e0" targetNodeId="6a9494bd-b973-42ed-9ac3-6570fd97f65a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="ea00a0cf-f8e4-46d3-8853-a1c6b4f02818" sourceNodeId="6a9494bd-b973-42ed-9ac3-6570fd97f65a" targetNodeId="8fe91440-dcb6-470d-af55-cc8dc28ca005" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="740711f3-9594-4047-bc1e-723f17c161bb" sourceNodeId="8fe91440-dcb6-470d-af55-cc8dc28ca005" targetNodeId="0c020ed3-c291-41dd-bed8-b96f09459a36" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="e249b3b2-0f8e-46bf-8717-92e11e03a809" sourceNodeId="0c020ed3-c291-41dd-bed8-b96f09459a36" targetNodeId="05acea61-4f4d-41c1-899f-061059181f91" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="1e8e8d19-1467-4e0a-852f-2a65c03bef0f" sourceNodeId="05acea61-4f4d-41c1-899f-061059181f91" targetNodeId="435305f1-7aef-4b5a-a764-4254613727d0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="f9761ef5-6144-4fa6-9ecd-298fa105f13f" sourceNodeId="435305f1-7aef-4b5a-a764-4254613727d0" targetNodeId="eea33e28-cfab-4563-a97e-f2ec262a08bb" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="56e32878-f544-46ee-b55e-cd0ed2db432f" sourceNodeId="9dcd3434-7e30-4db6-8b9c-fdfbcc67f82e" targetNodeId="00450d4a-dd37-450a-a0bb-29edd4b6749a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="88f0799f-2a50-4bdd-b7f7-74203fa0bfa6" sourceNodeId="00450d4a-dd37-450a-a0bb-29edd4b6749a" targetNodeId="9af1e856-0f98-468b-9164-3c5a916a9c8e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="87538023-ee96-4e53-97b5-209d1afb60b2" sourceNodeId="9af1e856-0f98-468b-9164-3c5a916a9c8e" targetNodeId="41f1492c-a447-45af-8091-64c7ec70478b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="91443c76-8fb0-428e-a73b-bf6db228e2d4" sourceNodeId="41f1492c-a447-45af-8091-64c7ec70478b" targetNodeId="501ffb6e-8a06-48b2-81ba-539d268b7e1f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="0f72fb79-46d6-4ddc-85c9-07e752d285e0" sourceNodeId="501ffb6e-8a06-48b2-81ba-539d268b7e1f" targetNodeId="d897a9f1-a996-4195-9097-4ce6f27368b2" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="3a8d5a6f-18a6-42fc-961d-d25a128ae87c" sourceNodeId="8afb6c1d-2d20-40b1-afa1-9b7b8b39be55" targetNodeId="e1c55c00-d01c-4f46-aa10-dc084317894e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="63363878-5959-45c1-8abe-03675ee1ebdd" sourceNodeId="e1c55c00-d01c-4f46-aa10-dc084317894e" targetNodeId="48286311-e0fd-4eea-bb13-0353ca2da6aa" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="f2af59cb-4e44-4ad5-a4b6-76ac7f9b4c1e" sourceNodeId="48286311-e0fd-4eea-bb13-0353ca2da6aa" targetNodeId="077ee8f8-b8b5-436d-ac7f-ced13f522660" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="0197881d-54ff-4654-a975-6f67ad7630b6" sourceNodeId="3aeec5dd-2b08-4fa9-854a-630c818b33bf" targetNodeId="23d55fc8-32a2-4f06-b288-8f412c925074" sourceConnector="right-output" targetConnector="router-input:7ba5a150-9672-4f1b-91a1-87779ad8ef4b" condition="true"/>
+      
+      
+      <Connection id="98fcb3c9-8a66-4620-a72c-9f88d044b11e" sourceNodeId="23d55fc8-32a2-4f06-b288-8f412c925074" targetNodeId="ef73fb45-500a-4346-9255-be5c080768e0" sourceConnector="router-output:e9db809d-3d9b-46a1-a4b5-173769b3819f" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="8b766fe7-614a-4d5e-9ed7-047931d23f4a" sourceNodeId="23d55fc8-32a2-4f06-b288-8f412c925074" targetNodeId="9dcd3434-7e30-4db6-8b9c-fdfbcc67f82e" sourceConnector="router-output:b89dfcea-93c8-4ac3-9b33-33f2d3167855" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="1bbc144f-6014-42e6-bce7-42d7a15f4772" sourceNodeId="23d55fc8-32a2-4f06-b288-8f412c925074" targetNodeId="8afb6c1d-2d20-40b1-afa1-9b7b8b39be55" sourceConnector="router-output:b704b518-52da-4496-abc9-eb3adb03fa44" targetConnector="left-input" condition="true"/>
+      
+   
+   </Connections>
+</Route>

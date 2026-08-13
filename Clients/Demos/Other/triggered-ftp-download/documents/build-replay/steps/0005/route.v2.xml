@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="cfc08bc4-06eb-4191-a393-8ee2575d2a2a" name="1 - Parse Control And Trigger Download">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="59c376ee-d19a-4923-9506-1477bfc3c38f" moduleId="47f94b32-0744-4ad8-8d9d-a25a8cab378f" label="Poll Control Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="cf6d9cfc-c60d-4846-9a10-b7bd290c6c82" moduleId="c1bca1b3-33dc-4a82-a9ae-ca25c7b6563e" label="Save Control Body To Attribute" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="9f35b413-8314-4ddb-aa19-2555ae18a63f" moduleId="42d84b84-a08c-4e1b-bf26-d05768f473fa" label="Set Remote File Name" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="23aa4e84-d5cc-45b6-a3d0-12b0ef55deb1" moduleId="e3a60404-a22d-44e0-a48f-62c2d7138e91" label="Set Remote Full Path" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="86efba3c-0da6-4633-800c-6f8693729b58" sourceNodeId="59c376ee-d19a-4923-9506-1477bfc3c38f" targetNodeId="cf6d9cfc-c60d-4846-9a10-b7bd290c6c82" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="42bbda65-b386-441a-a4cb-48f01b58410e" sourceNodeId="cf6d9cfc-c60d-4846-9a10-b7bd290c6c82" targetNodeId="9f35b413-8314-4ddb-aa19-2555ae18a63f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="e336c7f0-08f5-4a8e-9512-a45d43783541" sourceNodeId="9f35b413-8314-4ddb-aa19-2555ae18a63f" targetNodeId="23aa4e84-d5cc-45b6-a3d0-12b0ef55deb1" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+   </Connections>
+</Route>

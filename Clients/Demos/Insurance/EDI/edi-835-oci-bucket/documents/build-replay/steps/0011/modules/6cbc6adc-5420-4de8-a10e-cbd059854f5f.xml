@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="6cbc6adc-5420-4de8-a10e-cbd059854f5f" name="Write JSON Archive" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$JSON_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:(getAttribute('StControlNumber') != null ? getAttribute('StControlNumber') : 'st') + '_' + (getAttribute('ClaimControlNumber') != null ? getAttribute('ClaimControlNumber') : 'claim') + '.json'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

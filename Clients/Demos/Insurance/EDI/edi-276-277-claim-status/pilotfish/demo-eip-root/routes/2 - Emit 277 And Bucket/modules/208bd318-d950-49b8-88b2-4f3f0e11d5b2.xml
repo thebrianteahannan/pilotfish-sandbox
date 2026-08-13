@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="208bd318-d950-49b8-88b2-4f3f0e11d5b2" name="Debug Write 277 EDI XML" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:(getAttribute('TraceNumber') != null ? getAttribute('TraceNumber') : 'unknown') + '_277_edi.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

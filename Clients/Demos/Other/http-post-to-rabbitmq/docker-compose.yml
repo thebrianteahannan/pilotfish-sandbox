@@ -1,0 +1,77 @@
+services:
+  rabbitmq:
+    profiles: ["full"]
+    image: rabbitmq:3-management
+    container_name: pf-http-post-to-rabbitmq-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: demo
+      RABBITMQ_DEFAULT_PASS: demo
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  pilotfish:
+    profiles: ["full"]
+    build:
+      context: ./pilotfish
+    image: pilotfish-http-post-to-rabbitmq:23R1
+    container_name: pf-http-post-to-rabbitmq-pilotfish
+    restart: unless-stopped
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      CATALINA_OPTS: "-Xms256M -Xmx1024M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8134:8080"
+    volumes:
+      - ./input:/opt/pilotfish/input
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+      - ./pilotfish/demo-eip-root/routes:/usr/local/tomcat/webapps/eip/eip-root/routes
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/usr/local/tomcat/webapps/eip/eip-root/environment-settings.conf:ro
+
+  webui:
+    profiles: ["stage", "full"]
+    build:
+      context: ./webui
+    image: pilotfish-http-post-to-rabbitmq-webui:latest
+    container_name: pf-http-post-to-rabbitm-webui
+    restart: unless-stopped
+    environment:
+      WEBUI_PORT: "8135"
+      DEMO_SLUG: "http-post-to-rabbitmq"
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      SAMPLE_DIR: /samples
+      ENV_SETTINGS_FILE: /environment-settings.conf
+      LAN_HINT: "http://192.168.68.62:8135/"
+      EIP_PUBLIC_URL: "http://localhost:8134/eip/"
+      EIP_POST_URL: "http://pilotfish:8080/eip/http-post/ingress"
+      EIP_HEALTH_URL: "http://pilotfish:8080/eip/"
+      RABBITMQ_MGMT_URL: "http://rabbitmq:15672"
+      RABBITMQ_USER: demo
+      RABBITMQ_PASSWORD: demo
+      RABBITMQ_VHOST: "/"
+      RABBITMQ_QUEUE: demo.http.ingress
+    ports:
+      - "8135:8135"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./documents:/documents:ro
+      - ./samples:/samples:ro
+      - ./pilotfish/demo-eip-root/routes:/routes:ro
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/environment-settings.conf:ro
+      - ./webui/static:/app/static:ro
+      - ./webui/templates:/app/templates:ro
+      - ./webui/app.py:/app/app.py:ro
+      - ./webui/document_routes.py:/app/document_routes.py:ro

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="cebd23f2-0d68-4aa0-9639-4e50e8121870" name="1 - HTTP POST To RabbitMQ">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="d3a40e0b-8309-4da8-8d17-981ae559f211" moduleId="37e4941d-8f03-43d4-b63a-3e8d662f99f2" label="HTTP POST Ingress" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="7a6b490f-0724-4b7d-a202-1e0e98c28d2e" moduleId="c738b3c4-c766-49da-95b6-4c31d7d3b095" label="Publish To Queue" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="6fd804c4-4851-43ef-9bce-d854fcb803ae" sourceNodeId="d3a40e0b-8309-4da8-8d17-981ae559f211" targetNodeId="7a6b490f-0724-4b7d-a202-1e0e98c28d2e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

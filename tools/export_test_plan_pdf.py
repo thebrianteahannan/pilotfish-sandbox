@@ -7,6 +7,7 @@ import json
 from datetime import date
 from pathlib import Path
 
+from demo_paths import require_demo
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.lib.pagesizes import letter
@@ -197,7 +198,7 @@ def main():
     p.add_argument("--root", type=Path, default=None)
     p.add_argument("--out", type=Path, default=None)
     args = p.parse_args()
-    root = (args.root or Path.cwd()).resolve()
+    root = require_demo(args.root)
     path = build(root, args.out)
     print("Wrote", path)
 

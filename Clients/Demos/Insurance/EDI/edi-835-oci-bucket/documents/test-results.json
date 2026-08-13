@@ -1,0 +1,124 @@
+{
+  "interface": "EDI 835 OCI Bucket",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-835-oci-bucket",
+  "started_at": "2026-08-13T07:32:38.955134+00:00",
+  "finished_at": "2026-08-13T07:32:45.018123+00:00",
+  "summary": {
+    "pass": 12,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 12
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "UI OK (http://127.0.0.1:8105/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 4,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "oci",
+      "name": "Object Storage mock health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 1,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 3,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "wait-eip",
+      "name": "EIP is reachable",
+      "suite": "835 to objects",
+      "status": "pass",
+      "duration_ms": 4,
+      "message": "HTTP 200: {\"eip\":true,\"oci\":true,\"ok\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "reset",
+      "name": "Reset outputs",
+      "suite": "835 to objects",
+      "status": "pass",
+      "duration_ms": 6,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "inject",
+      "name": "Upload sample 835 via FTP folder",
+      "suite": "835 to objects",
+      "status": "pass",
+      "duration_ms": 3,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "claim-001",
+      "name": "PATCLAIM001 JSON object",
+      "suite": "835 to objects",
+      "status": "pass",
+      "duration_ms": 6031,
+      "message": "HTTP 200: {\"archive\":[{\"content\":\"ISA*00*          *00*          *ZZ*PAYERDEMO      *ZZ*PROVIDERDEMO   *260804*1430*^*00501*000000905*0*T*:~\\nGS*HP*PAYERDEMO*PROVIDERDEMO*20260804*1430*1*X*0",
+      "detail": ""
+    },
+    {
+      "id": "claim-002",
+      "name": "PATCLAIM002 JSON object",
+      "suite": "835 to objects",
+      "status": "pass",
+      "duration_ms": 3,
+      "message": "HTTP 200: {\"archive\":[{\"content\":\"ISA*00*          *00*          *ZZ*PAYERDEMO      *ZZ*PROVIDERDEMO   *260804*1430*^*00501*000000905*0*T*:~\\nGS*HP*PAYERDEMO*PROVIDERDEMO*20260804*1430*1*X*0",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-835-oci-bucket/documents/EDI835_OCI_V2_Route_Diagrams.pdf",
+      "detail": ""
+    },
+    {
+      "id": "capability-pdf",
+      "name": "Capability Brief PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-835-oci-bucket/documents/EDI835_OCI_Capability_Brief.pdf",
+      "detail": ""
+    },
+    {
+      "id": "test-plan-pdf",
+      "name": "Test Plan PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-835-oci-bucket/documents/EDI835_OCI_Test_Plan.pdf",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-835-oci-bucket/tests/plan.json"
+}

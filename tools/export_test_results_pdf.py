@@ -17,6 +17,7 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+from demo_paths import require_demo
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import letter
@@ -308,7 +309,7 @@ def main() -> int:
     parser.add_argument("--json", type=Path, default=None, help="Path to test-results.json")
     parser.add_argument("--out", type=Path, default=None, help="Output PDF path")
     args = parser.parse_args()
-    root = (args.root or Path.cwd()).resolve()
+    root = require_demo(args.root)
     path = build_from_json(root, json_path=args.json, out=args.out)
     print("Wrote", path)
     return 0

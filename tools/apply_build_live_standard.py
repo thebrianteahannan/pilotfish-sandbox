@@ -3,7 +3,7 @@
 
 Copies from Clients/Demos/_shared/webui:
   - document_routes.py (includes ensure_build_status_api)
-  - static/build-live.js + build-live.css
+  - static/build-live.js + build-live.css + build-stage.js
 
 Patches templates/index.html to include build-live CSS/JS when missing.
 Patches app.py to call ensure_build_status_api when timing API is present.
@@ -20,16 +20,15 @@ import re
 import shutil
 from pathlib import Path
 
+from demo_paths import DEMOS, iter_demo_roots, require_demo
+
 ROOT = Path(__file__).resolve().parents[1]
-DEMOS = ROOT / "Clients" / "Demos"
 SHARED = DEMOS / "_shared" / "webui"
 
 
 def demos_with_webui() -> list[Path]:
     out = []
-    for p in sorted(DEMOS.iterdir()):
-        if p.name.startswith("_"):
-            continue
+    for p in iter_demo_roots():
         if (p / "webui" / "templates" / "index.html").is_file():
             out.append(p)
     return out
@@ -40,7 +39,7 @@ def copy_assets(demo: Path) -> None:
     shutil.copy2(SHARED / "document_routes.py", webui / "document_routes.py")
     static = webui / "static"
     static.mkdir(parents=True, exist_ok=True)
-    for name in ("build-live.js", "build-live.css"):
+    for name in ("build-live.js", "build-live.css", "build-stage.js", "pilotfish-logo.jpg", "construction-video.js"):
         src = SHARED / "static" / name
         if src.is_file():
             shutil.copy2(src, static / name)
@@ -56,6 +55,20 @@ def patch_index(demo: Path) -> bool:
             '  <link rel="stylesheet" href="/static/build-live.css" />\n</head>',
             1,
         )
+    if "build-stage.js" not in text:
+        if "build-live.js" in text:
+            text = text.replace(
+                '<script src="/static/build-live.js"></script>',
+                '<script src="/static/build-stage.js"></script>\n  <script src="/static/build-live.js"></script>',
+                1,
+            )
+        elif re.search(r'<script[^>]+src="/static/app\.js"', text):
+            text = re.sub(
+                r'(<script[^>]+src="/static/app\.js"[^>]*>\s*</script>)',
+                r'<script src="/static/build-stage.js"></script>\n  <script src="/static/build-live.js"></script>\n  \1',
+                text,
+                count=1,
+            )
     if "build-live.js" not in text:
         # Prefer before closing body, after other scripts
         if re.search(r'<script[^>]+src="/static/app\.js"', text):
@@ -69,6 +82,26 @@ def patch_index(demo: Path) -> bool:
             text = text.replace(
                 "</body>",
                 '  <script src="/static/build-live.js"></script>\n</body>',
+                1,
+            )
+    if "construction-video.js" not in text:
+        if "build-live.js" in text:
+            text = text.replace(
+                '<script src="/static/build-live.js"></script>',
+                '<script src="/static/build-live.js"></script>\n  <script src="/static/construction-video.js"></script>',
+                1,
+            )
+        elif re.search(r'<script[^>]+src="/static/app\.js"', text):
+            text = re.sub(
+                r'(<script[^>]+src="/static/app\.js"[^>]*>\s*</script>)',
+                r'<script src="/static/construction-video.js"></script>\n  \1',
+                text,
+                count=1,
+            )
+        else:
+            text = text.replace(
+                "</body>",
+                '  <script src="/static/construction-video.js"></script>\n</body>',
                 1,
             )
     if text != orig:
@@ -155,7 +188,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--root", help="Single demo root")
     args = ap.parse_args()
-    targets = [Path(args.root).resolve()] if args.root else demos_with_webui()
+    targets = [require_demo(args.root)] if args.root else demos_with_webui()
     for demo in targets:
         if not demo.is_dir():
             raise SystemExit(f"Not a demo dir: {demo}")

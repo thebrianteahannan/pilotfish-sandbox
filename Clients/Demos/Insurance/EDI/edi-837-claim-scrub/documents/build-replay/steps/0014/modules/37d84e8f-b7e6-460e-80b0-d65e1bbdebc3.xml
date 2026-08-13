@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="37d84e8f-b7e6-460e-80b0-d65e1bbdebc3" name="Evaluate Payer Profile Edits" type="XSLT Transformation" tag="Processor" class="com.pilotfish.eip.modules.transform.XSLTProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+      
+          
+      <XSLTPath>transform-evaluate-payer-edits.xslt</XSLTPath>
+      
+          
+      <CacheXSLTToXML>false</CacheXSLTToXML>
+      
+          
+      <XSLTEngine>Saxon</XSLTEngine>
+      
+          
+      <XSLTParameters>null</XSLTParameters>
+      
+          
+      <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+      
+          
+      <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+      
+        
+   </ModuleConfig>
+</Module>

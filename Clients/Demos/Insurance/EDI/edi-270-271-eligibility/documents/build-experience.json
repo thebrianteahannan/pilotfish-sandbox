@@ -1,0 +1,254 @@
+{
+  "version": 1,
+  "title": "Interface construction experience",
+  "demo": "edi-270-271-eligibility",
+  "events": [
+    {
+      "id": "e001",
+      "kind": "decision",
+      "title": "REST listener for clinic API",
+      "summary": "RESTful Web Service, Synchronous=true, resources build and parse.",
+      "detail": "",
+      "rationale": "This is request/response, not a queue. HTTP Post Synchronous=true is the 23R1 trap only when the transport never completes the ticket.",
+      "at": "2026-08-13T06:44:28Z",
+      "alternatives": [
+        "HttpPostListener into a directory drop"
+      ]
+    },
+    {
+      "id": "e002",
+      "kind": "decision",
+      "title": "XML to EDI 270 with TableData",
+      "summary": "EDITransformationProcessor XML to EDI using edi-tabledata/270-A1.",
+      "detail": "",
+      "rationale": "Playbook \u00a73.5 \u2014 XSLT builds EDI XML, never concatenates ISA* as text.",
+      "at": "2026-08-13T06:44:28Z"
+    },
+    {
+      "id": "e003",
+      "kind": "decision",
+      "title": "Parse 271 with structural XSLT",
+      "summary": "Clinic UI wraps the 271 in EdiPayload; XSLT tokenizes AAA/EB.",
+      "detail": "",
+      "rationale": "23R1 EDI to XML for 271 has failed without licensed tables. TableData is still mounted for XML to EDI.",
+      "at": "2026-08-13T06:44:28Z"
+    },
+    {
+      "id": "e004",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: listener + transports scaffold",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:28Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0001"
+    },
+    {
+      "id": "e005",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cSnapshot Inbound Body\u201d (1/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:30Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0002"
+    },
+    {
+      "id": "e006",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cMap Request To 270 EDI XML\u201d (2/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:32Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0003"
+    },
+    {
+      "id": "e007",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cPretty-Print 270 EDI XML\u201d (3/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:34Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0004"
+    },
+    {
+      "id": "e008",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cWrite 270 EDI XML\u201d (4/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:36Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0005"
+    },
+    {
+      "id": "e009",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cXML to EDI 270\u201d (5/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:38Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0006"
+    },
+    {
+      "id": "e010",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cWrite 270 EDI Wire\u201d (6/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:40Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0007"
+    },
+    {
+      "id": "e011",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cSet 200 Build\u201d (7/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:42Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0008"
+    },
+    {
+      "id": "e012",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201c270 Response Headers\u201d (8/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:44Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0009"
+    },
+    {
+      "id": "e013",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cSnapshot Raw 271\u201d (9/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:47Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0010"
+    },
+    {
+      "id": "e014",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cMap 271 Wire To JSON\u201d (10/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:49Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0011"
+    },
+    {
+      "id": "e015",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cWrite JSON Summary\u201d (11/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:51Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0012"
+    },
+    {
+      "id": "e016",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cSet 200 Parse\u201d (12/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:53Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0013"
+    },
+    {
+      "id": "e017",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cJSON Response Headers\u201d (13/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:55Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0014"
+    },
+    {
+      "id": "e018",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cEmpty Error Body\u201d (14/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:57Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0015"
+    },
+    {
+      "id": "e019",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: adding \u201cSet 405\u201d (15/16)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:44:59Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0016"
+    },
+    {
+      "id": "e020",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: complete (16 processors)",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:45:01Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0017"
+    },
+    {
+      "id": "e021",
+      "kind": "route",
+      "title": "1 - Eligibility 270 271 API: complete \u2014 diagram live",
+      "summary": "Published diagram snapshot for 1 - Eligibility 270 271 API",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:45:02Z",
+      "route_id": "1-eligibility-270-271-api",
+      "replay_step": "0018"
+    },
+    {
+      "id": "e022",
+      "kind": "test",
+      "title": "10/10 tests passed",
+      "summary": "FAIL001 AAA 72 and OK001 active benefits through live EIP + mock payer.",
+      "detail": "XML to EDI 270 omitted ST*270; clinic UI inserts the ST segment. Parse uses structural XSLT over wrapped raw 271.",
+      "rationale": "",
+      "at": "2026-08-13T06:48:54Z"
+    },
+    {
+      "id": "e023",
+      "kind": "docs",
+      "title": "PDFs and Access URLs",
+      "summary": "Route diagrams, capability brief, and test plan on disk; Info tab lists Local, LAN, EIP, Eligibility API, mock payer.",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:48:54Z"
+    }
+  ],
+  "updated_at": "2026-08-13T06:48:54Z"
+}

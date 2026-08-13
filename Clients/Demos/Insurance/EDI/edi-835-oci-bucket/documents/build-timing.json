@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "interface": "EDI 835 OCI Bucket",
+  "slug": "edi-835-oci-bucket",
+  "path": "Clients/Demos/Insurance/EDI/edi-835-oci-bucket",
+  "requested_by": "user",
+  "started_at": "2026-08-13T07:21:29Z",
+  "completed_at": "2026-08-13T07:28:30Z",
+  "completed_by": "cursor-agent",
+  "duration_minutes": 7.0,
+  "compose_project": "edi-835-oci-bucket",
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-13T07:21:29Z",
+      "ended_at": "2026-08-13T07:23:00Z",
+      "duration_minutes": 1.5,
+      "notes": "Stopped 278 stack; deleted 835-oci tree without overlay restore; scaffolded Insurance/EDI/edi-835-oci-bucket on 8105; restored story sample"
+    },
+    {
+      "id": "design_scaffold",
+      "name": "DESIGN + V1 routes + FTP + Object Storage mock + Web UI",
+      "started_at": "2026-08-13T07:23:00Z",
+      "ended_at": "2026-08-13T07:25:00Z",
+      "duration_minutes": 2.0,
+      "notes": "Route 1 FTPListener from csv-sftp-to-sql; Route 2 835 fork + JSON XSLT + FileWrite + HttpPost from 270 realtime; mock POST/PUT /n/ns/b/bucket/o/name; TableData mount edi-tabledata/835-W1"
+    },
+    {
+      "id": "routes",
+      "name": "V2 publish + full stack",
+      "started_at": "2026-08-13T07:25:00Z",
+      "ended_at": "2026-08-13T07:27:30Z",
+      "duration_minutes": 2.5,
+      "notes": "oci-mock Dockerfile pip range needed requirements.txt. HttpPost retries=2 without delay blocked Route 2 load — set retries=1 like 270."
+    },
+    {
+      "id": "webui_docs",
+      "name": "PDFs + tests + construction prepare",
+      "started_at": "2026-08-13T07:27:30Z",
+      "ended_at": "2026-08-13T07:28:30Z",
+      "duration_minutes": 1.0,
+      "notes": "12/12 tests; PATCLAIM001 and PATCLAIM002 JSON + mock objects; transcript prepared; mp4 left for Info tab Create construction video"
+    }
+  ],
+  "slowest_phases": [
+    {"id": "routes", "duration_minutes": 2.5},
+    {"id": "design_scaffold", "duration_minutes": 2.0},
+    {"id": "webui_early", "duration_minutes": 1.5}
+  ],
+  "bottlenecks": [
+    "HttpPostTransport retries>1 requires a delay; retries=1 matches the 270 skeleton and loads",
+    "Dockerfile RUN pip install flask>=3.0,<4 needs quoting or a requirements.txt"
+  ],
+  "speedup_ideas": [
+    "Applied: fully-qualified OGNL TargetURL (not $$BASE/{ognl})",
+    "Applied: no XML Formatting on JSON FileWrite; unique processor names"
+  ]
+}

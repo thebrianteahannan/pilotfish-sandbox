@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="93402465-ea1e-46cc-b420-31dc707d9b65" name="1 - Poll And Score Remits">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="b1aedeff-b14f-490e-80d4-2d6e2c66db81" moduleId="061f9dba-590b-4bfc-958e-9340d654939c" label="Poll EDI 835 Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="574a50ca-3652-47eb-8bc9-350c68309650" moduleId="3422280e-6654-46fe-a8c1-199d902edc77" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="2762b41a-4fc0-421a-a134-1e2ecb4c39ae" sourceNodeId="b1aedeff-b14f-490e-80d4-2d6e2c66db81" targetNodeId="574a50ca-3652-47eb-8bc9-350c68309650" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+   </Connections>
+</Route>

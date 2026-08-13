@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="f48b8b58-7c35-419e-a239-4ddc3835caa3" name="Pretty-Print Claim Snapshot" type="XML Formatting" tag="Processor" class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+      
+        
+   </ModuleConfig>
+</Module>

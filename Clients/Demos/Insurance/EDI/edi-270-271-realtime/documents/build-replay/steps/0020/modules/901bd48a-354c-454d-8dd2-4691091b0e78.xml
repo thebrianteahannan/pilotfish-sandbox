@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="901bd48a-354c-454d-8dd2-4691091b0e78" name="Wrap 271 For Parse XSLT" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:elig.Wrapped271:eip_name:{ognl:"&lt;EdiPayload&gt;&lt;![CDATA[" + (getAttribute('elig.Raw271') == null ? '' : getAttribute('elig.Raw271').toString()) + "]]&gt;&lt;/EdiPayload&gt;"}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,206 @@
+{
+  "version": 1,
+  "title": "Interface construction experience",
+  "demo": "edi-276-277-claim-status",
+  "events": [
+    {
+      "id": "e001",
+      "kind": "route",
+      "title": "1 - Intake And Lookup: listener + transports scaffold",
+      "summary": "Published diagram snapshot for 1 - Intake And Lookup",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:40Z",
+      "route_id": "1-intake-and-lookup",
+      "replay_step": "0001"
+    },
+    {
+      "id": "e002",
+      "kind": "route",
+      "title": "1 - Intake And Lookup: adding \u201cExtract 276 Claim Status Fields\u201d (1/6)",
+      "summary": "Published diagram snapshot for 1 - Intake And Lookup",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:41Z",
+      "route_id": "1-intake-and-lookup",
+      "replay_step": "0002"
+    },
+    {
+      "id": "e003",
+      "kind": "route",
+      "title": "1 - Intake And Lookup: adding \u201cPretty-Print Forked 276 XML\u201d (2/6)",
+      "summary": "Published diagram snapshot for 1 - Intake And Lookup",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:42Z",
+      "route_id": "1-intake-and-lookup",
+      "replay_step": "0003"
+    },
+    {
+      "id": "e004",
+      "kind": "route",
+      "title": "1 - Intake And Lookup: adding \u201cDebug Write Forked Transaction\u201d (3/6)",
+      "summary": "Published diagram snapshot for 1 - Intake And Lookup",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:44Z",
+      "route_id": "1-intake-and-lookup",
+      "replay_step": "0004"
+    },
+    {
+      "id": "e005",
+      "kind": "route",
+      "title": "1 - Intake And Lookup: adding \u201cBuild Claim Status Decision XML\u201d (4/6)",
+      "summary": "Published diagram snapshot for 1 - Intake And Lookup",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:45Z",
+      "route_id": "1-intake-and-lookup",
+      "replay_step": "0005"
+    },
+    {
+      "id": "e006",
+      "kind": "route",
+      "title": "1 - Intake And Lookup: adding \u201cPretty-Print Claim Status Decision\u201d (5/6)",
+      "summary": "Published diagram snapshot for 1 - Intake And Lookup",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:46Z",
+      "route_id": "1-intake-and-lookup",
+      "replay_step": "0006"
+    },
+    {
+      "id": "e007",
+      "kind": "route",
+      "title": "1 - Intake And Lookup: complete (6 processors)",
+      "summary": "Published diagram snapshot for 1 - Intake And Lookup",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:47Z",
+      "route_id": "1-intake-and-lookup",
+      "replay_step": "0007"
+    },
+    {
+      "id": "e008",
+      "kind": "route",
+      "title": "1 - Intake And Lookup: complete \u2014 diagram live",
+      "summary": "Published diagram snapshot for 1 - Intake And Lookup",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:47Z",
+      "route_id": "1-intake-and-lookup",
+      "replay_step": "0008"
+    },
+    {
+      "id": "e009",
+      "kind": "route",
+      "title": "2 - Emit 277 And Bucket: listener + transports scaffold",
+      "summary": "Published diagram snapshot for 2 - Emit 277 And Bucket",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:47Z",
+      "route_id": "2-emit-277-and-bucket",
+      "replay_step": "0009"
+    },
+    {
+      "id": "e010",
+      "kind": "route",
+      "title": "2 - Emit 277 And Bucket: adding \u201cExtract Decision Attributes\u201d (1/8)",
+      "summary": "Published diagram snapshot for 2 - Emit 277 And Bucket",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:48Z",
+      "route_id": "2-emit-277-and-bucket",
+      "replay_step": "0010"
+    },
+    {
+      "id": "e011",
+      "kind": "route",
+      "title": "2 - Emit 277 And Bucket: adding \u201cMap Decision To 277 EDI XML\u201d (2/8)",
+      "summary": "Published diagram snapshot for 2 - Emit 277 And Bucket",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:49Z",
+      "route_id": "2-emit-277-and-bucket",
+      "replay_step": "0011"
+    },
+    {
+      "id": "e012",
+      "kind": "route",
+      "title": "2 - Emit 277 And Bucket: adding \u201cPretty-Print 277 EDI XML\u201d (3/8)",
+      "summary": "Published diagram snapshot for 2 - Emit 277 And Bucket",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:50Z",
+      "route_id": "2-emit-277-and-bucket",
+      "replay_step": "0012"
+    },
+    {
+      "id": "e013",
+      "kind": "route",
+      "title": "2 - Emit 277 And Bucket: adding \u201cDebug Write 277 EDI XML\u201d (4/8)",
+      "summary": "Published diagram snapshot for 2 - Emit 277 And Bucket",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:51Z",
+      "route_id": "2-emit-277-and-bucket",
+      "replay_step": "0013"
+    },
+    {
+      "id": "e014",
+      "kind": "route",
+      "title": "2 - Emit 277 And Bucket: adding \u201cXML to EDI 277 Response\u201d (5/8)",
+      "summary": "Published diagram snapshot for 2 - Emit 277 And Bucket",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:52Z",
+      "route_id": "2-emit-277-and-bucket",
+      "replay_step": "0014"
+    },
+    {
+      "id": "e015",
+      "kind": "route",
+      "title": "2 - Emit 277 And Bucket: adding \u201cPretty-Print Found XML\u201d (6/8)",
+      "summary": "Published diagram snapshot for 2 - Emit 277 And Bucket",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:53Z",
+      "route_id": "2-emit-277-and-bucket",
+      "replay_step": "0015"
+    },
+    {
+      "id": "e016",
+      "kind": "route",
+      "title": "2 - Emit 277 And Bucket: adding \u201cPretty-Print Not Found XML\u201d (7/8)",
+      "summary": "Published diagram snapshot for 2 - Emit 277 And Bucket",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:55Z",
+      "route_id": "2-emit-277-and-bucket",
+      "replay_step": "0016"
+    },
+    {
+      "id": "e017",
+      "kind": "route",
+      "title": "2 - Emit 277 And Bucket: complete (8 processors)",
+      "summary": "Published diagram snapshot for 2 - Emit 277 And Bucket",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:56Z",
+      "route_id": "2-emit-277-and-bucket",
+      "replay_step": "0017"
+    },
+    {
+      "id": "e018",
+      "kind": "route",
+      "title": "2 - Emit 277 And Bucket: complete \u2014 diagram live",
+      "summary": "Published diagram snapshot for 2 - Emit 277 And Bucket",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T07:53:56Z",
+      "route_id": "2-emit-277-and-bucket",
+      "replay_step": "0018"
+    }
+  ],
+  "updated_at": "2026-08-13T07:53:56Z"
+}

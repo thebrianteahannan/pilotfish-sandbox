@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Format xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" RoutePlacement="source" name="Split 278 Transactions">
+  <TransformationModule class="com.pilotfish.eip.modules.transform.edi.EDITransformationModule">
+    <ModuleConfig>
+      <ExecuteTransformation>true</ExecuteTransformation>
+      <UseInternalData>false</UseInternalData>
+      <USE_ENHANCED_CONTEXT>true</USE_ENHANCED_CONTEXT>
+      <TransactionDataWithVersion>[eip_pair:{ognl:@com.pilotfish.utils.PilotFishUtils@getWorkingDirectory()+'/edi-tabledata/278-A1'}:eip_name:5010:eip_value]</TransactionDataWithVersion>
+      <FriendlyNamesLevel>None</FriendlyNamesLevel>
+      <CODE_DEFS>false</CODE_DEFS>
+      <SegmentIndexing>true</SegmentIndexing>
+      <OutputEndlines>true</OutputEndlines>
+      <UseProvidedDelimiters>true</UseProvidedDelimiters>
+      <DataDelimiter>*</DataDelimiter>
+      <SubDelimiter>:</SubDelimiter>
+      <RepetitionDelimiter>^</RepetitionDelimiter>
+      <RecordDelimiter>~</RecordDelimiter>
+      <USE_LEGACY_FORMAT>false</USE_LEGACY_FORMAT>
+    </ModuleConfig>
+  </TransformationModule>
+  <XSLT>
+    <ToXML />
+    <CacheXSLTToXML>false</CacheXSLTToXML>
+    <FromXML />
+    <CacheXSLTFromXML>false</CacheXSLTFromXML>
+    <XSLTEngine>SAXON</XSLTEngine>
+    <XSLTParameters>null</XSLTParameters>
+    <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+    <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+    <ExecuteTransformation>true</ExecuteTransformation>
+  </XSLT>
+  <FormatMetadata />
+  <SplitControl xmlns="http://www.pilotfishtechnology.com/eip/FormatSpec">
+    <JoinModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullJoinModule" />
+    <ForkModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.other.XPathForkingModule">
+      <ModuleConfig>
+        <ForkingXPath>//Transaction</ForkingXPath>
+        <Namespaces>null</Namespaces>
+        <ExceptionOnNoNodes>false</ExceptionOnNoNodes>
+        <KeepForkingSource>false</KeepForkingSource>
+      </ModuleConfig>
+    </ForkModule>
+  </SplitControl>
+</Format>

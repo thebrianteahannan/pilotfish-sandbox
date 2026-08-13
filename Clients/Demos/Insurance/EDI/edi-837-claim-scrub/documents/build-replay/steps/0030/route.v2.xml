@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="961b368d-5499-45f6-92ad-eb3b1fdf7e75" name="2 - Scrub Claim And Route">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="7551b8fe-2e08-4bad-8fb2-b4ebd71b0f46" moduleId="80dc6d56-e0a2-4f27-9bc0-3b92f52672d9" label="Scrub Claim And Route.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="89b9ebae-a045-40e0-b280-c37e20fb56b9" moduleId="4cdae8a4-5d48-4d5c-9acd-c02908a3ba4a" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="fe01c638-9d50-4986-b2d6-4a58de1a9fc3" moduleId="c62187f7-fb54-44eb-a82b-0ae0b80b6ac8" label="Read Claim Keys" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="83504e94-7222-4717-8e45-8988f19e7cb6" moduleId="62bd7687-99c6-4abd-8fb2-321488c2911a" label="Save Claim XML" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="333abcd8-11f0-45bd-a5ca-3a9d2fd6bd0b" moduleId="f48b8b58-7c35-419e-a239-4ddc3835caa3" label="Pretty-Print Claim Snapshot" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="2d5268a2-4eeb-44ac-a738-0811cf4c9f93" moduleId="b998302b-ebaa-4fef-8fa2-e59d72117b4d" label="Debug Write Claim XML" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="2a357fc8-eac9-4721-b289-19608181eb0d" moduleId="7e848a08-4c69-41cf-9c59-f5cd9e95156c" label="Restore Claim XML For Evaluate" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="58ae0ad2-f962-46ba-ad6a-008a1b7aa502" moduleId="37d84e8f-b7e6-460e-80b0-d65e1bbdebc3" label="Evaluate Payer Profile Edits" x="2600.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="1b3ec0b6-9e8c-4dde-9654-e4fca0a3220e" moduleId="75deee91-6832-43a8-ac46-a410725c5945" label="Pretty-Print Scrub Decision" x="2860.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="630f6138-be64-49ca-bd21-7c3e15e0334f" moduleId="abea4e48-ed7c-4507-931b-b984ddd32153" label="Read Scrub Disposition" x="3120.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="cc962fed-1be3-4ef2-b7e9-dee9b53abd71" moduleId="1e1ffd10-84c4-446f-9e0b-6fb0d17b38ab" label="Debug Write Decision XML" x="3380.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="00572e78-7441-4250-881c-8c73e564fe7a" moduleId="0bb4de46-c1e6-4cb3-8898-a720d54297ab" label="Write Kickout Work Queue File" x="3640.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="afc159e6-22f2-44df-b44a-29fa8e336fde" moduleId="a852132d-3781-4eba-8683-ad0bcfe67441" label="Write BI Edit Outcome File" x="3900.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="bd2f1fac-9940-4572-acba-cb35c9041e57" moduleId="ba658d3d-98db-47eb-9dab-009265f8dec8" label="Restore Claim XML For Clean Path" x="4160.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="4cb4bd26-74f0-4976-8e5a-3c55bf2cded4" moduleId="3f4ac5f2-13b9-46d4-b1d3-f48cce514e9b" label="Map Claim To EDI XML" x="4420.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="f5bd535d-a641-452e-847f-511383ef8000" moduleId="ca42c02b-0e1a-4d76-8a17-aba3f6c27061" label="Pretty-Print EDI XML" x="4680.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="dff85c09-b01b-48da-aaec-33c7e0c30500" moduleId="56eecb9d-aac3-4c06-919e-2cc325c4c07d" label="Write Intermediate EDI XML" x="4940.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="76a53fd2-0832-4ed5-8ba8-bc54db4c239c" moduleId="e7005b2d-cad5-4402-a57f-031c5fbde659" label="Save EDI XML for SNIP" x="5200.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="9325c9a8-94e9-4ee6-bb76-7d0c1738c5c8" moduleId="d01c6eef-3f47-4b57-b4b5-cfec95ca6f75" label="XML to EDI 837" x="5460.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="b393358e-1575-46c5-9082-b1cb2130127c" moduleId="03301d09-836a-4e1c-8a4b-1e6637ad81ca" label="Write 837 EDI File" x="5720.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="9431ecb1-d63e-4efe-9523-446f3b360232" moduleId="99d7fd6b-d5f9-4169-a411-a3d9f5585d8f" label="Restore EDI XML for SNIP" x="5980.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="74cbe85b-b062-4aa6-8dd3-63fa0ff29121" moduleId="2aa25007-67d5-463d-b5d4-477bcce48b77" label="EDI SNIP Validation (Types 1-3)" x="6240.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="a7c0f37c-04ab-4655-a527-9cc9d92ace7b" moduleId="3ad17b81-a4e1-4e37-be67-500762d7abc8" label="Pretty-Print SNIP Results" x="6500.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="431774cd-a284-46b7-9d17-41665b26f055" moduleId="676d6f6d-eed6-4e74-abba-07bec69d367e" label="Write SNIP Results File" x="6760.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="113c9a94-70ca-4a54-8274-8d80a41cc401" sourceNodeId="7551b8fe-2e08-4bad-8fb2-b4ebd71b0f46" targetNodeId="89b9ebae-a045-40e0-b280-c37e20fb56b9" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="d9235a10-b0fb-4e73-a2db-f7071a3fd7e4" sourceNodeId="fe01c638-9d50-4986-b2d6-4a58de1a9fc3" targetNodeId="83504e94-7222-4717-8e45-8988f19e7cb6" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="c0f411e3-4abd-48c7-af65-4001a750725b" sourceNodeId="83504e94-7222-4717-8e45-8988f19e7cb6" targetNodeId="333abcd8-11f0-45bd-a5ca-3a9d2fd6bd0b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="bb8c5368-91c8-459c-b490-d688fa0f679f" sourceNodeId="333abcd8-11f0-45bd-a5ca-3a9d2fd6bd0b" targetNodeId="2d5268a2-4eeb-44ac-a738-0811cf4c9f93" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="ba0681fb-4469-4117-9b0a-c835de5fe5d3" sourceNodeId="2d5268a2-4eeb-44ac-a738-0811cf4c9f93" targetNodeId="2a357fc8-eac9-4721-b289-19608181eb0d" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="a428563b-354c-4612-a16e-d4bed9562e74" sourceNodeId="2a357fc8-eac9-4721-b289-19608181eb0d" targetNodeId="58ae0ad2-f962-46ba-ad6a-008a1b7aa502" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="dfa68e0e-e1e7-4051-bee9-ca98be4b7618" sourceNodeId="58ae0ad2-f962-46ba-ad6a-008a1b7aa502" targetNodeId="1b3ec0b6-9e8c-4dde-9654-e4fca0a3220e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="39e2e9c3-00e5-47fe-8b37-672bc35fa0f7" sourceNodeId="1b3ec0b6-9e8c-4dde-9654-e4fca0a3220e" targetNodeId="630f6138-be64-49ca-bd21-7c3e15e0334f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="f1382e25-f20b-489b-b33c-50413779d95d" sourceNodeId="630f6138-be64-49ca-bd21-7c3e15e0334f" targetNodeId="cc962fed-1be3-4ef2-b7e9-dee9b53abd71" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="218e3aff-435f-499d-88d4-46ece6740dbe" sourceNodeId="cc962fed-1be3-4ef2-b7e9-dee9b53abd71" targetNodeId="00572e78-7441-4250-881c-8c73e564fe7a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="2d9e76e7-13fe-4bac-9525-de6a3c412b16" sourceNodeId="00572e78-7441-4250-881c-8c73e564fe7a" targetNodeId="afc159e6-22f2-44df-b44a-29fa8e336fde" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="0f7da3bc-b293-4575-a2e1-5d2eed7372ce" sourceNodeId="afc159e6-22f2-44df-b44a-29fa8e336fde" targetNodeId="bd2f1fac-9940-4572-acba-cb35c9041e57" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="c13215de-4cf4-4bc6-a5fd-03bddc36f84a" sourceNodeId="bd2f1fac-9940-4572-acba-cb35c9041e57" targetNodeId="4cb4bd26-74f0-4976-8e5a-3c55bf2cded4" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="e92f4d39-7fe2-4096-8568-5ef05fdac3b5" sourceNodeId="4cb4bd26-74f0-4976-8e5a-3c55bf2cded4" targetNodeId="f5bd535d-a641-452e-847f-511383ef8000" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="a045d87e-06d9-4c1e-aab0-fa9d95802d42" sourceNodeId="f5bd535d-a641-452e-847f-511383ef8000" targetNodeId="dff85c09-b01b-48da-aaec-33c7e0c30500" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="ec236f55-10a8-49d6-85b2-f11b96535055" sourceNodeId="dff85c09-b01b-48da-aaec-33c7e0c30500" targetNodeId="76a53fd2-0832-4ed5-8ba8-bc54db4c239c" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="c947359f-36ae-409d-9b03-4a35d9618e29" sourceNodeId="76a53fd2-0832-4ed5-8ba8-bc54db4c239c" targetNodeId="9325c9a8-94e9-4ee6-bb76-7d0c1738c5c8" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="0e0727f1-8c2b-4560-b9cf-6a0f9bb221bd" sourceNodeId="9325c9a8-94e9-4ee6-bb76-7d0c1738c5c8" targetNodeId="b393358e-1575-46c5-9082-b1cb2130127c" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="faeb34ff-e4d3-4d17-98eb-a4d2c776a715" sourceNodeId="b393358e-1575-46c5-9082-b1cb2130127c" targetNodeId="9431ecb1-d63e-4efe-9523-446f3b360232" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="5aa91159-b59e-4814-ade5-1f38c1133738" sourceNodeId="9431ecb1-d63e-4efe-9523-446f3b360232" targetNodeId="74cbe85b-b062-4aa6-8dd3-63fa0ff29121" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="47cdfa25-a322-4c5c-8184-5a360193af3b" sourceNodeId="74cbe85b-b062-4aa6-8dd3-63fa0ff29121" targetNodeId="a7c0f37c-04ab-4655-a527-9cc9d92ace7b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="9a146f07-7a20-4d7a-a59b-98deb81391b8" sourceNodeId="a7c0f37c-04ab-4655-a527-9cc9d92ace7b" targetNodeId="431774cd-a284-46b7-9d17-41665b26f055" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="97b4f36c-aa27-4157-b6fd-3e2a3ec18d49" sourceNodeId="89b9ebae-a045-40e0-b280-c37e20fb56b9" targetNodeId="fe01c638-9d50-4986-b2d6-4a58de1a9fc3" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+   
+   </Connections>
+</Route>

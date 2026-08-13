@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="eeeee3db-90ca-4eb0-9683-5be8c1287ad6" name="2 - Split And Put Objects">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="e7e3b681-b6d7-44ab-a3f3-64be71cc6bbf" moduleId="2ee23d81-22e2-47d8-be88-bb91814a730f" label="Poll Staged 835 Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="0b887fa9-9217-49ec-a19b-0ffd16aa0623" moduleId="8ddd35ef-a049-4f39-b47d-5bd16d162f10" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="a09d0d7b-2aa5-41d8-8f47-2a2f58547881" moduleId="e9197399-3bd3-4c9c-9fba-0a88803599f3" label="Extract ST Control Number" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="8c1e7677-fc5f-4e33-ba48-305d5493647f" moduleId="3c147609-798c-4668-bfb9-7e059c102d96" label="Map Transaction To JSON" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="ba26e68e-a3c9-4ec5-bac3-d0c65ec52ecd" moduleId="6cbc6adc-5420-4de8-a10e-cbd059854f5f" label="Write JSON Archive" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="202a8448-0d72-49ff-a58a-c1993e0dd110" moduleId="dca3fa4e-0600-40f4-87a1-e84761085cda" label="Post JSON To Object Storage" x="2080.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="8d36541f-6aff-4645-bc2d-be82ec578d70" sourceNodeId="e7e3b681-b6d7-44ab-a3f3-64be71cc6bbf" targetNodeId="0b887fa9-9217-49ec-a19b-0ffd16aa0623" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="e5144aab-cfad-4b5c-9a3a-cee7c09b65a9" sourceNodeId="a09d0d7b-2aa5-41d8-8f47-2a2f58547881" targetNodeId="8c1e7677-fc5f-4e33-ba48-305d5493647f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="bd862c11-14eb-4664-ac13-fe9290ce6547" sourceNodeId="8c1e7677-fc5f-4e33-ba48-305d5493647f" targetNodeId="ba26e68e-a3c9-4ec5-bac3-d0c65ec52ecd" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="76866b3b-5206-4c11-be55-61371f747d90" sourceNodeId="ba26e68e-a3c9-4ec5-bac3-d0c65ec52ecd" targetNodeId="202a8448-0d72-49ff-a58a-c1993e0dd110" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="acc010b8-25f5-41db-87f3-b5802a2a7a79" sourceNodeId="0b887fa9-9217-49ec-a19b-0ffd16aa0623" targetNodeId="a09d0d7b-2aa5-41d8-8f47-2a2f58547881" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

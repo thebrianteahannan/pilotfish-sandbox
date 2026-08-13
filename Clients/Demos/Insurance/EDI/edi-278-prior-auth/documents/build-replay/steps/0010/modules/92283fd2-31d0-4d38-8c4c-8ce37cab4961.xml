@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="92283fd2-31d0-4d38-8c4c-8ce37cab4961" name="Debug Write Auth Decision" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:(getAttribute('AuthTraceNumber') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('AuthTraceNumber')).trim().isEmpty() ? getAttribute('AuthTraceNumber') : 'unknown') + '_decision.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

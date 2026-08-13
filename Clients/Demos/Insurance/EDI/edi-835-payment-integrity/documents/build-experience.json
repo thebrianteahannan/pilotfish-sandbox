@@ -1,0 +1,244 @@
+{
+  "version": 1,
+  "title": "Interface construction experience",
+  "demo": "edi-835-payment-integrity",
+  "events": [
+    {
+      "id": "e001",
+      "kind": "decision",
+      "title": "Directory listener, not FTP",
+      "summary": "Inbound 835s are a folder drop. Directory / File listener polls input/inbound.",
+      "detail": "",
+      "rationale": "The remit file is already local for the demo. FTP would add a hop that is not part of the payment-integrity story.",
+      "at": "2026-08-13T05:58:53Z",
+      "alternatives": [
+        "FTP / SFTP listener"
+      ]
+    },
+    {
+      "id": "e002",
+      "kind": "decision",
+      "title": "EDI to XML, then fork each ST",
+      "summary": "Stock EDI Transformation plus XPath fork on //Transaction, using Sandbox 835-W1 TableData.",
+      "detail": "",
+      "rationale": "One ISA can carry four claims. Forking ST lets each CLP hit OpenAR on its own. TableData gives named segments on 23R1.",
+      "at": "2026-08-13T05:58:53Z",
+      "alternatives": [
+        "One file, no fork",
+        "Hand-split in XSLT"
+      ]
+    },
+    {
+      "id": "e003",
+      "kind": "decision",
+      "title": "SQL processor for OpenAR, then XSLT score",
+      "summary": "Database (SQL) processor looks up expected paid. XSLT builds RemitDecision. XML Formatting sits on the Directory transport.",
+      "detail": "",
+      "rationale": "SQL lookup is a processor so the EDI body can be swapped for result XML after identity is already in attributes. Pretty-print belongs on the write, not the listener.",
+      "at": "2026-08-13T05:58:53Z",
+      "alternatives": [
+        "Custom Java scorer",
+        "XML Formatting on the listener"
+      ]
+    },
+    {
+      "id": "e004",
+      "kind": "route",
+      "title": "1 - Poll And Score Remits: listener + transports scaffold",
+      "summary": "Published diagram snapshot for 1 - Poll And Score Remits",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T05:59:59Z",
+      "route_id": "1-poll-and-score-remits",
+      "replay_step": "0001"
+    },
+    {
+      "id": "e005",
+      "kind": "route",
+      "title": "1 - Poll And Score Remits: adding \u201cExtract CLP Remit Fields\u201d (1/8)",
+      "summary": "Published diagram snapshot for 1 - Poll And Score Remits",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:02Z",
+      "route_id": "1-poll-and-score-remits",
+      "replay_step": "0002"
+    },
+    {
+      "id": "e006",
+      "kind": "route",
+      "title": "1 - Poll And Score Remits: adding \u201cDebug Write Forked Transaction\u201d (2/8)",
+      "summary": "Published diagram snapshot for 1 - Poll And Score Remits",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:05Z",
+      "route_id": "1-poll-and-score-remits",
+      "replay_step": "0003"
+    },
+    {
+      "id": "e007",
+      "kind": "route",
+      "title": "1 - Poll And Score Remits: adding \u201cLookup Open AR\u201d (3/8)",
+      "summary": "Published diagram snapshot for 1 - Poll And Score Remits",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:08Z",
+      "route_id": "1-poll-and-score-remits",
+      "replay_step": "0004"
+    },
+    {
+      "id": "e008",
+      "kind": "route",
+      "title": "1 - Poll And Score Remits: adding \u201cExtract Open AR Fields\u201d (4/8)",
+      "summary": "Published diagram snapshot for 1 - Poll And Score Remits",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:11Z",
+      "route_id": "1-poll-and-score-remits",
+      "replay_step": "0005"
+    },
+    {
+      "id": "e009",
+      "kind": "route",
+      "title": "1 - Poll And Score Remits: adding \u201cCompose Patient Name\u201d (5/8)",
+      "summary": "Published diagram snapshot for 1 - Poll And Score Remits",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:14Z",
+      "route_id": "1-poll-and-score-remits",
+      "replay_step": "0006"
+    },
+    {
+      "id": "e010",
+      "kind": "route",
+      "title": "1 - Poll And Score Remits: adding \u201cBuild Remit Decision XML\u201d (6/8)",
+      "summary": "Published diagram snapshot for 1 - Poll And Score Remits",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:18Z",
+      "route_id": "1-poll-and-score-remits",
+      "replay_step": "0007"
+    },
+    {
+      "id": "e011",
+      "kind": "route",
+      "title": "1 - Poll And Score Remits: adding \u201cDebug Write Remit Decision\u201d (7/8)",
+      "summary": "Published diagram snapshot for 1 - Poll And Score Remits",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:21Z",
+      "route_id": "1-poll-and-score-remits",
+      "replay_step": "0008"
+    },
+    {
+      "id": "e012",
+      "kind": "route",
+      "title": "1 - Poll And Score Remits: complete (8 processors)",
+      "summary": "Published diagram snapshot for 1 - Poll And Score Remits",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:24Z",
+      "route_id": "1-poll-and-score-remits",
+      "replay_step": "0009"
+    },
+    {
+      "id": "e013",
+      "kind": "route",
+      "title": "1 - Poll And Score Remits: complete \u2014 diagram live",
+      "summary": "Published diagram snapshot for 1 - Poll And Score Remits",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:24Z",
+      "route_id": "1-poll-and-score-remits",
+      "replay_step": "0010"
+    },
+    {
+      "id": "e014",
+      "kind": "route",
+      "title": "2 - Route Remit Decisions: listener + transports scaffold",
+      "summary": "Published diagram snapshot for 2 - Route Remit Decisions",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:30Z",
+      "route_id": "2-route-remit-decisions",
+      "replay_step": "0011"
+    },
+    {
+      "id": "e015",
+      "kind": "route",
+      "title": "2 - Route Remit Decisions: adding \u201cExtract Decision Attributes\u201d (1/6)",
+      "summary": "Published diagram snapshot for 2 - Route Remit Decisions",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:33Z",
+      "route_id": "2-route-remit-decisions",
+      "replay_step": "0012"
+    },
+    {
+      "id": "e016",
+      "kind": "route",
+      "title": "2 - Route Remit Decisions: adding \u201cPretty-Print XML\u201d (2/6)",
+      "summary": "Published diagram snapshot for 2 - Route Remit Decisions",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:36Z",
+      "route_id": "2-route-remit-decisions",
+      "replay_step": "0013"
+    },
+    {
+      "id": "e017",
+      "kind": "route",
+      "title": "2 - Route Remit Decisions: adding \u201cMark Open AR Matched\u201d (3/6)",
+      "summary": "Published diagram snapshot for 2 - Route Remit Decisions",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:39Z",
+      "route_id": "2-route-remit-decisions",
+      "replay_step": "0014"
+    },
+    {
+      "id": "e018",
+      "kind": "route",
+      "title": "2 - Route Remit Decisions: adding \u201cPretty-Print XML\u201d (4/6)",
+      "summary": "Published diagram snapshot for 2 - Route Remit Decisions",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:42Z",
+      "route_id": "2-route-remit-decisions",
+      "replay_step": "0015"
+    },
+    {
+      "id": "e019",
+      "kind": "route",
+      "title": "2 - Route Remit Decisions: adding \u201cMark Open AR Exception\u201d (5/6)",
+      "summary": "Published diagram snapshot for 2 - Route Remit Decisions",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:45Z",
+      "route_id": "2-route-remit-decisions",
+      "replay_step": "0016"
+    },
+    {
+      "id": "e020",
+      "kind": "route",
+      "title": "2 - Route Remit Decisions: complete (6 processors)",
+      "summary": "Published diagram snapshot for 2 - Route Remit Decisions",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:49Z",
+      "route_id": "2-route-remit-decisions",
+      "replay_step": "0017"
+    },
+    {
+      "id": "e021",
+      "kind": "route",
+      "title": "2 - Route Remit Decisions: complete \u2014 diagram live",
+      "summary": "Published diagram snapshot for 2 - Route Remit Decisions",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:00:49Z",
+      "route_id": "2-route-remit-decisions",
+      "replay_step": "0018"
+    }
+  ],
+  "updated_at": "2026-08-13T06:00:49Z"
+}

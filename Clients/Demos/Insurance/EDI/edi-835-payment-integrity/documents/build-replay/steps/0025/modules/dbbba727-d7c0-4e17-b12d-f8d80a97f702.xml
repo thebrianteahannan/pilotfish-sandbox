@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="dbbba727-d7c0-4e17-b12d-f8d80a97f702" name="Mark Open AR Matched" type="Database (SQL)" tag="Processor" class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <InputFile/>
+      
+          
+      <WriteQuery>true</WriteQuery>
+      
+          
+      <Query>UPDATE dbo.OpenAR SET Status = N'MATCHED', Notes = N'Remit matched expected paid', UpdatedAt = SYSUTCDATETIME() WHERE ClaimControlNumber = ?</Query>
+      
+          
+      <QueryParams>[eip_pair:Param1:eip_name:{ognl:getAttribute('ClaimControlNumber')}:eip_value]</QueryParams>
+      
+          
+      <UserName>$$sqlserver.username</UserName>
+      
+          
+      <Password>$$sqlserver.password</Password>
+      
+          
+      <UseDataSource>false</UseDataSource>
+      
+          
+      <DataSource/>
+      
+          
+      <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+      
+          
+      <JdbcURL>$$sqlserver.url</JdbcURL>
+      
+          
+      <KeepConnection>false</KeepConnection>
+      
+          
+      <Autocommit>true</Autocommit>
+      
+          
+      <EnableTimeout>false</EnableTimeout>
+      
+          
+      <Timeout>600</Timeout>
+      
+          
+      <RestrictMetaDataToCatalog/>
+      
+          
+      <RestrictMetaDataToSchema/>
+      
+          
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+          
+      <CallbackListenerName/>
+      
+          
+      <UseSingleOutputStream>true</UseSingleOutputStream>
+      
+          
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+          
+      <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+      
+          
+      <JDBCProperties>null</JDBCProperties>
+      
+          
+      <UseConnectionPooling>false</UseConnectionPooling>
+      
+          
+      <PermittedDBConnections>5</PermittedDBConnections>
+      
+          
+      <LogMetadata>false</LogMetadata>
+      
+          
+      <LogSQL>true</LogSQL>
+      
+          
+      <UseJdbcTyping>false</UseJdbcTyping>
+      
+          
+      <TransactionIsolationLevel>Default</TransactionIsolationLevel>
+      
+          
+      <TransactionIsolationDriverSpecific>-1</TransactionIsolationDriverSpecific>
+      
+        
+   </ModuleConfig>
+</Module>

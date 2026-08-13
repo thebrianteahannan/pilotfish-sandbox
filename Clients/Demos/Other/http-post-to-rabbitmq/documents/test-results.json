@@ -1,0 +1,97 @@
+{
+  "interface": "HTTP POST To RabbitMQ",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Other/http-post-to-rabbitmq",
+  "started_at": "2026-08-13T04:01:41.502199+00:00",
+  "finished_at": "2026-08-13T04:01:41.567708+00:00",
+  "summary": {
+    "pass": 9,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 9
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 8,
+      "message": "UI OK (http://127.0.0.1:8135/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 8,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 16,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "wait-eip",
+      "name": "EIP is reachable via Web UI health",
+      "suite": "POST then queue",
+      "status": "pass",
+      "duration_ms": 6,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"queue\":\"demo.http.ingress\",\"rabbitmq\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "inject-sample",
+      "name": "POST sample JSON through EIP",
+      "suite": "POST then queue",
+      "status": "pass",
+      "duration_ms": 14,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "queue-has-order",
+      "name": "Queue peek contains orderId",
+      "suite": "POST then queue",
+      "status": "pass",
+      "duration_ms": 11,
+      "message": "HTTP 200: {\"messageCount\":1,\"messages\":[{\"content\":\"{\\n  \\\"orderId\\\": \\\"ORD-1001\\\",\\n  \\\"customer\\\": \\\"Acme Clinic\\\",\\n  \\\"sku\\\": \\\"WIDGET-7\\\",\\n  \\\"qty\\\": 2\\n}\\n\",\"name\":\"msg-0\",\"size\":90}]",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Other/http-post-to-rabbitmq/documents/HTTP_POST_To_RabbitMQ_V2_Route_Diagrams.pdf",
+      "detail": ""
+    },
+    {
+      "id": "brief-pdf",
+      "name": "Capability Brief PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Other/http-post-to-rabbitmq/documents/HTTP_POST_To_RabbitMQ_Capability_Brief.pdf",
+      "detail": ""
+    },
+    {
+      "id": "test-plan-pdf",
+      "name": "Test Plan PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Other/http-post-to-rabbitmq/documents/HTTP_POST_To_RabbitMQ_Test_Plan.pdf",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Other/http-post-to-rabbitmq/tests/plan.json"
+}

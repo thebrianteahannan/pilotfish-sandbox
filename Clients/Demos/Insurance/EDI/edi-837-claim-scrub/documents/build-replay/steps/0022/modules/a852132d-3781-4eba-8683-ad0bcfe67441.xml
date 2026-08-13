@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="a852132d-3781-4eba-8683-ad0bcfe67441" name="Write BI Edit Outcome File" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$BI_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('ClaimFileBase') + '_outcome.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

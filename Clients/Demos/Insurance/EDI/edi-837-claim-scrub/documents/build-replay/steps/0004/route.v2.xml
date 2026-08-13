@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="0d2a4646-0aa3-4b86-a02d-4f0193862c02" name="1 - Poll SQL Server Claims">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="daad6d5c-6895-497b-b9b0-baa68d6fb793" moduleId="7d60b3b7-fe88-4286-be00-63c2b77cedd0" label="Poll SQL Server Claims" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="7b50ee3c-3f90-4813-be9a-cda2468ef70b" moduleId="bbd1045a-e12c-4816-b542-51e2b2d21d85" label="Pretty-Print Raw Claims" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="35f2ca95-6ddd-4219-a0c7-06ce034ea862" moduleId="bf07e73e-048d-448b-9e42-91eb906378dd" label="Write Raw Claims Snapshot" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="710bf84e-46cc-439e-972e-368f361483d2" sourceNodeId="daad6d5c-6895-497b-b9b0-baa68d6fb793" targetNodeId="7b50ee3c-3f90-4813-be9a-cda2468ef70b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="935858fe-7568-4df0-9dc8-fc5deb323f1d" sourceNodeId="7b50ee3c-3f90-4813-be9a-cda2468ef70b" targetNodeId="35f2ca95-6ddd-4219-a0c7-06ce034ea862" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+   </Connections>
+</Route>

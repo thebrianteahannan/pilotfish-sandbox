@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="39e89892-d2e6-4a66-9474-8f336c7cc849" name="Write 270 EDI Wire" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$EDI_270_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:'270_' + @java.lang.System@currentTimeMillis() + '.edi'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

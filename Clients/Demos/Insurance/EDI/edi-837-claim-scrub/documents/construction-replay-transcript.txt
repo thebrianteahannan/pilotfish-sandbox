@@ -1,0 +1,150 @@
+Construction Replay Transcript — EDI 837 Claim Scrub — Design
+Demo: edi-837-claim-scrub  ·  Generated 2026-08-13
+Video: documents/construction-replay.mp4
+
+What this interface does
+----------------------------------------
+SQL Server professional claims to payer-profile edits (referring NPI / Place of Service) to kickout work queue or clean 837 + SNIP before the clearinghouse. Every scrub decision is copied to a BI outcome folder.
+
+Who it's for
+----------------------------------------
+- Sources: Edi837ClaimScrub (Claims PENDING)
+- Destinations: output/kickouts/, output/edi/, output/snip/, output/bi/
+- Demo vs production: Synthetic payer rules mirrored in XSLT (not a live SQL join). SNIP on the clean path only.
+- Anyone watching the construction video or reading this transcript
+
+Systems involved
+----------------------------------------
+- Sources: Edi837ClaimScrub (Claims PENDING)
+- Destinations: output/kickouts/, output/edi/, output/snip/, output/bi/
+- Demo vs production: Synthetic payer rules mirrored in XSLT (not a live SQL join). SNIP on the clean path only.
+
+Documents we also produce
+----------------------------------------
+- EDI837_Claim_Scrub_Capability_Brief.pdf (ready)
+  Short overview of what the interface does — shareable without reading route XML.
+- EDI837_Claim_Scrub_Test_Plan.pdf (ready)
+  Scenarios that prove the interface works end-to-end.
+- Module documentation pack (12 deep-dive PDFs) (ready)
+  PilotFish product PDFs for the modules used in this build.
+- EDI837_Claim_Scrub_V2_Route_Diagrams.pdf (ready)
+  V2 route diagrams for visual review of module topology.
+- construction-replay.mp4 + this transcript (generate when ready)
+  Narrated walkthrough of building the routes, then a live Demo-tab test when inject is available.
+
+========================================
+Narration (what you'll hear)
+========================================
+
+[Setup]
+
+S1. Welcome
+Welcome to the PilotFish demo: EDI 837 Claim Scrub. SQL Server professional claims to payer-profile edits (referring NPI / Place of Service) to kickout work queue or clean 837 + SNIP before the clearinghouse. PilotFish supports the whole flow out of the box.
+
+S2. Pipeline overview
+Before we wire anything, here's the flow end to end. SQL Server professional claims to payer-profile edits (referring NPI / Place of Service) to kickout work queue or clean 837 + SNIP before the clearinghouse.
+
+S3. External systems
+And here's what sits around the routes. SQL Server, PilotFish eiPlatform, and Demo Web UI. All of those are spun up in docker images for this demo.
+
+[1 - Poll SQL Server Claims]
+
+1. First route
+SQL Server professional claims to payer-profile edits (referring NPI / Place of Service) to kickout work queue or clean 837 + SNIP before the clearinghouse. We'll build that in 2 routes. Starting with a blank canvas on the first route.
+
+2. SQL step
+First up is a SQL polling listener — it runs a query against Edi837ClaimScrub over JDBC. It checks about every 15 seconds.
+
+3. Pretty-Print Raw Claims
+This processor pretty-prints the XML — line breaks and indent — so the file on disk is readable.
+
+4. Write Raw Claims Snapshot
+Then we write that XML to disk so we can inspect it. That lands under /opt/pilotfish/output/claims.
+
+5. Hand Off Claims
+Here's a Route to Route processor — next step in the flow.
+
+[2 - Scrub Claim And Route]
+
+6. Next route
+Next route — blank canvas again, then the modules one at a time.
+
+7. Trigger listener
+This is a programmable trigger listener. The first route hands the batch here so we can fork and process each row.
+
+8. Fork - XPath
+This XPath fork splits the file so each transaction set becomes its own message.
+
+9. Read Claim Keys
+XPath evaluation copies a few fields off the XML onto the transaction so later steps can use them.
+
+10. Save Claim XML
+The control file is just a name on one line. This processor copies that text onto the transaction so the later steps can use it without parsing the body again.
+
+11. Pretty-Print Claim Snapshot
+This processor pretty-prints the XML — line breaks and indent — so the file on disk is readable.
+
+12. Debug Write Claim XML
+This writes a debug copy of the XML so we can inspect what the route saw. That lands under /opt/pilotfish/output/claims.
+
+13. Restore Claim XML For Evaluate
+The control file is just a name on one line. This processor copies that text onto the transaction so the later steps can use it without parsing the body again.
+
+14. Evaluate Payer Profile Edits
+Now for the mapping — we're using the stock XSLT processor with transform-evaluate-payer-edits.xslt. It maps claimId, claimNumber, payerId.
+
+15. Pretty-Print Scrub Decision
+This processor pretty-prints the XML — line breaks and indent — so the file on disk is readable.
+
+16. Read Scrub Disposition
+XPath evaluation copies a few fields off the XML onto the transaction so later steps can use them.
+
+17. Debug Write Decision XML
+This writes a debug copy of the XML so we can inspect what the route saw. That lands under /opt/pilotfish/output/claims.
+
+18. Write Kickout Work Queue File
+Then we write that XML to disk so we can inspect it. That lands under /opt/pilotfish/output/kickouts.
+
+19. Write BI Edit Outcome File
+Then we write that XML to disk so we can inspect it. That lands under /opt/pilotfish/output/bi.
+
+20. Restore Claim XML For Clean Path
+The control file is just a name on one line. This processor copies that text onto the transaction so the later steps can use it without parsing the body again.
+
+21. Map Claim To EDI XML
+Now for the mapping — we're using the stock XSLT processor with transform-claim-to-edi-xml.xslt. Watch the for-each over lines. It maps payerId, ctrl, claimNumber.
+
+22. Pretty-Print EDI XML
+This processor pretty-prints the XML — line breaks and indent — so the file on disk is readable.
+
+23. Write Intermediate EDI XML
+Then we write that XML to disk so we can inspect it. That lands under /opt/pilotfish/output/claims.
+
+24. Save EDI XML for SNIP
+The control file is just a name on one line. This processor copies that text onto the transaction so the later steps can use it without parsing the body again.
+
+25. XML to EDI 837
+Here's the EDI transformation — it turns our EDI XML into X12 text on the wire.
+
+26. Write 837 EDI File
+Then we write the X12 text to disk. That lands under /opt/pilotfish/output/edi.
+
+27. Restore EDI XML for SNIP
+The control file is just a name on one line. This processor copies that text onto the transaction so the later steps can use it without parsing the body again.
+
+28. EDI SNIP Validation (Types 1-3)
+Here's an EDI SNIP Validation processor — next step in the flow.
+
+29. Pretty-Print SNIP Results
+This processor pretty-prints the XML — line breaks and indent — so the file on disk is readable.
+
+30. Write SNIP Results File
+Then we write that XML to disk so we can inspect it. That lands under /opt/pilotfish/output/snip.
+
+31. No-Op Complete
+This route has nothing to send outbound. The work was the trigger, so we end on a null transport.
+
+[Closing]
+
+C1. Demo complete
+That's the demo — sQL Server professional claims to payer-profile edits (referring NPI / Place of Service) to kickout work queue or clean 837 + SNIP before the clearinghouse. Thanks for choosing PilotFish.

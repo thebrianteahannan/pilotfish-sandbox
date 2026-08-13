@@ -1,0 +1,121 @@
+Construction Replay Transcript — EDI 270/271 Eligibility — Design
+Demo: edi-270-271-eligibility  ·  Generated 2026-08-13
+Video: documents/construction-replay.mp4
+
+What this interface does
+----------------------------------------
+Clinic front desk verifies member eligibility over real X12 270/271 (005010X279A1): build a 270, call a mock payer, parse the 271, and show AAA rejection theater then a successful EB benefits response. Demo only — not a real payer.
+
+Who it's for
+----------------------------------------
+- Sources: Clinic Web UI posts EligibilityRequest XML
+- Destinations: sync X12 270, mock-payer 271, clinic JSON summary; audit files under output/
+- Demo vs production: Demo only — canned AAA/EB, no SNIP, no clearinghouse
+- Anyone watching the construction video or reading this transcript
+
+Systems involved
+----------------------------------------
+- Sources: Clinic Web UI posts EligibilityRequest XML
+- Destinations: sync X12 270, mock-payer 271, clinic JSON summary; audit files under output/
+- Demo vs production: Demo only — canned AAA/EB, no SNIP, no clearinghouse
+
+Documents we also produce
+----------------------------------------
+- EDI270_271_Eligibility_Capability_Brief.pdf (ready)
+  Short overview of what the interface does — shareable without reading route XML.
+- EDI270_271_Eligibility_Test_Plan.pdf (ready)
+  Scenarios that prove the interface works end-to-end.
+- Module documentation pack (10 deep-dive PDFs) (ready)
+  PilotFish product PDFs for the modules used in this build.
+- EDI270_271_V2_Route_Diagrams.pdf (ready)
+  V2 route diagrams for visual review of module topology.
+- construction-replay.mp4 + this transcript (generate when ready)
+  Narrated walkthrough of building the routes, then a live Demo-tab test when inject is available.
+
+========================================
+Narration (what you'll hear)
+========================================
+
+[Setup]
+
+S1. Welcome
+Welcome to the PilotFish demo: EDI 270/271 Eligibility. Clinic front desk verifies member eligibility over real X12 270/271 (005010X279A1): build a 270, call a mock payer, parse the 271, and show AAA rejection theater then a successful EB benefits response. PilotFish supports the whole flow out of the box.
+
+S2. Pipeline overview
+Before we wire anything, here's the flow end to end. Clinic front desk verifies member eligibility over real X12 270/271 (005010X279A1): build a 270, call a mock payer, parse the 271, and show AAA rejection theater then a successful EB benefits response.
+
+S3. External systems
+And here's what sits around the routes. Mock Payer, PilotFish eiPlatform, and Demo Web UI. All of those are spun up in docker images for this demo.
+
+[1 - Eligibility 270 271 API]
+
+1. First route
+Clinic front desk verifies member eligibility over real X12 270/271 (005010X279A1): build a 270, call a mock payer, parse the 271, and show AAA rejection theater then a successful EB benefits response. Starting with a blank canvas on the first route.
+
+2. Eligibility REST
+First up is a REST listener — clinic systems POST to /eip/rest/eligibility. The resources are build and parse. We wait for the route to finish so the caller gets an HTTP response back.
+
+3. Snapshot Inbound Body
+Next we archive a copy of the body — original name plus a timestamp. That lands under /opt/pilotfish/output/requests.
+
+4. Conditional Router
+Then a conditional router. POST to build goes down the 270 path, parse goes down the 271 path, and anything else is a 405.
+
+5. Map Request To 270 EDI XML
+Now for the mapping — we're using the stock XSLT processor with transform-request-to-270-edi-xml.xslt. It maps payerIdSafe, traceSafe, dateSafe.
+
+6. Snapshot Raw 271
+Then we write the X12 text to disk. That lands under /opt/pilotfish/output/271.
+
+7. Empty Error Body
+Now for the mapping — we're using the stock XSLT processor with transform-method-not-allowed.xslt.
+
+8. Pretty-Print 270 EDI XML
+This processor pretty-prints the XML — line breaks and indent — so the file on disk is readable.
+
+9. Map 271 Wire To JSON
+Now for the mapping — we're using the stock XSLT processor with transform-271-xml-to-json.xslt. Watch the for-each over ebSegs. It maps memberId, last, first.
+
+10. Set 405
+We set the HTTP status to 405 Method Not Allowed.
+
+11. Write 270 EDI XML
+Then we write that XML to disk so we can inspect it. That lands under /opt/pilotfish/output/270.
+
+12. Write JSON Summary
+Then we write the JSON summary to disk. That lands under /opt/pilotfish/output/responses.
+
+13. 405 Headers
+We set the response content type so the clinic client knows what it got back.
+
+14. XML to EDI 270
+Here's the EDI transformation — it turns our EDI XML into X12 text on the wire.
+
+15. Set 200 Parse
+We set the HTTP status to 200 OK.
+
+16. Method Not Allowed
+This transport replies on the original REST call with whatever body we just built.
+
+17. Write 270 EDI Wire
+Then we write the X12 text to disk. That lands under /opt/pilotfish/output/270.
+
+18. JSON Response Headers
+We set the response content type so the clinic client knows what it got back.
+
+19. Set 200 Build
+We set the HTTP status to 200 OK.
+
+20. Return Summary
+This transport replies on the original REST call with whatever body we just built.
+
+21. 270 Response Headers
+We set the response content type so the clinic client knows what it got back.
+
+22. Return 270
+This transport replies on the original REST call with whatever body we just built.
+
+[Closing]
+
+C1. Demo complete
+That's the demo — clinic front desk verifies member eligibility over real X12 270/271 (005010X279A1): build a 270, call a mock payer, parse the 271, and show AAA rejection. Thanks for choosing PilotFish.

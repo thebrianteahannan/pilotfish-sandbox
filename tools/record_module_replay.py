@@ -21,6 +21,7 @@ import re
 import shutil
 import sys
 from datetime import datetime, timezone
+from demo_paths import require_demo
 from pathlib import Path
 from xml.dom import minidom
 from xml.etree import ElementTree as ET
@@ -64,6 +65,16 @@ HIGHLIGHT_KEYS = {
     "Query",
     "WriteQuery",
     "AppendToFile",
+    "RequestPath",
+    "SERVICE_NAME",
+    "SupportedResources",
+    "Synchronous",
+    "TargetURL",
+    "Queue",
+    "URI",
+    "ConnectionMethod",
+    "PointToPointMode",
+    "Exchange",
     "ExecuteProcessor",
     "ExecuteTransformation",
     "UserName",  # noqa: duplicated ok
@@ -101,6 +112,7 @@ def pretty(root: ET.Element) -> str:
 OPENING = {
     ("Directory / File", "Listener"): "a Directory Listener that watches a local folder",
     ("Directory / File", "Transport"): "a Directory Transport that writes the file out locally",
+    ("XML Formatting", "Processor"): "an XML Formatting processor that pretty-prints the file before we write it",
     ("FTPListener", "Listener"): "an SFTP Listener that polls a remote folder",
     ("FTP / SFTP", "Listener"): "an SFTP Listener that polls a remote folder",
     ("File Writing", "Processor"): "a File Writing processor to keep a raw copy on disk",
@@ -149,6 +161,20 @@ def summarize_ognl_expr(expr: str) -> str:
     m = re.match(r"^getAttribute\('([^']+)'\)$", e)
     if m:
         return f"{{{friendly_attr(m.group(1))}}}"
+
+    m = re.match(
+        r"^getAttribute\('([^']+)'\)(?:\.toString\(\))?\.trim\(\)$",
+        e,
+    )
+    if m:
+        return f"trimmed {{{friendly_attr(m.group(1))}}}"
+
+    m = re.match(
+        r"^'([^']+)'\s*\+\s*getAttribute\('([^']+)'\)(?:\.toString\(\))?\.trim\(\)$",
+        e,
+    )
+    if m:
+        return f"{m.group(1)}{{trimmed {friendly_attr(m.group(2))}}}"
 
     if re.search(r"getAttribute\('ClaimId'\)\s*!=\s*null", e) and (
         "isEmpty()" in e or "trim()" in e
@@ -410,11 +436,16 @@ def load_module_meta(modules_dir: Path, module_id: str) -> dict:
         tag = child.tag.split("}")[-1]
         if tag != "ModuleConfig":
             continue
-        for item in child:
+        for item in child.iter():
             key = item.tag.split("}")[-1]
+            if key in {"ModuleConfig", "RoutingPorts", "inputs", "outputs", "input", "output"}:
+                continue
             val = (item.text or "").strip()
-            if key:
-                cfg[key] = val
+            if key and val:
+                if key in cfg and cfg[key] != val:
+                    cfg[key] = f"{cfg[key]} | {val}"
+                else:
+                    cfg[key] = val
     return {
         "tag": root.attrib.get("tag", ""),
         "type": root.attrib.get("type", ""),
@@ -539,7 +570,17 @@ def opening_for(tag: str, type_name: str, label: str) -> str:
 
 def _resolved(cfg: dict[str, str], env: dict[str, str], key: str, default: str = "") -> str:
     raw = cfg.get(key) or default
-    return resolve_token(raw, env) if raw else ""
+    if not raw:
+        return ""
+    out = resolve_token(raw, env)
+    if "$$" in out:
+        return ""
+    return out
+
+
+def _file_ext_spoken(ext: str) -> str:
+    parts = [p.strip().lstrip(".") for p in (ext or "").split(",") if p.strip()]
+    return ", ".join(f".{p}" for p in parts)
 
 
 def speak_ftp(text: str) -> str:
@@ -553,10 +594,24 @@ def soft_module_name(label: str) -> str:
     """Turn diagram labels into something a person would say."""
     raw = (label or "").strip()
     low = raw.lower()
+    if "poll" in low and "control" in low:
+        return "the control-file listener"
     if "poll" in low and ("sftp" in low or "ftp" in low):
         return "the FTP listener"
     if "poll" in low and "staged" in low:
         return "the staged-folder listener"
+    if "save" in low and "body" in low:
+        return "stash the file name"
+    if "remote file name" in low:
+        return "the remote file name"
+    if "remote full path" in low or ("full path" in low and "remote" in low):
+        return "the remote path"
+    if "trigger" in low and "ftp" in low:
+        return "the download trigger"
+    if "programmable" in low or ("trigger" in low and "listener" in low):
+        return "the trigger listener"
+    if "no outbound" in low or "trigger only" in low:
+        return "no outbound"
     if "archive" in low:
         return "the archive step"
     if "write" in low and "staged" in low:
@@ -565,18 +620,90 @@ def soft_module_name(label: str) -> str:
         return "the CSV processor"
     if "sqlxml" in low or ("map" in low and "sql" in low):
         return "the mapping step"
-    if "insert" in low or ("sql" in low and "patient" in low):
-        return "the SQL insert"
+    if "insert" in low or (low.endswith("sql") or " sql" in f" {low}"):
+        return "the SQL step"
     return speak_ftp(raw)
 
 
-def demo_overview(env: dict[str, str]) -> str:
-    """Opening beat after pipeline/systems — keep short; don't re-lecture the stack."""
-    return (
-        "Ops drops a patient CSV and we land the rows in the database — "
-        "no hand-loading. "
-        "Two routes: pickup first, then the load."
-    )
+def explain_from_label(label: str) -> str:
+    """Human why-it's-there copy from the diagram label when config XML is missing."""
+    low = (label or "").lower()
+    if "poll" in low and "control" in low:
+        return (
+            "First up is a directory listener — it watches a local folder for control files "
+            "that name what to download."
+        )
+    if "save" in low and "body" in low:
+        return (
+            "The control file is just a name on one line. "
+            "This processor copies that text onto the transaction "
+            "so the later steps can use it without parsing the body again."
+        )
+    if "remote file name" in low:
+        return (
+            "We trim the name and keep it on the transaction as the remote file name, "
+            "so we don't carry stray whitespace into FTP."
+        )
+    if "remote full path" in low or ("full path" in low and "remote" in low):
+        return (
+            "Then we build the full remote path — the upload folder plus that file name — "
+            "so the download listener knows exactly what to fetch."
+        )
+    if "trigger" in low and "ftp" in low:
+        return (
+            "Now we kick the FTP download listener for one cycle. "
+            "This route doesn't pull the file itself — it just tells that listener "
+            "to go get the named file."
+        )
+    if "programmable" in low or ("trigger" in low and "listener" in low):
+        return (
+            "This is a programmable trigger listener. "
+            "The first route hands the batch here so we can fork and process each row."
+        )
+    if "no outbound" in low or "trigger only" in low:
+        return (
+            "This route has nothing to send outbound. "
+            "The work was the trigger, so we end on a null transport."
+        )
+    if "http" in low and "post" in low:
+        return (
+            "First up is an HTTP Post listener — partners POST a body to a path on this server, "
+            "and that starts the transaction."
+        )
+    if "publish" in low and "queue" in low:
+        return (
+            "Then we publish that same body onto a RabbitMQ queue, so downstream consumers can pick it up."
+        )
+    if "rabbit" in low:
+        return (
+            "Then we publish that same body onto a RabbitMQ queue, so downstream consumers can pick it up."
+        )
+    return ""
+
+
+def infer_purpose_from_routes(demo: Path) -> str:
+    tools_dir = Path(__file__).resolve().parent
+    if str(tools_dir) not in sys.path:
+        sys.path.insert(0, str(tools_dir))
+    from construction_demo_context import purpose_from_route_labels
+
+    return purpose_from_route_labels(demo)
+
+
+def demo_overview(demo: Path, env: dict[str, str], route_count: int) -> str:
+    """Opening beat from this demo's DESIGN.md — not a canned CSV/SQL story."""
+    tools_dir = Path(__file__).resolve().parent
+    if str(tools_dir) not in sys.path:
+        sys.path.insert(0, str(tools_dir))
+    from construction_demo_context import first_sentence, load_purpose
+
+    purpose = first_sentence(load_purpose(demo), 220) or infer_purpose_from_routes(demo)
+    bits: list[str] = []
+    if purpose:
+        bits.append(purpose if purpose.endswith((".", "!", "?")) else purpose + ".")
+    if route_count > 1:
+        bits.append(f"We'll build that in {route_count} routes.")
+    return speak_ftp(" ".join(bits) if bits else "We'll build the routes one module at a time.")
 
 
 def empty_canvas_detail(
@@ -585,38 +712,17 @@ def empty_canvas_detail(
     events: list[dict],
     *,
     is_first_route: bool = False,
+    demo: Path | None = None,
+    route_count: int = 1,
 ) -> tuple[str, str | None]:
     """Short demo-style open for a route — no config dumps, no formal route titles."""
-    low = route_name.strip().lower()
     used_id = None
-    if "sftp" in low and "stage" in low:
-        if is_first_route:
-            text = (
-                demo_overview(env)
-                + " "
-                + "Starting with pickup: grab the file from FTP, "
-                "keep a raw archive, and stage a local copy — "
-                "before we ever touch the database."
-            )
-        else:
-            text = (
-                "Pickup route next. "
-                "Grab the file from FTP, keep a raw archive, and stage a local copy — "
-                "before we ever touch the database."
-            )
-        for ev in events:
-            if ev.get("kind") == "decision" and "two-route" in " ".join(
-                str(k) for k in (ev.get("keywords") or [])
-            ):
-                used_id = str(ev.get("id") or "") or None
-                break
-    elif "csv" in low and "sql" in low:
-        text = (
-            "Onto the load route — this one never talks to FTP. "
-            "It watches the staged folder, turns each CSV into SQL, and loads the patients table."
-        )
+    if is_first_route and demo is not None:
+        text = demo_overview(demo, env, route_count) + " Starting with a blank canvas on the first route."
+    elif is_first_route:
+        text = "We'll start with a blank canvas on the first route."
     else:
-        text = "Next route — we'll add the modules one at a time."
+        text = "Next route — blank canvas again, then the modules one at a time."
     return speak_ftp(text), used_id
 
 
@@ -630,6 +736,8 @@ def explain_module_rich(
     env: dict[str, str],
     events: list[dict],
     route_name: str,
+    demo: Path | None = None,
+    route_dir: Path | None = None,
 ) -> tuple[str, str | None]:
     """Demo-presenter narration — short, concrete, no key=value junk."""
     type_l = (type_name or "").lower()
@@ -650,6 +758,9 @@ def explain_module_rich(
     if m:
         db = m.group(1)
 
+    has_ftp = any(k.upper().startswith("SFTP") or k.upper().startswith("FTP") for k in env)
+    staged = "stag" in f"{poll_dir} {target} {label}".lower()
+
     # --- Listener: FTP / SFTP ---
     if "ftp" in type_l or "ftp" in class_l:
         where = poll_dir or "the remote folder"
@@ -668,8 +779,9 @@ def explain_module_rich(
             + ".",
         ]
         if ext:
-            ext_disp = ext if str(ext).startswith(".") else f".{ext}"
-            bits.append(f"We're only taking {ext_disp} files.")
+            ext_disp = _file_ext_spoken(ext)
+            if ext_disp:
+                bits.append(f"We're only taking {ext_disp} files.")
         if interval:
             bits.append(f"It checks about every {interval} seconds.")
         if post == "delete":
@@ -682,39 +794,205 @@ def explain_module_rich(
 
     # --- Listener: Directory ---
     if tag_l == "listener" and "directory" in type_l:
-        bits = [
-            "Next is the staged-folder listener — it never talks to FTP, just the local stage.",
-        ]
+        control = "control" in label.lower() or ext.lower().lstrip(".") == "ctl"
+        if has_ftp and staged:
+            bits = [
+                "Next is the staged-folder listener — it never talks to FTP, just the local stage.",
+            ]
+        elif control:
+            bits = [
+                "First up is a directory listener — it watches a local folder for control files.",
+            ]
+        else:
+            bits = ["Here's a directory listener — it watches a local folder."]
         if poll_dir:
-            bits.append(f"It watches {poll_dir}.")
+            bits.append(f"That folder is {poll_dir}.")
         if ext:
-            ext_disp = ext if str(ext).startswith(".") else f".{ext}"
-            bits.append(f"Same idea: only {ext_disp} files.")
+            ext_disp = _file_ext_spoken(ext)
+            if ext_disp:
+                bits.append(f"We're only taking {ext_disp} files.")
         if interval:
-            bits.append(f"It polls every {interval} seconds.")
-        if post == "move" and target:
+            bits.append(f"It checks about every {interval} seconds.")
+        if post == "move":
             bits.append("After pickup we move the file aside so the folder stays clean.")
         return speak_ftp(" ".join(bits)), None
 
-    # --- File Writing / archive ---
-    if "file writing" in type_l or "filewrite" in class_l:
+    # --- Listener: REST ---
+    if "restfulwebservice" in class_l or "restful web service" in type_l:
+        svc = (cfg.get("SERVICE_NAME") or "").strip() or "the service"
+        resources = (cfg.get("SupportedResources") or "").strip()
         bits = [
-            "Next we archive the raw file — an exact copy of whatever arrived, before we touch the data.",
+            f"First up is a REST listener — clinic systems POST to /eip/rest/{svc}.",
         ]
-        if target:
-            bits.append(f"That lands under {target}, original name plus a timestamp.")
+        if resources:
+            names = " and ".join(p.strip() for p in resources.split(",") if p.strip())
+            bits.append(f"The resources are {names}.")
+        if (cfg.get("Synchronous") or "").strip().lower() == "true":
+            bits.append("We wait for the route to finish so the caller gets an HTTP response back.")
         return speak_ftp(" ".join(bits)), None
 
-    # --- Directory transport / stage ---
-    if tag_l == "transport" and "directory" in type_l:
+    # --- Listener: HTTP Post ---
+    if "httppostlistener" in class_l or (tag_l == "listener" and "http post" in type_l):
+        path = (cfg.get("RequestPath") or "").strip() or "the configured path"
+        if path and not path.startswith("/"):
+            path = f"/{path}"
         bits = [
-            "Then we stage a local copy for the next route",
+            f"First up is an HTTP Post listener — partners POST a body to {path} on this server, "
+            "and that starts the transaction.",
         ]
-        if target:
-            bits[-1] = bits[-1] + f", writing to {target},"
+        if (cfg.get("Synchronous") or "").strip().lower() == "true":
+            bits.append("We wait for the route to finish so the caller gets an HTTP response back.")
+        return speak_ftp(" ".join(bits)), None
+
+    # --- Listener: Programmable trigger (route-to-route handoff) ---
+    if "triggerablelistener" in class_l or (tag_l == "listener" and "programmable" in type_l):
+        return speak_ftp(
+            "This is a programmable trigger listener. "
+            "The first route hands the batch here so we can fork and process each row."
+        ), None
+
+    # --- Save body onto the transaction (don't say "attribute" — TTS mangles it) ---
+    if "savedatatoattribute" in class_l or "data attribute swapper" in type_l:
+        lab = label.lower()
+        if "raw 271" in lab or "save raw" in lab:
+            return speak_ftp(
+                "We keep the raw 271 on the transaction so we can wrap it without losing the wire text."
+            ), None
+        if "wrapped" in lab or "load wrapped" in lab:
+            return speak_ftp(
+                "Then we put that wrapped XML back on the body so the next XSLT can parse it."
+            ), None
+        return speak_ftp(
+            "The control file is just a name on one line. "
+            "This processor copies that text onto the transaction "
+            "so the later steps can use it without parsing the body again."
+        ), None
+
+    # --- Transaction field population ---
+    if "transactionattributepopulation" in class_l or "transaction attribute population" in type_l:
+        expr = (cfg.get("Expression") or "").lower()
+        dest = (cfg.get("AttributeName") or "").lower()
+        lab = label.lower()
+        if "wrap" in lab and "271" in lab:
+            return speak_ftp(
+                "We wrap the raw 271 in a tiny XML envelope so the parse stylesheet can read it."
+            ), None
+        if "patient" in dest or "patient" in lab:
+            return speak_ftp(
+                "Then we stitch last name and first name into one patient name on the transaction."
+            ), None
+        if "full path" in lab or "fullpath" in dest or "upload/" in expr:
+            return speak_ftp(
+                "Then we build the full remote path — the upload folder plus that file name — "
+                "so the download listener knows exactly what to fetch."
+            ), None
+        if has_ftp or "file name" in dest or "filename" in dest or "remote" in lab:
+            return speak_ftp(
+                "We trim the name and keep it on the transaction as the remote file name, "
+                "so we don't carry stray whitespace into FTP."
+            ), None
+        return speak_ftp(
+            "We keep this value on the transaction so later steps can use it."
+        ), None
+
+    # --- Listener Trigger ---
+    if "listenertrigger" in class_l or "listener trigger" in type_l:
+        once = (cfg.get("RUN_ONCE") or "").strip().lower() in {"true", "1", "yes"}
+        cycle = " for one cycle" if once else ""
+        return speak_ftp(
+            f"Now we kick the FTP download listener{cycle}. "
+            "This route doesn't pull the file itself — it just tells that listener "
+            "to go get the named file."
+        ), None
+
+    # --- Null transport ---
+    if "nulltransport" in class_l or type_l in {"null", "none"}:
+        lab = label.lower()
+        if any(k in lab for k in ("update", "sql", "open ar", "ar matched", "ar exception")):
+            return speak_ftp(
+                "The SQL update already ran on this path, so we finish on a null transport — "
+                "nothing else to send."
+            ), None
+        if "complete" in lab or "no-op" in lab:
+            return speak_ftp(
+                "We're done with this claim — files already wrote to disk — so we finish on a null transport."
+            ), None
+        return speak_ftp(
+            "This route has nothing to send outbound, so we end on a null transport."
+        ), None
+
+    # --- File Writing / archive ---
+    if "file writing" in type_l or "filewrite" in class_l:
+        where = f"{label} {target} {cfg.get('TargetFileName') or ''}".lower()
+        if "debug" in where:
+            bits = ["This writes a debug copy of the XML so we can inspect what the route saw."]
+            if target:
+                bits.append(f"That lands under {target}.")
+            return speak_ftp(" ".join(bits)), None
+        if ".json" in where or "json" in where or "summary" in label.lower():
+            bits = ["Then we write the JSON summary to disk."]
+        elif ".xml" in where or "edi xml" in where:
+            bits = ["Then we write that XML to disk so we can inspect it."]
+        elif ".edi" in where or "wire" in label.lower():
+            bits = ["Then we write the X12 text to disk."]
         else:
-            bits[-1] = bits[-1] + ","
-        bits.append("so FTP pickup stays separate from the database work.")
+            bits = [
+                "Next we archive a copy of the body — original name plus a timestamp.",
+            ]
+        if target:
+            bits.append(f"That lands under {target}.")
+        return speak_ftp(" ".join(bits)), None
+
+    # --- XML pretty-print (transport-side; required before writing an XML file) ---
+    if "xmlformatting" in class_l or "xml formatting" in type_l:
+        return speak_ftp(
+            "This processor pretty-prints the XML — line breaks and indent — "
+            "so the file on disk is readable."
+        ), None
+
+    # --- Directory transport ---
+    if tag_l == "transport" and "directory" in type_l:
+        bits = ["Then we write the file out"]
+        if target:
+            bits[0] = bits[0] + f" to {target}"
+        bits[0] += "."
+        if has_ftp and staged:
+            bits.append("That keeps FTP pickup separate from the next route.")
+        return speak_ftp(" ".join(bits)), None
+
+    # --- Conditional / XPath router ---
+    if (
+        tag_l in {"routingmodule", "routing"}
+        or "routingmodule" in class_l
+        or "conditional node router" in type_l
+    ):
+        blob = " ".join(str(v) for v in cfg.values())
+        expr = (cfg.get("condition") or cfg.get("Expression") or cfg.get("OGNLExpression") or "").strip()
+        if "ResourceName" in blob and "check" in blob.lower():
+            return speak_ftp(
+                "Then a conditional router. POST to check takes the realtime round-trip; anything else is a 405."
+            ), None
+        if "ResourceName" in blob and ("build" in blob.lower() or "parse" in blob.lower()):
+            return speak_ftp(
+                "Then a conditional router. POST to build goes down the 270 path, parse goes down the 271 path, and anything else is a 405."
+            ), None
+        if expr in {"true()", "true"}:
+            return speak_ftp(
+                "Then a conditional router. Here the rule is always true, so every transaction goes down the same path."
+            ), None
+        return speak_ftp(
+            "Then a conditional router — it uses XPath to pick which path this transaction takes."
+        ), None
+
+    # --- RabbitMQ transport ---
+    if "rabbitmqtransport" in class_l or (tag_l == "transport" and "rabbit" in type_l):
+        queue = _resolved(cfg, env, "Queue") or "the queue"
+        bits = [
+            f"Then we publish that same body onto RabbitMQ queue {queue}, "
+            "so downstream consumers can pick it up.",
+        ]
+        if (cfg.get("Declare") or "").strip().lower() == "true":
+            bits.append("The transport declares the queue if it isn't there yet.")
         return speak_ftp(" ".join(bits)), None
 
     # --- CSV ---
@@ -726,31 +1004,150 @@ def explain_module_rich(
 
     # --- XSLT ---
     if "xslt" in type_l or "xslt" in class_l:
-        sheet = xslt or "our stylesheet"
-        if is_custom_module(class_name):
+        sheet = Path(xslt).name if xslt else "our stylesheet"
+        engine = (
+            "This is a custom module using"
+            if is_custom_module(class_name)
+            else "We're using the stock XSLT processor with"
+        )
+        opener = f"Now for the mapping — {engine[0].lower() + engine[1:]} {sheet}."
+        hints = ""
+        xslt_text = ""
+        if route_dir and xslt:
+            for cand in (route_dir / Path(xslt).name, route_dir / xslt, Path(xslt)):
+                if cand.is_file():
+                    xslt_text = cand.read_text(encoding="utf-8", errors="replace")
+                    break
+        if not xslt_text and demo and xslt:
+            want = Path(xslt).name.lower()
+            for p in demo.rglob(Path(xslt).name):
+                if "node_modules" in p.parts:
+                    continue
+                if p.name.lower() == want and p.is_file():
+                    xslt_text = p.read_text(encoding="utf-8", errors="replace")
+                    break
+        if xslt_text:
+            tools_dir = Path(__file__).resolve().parent
+            if str(tools_dir) not in sys.path:
+                sys.path.insert(0, str(tools_dir))
+            from construction_demo_context import xslt_talking_points
+
+            hints = xslt_talking_points(xslt_text)
+        return speak_ftp((opener + (" " + hints if hints else "")).strip()), None
+
+    # --- XPath fork ---
+    if (
+        "xpathfork" in class_l
+        or "xpath forking" in type_l
+        or ("fork" in label.lower() and "xpath" in f"{type_l} {class_l} {label.lower()}")
+    ):
+        return speak_ftp(
+            "This XPath fork splits the file so each transaction set becomes its own message."
+        ), None
+
+    # --- XPath Evaluation ---
+    if "xpathevaluator" in class_l or "xpath evaluation" in type_l:
+        lab = label.lower()
+        if "clp" in lab or "remit" in lab:
             return speak_ftp(
-                f"Now for the mapping — I'll open the custom stylesheet. "
-                f"This is a custom module using {sheet}. "
-                "Watch the for-each over each CSV record and the column mappings: "
-                "Dialect A tags like PATIENTID into the SQL insert fields, "
-                "and STATE becomes StateCode."
+                "XPath evaluation pulls the claim control number, paid amount, and charge "
+                "off the EDI XML."
+            ), None
+        if "open ar" in lab or "expected" in lab:
+            return speak_ftp(
+                "Another XPath evaluation — this time from the SQL result, so we have "
+                "expected paid and the patient name."
+            ), None
+        if "decision" in lab:
+            return speak_ftp(
+                "XPath evaluation copies the match bucket and underpay flag off the decision XML "
+                "so the router can fan out."
             ), None
         return speak_ftp(
-            f"Now for the mapping — I'll open the stylesheet. "
-            f"We're using the stock XSLT processor with {sheet}. "
-            "Watch the for-each over each CSV record and the column mappings: "
-            "Dialect A tags like PATIENTID into the SQL insert fields, "
-            "and STATE becomes StateCode."
+            "XPath evaluation copies a few fields off the XML onto the transaction "
+            "so later steps can use them."
+        ), None
+
+    # --- HTTP Post transport (payer / partner call) ---
+    if "httpposttransport" in class_l or (tag_l == "transport" and "http post" in type_l):
+        url = _resolved(cfg, env, "TargetURL") or ""
+        lab = (label or "").lower()
+        dump_url = bool(url) and "{ognl" not in url.lower() and "$$" not in url
+        if "object storage" in lab or "oci-mock" in url.lower() or "oci" in lab:
+            bits = ["Then we HTTP POST each JSON object to the Object Storage mock."]
+        elif dump_url:
+            bits = [f"Then we HTTP POST the body to {url}."]
+        else:
+            bits = ["Then we HTTP POST the body to the partner."]
+        bits.append("After the response comes back, post-processors keep going on that same transaction.")
+        return speak_ftp(" ".join(bits)), None
+
+    # --- Sync reply processor (after HttpPost, not a transport) ---
+    if "synchronousresponseprocessor" in class_l:
+        return speak_ftp(
+            "This processor replies on the original REST call, so the clinic gets the JSON on the same request."
+        ), None
+
+    if "synchronousresponsetransport" in class_l or (
+        tag_l == "transport" and "synchronous response" in type_l
+    ):
+        return speak_ftp(
+            "This transport replies on the original REST call with whatever body we just built."
+        ), None
+
+    if "httpresponsecode" in class_l or "http response status" in type_l:
+        code = (cfg.get("StatusCode") or "").strip()
+        if code:
+            return speak_ftp(f"We set the HTTP status to {code}."), None
+        return speak_ftp("We set the HTTP status on the way out."), None
+
+    if "addhttpresponseheaders" in class_l or "http response headers" in type_l:
+        return speak_ftp(
+            "We set the response content type so the clinic client knows what it got back."
+        ), None
+
+    # --- EDI transformation ---
+    if "editransformation" in class_l or "edi transformation" in type_l:
+        direction = (cfg.get("TransformationDirection") or "").lower()
+        if "xml to edi" in direction:
+            return speak_ftp(
+                "Here's the EDI transformation — it turns our EDI XML into X12 text on the wire."
+            ), None
+        return speak_ftp(
+            "Here's the EDI transformation — it turns the X12 into XML we can query."
         ), None
 
     # --- Database SQL ---
     if "database" in type_l or "databasesql" in class_l:
-        where = "the demo database"
-        if db and "demo" not in db.lower() and "sftp" not in db.lower():
-            where = db
+        where = db or "the database"
+        polling = (
+            tag_l == "listener"
+            or "polling" in type_l
+            or "databasesqllistener" in class_l
+        )
+        if polling:
+            bits = [
+                f"First up is a SQL polling listener — it runs a query against {where} over JDBC.",
+            ]
+            if interval:
+                bits.append(f"It checks about every {interval} seconds.")
+            return speak_ftp(" ".join(bits)), None
+        q = (cfg.get("Query") or "").lstrip()
+        q_up = q.upper()
+        if q_up.startswith("SELECT"):
+            return speak_ftp(
+                f"This is a SQL lookup — we query {where} over JDBC using a key from the transaction."
+            ), None
+        if q_up.startswith("UPDATE"):
+            return speak_ftp(
+                f"Then we update that row in {where} so the status matches the decision."
+            ), None
+        if q_up.startswith("INSERT"):
+            return speak_ftp(
+                f"And we write to SQL — those inserts go into {where} over JDBC."
+            ), None
         return speak_ftp(
-            f"And finally we insert into SQL — those inserts go into {where} over JDBC. "
-            "That's it: CSV in, patients in SQL."
+            f"And we write to SQL — those statements go into {where} over JDBC."
         ), None
 
     # --- Custom fallback ---
@@ -760,9 +1157,15 @@ def explain_module_rich(
             "This one's custom for this interface — not a stock catalog module."
         ), None
 
-    # --- Generic fallback: still keep it short ---
-    role = opening_for(tag, type_name, label)
-    return speak_ftp(f"Next we add {soft_module_name(label)} — {role}."), None
+    # --- Label fallback when module XML is missing (never "a module named X") ---
+    story = explain_from_label(label)
+    if story:
+        return speak_ftp(story), None
+    kind = (type_name or tag or "").strip()
+    if kind:
+        article = "an" if kind[:1].lower() in "aeiou" else "a"
+        return speak_ftp(f"Here's {article} {kind} processor — next step in the flow."), None
+    return speak_ftp("Here's the next step in the route."), None
 
 
 def clear_replay(root: Path) -> Path:
@@ -876,6 +1279,7 @@ def record_route(
     events: list[dict],
     used_decision_ids: set[str] | None = None,
     is_first_route: bool = False,
+    route_count: int = 1,
 ) -> int:
     v2 = route_dir / "route.v2.xml"
     if not v2.is_file():
@@ -910,6 +1314,8 @@ def record_route(
         env,
         [e for e in events if not (e.get("kind") == "decision" and str(e.get("id") or "") in used_decision_ids)],
         is_first_route=is_first_route,
+        demo=root,
+        route_count=route_count,
     )
     if empty_dec:
         used_decision_ids.add(empty_dec)
@@ -922,15 +1328,7 @@ def record_route(
         empty_detail = naturalize_spoken(empty_detail)
     except Exception:
         pass
-    low_name = route_name.lower()
-    if is_first_route and "sftp" in low_name:
-        empty_msg = "Pickup first"
-    elif "csv" in low_name and "sql" in low_name:
-        empty_msg = "The load route"
-    elif "sftp" in low_name or "ftp" in low_name:
-        empty_msg = "The pickup route"
-    else:
-        empty_msg = "Next route"
+    empty_msg = "First route" if is_first_route else "Next route"
     entry = {
         "route_id": route_id,
         "route_name": route_name,
@@ -979,6 +1377,8 @@ def record_route(
             env=env,
             events=filtered_events,
             route_name=route_name,
+            demo=root,
+            route_dir=route_dir,
         )
         try:
             tools_dir = Path(__file__).resolve().parent
@@ -1051,7 +1451,7 @@ def main() -> int:
     ap.add_argument("--root", required=True)
     ap.add_argument("--clear-only", action="store_true")
     args = ap.parse_args()
-    root = Path(args.root).expanduser().resolve()
+    root = require_demo(args.root)
     replay = clear_replay(root)
     if args.clear_only:
         print(replay)
@@ -1076,6 +1476,7 @@ def main() -> int:
             events=events,
             used_decision_ids=used_decision_ids,
             is_first_route=(idx == 0),
+            route_count=len(routes),
         )
     print(f"Done — {total} steps in {replay}")
     return 0

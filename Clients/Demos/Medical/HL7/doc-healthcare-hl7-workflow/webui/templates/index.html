@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DOC HL7 Workflow — Route Visualizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/pf-theme.css" />
+  <link rel="stylesheet" href="/static/app.css" />
+  <link rel="stylesheet" href="/static/timing-tab.css" />
+  <link rel="stylesheet" href="/static/build-live.css" />
+</head>
+<body>
+  <header>
+    <div class="app-bar" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.65rem 1rem;">
+      <div>
+        <h1 style="margin-bottom:.35rem;">DOC Healthcare → HL7 Routes</h1>
+        <p style="margin:0;">
+          Visual of the PilotFish routes built for the corrections healthcare workflow case study:
+          database events in, MULTI packages split, HL7 ADT out for MyAvatar.
+        </p>
+      </div>
+      <div class="main-tabs" role="tablist" aria-label="App views">
+        <button type="button" class="main-tab active" data-main-tab="demo" role="tab" aria-selected="true">Demo</button>
+        <button type="button" class="main-tab" data-main-tab="timing" role="tab" aria-selected="false">Timing</button>
+        <button type="button" class="main-tab" data-main-tab="info" role="tab" aria-selected="false">Info</button>
+      </div>
+    </div>
+    <nav class="nav" id="demo-nav">
+      <a href="#pipeline">Pipeline</a>
+      <a href="#route-1a">Route 1a SQL</a>
+      <a href="#route-1b">Route 1b Oracle</a>
+      <a href="#route-2">Route 2</a>
+      <a href="#inject">Add Event</a>
+      <a href="#results">HL7 Results</a>
+      <a id="eip-link" href="http://localhost:8091/eip/" target="_blank" rel="noreferrer">PilotFish EIP</a>
+    </nav>
+  </header>
+
+  <div id="tab-demo">
+  <main>
+    <section class="panel" id="pipeline">
+      <h2>End-to-end pipeline</h2>
+      <p class="section-lead">Two real databases feed one HL7 generation route — matching the case study.</p>
+      <div class="pipeline">
+        <div class="pipe-node db"><strong>Oracle OMS</strong><span>Driver <code>oracle.jdbc.OracleDriver</code><br/>Route 1b polls <code>operational_events</code></span></div>
+        <div class="pipe-node db"><strong>SQL Server Housing</strong><span>Driver <code>SQLServerDriver</code><br/>Route 1a polls <code>OperationalEvents</code></span></div>
+        <div class="pipe-node r1"><strong>Expand MULTI</strong><span>Each source expands packages into single events</span></div>
+        <div class="pipe-node r2"><strong>Route 2</strong><span>Fork + HL7 ADT transform</span></div>
+        <div class="pipe-node out"><strong>HL7 Out</strong><span>MyAvatar-bound <code>.hl7</code> files</span></div>
+      </div>
+      <div class="route-links">
+        <a class="route-card" href="#route-1a">
+          <span class="badge r1">Route 1a</span>
+          <h3>SQL Server Housing listener</h3>
+          <p><code>mssql-jdbc</code> → claim PENDING housing events → expand → Route 2.</p>
+        </a>
+        <a class="route-card" href="#route-1b">
+          <span class="badge r1">Route 1b</span>
+          <h3>Oracle OMS listener</h3>
+          <p><code>ojdbc11</code> → select/update PENDING OMS events → expand → Route 2.</p>
+        </a>
+        <a class="route-card" href="#route-2">
+          <span class="badge r2">Route 2</span>
+          <h3>Split Events → HL7 ADT</h3>
+          <p>Shared fork + XSLT + DirectoryTransport for both sources.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="panel" id="route-1a">
+      <span class="badge r1">Route 1a</span>
+      <h2>1a — Poll SQL Server Housing Events</h2>
+      <p class="section-lead">Microsoft SQL Server 2022 via Microsoft JDBC.</p>
+      <div class="flow">
+        <div class="node" data-detail="r1a-listener"><div class="kicker">Listener</div><div class="title">Poll SQL Server</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r1a-driver"><div class="kicker">JDBC</div><div class="title">SQLServerDriver</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r1a-expand"><div class="kicker">XSLT</div><div class="title">Expand MULTI</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r1a-handoff"><div class="kicker">Transport</div><div class="title">EIPTransport → Route 2</div></div>
+      </div>
+      <div class="detail open" id="r1a-listener">
+        <h4>DatabaseSqlListener — SQL Server</h4>
+        <ul>
+          <li>Class: <code>com.pilotfish.eip.modules.db.DatabaseSqlListener</code></li>
+          <li>JdbcDriver: <code>$$sqlserver.driver</code> = <code>com.microsoft.sqlserver.jdbc.SQLServerDriver</code></li>
+          <li>JdbcURL: <code>jdbc:sqlserver://sqlserver:1433;databaseName=DocHealthcare;...</code></li>
+          <li>Claims PENDING with <code>UPDATE...OUTPUT</code> → status becomes PROCESSED</li>
+        </ul>
+      </div>
+      <div class="detail" id="r1a-driver">
+        <h4>Driver JAR</h4>
+        <ul>
+          <li><code>mssql-jdbc-12.8.1.jre11.jar</code> in <code>WEB-INF/lib</code></li>
+          <li>Seed data: transfers, bed assigns, housing MULTI packages (EventIds 1003+)</li>
+        </ul>
+      </div>
+      <div class="detail" id="r1a-expand">
+        <h4>Expand MULTI</h4>
+        <ul>
+          <li>Same XSLT as Oracle route — e.g. <code>TRANSFER,BED_ASSIGN</code> → 2 events</li>
+        </ul>
+      </div>
+      <div class="detail" id="r1a-handoff">
+        <h4>Handoff</h4>
+        <ul>
+          <li>EIPTransport → <code>Split And Generate HL7.Programmable (Trigger) Listener</code></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="panel" id="route-1b">
+      <span class="badge r1">Route 1b</span>
+      <h2>1b — Poll Oracle OMS Events</h2>
+      <p class="section-lead">Oracle XE 21 via Oracle JDBC (ojdbc11).</p>
+      <div class="flow">
+        <div class="node" data-detail="r1b-listener"><div class="kicker">Listener</div><div class="title">Poll Oracle OMS</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r1b-driver"><div class="kicker">JDBC</div><div class="title">OracleDriver</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r1b-expand"><div class="kicker">XSLT</div><div class="title">Expand MULTI</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r1b-handoff"><div class="kicker">Transport</div><div class="title">EIPTransport → Route 2</div></div>
+      </div>
+      <div class="detail open" id="r1b-listener">
+        <h4>DatabaseSqlListener — Oracle</h4>
+        <ul>
+          <li>Class: <code>com.pilotfish.eip.modules.db.DatabaseSqlListener</code></li>
+          <li>JdbcDriver: <code>$$oracle.driver</code> = <code>oracle.jdbc.OracleDriver</code></li>
+          <li>JdbcURL: <code>jdbc:oracle:thin:@oracle:1521/XEPDB1</code></li>
+          <li>User: <code>docoms</code> / schema tables <code>operational_events</code>, <code>patients</code></li>
+          <li>SQLXML: SELECT PENDING, then UPDATE to PROCESSED</li>
+        </ul>
+      </div>
+      <div class="detail" id="r1b-driver">
+        <h4>Driver JAR</h4>
+        <ul>
+          <li><code>ojdbc11-21.9.0.0.jar</code> in <code>WEB-INF/lib</code></li>
+          <li>Seed data: admits, discharges, demo updates, OMS MULTI (EventIds 2001+)</li>
+        </ul>
+      </div>
+      <div class="detail" id="r1b-expand">
+        <h4>Expand MULTI</h4>
+        <ul>
+          <li>e.g. <code>ADMIT,BED_ASSIGN,DEMO_UPDATE</code> → 3 forked HL7 messages</li>
+        </ul>
+      </div>
+      <div class="detail" id="r1b-handoff">
+        <h4>Handoff</h4>
+        <ul>
+          <li>Same Route 2 listener as SQL Server — one HL7 pipeline for both DBs</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="panel" id="route-2">
+      <span class="badge r2">Route 2</span>
+      <h2>2 — Generate HL7 ADT</h2>
+      <p class="section-lead">Source format forks; target processors build each HL7 file.</p>
+      <div class="flow">
+        <div class="node" data-detail="r2-listen"><div class="kicker">Listener</div><div class="title">TriggerableListener</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r2-fork"><div class="kicker">Format</div><div class="title">Split Events fork</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r2-attrs"><div class="kicker">Processors</div><div class="title">Attrs + trigger map</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r2-xslt"><div class="kicker">XSLT</div><div class="title">Event → HL7 text</div></div>
+        <div class="arrow">→</div>
+        <div class="node" data-detail="r2-write"><div class="kicker">Transport</div><div class="title">Write .hl7 file</div></div>
+      </div>
+      <div class="detail" id="r2-listen">
+        <h4>TriggerableListener</h4>
+        <ul>
+          <li>Name: <code>Split And Generate HL7.Programmable (Trigger) Listener</code></li>
+          <li>Receives expanded event batch from Route 1</li>
+        </ul>
+      </div>
+      <div class="detail open" id="r2-fork">
+        <h4>FormatProfile “Split Events”</h4>
+        <ul>
+          <li>ForkModule: <code>com.pilotfish.eip.modules.other.XPathForkingModule</code></li>
+          <li>ForkingXPath: <code>//Event</code></li>
+          <li>One transaction per healthcare event (7 DB rows → 10 txs when MULTIs expand)</li>
+        </ul>
+      </div>
+      <div class="detail" id="r2-attrs">
+        <h4>Post-fork attribute mapping</h4>
+        <ul>
+          <li>XPathEvaluator sets <code>EventId</code>, <code>EventType</code>, <code>OffenderId</code></li>
+          <li>ADMIT→A01, TRANSFER/BED_ASSIGN→A02, DISCHARGE→A03, DEMO_UPDATE→A08</li>
+          <li>Must run on the <strong>target</strong> after fork so each file gets the right name</li>
+        </ul>
+      </div>
+      <div class="detail" id="r2-xslt">
+        <h4>transform-event-to-hl7.xslt</h4>
+        <ul>
+          <li>Output method: text (pipe-delimited HL7 2.5.1)</li>
+          <li>Segments: MSH, EVN, PID, PV1, ZPF (PilotFish audit)</li>
+          <li>Sending app/facility: <code>PILOTFISH|DOC</code> → receiving <code>MYAVATAR|NETSMART</code></li>
+        </ul>
+      </div>
+      <div class="detail" id="r2-write">
+        <h4>DirectoryTransport</h4>
+        <ul>
+          <li>Directory: <code>/opt/pilotfish/output/hl7</code></li>
+          <li>FileName: <code>{EventId}_{EventType}_{Hl7Trigger}.hl7</code></li>
+          <li>Example: <code>1002-1_ADMIT_A01.hl7</code></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="panel" id="inject">
+      <h2>Add an event</h2>
+      <p class="section-lead">
+        Choose <strong>Oracle</strong> or <strong>SQL Server</strong>, insert a PENDING row, then PilotFish polls that DB (~15s),
+        expands MULTI if needed, and Route 2 writes the same HL7 ADT output either way.
+      </p>
+      <div id="db-health" class="db-health" aria-live="polite">
+        <span class="db-chip" data-db="oracle">Oracle …</span>
+        <span class="db-chip" data-db="sqlserver">SQL Server …</span>
+      </div>
+      <form id="event-form" class="form-grid">
+        <label>Target database
+          <select name="targetDatabase" id="targetDatabase">
+            <option value="oracle">Oracle OMS (Route 1b)</option>
+            <option value="sqlserver">SQL Server Housing (Route 1a)</option>
+          </select>
+        </label>
+        <label>Patient
+          <select name="offenderId" id="offenderId">
+            {% for oid, p in patients.items() %}
+            <option value="{{ oid }}">{{ p.label }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label>Event type
+          <select name="eventType" id="eventType">
+            <option value="ADMIT">ADMIT → A01</option>
+            <option value="TRANSFER">TRANSFER → A02</option>
+            <option value="BED_ASSIGN">BED_ASSIGN → A02</option>
+            <option value="DEMO_UPDATE">DEMO_UPDATE → A08</option>
+            <option value="DISCHARGE">DISCHARGE → A03</option>
+            <option value="MULTI" selected>MULTI (package → split)</option>
+          </select>
+        </label>
+        <label>MULTI children
+          <input name="childEventTypes" id="childEventTypes" value="ADMIT,BED_ASSIGN,DEMO_UPDATE" placeholder="ADMIT,BED_ASSIGN" />
+        </label>
+        <button class="btn btn-primary" type="submit">Add event &amp; wait for HL7</button>
+        <label style="grid-column: 1 / -1;">Notes
+          <input name="notes" id="notes" placeholder="Optional note stored on the event" />
+        </label>
+      </form>
+      <div id="status" class="status">Ready.</div>
+
+      <h3 style="margin: 1.2rem 0 0.4rem; font-size: 1rem;">Recent DB events (both databases)</h3>
+      <div style="overflow:auto;">
+        <table id="events-table">
+          <thead>
+            <tr>
+              <th>Id</th><th>Database</th><th>Type</th><th>Patient</th><th>Source</th><th>Location</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" id="results">
+      <div style="display:flex;justify-content:space-between;gap:.75rem;align-items:center;flex-wrap:wrap;">
+        <div>
+          <h2 style="margin-bottom:.2rem;">HL7 results</h2>
+          <p class="section-lead" style="margin:0;">Newest generated messages from <code>output/hl7</code>.</p>
+        </div>
+        <button class="btn" type="button" id="refresh-hl7">Refresh Results</button>
+      </div>
+      <div id="results" class="results"></div>
+    </section>
+  </main>
+  </div>
+
+  <!-- TIMING_TAB_STANDARD:START -->
+  {% include 'partials/timing_tab.html' %}
+  <!-- TIMING_TAB_STANDARD:END -->
+  <!-- INFO_TAB_STANDARD:START -->
+  {% include 'partials/info_tab.html' %}
+  <!-- INFO_TAB_STANDARD:END -->
+
+  <script src="/static/build-live.js"></script>
+  <script src="/static/app.js"></script>
+  <script src="/static/timing-tab.js"></script>
+</body>
+</html>

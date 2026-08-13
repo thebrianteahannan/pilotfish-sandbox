@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "interface": "EDI 837P to QCare",
+  "slug": "edi-837p-qcare",
+  "path": "Clients/Demos/Insurance/EDI/edi-837p-qcare",
+  "requested_by": "user",
+  "started_at": "2026-08-13T07:41:00Z",
+  "compose_project": "edi-837p-qcare",
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-13T07:41:00Z",
+      "ended_at": "2026-08-13T07:42:00Z",
+      "duration_minutes": 1.0,
+      "notes": "Stopped 837-claim-scrub; deleted 837p tree without overlay restore; scaffolded Insurance/EDI/edi-837p-qcare on 8125; restored story samples"
+    },
+    {
+      "id": "design_scaffold",
+      "name": "DESIGN + V1 route + Web UI",
+      "started_at": "2026-08-13T07:42:00Z",
+      "notes": "DirectoryListener from 278; Split 837P format from 835 PI (837-Q1); XPath after fork; pretty-print before debug XML write; XSLT method=text with no XML Formatting after",
+      "ended_at": "2026-08-13T07:46:00Z",
+      "duration_minutes": 4.0
+    },
+    {
+      "id": "routes",
+      "name": "V2 publish + full stack",
+      "started_at": "2026-08-13T07:46:00Z",
+      "ended_at": "2026-08-13T07:47:15Z",
+      "duration_minutes": 1.3,
+      "notes": "EIP 8123 up immediately. Inject 803 \u2192 051301228883_qcare.txt length 2100 with STONE/SHARON/70487."
+    },
+    {
+      "id": "webui_docs",
+      "name": "PDFs + tests + construction prepare",
+      "started_at": "2026-08-13T07:47:15Z",
+      "ended_at": "2026-08-13T07:50:30Z",
+      "duration_minutes": 3.2,
+      "notes": "12/12 tests. Stripped archive EDI from /api/results so needles do not match the inbound file. record_module_replay after --complete. XSLT talking-points skip $var dumps."
+    }
+  ],
+  "completed_at": "2026-08-13T07:50:30Z",
+  "completed_by": "cursor-agent",
+  "duration_minutes": 9.5
+}

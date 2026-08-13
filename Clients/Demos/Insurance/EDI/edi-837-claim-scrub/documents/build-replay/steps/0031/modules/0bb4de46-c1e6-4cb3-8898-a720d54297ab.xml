@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="0bb4de46-c1e6-4cb3-8898-a720d54297ab" name="Write Kickout Work Queue File" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "kickout".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$KICKOUT_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('ClaimFileBase') + '_kickout.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

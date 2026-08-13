@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "sample": "bad-truncated.edi",
+  "preamble": [
+    {
+      "id": "welcome",
+      "action": "show_welcome",
+      "message": "Welcome",
+      "detail": "Welcome to the PilotFish demo: EDI 276/277 Claim Status. Ingest X12 276 claim status requests, look up a demo catalog by trace number (no SQL), stage a ClaimStatusDecision, then emit an X12 277 response and file buckets (found / not-found / error). PilotFish supports the whole flow out of the box.",
+      "demo_name": "EDI 276/277 Claim Status",
+      "text": "Welcome to the PilotFish demo: EDI 276/277 Claim Status. Ingest X12 276 claim status requests, look up a demo catalog by trace number (no SQL), stage a ClaimStatusDecision, then emit an X12 277 response and file buckets (found / not-found / error). PilotFish supports the whole flow out of the box."
+    },
+    {
+      "id": "pipeline-overview",
+      "action": "show_pipeline",
+      "message": "Pipeline overview",
+      "detail": "Before we wire anything, here's the flow end to end. Ingest X12 276 claim status requests, look up a demo catalog by trace number (no SQL), stage a ClaimStatusDecision, then emit an X12 277 response and file buckets (found / not-found / error).",
+      "demo_name": null,
+      "text": "Before we wire anything, here's the flow end to end. Ingest X12 276 claim status requests, look up a demo catalog by trace number (no SQL), stage a ClaimStatusDecision, then emit an X12 277 response and file buckets (found / not-found / error)."
+    },
+    {
+      "id": "systems-overview",
+      "action": "spotlight_systems",
+      "message": "External systems",
+      "detail": "And here's what sits around the routes. PilotFish eiPlatform and Demo Web UI. All of those are spun up in docker images for this demo.",
+      "demo_name": null,
+      "text": "And here's what sits around the routes. PilotFish eiPlatform and Demo Web UI. All of those are spun up in docker images for this demo."
+    }
+  ],
+  "steps": [
+    {
+      "id": "test-open",
+      "action": "open_demo",
+      "message": "Prove it works",
+      "detail": "Routes are built. Let's switch to the Demo tab and prove it works.",
+      "demo_name": null,
+      "text": "Routes are built. Let's switch to the Demo tab and prove it works."
+    },
+    {
+      "id": "test-inject-1",
+      "action": "inject",
+      "message": "Submit a sample",
+      "detail": "I'll submit this sample from the Demo tab \u2014 same as an operator would.",
+      "demo_name": null,
+      "text": "I'll submit this sample from the Demo tab \u2014 same as an operator would."
+    },
+    {
+      "id": "test-wait-1",
+      "action": "wait_results",
+      "message": "Waiting for the routes",
+      "detail": "Give the routes a moment to pick up the file and write the output.",
+      "demo_name": null,
+      "text": "Give the routes a moment to pick up the file and write the output."
+    },
+    {
+      "id": "test-show-1",
+      "action": "show_results",
+      "message": "277 responses",
+      "detail": "There it is \u2014 output on the results panel.",
+      "demo_name": null,
+      "text": "There it is \u2014 output on the results panel."
+    },
+    {
+      "id": "test-inject-2",
+      "action": "inject",
+      "message": "Submit another sample",
+      "detail": "Now a second payload from the Demo tab.",
+      "demo_name": null,
+      "text": "Now a second payload from the Demo tab."
+    },
+    {
+      "id": "test-wait-2",
+      "action": "wait_results",
+      "message": "Waiting for the routes",
+      "detail": "Same path \u2014 the second result should show up here.",
+      "demo_name": null,
+      "text": "Same path \u2014 the second result should show up here."
+    },
+    {
+      "id": "test-show-2",
+      "action": "show_results",
+      "message": "277 responses",
+      "detail": "And there's the second result.",
+      "demo_name": null,
+      "text": "And there's the second result."
+    }
+  ],
+  "outro": [
+    {
+      "id": "outro-thanks",
+      "action": "thank_you",
+      "message": "Demo complete",
+      "detail": "That's the demo \u2014 ingest X12 276 claim status requests, look up a demo catalog by trace number (no SQL), stage a ClaimStatusDecision, then emit an X12 277 response and file. Thanks for choosing PilotFish.",
+      "demo_name": null,
+      "text": "That's the demo \u2014 ingest X12 276 claim status requests, look up a demo catalog by trace number (no SQL), stage a ClaimStatusDecision, then emit an X12 277 response and file. Thanks for choosing PilotFish."
+    }
+  ]
+}

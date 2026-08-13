@@ -29,6 +29,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
+from demo_paths import iter_demo_roots, require_demo
+
 SANDBOX = Path(__file__).resolve().parents[1]
 DEMOS = SANDBOX / "Clients" / "Demos"
 DOC_ROOT = Path("/Users/brianhannan/Documents/PilotFish Documentation")
@@ -468,9 +470,7 @@ def sync_demo(
 
 def find_demo_roots() -> list[Path]:
     roots: list[Path] = []
-    for d in sorted(DEMOS.iterdir()):
-        if not d.is_dir() or d.name.startswith("_"):
-            continue
+    for d in iter_demo_roots():
         if (d / "eip-root").is_dir() or (d / "pilotfish" / "demo-eip-root").is_dir():
             roots.append(d)
     return roots
@@ -525,7 +525,7 @@ def main() -> int:
     if args.all_demos:
         roots = find_demo_roots()
     elif args.root:
-        roots = [args.root.resolve()]
+        roots = [require_demo(args.root)]
     else:
         cwd = Path.cwd().resolve()
         if (cwd / "eip-root").is_dir() or (cwd / "documents").is_dir():

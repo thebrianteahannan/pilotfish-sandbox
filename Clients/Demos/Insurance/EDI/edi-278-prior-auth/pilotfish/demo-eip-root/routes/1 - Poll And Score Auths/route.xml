@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule">
+    <ModuleConfig />
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="Inbound 278 Prior Auths">
+    <FormatProfile name="Split 278 Transactions" />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="Poll EDI 278 Files">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <PollingInterval>5</PollingInterval>
+        <PollingDirectory>$$EDI_INBOUND_DIRECTORY</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction>edi,278,txt</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>$$EDI_ARCHIVE_DIRECTORY</TargetDirectory>
+        <CompatModeMoved>false</CompatModeMoved>
+        <Tokenizers />
+        <SerializedTransactionsTag>1</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>1</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target icon="" name="Score And Stage Auth Decision">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Stage Auth Decision" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$STAGED_DECISION_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:(getAttribute('AuthTraceNumber') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('AuthTraceNumber')).trim().isEmpty() ? getAttribute('AuthTraceNumber') : 'unknown') + '_decision'}</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Extract 278 Auth Fields">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:AuthTraceNumber:eip_name:normalize-space(string((//TRN/TRN02 | //*[local-name()='TRN']/*[local-name()='TRN02'] | //BHT/BHT03 | //*[local-name()='BHT']/*[local-name()='BHT03'])[1])):eip_value][eip_pair:MemberId:eip_name:normalize-space(string((//NM1[NM101='IL']/NM109 | //*[local-name()='NM1'][*[local-name()='NM101']='IL']/*[local-name()='NM109'])[1])):eip_value][eip_pair:EdiPatientLast:eip_name:normalize-space(string((//NM1[NM101='IL']/NM103 | //*[local-name()='NM1'][*[local-name()='NM101']='IL']/*[local-name()='NM103'])[1])):eip_value][eip_pair:EdiPatientFirst:eip_name:normalize-space(string((//NM1[NM101='IL']/NM104 | //*[local-name()='NM1'][*[local-name()='NM101']='IL']/*[local-name()='NM104'])[1])):eip_value][eip_pair:ProcedureCode:eip_name:normalize-space(string((//SV101_02 | //*[local-name()='SV101_02'] | //SV1/SV101/*[2] | //*[local-name()='SV1']/*[local-name()='SV101']/*[2])[1])):eip_value][eip_pair:DiagnosisCode:eip_name:normalize-space(string((//HI01_02 | //*[local-name()='HI01_02'] | //HI/HI01/*[2] | //*[local-name()='HI']/*[local-name()='HI01']/*[2])[1])):eip_value][eip_pair:AttachmentFlag:eip_name:if (normalize-space(string((//REF[REF01='EA']/REF02 | //*[local-name()='REF'][*[local-name()='REF01']='EA']/*[local-name()='REF02'])[1])) = 'Y' or exists(//PWK | //*[local-name()='PWK'])) then 'Y' else 'N':eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Debug Write Forked Transaction">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:(getAttribute('AuthTraceNumber') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('AuthTraceNumber')).trim().isEmpty() ? getAttribute('AuthTraceNumber') : 'unknown') + '_txn.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor" name="Lookup Auth Catalog">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <InputFile />
+          <WriteQuery>true</WriteQuery>
+          <Query>SELECT TOP 1 ProcedureCode, RequiresDiagnosis, RequiresAttachment, DefaultDisposition FROM dbo.AuthCatalog WHERE ProcedureCode = ?</Query>
+          <QueryParams>[eip_pair:Param1:eip_name:{ognl:getAttribute('ProcedureCode')}:eip_value]</QueryParams>
+          <UserName>$$sqlserver.username</UserName>
+          <Password>$$sqlserver.password</Password>
+          <UseDataSource>false</UseDataSource>
+          <DataSource />
+          <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+          <JdbcURL>$$sqlserver.url</JdbcURL>
+          <KeepConnection>false</KeepConnection>
+          <Autocommit>true</Autocommit>
+          <EnableTimeout>false</EnableTimeout>
+          <Timeout>600</Timeout>
+          <RestrictMetaDataToCatalog />
+          <RestrictMetaDataToSchema />
+          <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+          <CallbackListenerName />
+          <UseSingleOutputStream>true</UseSingleOutputStream>
+          <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+          <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+          <JDBCProperties>null</JDBCProperties>
+          <UseConnectionPooling>true</UseConnectionPooling>
+          <PermittedDBConnections>5</PermittedDBConnections>
+          <LogMetadata>false</LogMetadata>
+          <LogSQL>true</LogSQL>
+          <UseJdbcTyping>false</UseJdbcTyping>
+          <TransactionIsolationLevel>Default</TransactionIsolationLevel>
+          <TransactionIsolationDriverSpecific>-1</TransactionIsolationDriverSpecific>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Extract Catalog Fields">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:RequiresDiagnosis:eip_name:normalize-space(string((//REQUIRESDIAGNOSIS | //RequiresDiagnosis | //*[local-name()='REQUIRESDIAGNOSIS' or local-name()='RequiresDiagnosis'])[1])):eip_value][eip_pair:RequiresAttachment:eip_name:normalize-space(string((//REQUIRESATTACHMENT | //RequiresAttachment | //*[local-name()='REQUIRESATTACHMENT' or local-name()='RequiresAttachment'])[1])):eip_value][eip_pair:DefaultDisposition:eip_name:normalize-space(string((//DEFAULTDISPOSITION | //DefaultDisposition | //*[local-name()='DEFAULTDISPOSITION' or local-name()='DefaultDisposition'])[1])):eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Compose Auth Patient Name">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:PatientLast:eip_name:{ognl:getAttribute('EdiPatientLast')}:eip_value][eip_pair:PatientFirst:eip_name:{ognl:getAttribute('EdiPatientFirst')}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Build Auth Decision XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>build-auth-decision.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>[eip_pair:AuthTraceNumber:eip_name:{ognl:getAttribute('AuthTraceNumber')}:eip_value][eip_pair:MemberId:eip_name:{ognl:getAttribute('MemberId')}:eip_value][eip_pair:PatientLast:eip_name:{ognl:getAttribute('EdiPatientLast')}:eip_value][eip_pair:PatientFirst:eip_name:{ognl:getAttribute('EdiPatientFirst')}:eip_value][eip_pair:ProcedureCode:eip_name:{ognl:getAttribute('ProcedureCode')}:eip_value][eip_pair:DiagnosisCode:eip_name:{ognl:getAttribute('DiagnosisCode')}:eip_value][eip_pair:AttachmentFlag:eip_name:{ognl:getAttribute('AttachmentFlag')}:eip_value][eip_pair:RequiresDiagnosis:eip_name:{ognl:getAttribute('RequiresDiagnosis')}:eip_value][eip_pair:RequiresAttachment:eip_name:{ognl:getAttribute('RequiresAttachment')}:eip_value][eip_pair:DefaultDisposition:eip_name:{ognl:getAttribute('DefaultDisposition')}:eip_value]</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Debug Write Auth Decision">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:(getAttribute('AuthTraceNumber') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('AuthTraceNumber')).trim().isEmpty() ? getAttribute('AuthTraceNumber') : 'unknown') + '_decision.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor" name="Pretty-Print Auth Decision XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>

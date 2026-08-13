@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "title": "Module-by-module construction replay",
+  "steps": [
+    {
+      "route_id": "1-export-captures-to-xml",
+      "route_name": "1 - Export Captures to XML",
+      "message": "First route",
+      "detail": "Poll SQL Server PilotFishDemo.dbo.Captures on a timer and write the current result set as one pretty-printed XML file. Starting with a blank canvas on the first route.",
+      "modules_visible": 0,
+      "focus_label": "",
+      "focus_node_id": "",
+      "external_systems": [
+        "SQL Server (Docker service sqlserver), database PilotFishDemo via JDBC"
+      ],
+      "id": "0001",
+      "seq": 1,
+      "recorded_at": "2026-08-13T05:49:38Z"
+    },
+    {
+      "id": "0002",
+      "seq": 2,
+      "route_id": "1-export-captures-to-xml",
+      "route_name": "1 - Export Captures to XML",
+      "message": "Poll Captures Table",
+      "detail": "First up is a SQL polling listener \u2014 it runs a query against PilotFishDemo over JDBC. It checks about every 15 seconds.",
+      "modules_visible": 1,
+      "focus_label": "Poll Captures Table",
+      "focus_node_id": "646e43f3-3dc2-44b6-893c-6aa13ebb9dca",
+      "module_type": "Database Polling (SQL)",
+      "module_tag": "Listener",
+      "module_class": "com.pilotfish.eip.modules.db.DatabaseSqlListener",
+      "custom_module": false,
+      "config_highlights": [
+        "PollingInterval: 15",
+        "UserName: sa",
+        "JdbcDriver: Microsoft SQL Server JDBC driver",
+        "JdbcURL: JDBC to sqlserver, database PilotFishDemo"
+      ],
+      "recorded_at": "2026-08-13T05:49:38Z"
+    },
+    {
+      "id": "0003",
+      "seq": 3,
+      "route_id": "1-export-captures-to-xml",
+      "route_name": "1 - Export Captures to XML",
+      "message": "Conditional Router",
+      "detail": "Then a conditional router \u2014 it uses XPath to pick which path this transaction takes.",
+      "modules_visible": 2,
+      "focus_label": "Conditional Router",
+      "focus_node_id": "f45949ab-270b-4208-aaec-cfaace650064",
+      "module_type": "Conditional Node Router",
+      "module_tag": "RoutingModule",
+      "module_class": "com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule",
+      "custom_module": false,
+      "config_highlights": [],
+      "recorded_at": "2026-08-13T05:49:38Z"
+    },
+    {
+      "id": "0004",
+      "seq": 4,
+      "route_id": "1-export-captures-to-xml",
+      "route_name": "1 - Export Captures to XML",
+      "message": "Pretty-Print XML",
+      "detail": "This processor pretty-prints the XML \u2014 line breaks and indent \u2014 so the file on disk is readable.",
+      "modules_visible": 3,
+      "focus_label": "Pretty-Print XML",
+      "focus_node_id": "de19c3f6-3e20-4646-aa72-4e67cc54ba27",
+      "module_type": "XML Formatting",
+      "module_tag": "Processor",
+      "module_class": "com.pilotfish.eip.modules.transform.XMLFormattingProcessor",
+      "custom_module": false,
+      "config_highlights": [],
+      "recorded_at": "2026-08-13T05:49:38Z"
+    },
+    {
+      "id": "0005",
+      "seq": 5,
+      "route_id": "1-export-captures-to-xml",
+      "route_name": "1 - Export Captures to XML",
+      "message": "Write Captures XML",
+      "detail": "Then we write the file out to /opt/pilotfish/output.",
+      "modules_visible": 4,
+      "focus_label": "Write Captures XML",
+      "focus_node_id": "5f495a13-5a06-40c2-ab59-7769b980091e",
+      "module_type": "Directory / File",
+      "module_tag": "Transport",
+      "module_class": "com.pilotfish.eip.modules.file.DirectoryTransport",
+      "custom_module": false,
+      "config_highlights": [
+        "TargetDirectory: /opt/pilotfish/output",
+        "FileExtension: xml",
+        "FileName: captures_export"
+      ],
+      "recorded_at": "2026-08-13T05:49:38Z"
+    }
+  ],
+  "updated_at": "2026-08-13T05:49:38Z",
+  "default_pause_ms": 4500
+}

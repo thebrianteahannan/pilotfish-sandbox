@@ -25,6 +25,7 @@ import shutil
 import sys
 import time
 from datetime import datetime, timezone
+from demo_paths import require_demo
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
@@ -193,7 +194,9 @@ def load_converter(root: Path):
     path = root / "tools" / "convert_routes_to_v2.py"
     if not path.is_file():
         # fall back to nearest demo convert script
-        for alt in sorted(Path(__file__).resolve().parents[1].glob("Clients/Demos/*/tools/convert_routes_to_v2.py")):
+        for alt in sorted(
+            Path(__file__).resolve().parents[1].glob("Clients/Demos/**/tools/convert_routes_to_v2.py")
+        ):
             path = alt
             break
     if not path.is_file():
@@ -379,7 +382,7 @@ def main() -> int:
     )
     args = ap.parse_args()
 
-    root = Path(args.root).expanduser().resolve()
+    root = require_demo(args.root)
     if args.clear_replay:
         clear_replay(root)
         if not args.route:

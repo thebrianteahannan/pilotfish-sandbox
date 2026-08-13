@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="1e1ffd10-84c4-446f-9e0b-6fb0d17b38ab" name="Debug Write Decision XML" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$CLAIM_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('ClaimFileBase') + '_decision.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

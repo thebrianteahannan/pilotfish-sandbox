@@ -32,14 +32,15 @@ from pathlib import Path
 from urllib.error import URLError
 from urllib.request import urlopen
 
+from demo_paths import DEMOS, infer_category, require_demo
+
 ROOT = Path(__file__).resolve().parents[1]
-DEMOS = ROOT / "Clients" / "Demos"
 SHARED = DEMOS / "_shared" / "webui"
 # Prefer shared replay-capable viewer; fall back to a known good demo copy.
 REF_VIEWER = (
     (SHARED / "static" / "route-viewer")
     if (SHARED / "static" / "route-viewer" / "route-viewer.js").is_file()
-    else DEMOS / "edi-999-ta1-ack-triage" / "webui" / "static" / "route-viewer"
+    else require_demo("edi-999-ta1-ack-triage") / "webui" / "static" / "route-viewer"
 )
 
 
@@ -71,7 +72,7 @@ def write(path: Path, text: str) -> None:
 def copy_shared_static(webui: Path) -> None:
     static = webui / "static"
     static.mkdir(parents=True, exist_ok=True)
-    for name in ("build-live.js", "build-live.css", "timing-tab.js", "timing-tab.css", "code-highlight.js", "code-highlight.css"):
+    for name in ("pf-theme.css", "build-live.js", "build-live.css", "build-stage.js", "timing-tab.js", "timing-tab.css", "code-highlight.js", "code-highlight.css", "pilotfish-logo.jpg", "construction-video.js"):
         src = SHARED / "static" / name
         if not src.is_file():
             # timing/code live either under static/ or directly under shared
@@ -215,6 +216,7 @@ INDEX_HTML = '''<!doctype html>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{{ title }} — Build Stage</title>
+  <link rel="stylesheet" href="/static/pf-theme.css" />
   <link rel="stylesheet" href="/static/app.css" />
   <link rel="stylesheet" href="/static/timing-tab.css" />
   <link rel="stylesheet" href="/static/build-live.css" />
@@ -236,7 +238,7 @@ INDEX_HTML = '''<!doctype html>
       <div class="row-head">
         <h2>Routes</h2>
         <select id="route-select"></select>
-        <span id="routes-status" class="muted">Waiting for first module…</span>
+        <span id="routes-status" class="muted">Live construction</span>
       </div>
       <iframe id="route-viewer-frame" title="Route viewer" src="about:blank"></iframe>
     </section>
@@ -250,7 +252,9 @@ INDEX_HTML = '''<!doctype html>
   </div>
 
   <script src="/static/timing-tab.js"></script>
+  <script src="/static/build-stage.js"></script>
   <script src="/static/build-live.js"></script>
+  <script src="/static/construction-video.js"></script>
   <script src="/static/app.js"></script>
 </body>
 </html>
@@ -331,12 +335,15 @@ COMPOSE = '''services:
     restart: unless-stopped
     environment:
       WEBUI_PORT: "{port}"
+      DEMO_SLUG: "{slug}"
       ROUTES_DIR: /routes
       DOCUMENTS_DIR: /documents
       LAN_HINT: "{lan}"
       EIP_PUBLIC_URL: "http://localhost:{eip_port}/eip/"
     ports:
       - "{port}:{port}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ./documents:/documents:ro
       # Prefer demo-eip-root (no spaces). Paths with spaces often mount empty on Docker Desktop.
@@ -383,17 +390,27 @@ def start_stage_webui(demo: Path, port: int) -> None:
         return
     if wait_for_webui(port):
         print(f"Web UI ready: http://localhost:{port}/", flush=True)
-        if sys.platform == "darwin":
-            subprocess.run(["open", f"http://localhost:{port}/"], check=False)
+        # Do not `open` the URL — that launches the host browser (Chrome).
+        # Agents open it in Cursor's IDE browser (MCP browser_navigate, position active).
     else:
         print(
             f"Compose started but http://localhost:{port}/ not responding yet — check docker logs.",
             file=sys.stderr,
         )
+    worker = ROOT / "tools" / "construction_video_worker.py"
+    if worker.is_file():
+        subprocess.Popen(
+            [sys.executable, str(worker)],
+            cwd=str(ROOT),
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
 
 
-def scaffold(slug: str, title: str, port: int) -> Path:
-    demo = DEMOS / slug
+def scaffold(slug: str, title: str, port: int, *, category: str | None = None) -> Path:
+    dest_cat = (category or infer_category(slug)).strip().strip("/")
+    demo = DEMOS / dest_cat / slug
     if demo.exists():
         raise SystemExit(f"Already exists: {demo}")
 
@@ -440,14 +457,14 @@ def scaffold(slug: str, title: str, port: int) -> Path:
     )
     write(
         demo / "README.md",
-        f"# {title}\n\n## Progressive stage (Web UI early)\n\n`tools/scaffold_demo_stage.py` creates this folder and starts the stage UI by default.\n\n```bash\ncd Clients/Demos/{slug}\n# if UI is not already up:\ndocker compose --profile stage up -d --build\nopen http://localhost:{port}/\n```\n\nUpdate build theater:\n\n```bash\npython3 tools/update_build_status.py --root Clients/Demos/{slug} --phase routes --message \"…\" --add-route 01-listen --active\n```\n\nWhen done:\n\n```bash\npython3 tools/update_build_status.py --root Clients/Demos/{slug} --complete\n```\n",
+        f"# {title}\n\n## Progressive stage (Web UI early)\n\n`tools/scaffold_demo_stage.py` creates this folder and starts the stage UI by default.\n\n```bash\ncd {demo.relative_to(ROOT)}\n# if UI is not already up:\ndocker compose --profile stage up -d --build\n# Web UI: http://localhost:{port}/  (open in Cursor, not Chrome)\n```\n\nUpdate build theater:\n\n```bash\npython3 tools/update_build_status.py --root {slug} --phase routes --message \"…\" --add-route 01-listen --active\n```\n\nWhen done:\n\n```bash\npython3 tools/update_build_status.py --root {slug} --complete\n```\n",
     )
 
     timing = {
         "version": 1,
         "interface": title,
         "slug": slug,
-        "path": f"Clients/Demos/{slug}",
+        "path": str(demo.relative_to(ROOT)),
         "requested_by": "user",
         "started_at": now,
         "completed_at": None,
@@ -474,7 +491,7 @@ def scaffold(slug: str, title: str, port: int) -> Path:
         "active": True,
         "phase": "scaffold",
         "current_route": "",
-        "message": "Stage Web UI up — waiting for first route.v2.xml",
+        "message": "Web UI is up. The route diagram will grow here as modules are published.",
         "routes_ready": [],
         "updated_at": now,
     }
@@ -485,7 +502,11 @@ def scaffold(slug: str, title: str, port: int) -> Path:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--slug", required=True, help="Folder name under Clients/Demos/")
+    ap.add_argument("--slug", required=True, help="Folder name (slug) for the demo")
+    ap.add_argument(
+        "--category",
+        help="Clients/Demos/<category>/… (default: inferred from slug: Insurance/EDI, Medical/HL7, Medical/FHIR, Other)",
+    )
     ap.add_argument("--title", help="Human title (default: slug prettified)")
     ap.add_argument("--port", type=int, default=8120, help="Web UI host port")
     ap.add_argument(
@@ -497,7 +518,7 @@ def main() -> int:
     args = ap.parse_args()
     slug = slugify(args.slug)
     title = args.title or slug.replace("-", " ").title()
-    demo = scaffold(slug, title, args.port)
+    demo = scaffold(slug, title, args.port, category=args.category)
     lan = lan_hint(args.port)
     print(f"Created {demo}")
     print(f"Local: http://localhost:{args.port}/")

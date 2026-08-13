@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "active": false,
+  "phase": "complete",
+  "routes_ready": [
+    "1-eligibility-270-271-api"
+  ],
+  "current_route": "",
+  "message": "Build complete",
+  "updated_at": "2026-08-13T06:48:54Z",
+  "modules_visible": 21,
+  "log": [
+    {
+      "at": "2026-08-13T06:45:02Z",
+      "text": "Listener: RESTful Web Service \u2014 POST /eip/rest/eligibility/build and /parse"
+    },
+    {
+      "at": "2026-08-13T06:45:02Z",
+      "text": "Build: XSLT EligibilityRequest to EDI XML, pretty-print, XML to EDI 270"
+    },
+    {
+      "at": "2026-08-13T06:45:02Z",
+      "text": "Parse: wrap raw 271, XSLT to AAA/EB JSON"
+    },
+    {
+      "at": "2026-08-13T06:45:02Z",
+      "text": "Mock payer: FAIL001 AAA 72, UNKNOWN AAA 75, else active EB"
+    }
+  ]
+}

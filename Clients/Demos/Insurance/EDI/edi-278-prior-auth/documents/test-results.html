@@ -1,0 +1,26 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/><title>Test results — EDI 278 Prior Auth</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:1.5rem;background:#0b1c33;color:#e8eef8}
+h1{font-size:1.25rem} .sum span{margin-right:1rem;font-weight:700}
+table{border-collapse:collapse;width:100%;margin-top:1rem}
+th,td{border-bottom:1px solid #2a4466;padding:.45rem .5rem;text-align:left;vertical-align:top}
+tr.pass td:first-child{color:#3dd68c} tr.fail td:first-child,tr.error td:first-child{color:#ff6b6b}
+tr.skip td:first-child{color:#f0a202}
+</style></head><body>
+<h1>Test results — EDI 278 Prior Auth</h1>
+<p class="sum">
+<span>pass 16</span>
+<span>fail 0</span>
+<span>error 0</span>
+<span>skip 0</span>
+<span>total 16</span>
+</p>
+<p>Finished 2026-08-13T07:20:12.911555+00:00</p>
+<table><thead><tr><th>Status</th><th>Suite</th><th>Test</th><th>Message</th><th>Time</th></tr></thead>
+<tbody>
+<tr class='pass'><td>PASS</td><td>Health</td><td>Web UI loads</td><td>UI OK (http://127.0.0.1:8121/)</td><td>2ms</td></tr><tr class='pass'><td>PASS</td><td>Health</td><td>API health</td><td>HTTP 200</td><td>13ms</td></tr><tr class='pass'><td>PASS</td><td>Health</td><td>Routes API</td><td>HTTP 200</td><td>2ms</td></tr><tr class='pass'><td>PASS</td><td>278 scoring</td><td>SQL is reachable</td><td>HTTP 200: {&quot;eip&quot;:true,&quot;ok&quot;:true,&quot;sql&quot;:true}
+</td><td>12ms</td></tr><tr class='pass'><td>PASS</td><td>278 scoring</td><td>EIP is reachable</td><td>HTTP 200: {&quot;eip&quot;:true,&quot;ok&quot;:true,&quot;sql&quot;:true}
+</td><td>11ms</td></tr><tr class='pass'><td>PASS</td><td>278 scoring</td><td>AuthRequest seed rows</td><td>HTTP 200: {&quot;ok&quot;:true,&quot;rows&quot;:[{&quot;AttachmentFlag&quot;:&quot;Y&quot;,&quot;AuthTraceNumber&quot;:&quot;PACOMPLETE01&quot;,&quot;DiagnosisCode&quot;:&quot;M17.11&quot;,&quot;MemberId&quot;:&quot;MEM001&quot;,&quot;Notes&quot;:&quot;Catalog disposition APPROVE&quot;,&quot;PatientFirstName&quot;:&quot;JAN</td><td>9ms</td></tr><tr class='pass'><td>PASS</td><td>278 scoring</td><td>Reset AuthRequest</td><td>HTTP 200</td><td>31ms</td></tr><tr class='pass'><td>PASS</td><td>278 scoring</td><td>Inject sample 278</td><td>HTTP 200</td><td>3ms</td></tr><tr class='pass'><td>PASS</td><td>278 scoring</td><td>PACOMPLETE01 approved</td><td>HTTP 200: {&quot;ok&quot;:true,&quot;rows&quot;:[{&quot;AttachmentFlag&quot;:&quot;Y&quot;,&quot;AuthTraceNumber&quot;:&quot;PACOMPLETE01&quot;,&quot;DiagnosisCode&quot;:&quot;M17.11&quot;,&quot;MemberId&quot;:&quot;MEM001&quot;,&quot;Notes&quot;:&quot;Catalog disposition APPROVE&quot;,&quot;PatientFirstName&quot;:&quot;JAN</td><td>18179ms</td></tr><tr class='pass'><td>PASS</td><td>278 scoring</td><td>PAINCOMPLETE01 incomplete</td><td>HTTP 200: {&quot;ok&quot;:true,&quot;rows&quot;:[{&quot;AttachmentFlag&quot;:&quot;Y&quot;,&quot;AuthTraceNumber&quot;:&quot;PACOMPLETE01&quot;,&quot;DiagnosisCode&quot;:&quot;M17.11&quot;,&quot;MemberId&quot;:&quot;MEM001&quot;,&quot;Notes&quot;:&quot;Catalog disposition APPROVE&quot;,&quot;PatientFirstName&quot;:&quot;JAN</td><td>11ms</td></tr><tr class='pass'><td>PASS</td><td>278 scoring</td><td>PADENY01 denied</td><td>HTTP 200: {&quot;ok&quot;:true,&quot;rows&quot;:[{&quot;AttachmentFlag&quot;:&quot;Y&quot;,&quot;AuthTraceNumber&quot;:&quot;PACOMPLETE01&quot;,&quot;DiagnosisCode&quot;:&quot;M17.11&quot;,&quot;MemberId&quot;:&quot;MEM001&quot;,&quot;Notes&quot;:&quot;Catalog disposition APPROVE&quot;,&quot;PatientFirstName&quot;:&quot;JAN</td><td>10ms</td></tr><tr class='pass'><td>PASS</td><td>278 scoring</td><td>PAPEND01 pended</td><td>HTTP 200: {&quot;ok&quot;:true,&quot;rows&quot;:[{&quot;AttachmentFlag&quot;:&quot;Y&quot;,&quot;AuthTraceNumber&quot;:&quot;PACOMPLETE01&quot;,&quot;DiagnosisCode&quot;:&quot;M17.11&quot;,&quot;MemberId&quot;:&quot;MEM001&quot;,&quot;Notes&quot;:&quot;Catalog disposition APPROVE&quot;,&quot;PatientFirstName&quot;:&quot;JAN</td><td>11ms</td></tr><tr class='pass'><td>PASS</td><td>278 scoring</td><td>Decision buckets and 278/ORU files</td><td>HTTP 200: {&quot;approved&quot;:[{&quot;content&quot;:&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&lt;AuthDecision&gt;\n   &lt;AuthTraceNumber&gt;PACOMPLETE01&lt;/AuthTraceNumber&gt;\n   &lt;MemberId&gt;MEM001&lt;/MemberId&gt;\n   &lt;PatientLa</td><td>13ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Route PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-278-prior-auth/documents/EDI278_Prior_Auth_V2_Route_Diagrams.pdf</td><td>0ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Capability Brief PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-278-prior-auth/documents/EDI278_Prior_Auth_Capability_Brief.pdf</td><td>0ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Test Plan PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-278-prior-auth/documents/EDI278_Prior_Auth_Test_Plan.pdf</td><td>0ms</td></tr>
+</tbody></table>
+</body></html>

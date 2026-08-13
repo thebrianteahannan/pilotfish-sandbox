@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="2830169b-adc8-4ea6-835a-177b7cb77ae5" name="Extract Catalog Fields" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:RequiresDiagnosis:eip_name:normalize-space(string((//REQUIRESDIAGNOSIS | //RequiresDiagnosis | //*[local-name()='REQUIRESDIAGNOSIS' or local-name()='RequiresDiagnosis'])[1])):eip_value][eip_pair:RequiresAttachment:eip_name:normalize-space(string((//REQUIRESATTACHMENT | //RequiresAttachment | //*[local-name()='REQUIRESATTACHMENT' or local-name()='RequiresAttachment'])[1])):eip_value][eip_pair:DefaultDisposition:eip_name:normalize-space(string((//DEFAULTDISPOSITION | //DefaultDisposition | //*[local-name()='DEFAULTDISPOSITION' or local-name()='DefaultDisposition'])[1])):eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>

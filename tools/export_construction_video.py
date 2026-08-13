@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -47,9 +48,36 @@ DEFAULT_EDGE_RATE = "+8%"
 
 
 def resolve_root(raw: str | None) -> Path:
-    if raw:
-        return Path(raw).expanduser().resolve()
-    return Path.cwd().resolve()
+    from demo_paths import require_demo
+
+    return require_demo(raw)
+
+
+def bump_webui_status(
+    demo: Path,
+    message: str,
+    *,
+    phase: str = "tts",
+    log: str | None = None,
+    **job_fields,
+) -> None:
+    """Write Info-tab job progress. Do not reopen the completed-build theater."""
+    os.environ["CONSTRUCTION_VIDEO_DEMO"] = str(demo.resolve())
+    try:
+        from construction_video_job import update_job
+    except ImportError:
+        sys.path.insert(0, str(ROOT / "tools"))
+        from construction_video_job import update_job
+    payload = {
+        "status": "running",
+        "slug": demo.name,
+        "message": message,
+        "phase": phase,
+    }
+    payload.update(job_fields)
+    if log:
+        payload["log_line"] = log
+    update_job(demo, **payload)
 
 
 def detect_webui_url(demo: Path, explicit: str | None) -> str:
@@ -67,140 +95,62 @@ def detect_webui_url(demo: Path, explicit: str | None) -> str:
     return "http://127.0.0.1:8120/"
 
 
+def _oxford(items: list[str]) -> str:
+    items = [i for i in items if i]
+    if not items:
+        return ""
+    if len(items) == 1:
+        return items[0]
+    if len(items) == 2:
+        return f"{items[0]} and {items[1]}"
+    return ", ".join(items[:-1]) + f", and {items[-1]}"
+
+
+def _ctx():
+    tools_dir = Path(__file__).resolve().parent
+    if str(tools_dir) not in sys.path:
+        sys.path.insert(0, str(tools_dir))
+    import construction_demo_context as ctx
+
+    return ctx
+
+
 def detect_demo_test(url: str, demo: Path) -> dict | None:
-    """Return live-test config when Demo inject + SQL are available."""
-    base = url.rstrip("/") + "/"
-    try:
-        with urlopen(base + "api/health", timeout=4) as resp:
-            health = json.loads(resp.read().decode("utf-8", errors="replace"))
-    except Exception:
-        return None
-    if not isinstance(health, dict) or not health.get("db_ok"):
-        return None
-    try:
-        with urlopen(base + "api/samples", timeout=4) as resp:
-            samples = json.loads(resp.read().decode("utf-8", errors="replace"))
-    except Exception:
-        return None
-    files = samples.get("files") if isinstance(samples, dict) else None
-    if not isinstance(files, list) or not files:
-        return None
-    # Prefer patients.csv when present
-    names = [str(f.get("name") or "") for f in files if isinstance(f, dict)]
-    sample = "patients.csv" if "patients.csv" in names else names[0]
-    # Only enable when this Web UI looks like the inject demo
-    if not (demo / "webui" / "static" / "app.js").is_file() and not (
-        demo / "webui" / "templates" / "index.html"
-    ).is_file():
-        # Still OK if APIs work
-        pass
-    return {"sample": sample, "sftp_hint": str(health.get("sftp_hint") or "SFTP")}
+    return _ctx().detect_demo_test(url, demo)
 
 
-def find_demo_xslt(demo: Path) -> tuple[str, str] | None:
-    """Return (filename, text) for the primary route stylesheet if present."""
-    preferred = [
-        demo / "pilotfish" / "demo-eip-root" / "routes" / "2 - CSV To SQL" / "csv-to-sqlxml.xslt",
-        demo / "eip-root" / "interfaces" / "CSV SFTP To SQL" / "routes" / "2 - CSV To SQL" / "csv-to-sqlxml.xslt",
-    ]
-    for p in preferred:
-        if p.is_file():
-            return p.name, p.read_text(encoding="utf-8", errors="replace")
-    hits = sorted(demo.rglob("*.xslt"))
-    if hits:
-        p = hits[0]
-        return p.name, p.read_text(encoding="utf-8", errors="replace")
-    return None
+def find_demo_xslt(demo: Path, step: dict | None = None) -> tuple[str, str] | None:
+    return _ctx().find_xslt_for_step(demo, step)
 
 
 def xslt_highlight_lines(text: str) -> list[int]:
-    hot: list[int] = []
-    for i, line in enumerate(text.splitlines(), start=1):
-        low = line.lower()
-        if any(
-            k in low
-            for k in (
-                "xcsrecord",
-                "patientid",
-                "firstname",
-                "lastname",
-                "dateofbirth",
-                "statecode",
-                "insert",
-                "for-each",
-                "uppercase",
-            )
-        ):
-            hot.append(i)
-    return hot
-
-
-OGNL_EXAMPLE = (
-    "{ognl:(getAttribute('com.pilotfish.FileName') != null "
-    "? getAttribute('com.pilotfish.FileName') : 'csv') + '_' "
-    "+ @java.lang.System@currentTimeMillis() + '.csv'}"
-)
-
-# Default sandbox stack for csv-sftp-to-sql (ports match DESIGN.md / compose).
-DEFAULT_EXTERNAL_SYSTEMS = [
-    {
-        "name": "FTP drop",
-        "kind": "Docker",
-        "image": "atmoz/sftp:alpine",
-        "detail": "localhost:2224 · demo/demo · upload/",
-        "role": "Trading-partner file drop (secure FTP)",
-    },
-    {
-        "name": "SQL Server 2022",
-        "kind": "Docker",
-        "image": "mssql/server:2022-latest",
-        "detail": "localhost:14341 · database CsvSftpDemo",
-        "role": "Target — dbo.CsvPatients",
-    },
-    {
-        "name": "PilotFish eiPlatform",
-        "kind": "Docker",
-        "image": "pilotfish-csv-sftp-to-sql:23R1",
-        "detail": "localhost:8132/eip/",
-        "role": "Runs the two routes",
-    },
-    {
-        "name": "Demo Web UI",
-        "kind": "Docker",
-        "image": "pilotfish-csv-sftp-to-sql-webui",
-        "detail": "localhost:8133",
-        "role": "Inject sample CSV + review SQL rows",
-    },
-]
-
-DEFAULT_PIPELINE_STAGES = [
-    {"title": "FTP drop", "subtitle": "upload/ · CSV"},
-    {"title": "Stage", "subtitle": "Archive + local copy"},
-    {"title": "CSV → XML", "subtitle": "Dialect A rows"},
-    {"title": "SQL Server", "subtitle": "dbo.CsvPatients"},
-]
+    return _ctx().xslt_highlight_lines(text)
 
 
 def load_demo_display_name(demo: Path) -> str:
-    """Human-facing demo / interface name (DESIGN.md H1 preferred)."""
-    design = demo / "DESIGN.md"
-    if design.is_file():
-        for line in design.read_text(encoding="utf-8", errors="replace").splitlines():
-            if line.startswith("# "):
-                name = line[2:].strip()
-                if name:
-                    return name
-    interfaces = demo / "eip-root" / "interfaces"
-    if interfaces.is_dir():
-        kids = sorted(p.name for p in interfaces.iterdir() if p.is_dir() and not p.name.startswith("."))
-        if kids:
-            return kids[0]
-    return demo.name.replace("-", " ").strip() or "PilotFish Demo"
+    return _ctx().load_demo_display_name(demo)
 
 
-def build_theater_preamble_entries(demo_name: str = "PilotFish Demo") -> list[dict]:
+def build_theater_preamble_entries(
+    demo_name: str = "PilotFish Demo",
+    *,
+    demo: Path | None = None,
+) -> list[dict]:
+    ctx = _ctx()
     name = (demo_name or "PilotFish Demo").strip() or "PilotFish Demo"
-    return [
+    purpose_s = ctx.first_sentence(ctx.load_purpose(demo), 220)
+    extra = (
+        "This demo adds a small custom module on top of stock PilotFish."
+        if ctx.has_custom_modules(demo)
+        else "PilotFish supports the whole flow out of the box."
+    )
+    welcome = f"Welcome to the PilotFish demo: {name}."
+    if purpose_s:
+        welcome += " " + purpose_s
+        if not welcome.endswith("."):
+            welcome += "."
+        welcome += " " + extra
+    entries: list[dict] = [
         {
             "kind": "ui_gesture",
             "action": "show_welcome",
@@ -208,132 +158,191 @@ def build_theater_preamble_entries(demo_name: str = "PilotFish Demo") -> list[di
             "message": "Welcome",
             "demo_name": name,
             "headline": "Welcome to the demo",
-            "detail": (
-                f"Welcome to the PilotFish demo: {name}. "
-                "This one didn't need any custom code — "
-                "PilotFish supports the whole flow out of the box."
-            ),
-            "logo_url": "/static/pilotfish-logo.jpg",
+            "detail": welcome,
+            "logo_url": ctx.logo_data_uri(demo),
             "min_dwell_ms": 5500,
         },
-        {
-            "kind": "ui_gesture",
-            "action": "show_pipeline",
-            "id": "pipeline-overview",
-            "message": "Pipeline overview",
-            "detail": (
-                "Before we wire anything, here's the flow end to end. "
-                "A CSV lands on FTP, we stage it, turn the rows into XML, "
-                "and load them into SQL Server. Two routes — pickup, then load."
-            ),
-            "pipeline_stages": DEFAULT_PIPELINE_STAGES,
-            "min_dwell_ms": 8000,
-        },
-        {
-            "kind": "ui_gesture",
-            "action": "spotlight_systems",
-            "id": "systems-overview",
-            "message": "External systems",
-            "detail": (
-                "And here's what sits around the routes. "
-                "FTP holds the drop folder, SQL Server holds the patients table, "
-                "eiPlatform runs the interfaces, and this Web UI is where we inject and review. "
-                "All of that is Docker for the demo."
-            ),
-            "systems": DEFAULT_EXTERNAL_SYSTEMS,
-            "min_dwell_ms": 10000,
-        },
-        {
-            "kind": "ui_gesture",
-            "action": "create_interface",
-            "id": "create-iface",
-            "message": "Blank canvas",
-            "detail": (
-                "Here is a blank canvas, so let's get started creating the new PilotFish interface."
-            ),
-        },
-        {
-            "kind": "ui_gesture",
-            "action": "spotlight_ognl",
-            "id": "ognl-intro",
-            "message": "What OGNL is",
-            "detail": (
-                "One thing you'll see in a few configs: OGNL. "
-                "Think of it as a tiny expression language — instead of hard-coding a file name, "
-                "we build it from the transaction. "
-                "On archive and stage we use the original name, an underscore, a timestamp, then .csv. "
-                "That keeps every copy unique without losing where it came from."
-            ),
-            "ognl_summary": "{sourceFileName}_<timestamp>.csv",
-            "ognl_example": OGNL_EXAMPLE,
-            "ognl_why": (
-                "OGNL lets config values stay dynamic — tied to the file or transaction — "
-                "instead of a static string."
-            ),
-            "min_dwell_ms": 10000,
-        },
     ]
+    stages = ctx.load_pipeline_stages(demo)
+    if stages:
+        titles = [str(s.get("title") or "") for s in stages]
+        detail = "Before we wire anything, here's the flow end to end."
+        if purpose_s:
+            detail += " " + purpose_s
+            if not detail.endswith("."):
+                detail += "."
+        elif titles:
+            detail += f" {_oxford(titles)}."
+        entries.append(
+            {
+                "kind": "ui_gesture",
+                "action": "show_pipeline",
+                "id": "pipeline-overview",
+                "message": "Pipeline overview",
+                "detail": detail,
+                "lead": purpose_s or "What you're about to watch us build.",
+                "pipeline_stages": stages,
+                "min_dwell_ms": 8000,
+            }
+        )
+    systems = ctx.load_compose_systems(demo)
+    if systems:
+        names = [str(s.get("name") or "") for s in systems]
+        one = len(systems) == 1
+        docker_line = (
+            "That's spun up in a docker image for this demo."
+            if one
+            else "All of those are spun up in docker images for this demo."
+        )
+        entries.append(
+            {
+                "kind": "ui_gesture",
+                "action": "spotlight_systems",
+                "id": "systems-overview",
+                "message": "External system" if one else "External systems",
+                "detail": (
+                    "And here's what sits around the routes. "
+                    f"{_oxford(names)}. {docker_line}"
+                ),
+                "headline": (
+                    "External system & Docker service"
+                    if one
+                    else "External systems & Docker services"
+                ),
+                "lead": (
+                    "The runtime this interface talks to — a local compose service."
+                    if one
+                    else "Mocks and runtimes this interface talks to — all local compose services."
+                ),
+                "systems": systems,
+                "min_dwell_ms": 10000,
+            }
+        )
+    return entries
 
 
-def build_outro_entries() -> list[dict]:
+def build_outro_entries(*, demo: Path | None = None) -> list[dict]:
+    ctx = _ctx()
+    purpose_s = ctx.first_sentence(ctx.load_purpose(demo), 160)
+    if purpose_s:
+        p = purpose_s.rstrip(".")
+        if p:
+            p = p[0].lower() + p[1:]
+        detail = f"That's the demo — {p}. Thanks for choosing PilotFish."
+    else:
+        name = ctx.load_demo_display_name(demo) if demo else "this interface"
+        detail = f"That's the walkthrough of {name}. Thanks for choosing PilotFish."
     return [
         {
             "kind": "outro",
             "action": "thank_you",
             "id": "outro-thanks",
             "message": "Demo complete",
-            "detail": (
-                "That's the demo — file in on FTP, patients in SQL. "
-                "Thanks for choosing PilotFish."
-            ),
+            "detail": detail,
+            "logo_url": ctx.logo_data_uri(demo),
         },
     ]
 
 
 def build_demo_test_plan_entries(cfg: dict) -> list[dict]:
-    sample = cfg.get("sample") or "patients.csv"
-    return [
+    raw = cfg.get("samples") or [cfg.get("sample") or "the sample"]
+    samples = [str(s).strip() for s in raw if str(s).strip()]
+    if not samples:
+        samples = ["the sample"]
+    mode = str(cfg.get("mode") or "")
+    if mode != "insert" and len(samples) == 1:
+        samples = [samples[0], samples[0]]
+    samples = samples[:1] if mode == "insert" else samples[:2]
+    has_sql = bool(cfg.get("has_sql"))
+    has_ftp = bool(cfg.get("has_ftp"))
+    has_queue = bool(cfg.get("has_queue"))
+    results_label = str(cfg.get("results_label") or "Results")
+    if mode == "insert":
+        show_msg = results_label or "XML export"
+        wait_first = "The table updates right away. The listener keeps polling and rewriting the XML export."
+        wait_again = wait_first
+        show_first = "There's the live table, and the pretty-printed XML file from the last poll."
+        show_again = show_first
+    elif has_sql:
+        show_msg = "Rows in SQL"
+        wait_first = "Give the routes a moment to pick up the file and write to SQL."
+        wait_again = "Same path — it should land in SQL in a moment."
+        show_first = f"There they are — rows in the database, under {results_label}."
+        show_again = "And there's the second payload in SQL."
+    elif has_queue:
+        show_msg = results_label
+        wait_first = "Give PilotFish a moment to publish that POST onto the queue."
+        wait_again = "Same path — it should show up on the queue right away."
+        show_first = "There it is — the same body sitting on the queue."
+        show_again = "Second payload's on the queue too."
+    else:
+        show_msg = results_label
+        wait_first = "Give the routes a moment to pick up the file and write the output."
+        wait_again = "Same path — the second result should show up here."
+        show_first = "There it is — output on the results panel."
+        show_again = "And there's the second result."
+    entries: list[dict] = [
         {
             "kind": "demo_test",
             "action": "open_demo",
             "id": "test-open",
             "message": "Prove it works",
-            "detail": (
-                "Routes are built. Let's switch to the Demo tab and prove it works."
-            ),
-        },
-        {
-            "kind": "demo_test",
-            "action": "inject",
-            "id": "test-inject",
-            "sample": sample,
-            "message": f"Drop {sample} on FTP",
-            "detail": (
-                f"I'll drop {sample} into the FTP upload folder — same place a trading partner would."
-            ),
-        },
-        {
-            "kind": "demo_test",
-            "action": "wait_results",
-            "id": "test-wait",
-            "timeout_ms": 90000,
-            "message": "Waiting for the routes",
-            "detail": (
-                "Give the routes a moment. Route one picks up the file and stages it; "
-                "route two parses the CSV and inserts into SQL."
-            ),
-            "min_dwell_ms": 32000,
-        },
-        {
-            "kind": "demo_test",
-            "action": "show_results",
-            "id": "test-show",
-            "message": "Rows in SQL",
-            "detail": (
-                "There they are — patient rows in the database. File in on FTP, data out in SQL."
-            ),
+            "detail": "Routes are built. Let's switch to the Demo tab and prove it works.",
         },
     ]
+    for i, sample in enumerate(samples, start=1):
+        distinct = i > 1 and sample != samples[0]
+        repeat = i > 1 and sample == samples[0]
+        if mode == "insert":
+            inject_msg = "Insert a row"
+            inject_detail = "I'll insert a row from the Demo tab so it shows up in Captures."
+        elif has_ftp:
+            inject_msg = "Drop another sample" if i > 1 else "Drop a sample"
+            if distinct:
+                inject_detail = "Now I'll drop a second file into the FTP upload folder."
+            elif repeat:
+                inject_detail = "I'll drop another copy so we can watch it land again."
+            else:
+                inject_detail = (
+                    "I'll drop this sample into the FTP upload folder — same place a trading partner would."
+                )
+        else:
+            inject_msg = "Submit another sample" if i > 1 else "Submit a sample"
+            if distinct:
+                inject_detail = "Now a second payload from the Demo tab."
+            elif repeat:
+                inject_detail = "I'll send it one more time so we can watch it land again."
+            else:
+                inject_detail = "I'll submit this sample from the Demo tab — same as an operator would."
+        entries.extend(
+            [
+                {
+                    "kind": "demo_test",
+                    "action": "inject",
+                    "id": f"test-inject-{i}",
+                    "sample": sample,
+                    "message": inject_msg,
+                    "detail": inject_detail,
+                },
+                {
+                    "kind": "demo_test",
+                    "action": "wait_results",
+                    "id": f"test-wait-{i}",
+                    "timeout_ms": 8000,
+                    "message": "Waiting for the routes",
+                    "detail": wait_again if i > 1 else wait_first,
+                    "min_dwell_ms": 2200,
+                },
+                {
+                    "kind": "demo_test",
+                    "action": "show_results",
+                    "id": f"test-show-{i}",
+                    "message": show_msg,
+                    "detail": show_again if i > 1 else show_first,
+                },
+            ]
+        )
+    return entries
 
 
 def synthesize_plan_audio(
@@ -374,12 +383,15 @@ def synthesize_plan_audio(
         action = str(entry.get("action") or "")
         floor = int(entry.get("min_dwell_ms") or 0)
         if action == "wait_results":
-            # Speech + silence pad so A/V stay aligned while EIP polls
-            dwell = max(floor, speech_ms + empty_post_speech_ms, 28000)
+            # Speech plus a short beat — never a 20s+ silent hold after results land
+            dwell = max(speech_ms + max(post_speech_ms, 700), 2200)
+            if floor:
+                dwell = max(dwell, min(floor, 3500))
+            dwell = min(dwell, speech_ms + 1500) if speech_ms else min(dwell, 3500)
         elif action == "inject":
             dwell = max(speech_ms + post_speech_ms, 2800)
         elif action == "show_results":
-            dwell = max(speech_ms + post_speech_ms, 5000)
+            dwell = max(speech_ms + post_speech_ms, 2800)
         elif action == "spotlight_ognl":
             dwell = max(floor, speech_ms + post_speech_ms + 2000, 10000)
         elif action == "show_welcome":
@@ -409,6 +421,25 @@ def synthesize_plan_audio(
         out["text"] = text
         plans.append(out)
         print(f"  narrate {out.get('id')}: {speech_ms}ms speech → {dwell}ms on screen")
+        try:
+            from construction_video_job import clip_label, update_job
+
+            batch = {"preamble": "setup", "test": "live Demo test", "outro": "closing"}.get(
+                stem_prefix, stem_prefix
+            )
+            label = clip_label(out)
+            left = max(0, len(entries) - i)
+            update_job(
+                phase="tts",
+                status="running",
+                step=i,
+                step_total=len(entries),
+                remaining_sec=left * 8,
+                message=f"Speaking {batch} {i} of {len(entries)} — {label}",
+                log_line=f"TTS {stem_prefix} {i}/{len(entries)}: {label}",
+            )
+        except Exception:
+            pass
     return plans, wav_parts
 
 
@@ -446,6 +477,117 @@ def load_steps(demo: Path) -> tuple[list[dict], str]:
         steps = []
     title = load_demo_display_name(demo)
     return steps, title or demo.name
+
+
+def _items_for_json(plans: list[dict]) -> list[dict]:
+    return [
+        {
+            "id": p.get("id"),
+            "action": p.get("action"),
+            "message": p.get("message"),
+            "detail": p.get("detail"),
+            "demo_name": p.get("demo_name"),
+            "text": p.get("text") or p.get("detail"),
+        }
+        for p in plans
+    ]
+
+
+def write_construction_demo_test_json(
+    demo: Path,
+    *,
+    sample: str | None,
+    preamble: list[dict],
+    steps: list[dict],
+    outro: list[dict],
+) -> Path:
+    docs = demo / "documents"
+    docs.mkdir(parents=True, exist_ok=True)
+    path = docs / "construction-demo-test.json"
+    path.write_text(
+        json.dumps(
+            {
+                "version": 1,
+                "sample": sample,
+                "preamble": _items_for_json(preamble),
+                "steps": _items_for_json(steps),
+                "outro": _items_for_json(outro),
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return path
+
+
+def export_transcript_pdf(demo: Path) -> None:
+    transcript_script = Path(__file__).resolve().parent / "export_construction_transcript_pdf.py"
+    py_for_pdf = shutil.which("python3") or sys.executable
+    proc = subprocess.run(
+        [py_for_pdf, str(transcript_script), "--root", str(demo)],
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
+    )
+    if proc.returncode == 0:
+        print((proc.stdout or "").strip())
+        return
+    print(
+        f"WARNING: transcript export failed ({proc.returncode}): "
+        f"{(proc.stderr or proc.stdout or '').strip()[:400]}",
+        file=sys.stderr,
+    )
+
+
+def ensure_build_replay(demo: Path) -> None:
+    manifest = demo / "documents" / "build-replay" / "manifest.json"
+    if manifest.is_file():
+        try:
+            data = json.loads(manifest.read_text(encoding="utf-8"))
+            if isinstance(data, dict) and data.get("steps"):
+                return
+        except json.JSONDecodeError:
+            pass
+    script = ROOT / "tools" / "record_module_replay.py"
+    if not script.is_file():
+        return
+    print("Recording build-replay steps…")
+    subprocess.run([sys.executable, str(script), "--root", str(demo)], cwd=str(ROOT), check=False)
+
+
+def prepare_construction_assets(demo: Path, *, url: str | None = None) -> int:
+    """Replay + naturalized narration + transcript. Does not record mp4."""
+    ensure_build_replay(demo)
+    tools_dir = Path(__file__).resolve().parent
+    if str(tools_dir) not in sys.path:
+        sys.path.insert(0, str(tools_dir))
+    from construction_narration_naturalize import naturalize_demo_root
+
+    counts = naturalize_demo_root(demo)
+    if counts.get("manifest") or counts.get("demo_test"):
+        print(
+            f"Naturalized narration: manifest={counts['manifest']}, "
+            f"demo-test={counts['demo_test']}"
+        )
+    steps, title = load_steps(demo)
+    title = title or load_demo_display_name(demo) or demo.name
+    resolved = detect_webui_url(demo, url)
+    demo_cfg = detect_demo_test(resolved, demo)
+    preamble = build_theater_preamble_entries(title, demo=demo)
+    outro = build_outro_entries(demo=demo)
+    test_entries = build_demo_test_plan_entries(demo_cfg) if demo_cfg else []
+    path = write_construction_demo_test_json(
+        demo,
+        sample=(demo_cfg or {}).get("sample") if demo_cfg else None,
+        preamble=preamble,
+        steps=test_entries,
+        outro=outro,
+    )
+    print(path)
+    export_transcript_pdf(demo)
+    print("Prepared construction video assets (no mp4)")
+    return 0
 
 
 def ensure_playwright_python() -> Path:
@@ -662,8 +804,6 @@ def prepare_narration(
         sys.path.insert(0, str(tools_dir))
     from construction_speech import for_speech
 
-    xslt_hit = find_demo_xslt(demo) if demo else None
-
     if include_intro:
         intro_text = for_speech(
             clean_speech(
@@ -730,6 +870,7 @@ def prepare_narration(
         # XSLT beat needs extra on-screen time for scroll/highlight
         module_type = str(step.get("module_type") or "")
         is_xslt = "xslt" in module_type.lower()
+        xslt_hit = find_demo_xslt(demo, step) if demo and is_xslt else None
         if is_xslt and xslt_hit:
             dwell = max(dwell, speech_ms + 6500, 14000)
         pad_ms = max(0, dwell - speech_ms)
@@ -764,6 +905,22 @@ def prepare_narration(
             plan_step["xslt_highlight_lines"] = xslt_highlight_lines(body)
         plans.append(plan_step)
         print(f"  narrate {step_id}: {speech_ms}ms speech → {dwell}ms on screen")
+        try:
+            from construction_video_job import clip_label, update_job
+
+            n = len(steps)
+            label = clip_label(plan_step)
+            update_job(
+                phase="tts",
+                status="running",
+                step=i,
+                step_total=n,
+                remaining_sec=max(0, n - i) * 8,
+                message=f"Speaking route step {i} of {n} — {label}",
+                log_line=f"TTS route {i}/{n}: {label}",
+            )
+        except Exception:
+            pass
 
     narration = work / "narration.wav"
     concat_wavs(wav_parts, narration)
@@ -833,7 +990,7 @@ def main() -> int:
         "--demo-test",
         action=argparse.BooleanOptionalAction,
         default=True,
-        help="After construction, inject sample CSV on Demo tab and show SQL rows (default: on when health/db OK)",
+        help="After construction, inject a sample on the Demo tab when /api/samples exists (default: on)",
     )
     ap.add_argument(
         "--skip-if-missing-replay",
@@ -841,6 +998,11 @@ def main() -> int:
         help="Exit 0 when no build-replay steps exist",
     )
     ap.add_argument("--no-voice", action="store_true", help="Record video without TTS narration")
+    ap.add_argument(
+        "--prepare-only",
+        action="store_true",
+        help="Write build-replay / narration / transcript; do not record mp4",
+    )
     args = ap.parse_args()
 
     # If user picks a classic say voice name with default engine, switch to say
@@ -850,6 +1012,9 @@ def main() -> int:
             args.engine = "say"
 
     demo = resolve_root(args.root)
+    os.environ["CONSTRUCTION_VIDEO_DEMO"] = str(demo.resolve())
+    if args.prepare_only:
+        return prepare_construction_assets(demo, url=args.url)
     steps, title = load_steps(demo)
     if not steps:
         msg = f"No build-replay steps under {demo / 'documents' / 'build-replay'}"
@@ -879,6 +1044,14 @@ def main() -> int:
     print(
         f"Replay steps: {len(steps)} · voice={'off' if args.no_voice else f'{args.engine}/{args.voice}'}"
     )
+    bump_webui_status(
+        demo,
+        f"Preparing {len(steps)} route steps for the construction video",
+        phase="starting",
+        log="Exporter started",
+        step=0,
+        step_total=0,
+    )
     if not wait_webui_styled(url, timeout=20):
         print(
             f"Web UI not ready (or /static/app.css missing) at {url} — "
@@ -886,6 +1059,12 @@ def main() -> int:
             file=sys.stderr,
         )
         return 1
+
+    bump_webui_status(
+        demo,
+        "Writing narration for the construction video",
+        log="Started construction-video export",
+    )
 
     out_mp4 = Path(args.out).expanduser().resolve() if args.out else (demo / "documents" / "construction-replay.mp4")
 
@@ -897,8 +1076,8 @@ def main() -> int:
         test_plans: list[dict] = []
         outro_plans: list[dict] = []
 
-        preamble_entries = build_theater_preamble_entries(title)
-        outro_entries = build_outro_entries()
+        preamble_entries = build_theater_preamble_entries(title, demo=demo)
+        outro_entries = build_outro_entries(demo=demo)
 
         if args.no_voice:
             for te in preamble_entries:
@@ -928,7 +1107,7 @@ def main() -> int:
                     "module_type": str(step.get("module_type") or ""),
                 }
                 if "xslt" in str(step.get("module_type") or "").lower():
-                    xslt_hit = find_demo_xslt(demo)
+                    xslt_hit = find_demo_xslt(demo, step)
                     if xslt_hit:
                         name, body = xslt_hit
                         item["show_xslt"] = True
@@ -939,6 +1118,12 @@ def main() -> int:
                 plans.append(item)
         else:
             print("Synthesizing narration…")
+            bump_webui_status(
+                demo,
+                "Synthesizing the spoken walkthrough",
+                phase="tts",
+                log="TTS narration",
+            )
             preamble_plans, preamble_wavs = synthesize_plan_audio(
                 preamble_entries,
                 work,
@@ -980,16 +1165,23 @@ def main() -> int:
         demo_cfg = detect_demo_test(url, demo) if args.demo_test else None
         if args.demo_test and not demo_cfg:
             print(
-                "skip live demo test: /api/health db_ok or /api/samples not available",
+                "skip live demo test: Demo tab has no inject or insert form",
                 file=sys.stderr,
             )
         if demo_cfg:
-            print(f"Live demo test: inject {demo_cfg.get('sample')} → SQL")
+            sink = "SQL" if demo_cfg.get("has_sql") else ("queue" if demo_cfg.get("has_queue") else "results")
+            print(f"Live demo test: inject {demo_cfg.get('samples') or demo_cfg.get('sample')} → {sink}")
             test_entries = build_demo_test_plan_entries(demo_cfg)
             if args.no_voice:
                 for te in test_entries:
                     item = dict(te)
-                    item["dwell_ms"] = 6000 if item.get("action") != "wait_results" else 32000
+                    action = item.get("action")
+                    if action == "wait_results":
+                        item["dwell_ms"] = 2800
+                    elif action == "inject":
+                        item["dwell_ms"] = 2800
+                    else:
+                        item["dwell_ms"] = 3500
                     plans.append(item)
                     test_plans.append(item)
             else:
@@ -1044,49 +1236,24 @@ def main() -> int:
                 narration = work / "narration.wav"
                 concat_wavs(outro_wavs, narration)
 
-        # Persist spoken extras for transcript PDF
-        (demo / "documents").mkdir(parents=True, exist_ok=True)
-        extras_payload = {
-            "version": 1,
-            "sample": (demo_cfg or {}).get("sample") if demo_cfg else None,
-            "preamble": [
-                {
-                    "id": p.get("id"),
-                    "action": p.get("action"),
-                    "message": p.get("message"),
-                    "detail": p.get("detail"),
-                    "demo_name": p.get("demo_name"),
-                    "text": p.get("text") or p.get("detail"),
-                }
-                for p in preamble_plans
-            ],
-            "steps": [
-                {
-                    "id": p.get("id"),
-                    "action": p.get("action"),
-                    "message": p.get("message"),
-                    "detail": p.get("detail"),
-                    "text": p.get("text") or p.get("detail"),
-                }
-                for p in test_plans
-            ],
-            "outro": [
-                {
-                    "id": p.get("id"),
-                    "action": p.get("action"),
-                    "message": p.get("message"),
-                    "detail": p.get("detail"),
-                    "text": p.get("text") or p.get("detail"),
-                }
-                for p in outro_plans
-            ],
-        }
-        (demo / "documents" / "construction-demo-test.json").write_text(
-            json.dumps(extras_payload, indent=2) + "\n",
-            encoding="utf-8",
+        write_construction_demo_test_json(
+            demo,
+            sample=(demo_cfg or {}).get("sample") if demo_cfg else None,
+            preamble=preamble_plans,
+            steps=test_plans,
+            outro=outro_plans,
         )
 
         webm = work / "construction-replay.webm"
+        bump_webui_status(
+            demo,
+            f"Recording the browser — about {sum(int(p.get('dwell_ms') or 0) for p in plans) // 1000}s of scenes",
+            phase="recording",
+            log="Playwright capture",
+            step=0,
+            step_total=len(plans),
+            remaining_sec=sum(int(p.get("dwell_ms") or 0) for p in plans) // 1000,
+        )
         record_session(url, plans, webm)
         if not webm.is_file():
             found = list(work.glob("*.webm"))
@@ -1097,6 +1264,13 @@ def main() -> int:
 
         if narration and narration.is_file():
             print("Muxing narration…")
+            bump_webui_status(
+                demo,
+                "Combining narration with the video (ffmpeg) — often 20–40s",
+                phase="mux",
+                log="ffmpeg mux",
+                remaining_sec=None,
+            )
             mux_video_audio(webm, narration, out_mp4)
         else:
             # silent fallback
@@ -1129,23 +1303,36 @@ def main() -> int:
 
     print(out_mp4)
     print(f"Size: {out_mp4.stat().st_size // 1024} KB")
-
-    transcript_script = Path(__file__).resolve().parent / "export_construction_transcript_pdf.py"
-    py_for_pdf = shutil.which("python3") or sys.executable
-    proc = subprocess.run(
-        [py_for_pdf, str(transcript_script), "--root", str(demo)],
-        cwd=str(ROOT),
-        capture_output=True,
-        text=True,
+    bump_webui_status(demo, "Writing the construction transcript", phase="transcript", log="Transcript PDF")
+    export_transcript_pdf(demo)
+    size_kb = out_mp4.stat().st_size // 1024 if out_mp4.is_file() else None
+    bump_webui_status(
+        demo,
+        "Construction video ready",
+        phase="done",
+        status="done",
+        size_kb=size_kb,
+        remaining_sec=0,
+        log="Construction video ready",
     )
-    if proc.returncode == 0:
-        print((proc.stdout or "").strip())
-    else:
-        print(
-            f"WARNING: transcript export failed ({proc.returncode}): "
-            f"{(proc.stderr or proc.stdout or '').strip()[:400]}",
-            file=sys.stderr,
-        )
+    subprocess.run(
+        [
+            sys.executable,
+            str(ROOT / "tools" / "update_build_status.py"),
+            "--root",
+            str(demo),
+            "--inactive",
+            "--phase",
+            "complete",
+            "--message",
+            "Construction video ready",
+            "--log",
+            "Construction video and transcript are on the Info tab",
+        ],
+        cwd=str(ROOT),
+        check=False,
+        capture_output=True,
+    )
     return 0
 
 

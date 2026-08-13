@@ -1,0 +1,84 @@
+Construction Replay Transcript — SQL Server PilotFish XML Export — Design
+Demo: sqlserver-pilotfish-demo  ·  Generated 2026-08-13
+Video: documents/construction-replay.mp4
+
+What this interface does
+----------------------------------------
+Poll SQL Server PilotFishDemo.dbo.Captures on a timer and write the current result set as one pretty-printed XML file. Demo-only: no business transform, no SNIP, no dual-write.
+
+Who it's for
+----------------------------------------
+- Sources: SQL Server 2022 (PilotFishDemo.dbo.Captures)
+- Destinations: XML file captures_export.xml on the EIP output volume
+- Demo vs production: Demo only (SA login, encrypt=true;trustServerCertificate=true, overwrite the same file each poll)
+- Anyone watching the construction video or reading this transcript
+
+Systems involved
+----------------------------------------
+- Sources: SQL Server 2022 (PilotFishDemo.dbo.Captures)
+- Destinations: XML file captures_export.xml on the EIP output volume
+- Demo vs production: Demo only (SA login, encrypt=true;trustServerCertificate=true, overwrite the same file each poll)
+
+Documents we also produce
+----------------------------------------
+- SQL_Server_PilotFish_XML_Export_Capability_Brief.pdf (ready)
+  Short overview of what the interface does — shareable without reading route XML.
+- SQL_Server_PilotFish_XML_Export_Test_Plan.pdf (ready)
+  Scenarios that prove the interface works end-to-end.
+- Module documentation pack (5 deep-dive PDFs) (ready)
+  PilotFish product PDFs for the modules used in this build.
+- SQL_Server_PilotFish_XML_Export_V2_Route_Diagrams.pdf (ready)
+  V2 route diagrams for visual review of module topology.
+- construction-replay.mp4 + this transcript (generate when ready)
+  Narrated walkthrough of building the routes, then a live Demo-tab test when inject is available.
+
+========================================
+Narration (what you'll hear)
+========================================
+
+[Setup]
+
+S1. Welcome
+Welcome to the PilotFish demo: SQL Server PilotFish XML Export. Poll SQL Server PilotFishDemo.dbo.Captures on a timer and write the current result set as one pretty-printed XML file. PilotFish supports the whole flow out of the box.
+
+S2. Pipeline overview
+Before we wire anything, here's the flow end to end. Poll SQL Server PilotFishDemo.dbo.Captures on a timer and write the current result set as one pretty-printed XML file.
+
+S3. External systems
+And here's what sits around the routes. SQL Server, PilotFish eiPlatform, and Demo Web UI. All of those are spun up in docker images for this demo.
+
+[1 - Export Captures to XML]
+
+1. First route
+Poll SQL Server PilotFishDemo.dbo.Captures on a timer and write the current result set as one pretty-printed XML file. Starting with a blank canvas on the first route.
+
+2. Poll Captures Table
+First up is a SQL polling listener — it runs a query against PilotFishDemo over JDBC. It checks about every 15 seconds.
+
+3. Conditional Router
+Then a conditional router — it uses XPath to pick which path this transaction takes.
+
+4. Pretty-Print XML
+This processor pretty-prints the XML — line breaks and indent — so the file on disk is readable.
+
+5. Write Captures XML
+Then we write the file out to /opt/pilotfish/output.
+
+[Live test]
+
+T1. Prove it works
+Routes are built. Let's switch to the Demo tab and prove it works.
+
+T2. Insert a row
+I'll insert a row from the Demo tab so it shows up in Captures.
+
+T3. Waiting for the routes
+The table updates right away. The listener keeps polling and rewriting the XML export.
+
+T4. SQL Captures
+There's the live table, and the pretty-printed XML file from the last poll.
+
+[Closing]
+
+C1. Demo complete
+That's the demo — poll SQL Server PilotFishDemo.dbo.Captures on a timer and write the current result set as one pretty-printed XML file. Thanks for choosing PilotFish.

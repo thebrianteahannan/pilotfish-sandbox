@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7c32cbb6-6542-4550-8abe-a68fdb1da04e" name="Extract Decision Attributes" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:AuthTraceNumber:eip_name:normalize-space(string((//AuthTraceNumber)[1])):eip_value][eip_pair:Disposition:eip_name:normalize-space(string((//Disposition)[1])):eip_value][eip_pair:DecisionBucket:eip_name:normalize-space(string((//DecisionBucket)[1])):eip_value][eip_pair:Notes:eip_name:normalize-space(string((//Notes)[1])):eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -20,6 +20,7 @@ import xml.etree.ElementTree as ET
 from datetime import date
 from pathlib import Path
 
+from demo_paths import require_demo
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT
 from reportlab.lib.pagesizes import letter
@@ -861,7 +862,7 @@ def main():
         help="Output PDF path (default: documents/<ShortName>_Capability_Brief.pdf)",
     )
     args = parser.parse_args()
-    root = (args.root or Path.cwd()).resolve()
+    root = require_demo(args.root)
     if not root.is_dir():
         raise SystemExit(f"Root not found: {root}")
     out = args.out or (root / "documents" / output_pdf_name(root))

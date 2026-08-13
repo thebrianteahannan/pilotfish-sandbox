@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "sample": null,
+  "preamble": [
+    {
+      "id": "welcome",
+      "action": "show_welcome",
+      "message": "Welcome",
+      "detail": "Welcome to the PilotFish demo: EDI 270/271 Realtime Eligibility. Clinic (or EHR) posts once. PilotFish supports the whole flow out of the box.",
+      "demo_name": "EDI 270/271 Realtime Eligibility",
+      "text": "Welcome to the PilotFish demo: EDI 270/271 Realtime Eligibility. Clinic (or EHR) posts once. PilotFish supports the whole flow out of the box."
+    },
+    {
+      "id": "pipeline-overview",
+      "action": "show_pipeline",
+      "message": "Pipeline overview",
+      "detail": "Before we wire anything, here's the flow end to end. Clinic (or EHR) posts once.",
+      "demo_name": null,
+      "text": "Before we wire anything, here's the flow end to end. Clinic (or EHR) posts once."
+    },
+    {
+      "id": "systems-overview",
+      "action": "spotlight_systems",
+      "message": "External systems",
+      "detail": "And here's what sits around the routes. Mock Payer, PilotFish eiPlatform, and Demo Web UI. All of those are spun up in docker images for this demo.",
+      "demo_name": null,
+      "text": "And here's what sits around the routes. Mock Payer, PilotFish eiPlatform, and Demo Web UI. All of those are spun up in docker images for this demo."
+    }
+  ],
+  "steps": [],
+  "outro": [
+    {
+      "id": "outro-thanks",
+      "action": "thank_you",
+      "message": "Demo complete",
+      "detail": "That's the demo \u2014 clinic (or EHR) posts once. Thanks for choosing PilotFish.",
+      "demo_name": null,
+      "text": "That's the demo \u2014 clinic (or EHR) posts once. Thanks for choosing PilotFish."
+    }
+  ]
+}

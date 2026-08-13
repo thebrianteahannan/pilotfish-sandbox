@@ -1,0 +1,16 @@
+{
+  "groups": [
+    {
+      "id": "fanout",
+      "title": "Always emit",
+      "description": "Every scored auth writes a 278 response, an EHR ORU, and updates AuthRequest.",
+      "labels": ["Extract Decision Attributes", "Map Auth Decision To 278 XCSData", "XML to EDI 278 Response", "Map Auth Decision To ORU XML", "XML to HL7 ORU", "Normalize ORU Line Endings", "Update Auth Request Status"]
+    },
+    {
+      "id": "buckets",
+      "title": "Decision buckets",
+      "description": "Pretty-print AuthDecision XML into approved, denied, incomplete, or pended.",
+      "labels": ["Pretty-Print Approved XML", "Pretty-Print Denied XML", "Pretty-Print Incomplete XML", "Pretty-Print Pended XML"]
+    }
+  ]
+}

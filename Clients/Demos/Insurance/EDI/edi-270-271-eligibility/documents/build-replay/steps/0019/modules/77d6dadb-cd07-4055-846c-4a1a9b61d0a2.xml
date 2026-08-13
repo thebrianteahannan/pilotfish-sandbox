@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="77d6dadb-cd07-4055-846c-4a1a9b61d0a2" name="Snapshot Raw 271" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$EDI_271_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:'271_' + @java.lang.System@currentTimeMillis() + '_raw.edi'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

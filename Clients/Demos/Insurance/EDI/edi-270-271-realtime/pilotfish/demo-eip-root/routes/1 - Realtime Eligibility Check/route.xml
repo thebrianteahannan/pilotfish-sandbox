@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Post 270 To Payer" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('com.pilotfish.HttpMethodName') == 'POST' &amp;&amp; 'check'.equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName'))</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Method Not Allowed" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>true</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="Clinic Realtime Client">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.http.rest.RESTfulWebServiceListener" enabled="true" name="Realtime Eligibility REST">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <SERVICE_NAME>eligibility</SERVICE_NAME>
+        <USER_NAME />
+        <PASSWORD />
+        <POST_SUPPORTED>true</POST_SUPPORTED>
+        <GET_SUPPORTED>false</GET_SUPPORTED>
+        <PUT_SUPPORTED>false</PUT_SUPPORTED>
+        <DELETE_SUPPORTED>false</DELETE_SUPPORTED>
+        <SupportedResources>check</SupportedResources>
+        <Timeout>60</Timeout>
+        <RequireSSL>false</RequireSSL>
+        <Synchronous>true</Synchronous>
+        <HTTPHeaders />
+        <UseLegacyTokenParam>false</UseLegacyTokenParam>
+        <WadlFile />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Snapshot Inbound Request">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$REQUEST_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:'in_check_' + @java.lang.System@currentTimeMillis() + '.dat'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="Realtime Payer Roundtrip">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="Post 270 To Payer" retries="1">
+      <ModuleConfig>
+        <TargetURL>$$PAYER_X12_URL</TargetURL>
+        <UserName />
+        <Password />
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <PreemptiveAuthentication>false</PreemptiveAuthentication>
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/plain; charset=UTF-8:eip_value][eip_pair:Accept:eip_name:text/plain:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <ProxyPassword />
+        <KeyStoreFilePath />
+        <KeyStoreFileType>NONE</KeyStoreFileType>
+        <KeyStoreFilePassword />
+        <TrustStoreFilePath />
+        <TrustStoreFilePassword />
+        <DisableChunking>false</DisableChunking>
+        <Timeout>30</Timeout>
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <ResponseCodeList />
+        <FormElementEncoding>UTF-8</FormElementEncoding>
+        <UrlParamEncoding>UTF-8</UrlParamEncoding>
+        <ErrorResponseEncoding>UTF-8</ErrorResponseEncoding>
+        <TrustStoreSource>JVM</TrustStoreSource>
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Map Request To 270 EDI XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform-request-to-270-edi-xml.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor" name="Pretty-Print 270 EDI XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write 270 EDI XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$EDI_270_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:'270_' + @java.lang.System@currentTimeMillis() + '_edi.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.EDITransformationProcessor" name="XML to EDI 270">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <ExecuteTransformation>true</ExecuteTransformation>
+          <TransformationDirection>XML to EDI</TransformationDirection>
+          <UseInternalData>false</UseInternalData>
+          <USE_ENHANCED_CONTEXT>true</USE_ENHANCED_CONTEXT>
+          <TransactionDataWithVersion>[eip_pair:{ognl:@com.pilotfish.utils.PilotFishUtils@getWorkingDirectory()+'/edi-tabledata/270-A1'}:eip_name:5010:eip_value][eip_pair:{ognl:@com.pilotfish.utils.PilotFishUtils@getWorkingDirectory()+'/edi-tabledata/271-A1'}:eip_name:5010:eip_value]</TransactionDataWithVersion>
+          <FriendlyNamesLevel>None</FriendlyNamesLevel>
+          <CODE_DEFS>false</CODE_DEFS>
+          <SegmentIndexing>true</SegmentIndexing>
+          <OutputEndlines>true</OutputEndlines>
+          <UseProvidedDelimiters>true</UseProvidedDelimiters>
+          <DataDelimiter>*</DataDelimiter>
+          <SubDelimiter>:</SubDelimiter>
+          <RepetitionDelimiter>^</RepetitionDelimiter>
+          <RecordDelimiter>~</RecordDelimiter>
+          <USE_LEGACY_FORMAT>false</USE_LEGACY_FORMAT>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write 270 EDI Wire">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$EDI_270_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:'270_' + @java.lang.System@currentTimeMillis() + '.edi'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+    <PostProcessors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Snapshot Raw 271">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$EDI_271_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:'271_' + @java.lang.System@currentTimeMillis() + '_raw.edi'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Save Raw 271">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>elig.Raw271</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Wrap 271 For Parse XSLT">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:elig.Wrapped271:eip_name:{ognl:"&lt;EdiPayload&gt;&lt;![CDATA[" + (getAttribute('elig.Raw271') == null ? '' : getAttribute('elig.Raw271').toString()) + "]]&gt;&lt;/EdiPayload&gt;"}:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Load Wrapped 271 Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>elig.Wrapped271</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Map 271 Wire To JSON">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform-271-xml-to-json.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write JSON Summary">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$RESPONSE_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:'summary_' + @java.lang.System@currentTimeMillis() + '.json'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.HttpResponseCodeProcessor" name="Set 200 Check">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <StatusCode>200 OK</StatusCode>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor" name="JSON Response Headers">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <HeaderTable>[eip_pair:Content-Type:eip_name:application/json; charset=UTF-8:eip_value]</HeaderTable>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.SynchronousResponseProcessor" name="Return Summary To Clinic">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <Listener />
+        </ModuleConfig>
+      </Processor>
+    </PostProcessors>
+  </Target>
+  <Target icon="" name="Not Allowed">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.internal.SynchronousResponseTransport" name="Method Not Allowed" retries="1" />
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Empty Error Body">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <XSLTPath>transform-method-not-allowed.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.HttpResponseCodeProcessor" name="Set 405">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <StatusCode>405 Method Not Allowed</StatusCode>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor" name="405 Headers">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <HeaderTable>[eip_pair:Content-Type:eip_name:application/json; charset=UTF-8:eip_value]</HeaderTable>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>

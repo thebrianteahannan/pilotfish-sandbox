@@ -1,0 +1,19 @@
+---
+description: Keep the approved construction-video look; fix TTS via spoken words only
+alwaysApply: true
+---
+
+# Construction video — keep the look, fix words only
+
+Brian approved the current construction-replay **look** (theater, overlays, timing, Edge `en-US-AvaNeural`). Do **not** overhaul recording, visuals, or switch to a cloned/human voice unless he asks.
+
+## Pronunciation (robot voice stays)
+
+He will name a mangled term and speak it once. Do not ask him to read the whole script.
+
+1. Record a short Mac mic take and teach TTS:
+   `python3 tools/learn_construction_pronunciation.py --word <Term>`
+2. Display/transcript spelling stays human-readable. Only `docs/construction-narration-pronunciation.json` `speak` strings change (`tools/construction_speech.py` `for_speech`).
+3. After the batch of words, re-export that demo’s construction video. Do not batch other demos.
+
+Optional: `--speak "…"` if the take transcribes wrong.

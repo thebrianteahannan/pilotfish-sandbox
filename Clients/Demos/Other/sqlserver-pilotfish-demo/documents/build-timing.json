@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "interface": "SQL Server PilotFish XML Export",
+  "slug": "sqlserver-pilotfish-demo",
+  "path": "Clients/Demos/Other/sqlserver-pilotfish-demo",
+  "requested_by": "user",
+  "started_at": "2026-08-13T05:44:20Z",
+  "completed_at": "2026-08-13T05:49:40Z",
+  "completed_by": "cursor-agent",
+  "duration_minutes": 5.3,
+  "compose_project": "sqlserver-pilotfish-demo",
+  "docker_at_completion": {
+    "sandbox_compose_projects_running": 1,
+    "sandbox_demo_containers_running": 3,
+    "this_demo_containers": [
+      "pf-sqlserver-pilotfish-pilotfish",
+      "pf-sqlserver-pilotfish-webui",
+      "pf-sqlserver-pilotfish-sqlserver"
+    ],
+    "running_projects": ["sqlserver-pilotfish-demo"],
+    "inventory_command": "python3 tools/list_sandbox_demo_docker.py",
+    "captured_at": "2026-08-13T05:49:40Z"
+  },
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-13T05:44:20Z",
+      "ended_at": "2026-08-13T05:44:45Z",
+      "duration_minutes": 0.4,
+      "notes": "Deleted previous tree without overlay restore; scaffolded Other/sqlserver-pilotfish-demo on 8137"
+    },
+    {
+      "id": "design_scaffold",
+      "name": "DESIGN + SQL + V1 route + Web UI authored from playbook",
+      "started_at": "2026-08-13T05:44:45Z",
+      "ended_at": "2026-08-13T05:48:05Z",
+      "duration_minutes": 3.3,
+      "notes": "Listener skeleton from edi-837-snip-sqlserver; Directory File from edi-999; JDBC/compose from csv-sftp-to-sql; XML Formatting on the transport per §1.4"
+    },
+    {
+      "id": "routes",
+      "name": "V2 publish + full stack (SQL Server + EIP)",
+      "started_at": "2026-08-13T05:48:05Z",
+      "ended_at": "2026-08-13T05:49:07Z",
+      "duration_minutes": 1.0,
+      "notes": "First poll wrote pretty-printed captures_export.xml"
+    },
+    {
+      "id": "webui_docs",
+      "name": "PDFs + tests + construction prepare",
+      "started_at": "2026-08-13T05:49:07Z",
+      "ended_at": "2026-08-13T05:49:40Z",
+      "duration_minutes": 0.6,
+      "notes": "10/10 tests; transcript prepared; mp4 left for Info tab Create construction video"
+    }
+  ],
+  "slowest_phases": [
+    {"id": "design_scaffold", "duration_minutes": 3.3},
+    {"id": "routes", "duration_minutes": 1.0},
+    {"id": "webui_docs", "duration_minutes": 0.6}
+  ],
+  "bottlenecks": [],
+  "speedup_ideas": [
+    "Applied: XML Formatting sits on the Directory File transport so the written file is indented",
+    "Applied: Database Polling listener XML copied from edi-837-snip-sqlserver, not from the deleted demo"
+  ]
+}

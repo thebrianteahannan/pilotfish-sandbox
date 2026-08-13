@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule">
+    <ModuleConfig />
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="Claim Batch">
+    <FormatProfile name="Split Claims" />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Scrub Claim And Route.Programmable (Trigger) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes />
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>15:47-15:47</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors />
+  </Source>
+  <Target icon="" name="Scrub Then Kickout Or Clean">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.other.NullTransport" name="No-Op Complete" retries="1">
+      <ModuleConfig />
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Read Claim Keys">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:ClaimId:eip_name:normalize-space(string((.//*[local-name()='ClaimId' or local-name()='CLAIMID'])[1])):eip_value][eip_pair:ClaimNumber:eip_name:normalize-space(string((.//*[local-name()='ClaimNumber' or local-name()='CLAIMNUMBER'])[1])):eip_value][eip_pair:ClaimFileBase:eip_name:concat(normalize-space(string((.//*[local-name()='ClaimId' or local-name()='CLAIMID'])[1])), '_', normalize-space(string((.//*[local-name()='ClaimNumber' or local-name()='CLAIMNUMBER'])[1]))):eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Save Claim XML">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+          <AttributeName>claim_xml</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor" name="Pretty-Print Claim Snapshot">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Debug Write Claim XML">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+          <TargetDirectory>$$CLAIM_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('ClaimFileBase') + '_claim.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Claim XML For Evaluate">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+          <AttributeName>claim_xml</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Evaluate Payer Profile Edits">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+          <XSLTPath>transform-evaluate-payer-edits.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor" name="Pretty-Print Scrub Decision">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="Read Scrub Disposition">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:MatchBucket:eip_name:normalize-space(string((//MatchBucket)[1])):eip_value][eip_pair:Disposition:eip_name:normalize-space(string((//Disposition)[1])):eip_value][eip_pair:ReasonSummary:eip_name:normalize-space(string((//ReasonSummary)[1])):eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Debug Write Decision XML">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+          <TargetDirectory>$$CLAIM_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('ClaimFileBase') + '_decision.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Kickout Work Queue File">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "kickout".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+          <TargetDirectory>$$KICKOUT_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('ClaimFileBase') + '_kickout.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write BI Edit Outcome File">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+          <TargetDirectory>$$BI_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('ClaimFileBase') + '_outcome.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore Claim XML For Clean Path">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+          <AttributeName>claim_xml</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Map Claim To EDI XML">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+          <XSLTPath>transform-claim-to-edi-xml.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor" name="Pretty-Print EDI XML">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write Intermediate EDI XML">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+          <TargetDirectory>$$CLAIM_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('ClaimFileBase') + '_edi.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Save EDI XML for SNIP">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+          <AttributeName>edi_xml</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.EDITransformationProcessor" name="XML to EDI 837">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+          <ExecuteTransformation>true</ExecuteTransformation>
+          <TransformationDirection>XML to EDI</TransformationDirection>
+          <UseInternalData>false</UseInternalData>
+          <USE_ENHANCED_CONTEXT>true</USE_ENHANCED_CONTEXT>
+          <TransactionDataWithVersion>[eip_pair:{ognl:@com.pilotfish.utils.PilotFishUtils@getWorkingDirectory()+'/edi-tabledata/837-Q1'}:eip_name:5010:eip_value]</TransactionDataWithVersion>
+          <FriendlyNamesLevel>None</FriendlyNamesLevel>
+          <CODE_DEFS>false</CODE_DEFS>
+          <SegmentIndexing>true</SegmentIndexing>
+          <OutputEndlines>true</OutputEndlines>
+          <UseProvidedDelimiters>true</UseProvidedDelimiters>
+          <DataDelimiter>*</DataDelimiter>
+          <SubDelimiter>:</SubDelimiter>
+          <RepetitionDelimiter>^</RepetitionDelimiter>
+          <RecordDelimiter>~</RecordDelimiter>
+          <USE_LEGACY_FORMAT>false</USE_LEGACY_FORMAT>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write 837 EDI File">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+          <TargetDirectory>$$EDI_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('ClaimFileBase') + '.edi'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="Restore EDI XML for SNIP">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+          <AttributeName>edi_xml</AttributeName>
+          <SAVEOUTTAG>true</SAVEOUTTAG>
+          <SAVEINTAG>false</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>false</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.edi.EdiSNIPValidationProcessor" name="EDI SNIP Validation (Types 1-3)">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+          <SnipVersion>005010X222A1</SnipVersion>
+          <EdiDocumentType>837</EdiDocumentType>
+          <SnipStats>true</SnipStats>
+          <Snip1Validation>true</Snip1Validation>
+          <Snip2Validation>true</Snip2Validation>
+          <Snip3Validation>true</Snip3Validation>
+          <Snip4Validation>false</Snip4Validation>
+          <Snip5Validation>false</Snip5Validation>
+          <Snip7Validation>false</Snip7Validation>
+          <UseTransactionData>true</UseTransactionData>
+          <SnipFriendlyNames>false</SnipFriendlyNames>
+          <SnipStopOnError>false</SnipStopOnError>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor" name="Pretty-Print SNIP Results">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Write SNIP Results File">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+          <TargetDirectory>$$SNIP_OUTPUT_DIRECTORY</TargetDirectory>
+          <TargetFileName>{ognl:getAttribute('ClaimFileBase') + '_snip.xml'}</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>

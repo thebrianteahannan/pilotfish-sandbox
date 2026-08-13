@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="75fff3c7-e9e2-4a58-be40-eeb8f03333e8" name="2 - Emit 277 And Bucket">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="6b7b03f8-56be-4127-b0c2-8d8178c505d1" moduleId="d644b2f6-b6fa-41af-b96b-3fe7be8c5e97" label="Poll Staged Claim Status Decisions" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="da6f0ea2-e580-46cd-9b2d-52c3b315f42e" moduleId="e27a057f-fa20-4cdf-b690-dfe427405720" label="Extract Decision Attributes" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="fee9320c-7005-4dea-8c0b-99b40ac21946" moduleId="5ae542e9-7402-47d0-9e41-843c4a507480" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="120.0"/>
+      
+      
+      <Node id="76e92205-9eb0-43d0-9e5e-bc73dedecc21" moduleId="9bbbb2ba-ed65-4ef8-bcbe-1ba8badeb746" label="Map Decision To 277 EDI XML" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="2538854b-4e65-4ccc-9237-0238e1398d40" moduleId="a717bfce-3e87-44f4-b1cb-73406f496b15" label="Pretty-Print 277 EDI XML" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="4e0bec52-9b46-4abe-b7f8-cefd104ee7de" moduleId="1be447eb-8bf2-41d7-b692-e3acc831ca11" label="Pretty-Print Found XML" x="1300.0" y="140.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="77f43d46-0c6e-44c5-b87c-243539b198cd" moduleId="78547820-1d01-445b-9002-07eb4dc525a2" label="Write Found" x="1560.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+      
+      
+      <Node id="350f0f44-ddaf-47ce-9f26-d237770d61b6" moduleId="77668ff9-c8ac-400e-8348-958c9e095d54" label="Pretty-Print Not Found XML" x="1300.0" y="280.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="ce5b020c-96aa-4d28-bb0a-6afe470ead1f" moduleId="b1c9485d-8b58-4fa9-8681-270bbf5afe43" label="Pretty-Print Error XML" x="1300.0" y="420.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="72f84199-6810-4728-a3c8-dadc22130f74" sourceNodeId="6b7b03f8-56be-4127-b0c2-8d8178c505d1" targetNodeId="da6f0ea2-e580-46cd-9b2d-52c3b315f42e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="e4f1d6e6-0947-4521-9467-e955c513da9a" sourceNodeId="76e92205-9eb0-43d0-9e5e-bc73dedecc21" targetNodeId="2538854b-4e65-4ccc-9237-0238e1398d40" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="99fdac3f-8f99-4d0e-b729-7a73c064cccd" sourceNodeId="4e0bec52-9b46-4abe-b7f8-cefd104ee7de" targetNodeId="77f43d46-0c6e-44c5-b87c-243539b198cd" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="12bf7b04-e0e6-4f12-954d-ca588cad5ac1" sourceNodeId="da6f0ea2-e580-46cd-9b2d-52c3b315f42e" targetNodeId="fee9320c-7005-4dea-8c0b-99b40ac21946" sourceConnector="right-output" targetConnector="router-input:2167b77a-b7ab-4197-baf4-5b23af443956" condition="true"/>
+      
+      
+      <Connection id="07ed461e-ec88-4ae2-a57f-441e82d17124" sourceNodeId="fee9320c-7005-4dea-8c0b-99b40ac21946" targetNodeId="76e92205-9eb0-43d0-9e5e-bc73dedecc21" sourceConnector="router-output:41e5795c-6e70-4a60-ac8b-23a282afd6a1" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="3a3441ac-23f8-4d65-b484-9c0670b957f2" sourceNodeId="fee9320c-7005-4dea-8c0b-99b40ac21946" targetNodeId="4e0bec52-9b46-4abe-b7f8-cefd104ee7de" sourceConnector="router-output:d522dad0-d2c6-4e14-815d-c488676d0093" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="f657841b-6b76-45af-8937-3a4f6b483866" sourceNodeId="fee9320c-7005-4dea-8c0b-99b40ac21946" targetNodeId="350f0f44-ddaf-47ce-9f26-d237770d61b6" sourceConnector="router-output:c10e13fc-cb47-4e5c-bb53-82ffd1d74281" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="40aa2573-d71c-4648-96fb-aee721ecff35" sourceNodeId="fee9320c-7005-4dea-8c0b-99b40ac21946" targetNodeId="ce5b020c-96aa-4d28-bb0a-6afe470ead1f" sourceConnector="router-output:00391c62-a02f-487b-9835-c09c5878f5df" targetConnector="left-input" condition="true"/>
+      
+   
+   </Connections>
+</Route>

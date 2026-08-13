@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "active": false,
+  "phase": "complete",
+  "routes_ready": [
+    "1-poll-and-score-remits",
+    "2-route-remit-decisions"
+  ],
+  "current_route": "",
+  "message": "Construction video ready",
+  "updated_at": "2026-08-13T06:22:54Z",
+  "log": [
+    {
+      "at": "2026-08-13T05:58:53Z",
+      "text": "Route 2: Directory poll of staged XML, XPath router (matched / exception / underpay CSV), NULL Transport for AR updates"
+    },
+    {
+      "at": "2026-08-13T06:00:56Z",
+      "text": "Route 1 live: Directory listener \u2192 EDI fork \u2192 OpenAR SQL \u2192 XSLT RemitDecision \u2192 XML Formatting \u2192 Directory stage"
+    },
+    {
+      "at": "2026-08-13T06:00:56Z",
+      "text": "Route 2 live: Directory poll \u2192 XPath router \u2192 matched XML / exception XML / underpay CSV + AR status updates"
+    },
+    {
+      "at": "2026-08-13T06:03:11Z",
+      "text": "Compose profile full: sqlserver \u2192 sqlserver-init seed OpenAR \u2192 pilotfish EIP \u2192 webui"
+    },
+    {
+      "at": "2026-08-13T06:05:46Z",
+      "text": "sqlserver-init finished: Edi835PaymentIntegrity + dbo.OpenAR seed"
+    },
+    {
+      "at": "2026-08-13T06:05:46Z",
+      "text": "Waiting for eiPlatform HTTP on :8110"
+    },
+    {
+      "at": "2026-08-13T06:05:53Z",
+      "text": "SQL and EIP both healthy on /api/health"
+    },
+    {
+      "at": "2026-08-13T06:11:11Z",
+      "text": "Fixed duplicate Pretty-Print names so Route 2 would load"
+    },
+    {
+      "at": "2026-08-13T06:11:11Z",
+      "text": "SQLXML result tags are uppercase; XPath now reads EXPECTEDPAID"
+    },
+    {
+      "at": "2026-08-13T06:11:11Z",
+      "text": "PATCLAIM002/003 matched, PATCLAIM001 underpay + CSV, PATCLAIM999 NO_AR"
+    },
+    {
+      "at": "2026-08-13T06:12:21Z",
+      "text": "15/15 tests passed"
+    },
+    {
+      "at": "2026-08-13T06:22:54Z",
+      "text": "Construction video and transcript are on the Info tab"
+    }
+  ],
+  "pipeline": {
+    "in": {
+      "role": "Listener",
+      "name": "Directory / File"
+    },
+    "mid": {
+      "role": "Processors",
+      "name": "EDI + SQL + XSLT"
+    },
+    "out": {
+      "role": "Transport",
+      "name": "Directory stage"
+    }
+  },
+  "modules_visible": 13
+}

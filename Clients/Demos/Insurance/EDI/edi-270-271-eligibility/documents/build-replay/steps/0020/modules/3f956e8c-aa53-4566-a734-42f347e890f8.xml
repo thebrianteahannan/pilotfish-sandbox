@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="3f956e8c-aa53-4566-a734-42f347e890f8" name="JSON Response Headers" type="HTTP Response Headers" tag="Processor" class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <HeaderTable>[eip_pair:Content-Type:eip_name:application/json; charset=UTF-8:eip_value]</HeaderTable>
+      
+        
+   </ModuleConfig>
+</Module>

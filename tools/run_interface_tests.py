@@ -21,6 +21,7 @@ _SANDBOX_TOOLS = Path(__file__).resolve().parent
 if str(_SANDBOX_TOOLS) not in sys.path:
     sys.path.insert(0, str(_SANDBOX_TOOLS))
 
+from demo_paths import require_demo  # noqa: E402
 from export_test_results_pdf import write_from_report  # noqa: E402
 from interface_testlib import find_plan, load_plan, run_plan, write_report  # noqa: E402
 
@@ -171,7 +172,7 @@ def main() -> int:
     parser.add_argument("--wait", action="store_true", help="Wait for health URLs before running")
     parser.add_argument("--watch", action="store_true", help="Re-run when plan/routes/DESIGN/samples change")
     args = parser.parse_args()
-    root = (args.root or Path.cwd()).resolve()
+    root = require_demo(args.root)
     if args.watch:
         return watch(root, wait=args.wait)
     return run_once(root, wait=args.wait)

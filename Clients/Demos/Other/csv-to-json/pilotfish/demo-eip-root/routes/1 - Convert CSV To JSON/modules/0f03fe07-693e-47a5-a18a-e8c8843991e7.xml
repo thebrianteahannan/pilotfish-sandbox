@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="0f03fe07-693e-47a5-a18a-e8c8843991e7" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="3c8ce277-076a-42ff-a851-0f85ecc2497a" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="dfdbcf2a-c946-46fc-915e-a8bce9ba9ac4" name="Rule 1 - Write JSON" type="XPATH">
+               <condition>true()</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

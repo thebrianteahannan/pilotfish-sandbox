@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="ca42c02b-0e1a-4d76-8a17-aba3f6c27061" name="Pretty-Print EDI XML" type="XML Formatting" tag="Processor" class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; "clean".equals(@java.lang.String@valueOf(getAttribute('MatchBucket')))}</ExecuteProcessor>
+      
+        
+   </ModuleConfig>
+</Module>

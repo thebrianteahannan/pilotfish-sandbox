@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "interface": "EDI 270/271 Eligibility",
+  "short_name": "EDI270_271_Eligibility",
+  "description": "Clinic 270 build, mock payer 271, AAA theater then active benefits.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8107",
+    "eip": "http://127.0.0.1:8106/eip",
+    "payer": "http://127.0.0.1:8210"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8107/",
+    "http://127.0.0.1:8107/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["270", "check-form"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["1-eligibility-270-271-api"] }
+        }
+      ]
+    },
+    {
+      "id": "eligibility",
+      "name": "270/271 story",
+      "tests": [
+        {
+          "id": "wait-eip",
+          "name": "EIP is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"eip\":true"]
+          }
+        },
+        {
+          "id": "wait-payer",
+          "name": "Mock payer is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 60,
+            "interval_sec": 3,
+            "contains": ["\"payer\":true"]
+          }
+        },
+        {
+          "id": "aaa-fail001",
+          "name": "FAIL001 AAA reject",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/check-eligibility",
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "MemberId": "FAIL001",
+              "LastName": "DOE",
+              "FirstName": "JANE",
+              "BirthDate": "19800115",
+              "Gender": "F"
+            }
+          },
+          "expect": { "status": 200, "contains": ["rejected", "72"] }
+        },
+        {
+          "id": "ok001-active",
+          "name": "OK001 active benefits",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/check-eligibility",
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "MemberId": "OK001",
+              "LastName": "SMITH",
+              "FirstName": "JOHN",
+              "BirthDate": "19800515",
+              "Gender": "M"
+            }
+          },
+          "expect": { "status": 200, "contains": ["active", "OK001"] }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI270_271_V2_Route_Diagrams.pdf" }
+        },
+        {
+          "id": "capability-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI270_271_Eligibility_Capability_Brief.pdf" }
+        },
+        {
+          "id": "test-plan-pdf",
+          "name": "Test Plan PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI270_271_Eligibility_Test_Plan.pdf" }
+        }
+      ]
+    }
+  ]
+}

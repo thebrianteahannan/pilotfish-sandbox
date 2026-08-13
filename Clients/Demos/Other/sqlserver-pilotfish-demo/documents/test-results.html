@@ -1,0 +1,26 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/><title>Test results — SQL Server PilotFish XML Export</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:1.5rem;background:#0b1c33;color:#e8eef8}
+h1{font-size:1.25rem} .sum span{margin-right:1rem;font-weight:700}
+table{border-collapse:collapse;width:100%;margin-top:1rem}
+th,td{border-bottom:1px solid #2a4466;padding:.45rem .5rem;text-align:left;vertical-align:top}
+tr.pass td:first-child{color:#3dd68c} tr.fail td:first-child,tr.error td:first-child{color:#ff6b6b}
+tr.skip td:first-child{color:#f0a202}
+</style></head><body>
+<h1>Test results — SQL Server PilotFish XML Export</h1>
+<p class="sum">
+<span>pass 10</span>
+<span>fail 0</span>
+<span>error 0</span>
+<span>skip 0</span>
+<span>total 10</span>
+</p>
+<p>Finished 2026-08-13T05:49:19.231231+00:00</p>
+<table><thead><tr><th>Status</th><th>Suite</th><th>Test</th><th>Message</th><th>Time</th></tr></thead>
+<tbody>
+<tr class='pass'><td>PASS</td><td>Health</td><td>Web UI loads</td><td>UI OK (http://127.0.0.1:8137/)</td><td>2ms</td></tr><tr class='pass'><td>PASS</td><td>Health</td><td>API health</td><td>HTTP 200</td><td>14ms</td></tr><tr class='pass'><td>PASS</td><td>Health</td><td>Routes API</td><td>HTTP 200</td><td>2ms</td></tr><tr class='pass'><td>PASS</td><td>SQL poll then XML</td><td>SQL is reachable via Web UI health</td><td>HTTP 200: {&quot;eip&quot;:true,&quot;ok&quot;:true,&quot;sql&quot;:true,&quot;xml&quot;:true}
+</td><td>15ms</td></tr><tr class='pass'><td>PASS</td><td>SQL poll then XML</td><td>EIP is reachable via Web UI health</td><td>HTTP 200: {&quot;eip&quot;:true,&quot;ok&quot;:true,&quot;sql&quot;:true,&quot;xml&quot;:true}
+</td><td>19ms</td></tr><tr class='pass'><td>PASS</td><td>SQL poll then XML</td><td>Seeded Captures rows are visible</td><td>HTTP 200: {&quot;count&quot;:3,&quot;ok&quot;:true,&quot;rows&quot;:[{&quot;CaptureId&quot;:1001,&quot;CapturePayload&quot;:&quot;Order POL-77821 accepted&quot;,&quot;ClientName&quot;:&quot;American General&quot;,&quot;CreatedAt&quot;:&quot;2026-07-16T09:15:00&quot;,&quot;DocumentType&quot;:&quot;ACORD 1</td><td>14ms</td></tr><tr class='pass'><td>PASS</td><td>SQL poll then XML</td><td>XML export contains CaptureId 1001</td><td>HTTP 200: {&quot;bytes&quot;:991,&quot;content&quot;:&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&lt;EIPData&gt;\n  &lt;RECORDS&gt;\n    &lt;CAPTURE&gt;\n      &lt;CAPTUREID&gt;1001&lt;/CAPTUREID&gt;\n      &lt;CLIENTNAME&gt;American General&lt;/CLIE</td><td>1ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Route PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Other/sqlserver-pilotfish-demo/documents/SQL_Server_PilotFish_XML_Export_V2_Route_Diagrams.pdf</td><td>0ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Capability Brief PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Other/sqlserver-pilotfish-demo/documents/SQL_Server_PilotFish_XML_Export_Capability_Brief.pdf</td><td>0ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Test Plan PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Other/sqlserver-pilotfish-demo/documents/SQL_Server_PilotFish_XML_Export_Test_Plan.pdf</td><td>0ms</td></tr>
+</tbody></table>
+</body></html>

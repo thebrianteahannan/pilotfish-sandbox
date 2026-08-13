@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="9cca113a-23bf-480f-a3e7-7adfc8551322" name="Debug Write Remit Decision" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:(getAttribute('ClaimControlNumber') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimControlNumber')).trim().isEmpty() ? getAttribute('ClaimControlNumber') : 'unknown') + '_decision.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

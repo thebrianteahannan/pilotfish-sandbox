@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7374c136-6cb0-4b47-8604-349f2abbce53" name="270 Response Headers" type="HTTP Response Headers" tag="Processor" class="com.pilotfish.eip.modules.http.AddHttpResponseHeadersProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <HeaderTable>[eip_pair:Content-Type:eip_name:text/plain; charset=UTF-8:eip_value]</HeaderTable>
+      
+        
+   </ModuleConfig>
+</Module>

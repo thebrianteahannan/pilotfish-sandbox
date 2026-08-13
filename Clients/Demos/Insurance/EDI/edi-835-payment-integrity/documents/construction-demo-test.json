@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "sample": "sample_835_underpays.edi",
+  "preamble": [
+    {
+      "id": "welcome",
+      "action": "show_welcome",
+      "message": "Welcome",
+      "detail": "Welcome to the PilotFish demo: EDI 835 Payment Integrity. Ingest ERA 835s, enrich each claim payment with open-AR lineage from SQL Server, bucket matched vs exception, and emit an underpay alert CSV for shortfalls finance can act on. PilotFish supports the whole flow out of the box.",
+      "demo_name": "EDI 835 Payment Integrity",
+      "text": "Welcome to the Pilot Fish demo: EDI 835 Payment Integrity. Ingest ERA 835s, enrich each claim payment with open-AR lineage from sequel Server, bucket matched vs exception, and emit an underpay alert C S V for shortfalls finance can act on. Pilot Fish supports the whole flow out of the box."
+    },
+    {
+      "id": "pipeline-overview",
+      "action": "show_pipeline",
+      "message": "Pipeline overview",
+      "detail": "Before we wire anything, here's the flow end to end. Ingest ERA 835s, enrich each claim payment with open-AR lineage from SQL Server, bucket matched vs exception, and emit an underpay alert CSV for shortfalls finance can act on.",
+      "demo_name": null,
+      "text": "Before we wire anything, here's the flow end to end. Ingest ERA 835s, enrich each claim payment with open-AR lineage from sequel Server, bucket matched vs exception, and emit an underpay alert C S V for shortfalls finance can act on."
+    },
+    {
+      "id": "systems-overview",
+      "action": "spotlight_systems",
+      "message": "External systems",
+      "detail": "And here's what sits around the routes. SQL Server, PilotFish eiPlatform, and Demo Web UI. All of those are spun up in docker images for this demo.",
+      "demo_name": null,
+      "text": "And here's what sits around the routes. sequel Server, Pilot Fish E I Platform, and Demo Web UI. All of those are spun up in docker images for this demo."
+    }
+  ],
+  "steps": [
+    {
+      "id": "test-open",
+      "action": "open_demo",
+      "message": "Prove it works",
+      "detail": "Routes are built. Let's switch to the Demo tab and prove it works.",
+      "demo_name": null,
+      "text": "Routes are built. Let's switch to the Demo tab and prove it works."
+    },
+    {
+      "id": "test-inject-1",
+      "action": "inject",
+      "message": "Submit a sample",
+      "detail": "I'll submit this sample from the Demo tab \u2014 same as an operator would.",
+      "demo_name": null,
+      "text": "I'll submit this sample from the Demo tab \u2014 same as an operator would."
+    },
+    {
+      "id": "test-wait-1",
+      "action": "wait_results",
+      "message": "Waiting for the routes",
+      "detail": "Give the routes a moment to pick up the file and write the output.",
+      "demo_name": null,
+      "text": "Give the routes a moment to pick up the file and write the output."
+    },
+    {
+      "id": "test-show-1",
+      "action": "show_results",
+      "message": "OpenAR",
+      "detail": "There it is \u2014 output on the results panel.",
+      "demo_name": null,
+      "text": "There it is \u2014 output on the results panel."
+    },
+    {
+      "id": "test-inject-2",
+      "action": "inject",
+      "message": "Submit another sample",
+      "detail": "I'll send it one more time so we can watch it land again.",
+      "demo_name": null,
+      "text": "I'll send it one more time so we can watch it land again."
+    },
+    {
+      "id": "test-wait-2",
+      "action": "wait_results",
+      "message": "Waiting for the routes",
+      "detail": "Same path \u2014 the second result should show up here.",
+      "demo_name": null,
+      "text": "Same path \u2014 the second result should show up here."
+    },
+    {
+      "id": "test-show-2",
+      "action": "show_results",
+      "message": "OpenAR",
+      "detail": "And there's the second result.",
+      "demo_name": null,
+      "text": "And there's the second result."
+    }
+  ],
+  "outro": [
+    {
+      "id": "outro-thanks",
+      "action": "thank_you",
+      "message": "Demo complete",
+      "detail": "That's the demo \u2014 ingest ERA 835s, enrich each claim payment with open-AR lineage from SQL Server, bucket matched vs exception, and emit an underpay alert CSV for shortfalls. Thanks for choosing PilotFish.",
+      "demo_name": null,
+      "text": "That's the demo \u2014 ingest ERA 835s, enrich each claim payment with open-AR lineage from sequel Server, bucket matched vs exception, and emit an underpay alert C S V for shortfalls. Thanks for choosing Pilot Fish."
+    }
+  ]
+}

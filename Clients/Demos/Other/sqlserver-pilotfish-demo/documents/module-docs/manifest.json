@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "demo": "sqlserver-pilotfish-demo",
+  "path": "Clients/Demos/Other/sqlserver-pilotfish-demo",
+  "synced_at": "2026-08-13T05:49:19Z",
+  "documentation_root": "/Users/brianhannan/Documents/PilotFish Documentation/Documents",
+  "modules": [
+    {
+      "fqcn": "com.pilotfish.eip.modules.db.DatabaseSqlListener",
+      "kind": "Listener",
+      "ui_type": "Database Polling (SQL)",
+      "pdf": "module-docs/PilotFish-Database-Polling-SQL-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-Database-Polling-SQL-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.transform.XMLFormattingProcessor",
+      "kind": "Processor",
+      "ui_type": "XML Formatting",
+      "pdf": "module-docs/PilotFish-XML-Formatting-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-XML-Formatting-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule",
+      "kind": "Routing",
+      "ui_type": "Conditional Node Router",
+      "pdf": "module-docs/PilotFish-Conditional-Node-Router-Reference-26R1.11.pdf",
+      "source": "Routing/26R1.11/PilotFish-Conditional-Node-Router-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.routing.XPathRoutingModule",
+      "kind": "Routing",
+      "ui_type": "Conditional Node Router",
+      "pdf": "module-docs/PilotFish-Conditional-Node-Router-Reference-26R1.11.pdf",
+      "source": "Routing/26R1.11/PilotFish-Conditional-Node-Router-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.DirectoryTransport",
+      "kind": "Transport",
+      "ui_type": "Directory / File",
+      "pdf": "module-docs/PilotFish-Directory-File-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-Directory-File-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    }
+  ],
+  "missing": [],
+  "note": "Auto-synced from route.xml / modules/*.xml. Re-run tools/sync_module_docs.py after route changes."
+}

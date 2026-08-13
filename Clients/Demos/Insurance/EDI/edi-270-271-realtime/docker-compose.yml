@@ -1,0 +1,69 @@
+services:
+  mock-payer:
+    profiles: ["full"]
+    build:
+      context: ./mock-payer
+    image: pilotfish-edi270rt-mock-payer:latest
+    container_name: pf-edi270rt-mock-payer
+    restart: unless-stopped
+    ports:
+      - "8211:8210"
+
+  pilotfish:
+    profiles: ["full"]
+    build:
+      context: ./pilotfish
+    image: pilotfish-edi-270-271-realtime:23R1
+    container_name: pf-edi270rt-pilotfish
+    restart: unless-stopped
+    depends_on:
+      - mock-payer
+    environment:
+      CATALINA_OPTS: "-Xms512M -Xmx2048M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8120:8080"
+    volumes:
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+      - ./pilotfish/demo-eip-root/routes:/usr/local/tomcat/webapps/eip/eip-root/routes
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/usr/local/tomcat/webapps/eip/eip-root/environment-settings.conf:ro
+      - ../../../../../EDI/TableData/x12:/usr/local/tomcat/webapps/eip/eip-root/edi-tabledata:ro
+
+  webui:
+    profiles: ["stage", "full"]
+    build:
+      context: ./webui
+    image: pilotfish-edi-270-271-realtime-webui:latest
+    container_name: pf-edi-270-271-realtime-webui
+    restart: unless-stopped
+    environment:
+      WEBUI_PORT: "8121"
+      DEMO_SLUG: "edi-270-271-realtime"
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      SAMPLE_DIR: /samples
+      OUTPUT_DIR: /output
+      ENV_SETTINGS_FILE: /environment-settings.conf
+      LAN_HINT: "http://192.168.68.62:8121/"
+      EIP_PUBLIC_URL: "http://127.0.0.1:8120/eip/"
+      PF_ELIGIBILITY_BASE_URL: "http://pilotfish:8080/eip/rest/eligibility"
+      PF_PUBLIC_BASE_URL: "http://127.0.0.1:8120/eip/rest/eligibility"
+      MOCK_PAYER_PUBLIC_URL: "http://127.0.0.1:8211/x12/270"
+      MOCK_PAYER_HEALTH_URL: "http://mock-payer:8210/health"
+      EIP_HEALTH_URL: "http://pilotfish:8080/eip/"
+      DIFF_PDF_NAME: "EDI270_271_Orig_vs_Realtime_Differences.pdf"
+    ports:
+      - "8121:8121"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./documents:/documents:ro
+      - ./samples:/samples:ro
+      - ./output:/output:ro
+      - ./pilotfish/demo-eip-root/routes:/routes:ro
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/environment-settings.conf:ro
+      - ./webui/static:/app/static:ro
+      - ./webui/templates:/app/templates:ro
+      - ./webui/app.py:/app/app.py:ro
+      - ./webui/document_routes.py:/app/document_routes.py:ro

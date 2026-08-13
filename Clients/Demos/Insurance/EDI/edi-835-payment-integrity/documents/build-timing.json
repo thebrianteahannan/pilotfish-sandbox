@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "interface": "EDI 835 Payment Integrity",
+  "slug": "edi-835-payment-integrity",
+  "path": "Clients/Demos/Insurance/EDI/edi-835-payment-integrity",
+  "requested_by": "user",
+  "started_at": "2026-08-13T05:54:37Z",
+  "completed_at": "2026-08-13T06:11:44Z",
+  "completed_by": "cursor-agent",
+  "duration_minutes": 17.1,
+  "compose_project": "edi-835-payment-integrity",
+  "docker_at_completion": {
+    "sandbox_compose_projects_running": 1,
+    "sandbox_demo_containers_running": 3,
+    "this_demo_containers": [
+      "pf-edi-835-payment-integrity-pilotfish",
+      "pf-edi-835-payment-inte-webui",
+      "pf-edi-835-payment-integrity-sqlserver"
+    ],
+    "running_projects": ["edi-835-payment-integrity"],
+    "inventory_command": "python3 tools/list_sandbox_demo_docker.py",
+    "captured_at": "2026-08-13T06:11:44Z"
+  },
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-13T05:54:37Z",
+      "ended_at": "2026-08-13T05:56:00Z",
+      "duration_minutes": 1.4,
+      "notes": "Deleted previous tree without overlay restore; scaffolded Insurance/EDI/edi-835-payment-integrity on 8111"
+    },
+    {
+      "id": "design_scaffold",
+      "name": "DESIGN + SQL + V1 routes + Web UI authored from playbook",
+      "started_at": "2026-08-13T05:56:00Z",
+      "ended_at": "2026-08-13T06:03:11Z",
+      "duration_minutes": 7.2,
+      "notes": "Route 1 skeleton from edi-276-277-claim-status + csv-sftp-to-sql JDBC; Route 2 XPath router; XML Formatting on XML transports only (not underpay CSV)"
+    },
+    {
+      "id": "routes",
+      "name": "V2 publish + full stack + Route 2 load fix",
+      "started_at": "2026-08-13T06:03:11Z",
+      "ended_at": "2026-08-13T06:10:37Z",
+      "duration_minutes": 7.4,
+      "notes": "EIP refused Route 2 (duplicate Pretty-Print XML names). SQL lookup worked but XPath missed UPPERCASE EXPECTEDPAID. After rename + XPath, inject scored 002/003 matched, 001 underpay, 999 NO_AR"
+    },
+    {
+      "id": "webui_docs",
+      "name": "PDFs + tests + construction prepare",
+      "started_at": "2026-08-13T06:10:37Z",
+      "ended_at": "2026-08-13T06:11:44Z",
+      "duration_minutes": 1.1,
+      "notes": "15/15 tests; transcript prepared; mp4 left for Info tab Create construction video"
+    }
+  ],
+  "slowest_phases": [
+    {"id": "routes", "duration_minutes": 7.4},
+    {"id": "design_scaffold", "duration_minutes": 7.2},
+    {"id": "webui_early", "duration_minutes": 1.4}
+  ],
+  "bottlenecks": [
+    "EIP does not load a route when two processors share a name",
+    "Database SQL result XML uses uppercase column tags"
+  ],
+  "speedup_ideas": [
+    "Applied: unique processor names per route (Pretty-Print Matched XML vs Pretty-Print Exception XML)",
+    "Applied: XPath after DatabaseSqlProcessor matches EXPECTEDPAID and ExpectedPaid",
+    "Applied: XML Formatting on Directory File transports for XML buckets only — not the underpay CSV"
+  ]
+}

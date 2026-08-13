@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="81ee2c09-4e61-4d56-9c9c-fc075cf0e7f4" name="1 - Convert CSV To JSON">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="0ed71c36-738e-4e44-b59e-01e93b82f645" moduleId="c7b8be08-f405-4207-9a93-92754b9000e8" label="Poll CSV Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="075a6ac8-c70c-4b28-ad64-1bd6749a002f" moduleId="4944bdc2-15b6-43bb-9da5-f31f7f295bd8" label="CSV to XML" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="04ac1d97-1358-4207-86a7-865285b874a0" sourceNodeId="0ed71c36-738e-4e44-b59e-01e93b82f645" targetNodeId="075a6ac8-c70c-4b28-ad64-1bd6749a002f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+   </Connections>
+</Route>

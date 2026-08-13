@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDI 837 + SNIP — SQL Server Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/pf-theme.css" />
+  <link rel="stylesheet" href="/static/app.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css" />
+  <link rel="stylesheet" href="/static/code-highlight.css" />
+  <link rel="stylesheet" href="/static/timing-tab.css" />
+  <link rel="stylesheet" href="/static/build-live.css" />
+</head>
+<body>
+  <header>
+    <div class="app-bar">
+      <p class="brand">PilotFish · EDI 837 Demo</p>
+      <div class="main-tabs" role="tablist" aria-label="App views">
+        <button type="button" class="main-tab active" data-main-tab="demo" role="tab" aria-selected="true">Demo</button>
+        <button type="button" class="main-tab" data-main-tab="routes" role="tab" aria-selected="false">Routes</button>
+        {% if has_xslt %}
+        <button type="button" class="main-tab" data-main-tab="xslt" role="tab" aria-selected="false">XSLT</button>
+        {% endif %}
+        <button type="button" class="main-tab" data-main-tab="timing" role="tab" aria-selected="false">Timing</button>
+        <button type="button" class="main-tab" data-main-tab="info" role="tab" aria-selected="false">Info</button>
+      </div>
+    </div>
+    <nav class="nav" id="demo-nav">
+      <a href="#pipeline">Pipeline</a>
+      <a href="#inject">Add Claim</a>
+      <a href="#results">EDI / SNIP</a>
+    </nav>
+  </header>
+
+  <div id="tab-demo">
+    <main>
+      <section class="panel" id="pipeline">
+        <h2>End-to-end pipeline</h2>
+        <p class="section-lead">One SQL Server database feeds Route 1 → Route 2 (fork, transform, SNIP).</p>
+        <div class="pipeline">
+          <div class="pipe-node db"><strong>SQL Server</strong><span>Claims / ClaimLines<br/><code>Edi837Demo</code></span></div>
+          <div class="pipe-node r1"><strong>Route 1</strong><span>DatabaseSqlListener<br/>claim PENDING rows</span></div>
+          <div class="pipe-node r2"><strong>Route 2</strong><span>XSLT → 837<br/>EDI Transform<br/>SNIP 1–3</span></div>
+          <div class="pipe-node out"><strong>Outputs</strong><span><code>output/edi/*.edi</code><br/><code>output/snip/*_snip.xml</code></span></div>
+        </div>
+      </section>
+
+      <section class="panel" id="inject">
+        <h2>Add a claim</h2>
+        <p class="section-lead">Inserts a PENDING row. Route 1 polls every 15s.</p>
+        <form id="claim-form" class="form-grid">
+          <label>Patient
+            <select name="patientId" id="patientId">
+              {% for pid, p in patients.items() %}
+              <option value="{{ pid }}">{{ p.label }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>Procedure
+            <input name="procedureCode" value="99213" />
+          </label>
+          <label>Amount
+            <input name="claimAmount" type="number" step="0.01" value="140.55" />
+          </label>
+          <label>Diagnosis
+            <input name="diagnosisCode" value="J06.9" />
+          </label>
+          <label class="wide">Notes
+            <input name="notes" value="Injected from LAN web UI" />
+          </label>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary" id="submit-btn">Submit claim</button>
+            <span id="status" class="status"></span>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" id="results">
+        <div class="row-head">
+          <h2>EDI &amp; SNIP results</h2>
+          <button type="button" class="btn" id="refresh-btn">Refresh</button>
+        </div>
+        <div class="split">
+          <div>
+            <h3>837 EDI files</h3>
+            <div id="edi-list" class="file-list"></div>
+            <pre id="edi-view" class="viewer"></pre>
+          </div>
+          <div>
+            <h3>SNIP reports</h3>
+            <div id="snip-list" class="file-list"></div>
+            <div class="snip-tabs">
+              <button type="button" class="btn snip-tab active" data-tab="html">HTML report</button>
+              <button type="button" class="btn snip-tab" data-tab="raw">Raw XML</button>
+            </div>
+            <iframe id="snip-html" class="snip-frame" title="SNIP HTML validation report"></iframe>
+            <pre id="snip-view" class="viewer snip-raw" hidden></pre>
+          </div>
+        </div>
+        <h3>Claims in SQL Server</h3>
+        <div id="claims-table" class="table-wrap"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="tab-routes" class="routes-tab" hidden>
+    <div class="routes-toolbar">
+      <label for="route-select">V2 route
+        <select id="route-select"></select>
+      </label>
+      <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route design PDF</a>
+      <a class="btn" id="routes-docs-link" href="/static/route-viewer/docs.html?config=changed" target="_blank" rel="noreferrer">All routes (print)</a>
+      <span id="routes-status" class="status"></span>
+    </div>
+    <iframe id="route-viewer-frame" class="route-viewer-frame" title="V2 route graph viewer" src="about:blank"></iframe>
+  </div>
+
+  {% if has_xslt %}
+  <div id="tab-xslt" class="xslt-tab" hidden>
+    <aside class="xslt-sidebar">
+      <div class="xslt-sidebar-head">
+        <h2>XSLT files</h2>
+        <span id="xslt-status" class="status"></span>
+      </div>
+      <ul id="xslt-file-list" class="xslt-file-list"></ul>
+    </aside>
+    <section class="xslt-viewer">
+      <div class="xslt-viewer-head">
+        <code id="xslt-path" class="xslt-path">Select an XSLT file</code>
+        <span id="xslt-meta" class="muted"></span>
+      </div>
+      <pre class="xslt-source"><code id="xslt-code"></code></pre>
+    </section>
+  </div>
+  {% endif %}
+
+  <!-- TIMING_TAB_STANDARD:START -->
+  {% include 'partials/timing_tab.html' %}
+  <!-- TIMING_TAB_STANDARD:END -->
+  <!-- INFO_TAB_STANDARD:START -->
+  {% include 'partials/info_tab.html' %}
+  <!-- INFO_TAB_STANDARD:END -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
+  <script src="/static/code-highlight.js"></script>
+  <script src="/static/build-live.js"></script>
+  <script src="/static/app.js"></script>
+  <script src="/static/timing-tab.js"></script>
+</body>
+</html>

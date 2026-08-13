@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="75fff3c7-e9e2-4a58-be40-eeb8f03333e8" name="2 - Emit 277 And Bucket">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="6b7b03f8-56be-4127-b0c2-8d8178c505d1" moduleId="d644b2f6-b6fa-41af-b96b-3fe7be8c5e97" label="Poll Staged Claim Status Decisions" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="da6f0ea2-e580-46cd-9b2d-52c3b315f42e" moduleId="e27a057f-fa20-4cdf-b690-dfe427405720" label="Extract Decision Attributes" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="72f84199-6810-4728-a3c8-dadc22130f74" sourceNodeId="6b7b03f8-56be-4127-b0c2-8d8178c505d1" targetNodeId="da6f0ea2-e580-46cd-9b2d-52c3b315f42e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+   </Connections>
+</Route>

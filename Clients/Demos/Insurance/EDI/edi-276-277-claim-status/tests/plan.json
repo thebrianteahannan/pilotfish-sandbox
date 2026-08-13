@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "interface": "EDI 276/277 Claim Status",
+  "short_name": "EDI276_277",
+  "description": "Directory poll 276 → catalog lookup → 277 + found bucket.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8127",
+    "eip": "http://127.0.0.1:8126/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8127/",
+    "http://127.0.0.1:8127/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["276", "inject-form"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["1-intake-and-lookup", "2-emit-277-and-bucket"] }
+        }
+      ]
+    },
+    {
+      "id": "pipeline",
+      "name": "276 to 277",
+      "tests": [
+        {
+          "id": "wait-eip",
+          "name": "EIP is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"eip\":true"]
+          }
+        },
+        {
+          "id": "reset",
+          "name": "Reset outputs",
+          "type": "http",
+          "request": { "method": "POST", "url": "{webui}/api/reset" },
+          "expect": { "status": 200, "contains": ["ok"] }
+        },
+        {
+          "id": "inject",
+          "name": "Inject sample 276",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/inject",
+            "headers": { "Content-Type": "application/json" },
+            "body": { "sample": "X212-276-claim-request.edi" }
+          },
+          "expect": { "status": 200, "contains": ["X212-276-claim-request.edi"] }
+        },
+        {
+          "id": "found-file",
+          "name": "ABCXYZ1 found bucket",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["ABCXYZ1_found.xml"]
+          }
+        },
+        {
+          "id": "277-file",
+          "name": "ABCXYZ1 277 response",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["ABCXYZ1_277_response.edi"]
+          }
+        },
+        {
+          "id": "277-st",
+          "name": "277 wire starts with ST 277",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 30,
+            "interval_sec": 2,
+            "contains": ["ST*277"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI276_277_V2_Route_Diagrams.pdf" }
+        },
+        {
+          "id": "capability-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI276_277_Capability_Brief.pdf" }
+        },
+        {
+          "id": "test-plan-pdf",
+          "name": "Test Plan PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI276_277_Test_Plan.pdf" }
+        }
+      ]
+    }
+  ]
+}

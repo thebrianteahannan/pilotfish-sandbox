@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="37e4941d-8f03-43d4-b63a-3e8d662f99f2" name="HTTP POST Ingress" type="HTTP Post" tag="Listener" class="com.pilotfish.eip.modules.http.HttpPostListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <CLIAllowed>false</CLIAllowed>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <FIFOQueueName/>
+      
+        
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      
+        
+      <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      
+        
+      <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+      
+        
+      <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+      
+        
+      <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      
+        
+      <RequestPath>ingress</RequestPath>
+      
+        
+      <Timeout>60</Timeout>
+      
+        
+      <TimeoutHandlingMechanism>Send timeout message</TimeoutHandlingMechanism>
+      
+        
+      <Synchronous>false</Synchronous>
+      
+        
+      <RequireSSL>false</RequireSSL>
+      
+        
+      <HTTPHeaders>[eip_pair:Content-Type:eip_name:application/json:eip_value]</HTTPHeaders>
+      
+        
+      <WsdlFile/>
+      
+        
+      <WsdlContentType>application/wsdl+xml</WsdlContentType>
+      
+        
+      <ValidateAtListenerLevel>false</ValidateAtListenerLevel>
+      
+        
+      <USE_BASIC_AUTH>false</USE_BASIC_AUTH>
+      
+        
+      <AUTH_FILE/>
+      
+        
+      <REALM>PilotFish</REALM>
+      
+        
+      <AdditionalResources/>
+      
+      
+   </ModuleConfig>
+</Module>

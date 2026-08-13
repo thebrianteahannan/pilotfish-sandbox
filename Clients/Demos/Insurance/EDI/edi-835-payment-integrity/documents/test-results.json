@@ -1,0 +1,151 @@
+{
+  "interface": "EDI 835 Payment Integrity",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-835-payment-integrity",
+  "started_at": "2026-08-13T06:11:12.357048+00:00",
+  "finished_at": "2026-08-13T06:11:30.531092+00:00",
+  "summary": {
+    "pass": 15,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 15
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "UI OK (http://127.0.0.1:8111/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 11,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "wait-sql",
+      "name": "SQL is reachable",
+      "suite": "835 scoring",
+      "status": "pass",
+      "duration_ms": 11,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"sql\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "wait-eip",
+      "name": "EIP is reachable",
+      "suite": "835 scoring",
+      "status": "pass",
+      "duration_ms": 10,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"sql\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "open-ar-seed",
+      "name": "OpenAR seed rows",
+      "suite": "835 scoring",
+      "status": "pass",
+      "duration_ms": 9,
+      "message": "HTTP 200: {\"ok\":true,\"rows\":[{\"ClaimControlNumber\":\"PATCLAIM001\",\"ExpectedPaid\":\"500.00\",\"Notes\":\"UNDERPAY\",\"PatientFirstName\":\"JANE\",\"PatientLastName\":\"DOE\",\"Status\":\"UNDERPAY\",\"UpdatedAt\":",
+      "detail": ""
+    },
+    {
+      "id": "reset-drop",
+      "name": "Reset then drop sample 835",
+      "suite": "835 scoring",
+      "status": "pass",
+      "duration_ms": 17,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "inject-sample",
+      "name": "Inject sample 835",
+      "suite": "835 scoring",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "matched-002",
+      "name": "PATCLAIM002 matched",
+      "suite": "835 scoring",
+      "status": "pass",
+      "duration_ms": 15067,
+      "message": "HTTP 200: {\"csv\":[{\"content\":\"ClaimControlNumber,PatientName,ExpectedPaid,PaidAmount,Variance,CasCodes,Reason,SourceFile\\n\",\"mtime\":\"2026-08-13T06:11:12\",\"name\":\"underpay_alerts.csv\",\"size\":",
+      "detail": ""
+    },
+    {
+      "id": "underpay-001",
+      "name": "PATCLAIM001 underpay exception",
+      "suite": "835 scoring",
+      "status": "pass",
+      "duration_ms": 3027,
+      "message": "HTTP 200: {\"csv\":[{\"content\":\"ClaimControlNumber,PatientName,ExpectedPaid,PaidAmount,Variance,CasCodes,Reason,SourceFile\\nPATCLAIM001,JANE DOE,500.00,400.25,-99.75,45,UNDERPAY,sample_835_und",
+      "detail": ""
+    },
+    {
+      "id": "no-ar-999",
+      "name": "PATCLAIM999 NO_AR exception",
+      "suite": "835 scoring",
+      "status": "pass",
+      "duration_ms": 5,
+      "message": "HTTP 200: {\"csv\":[{\"content\":\"ClaimControlNumber,PatientName,ExpectedPaid,PaidAmount,Variance,CasCodes,Reason,SourceFile\\nPATCLAIM001,JANE DOE,500.00,400.25,-99.75,45,UNDERPAY,sample_835_und",
+      "detail": ""
+    },
+    {
+      "id": "underpay-csv",
+      "name": "Underpay CSV has PATCLAIM001",
+      "suite": "835 scoring",
+      "status": "pass",
+      "duration_ms": 4,
+      "message": "HTTP 200: {\"csv\":[{\"content\":\"ClaimControlNumber,PatientName,ExpectedPaid,PaidAmount,Variance,CasCodes,Reason,SourceFile\\nPATCLAIM001,JANE DOE,500.00,400.25,-99.75,45,UNDERPAY,sample_835_und",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-835-payment-integrity/documents/EDI835_Payment_Integrity_V2_Route_Diagrams.pdf",
+      "detail": ""
+    },
+    {
+      "id": "capability-pdf",
+      "name": "Capability Brief PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-835-payment-integrity/documents/EDI835_Payment_Integrity_Capability_Brief.pdf",
+      "detail": ""
+    },
+    {
+      "id": "test-plan-pdf",
+      "name": "Test Plan PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-835-payment-integrity/documents/EDI835_Payment_Integrity_Test_Plan.pdf",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-835-payment-integrity/tests/plan.json"
+}

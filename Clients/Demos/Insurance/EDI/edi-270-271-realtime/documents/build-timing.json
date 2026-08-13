@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "interface": "EDI 270/271 Realtime Eligibility",
+  "slug": "edi-270-271-realtime",
+  "path": "Clients/Demos/Insurance/EDI/edi-270-271-realtime",
+  "requested_by": "user",
+  "started_at": "2026-08-13T06:52:29Z",
+  "completed_at": "2026-08-13T06:59:33Z",
+  "completed_by": "cursor-agent",
+  "duration_minutes": 7.1,
+  "compose_project": "edi-270-271-realtime",
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-13T06:52:29Z",
+      "ended_at": "2026-08-13T06:53:00Z",
+      "duration_minutes": 0.5,
+      "notes": "Stopped edi-270-271-eligibility; deleted realtime tree without overlay restore; scaffolded on 8121"
+    },
+    {
+      "id": "design_scaffold",
+      "name": "DESIGN + V1 HttpPost route + mock payer + Web UI",
+      "started_at": "2026-08-13T06:53:00Z",
+      "ended_at": "2026-08-13T06:56:08Z",
+      "duration_minutes": 3.1,
+      "notes": "REST from sibling 270; HttpPost + PostProcessors + SynchronousResponseProcessor from FHIR Keycloak; XML Formatting on 270 EDI XML write; TableData 5 ../"
+    },
+    {
+      "id": "routes",
+      "name": "V2 publish + full stack",
+      "started_at": "2026-08-13T06:56:08Z",
+      "ended_at": "2026-08-13T06:56:55Z",
+      "duration_minutes": 0.8,
+      "notes": "Single /check returned AAA 72 and active EB; UI 58 ms round-trip"
+    },
+    {
+      "id": "webui_docs",
+      "name": "PDFs + tests + construction prepare",
+      "started_at": "2026-08-13T06:56:55Z",
+      "ended_at": "2026-08-13T06:59:33Z",
+      "duration_minutes": 2.6,
+      "notes": "12/12 tests; orig-vs-realtime PDF; transcript prepared; mp4 left for Info tab"
+    }
+  ],
+  "slowest_phases": [
+    {
+      "id": "design_scaffold",
+      "duration_minutes": 3.1
+    },
+    {
+      "id": "webui_docs",
+      "duration_minutes": 2.6
+    },
+    {
+      "id": "routes",
+      "duration_minutes": 0.8
+    },
+    {
+      "id": "webui_early",
+      "duration_minutes": 0.5
+    }
+  ],
+  "bottlenecks": [
+    "V1 converter needed PostProcessors after HttpPost",
+    "Raw 271 is not XML \u2014 wrap in EdiPayload before parse XSLT"
+  ],
+  "speedup_ideas": [
+    "Applied: unique processor names; XML Formatting only on the 270 EDI XML audit write",
+    "Applied: SaveDataToAttribute + Attribute Population wrap instead of custom Java"
+  ],
+  "docker_at_completion": {
+    "sandbox_compose_projects_running": 1,
+    "sandbox_demo_containers_running": 3,
+    "this_demo_containers": [
+      "pf-edi270rt-pilotfish",
+      "pf-edi-270-271-realtime-webui",
+      "pf-edi270rt-mock-payer"
+    ],
+    "running_projects": [
+      "edi-270-271-realtime"
+    ],
+    "inventory_command": "python3 tools/list_sandbox_demo_docker.py",
+    "captured_at": "2026-08-13T06:59:33Z"
+  }
+}

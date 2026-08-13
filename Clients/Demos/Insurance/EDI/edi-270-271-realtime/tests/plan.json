@@ -1,0 +1,144 @@
+{
+  "version": 1,
+  "interface": "EDI 270/271 Realtime Eligibility",
+  "short_name": "EDI270_271_Realtime",
+  "description": "Single sync REST eligibility check: PF builds 270, posts payer, parses 271.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8121",
+    "eip": "http://127.0.0.1:8120/eip",
+    "payer": "http://127.0.0.1:8211"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8121/",
+    "http://127.0.0.1:8121/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["Realtime", "check-form"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["1-realtime-eligibility-check"] }
+        }
+      ]
+    },
+    {
+      "id": "realtime",
+      "name": "Realtime check",
+      "tests": [
+        {
+          "id": "wait-eip",
+          "name": "EIP is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"eip\":true"]
+          }
+        },
+        {
+          "id": "wait-payer",
+          "name": "Mock payer is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 60,
+            "interval_sec": 3,
+            "contains": ["\"payer\":true"]
+          }
+        },
+        {
+          "id": "aaa",
+          "name": "FAIL001 AAA via single /check",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{eip}/rest/eligibility/check",
+            "headers": { "Content-Type": "application/xml" },
+            "body": "<EligibilityRequest><MemberId>FAIL001</MemberId><LastName>DOE</LastName><FirstName>JANE</FirstName><BirthDate>19800115</BirthDate><Gender>F</Gender><PayerId>MOCKPAYER</PayerId><PayerName>MOCK PAYER</PayerName><ProviderNpi>1234567893</ProviderNpi><ProviderName>PILOTFISH DEMO CLINIC</ProviderName><ServiceTypeCode>30</ServiceTypeCode></EligibilityRequest>"
+          },
+          "expect": { "status": 200, "contains": ["\"theater\":\"aaa_error\"", "\"rejectReason\":\"72\""] }
+        },
+        {
+          "id": "ok",
+          "name": "OK001 benefits via single /check",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{eip}/rest/eligibility/check",
+            "headers": { "Content-Type": "application/xml" },
+            "body": "<EligibilityRequest><MemberId>OK001</MemberId><LastName>SMITH</LastName><FirstName>JOHN</FirstName><BirthDate>19800515</BirthDate><Gender>M</Gender><PayerId>MOCKPAYER</PayerId><PayerName>MOCK PAYER</PayerName><ProviderNpi>1234567893</ProviderNpi><ProviderName>PILOTFISH DEMO CLINIC</ProviderName><ServiceTypeCode>30</ServiceTypeCode></EligibilityRequest>"
+          },
+          "expect": { "status": 200, "contains": ["\"status\":\"active\"", "\"theater\":\"success\""] }
+        },
+        {
+          "id": "ui_check",
+          "name": "Web UI single-call orchestration",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/check-eligibility",
+            "headers": { "Content-Type": "application/json" },
+            "json": {
+              "MemberId": "OK001",
+              "LastName": "SMITH",
+              "FirstName": "JOHN",
+              "BirthDate": "19800515",
+              "Gender": "M"
+            }
+          },
+          "expect": { "status": 200, "json_path_equals": { "ok": true, "mode": "realtime" } }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI270_271_Realtime_V2_Route_Diagrams.pdf" }
+        },
+        {
+          "id": "capability-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI270_271_Realtime_Capability_Brief.pdf" }
+        },
+        {
+          "id": "test-plan-pdf",
+          "name": "Test Plan PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI270_271_Realtime_Test_Plan.pdf" }
+        },
+        {
+          "id": "diff-pdf",
+          "name": "Orig vs realtime PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI270_271_Orig_vs_Realtime_Differences.pdf" }
+        }
+      ]
+    }
+  ]
+}

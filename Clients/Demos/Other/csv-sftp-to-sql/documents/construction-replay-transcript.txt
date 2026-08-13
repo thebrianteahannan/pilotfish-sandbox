@@ -1,0 +1,102 @@
+Construction Replay Transcript — CSV SFTP To SQL
+Demo: csv-sftp-to-sql  ·  Generated 2026-08-12
+Video: documents/construction-replay.mp4
+
+What this interface does
+----------------------------------------
+Poll a CSV file from an FTP directory, stage it locally, parse rows (CSV to XML Dialect A), and insert into SQL Server dbo.CsvPatients.
+
+Who it's for
+----------------------------------------
+- Trading partner / ops drop CSV on FTP (demo / demo, dir upload)
+- PilotFish eiPlatform (23R1)
+- SQL Server 2022 (CsvSftpDemo)
+- Anyone watching the construction video or reading this transcript
+
+Systems involved
+----------------------------------------
+- Trading partner / ops drop CSV on FTP (demo / demo, dir upload)
+- PilotFish eiPlatform (23R1)
+- SQL Server 2022 (CsvSftpDemo)
+
+Documents we also produce
+----------------------------------------
+- csv_sftp_to_sql_Capability_Brief.pdf (ready)
+  Short overview of what the interface does — shareable without reading route XML.
+- CSV_SFTP_To_SQL_Test_Plan.pdf (ready)
+  Scenarios that prove the interface works end-to-end (2 cases in tests/plan.json).
+- Module documentation pack (7 deep-dive PDFs) (ready)
+  PilotFish product PDFs for the modules used in this build.
+- construction-replay.mp4 + this transcript (ready)
+  Narrated walkthrough of building the routes, then a live Demo-tab test when inject is available.
+
+========================================
+Narration (what you'll hear)
+========================================
+
+[Setup]
+
+S1. Welcome
+Welcome to the PilotFish demo: CSV FTP To SQL. Poll a CSV file from an FTP directory, stage it locally, parse rows (CSV to XML Dialect A), and insert into SQL Server dbo.CsvPatients. PilotFish supports the whole flow out of the box.
+
+S2. Pipeline overview
+Before we wire anything, here's the flow end to end. Poll a CSV file from an FTP directory, stage it locally, parse rows (CSV to XML Dialect A), and insert into SQL Server dbo.CsvPatients.
+
+S3. External systems
+And here's what sits around the routes. FTP drop, SQL Server, PilotFish eiPlatform, and Demo Web UI. All of those are spun up in docker images for this demo.
+
+S4. Blank canvas
+Here is a blank canvas, so let's get started creating the new PilotFish interface.
+
+S5. What OGNL is
+One thing you'll see in a few configs: OGNL. Think of it as a tiny expression language — instead of hard-coding a value, we build it from the transaction.
+
+[1 - SFTP Poll And Stage]
+
+1. First route
+Poll a CSV file from an FTP directory, stage it locally, parse rows (CSV to XML Dialect A), and insert into SQL Server dbo.CsvPatients. We'll build that in 2 routes. Starting with a blank canvas on the first route.
+
+2. FTP listener
+First up is the FTP listener — it watches the upload folder on the FTP server. We're only taking .csv files. It checks about every 10 seconds. Once we've got the file, we delete it remotely so it doesn't get picked up again.
+
+3. Archive step
+Next we archive the raw file — an exact copy of whatever arrived, before we touch the data. That lands under /opt/pilotfish/output/archive, original name plus a timestamp.
+
+4. Stage-to-disk step
+Then we write the file out to /opt/pilotfish/input/staged. That keeps FTP pickup separate from the next route.
+
+[2 - CSV To SQL]
+
+5. Next route
+Next route — blank canvas again, then the modules one at a time.
+
+6. Staged-folder listener
+Next is the staged-folder listener — it never talks to FTP, just the local stage. It watches /opt/pilotfish/input/staged. We're only taking .csv files. It polls every 5 seconds. After pickup we move the file aside so the folder stays clean.
+
+7. CSV processor
+Here's the CSV processor — it turns the file into XML and uses the header row for the column names.
+
+8. Mapping step
+Now for the mapping — I'll open the stylesheet. We are using the stock XSLT processor with csv-to-sqlxml.xslt. Watch the for-each over XCSRecord. It maps PATIENTID, FIRSTNAME, LASTNAME.
+
+9. SQL step
+And we write to SQL — those statements go into CsvSftpDemo over JDBC.
+
+[Live test]
+
+T1. Prove it works
+Routes are built. Let's switch to the Demo tab and prove it works.
+
+T2. Drop patients.csv
+I'll drop patients.csv into the FTP upload folder — same place a trading partner would.
+
+T3. Waiting for the routes
+Give the routes a moment to pick up the file and write to SQL.
+
+T4. Rows in SQL
+There they are — rows in the database, under SQL rows (CsvPatients).
+
+[Closing]
+
+C1. Demo complete
+That's the demo — Poll a CSV file from an FTP directory, stage it locally, parse rows (CSV to XML Dialect A), and insert into SQL Server dbo.CsvPatients. Thanks for choosing PilotFish.

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="93402465-ea1e-46cc-b420-31dc707d9b65" name="1 - Poll And Score Remits">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="b1aedeff-b14f-490e-80d4-2d6e2c66db81" moduleId="061f9dba-590b-4bfc-958e-9340d654939c" label="Poll EDI 835 Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="574a50ca-3652-47eb-8bc9-350c68309650" moduleId="3422280e-6654-46fe-a8c1-199d902edc77" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="7517ff97-b481-4b4c-a4c3-78728ce06052" moduleId="bdfadfd5-6540-42a4-a75f-64e467a2a32c" label="Extract CLP Remit Fields" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="03f1b37f-11be-4755-b389-5aa9cd3b9cb2" moduleId="16ddf54d-9b52-480f-923d-0749a3c68ed7" label="Debug Write Forked Transaction" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="141c94d1-de19-4d8a-8d1b-824e938be09a" moduleId="66920f38-c7d5-414d-b9e0-b84601de2495" label="Lookup Open AR" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="2eb77287-d7c5-4aed-9f2c-ea3b044f038e" moduleId="735b00c2-5fe3-4b0e-9565-2d00492548a5" label="Extract Open AR Fields" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="670df292-ac91-4191-b8c8-8fa52cdbdbf0" moduleId="84ffec22-ee08-4528-823b-f4e065e7db0d" label="Compose Patient Name" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="2762b41a-4fc0-421a-a134-1e2ecb4c39ae" sourceNodeId="b1aedeff-b14f-490e-80d4-2d6e2c66db81" targetNodeId="574a50ca-3652-47eb-8bc9-350c68309650" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="1920c1ce-018a-4c4e-b6f5-ca7a48f371ad" sourceNodeId="7517ff97-b481-4b4c-a4c3-78728ce06052" targetNodeId="03f1b37f-11be-4755-b389-5aa9cd3b9cb2" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="9b391ba4-ff0f-4370-b651-4fd4649ea449" sourceNodeId="03f1b37f-11be-4755-b389-5aa9cd3b9cb2" targetNodeId="141c94d1-de19-4d8a-8d1b-824e938be09a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="cd5f1de9-3d49-4c54-bd08-34009063c280" sourceNodeId="141c94d1-de19-4d8a-8d1b-824e938be09a" targetNodeId="2eb77287-d7c5-4aed-9f2c-ea3b044f038e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="cceaf27b-8092-43cd-a2e7-958af7040108" sourceNodeId="2eb77287-d7c5-4aed-9f2c-ea3b044f038e" targetNodeId="670df292-ac91-4191-b8c8-8fa52cdbdbf0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="652aed62-fbcf-4838-a89f-c40956c6cf43" sourceNodeId="574a50ca-3652-47eb-8bc9-350c68309650" targetNodeId="7517ff97-b481-4b4c-a4c3-78728ce06052" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+   
+   </Connections>
+</Route>

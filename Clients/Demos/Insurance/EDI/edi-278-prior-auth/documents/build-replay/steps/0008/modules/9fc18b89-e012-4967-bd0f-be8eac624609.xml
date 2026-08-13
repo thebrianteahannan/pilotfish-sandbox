@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="9fc18b89-e012-4967-bd0f-be8eac624609" name="Compose Auth Patient Name" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:PatientLast:eip_name:{ognl:getAttribute('EdiPatientLast')}:eip_value][eip_pair:PatientFirst:eip_name:{ognl:getAttribute('EdiPatientFirst')}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

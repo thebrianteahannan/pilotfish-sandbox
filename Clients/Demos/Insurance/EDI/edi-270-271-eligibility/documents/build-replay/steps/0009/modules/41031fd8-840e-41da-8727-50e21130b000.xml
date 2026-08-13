@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="41031fd8-840e-41da-8727-50e21130b000" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="7ba5a150-9672-4f1b-91a1-87779ad8ef4b" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="e9db809d-3d9b-46a1-a4b5-173769b3819f" name="Rule 1 - Return 270" type="XPATH">
+               <condition>getAttribute('com.pilotfish.HttpMethodName') == 'POST' &amp;&amp; 'build'.equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName'))</condition>
+            </output>
+            <output id="b89dfcea-93c8-4ac3-9b33-33f2d3167855" name="Rule 2 - Return Summary" type="XPATH">
+               <condition>getAttribute('com.pilotfish.HttpMethodName') == 'POST' &amp;&amp; 'parse'.equalsIgnoreCase(getAttribute('com.pilotfish.ResourceName'))</condition>
+            </output>
+            <output id="b704b518-52da-4496-abc9-eb3adb03fa44" name="Rule 3 - Method Not Allowed" type="XPATH">
+               <condition>true</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

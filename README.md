@@ -20,16 +20,18 @@ Agents constructing any interface under `Clients/` must follow:
 
 ## Reference demos
 
+See [Clients/Demos/README.md](Clients/Demos/README.md) for the category layout. Tools resolve demos by **slug**.
+
 | Demo | Path |
 |------|------|
-| EDI 837 + SNIP + SQL Server | `Clients/Demos/edi-837-snip-sqlserver/` |
-| HL7 Healthcare Automation | `Clients/Demos/hl7-healthcare-automation/` |
-| Medical Lab HL7 LLP → MEDITECH | `Clients/Demos/medical-lab-hl7-llp/` |
-| Medical Device HL7 → EHR | `Clients/Demos/medical-device-hl7-ehr/` |
-| FHIR Patient Exchange | `Clients/Demos/fhir-patient-exchange/` |
-| EDI 270/271 Eligibility | `Clients/Demos/edi-270-271-eligibility/` |
-| FHIR R4 Expandable Platform | `Clients/Demos/fhir-r4-platform/` |
-| CSV to JSON | `Clients/Demos/csv-to-json/` |
-| XML → EDI 834 | `Clients/Demos/xml-to-edi-834/` (`./docker-run-834.sh`) |
-| FTP Named Download Trigger | `Clients/Demos/ftp-named-download-trigger/` |
-| EDI 837P → QCare | `Clients/Demos/edi-837p-qcare/` |
+| EDI 837 + SNIP + SQL Server | `Clients/Demos/Insurance/EDI/edi-837-snip-sqlserver/` |
+| HL7 Healthcare Automation | `Clients/Demos/Medical/HL7/hl7-healthcare-automation/` |
+| Medical Lab HL7 LLP → MEDITECH | `Clients/Demos/Medical/HL7/medical-lab-hl7-llp/` |
+| Medical Device HL7 → EHR | `Clients/Demos/Medical/HL7/medical-device-hl7-ehr/` |
+| EDI 270/271 Eligibility | `Clients/Demos/Insurance/EDI/edi-270-271-eligibility/` |
+| FHIR R4 Expandable Platform | `Clients/Demos/Medical/FHIR/fhir-r4-platform/` |
+| CSV to JSON | `Clients/Demos/Other/csv-to-json/` |
+| XML → EDI 834 | `Clients/Demos/Insurance/EDI/xml-to-edi-834/` |
+| FTP Named Download Trigger | `Clients/Demos/Other/ftp-named-download-trigger/` |
+| EDI 837P → QCare | `Clients/Demos/Insurance/EDI/edi-837p-qcare/` |
+| HTTP POST → RabbitMQ | `Clients/Demos/Other/http-post-to-rabbitmq/` |

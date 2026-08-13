@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="f59b0701-e798-49a6-945c-adf44d889b8e" name="Write 270 EDI XML" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$EDI_270_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:'270_' + @java.lang.System@currentTimeMillis() + '_edi.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="5ae542e9-7402-47d0-9e41-843c4a507480" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="2167b77a-b7ab-4197-baf4-5b23af443956" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="41e5795c-6e70-4a60-ac8b-23a282afd6a1" name="Rule 1 - Emit 277 Response" type="XPATH">
+               <condition>boolean(//DecisionBucket)</condition>
+            </output>
+            <output id="d522dad0-d2c6-4e14-815d-c488676d0093" name="Rule 2 - Write Found" type="XPATH">
+               <condition>//DecisionBucket = 'found'</condition>
+            </output>
+            <output id="c10e13fc-cb47-4e5c-bb53-82ffd1d74281" name="Rule 3 - Write Not Found" type="XPATH">
+               <condition>//DecisionBucket = 'not-found'</condition>
+            </output>
+            <output id="00391c62-a02f-487b-9835-c09c5878f5df" name="Rule 4 - Write Error" type="XPATH">
+               <condition>//DecisionBucket = 'error'</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

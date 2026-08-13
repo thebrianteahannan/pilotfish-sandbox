@@ -1,0 +1,22 @@
+{
+  "groups": [
+    {
+      "id": "extract",
+      "title": "Extract 278",
+      "description": "Pull trace, member, procedure, diagnosis, and attachment flags from the forked ST.",
+      "labels": ["Extract 278 Auth Fields", "Debug Write Forked Transaction"]
+    },
+    {
+      "id": "enrich",
+      "title": "Auth catalog lookup",
+      "description": "SQL AuthCatalog lookup for completeness rules and default disposition.",
+      "labels": ["Lookup Auth Catalog", "Extract Catalog Fields", "Compose Auth Patient Name"]
+    },
+    {
+      "id": "decide",
+      "title": "Auth decision",
+      "description": "Build AuthDecision XML, pretty-print, and stage for routing.",
+      "labels": ["Build Auth Decision XML", "Debug Write Auth Decision", "Pretty-Print Auth Decision XML"]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="61ab4609-5cc0-46f5-a884-abacfb4a3dc6" name="1 - Export Captures to XML">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="646e43f3-3dc2-44b6-893c-6aa13ebb9dca" moduleId="d28dd7da-3417-44db-bfb3-c783af188d80" label="Poll Captures Table" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="f45949ab-270b-4208-aaec-cfaace650064" moduleId="aeabcb3a-e44c-4ac1-a848-a37c1db4d648" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="de19c3f6-3e20-4646-aa72-4e67cc54ba27" moduleId="7ddd38b6-f957-4671-94f7-4004e039e28d" label="Pretty-Print XML" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="c3ab88e0-1ab3-4483-ad88-4b44b0805ceb" sourceNodeId="646e43f3-3dc2-44b6-893c-6aa13ebb9dca" targetNodeId="f45949ab-270b-4208-aaec-cfaace650064" sourceConnector="right-output" targetConnector="router-input:a679dde4-8b98-49ef-908a-9539e0bd9fef" condition="true"/>
+      
+      
+      <Connection id="3748b02d-b030-448b-8211-4dcea8abf3be" sourceNodeId="f45949ab-270b-4208-aaec-cfaace650064" targetNodeId="de19c3f6-3e20-4646-aa72-4e67cc54ba27" sourceConnector="router-output:3a3a3362-9130-40a0-9c1e-18cd206571f2" targetConnector="left-input" condition="true"/>
+      
+   
+   </Connections>
+</Route>

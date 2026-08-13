@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "title": "Module-by-module construction replay",
+  "steps": [
+    {
+      "route_id": "1-http-post-to-rabbitmq",
+      "route_name": "1 - HTTP POST To RabbitMQ",
+      "message": "First route",
+      "detail": "Accept an HTTP POST body on a PilotFish web-service path and publish that same payload to a RabbitMQ queue. Starting with a blank canvas on the first route.",
+      "modules_visible": 0,
+      "focus_label": "",
+      "focus_node_id": "",
+      "external_systems": [],
+      "id": "0001",
+      "seq": 1,
+      "recorded_at": "2026-08-13T03:59:55Z"
+    },
+    {
+      "id": "0002",
+      "seq": 2,
+      "route_id": "1-http-post-to-rabbitmq",
+      "route_name": "1 - HTTP POST To RabbitMQ",
+      "message": "HTTP POST Ingress",
+      "detail": "First up is an HTTP Post listener \u2014 partners POST a body to /ingress on this server, and that starts the transaction.",
+      "modules_visible": 1,
+      "focus_label": "HTTP POST Ingress",
+      "focus_node_id": "f5fdd77a-94ba-4670-a261-353c86fcefba",
+      "module_type": "HTTP Post",
+      "module_tag": "Listener",
+      "module_class": "com.pilotfish.eip.modules.http.HttpPostListener",
+      "custom_module": false,
+      "config_highlights": [
+        "RequestPath: ingress"
+      ],
+      "recorded_at": "2026-08-13T03:59:55Z"
+    },
+    {
+      "id": "0003",
+      "seq": 3,
+      "route_id": "1-http-post-to-rabbitmq",
+      "route_name": "1 - HTTP POST To RabbitMQ",
+      "message": "Publish To Queue",
+      "detail": "Then we publish that same body onto RabbitMQ queue demo.http.ingress, so downstream consumers can pick it up. The transport declares the queue if it isn't there yet.",
+      "modules_visible": 2,
+      "focus_label": "Publish To Queue",
+      "focus_node_id": "56c275cb-6301-4aef-8979-0fc76a19826a",
+      "module_type": "RabbitMQ",
+      "module_tag": "Transport",
+      "module_class": "com.pilotfish.eip.modules.messaging.rabbitmq.RabbitMQTransport",
+      "custom_module": false,
+      "config_highlights": [
+        "Queue: demo.http.ingress",
+        "ConnectionMethod: Host and Port",
+        "PointToPointMode: Queue (Point-to-Point)",
+        "UserName: demo",
+        "URI: amqp://localhost",
+        "HostsAndPorts: rabbitmq:5672"
+      ],
+      "recorded_at": "2026-08-13T03:59:55Z"
+    }
+  ],
+  "updated_at": "2026-08-13T03:59:55Z",
+  "default_pause_ms": 4500
+}

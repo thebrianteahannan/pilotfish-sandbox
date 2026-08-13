@@ -1,0 +1,23 @@
+---
+description: Shut down other Sandbox demo Docker stacks before starting a new demo
+alwaysApply: true
+---
+
+# One demo Docker stack at a time
+
+When starting, scaffolding, or spinning up a **new** PilotFish Sandbox demo under `Clients/` (including `scaffold_demo_stage.py`, `docker compose up`, or first bring-up of a demo Web UI/EIP):
+
+## Required first step
+1. Inventory running Sandbox demos: `python3 tools/list_sandbox_demo_docker.py`
+2. **Stop every other demo stack** under `Clients/` before bringing the new one up.
+   - Prefer `docker compose down` from that demo’s directory (or `docker compose -f <path>/docker-compose.yml --project-directory <path> down`).
+   - Match Compose projects whose config files live under `Clients/` and/or containers named `pf-*` for demos you are not about to start.
+3. Confirm briefly in chat which projects you stopped, then start only the target demo.
+
+## Do
+- Always do this automatically when the user asks to create/start a new demo — do not wait to be asked.
+- Leave non-demo host containers alone (e.g. unrelated apps not under `Clients/`).
+
+## Don’t
+- Do **not** use `docker compose down -v`, `docker system prune`, or volume/image deletes unless the user explicitly asks.
+- Do **not** leave idle demos running “just in case” while building another demo (port and RAM collisions).

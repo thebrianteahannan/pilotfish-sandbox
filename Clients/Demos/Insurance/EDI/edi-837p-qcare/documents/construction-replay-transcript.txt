@@ -1,0 +1,79 @@
+Construction Replay Transcript — EDI 837P to QCare — Design
+Demo: edi-837p-qcare  ·  Generated 2026-08-13
+Video: documents/construction-replay.mp4
+
+What this interface does
+----------------------------------------
+Directory-poll X12 837P professional claims, parse with PilotFish EDI TableData (837-Q1), and map each ST to QCare's 2100-byte outpatient (OT / B837) flat-file record. Demo only — golden-path fidelity against client samples, not full WTX/ITX parity.
+
+Who it's for
+----------------------------------------
+- Source: operator dropping *.txt / *.edi / *.837 into input/inbound
+- Destinations: QCare text under output/qcare/; archived EDI under output/archive/; debug EDI XML under output/debug/
+- Demo vs production: synthetic/client sample PHI; no SNIP gate; REPOSHDR claim numbering is a demo-stable header, not byte-identical to staged WTX
+- Anyone watching the construction video or reading this transcript
+
+Systems involved
+----------------------------------------
+- Source: operator dropping *.txt / *.edi / *.837 into input/inbound
+- Destinations: QCare text under output/qcare/; archived EDI under output/archive/; debug EDI XML under output/debug/
+- Demo vs production: synthetic/client sample PHI; no SNIP gate; REPOSHDR claim numbering is a demo-stable header, not byte-identical to staged WTX
+
+Documents we also produce
+----------------------------------------
+- EDI837P_QCare_Capability_Brief.pdf (ready)
+  Short overview of what the interface does — shareable without reading route XML.
+- EDI837P_QCare_Test_Plan.pdf (ready)
+  Scenarios that prove the interface works end-to-end.
+- Module documentation pack (7 deep-dive PDFs) (ready)
+  PilotFish product PDFs for the modules used in this build.
+- EDI837P_QCare_V2_Route_Diagrams.pdf (ready)
+  V2 route diagrams for visual review of module topology.
+- construction-replay.mp4 + this transcript (generate when ready)
+  Narrated walkthrough of building the routes, then a live Demo-tab test when inject is available.
+
+========================================
+Narration (what you'll hear)
+========================================
+
+[Setup]
+
+S1. Welcome
+Welcome to the PilotFish demo: EDI 837P to QCare. Directory-poll X12 837P professional claims, parse with PilotFish EDI TableData (837-Q1), and map each ST to QCare's 2100-byte outpatient (OT / B837) flat-file record. PilotFish supports the whole flow out of the box.
+
+S2. Pipeline overview
+Before we wire anything, here's the flow end to end. Directory-poll X12 837P professional claims, parse with PilotFish EDI TableData (837-Q1), and map each ST to QCare's 2100-byte outpatient (OT / B837) flat-file record.
+
+S3. External systems
+And here's what sits around the routes. PilotFish eiPlatform and Demo Web UI. All of those are spun up in docker images for this demo.
+
+[1 - Map 837P To QCare]
+
+1. First route
+Directory-poll X12 837P professional claims, parse with PilotFish EDI TableData (837-Q1), and map each ST to QCare's 2100-byte outpatient (OT / B837) flat-file record. Starting with a blank canvas on the first route.
+
+2. Poll EDI 837P Files
+Here's a directory listener — it watches a local folder. That folder is /opt/pilotfish/input/inbound. We're only taking .edi, .txt, .837 files. It checks about every 5 seconds. After pickup we move the file aside so the folder stays clean.
+
+3. Fork - XPath
+This XPath fork splits the file so each transaction set becomes its own message.
+
+4. Extract Claim Identity
+XPath evaluation copies a few fields off the XML onto the transaction so later steps can use them.
+
+5. Pretty-Print EDI XML
+This processor pretty-prints the XML — line breaks and indent — so the file on disk is readable.
+
+6. Debug Write EDI XML
+This writes a debug copy of the XML so we can inspect what the route saw. That lands under /opt/pilotfish/output/debug.
+
+7. Map EDI XML To QCare Flat File
+Now for the mapping — we're using the stock XSLT processor with transform-837p-to-qcare.xslt. The stylesheet writes a 2100-character fixed-width text record.
+
+8. Write QCare Record
+Then we write the file out to /opt/pilotfish/output/qcare.
+
+[Closing]
+
+C1. Demo complete
+That's the demo — directory-poll X12 837P professional claims, parse with PilotFish EDI TableData (837-Q1), and map each ST to QCare's 2100-byte outpatient (OT / B837). Thanks for choosing PilotFish.

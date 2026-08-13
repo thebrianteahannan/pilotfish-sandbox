@@ -10,10 +10,13 @@ import re
 import shutil
 from pathlib import Path
 
+from demo_paths import resolve_demo, require_demo
+
 ROOT = Path(__file__).resolve().parents[1]
-DEMOS = ROOT / "Clients" / "Demos"
-REF = DEMOS / "fhir-r4-platform"
-REF_VIEWER = REF / "webui" / "static" / "route-viewer"
+
+
+def _ref_viewer() -> Path:
+    return require_demo("fhir-r4-platform") / "webui" / "static" / "route-viewer"
 
 # Demos that get viewer/API hygiene (and groups JSON where defined below)
 ALL_TARGET_DEMOS = [
@@ -225,7 +228,7 @@ def port_viewer(demo: Path) -> None:
         "route-node-editor-web.css",
         "index.html",
     ):
-        src = REF_VIEWER / name
+        src = _ref_viewer() / name
         if src.is_file():
             shutil.copy2(src, dest / name)
             print(f"  copied {name}")
@@ -619,8 +622,8 @@ def rewrite_export(demo_name: str, demo: Path) -> None:
 
 def main() -> int:
     for name in ALL_TARGET_DEMOS:
-        demo = DEMOS / name
-        if not demo.is_dir():
+        demo = resolve_demo(name)
+        if demo is None:
             print("missing", name)
             continue
         print(f"\n=== {name} ===")

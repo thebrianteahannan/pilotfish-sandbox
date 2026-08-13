@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="dca3fa4e-0600-40f4-87a1-e84761085cda" name="Post JSON To Object Storage" type="HTTP POST" tag="Transport" class="com.pilotfish.eip.modules.http.HttpPostTransport">
+   <ModuleConfig>
+      <TargetURL>{ognl:'http://oci-mock:4599/n/floci-local/b/edi-835-payments/o/' + (getAttribute('StControlNumber') != null ? getAttribute('StControlNumber') : 'st') + '_' + (getAttribute('ClaimControlNumber') != null ? getAttribute('ClaimControlNumber') : 'claim') + '.json'}</TargetURL>
+      
+        
+      <UserName/>
+      
+        
+      <Password/>
+      
+        
+      <AUTH_HOST_TAG/>
+      
+        
+      <AUTH_PORT_TAG/>
+      
+        
+      <PreemptiveAuthentication>false</PreemptiveAuthentication>
+      
+        
+      <FormElement/>
+      
+        
+      <HTTPHeaders>[eip_pair:Content-Type:eip_name:application/json; charset=UTF-8:eip_value]</HTTPHeaders>
+      
+        
+      <useProxy>false</useProxy>
+      
+        
+      <proxyHost>127.0.0.1</proxyHost>
+      
+        
+      <proxyPort>8080</proxyPort>
+      
+        
+      <proxyUsername/>
+      
+        
+      <ProxyPassword/>
+      
+        
+      <KeyStoreFilePath/>
+      
+        
+      <KeyStoreFileType>NONE</KeyStoreFileType>
+      
+        
+      <KeyStoreFilePassword/>
+      
+        
+      <TrustStoreFilePath/>
+      
+        
+      <TrustStoreFilePassword/>
+      
+        
+      <DisableChunking>false</DisableChunking>
+      
+        
+      <Timeout>30</Timeout>
+      
+        
+      <ResponseCodeHandling>Default</ResponseCodeHandling>
+      
+        
+      <ResponseCodeList/>
+      
+        
+      <FormElementEncoding>UTF-8</FormElementEncoding>
+      
+        
+      <UrlParamEncoding>UTF-8</UrlParamEncoding>
+      
+        
+      <ErrorResponseEncoding>UTF-8</ErrorResponseEncoding>
+      
+        
+      <TrustStoreSource>JVM</TrustStoreSource>
+      
+        
+      <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      
+      
+   </ModuleConfig>
+</Module>

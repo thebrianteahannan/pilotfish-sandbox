@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "interface": "EDI 278 Prior Auth",
+  "slug": "edi-278-prior-auth",
+  "path": "Clients/Demos/Insurance/EDI/edi-278-prior-auth",
+  "requested_by": "user",
+  "started_at": "2026-08-13T07:00:14Z",
+  "completed_at": "2026-08-13T07:21:00Z",
+  "completed_by": "cursor-agent",
+  "duration_minutes": 20.8,
+  "compose_project": "edi-278-prior-auth",
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-13T07:00:14Z",
+      "ended_at": "2026-08-13T07:02:00Z",
+      "duration_minutes": 1.8,
+      "notes": "Stopped realtime stack; deleted 278 tree without overlay restore; scaffolded Insurance/EDI/edi-278-prior-auth on 8121"
+    },
+    {
+      "id": "design_scaffold",
+      "name": "DESIGN + SQL + V1 routes + Web UI",
+      "started_at": "2026-08-13T07:02:00Z",
+      "ended_at": "2026-08-13T07:10:00Z",
+      "duration_minutes": 8.0,
+      "notes": "Route 1 from 835 directory/EDI/JDBC skeleton; Route 2 XPath accumulate fan-out; 278 XML→EDI via XCSData; ORU via HL7TransformationProcessor from Med Rec 3b; XML Formatting on XML bucket writes only"
+    },
+    {
+      "id": "routes",
+      "name": "V2 publish + full stack + scoring fix",
+      "started_at": "2026-08-13T07:10:00Z",
+      "ended_at": "2026-08-13T07:13:20Z",
+      "duration_minutes": 3.3,
+      "notes": "OGNL with semicolons/colons did not evaluate — switched to XPath SV101_02/HI01_02. UPDATE needs SELECT @@ROWCOUNT. Then PACOMPLETE01 APPROVED, PAINCOMPLETE01 INCOMPLETE, PADENY01 DENIED, PAPEND01 PENDED"
+    },
+    {
+      "id": "webui_docs",
+      "name": "PDFs + tests + construction prepare",
+      "started_at": "2026-08-13T07:13:20Z",
+      "ended_at": "2026-08-13T07:21:00Z",
+      "duration_minutes": 7.7,
+      "notes": "16/16 tests; Flask JSON has no space after colon in Status waits; transcript prepared; mp4 left for Info tab Create construction video"
+    }
+  ],
+  "slowest_phases": [
+    {"id": "design_scaffold", "duration_minutes": 8.0},
+    {"id": "webui_docs", "duration_minutes": 7.7},
+    {"id": "routes", "duration_minutes": 3.3}
+  ],
+  "bottlenecks": [
+    "TransactionAttributePopulation OGNL cannot use semicolons or colon-in-string strippers — XPath composite SV101_02 instead",
+    "DatabaseSqlProcessor UPDATE must end with SELECT @@ROWCOUNT or JDBC executeQuery fails"
+  ],
+  "speedup_ideas": [
+    "Applied: unique Pretty-Print names per bucket; XML Formatting on XML transports only",
+    "Applied: SQLXML uppercase XPath; TableData 5 ../ for 278-A1 inbound and 278-A3 outbound"
+  ]
+}

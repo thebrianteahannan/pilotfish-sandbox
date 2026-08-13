@@ -22,6 +22,7 @@ import json
 import re
 import sys
 from datetime import date
+from demo_paths import require_demo
 from pathlib import Path
 
 from reportlab.lib import colors
@@ -132,7 +133,8 @@ def discover_docs(demo: Path) -> dict:
     sections = parse_design_sections(design_text) if design_text else {}
 
     purpose = first_paragraph(section_match(sections, "purpose", "business goal", "goal"))
-    # Spoken/demo wording prefers FTP over SFTP in human-facing transcript prose
+    if purpose and re.fullmatch(r"(tbd|todo|n/?a|none|\.+)", purpose, flags=re.I):
+        purpose = ""
     if purpose:
         purpose = re.sub(r"\bSFTP\b", "FTP", purpose)
         purpose = re.sub(r"\bSftp\b", "FTP", purpose)
@@ -140,17 +142,10 @@ def discover_docs(demo: Path) -> dict:
     system_actors = [
         re.sub(r"\bSftp\b", "FTP", re.sub(r"\bSFTP\b", "FTP", s)) for s in system_actors
     ]
-    audiences = [
-        "Ops and trading partners dropping CSV files on FTP",
-        "Stakeholders who want the Capability Brief, not route XML",
-        "Engineers running the Test Plan against the Demo UI and SQL",
-        "Anyone watching the construction video or reading this transcript",
-    ]
-    # Keep concrete systems from DESIGN as context under "connected systems"
+    audiences = list(system_actors[:6]) if system_actors else []
+    if not any("transcript" in a.lower() or "video" in a.lower() for a in audiences):
+        audiences.append("Anyone watching the construction video or reading this transcript")
     actors = audiences
-    if system_actors:
-        # Prefer human-facing audience list; systems listed separately in companions/purpose
-        pass
 
     # Capability brief
     brief = None
@@ -250,7 +245,7 @@ def discover_docs(demo: Path) -> dict:
         {
             "name": "construction-replay.mp4 + this transcript",
             "exists": (docs / "construction-replay.mp4").is_file(),
-            "role": "Narrated walkthrough of building the routes, then a live inject → SQL smoke test.",
+            "role": "Narrated walkthrough of building the routes, then a live Demo-tab test when inject is available.",
             "path": "documents/construction-replay.mp4",
         }
     )
@@ -564,7 +559,7 @@ def build_pdf(demo: Path, steps: list[dict], title: str, ctx: dict, out_path: Pa
         story.append(Paragraph("Live test", styles["h2"]))
         story.append(
             Paragraph(
-                "After construction, the video switches to the Demo tab and runs inject → SQL.",
+                "After construction, the video switches to the Demo tab and runs a live inject when the UI supports it.",
                 styles["body"],
             )
         )
@@ -644,7 +639,7 @@ def main() -> int:
     ap.add_argument("--out", help="PDF output path (default: documents/construction-replay-transcript.pdf)")
     ap.add_argument("--out-txt", help="Plain-text twin path (default: documents/construction-replay-transcript.txt)")
     args = ap.parse_args()
-    demo = Path(args.root).expanduser().resolve()
+    demo = require_demo(args.root)
     pdf_path = Path(args.out).expanduser().resolve() if args.out else None
     txt_path = Path(args.out_txt).expanduser().resolve() if args.out_txt else None
     pdf, txt = export(demo, out_pdf=pdf_path, out_txt=txt_path)

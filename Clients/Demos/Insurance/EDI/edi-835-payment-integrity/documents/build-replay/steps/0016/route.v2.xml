@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="b918cb9e-975a-4f67-b223-30de068c1e18" name="2 - Route Remit Decisions">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="47e79af0-c581-4912-90f8-53ae07882a70" moduleId="8c5946d2-3f0e-44e2-9a12-1774a9d760d7" label="Poll Staged Remit Decisions" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="f6e449fb-0322-4fa5-9e10-be0fc3fad673" moduleId="ce3c53c3-94ef-4efc-8b39-1a6cdbaeb9f4" label="Extract Decision Attributes" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="7cc2caf5-00ee-4cb2-8e31-331e7fdb0864" moduleId="f93e4b94-7828-497b-8f6e-1f3f23c22beb" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="96.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="bd0b93ee-a86b-41c1-af58-3e199e9f5da4" sourceNodeId="47e79af0-c581-4912-90f8-53ae07882a70" targetNodeId="f6e449fb-0322-4fa5-9e10-be0fc3fad673" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="c8aa805a-065d-4ccb-b2e9-0fed8dfa34d1" sourceNodeId="f6e449fb-0322-4fa5-9e10-be0fc3fad673" targetNodeId="7cc2caf5-00ee-4cb2-8e31-331e7fdb0864" sourceConnector="right-output" targetConnector="router-input:6c0d42aa-303a-4de8-9ae8-20c57dfbeaac" condition="true"/>
+      
+      
+   </Connections>
+</Route>

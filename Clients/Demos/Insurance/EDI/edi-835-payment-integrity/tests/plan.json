@@ -1,0 +1,172 @@
+{
+  "version": 1,
+  "interface": "EDI 835 Payment Integrity",
+  "short_name": "EDI835_Payment_Integrity",
+  "description": "Directory-drop 835, OpenAR lookup, matched vs exception buckets, underpay CSV.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8111",
+    "eip": "http://127.0.0.1:8110/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8111/",
+    "http://127.0.0.1:8111/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["835", "inject-form"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["1-poll-and-score-remits", "2-route-remit-decisions"] }
+        }
+      ]
+    },
+    {
+      "id": "remit",
+      "name": "835 scoring",
+      "tests": [
+        {
+          "id": "wait-sql",
+          "name": "SQL is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"sql\":true"]
+          }
+        },
+        {
+          "id": "wait-eip",
+          "name": "EIP is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"eip\":true"]
+          }
+        },
+        {
+          "id": "open-ar-seed",
+          "name": "OpenAR seed rows",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/open-ar",
+            "timeout_sec": 60,
+            "interval_sec": 2,
+            "contains": ["PATCLAIM001", "PATCLAIM002"]
+          }
+        },
+        {
+          "id": "reset-drop",
+          "name": "Reset then drop sample 835",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/reset"
+          },
+          "expect": { "status": 200, "contains": ["ok"] }
+        },
+        {
+          "id": "inject-sample",
+          "name": "Inject sample 835",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/inject",
+            "headers": { "Content-Type": "application/json" },
+            "body": { "sample": "sample_835_underpays.edi" }
+          },
+          "expect": { "status": 200, "contains": ["sample_835_underpays.edi"] }
+        },
+        {
+          "id": "matched-002",
+          "name": "PATCLAIM002 matched",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["PATCLAIM002", "matched"]
+          }
+        },
+        {
+          "id": "underpay-001",
+          "name": "PATCLAIM001 underpay exception",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["PATCLAIM001", "UNDERPAY"]
+          }
+        },
+        {
+          "id": "no-ar-999",
+          "name": "PATCLAIM999 NO_AR exception",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["PATCLAIM999", "NO_AR"]
+          }
+        },
+        {
+          "id": "underpay-csv",
+          "name": "Underpay CSV has PATCLAIM001",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 60,
+            "interval_sec": 3,
+            "contains": ["PATCLAIM001"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI835_Payment_Integrity_V2_Route_Diagrams.pdf" }
+        },
+        {
+          "id": "capability-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI835_Payment_Integrity_Capability_Brief.pdf" }
+        },
+        {
+          "id": "test-plan-pdf",
+          "name": "Test Plan PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI835_Payment_Integrity_Test_Plan.pdf" }
+        }
+      ]
+    }
+  ]
+}

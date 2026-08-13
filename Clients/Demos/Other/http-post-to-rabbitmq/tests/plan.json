@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "interface": "HTTP POST To RabbitMQ",
+  "short_name": "HTTP_POST_To_RabbitMQ",
+  "description": "HTTP POST web service inbound, publish the same body to a RabbitMQ queue.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8135",
+    "eip": "http://127.0.0.1:8134/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8135/",
+    "http://127.0.0.1:8135/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["HTTP POST", "RabbitMQ"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["routes"] }
+        }
+      ]
+    },
+    {
+      "id": "publish",
+      "name": "POST then queue",
+      "tests": [
+        {
+          "id": "wait-eip",
+          "name": "EIP is reachable via Web UI health",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 120,
+            "interval_sec": 3,
+            "contains": ["\"eip\":"]
+          }
+        },
+        {
+          "id": "inject-sample",
+          "name": "POST sample JSON through EIP",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/inject",
+            "headers": { "Content-Type": "application/json" },
+            "timeout": 80,
+            "body": { "sample": "sample-order.json" }
+          },
+          "expect": { "status": 200, "contains": ["\"ok\":true"] }
+        },
+        {
+          "id": "queue-has-order",
+          "name": "Queue peek contains orderId",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/queue",
+            "timeout_sec": 30,
+            "interval_sec": 1,
+            "contains": ["ORD-1001"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/HTTP_POST_To_RabbitMQ_V2_Route_Diagrams.pdf", "exists": true }
+        },
+        {
+          "id": "brief-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/HTTP_POST_To_RabbitMQ_Capability_Brief.pdf", "exists": true }
+        },
+        {
+          "id": "test-plan-pdf",
+          "name": "Test Plan PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/HTTP_POST_To_RabbitMQ_Test_Plan.pdf", "exists": true }
+        }
+      ]
+    }
+  ]
+}

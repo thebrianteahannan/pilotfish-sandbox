@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="961b368d-5499-45f6-92ad-eb3b1fdf7e75" name="2 - Scrub Claim And Route">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="7551b8fe-2e08-4bad-8fb2-b4ebd71b0f46" moduleId="80dc6d56-e0a2-4f27-9bc0-3b92f52672d9" label="Scrub Claim And Route.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="89b9ebae-a045-40e0-b280-c37e20fb56b9" moduleId="4cdae8a4-5d48-4d5c-9acd-c02908a3ba4a" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="113c9a94-70ca-4a54-8274-8d80a41cc401" sourceNodeId="7551b8fe-2e08-4bad-8fb2-b4ebd71b0f46" targetNodeId="89b9ebae-a045-40e0-b280-c37e20fb56b9" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+   </Connections>
+</Route>

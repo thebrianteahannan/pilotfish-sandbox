@@ -26,9 +26,25 @@ def utc_now() -> str:
 
 
 def resolve_root(raw: str | None) -> Path:
-    if raw:
-        return Path(raw).expanduser().resolve()
-    return Path.cwd().resolve()
+    from demo_paths import require_demo
+
+    return require_demo(raw)
+
+
+def maybe_prepare_video_assets(root: Path) -> None:
+    script = TOOLS / "export_construction_video.py"
+    if not script.is_file():
+        return
+    print("Preparing construction video assets (no mp4)…")
+    proc = subprocess.run(
+        [sys.executable, str(script), "--root", str(root), "--prepare-only"],
+        cwd=str(ROOT),
+    )
+    if proc.returncode != 0:
+        print(
+            f"WARNING: construction video prepare failed (exit {proc.returncode}).",
+            file=sys.stderr,
+        )
 
 
 def maybe_export_video(root: Path, *, enabled: bool, url: str | None) -> None:
@@ -56,6 +72,7 @@ def main() -> int:
     ap.add_argument("--root", help="Demo root (contains documents/)")
     ap.add_argument("--phase", help="Phase id: scaffold|design|routes|webui|docs|tests|idle")
     ap.add_argument("--message", help="Human-readable status line")
+    ap.add_argument("--log", action="append", default=[], help="Append a live-log line (repeatable)")
     ap.add_argument("--route", dest="current_route", help="Current route being built")
     ap.add_argument("--add-route", action="append", default=[], help="Append to routes_ready (repeatable)")
     ap.add_argument("--active", action="store_true", help="Mark build active")
@@ -64,8 +81,8 @@ def main() -> int:
     ap.add_argument(
         "--video",
         action=argparse.BooleanOptionalAction,
-        default=True,
-        help="On --complete, record documents/construction-replay.mp4 (default: true)",
+        default=False,
+        help="On --complete, also record construction-replay.mp4 (default: false; Info tab button)",
     )
     ap.add_argument("--url", help="Web UI URL for video recording (optional)")
     args = ap.parse_args()
@@ -106,6 +123,12 @@ def main() -> int:
         if r and r not in ready:
             ready.append(r)
     data["routes_ready"] = ready
+    log = list(data.get("log") or [])
+    for line in args.log:
+        text = str(line or "").strip()
+        if text:
+            log.append({"at": utc_now(), "text": text})
+    data["log"] = log[-12:]
     data["updated_at"] = utc_now()
     data["version"] = 1
 
@@ -114,6 +137,7 @@ def main() -> int:
     print(json.dumps(data, indent=2))
 
     if args.complete:
+        maybe_prepare_video_assets(root)
         maybe_export_video(root, enabled=args.video, url=args.url)
     return 0
 

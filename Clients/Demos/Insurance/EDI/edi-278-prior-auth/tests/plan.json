@@ -1,0 +1,183 @@
+{
+  "version": 1,
+  "interface": "EDI 278 Prior Auth",
+  "short_name": "EDI278_Prior_Auth",
+  "description": "Directory-drop 278, AuthCatalog completeness, decision buckets, 278 response, EHR ORU.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8121",
+    "eip": "http://127.0.0.1:8120/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8121/",
+    "http://127.0.0.1:8121/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["Prior Auth", "278"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["1-poll-and-score-auths", "2-route-auth-decisions"] }
+        }
+      ]
+    },
+    {
+      "id": "auth",
+      "name": "278 scoring",
+      "tests": [
+        {
+          "id": "wait-sql",
+          "name": "SQL is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"sql\":true"]
+          }
+        },
+        {
+          "id": "wait-eip",
+          "name": "EIP is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"eip\":true"]
+          }
+        },
+        {
+          "id": "auth-seed",
+          "name": "AuthRequest seed rows",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/auth-requests",
+            "timeout_sec": 60,
+            "interval_sec": 2,
+            "contains": ["PACOMPLETE01", "PAINCOMPLETE01"]
+          }
+        },
+        {
+          "id": "reset-drop",
+          "name": "Reset AuthRequest",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/reset"
+          },
+          "expect": { "status": 200, "contains": ["ok"] }
+        },
+        {
+          "id": "inject-sample",
+          "name": "Inject sample 278",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/inject",
+            "headers": { "Content-Type": "application/json" },
+            "body": { "sample": "sample_278_prior_auths.edi" }
+          },
+          "expect": { "status": 200, "contains": ["sample_278_prior_auths.edi"] }
+        },
+        {
+          "id": "approved-complete",
+          "name": "PACOMPLETE01 approved",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/auth-requests",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["\"Status\":\"APPROVED\""]
+          }
+        },
+        {
+          "id": "incomplete-missing-dx",
+          "name": "PAINCOMPLETE01 incomplete",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/auth-requests",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["\"Status\":\"INCOMPLETE\""]
+          }
+        },
+        {
+          "id": "denied-mri",
+          "name": "PADENY01 denied",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/auth-requests",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["\"Status\":\"DENIED\""]
+          }
+        },
+        {
+          "id": "pended-lumbar",
+          "name": "PAPEND01 pended",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/auth-requests",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["\"Status\":\"PENDED\""]
+          }
+        },
+        {
+          "id": "bucket-files",
+          "name": "Decision buckets and 278/ORU files",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["PACOMPLETE01", "PADENY01", "_278_response", "_auth_decided.oru"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI278_Prior_Auth_V2_Route_Diagrams.pdf" }
+        },
+        {
+          "id": "capability-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI278_Prior_Auth_Capability_Brief.pdf" }
+        },
+        {
+          "id": "test-plan-pdf",
+          "name": "Test Plan PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI278_Prior_Auth_Test_Plan.pdf" }
+        }
+      ]
+    }
+  ]
+}

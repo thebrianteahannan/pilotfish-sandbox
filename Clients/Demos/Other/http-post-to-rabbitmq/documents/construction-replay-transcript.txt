@@ -1,0 +1,87 @@
+Construction Replay Transcript — HTTP POST To RabbitMQ
+Demo: http-post-to-rabbitmq  ·  Generated 2026-08-13
+Video: documents/construction-replay.mp4
+
+What this interface does
+----------------------------------------
+Accept an HTTP POST body on a PilotFish web-service path and publish that same payload to a RabbitMQ queue. Demo-only: no transformation, no auth, no dead-letter theater.
+
+Who it's for
+----------------------------------------
+- Sources: any HTTP client (Web UI inject, curl, partner system)
+- Destinations: RabbitMQ queue demo.http.ingress (AMQP publish)
+- Demo vs production: Demo only (plain AMQP, demo/demo credentials, no TLS)
+- Anyone watching the construction video or reading this transcript
+
+Systems involved
+----------------------------------------
+- Sources: any HTTP client (Web UI inject, curl, partner system)
+- Destinations: RabbitMQ queue demo.http.ingress (AMQP publish)
+- Demo vs production: Demo only (plain AMQP, demo/demo credentials, no TLS)
+
+Documents we also produce
+----------------------------------------
+- http_post_to_rabbitmq_Capability_Brief.pdf (ready)
+  Short overview of what the interface does — shareable without reading route XML.
+- http_post_to_rabbitmq_Test_Plan.pdf (ready)
+  Scenarios that prove the interface works end-to-end.
+- Module documentation pack (2 deep-dive PDFs) (ready)
+  PilotFish product PDFs for the modules used in this build.
+- HTTP_POST_To_RabbitMQ_V2_Route_Diagrams.pdf (ready)
+  V2 route diagrams for visual review of module topology.
+- construction-replay.mp4 + this transcript (ready)
+  Narrated walkthrough of building the routes, then a live Demo-tab test when inject is available.
+
+========================================
+Narration (what you'll hear)
+========================================
+
+[Setup]
+
+S1. Welcome
+Welcome to the PilotFish demo: HTTP POST To RabbitMQ. Accept an HTTP POST body on a PilotFish web-service path and publish that same payload to a RabbitMQ queue. PilotFish supports the whole flow out of the box.
+
+S2. Pipeline overview
+Before we wire anything, here's the flow end to end. Accept an HTTP POST body on a PilotFish web-service path and publish that same payload to a RabbitMQ queue.
+
+S3. External systems
+And here's what sits around the routes. RabbitMQ, PilotFish eiPlatform, and Demo Web UI. All of those are spun up in docker images for this demo.
+
+[1 - HTTP POST To RabbitMQ]
+
+1. First route
+Accept an HTTP POST body on a PilotFish web-service path and publish that same payload to a RabbitMQ queue. Starting with a blank canvas on the first route.
+
+2. HTTP POST Ingress
+First up is an HTTP Post listener — partners POST a body to /ingress on this server, and that starts the transaction.
+
+3. Publish To Queue
+Then we publish that same body onto RabbitMQ queue demo.http.ingress, so downstream consumers can pick it up. The transport declares the queue if it isn't there yet.
+
+[Live test]
+
+T1. Prove it works
+Routes are built. Let's switch to the Demo tab and prove it works.
+
+T2. Submit a sample
+I'll submit this sample from the Demo tab — same as an operator would.
+
+T3. Waiting for the routes
+Give PilotFish a moment to publish that POST onto the queue.
+
+T4. Queue
+There it is — the same body sitting on the queue.
+
+T5. Submit another sample
+Now a second payload from the Demo tab.
+
+T6. Waiting for the routes
+Same path — it should show up on the queue right away.
+
+T7. Queue
+Second payload's on the queue too.
+
+[Closing]
+
+C1. Demo complete
+That's the demo — accept an HTTP POST body on a PilotFish web-service path and publish that same payload to a RabbitMQ queue. Thanks for choosing PilotFish.

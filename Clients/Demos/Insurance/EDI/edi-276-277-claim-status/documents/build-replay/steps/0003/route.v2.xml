@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="5c9692f9-702e-4896-a56a-f3eea59b611a" name="1 - Intake And Lookup">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="7cfd4ef9-f36a-4388-860b-eca1ad92521a" moduleId="7d25bbc0-26ea-4fed-bc1c-7c07084b4f24" label="Poll EDI 276 Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="8f47a574-c499-48fc-bd79-06f1c6f2ddcf" moduleId="a752a2fc-1e16-4c4a-8a99-3ccf9ef946a3" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="8500a589-ac2b-4022-ad8e-f00d8f29c487" sourceNodeId="7cfd4ef9-f36a-4388-860b-eca1ad92521a" targetNodeId="8f47a574-c499-48fc-bd79-06f1c6f2ddcf" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+   </Connections>
+</Route>

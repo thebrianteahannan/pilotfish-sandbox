@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "interface": "EDI 270/271 Eligibility",
+  "slug": "edi-270-271-eligibility",
+  "path": "Clients/Demos/Insurance/EDI/edi-270-271-eligibility",
+  "requested_by": "user",
+  "started_at": "2026-08-13T06:40:12Z",
+  "completed_at": "2026-08-13T06:51:48Z",
+  "completed_by": "cursor-agent",
+  "duration_minutes": 11.6,
+  "compose_project": "edi-270-271-eligibility",
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-13T06:40:12Z",
+      "ended_at": "2026-08-13T06:42:00Z",
+      "duration_minutes": 1.8,
+      "notes": "Deleted previous tree without overlay restore; scaffolded Insurance/EDI/edi-270-271-eligibility on 8107"
+    },
+    {
+      "id": "design_scaffold",
+      "name": "DESIGN + V1 REST route + mock payer + Web UI",
+      "started_at": "2026-08-13T06:42:00Z",
+      "ended_at": "2026-08-13T06:45:02Z",
+      "duration_minutes": 3.0,
+      "notes": "REST skeleton from CRL Plus Status.91; EDI transform + XML Formatting from edi-835-payment-integrity; TableData 5 ../; unique processor names"
+    },
+    {
+      "id": "routes",
+      "name": "V2 publish + full stack",
+      "started_at": "2026-08-13T06:45:02Z",
+      "ended_at": "2026-08-13T06:46:12Z",
+      "duration_minutes": 1.2,
+      "notes": "XML to EDI omitted ST*270; clinic UI inserts ST. Parse is structural XSLT over wrapped raw 271"
+    },
+    {
+      "id": "webui_docs",
+      "name": "PDFs + tests + construction prepare",
+      "started_at": "2026-08-13T06:46:12Z",
+      "ended_at": "2026-08-13T06:51:48Z",
+      "duration_minutes": 5.6,
+      "notes": "10/10 tests; transcript prepared; mp4 left for Info tab Create construction video"
+    }
+  ],
+  "slowest_phases": [
+    {
+      "id": "webui_docs",
+      "duration_minutes": 5.6
+    },
+    {
+      "id": "design_scaffold",
+      "duration_minutes": 3.0
+    },
+    {
+      "id": "webui_early",
+      "duration_minutes": 1.8
+    },
+    {
+      "id": "routes",
+      "duration_minutes": 1.2
+    }
+  ],
+  "bottlenecks": [
+    "23R1 XML to EDI 270 omitted ST*270",
+    "23R1 EDI to XML for 271 not used; structural XSLT parse"
+  ],
+  "speedup_ideas": [
+    "Applied: clinic UI inserts ST*270 when XML to EDI omits it",
+    "Applied: unique processor names; XML Formatting only on the 270 EDI XML audit write"
+  ],
+  "docker_at_completion": {
+    "sandbox_compose_projects_running": 1,
+    "sandbox_demo_containers_running": 3,
+    "this_demo_containers": [
+      "pf-edi270-pilotfish",
+      "pf-edi-270-271-eligibil-webui",
+      "pf-edi270-mock-payer"
+    ],
+    "running_projects": [
+      "edi-270-271-eligibility"
+    ],
+    "inventory_command": "python3 tools/list_sandbox_demo_docker.py",
+    "captured_at": "2026-08-13T06:51:48Z"
+  }
+}

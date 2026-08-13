@@ -1,0 +1,25 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/><title>Test results — EDI 835 OCI Bucket</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:1.5rem;background:#0b1c33;color:#e8eef8}
+h1{font-size:1.25rem} .sum span{margin-right:1rem;font-weight:700}
+table{border-collapse:collapse;width:100%;margin-top:1rem}
+th,td{border-bottom:1px solid #2a4466;padding:.45rem .5rem;text-align:left;vertical-align:top}
+tr.pass td:first-child{color:#3dd68c} tr.fail td:first-child,tr.error td:first-child{color:#ff6b6b}
+tr.skip td:first-child{color:#f0a202}
+</style></head><body>
+<h1>Test results — EDI 835 OCI Bucket</h1>
+<p class="sum">
+<span>pass 12</span>
+<span>fail 0</span>
+<span>error 0</span>
+<span>skip 0</span>
+<span>total 12</span>
+</p>
+<p>Finished 2026-08-13T07:32:45.018123+00:00</p>
+<table><thead><tr><th>Status</th><th>Suite</th><th>Test</th><th>Message</th><th>Time</th></tr></thead>
+<tbody>
+<tr class='pass'><td>PASS</td><td>Health</td><td>Web UI loads</td><td>UI OK (http://127.0.0.1:8105/)</td><td>2ms</td></tr><tr class='pass'><td>PASS</td><td>Health</td><td>API health</td><td>HTTP 200</td><td>4ms</td></tr><tr class='pass'><td>PASS</td><td>Health</td><td>Object Storage mock health</td><td>HTTP 200</td><td>1ms</td></tr><tr class='pass'><td>PASS</td><td>Health</td><td>Routes API</td><td>HTTP 200</td><td>3ms</td></tr><tr class='pass'><td>PASS</td><td>835 to objects</td><td>EIP is reachable</td><td>HTTP 200: {&quot;eip&quot;:true,&quot;oci&quot;:true,&quot;ok&quot;:true}
+</td><td>4ms</td></tr><tr class='pass'><td>PASS</td><td>835 to objects</td><td>Reset outputs</td><td>HTTP 200</td><td>6ms</td></tr><tr class='pass'><td>PASS</td><td>835 to objects</td><td>Upload sample 835 via FTP folder</td><td>HTTP 200</td><td>3ms</td></tr><tr class='pass'><td>PASS</td><td>835 to objects</td><td>PATCLAIM001 JSON object</td><td>HTTP 200: {&quot;archive&quot;:[{&quot;content&quot;:&quot;ISA*00*          *00*          *ZZ*PAYERDEMO      *ZZ*PROVIDERDEMO   *260804*1430*^*00501*000000905*0*T*:~\nGS*HP*PAYERDEMO*PROVIDERDEMO*20260804*1430*1*X*0</td><td>6031ms</td></tr><tr class='pass'><td>PASS</td><td>835 to objects</td><td>PATCLAIM002 JSON object</td><td>HTTP 200: {&quot;archive&quot;:[{&quot;content&quot;:&quot;ISA*00*          *00*          *ZZ*PAYERDEMO      *ZZ*PROVIDERDEMO   *260804*1430*^*00501*000000905*0*T*:~\nGS*HP*PAYERDEMO*PROVIDERDEMO*20260804*1430*1*X*0</td><td>3ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Route PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-835-oci-bucket/documents/EDI835_OCI_V2_Route_Diagrams.pdf</td><td>0ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Capability Brief PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-835-oci-bucket/documents/EDI835_OCI_Capability_Brief.pdf</td><td>0ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Test Plan PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-835-oci-bucket/documents/EDI835_OCI_Test_Plan.pdf</td><td>0ms</td></tr>
+</tbody></table>
+</body></html>

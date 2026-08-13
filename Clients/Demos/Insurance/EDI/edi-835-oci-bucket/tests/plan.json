@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "interface": "EDI 835 OCI Bucket",
+  "short_name": "EDI835_OCI",
+  "description": "FTP 835 poll, ST fork to JSON, post to local Object Storage mock.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8105",
+    "eip": "http://127.0.0.1:8104/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8105/",
+    "http://127.0.0.1:8105/api/health",
+    "http://127.0.0.1:4599/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["835", "inject-form"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "oci",
+          "name": "Object Storage mock health",
+          "type": "http",
+          "request": { "method": "GET", "url": "http://127.0.0.1:4599/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["1-sftp-poll-and-stage", "2-split-and-put-objects"] }
+        }
+      ]
+    },
+    {
+      "id": "pipeline",
+      "name": "835 to objects",
+      "tests": [
+        {
+          "id": "wait-eip",
+          "name": "EIP is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"eip\":true"]
+          }
+        },
+        {
+          "id": "reset",
+          "name": "Reset outputs",
+          "type": "http",
+          "request": { "method": "POST", "url": "{webui}/api/reset" },
+          "expect": { "status": 200, "contains": ["ok"] }
+        },
+        {
+          "id": "inject",
+          "name": "Upload sample 835 via FTP folder",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/inject",
+            "headers": { "Content-Type": "application/json" },
+            "body": { "sample": "sample_multi_st_835.edi" }
+          },
+          "expect": { "status": 200, "contains": ["sample_multi_st_835.edi"] }
+        },
+        {
+          "id": "claim-001",
+          "name": "PATCLAIM001 JSON object",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["PATCLAIM001.json"]
+          }
+        },
+        {
+          "id": "claim-002",
+          "name": "PATCLAIM002 JSON object",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["PATCLAIM002.json"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI835_OCI_V2_Route_Diagrams.pdf" }
+        },
+        {
+          "id": "capability-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI835_OCI_Capability_Brief.pdf" }
+        },
+        {
+          "id": "test-plan-pdf",
+          "name": "Test Plan PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI835_OCI_Test_Plan.pdf" }
+        }
+      ]
+    }
+  ]
+}

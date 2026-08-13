@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title }} — PilotFish Demo</title>
+  <link rel="stylesheet" href="/static/pf-theme.css" />
+  <link rel="stylesheet" href="/static/app.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css" />
+  <link rel="stylesheet" href="/static/code-highlight.css" />
+  <link rel="stylesheet" href="/static/timing-tab.css" />
+  <link rel="stylesheet" href="/static/build-live.css" />
+</head>
+<body>
+  <header>
+    <div class="app-bar">
+      <p class="brand">PilotFish · {{ title }}</p>
+      <div class="main-tabs" role="tablist" aria-label="App views">
+        <button type="button" class="main-tab" data-main-tab="demo" role="tab" aria-selected="false">Demo</button>
+        <button type="button" class="main-tab active" data-main-tab="routes" role="tab" aria-selected="true">Routes</button>
+        <button type="button" class="main-tab" data-main-tab="timing" role="tab" aria-selected="false">Timing</button>
+        <button type="button" class="main-tab" data-main-tab="info" role="tab" aria-selected="false">Info</button>
+      </div>
+    </div>
+  </header>
+
+  <div id="tab-demo" hidden>
+    <main>
+      <section class="panel" id="pipeline">
+        <h2>Pipeline</h2>
+        <p class="section-lead">Realtime: one clinic POST. PilotFish builds the 270, calls the payer, and returns AAA theater or active benefits.</p>
+        <p class="section-lead muted" id="health-note">Checking health…</p>
+      </section>
+      <section class="panel" id="check">
+        <h2>Front desk check</h2>
+        <form id="check-form" class="form-grid">
+          <label>Preset
+            <select id="preset">
+              {% for p in presets %}
+              <option value="{{ p.id }}"
+                data-member="{{ p.MemberId }}"
+                data-last="{{ p.LastName }}"
+                data-first="{{ p.FirstName }}"
+                data-dob="{{ p.BirthDate }}"
+                data-gender="{{ p.Gender }}">{{ p.label }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>Member ID <input id="MemberId" name="MemberId" /></label>
+          <label>Last name <input id="LastName" name="LastName" /></label>
+          <label>First name <input id="FirstName" name="FirstName" /></label>
+          <label>Birth (CCYYMMDD) <input id="BirthDate" name="BirthDate" /></label>
+          <label>Gender <input id="Gender" name="Gender" /></label>
+          <div class="actions">
+            <button type="submit" class="btn primary" id="btn-check">Check eligibility (realtime)</button>
+          </div>
+        </form>
+        <p id="status" class="status"></p>
+        <div id="result-banner"></div>
+        <div class="cols steps">
+          <div><h3>1. Request XML</h3><pre id="step-request">—</pre></div>
+          <div><h3>2. X12 270</h3><pre id="step-270">—</pre></div>
+          <div><h3>3. X12 271</h3><pre id="step-271">—</pre></div>
+          <div><h3>4. Summary JSON</h3><pre id="step-summary">—</pre></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="tab-routes">
+    <section class="panel routes-panel">
+      <div class="row-head">
+        <h2>Routes</h2>
+        <select id="route-select"></select>
+        <span id="routes-status" class="muted">Live construction</span>
+      </div>
+      <iframe id="route-viewer-frame" title="Route viewer" src="about:blank"></iframe>
+    </section>
+  </div>
+  <div id="tab-timing" hidden>
+    {% include "partials/timing_tab.html" %}
+  </div>
+  <div id="tab-info" hidden>
+    {% include "partials/info_tab.html" %}
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
+  <script src="/static/code-highlight.js"></script>
+  <script src="/static/timing-tab.js"></script>
+  <script src="/static/build-stage.js"></script>
+  <script src="/static/build-live.js"></script>
+  <script src="/static/construction-video.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

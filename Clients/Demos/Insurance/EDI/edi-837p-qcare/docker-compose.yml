@@ -1,0 +1,54 @@
+services:
+  pilotfish:
+    profiles: ["full"]
+    build:
+      context: ./pilotfish
+    image: pilotfish-edi837p-qcare:23R1
+    container_name: pf-edi837p-qcare-pilotfish
+    restart: unless-stopped
+    environment:
+      CATALINA_OPTS: "-Xms512M -Xmx2048M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8123:8080"
+    volumes:
+      - ./input:/opt/pilotfish/input
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+      - ./pilotfish/demo-eip-root/routes:/usr/local/tomcat/webapps/eip/eip-root/routes
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/usr/local/tomcat/webapps/eip/eip-root/environment-settings.conf:ro
+      - ../../../../../EDI/TableData/x12:/usr/local/tomcat/webapps/eip/eip-root/edi-tabledata:ro
+
+  webui:
+    profiles: ["stage", "full"]
+    build:
+      context: ./webui
+    image: pilotfish-edi-837p-qcare-webui:latest
+    container_name: pf-edi-837p-qcare-webui
+    restart: unless-stopped
+    environment:
+      WEBUI_PORT: "8125"
+      DEMO_SLUG: "edi-837p-qcare"
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      SAMPLE_DIR: /samples
+      INBOUND_DIR: /input/inbound
+      OUTPUT_DIR: /output
+      LAN_HINT: "http://192.168.68.62:8125/"
+      EIP_PUBLIC_URL: "http://127.0.0.1:8123/eip/"
+      EIP_HEALTH_URL: "http://pilotfish:8080/eip/"
+    ports:
+      - "8125:8125"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./documents:/documents:ro
+      - ./samples:/samples:ro
+      - ./input:/input
+      - ./output:/output
+      - ./pilotfish/demo-eip-root/routes:/routes:ro
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/environment-settings.conf:ro
+      - ./webui/static:/app/static:ro
+      - ./webui/templates:/app/templates:ro
+      - ./webui/app.py:/app/app.py:ro
+      - ./webui/document_routes.py:/app/document_routes.py:ro

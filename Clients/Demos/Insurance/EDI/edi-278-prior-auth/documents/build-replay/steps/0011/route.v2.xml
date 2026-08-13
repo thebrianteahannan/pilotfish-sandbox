@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="f2cd2210-4740-497a-b177-712606c94ad2" name="1 - Poll And Score Auths">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="d967ac89-b5fb-46b9-aca2-aa82830b9d31" moduleId="6a70b871-9b89-4959-ab84-74439adaa529" label="Poll EDI 278 Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="c7c04a45-f35d-4cf0-806b-c688fb079b47" moduleId="c94ae8dd-3d79-471c-8d79-60cd8847a026" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="3738661b-2ed8-43f0-8257-ea24967aac07" moduleId="487dea95-3841-486a-bd05-f30e78626b41" label="Extract 278 Auth Fields" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="a5cac0ae-926c-4e9e-8adb-49c696591a1f" moduleId="00de461c-7185-4f49-8296-be4a83874622" label="Debug Write Forked Transaction" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="5b7bed98-b020-43a1-b459-987d40203d14" moduleId="30b0d4fc-6af0-467f-b64e-d2f51754253a" label="Lookup Auth Catalog" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="44594538-62e2-4aba-a169-6b3a88410f05" moduleId="2830169b-adc8-4ea6-835a-177b7cb77ae5" label="Extract Catalog Fields" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="e6fc64bb-d3e4-4dce-9d33-f9d7d879768d" moduleId="9fc18b89-e012-4967-bd0f-be8eac624609" label="Compose Auth Patient Name" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="12053a96-4068-435f-b41a-9343ade3a91d" moduleId="7f6f1d11-ab00-4861-b130-d335e6ae3fa8" label="Build Auth Decision XML" x="2600.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="7501df14-cd3b-48dc-a583-be2b06c689e9" moduleId="92283fd2-31d0-4d38-8c4c-8ce37cab4961" label="Debug Write Auth Decision" x="2860.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="6e4a40bf-4a74-4d67-aa01-5fab705b13e2" moduleId="58a16784-8fd5-4024-969b-6720fb01f1aa" label="Pretty-Print Auth Decision XML" x="3120.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="beeeb2b9-6de9-4338-94b6-e68aa9e7def9" sourceNodeId="d967ac89-b5fb-46b9-aca2-aa82830b9d31" targetNodeId="c7c04a45-f35d-4cf0-806b-c688fb079b47" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="88dddb08-6b64-45e7-9a06-b3ba3832dd8b" sourceNodeId="3738661b-2ed8-43f0-8257-ea24967aac07" targetNodeId="a5cac0ae-926c-4e9e-8adb-49c696591a1f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="c1438137-c999-4a4a-8c15-198476edaf80" sourceNodeId="a5cac0ae-926c-4e9e-8adb-49c696591a1f" targetNodeId="5b7bed98-b020-43a1-b459-987d40203d14" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="1aef63de-3cb0-48f6-8b33-d93f0549d765" sourceNodeId="5b7bed98-b020-43a1-b459-987d40203d14" targetNodeId="44594538-62e2-4aba-a169-6b3a88410f05" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="3fffeb66-a625-4e36-8e5d-bf539fae1283" sourceNodeId="44594538-62e2-4aba-a169-6b3a88410f05" targetNodeId="e6fc64bb-d3e4-4dce-9d33-f9d7d879768d" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="ce35627b-70d0-4e4e-980b-1d8edb7796d7" sourceNodeId="e6fc64bb-d3e4-4dce-9d33-f9d7d879768d" targetNodeId="12053a96-4068-435f-b41a-9343ade3a91d" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="ccc1950e-67db-4423-a59e-db9090b0fb3c" sourceNodeId="12053a96-4068-435f-b41a-9343ade3a91d" targetNodeId="7501df14-cd3b-48dc-a583-be2b06c689e9" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="712195b2-fb46-4825-9f29-246b222bdf41" sourceNodeId="7501df14-cd3b-48dc-a583-be2b06c689e9" targetNodeId="6e4a40bf-4a74-4d67-aa01-5fab705b13e2" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="1770e132-779c-472e-8143-f436ac857606" sourceNodeId="c7c04a45-f35d-4cf0-806b-c688fb079b47" targetNodeId="3738661b-2ed8-43f0-8257-ea24967aac07" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+   
+   </Connections>
+</Route>

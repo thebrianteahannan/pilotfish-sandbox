@@ -12,19 +12,35 @@ Whenever you author or regenerate construction-replay **narration**, **transcrip
    `python3 tools/construction_narration_naturalize.py --root Clients/Demos/<slug> --export-transcript`
 2. Transcript export (`tools/export_construction_transcript_pdf.py`) and video export (`tools/export_construction_video.py`) already call `naturalize_spoken` / `naturalize_demo_root` — still re-read the output; if a line still sounds like UI chrome or AI filler, fix the source and re-run.
 3. Prefer **FTP** in spoken/transcript prose (not SFTP letter-soup), even when the stack is SFTP.
-4. Regenerate `documents/construction-replay-transcript.{pdf,txt}` after any narration change; regenerate the MP4 when spoken audio must match.
+4. Regenerate `documents/construction-replay-transcript.{pdf,txt}` after any narration change. Do **not** auto-export the MP4; the Info tab **Create construction video** button (or an explicit user ask) records it.
+
+## Regenerate from chat
+
+When the user asks to regenerate / rebuild / remake a construction **video** for a demo, **run it** (do not only paste commands):
+
+1. Infer the slug from the message, `@`-mention, or open files under `Clients/Demos/`
+2. From repo root: `python3 tools/regenerate_construction_video.py <slug>`
+3. Confirm the mp4 + transcript paths. Do not batch other demos unless asked.
+
+Do **not** run that script (or `export_construction_video.py` without `--prepare-only`) at the end of an interface build. Prepare assets with `python3 tools/export_construction_video.py --root Clients/Demos/<slug> --prepare-only` instead.
+
+See `.cursor/skills/regenerate-construction-video/SKILL.md`.
 
 ## Required voice
 - Write like a person giving a live PilotFish demo — short, concrete, conversational.
-- Prefer: “Here is a blank canvas…”, “First up…”, “Here's the flow…”
+- Prefer: “First up…”, “Here's the flow…”
 - Avoid: rhetorical questions (“Why this demo?”), live-audience banter, choppy catalog fragments (“Stock module — …”), telling the viewer to click UI (“Click Create New…”), “Next I'll create…”, catalog readouts, “Module documentation for this step”, key=value dumps, formal route titles read aloud (“1 - SFTP Poll And Stage”).
 - Talk about the work in front of you in full spoken sentences; leave filler and nonsense to a minimum.
-- Create-interface beat is theater, not instruction: narrate the blank canvas, then animate the button click.
+- Explain each listener/processor (what type it is, why it's there). Do not read diagram card labels aloud (“a module named …”).
+- Do **not** add a “Create New PilotFish Interface” / “Interface created” overlay — it looks like the interface already exists.
+- Do **not** add an OGNL lecture overlay. If OGNL matters, say it in the processor step that uses it, in plain language (and avoid the word “attribute” in spoken copy — TTS mangles it).
+- Docker/systems overlay: singular vs plural from the actual compose service count for **that** demo.
+- All of the above lives in the shared exporters (`tools/export_construction_video.py`, `tools/record_module_replay.py`, `tools/_record_construction_session.py`, `tools/construction_demo_context.py`) so **every** demo video gets the same treatment. Do not special-case a slug.
 
 ## Where the copy lives
 - Naturalizer: `tools/construction_narration_naturalize.py`
 - Module/route steps: `tools/record_module_replay.py` → `build-replay/manifest.json`
-- Setup / OGNL / systems / create / outro: `tools/export_construction_video.py`
+- Setup / systems / outro: `tools/export_construction_video.py`
 - Transcript framing: `tools/export_construction_transcript_pdf.py` (use `•` paragraphs — never print the word “bullet”)
 
 ## Non-goals

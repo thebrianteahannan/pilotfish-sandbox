@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="0e045fbe-61b0-4bdf-8860-d05aa6bd59b6" name="Stage Auth Decision" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory>$$STAGED_DECISION_DIRECTORY</TargetDirectory>
+      
+        
+      <FileName>{ognl:(getAttribute('AuthTraceNumber') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('AuthTraceNumber')).trim().isEmpty() ? getAttribute('AuthTraceNumber') : 'unknown') + '_decision'}</FileName>
+      
+        
+      <FileExtension>xml</FileExtension>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <AppendToFile>Overwrite</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

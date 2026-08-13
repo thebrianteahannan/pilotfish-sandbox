@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "interface": "EDI 837 Claim Scrub",
+  "slug": "edi-837-claim-scrub",
+  "path": "Clients/Demos/Insurance/EDI/edi-837-claim-scrub",
+  "requested_by": "user",
+  "started_at": "2026-08-13T07:34:14Z",
+  "completed_at": "2026-08-13T07:40:30Z",
+  "completed_by": "cursor-agent",
+  "duration_minutes": 6.3,
+  "compose_project": "edi-837-claim-scrub",
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-13T07:34:14Z",
+      "ended_at": "2026-08-13T07:35:00Z",
+      "duration_minutes": 0.8,
+      "notes": "Stopped 835-oci; deleted 837-claim-scrub without overlay restore; scaffolded on 8115; restored SQL seed + SNIP HTML XSLT helpers"
+    },
+    {
+      "id": "design_scaffold",
+      "name": "DESIGN + SQL + V1 routes + Web UI",
+      "started_at": "2026-08-13T07:35:00Z",
+      "ended_at": "2026-08-13T07:38:00Z",
+      "duration_minutes": 3.0,
+      "notes": "Route 1 DatabaseSqlListener + EIPTransport; Route 2 TriggerableListener + Split Claims + gated kickout/clean; XML→EDI 837-Q1; SNIP 1-3; unique Pretty-Print names; XML Formatting on XML writes only"
+    },
+    {
+      "id": "routes",
+      "name": "V2 publish + full stack",
+      "started_at": "2026-08-13T07:38:00Z",
+      "ended_at": "2026-08-13T07:39:40Z",
+      "duration_minutes": 1.7,
+      "notes": "5002/5003 kickouts; 5001/5004 ST*837 wire + SNIP; TableData 5 ../"
+    },
+    {
+      "id": "webui_docs",
+      "name": "PDFs + tests + construction prepare",
+      "started_at": "2026-08-13T07:39:40Z",
+      "ended_at": "2026-08-13T07:40:30Z",
+      "duration_minutes": 0.8,
+      "notes": "12/12 tests; transcript prepared; mp4 left for Info tab Create construction video"
+    }
+  ],
+  "slowest_phases": [
+    {"id": "design_scaffold", "duration_minutes": 3.0},
+    {"id": "routes", "duration_minutes": 1.7}
+  ],
+  "bottlenecks": [
+    "XPath extract must run after the claim fork (target processors), not on raw SQLXML before split"
+  ],
+  "speedup_ideas": [
+    "Applied: SaveDataToAttribute to keep claim XML across evaluate XSLT",
+    "Applied: ExecuteProcessor OGNL without semicolons or colon-in-string"
+  ]
+}

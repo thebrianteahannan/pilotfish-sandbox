@@ -1,0 +1,124 @@
+{
+  "interface": "EDI 837 Claim Scrub",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-claim-scrub",
+  "started_at": "2026-08-13T07:39:53.260099+00:00",
+  "finished_at": "2026-08-13T07:39:53.461712+00:00",
+  "summary": {
+    "pass": 12,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 12
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 3,
+      "message": "UI OK (http://127.0.0.1:8115/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 11,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 14,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "payer-rules",
+      "name": "Payer rules seeded",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 12,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "wait-eip",
+      "name": "EIP is reachable",
+      "suite": "Scrub pipeline",
+      "status": "pass",
+      "duration_ms": 10,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"sql\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "kickout-5002",
+      "name": "5002 missing NPI kickout",
+      "suite": "Scrub pipeline",
+      "status": "pass",
+      "duration_ms": 40,
+      "message": "HTTP 200: {\"bi\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><ClaimScrubDecision>\\n   <ClaimId>5004</ClaimId>\\n   <ClaimNumber>CLM-5004</ClaimNumber>\\n   <PayerId>MDCAID01</PayerId",
+      "detail": ""
+    },
+    {
+      "id": "kickout-5003",
+      "name": "5003 invalid POS kickout",
+      "suite": "Scrub pipeline",
+      "status": "pass",
+      "duration_ms": 42,
+      "message": "HTTP 200: {\"bi\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><ClaimScrubDecision>\\n   <ClaimId>5004</ClaimId>\\n   <ClaimNumber>CLM-5004</ClaimNumber>\\n   <PayerId>MDCAID01</PayerId",
+      "detail": ""
+    },
+    {
+      "id": "edi-5001",
+      "name": "5001 clean 837",
+      "suite": "Scrub pipeline",
+      "status": "pass",
+      "duration_ms": 45,
+      "message": "HTTP 200: {\"bi\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><ClaimScrubDecision>\\n   <ClaimId>5004</ClaimId>\\n   <ClaimNumber>CLM-5004</ClaimNumber>\\n   <PayerId>MDCAID01</PayerId",
+      "detail": ""
+    },
+    {
+      "id": "edi-5004",
+      "name": "5004 clean 837",
+      "suite": "Scrub pipeline",
+      "status": "pass",
+      "duration_ms": 21,
+      "message": "HTTP 200: {\"bi\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><ClaimScrubDecision>\\n   <ClaimId>5004</ClaimId>\\n   <ClaimNumber>CLM-5004</ClaimNumber>\\n   <PayerId>MDCAID01</PayerId",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-claim-scrub/documents/EDI837_Claim_Scrub_V2_Route_Diagrams.pdf",
+      "detail": ""
+    },
+    {
+      "id": "capability-pdf",
+      "name": "Capability Brief PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-claim-scrub/documents/EDI837_Claim_Scrub_Capability_Brief.pdf",
+      "detail": ""
+    },
+    {
+      "id": "test-plan-pdf",
+      "name": "Test Plan PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-claim-scrub/documents/EDI837_Claim_Scrub_Test_Plan.pdf",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-claim-scrub/tests/plan.json"
+}

@@ -68,6 +68,18 @@ Spell these out (spaces between letters) unless noted:
 python3 tools/export_construction_narration_pronunciation_pdf.py
 ```
 
+## Spoken corrections (one word at a time)
+
+Do **not** clone a human voice or re-read the whole script. For a term the robot mangles:
+
+1. Name the display spelling (`RabbitMQ`, `eiPlatform`, …).
+2. Record a few seconds of how it should sound:
+   `python3 tools/learn_construction_pronunciation.py --word RabbitMQ`
+3. The helper transcribes the take and writes `speak` into the JSON. Transcript/PDF spelling stays as-is.
+4. Re-export the construction video after the batch of words is in.
+
+Optional: `--speak "rabbit em queue"` if the transcript of the take is wrong.
+
 ## Using it in videos
 
 `export_construction_video.py` loads the JSON and rewrites each step’s spoken line before Edge TTS / `say`. After changing the guide, re-export the video:

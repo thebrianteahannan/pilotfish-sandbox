@@ -18,8 +18,9 @@ import shutil
 import sys
 from pathlib import Path
 
+from demo_paths import DEMOS, require_demo
+
 SANDBOX = Path(__file__).resolve().parents[1]
-DEMOS = SANDBOX / "Clients" / "Demos"
 SHARED_WEB = DEMOS / "_shared" / "webui"
 SHARED_DOC_ROUTES = SHARED_WEB / "document_routes.py"
 SHARED_PARTIAL = SHARED_WEB / "templates" / "partials" / "info_tab.html"
@@ -193,6 +194,28 @@ def copy_shared(demo_root: Path) -> None:
     dest_partial = webui / "templates" / "partials" / "info_tab.html"
     dest_partial.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(SHARED_PARTIAL, dest_partial)
+    js_src = SHARED_WEB / "static" / "construction-video.js"
+    if js_src.is_file():
+        static = webui / "static"
+        static.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(js_src, static / "construction-video.js")
+    idx = webui / "templates" / "index.html"
+    if idx.is_file():
+        html = idx.read_text(encoding="utf-8")
+        if "construction-video.js" not in html:
+            if "build-live.js" in html:
+                html = html.replace(
+                    '<script src="/static/build-live.js"></script>',
+                    '<script src="/static/build-live.js"></script>\n  <script src="/static/construction-video.js"></script>',
+                    1,
+                )
+            else:
+                html = html.replace(
+                    "</body>",
+                    '  <script src="/static/construction-video.js"></script>\n</body>',
+                    1,
+                )
+            idx.write_text(html, encoding="utf-8")
     ensure_dockerfile(demo_root)
 
 
@@ -400,9 +423,7 @@ def ensure_muted_css(css_path: Path) -> None:
 
 
 def apply_demo(name: str) -> None:
-    root = DEMOS / name
-    if not root.is_dir():
-        raise SystemExit(f"Unknown demo: {name}")
+    root = require_demo(name)
     meta = DEMOS_META[name]
     copy_shared(root)
 

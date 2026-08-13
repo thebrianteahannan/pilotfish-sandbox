@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "demo": "http-post-to-rabbitmq",
+  "path": "Clients/Demos/Other/http-post-to-rabbitmq",
+  "synced_at": "2026-08-13T04:01:41Z",
+  "documentation_root": "/Users/brianhannan/Documents/PilotFish Documentation/Documents",
+  "modules": [
+    {
+      "fqcn": "com.pilotfish.eip.modules.http.HttpPostListener",
+      "kind": "Listener",
+      "ui_type": "HTTP Post",
+      "pdf": "module-docs/PilotFish-HTTP-Post-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-HTTP-Post-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.messaging.rabbitmq.RabbitMQTransport",
+      "kind": "Transport",
+      "ui_type": "RabbitMQ",
+      "pdf": "module-docs/PilotFish-RabbitMQ-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-RabbitMQ-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    }
+  ],
+  "missing": [],
+  "note": "Auto-synced from route.xml / modules/*.xml. Re-run tools/sync_module_docs.py after route changes."
+}

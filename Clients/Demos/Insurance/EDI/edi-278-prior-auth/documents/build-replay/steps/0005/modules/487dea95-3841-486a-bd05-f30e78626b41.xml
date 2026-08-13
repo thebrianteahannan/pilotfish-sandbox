@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="487dea95-3841-486a-bd05-f30e78626b41" name="Extract 278 Auth Fields" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:AuthTraceNumber:eip_name:normalize-space(string((//TRN/TRN02 | //*[local-name()='TRN']/*[local-name()='TRN02'] | //BHT/BHT03 | //*[local-name()='BHT']/*[local-name()='BHT03'])[1])):eip_value][eip_pair:MemberId:eip_name:normalize-space(string((//NM1[NM101='IL']/NM109 | //*[local-name()='NM1'][*[local-name()='NM101']='IL']/*[local-name()='NM109'])[1])):eip_value][eip_pair:EdiPatientLast:eip_name:normalize-space(string((//NM1[NM101='IL']/NM103 | //*[local-name()='NM1'][*[local-name()='NM101']='IL']/*[local-name()='NM103'])[1])):eip_value][eip_pair:EdiPatientFirst:eip_name:normalize-space(string((//NM1[NM101='IL']/NM104 | //*[local-name()='NM1'][*[local-name()='NM101']='IL']/*[local-name()='NM104'])[1])):eip_value][eip_pair:ProcedureCode:eip_name:normalize-space(string((//SV101_02 | //*[local-name()='SV101_02'] | //SV1/SV101/*[2] | //*[local-name()='SV1']/*[local-name()='SV101']/*[2])[1])):eip_value][eip_pair:DiagnosisCode:eip_name:normalize-space(string((//HI01_02 | //*[local-name()='HI01_02'] | //HI/HI01/*[2] | //*[local-name()='HI']/*[local-name()='HI01']/*[2])[1])):eip_value][eip_pair:AttachmentFlag:eip_name:if (normalize-space(string((//REF[REF01='EA']/REF02 | //*[local-name()='REF'][*[local-name()='REF01']='EA']/*[local-name()='REF02'])[1])) = 'Y' or exists(//PWK | //*[local-name()='PWK'])) then 'Y' else 'N':eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>

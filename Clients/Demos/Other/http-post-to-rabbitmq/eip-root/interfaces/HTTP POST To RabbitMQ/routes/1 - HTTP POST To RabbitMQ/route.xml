@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule">
+    <ModuleConfig />
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="HTTP POST">
+    <FormatProfile name="Relay (System Format)" />
+    <Listener class="com.pilotfish.eip.modules.http.HttpPostListener" enabled="true" name="HTTP POST Ingress">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <RequestPath>ingress</RequestPath>
+        <Timeout>60</Timeout>
+        <TimeoutHandlingMechanism>Send timeout message</TimeoutHandlingMechanism>
+        <Synchronous>false</Synchronous>
+        <RequireSSL>false</RequireSSL>
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:application/json:eip_value]</HTTPHeaders>
+        <WsdlFile />
+        <WsdlContentType>application/wsdl+xml</WsdlContentType>
+        <ValidateAtListenerLevel>false</ValidateAtListenerLevel>
+        <USE_BASIC_AUTH>false</USE_BASIC_AUTH>
+        <AUTH_FILE />
+        <REALM>PilotFish</REALM>
+        <AdditionalResources />
+      </ModuleConfig>
+    </Listener>
+    <Processors />
+  </Source>
+  <Target icon="" name="RabbitMQ">
+    <FormatProfile name="Relay (System Format)" />
+    <Transport class="com.pilotfish.eip.modules.messaging.rabbitmq.RabbitMQTransport" name="Publish To Queue" retries="1">
+      <ModuleConfig>
+        <ConnectionMethod>Host and Port</ConnectionMethod>
+        <URI>amqp://localhost</URI>
+        <HostsAndPorts>$$RABBITMQ_HOSTS</HostsAndPorts>
+        <VirtualHost>/</VirtualHost>
+        <UserName>$$RABBITMQ_USER</UserName>
+        <Password>$$RABBITMQ_PASSWORD</Password>
+        <SSLEnabled>false</SSLEnabled>
+        <Queue>$$RABBITMQ_QUEUE</Queue>
+        <Exchange />
+        <PointToPointMode>Queue (Point-to-Point)</PointToPointMode>
+        <SyncAck>false</SyncAck>
+        <Declare>true</Declare>
+        <Durable>true</Durable>
+        <Exclusive>false</Exclusive>
+        <AutoDelete>false</AutoDelete>
+        <MessageTTL>0</MessageTTL>
+        <AutoExpire>0</AutoExpire>
+        <MaxLength>0</MaxLength>
+        <DeadLetterExchange />
+        <com.pilotfish.rabbitmq.ContentType>application/json</com.pilotfish.rabbitmq.ContentType>
+        <com.pilotfish.rabbitmq.ContentEncoding />
+        <com.pilotfish.rabbitmq.CorrelationId />
+        <com.pilotfish.rabbitmq.DeliveryMode />
+        <com.pilotfish.rabbitmq.Expiration />
+        <com.pilotfish.rabbitmq.MessageId />
+        <com.pilotfish.rabbitmq.Priority />
+        <com.pilotfish.rabbitmq.ReplyTo />
+        <com.pilotfish.rabbitmq.Timestamp />
+        <com.pilotfish.rabbitmq.Type />
+        <com.pilotfish.rabbitmq.UserId />
+        <com.pilotfish.rabbitmq.AppId />
+        <com.pilotfish.rabbitmq.Headers />
+      </ModuleConfig>
+    </Transport>
+    <Processors />
+  </Target>
+</Route>

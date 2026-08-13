@@ -1,0 +1,106 @@
+{
+  "interface": "SQL Server PilotFish XML Export",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Other/sqlserver-pilotfish-demo",
+  "started_at": "2026-08-13T05:49:19.161158+00:00",
+  "finished_at": "2026-08-13T05:49:19.231231+00:00",
+  "summary": {
+    "pass": 10,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 10
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "UI OK (http://127.0.0.1:8137/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 14,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "wait-sql",
+      "name": "SQL is reachable via Web UI health",
+      "suite": "SQL poll then XML",
+      "status": "pass",
+      "duration_ms": 15,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"sql\":true,\"xml\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "wait-eip",
+      "name": "EIP is reachable via Web UI health",
+      "suite": "SQL poll then XML",
+      "status": "pass",
+      "duration_ms": 19,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"sql\":true,\"xml\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "seed-rows",
+      "name": "Seeded Captures rows are visible",
+      "suite": "SQL poll then XML",
+      "status": "pass",
+      "duration_ms": 14,
+      "message": "HTTP 200: {\"count\":3,\"ok\":true,\"rows\":[{\"CaptureId\":1001,\"CapturePayload\":\"Order POL-77821 accepted\",\"ClientName\":\"American General\",\"CreatedAt\":\"2026-07-16T09:15:00\",\"DocumentType\":\"ACORD 1",
+      "detail": ""
+    },
+    {
+      "id": "xml-export",
+      "name": "XML export contains CaptureId 1001",
+      "suite": "SQL poll then XML",
+      "status": "pass",
+      "duration_ms": 1,
+      "message": "HTTP 200: {\"bytes\":991,\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><EIPData>\\n  <RECORDS>\\n    <CAPTURE>\\n      <CAPTUREID>1001</CAPTUREID>\\n      <CLIENTNAME>American General</CLIE",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Other/sqlserver-pilotfish-demo/documents/SQL_Server_PilotFish_XML_Export_V2_Route_Diagrams.pdf",
+      "detail": ""
+    },
+    {
+      "id": "capability-pdf",
+      "name": "Capability Brief PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Other/sqlserver-pilotfish-demo/documents/SQL_Server_PilotFish_XML_Export_Capability_Brief.pdf",
+      "detail": ""
+    },
+    {
+      "id": "test-plan-pdf",
+      "name": "Test Plan PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Other/sqlserver-pilotfish-demo/documents/SQL_Server_PilotFish_XML_Export_Test_Plan.pdf",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Other/sqlserver-pilotfish-demo/tests/plan.json"
+}

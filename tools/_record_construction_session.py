@@ -31,6 +31,12 @@ THEATER_CSS = """
   background: rgba(10, 18, 32, 0.55); pointer-events: auto;
   animation: pfFadeIn 280ms ease;
 }
+#pf-theater-root .pf-t-layer.pf-welcome-layer,
+#pf-theater-root .pf-t-layer.pf-outro-layer {
+  background: #0b1220;
+  animation: none;
+  opacity: 1;
+}
 #pf-theater-root .pf-t-layer.is-clear { background: transparent; }
 @keyframes pfFadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes pfPulse {
@@ -136,6 +142,10 @@ THEATER_CSS = """
   border: 1px solid #334155; border-radius: 16px; padding: 44px 40px;
   box-shadow: 0 28px 80px rgba(0,0,0,0.45);
 }
+.pf-outro-card .logo {
+  display: block; margin: 0 auto 28px; height: 72px; width: auto;
+  object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
+}
 .pf-outro-card .mark { color: #5eead4; font-size: 13px; letter-spacing: 0.14em;
   text-transform: uppercase; font-weight: 700; margin: 0 0 14px; }
 .pf-outro-card h1 { margin: 0 0 14px; font-size: 32px; color: #fff; }
@@ -193,6 +203,11 @@ THEATER_CSS = """
   font-size: 12px; color: #cbd5e1; line-height: 1.4;
 }
 .pf-system-tile .image { color: #64748b; }
+body.pf-theater-recording #pf-build-banner,
+body.pf-theater-recording #pf-routes-activity,
+body.pf-theater-recording #pf-build-stage {
+  display: none !important;
+}
 #pipeline.pf-pipeline-spotlight {
   outline: 3px solid #14b8a6; outline-offset: 6px; border-radius: 12px;
   box-shadow: 0 0 0 10px rgba(20, 184, 166, 0.15);
@@ -232,42 +247,24 @@ def ensure_theater_chrome(page) -> None:
             root.id = 'pf-theater-root';
             document.body.appendChild(root);
           }
-
-          let banner = document.getElementById('pf-build-banner');
-          if (!banner) {
-            banner = document.createElement('div');
-            banner.id = 'pf-build-banner';
-            banner.className = 'pf-build-banner is-active';
-            banner.innerHTML =
-              '<span class="pf-build-dot" aria-hidden="true"></span>' +
-              '<div class="pf-build-copy">' +
-              '<strong class="pf-build-phase">Replay</strong>' +
-              '<span class="pf-build-msg"></span></div>' +
-              '<span class="pf-build-routes"></span>';
-            document.body.prepend(banner);
+          document.body.classList.add('pf-theater-recording');
+          window.__pfTheaterRecording = true;
+          const liveStage = document.getElementById('pf-build-stage');
+          if (liveStage) liveStage.hidden = true;
+          const liveBanner = document.getElementById('pf-build-banner');
+          if (liveBanner) {
+            liveBanner.hidden = true;
+            liveBanner.classList.remove('is-active');
           }
-          banner.hidden = false;
-          banner.classList.add('is-active');
-
-          let activity = document.getElementById('pf-routes-activity');
-          const panel = document.querySelector('.routes-panel') || document.getElementById('tab-routes');
-          if (!activity && panel) {
-            activity = document.createElement('div');
-            activity.id = 'pf-routes-activity';
-            activity.className = 'pf-routes-activity is-active';
-            activity.innerHTML =
-              '<span class="pf-routes-activity-dot" aria-hidden="true"></span>' +
-              '<div class="pf-routes-activity-copy">' +
-              '<span class="pf-routes-activity-label">Currently</span>' +
-              '<span class="pf-routes-activity-msg"></span></div>' +
-              '<span class="pf-routes-activity-meta"></span>';
-            const row = panel.querySelector('.row-head');
-            if (row) row.insertAdjacentElement('afterend', activity);
-            else panel.prepend(activity);
+          const liveActivity = document.getElementById('pf-routes-activity');
+          if (liveActivity) {
+            liveActivity.hidden = true;
+            liveActivity.classList.remove('is-active');
           }
-          if (activity) {
-            activity.hidden = false;
-            activity.classList.add('is-active');
+          const statusEl = document.getElementById('routes-status');
+          if (statusEl) {
+            statusEl.textContent = '';
+            statusEl.classList.remove('is-building');
           }
         }""",
         {"css": THEATER_CSS},
@@ -284,61 +281,15 @@ def clear_theater_overlay(page) -> None:
 
 
 def update_banner(page, step: dict, index: int, total: int, *, phase: str) -> None:
-    page.evaluate(
-        """({ step, index, total, phase }) => {
-          const banner = document.getElementById('pf-build-banner');
-          if (banner) {
-            banner.hidden = false;
-            banner.classList.add('is-active');
-            const phaseEl = banner.querySelector('.pf-build-phase');
-            const msg = banner.querySelector('.pf-build-msg');
-            const routes = banner.querySelector('.pf-build-routes');
-            if (phaseEl) phaseEl.textContent = phase;
-            if (msg) msg.textContent = step.message || step.detail || '';
-            if (routes) routes.textContent = `${index}/${total}`;
-          }
-          const activity = document.getElementById('pf-routes-activity');
-          if (activity) {
-            activity.hidden = false;
-            activity.classList.add('is-active');
-            const label = activity.querySelector('.pf-routes-activity-label');
-            const amsg = activity.querySelector('.pf-routes-activity-msg');
-            const meta = activity.querySelector('.pf-routes-activity-meta');
-            if (label) label.textContent = phase;
-            if (amsg) amsg.textContent = step.detail || step.message || '';
-            if (meta) meta.textContent = step.action || '';
-          }
-        }""",
-        {"step": step, "index": index, "total": total, "phase": phase},
-    )
+    # Live-build banner/activity is hidden during theater recording.
+    return
 
 
 def show_construction_step(page, step: dict, index: int, total: int) -> None:
     clear_theater_overlay(page)
+    switch_tab(page, "routes")
     page.evaluate(
-        """({ step, index, total, src }) => {
-          const banner = document.getElementById('pf-build-banner');
-          if (banner) {
-            banner.hidden = false;
-            banner.classList.add('is-active');
-            const phase = banner.querySelector('.pf-build-phase');
-            const msg = banner.querySelector('.pf-build-msg');
-            const routes = banner.querySelector('.pf-build-routes');
-            if (phase) phase.textContent = 'Construction';
-            if (msg) msg.textContent = step.message || step.detail || '';
-            if (routes) routes.textContent = `Step ${index}/${total}`;
-          }
-          const activity = document.getElementById('pf-routes-activity');
-          if (activity) {
-            activity.hidden = false;
-            activity.classList.add('is-active');
-            const label = activity.querySelector('.pf-routes-activity-label');
-            const amsg = activity.querySelector('.pf-routes-activity-msg');
-            const meta = activity.querySelector('.pf-routes-activity-meta');
-            if (label) label.textContent = step.focus_label ? 'Adding module' : 'Replay';
-            if (amsg) amsg.textContent = step.detail || step.message || '';
-            if (meta) meta.textContent = `Replay ${index}/${total}` + (step.route_id ? ` · ${step.route_id}` : '');
-          }
+        """({ step, src }) => {
           const select = document.getElementById('route-select');
           if (select && step.route_id) {
             const opt = [...select.options].find(o => o.value === step.route_id);
@@ -346,20 +297,28 @@ def show_construction_step(page, step: dict, index: int, total: int) -> None:
           }
           const frame = document.getElementById('route-viewer-frame');
           if (frame) {
+            frame.style.visibility = 'hidden';
             frame.dataset.empty = '0';
+            try {
+              const doc = frame.contentDocument;
+              if (doc && doc.documentElement) {
+                doc.documentElement.removeAttribute('data-ready');
+              }
+            } catch (e) {}
             frame.src = src;
           }
         }""",
-        {"step": step, "index": index, "total": total, "src": step_frame_src(step)},
+        {"step": step, "src": step_frame_src(step)},
     )
 
 
-def wait_frame_ready(page, timeout_ms: int = 8000) -> None:
+def wait_frame_ready(page, timeout_ms: int = 8000, replay_step: str = "") -> None:
     page.wait_for_function(
-        """() => {
+        """(step) => {
           const frame = document.getElementById('route-viewer-frame');
           if (!frame) return true;
           if (!frame.src || frame.src === 'about:blank' || frame.src.endsWith('about:blank')) return true;
+          if (step && !frame.src.includes('replayStep=' + step)) return false;
           try {
             const doc = frame.contentDocument;
             return !!(doc && doc.documentElement.getAttribute('data-ready') === '1');
@@ -367,16 +326,36 @@ def wait_frame_ready(page, timeout_ms: int = 8000) -> None:
             return false;
           }
         }""",
+        arg=replay_step or "",
         timeout=timeout_ms,
     )
 
 
 def switch_tab(page, tab: str) -> None:
     # Theater overlays can intercept pointer events — flip tabs via DOM.
+    # Do not .click() Routes during recording: demo app.js loadRoutesTab()
+    # loads the finished live route (all modules), which flashes on screen
+    # before the replay snapshot (one module) replaces it.
     page.evaluate(
         """(tab) => {
-          const btn = document.querySelector(`.main-tab[data-main-tab="${tab}"]`);
-          if (btn) btn.click();
+          const recording = !!window.__pfTheaterRecording;
+          if (!(recording && tab === "routes")) {
+            const btn = document.querySelector(`.main-tab[data-main-tab="${tab}"]`);
+            if (btn) btn.click();
+            return;
+          }
+          document.querySelectorAll(".main-tab").forEach((b) => {
+            const on = b.dataset.mainTab === tab;
+            b.classList.toggle("active", on);
+            b.setAttribute("aria-selected", on ? "true" : "false");
+          });
+          ["demo", "routes", "timing", "info", "experience"].forEach((id) => {
+            const el = document.getElementById("tab-" + id);
+            if (el) el.hidden = id !== tab;
+          });
+          document.body.classList.toggle("routes-mode", tab === "routes");
+          const nav = document.getElementById("demo-nav");
+          if (nav) nav.hidden = tab !== "demo";
         }""",
         tab,
     )
@@ -435,15 +414,8 @@ def show_create_interface(page, step: dict) -> None:
 def show_ognl_spotlight(page, step: dict) -> None:
     clear_theater_overlay(page)
     switch_tab(page, "routes")
-    summary = str(step.get("ognl_summary") or "{sourceFileName}_<timestamp>.csv")
-    raw = str(
-        step.get("ognl_example")
-        or (
-            "{ognl:(getAttribute('com.pilotfish.FileName') != null "
-            "? getAttribute('com.pilotfish.FileName') : 'csv') + '_' "
-            "+ @java.lang.System@currentTimeMillis() + '.csv'}"
-        )
-    )
+    summary = str(step.get("ognl_summary") or "dynamic value from the transaction")
+    raw = str(step.get("ognl_example") or "{ognl:…}")
     why = str(
         step.get("ognl_why")
         or (
@@ -452,8 +424,9 @@ def show_ognl_spotlight(page, step: dict) -> None:
             "instead of hard-coding a static string."
         )
     )
+    legend = str(step.get("ognl_legend") or "Human reading above · raw OGNL below.")
     page.evaluate(
-        """({ summary, raw, why }) => {
+        """({ summary, raw, why, legend }) => {
           const root = document.getElementById('pf-theater-root');
           if (!root) return;
           const esc = (s) => String(s)
@@ -466,11 +439,11 @@ def show_ognl_spotlight(page, step: dict) -> None:
                 <p class="why">${esc(why)}</p>
                 <div class="pf-ognl-summary">${esc(summary)}</div>
                 <pre class="pf-ognl-raw">${esc(raw)}</pre>
-                <p class="pf-ognl-legend">Human reading above · raw OGNL below — you'll see this on archive and stage file names.</p>
+                <p class="pf-ognl-legend">${esc(legend)}</p>
               </div>
             </div>`;
         }""",
-        {"summary": summary, "raw": raw, "why": why},
+        {"summary": summary, "raw": raw, "why": why, "legend": legend},
     )
 
 
@@ -630,7 +603,7 @@ def show_welcome(page, step: dict) -> None:
             ? `<p class="lead">${esc(lead)}</p>`
             : '';
           root.innerHTML = `
-            <div class="pf-t-layer">
+            <div class="pf-t-layer pf-welcome-layer">
               <div class="pf-welcome-card">
                 <img class="logo" src="${esc(logo)}" alt="PilotFish" />
                 <p class="eyebrow">PilotFish</p>
@@ -664,15 +637,11 @@ def show_pipeline_overview(page, step: dict) -> None:
         }"""
     )
     stages = step.get("pipeline_stages") or []
-    if not isinstance(stages, list) or not stages:
-        stages = [
-            {"title": "FTP drop", "subtitle": "upload/ · CSV"},
-            {"title": "Stage", "subtitle": "Archive + local copy"},
-            {"title": "CSV → XML", "subtitle": "Dialect A rows"},
-            {"title": "SQL Server", "subtitle": "dbo.CsvPatients"},
-        ]
+    if not isinstance(stages, list):
+        stages = []
+    lead = str(step.get("lead") or "What you're about to watch us build.")
     page.evaluate(
-        """({ stages }) => {
+        """({ stages, lead }) => {
           const root = document.getElementById('pf-theater-root');
           if (!root) return;
           const esc = (s) => String(s)
@@ -684,17 +653,20 @@ def show_pipeline_overview(page, step: dict) -> None:
             return `<div class="${cls}"><strong>${esc(st.title || '')}</strong>`
               + `<span>${esc(st.subtitle || '')}</span></div>${arrow}`;
           }).join('');
+          const row = nodes
+            ? `<div class="pf-pipe-row">${nodes}</div>`
+            : '';
           root.innerHTML = `
             <div class="pf-t-layer">
               <div class="pf-pipe-card">
                 <p class="eyebrow">Context</p>
                 <h2>End-to-end pipeline</h2>
-                <p class="lead">What you're about to watch us build — FTP in, SQL out.</p>
-                <div class="pf-pipe-row">${nodes}</div>
+                <p class="lead">${esc(lead)}</p>
+                ${row}
               </div>
             </div>`;
         }""",
-        {"stages": stages},
+        {"stages": stages, "lead": lead},
     )
 
 
@@ -705,8 +677,25 @@ def show_systems_spotlight(page, step: dict) -> None:
     systems = step.get("systems") or []
     if not isinstance(systems, list):
         systems = []
+    one = len(systems) == 1
+    headline = str(
+        step.get("headline")
+        or (
+            "External system & Docker service"
+            if one
+            else "External systems & Docker services"
+        )
+    )
+    lead = str(
+        step.get("lead")
+        or (
+            "The runtime this interface talks to — a local compose service."
+            if one
+            else "Mocks and runtimes this interface talks to — all local compose services."
+        )
+    )
     page.evaluate(
-        """({ systems }) => {
+        """({ systems, headline, lead }) => {
           const root = document.getElementById('pf-theater-root');
           if (!root) return;
           const esc = (s) => String(s)
@@ -723,13 +712,13 @@ def show_systems_spotlight(page, step: dict) -> None:
             <div class="pf-t-layer">
               <div class="pf-systems-card">
                 <p class="eyebrow">Sandbox stack</p>
-                <h2>External systems &amp; Docker services</h2>
-                <p class="lead">Mocks and runtimes this interface talks to — all local compose services.</p>
+                <h2>${esc(headline)}</h2>
+                <p class="lead">${esc(lead)}</p>
                 <div class="pf-systems-grid">${tiles}</div>
               </div>
             </div>`;
         }""",
-        {"systems": systems},
+        {"systems": systems, "headline": headline, "lead": lead},
     )
 
 
@@ -737,22 +726,25 @@ def show_outro(page, step: dict) -> None:
     clear_theater_overlay(page)
     title = str(step.get("message") or "Demo complete")
     body = str(step.get("detail") or "Thanks for choosing PilotFish.")
+    logo = str(step.get("logo_url") or "/static/pilotfish-logo.jpg")
     page.evaluate(
-        """({ title, body }) => {
+        """({ title, body, logo }) => {
           const root = document.getElementById('pf-theater-root');
           if (!root) return;
           const esc = (s) => String(s)
-            .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+            .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;');
           root.innerHTML = `
-            <div class="pf-t-layer">
+            <div class="pf-t-layer pf-outro-layer">
               <div class="pf-outro-card">
+                <img class="logo" src="${esc(logo)}" alt="PilotFish" />
                 <p class="mark">PilotFish</p>
                 <h1>${esc(title)}</h1>
                 <p>${esc(body)}</p>
               </div>
             </div>`;
         }""",
-        {"title": title, "body": body},
+        {"title": title, "body": body, "logo": logo},
     )
 
 
@@ -784,15 +776,108 @@ def run_ui_gesture(page, step: dict) -> None:
         return
 
 
+def snapshot_demo_results(page) -> None:
+    """Remember which result is on screen so we can select the new one after inject."""
+    page.evaluate(
+        """() => {
+          const buttons = [...document.querySelectorAll(
+            '#queue-list button, #json-list button, #archive-list button, #results .file-list button'
+          )];
+          const viewers = [...document.querySelectorAll(
+            '#queue-view, #json-view, #archive-view, #results pre.viewer, #xml-view'
+          )];
+          window.__pfResultSnap = {
+            names: buttons.map((b) => (b.textContent || '').trim()),
+            viewer: viewers.map((v) => (v.textContent || '').trim()).join('\\n').slice(0, 4000),
+          };
+        }"""
+    )
+
+
+def reveal_latest_result(page) -> None:
+    """Always show the new output — queues name newest as msg-0; files are usually newest-first."""
+    page.evaluate(
+        """() => {
+          const snap = window.__pfResultSnap || { names: [], viewer: '' };
+          const buttons = [...document.querySelectorAll(
+            '#queue-list button, #json-list button, #archive-list button, #results .file-list button'
+          )];
+          const msgBtns = buttons.filter((b) => /^msg-\\d+$/i.test((b.textContent || '').trim()));
+          let pick = null;
+          if (msgBtns.length) {
+            msgBtns.sort((a, b) => {
+              const na = Number((a.textContent || '').replace(/\\D/g, '') || 0);
+              const nb = Number((b.textContent || '').replace(/\\D/g, '') || 0);
+              return na - nb;
+            });
+            pick = msgBtns[0];
+          } else if (buttons.length) {
+            pick = buttons.find((b) => !snap.names.includes((b.textContent || '').trim()))
+              || buttons[0];
+          }
+          if (pick) {
+            pick.click();
+            pick.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'nearest' });
+          }
+          const row = document.querySelector(
+            '#results table tbody tr:last-child, #patients-table table tbody tr:last-child, #captures-table tbody tr:last-child'
+          );
+          if (row) row.scrollIntoView({ behavior: 'auto', block: 'center' });
+          const view = document.querySelector(
+            '#queue-view, #json-view, #archive-view, #results pre.viewer, #xml-view'
+          );
+          if (view) view.scrollIntoView({ behavior: 'auto', block: 'nearest' });
+        }"""
+    )
+
+
+def scroll_demo_results(page) -> None:
+    """Keep the results panel in frame before and during live inject."""
+    for sel in (
+        "#results",
+        "#queue-list",
+        "#patients-table",
+        "#json-list",
+        "#archive-list",
+        "#captures-table",
+        "#xml-view",
+        "#export",
+        "#insert-form",
+    ):
+        loc = page.locator(sel)
+        if loc.count():
+            try:
+                loc.first.scroll_into_view_if_needed()
+                page.wait_for_timeout(250)
+            except Exception:
+                pass
+            return
+    inj = page.locator("#inject")
+    if inj.count():
+        try:
+            inj.first.scroll_into_view_if_needed()
+        except Exception:
+            pass
+
+
+def click_results_refresh(page) -> None:
+    for sel in ("#refresh-btn", "#refresh-xml-btn", "#refresh-sql-btn"):
+        refresh = page.locator(sel)
+        if refresh.count():
+            try:
+                refresh.first.click()
+                page.wait_for_timeout(400)
+            except Exception:
+                pass
+
+
 def run_demo_test_action(page, step: dict) -> None:
     action = str(step.get("action") or "")
     if action == "open_demo":
         clear_theater_overlay(page)
         switch_tab(page, "demo")
-        inj = page.locator("#inject")
-        if inj.count():
-            inj.first.scroll_into_view_if_needed()
         page.wait_for_timeout(400)
+        scroll_demo_results(page)
         return
 
     if action == "inject":
@@ -802,13 +887,30 @@ def run_demo_test_action(page, step: dict) -> None:
         if sample and select.count():
             try:
                 select.first.select_option(sample)
-                page.wait_for_timeout(400)
+                page.wait_for_timeout(300)
             except Exception:
                 pass
+        scroll_demo_results(page)
         page.wait_for_timeout(200)
+        snapshot_demo_results(page)
         form = page.locator("#inject-form")
         if form.count():
             form.locator('button[type="submit"]').first.click()
+            return
+        insert = page.locator("#insert-form")
+        if insert.count():
+            payload = page.locator("#CapturePayload")
+            if payload.count():
+                try:
+                    payload.first.fill("Live construction test")
+                except Exception:
+                    pass
+            try:
+                insert.first.scroll_into_view_if_needed()
+            except Exception:
+                pass
+            insert.locator('button[type="submit"]').first.click()
+            page.wait_for_timeout(600)
         return
 
     if action == "wait_results":
@@ -816,13 +918,18 @@ def run_demo_test_action(page, step: dict) -> None:
 
     if action == "show_results":
         switch_tab(page, "demo")
-        results = page.locator("#results")
-        if results.count():
-            results.first.scroll_into_view_if_needed()
-        refresh = page.locator("#refresh-btn")
-        if refresh.count():
-            refresh.first.click()
-            page.wait_for_timeout(800)
+        scroll_demo_results(page)
+        click_results_refresh(page)
+        reveal_latest_result(page)
+        for sel in ("#xml-view", "#export"):
+            loc = page.locator(sel)
+            if loc.count():
+                try:
+                    loc.first.scroll_into_view_if_needed()
+                    page.wait_for_timeout(250)
+                except Exception:
+                    pass
+                break
         return
 
 
@@ -838,27 +945,40 @@ def hold_demo_step(page, step: dict) -> None:
         return
 
     switch_tab(page, "demo")
-    results = page.locator("#results")
-    if results.count():
-        results.first.scroll_into_view_if_needed()
+    scroll_demo_results(page)
+    click_results_refresh(page)
     t0 = time.time()
     deadline = t0 + (dwell / 1000.0)
+    extra_refresh = False
     while time.time() < deadline:
         ready = page.evaluate(
             """() => {
               const status = document.getElementById('status');
               const t = (status && status.textContent) || '';
-              if (/Loaded\\s+\\d+/i.test(t)) return true;
-              const table = document.querySelector('#patients-table table.data tbody tr');
-              return !!table;
+              if (/Loaded\\s+\\d+|wrote|injected|converted|published|Inserted|EIP\\s+\\d+|ok\\b/i.test(t)) return true;
+              const meta = document.getElementById('queue-meta');
+              if (meta && /message/i.test(meta.textContent || '')) return true;
+              if (document.querySelector('#results table tbody tr, #patients-table table tbody tr, #captures-table tbody tr')) return true;
+              if (document.querySelector('#json-list button, #archive-list button, #results .file-list button, #queue-list button')) return true;
+              const viewers = document.querySelectorAll('#results pre.viewer, #json-view, #archive-view, #queue-view, #xml-view');
+              for (const v of viewers) {
+                const body = (v.textContent || '').trim();
+                if (body.length > 20 && body !== '(none yet)') return true;
+              }
+              return false;
             }"""
         )
         if ready:
+            reveal_latest_result(page)
             break
-        page.wait_for_timeout(500)
+        if not extra_refresh and (time.time() - t0) > 1.0:
+            click_results_refresh(page)
+            extra_refresh = True
+        page.wait_for_timeout(300)
     remaining = int(max(0, (deadline - time.time()) * 1000))
     if remaining:
         page.wait_for_timeout(remaining)
+    reveal_latest_result(page)
 
 
 def hold_construction_step(page, step: dict, index: int, total: int) -> None:
@@ -867,9 +987,30 @@ def hold_construction_step(page, step: dict, index: int, total: int) -> None:
     dwell = int(step.get("dwell_ms") or 3000)
     show_construction_step(page, step, index, total)
     try:
-        wait_frame_ready(page, 6000)
+        wait_frame_ready(page, 6000, str(step.get("id") or ""))
     except Exception:
         pass
+    page.evaluate(
+        """() => {
+          const frame = document.getElementById('route-viewer-frame');
+          if (frame) frame.style.visibility = '';
+        }"""
+    )
+    page.wait_for_timeout(400)
+    page.evaluate(
+        """() => {
+          const frame = document.getElementById('route-viewer-frame');
+          if (!frame) return;
+          try {
+            const doc = frame.contentDocument;
+            const node = doc && (
+              doc.querySelector('.route-node.is-new') ||
+              doc.querySelector('.route-node.selected')
+            );
+            if (node) node.scrollIntoView({ behavior: 'auto', block: 'center', inline: 'nearest' });
+          } catch (e) {}
+        }"""
+    )
     t0 = time.time()
     if step.get("show_xslt") and step.get("xslt_text"):
         # Brief glance at the focused module, then open the stylesheet
@@ -889,6 +1030,36 @@ def hold_ui_gesture(page, step: dict) -> None:
     remaining = int(max(0, dwell - (time.time() - t0) * 1000))
     if remaining:
         page.wait_for_timeout(remaining)
+
+
+def report_job(plan: list, index: int, step: dict) -> None:
+    try:
+        tools = Path(__file__).resolve().parent
+        if str(tools) not in sys.path:
+            sys.path.insert(0, str(tools))
+        from construction_video_job import clip_label, update_job
+    except Exception:
+        return
+    total = len(plan) or 1
+    remaining_ms = sum(int(s.get("dwell_ms") or 0) for s in plan[index - 1 :])
+    kind = str(step.get("kind") or "step")
+    phase_name = {
+        "outro": "closing",
+        "demo_test": "live Demo test",
+        "ui_gesture": "setup overlay",
+        "intro": "intro",
+    }.get(kind, "route diagram")
+    label = clip_label(step)
+    left = remaining_ms // 1000
+    update_job(
+        phase="recording",
+        status="running",
+        step=index,
+        step_total=total,
+        remaining_sec=left,
+        message=f"Recording {index} of {total} — {phase_name}: {label} (~{left}s left)",
+        log_line=f"Scene {index}/{total}: {label}",
+    )
 
 
 def main() -> int:
@@ -917,6 +1088,19 @@ def main() -> int:
             record_video_size={"width": 1440, "height": 900},
         )
         page = context.new_page()
+        page.add_init_script(
+            """() => {
+              // Set before any demo JS runs so build-live polling cannot load
+              // the finished live route into the iframe during recording.
+              window.__pfTheaterRecording = true;
+              const paint = () => {
+                document.documentElement.style.background = '#0b1220';
+                if (document.body) document.body.style.background = '#0b1220';
+              };
+              paint();
+              document.addEventListener('DOMContentLoaded', paint);
+            }"""
+        )
         page.goto(url, wait_until="domcontentloaded", timeout=60000)
         # Fail fast if CSS did not load (records as an unstyled "jank" page).
         try:
@@ -925,11 +1109,17 @@ def main() -> int:
                   const hrefs = [...document.styleSheets]
                     .map((s) => s.href || '')
                     .join(' ');
-                  if (!hrefs.includes('app.css')) return false;
-                  const bg = getComputedStyle(document.body).backgroundColor || '';
-                  return bg.includes('245') || bg.includes('248') || bg.includes('251');
+                  if (hrefs.includes('app.css') || hrefs.includes('.css')) {
+                    const bg = getComputedStyle(document.body).backgroundColor || '';
+                    // Any non-default transparent/white-only is fine; also accept
+                    // PilotFish sandbox --bg (#f5f8fb) and plain white panels.
+                    if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') return true;
+                    // Stylesheets present is enough when body bg is inherited/white.
+                    return document.styleSheets.length >= 1;
+                  }
+                  return false;
                 }""",
-                timeout=12000,
+                timeout=20000,
             )
         except Exception:
             print(
@@ -941,13 +1131,25 @@ def main() -> int:
             browser.close()
             return 1
 
-        switch_tab(page, "routes")
-        page.wait_for_timeout(400)
         ensure_theater_chrome(page)
+        welcome = next(
+            (
+                s
+                for s in plan
+                if s.get("action") == "show_welcome" or s.get("id") == "welcome"
+            ),
+            None,
+        )
+        if welcome:
+            show_welcome(page, welcome)
+        else:
+            switch_tab(page, "routes")
+        page.wait_for_timeout(200)
 
         diagram_index = 0
         demo_index = 0
-        for step in plan:
+        for index, step in enumerate(plan, start=1):
+            report_job(plan, index, step)
             kind = str(step.get("kind") or "step")
             if kind == "ui_gesture":
                 update_banner(page, step, 1, 1, phase="Setup")

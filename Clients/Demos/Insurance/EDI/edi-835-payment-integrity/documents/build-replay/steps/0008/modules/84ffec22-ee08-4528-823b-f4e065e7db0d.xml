@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="84ffec22-ee08-4528-823b-f4e065e7db0d" name="Compose Patient Name" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:PatientName:eip_name:{ognl:(getAttribute('ArPatientFirst') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ArPatientFirst')).trim().isEmpty() ? getAttribute('ArPatientFirst') : (getAttribute('EdiPatientFirst') != null ? getAttribute('EdiPatientFirst') : '')) + ' ' + (getAttribute('ArPatientLast') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ArPatientLast')).trim().isEmpty() ? getAttribute('ArPatientLast') : (getAttribute('EdiPatientLast') != null ? getAttribute('EdiPatientLast') : ''))}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

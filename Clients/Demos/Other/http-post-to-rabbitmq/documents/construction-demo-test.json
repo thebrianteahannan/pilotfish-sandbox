@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "sample": "sample-order.json",
+  "preamble": [
+    {
+      "id": "welcome",
+      "action": "show_welcome",
+      "message": "Welcome",
+      "detail": "Welcome to the PilotFish demo: HTTP POST To RabbitMQ. Accept an HTTP POST body on a PilotFish web-service path and publish that same payload to a RabbitMQ queue. PilotFish supports the whole flow out of the box.",
+      "demo_name": "HTTP POST To RabbitMQ",
+      "text": "Welcome to the Pilot Fish demo: H T T P POST To Rabbit MQ. Accept an H T T P POST body on a Pilot Fish web-service path and publish that same payload to a Rabbit MQ queue. Pilot Fish supports the whole flow out of the box."
+    },
+    {
+      "id": "pipeline-overview",
+      "action": "show_pipeline",
+      "message": "Pipeline overview",
+      "detail": "Before we wire anything, here's the flow end to end. Accept an HTTP POST body on a PilotFish web-service path and publish that same payload to a RabbitMQ queue.",
+      "demo_name": null,
+      "text": "Before we wire anything, here's the flow end to end. Accept an H T T P POST body on a Pilot Fish web-service path and publish that same payload to a Rabbit MQ queue."
+    },
+    {
+      "id": "systems-overview",
+      "action": "spotlight_systems",
+      "message": "External systems",
+      "detail": "And here's what sits around the routes. RabbitMQ, PilotFish eiPlatform, and Demo Web UI. All of those are spun up in docker images for this demo.",
+      "demo_name": null,
+      "text": "And here's what sits around the routes. Rabbit MQ, Pilot Fish E I Platform, and Demo Web UI. All of those are spun up in docker images for this demo."
+    }
+  ],
+  "steps": [
+    {
+      "id": "test-open",
+      "action": "open_demo",
+      "message": "Prove it works",
+      "detail": "Routes are built. Let's switch to the Demo tab and prove it works.",
+      "demo_name": null,
+      "text": "Routes are built. Let's switch to the Demo tab and prove it works."
+    },
+    {
+      "id": "test-inject-1",
+      "action": "inject",
+      "message": "Submit a sample",
+      "detail": "I'll submit this sample from the Demo tab \u2014 same as an operator would.",
+      "demo_name": null,
+      "text": "I'll submit this sample from the Demo tab \u2014 same as an operator would."
+    },
+    {
+      "id": "test-wait-1",
+      "action": "wait_results",
+      "message": "Waiting for the routes",
+      "detail": "Give PilotFish a moment to publish that POST onto the queue.",
+      "demo_name": null,
+      "text": "Give Pilot Fish a moment to publish that POST onto the queue."
+    },
+    {
+      "id": "test-show-1",
+      "action": "show_results",
+      "message": "Queue",
+      "detail": "There it is \u2014 the same body sitting on the queue.",
+      "demo_name": null,
+      "text": "There it is \u2014 the same body sitting on the queue."
+    },
+    {
+      "id": "test-inject-2",
+      "action": "inject",
+      "message": "Submit another sample",
+      "detail": "Now a second payload from the Demo tab.",
+      "demo_name": null,
+      "text": "Now a second payload from the Demo tab."
+    },
+    {
+      "id": "test-wait-2",
+      "action": "wait_results",
+      "message": "Waiting for the routes",
+      "detail": "Same path \u2014 it should show up on the queue right away.",
+      "demo_name": null,
+      "text": "Same path \u2014 it should show up on the queue right away."
+    },
+    {
+      "id": "test-show-2",
+      "action": "show_results",
+      "message": "Queue",
+      "detail": "Second payload's on the queue too.",
+      "demo_name": null,
+      "text": "Second payload's on the queue too."
+    }
+  ],
+  "outro": [
+    {
+      "id": "outro-thanks",
+      "action": "thank_you",
+      "message": "Demo complete",
+      "detail": "That's the demo \u2014 accept an HTTP POST body on a PilotFish web-service path and publish that same payload to a RabbitMQ queue. Thanks for choosing PilotFish.",
+      "demo_name": null,
+      "text": "That's the demo \u2014 accept an H T T P POST body on a Pilot Fish web-service path and publish that same payload to a Rabbit MQ queue. Thanks for choosing Pilot Fish."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="f93e4b94-7828-497b-8f6e-1f3f23c22beb" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="6c0d42aa-303a-4de8-9ae8-20c57dfbeaac" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="52aeb46e-dfff-4cf2-a944-85b5a1831185" name="Rule 1 - Write Matched, Update AR Matched" type="XPATH">
+               <condition>//MatchBucket = 'matched'</condition>
+            </output>
+            <output id="974db92f-dead-4a0a-ac1b-d82fe5729b04" name="Rule 2 - Write Exception, Update AR Exception" type="XPATH">
+               <condition>//MatchBucket = 'exception'</condition>
+            </output>
+            <output id="46449d84-9020-4d43-a742-2f56a9aeb084" name="Rule 3 - Append Underpay Alert CSV" type="XPATH">
+               <condition>//UnderpayFlag = 'true'</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

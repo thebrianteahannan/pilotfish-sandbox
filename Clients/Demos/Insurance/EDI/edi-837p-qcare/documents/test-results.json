@@ -1,0 +1,124 @@
+{
+  "interface": "EDI 837P to QCare",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837p-qcare",
+  "started_at": "2026-08-13T07:47:48.085875+00:00",
+  "finished_at": "2026-08-13T07:47:51.148826+00:00",
+  "summary": {
+    "pass": 12,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 12
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 3,
+      "message": "UI OK (http://127.0.0.1:8125/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 3,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "wait-eip",
+      "name": "EIP is reachable",
+      "suite": "Map sample 803",
+      "status": "pass",
+      "duration_ms": 4,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "reset",
+      "name": "Reset outputs",
+      "suite": "Map sample 803",
+      "status": "pass",
+      "duration_ms": 6,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "inject",
+      "name": "Inject sample 837P 803",
+      "suite": "Map sample 803",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "qcare-stone",
+      "name": "QCare 2100-byte STONE record",
+      "suite": "Map sample 803",
+      "status": "pass",
+      "duration_ms": 3025,
+      "message": "HTTP 200: {\"archive\":[{\"content\":\"ISA*00*          *00*          *ZZ*POSTNTRACK000PB*ZZ*QCARE-PAYER    *240504*0130*^*00501*000041312*0*P*:~\\nGS*HC*POSTNTRACK000PB*QCARE-PAYER*20240504*0130*",
+      "detail": ""
+    },
+    {
+      "id": "qcare-sharon",
+      "name": "QCare SHARON and procedure 70487",
+      "suite": "Map sample 803",
+      "status": "pass",
+      "duration_ms": 6,
+      "message": "HTTP 200: {\"archive\":[{\"content\":\"ISA*00*          *00*          *ZZ*POSTNTRACK000PB*ZZ*QCARE-PAYER    *240504*0130*^*00501*000041312*0*P*:~\\nGS*HC*POSTNTRACK000PB*QCARE-PAYER*20240504*0130*",
+      "detail": ""
+    },
+    {
+      "id": "qcare-file",
+      "name": "QCare filename from CLM01",
+      "suite": "Map sample 803",
+      "status": "pass",
+      "duration_ms": 6,
+      "message": "HTTP 200: {\"archive\":[{\"content\":\"ISA*00*          *00*          *ZZ*POSTNTRACK000PB*ZZ*QCARE-PAYER    *240504*0130*^*00501*000041312*0*P*:~\\nGS*HC*POSTNTRACK000PB*QCARE-PAYER*20240504*0130*",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837p-qcare/documents/EDI837P_QCare_V2_Route_Diagrams.pdf",
+      "detail": ""
+    },
+    {
+      "id": "capability-pdf",
+      "name": "Capability Brief PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837p-qcare/documents/EDI837P_QCare_Capability_Brief.pdf",
+      "detail": ""
+    },
+    {
+      "id": "test-plan-pdf",
+      "name": "Test Plan PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837p-qcare/documents/EDI837P_QCare_Test_Plan.pdf",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837p-qcare/tests/plan.json"
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="42d84b84-a08c-4e1b-bf26-d05768f473fa" name="Set Remote File Name" type="Transaction Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeName>demo.ftp.RemoteFileName</AttributeName>
+      
+          
+      <Expression>{ognl:getAttribute('demo.ftp.RemoteFileNameRaw').toString().trim()}</Expression>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+        
+   </ModuleConfig>
+</Module>

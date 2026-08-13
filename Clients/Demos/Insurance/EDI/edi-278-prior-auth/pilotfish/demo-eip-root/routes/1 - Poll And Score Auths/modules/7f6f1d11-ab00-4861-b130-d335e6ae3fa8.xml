@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7f6f1d11-ab00-4861-b130-d335e6ae3fa8" name="Build Auth Decision XML" type="XSLT Transformation" tag="Processor" class="com.pilotfish.eip.modules.transform.XSLTProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <XSLTPath>build-auth-decision.xslt</XSLTPath>
+      
+          
+      <CacheXSLTToXML>false</CacheXSLTToXML>
+      
+          
+      <XSLTEngine>Saxon</XSLTEngine>
+      
+          
+      <XSLTParameters>[eip_pair:AuthTraceNumber:eip_name:{ognl:getAttribute('AuthTraceNumber')}:eip_value][eip_pair:MemberId:eip_name:{ognl:getAttribute('MemberId')}:eip_value][eip_pair:PatientLast:eip_name:{ognl:getAttribute('EdiPatientLast')}:eip_value][eip_pair:PatientFirst:eip_name:{ognl:getAttribute('EdiPatientFirst')}:eip_value][eip_pair:ProcedureCode:eip_name:{ognl:getAttribute('ProcedureCode')}:eip_value][eip_pair:DiagnosisCode:eip_name:{ognl:getAttribute('DiagnosisCode')}:eip_value][eip_pair:AttachmentFlag:eip_name:{ognl:getAttribute('AttachmentFlag')}:eip_value][eip_pair:RequiresDiagnosis:eip_name:{ognl:getAttribute('RequiresDiagnosis')}:eip_value][eip_pair:RequiresAttachment:eip_name:{ognl:getAttribute('RequiresAttachment')}:eip_value][eip_pair:DefaultDisposition:eip_name:{ognl:getAttribute('DefaultDisposition')}:eip_value]</XSLTParameters>
+      
+          
+      <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+      
+          
+      <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+      
+        
+   </ModuleConfig>
+</Module>

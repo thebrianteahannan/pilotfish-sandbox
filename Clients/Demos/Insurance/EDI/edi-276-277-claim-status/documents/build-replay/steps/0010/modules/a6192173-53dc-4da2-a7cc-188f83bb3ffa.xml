@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="a6192173-53dc-4da2-a7cc-188f83bb3ffa" name="Debug Write Claim Status Decision" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:(getAttribute('TraceNumber') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('TraceNumber')).trim().isEmpty() ? getAttribute('TraceNumber') : 'unknown') + '_decision.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

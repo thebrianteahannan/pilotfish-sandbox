@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="75deee91-6832-43a8-ac46-a410725c5945" name="Pretty-Print Scrub Decision" type="XML Formatting" tag="Processor" class="com.pilotfish.eip.modules.transform.XMLFormattingProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('ClaimId') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimId')).trim().isEmpty()}</ExecuteProcessor>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,85 @@
+{# Standard Info tab — playbook §6.5. Include from index.html:
+
+     {% include 'partials/info_tab.html' %}
+
+   Expected context (via context processor or render_template):
+     info_title, info_blurb, info_note, eip_url, lan_hint (optional),
+     info_ports (list of {label, value}), test_results_pdf (optional),
+     info_extra_links (optional list of {href, label}),
+     info_extra_sections (optional list of {title, items:[str], note?:str})
+#}
+<div id="tab-info" hidden>
+  <main>
+    <section class="panel info-tab">
+      <h1>{{ info_title }}</h1>
+      <p class="sub">{{ info_blurb|safe }}</p>
+    </section>
+
+    <section class="panel">
+      <h2>Info &amp; review PDFs</h2>
+      <ul>
+        {% if info_note %}<li>{{ info_note|safe }}</li>{% endif %}
+        {% if eip_url %}
+        <li>EIP: <a href="{{ eip_url }}" target="_blank" rel="noopener">{{ eip_url }}</a></li>
+        {% endif %}
+        {% if lan_hint %}
+        <li>LAN UI: <a href="{{ lan_hint }}" id="lan-link" target="_blank" rel="noopener">{{ lan_hint }}</a></li>
+        {% endif %}
+        <li><a href="/documents/capability-brief.pdf" target="_blank" rel="noopener">Capability brief PDF</a></li>
+        <li><a href="/documents/route-diagrams.pdf" target="_blank" rel="noopener">Route diagrams PDF</a></li>
+        <li><a href="/documents/test-plan.pdf" target="_blank" rel="noopener">Test plan PDF</a></li>
+        <li>
+          <a href="/documents/construction-replay.mp4" target="_blank" rel="noopener"><strong>Construction replay video</strong></a>
+          <span class="muted"> — narrated module-by-module build + live Demo-tab test</span>
+        </li>
+        <li>
+          <a href="/documents/construction-replay-transcript.pdf" target="_blank" rel="noopener">Construction replay transcript (PDF)</a>
+          <span class="muted"> —
+            <a href="/documents/construction-replay-transcript.txt" target="_blank" rel="noopener">plain text</a>
+          </span>
+        </li>
+        <li>
+          <a href="/documents/test-results.pdf" target="_blank" rel="noopener"><strong>Test results PDF</strong></a>
+          {% if test_results_pdf %}
+          <span class="muted"> — also <a href="/documents/{{ test_results_pdf }}" target="_blank" rel="noopener">{{ test_results_pdf }}</a></span>
+          {% endif %}
+        </li>
+        {% for link in info_extra_links or [] %}
+        {# Skip duplicates already listed above #}
+        {% if link.href not in [
+          '/documents/construction-replay.mp4',
+          '/documents/construction-replay-transcript.pdf',
+          '/documents/construction-replay-transcript.txt'
+        ] %}
+        <li><a href="{{ link.href }}" target="_blank" rel="noopener">{{ link.label }}</a></li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </section>
+
+    {% if info_ports %}
+    <section class="panel">
+      <h2>Ports</h2>
+      <ul>
+        {% for p in info_ports %}
+        <li>{{ p.label }}: <code>{{ p.value }}</code></li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% for sec in (info_extra_sections or []) + (module_docs_sections or []) %}
+    <section class="panel">
+      <h2>{{ sec.title }}</h2>
+      {% if sec['items'] %}
+      <ul>
+        {% for item in sec['items'] %}
+        <li>{{ item|safe }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if sec.note %}<p class="sub muted">{{ sec.note|safe }}</p>{% endif %}
+    </section>
+    {% endfor %}
+  </main>
+</div>

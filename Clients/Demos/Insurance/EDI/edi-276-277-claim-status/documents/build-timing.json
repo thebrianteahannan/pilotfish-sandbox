@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "interface": "EDI 276/277 Claim Status",
+  "slug": "edi-276-277-claim-status",
+  "path": "Clients/Demos/Insurance/EDI/edi-276-277-claim-status",
+  "requested_by": "user",
+  "started_at": "2026-08-13T07:50:30Z",
+  "completed_at": "2026-08-13T07:56:30Z",
+  "completed_by": "cursor-agent",
+  "duration_minutes": 6.0,
+  "compose_project": "edi-276-277-claim-status",
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-13T07:50:30Z",
+      "ended_at": "2026-08-13T07:51:30Z",
+      "duration_minutes": 1.0,
+      "notes": "Stopped 837p; deleted 276 tree without overlay restore; scaffolded on 8127; restored samples + XSLT catalog/277 map"
+    },
+    {
+      "id": "design_scaffold",
+      "name": "DESIGN + V1 routes + Web UI",
+      "started_at": "2026-08-13T07:51:30Z",
+      "ended_at": "2026-08-13T07:53:40Z",
+      "duration_minutes": 2.2,
+      "notes": "Route 1 from 278 directory + 835 PI 276-A1 fork. Route 2 from 278 XPath router + XML-to-EDI 277-A1. Unique Pretty-Print names. TraceNumber prefers TRN02 over BHT03."
+    },
+    {
+      "id": "routes",
+      "name": "V2 publish + full stack",
+      "started_at": "2026-08-13T07:53:40Z",
+      "ended_at": "2026-08-13T07:55:30Z",
+      "duration_minutes": 1.8,
+      "notes": "First inject used BHT03 ABC276XXX. Prefer TRN02 \u2192 ABCXYZ1_found.xml + real ST*277 wire."
+    },
+    {
+      "id": "webui_docs",
+      "name": "PDFs + tests + construction prepare",
+      "started_at": "2026-08-13T07:55:30Z",
+      "ended_at": "2026-08-13T07:56:30Z",
+      "duration_minutes": 1.0,
+      "notes": "12/12 tests. record_module_replay after --complete. No MP4."
+    }
+  ]
+}

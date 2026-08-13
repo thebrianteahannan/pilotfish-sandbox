@@ -6,6 +6,20 @@
 
 Do **not** invent a one-off layout. Follow this playbook, then specialize only where the integration requires it.
 
+## Demo folder layout
+
+Sandbox demos live under `Clients/Demos/` in category folders. The **slug** (last folder name) stays the same so Compose project names do not change.
+
+| Category | Path | What’s there |
+|----------|------|----------------|
+| Insurance / EDI | `Clients/Demos/Insurance/EDI/` | X12 270/271, 276/277, 278, 834, 835, 837, 999 |
+| Medical / HL7 | `Clients/Demos/Medical/HL7/` | Hospital HL7, lab LLP, device → EHR, doc workflow |
+| Medical / FHIR | `Clients/Demos/Medical/FHIR/` | FHIR R4 platform |
+| Other | `Clients/Demos/Other/` | CSV, FTP, HTTP → RabbitMQ, SQL, smoke |
+| Shared chrome | `Clients/Demos/_shared/` | Info / Timing / build-live copied into each Web UI |
+
+`python3 tools/scaffold_demo_stage.py --slug …` infers the category (`--category Insurance/EDI` to override). Tools resolve `--root <slug>` or a full path. See `Clients/Demos/README.md`.
+
 ---
 
 ## How agents know how to build PilotFish interfaces
@@ -80,11 +94,28 @@ Best source for **end-to-end patterns** that already run in Docker:
 
 | Demo | Pattern |
 |------|---------|
-| `Clients/Demos/edi-837-snip-sqlserver/` | SQL poll → EIP handoff → fork → EDI + SNIP |
-| `Clients/Demos/edi-278-prior-auth/` | Completeness + simulated PA; EDI XML→EDI + HL7 XML→ER7 (§3.5) |
-| `Clients/Demos/hl7-healthcare-automation/` | Directory → validate → router fan-out → SQL + file |
+| `Clients/Demos/Insurance/EDI/edi-837-snip-sqlserver/` | SQL poll → EIP handoff → fork → EDI + SNIP |
+| `Clients/Demos/Insurance/EDI/edi-278-prior-auth/` | Completeness + simulated PA; EDI XML→EDI + HL7 XML→ER7 (§3.5) |
+| `Clients/Demos/Medical/HL7/hl7-healthcare-automation/` | Directory → validate → router fan-out → SQL + file |
+| `Clients/Demos/Other/http-post-to-rabbitmq/` | HTTP Post listener → RabbitMQ queue (`HttpPostListener` + `RabbitMQTransport`) |
 
 **Default assembly method:** choose modules via Documentation + V2 → copy a Sandbox `route.xml` fragment when one exists for that class → otherwise build V1 XML from looked-up config items → convert to V2 for diagrams.
+
+### 1.4 Known 23R1 wiring traps (do not re-debug)
+
+These burned the two slowest phases of `http-post-to-rabbitmq` (DESIGN/compose + first inject). Copy the working XML from that demo; do **not** rediscover them from logs.
+
+| Trap | What you will see | Do this first |
+|------|-------------------|---------------|
+| RabbitMQ `ConnectionMethod` **URI** `amqp://user:pass@host:5672/` (trailing slash) | `530 NOT_ALLOWED - vhost  not found` (empty vhost) | **Host and Port**: `HostsAndPorts=rabbitmq:5672`, `VirtualHost=/`, username/password env vars. Confirmed on `pilotfish-eip:23R1` (`modules-rabbitmq-23R1-SNAPSHOT.jar`). |
+| HTTP Post **`Synchronous=true`** into RabbitMQ (or any transport that does not complete `com.pilotfish.eip.synchronousResponseTicket`) | Web UI inject hangs until listener `Timeout`; the message may still publish | **`Synchronous=false`** for queue ingest. RabbitMQ **`SyncAck`** is a different ticket — it does not finish the HTTP Post wait. |
+| XML file outbound is one long minified line (SQL-XML, transformer default) | Demo tab / `cat` of the file is unreadable | Target-side **`XMLFormattingProcessor`** (`com.pilotfish.eip.modules.transform.XMLFormattingProcessor`) **on the transport**, not the listener. Module docs: indent is 2 spaces; listener-side has no effect. |
+| Two processors on the **same route** share a **name** (e.g. both `Pretty-Print XML`) | `Route […]: More than one Processor named [Pretty-Print XML] is defined.` — EIP **does not load that route** | Unique `name=` per processor on the route (`Pretty-Print Matched XML` / `Pretty-Print Exception XML`) |
+| XPath after `DatabaseSqlProcessor` uses mixed-case column names (`//ExpectedPaid`) | SQL ran (log shows `Field ExpectedPaid = 500.00`) but extract is empty | SQLXML result tags are **UPPERCASE** (`EXPECTEDPAID`). Match both: `//EXPECTEDPAID \| //ExpectedPaid` |
+
+Opaque JSON/bytes inbound: use `NullRoutingModule`, not XPath `true()` (XPath expects XML).
+
+When a demo’s `build-timing.json` `speedup_ideas` are **reusable** (not slug-specific), add them here and to §10 **in the same session**. Leaving them only in that demo’s Timing tab does not make the next interface faster.
 
 ### 2. How agents pick processors / class names (`route.xml`)
 
@@ -205,7 +236,7 @@ For **PDFs and other review files**, also follow §6.2 (serve under `/documents/
 
 ## 2. Standard directory scaffold
 
-Create under `Clients/Demos/<slug>/` (or `Clients/<Client>/<slug>/` for client work):
+Create under `Clients/Demos/<Category>/…/<slug>/` (scaffold infers category; or `Clients/<Client>/<slug>/` for client work):
 
 ```text
 <interface>/
@@ -268,11 +299,11 @@ If runtime and diagrams diverge, fix or document the divergence in `DESIGN.md` �
 
 Reference implementations:
 
-- `Clients/Demos/edi-837-snip-sqlserver/` — SQL poll → EIP handoff → fork → EDI XML→EDI + SNIP
-- `Clients/Demos/edi-270-271-eligibility/` — EligibilityRequest → EDI XML → `EDITransformationProcessor` (XML→EDI) → 270
-- `Clients/Demos/edi-278-prior-auth/` — AuthDecision → EDI XML→EDI (278) + HL7 XML→ER7 (ORU); no hardcoded wire text
-- `Clients/Demos/hl7-healthcare-automation/` — directory listen → validate → router fan-out → SQL + file
-- `Clients/Demos/fhir-r4-platform/` — Call Route auth, docs-only **Processor Groups** (`diagram-groups.json` + overview/detail route PDF)
+- `Clients/Demos/Insurance/EDI/edi-837-snip-sqlserver/` — SQL poll → EIP handoff → fork → EDI XML→EDI + SNIP
+- `Clients/Demos/Insurance/EDI/edi-270-271-eligibility/` — EligibilityRequest → EDI XML → `EDITransformationProcessor` (XML→EDI) → 270
+- `Clients/Demos/Insurance/EDI/edi-278-prior-auth/` — AuthDecision → EDI XML→EDI (278) + HL7 XML→ER7 (ORU); no hardcoded wire text
+- `Clients/Demos/Medical/HL7/hl7-healthcare-automation/` — directory listen → validate → router fan-out → SQL + file
+- `Clients/Demos/Medical/FHIR/fhir-r4-platform/` — Call Route auth, docs-only **Processor Groups** (`diagram-groups.json` + overview/detail route PDF)
 - Med Rec Flat File to HL7 (`Clients/Med Rec/eip-root/interfaces/Flat File to HL7 and Kickout Reports/`) — XSLT HL7 XML → `HL7TransformationProcessor` (XML→HL7 2.X)
 
 ---
@@ -389,8 +420,8 @@ Business / decision XML
 
 **Reference assemblies**
 
-- X12 XML→EDI: `Clients/Demos/edi-270-271-eligibility/`, `Clients/Demos/edi-837-snip-sqlserver/`, `Clients/Demos/edi-278-prior-auth/` (278 response)
-- HL7 XML→ER7: Med Rec / Flat File to HL7 (`Clients/Med Rec/eip-root/interfaces/Flat File to HL7 and Kickout Reports/`), `Clients/Demos/edi-278-prior-auth/` (ORU notice)
+- X12 XML→EDI: `Clients/Demos/Insurance/EDI/edi-270-271-eligibility/`, `Clients/Demos/Insurance/EDI/edi-837-snip-sqlserver/`, `Clients/Demos/Insurance/EDI/edi-278-prior-auth/` (278 response)
+- HL7 XML→ER7: Med Rec / Flat File to HL7 (`Clients/Med Rec/eip-root/interfaces/Flat File to HL7 and Kickout Reports/`), `Clients/Demos/Insurance/EDI/edi-278-prior-auth/` (ORU notice)
 - Structured dialect docs: `/Users/brianhannan/Documents/PilotFish Documentation/Documents/Processors/…/PilotFish-EDI-XML-Guide-*.md`
 
 **Anti-example (do not copy for new work):** XSLT that emits `ISA*00*…` or `MSH|^~\&|…` as text. Legacy demos that still do this (`hl7-healthcare-automation` event→HL7 text, older doc-healthcare maps) are **not** the construction standard going forward—refactor when touching those emitters.
@@ -449,7 +480,7 @@ Work in this order unless the user specifies otherwise:
 10c. **Test plan PDF + automated run (required):** maintain `tests/plan.json`, run `python3 tools/export_test_plan_pdf.py` and `python3 tools/run_interface_tests.py --wait` (see §7.1). Update the plan as capabilities are added.
 11. **README.md** (run, ports, smoke commands; link to `documents/*.pdf`).
 12. **Smoke / automated tests** (§7 / §7.1) and paste pass/fail summary into the chat (and update DESIGN.md Risks if findings).
-13. **Finalize timing + Docker inventory (§4.1 / §5.1):** complete `build-timing.json`, run `python3 tools/update_build_status.py --root … --complete` (records **construction-replay.mp4** by default when the Web UI is up and `documents/build-replay/` has steps; use `--no-video` to skip), run `python3 tools/list_sandbox_demo_docker.py`, retain Hindsight note when the user marks the demo done.
+13. **Finalize timing + Docker inventory (§4.1 / §5.1):** complete `build-timing.json`, run `python3 tools/update_build_status.py --root … --complete` (prepares **build-replay**, naturalized narration, and **construction-replay-transcript** PDF/TXT; does **not** record **construction-replay.mp4** — use the Info tab **Create construction video** button, or `--video` / `tools/regenerate_construction_video.py` when the user asks), run `python3 tools/list_sandbox_demo_docker.py`, retain Hindsight note when the user marks the demo done.
 
 Do not refactor unrelated demos. Prefer copying the closest existing demo assembly after modules are chosen from Documentation/V2.
 
@@ -485,8 +516,9 @@ Proposal PDF: [`docs/Progressive_Interface_Build_Visibility_Proposal.pdf`](../Pr
 
 Implemented tooling:
 - `tools/scaffold_demo_stage.py` — net-new demo with stage Web UI
-- `tools/update_build_status.py` — update `documents/build-status.json` (on `--complete`, records construction video by default)
-- `tools/export_construction_video.py` — Playwright capture of each replay step + neural TTS voiceover → `documents/construction-replay.mp4` (also writes transcript PDF/TXT). TTS pronunciation from `docs/construction-narration-pronunciation.json` via `tools/construction_speech.py`
+- `tools/update_build_status.py` — update `documents/build-status.json` (on `--complete`, prepares construction-video assets; `--video` also records the mp4)
+- `tools/export_construction_video.py` — Playwright capture of each replay step + neural TTS voiceover → `documents/construction-replay.mp4` (also writes transcript PDF/TXT). `--prepare-only` writes replay/narration/transcript without recording. TTS pronunciation from `docs/construction-narration-pronunciation.json` via `tools/construction_speech.py`
+- `tools/construction_video_worker.py` — host listener (`127.0.0.1:8764`) so the Info tab **Create construction video** button can start the exporter (Playwright is not in the webui container)
 - `tools/export_construction_transcript_pdf.py` — `documents/construction-replay-transcript.pdf` (+ `.txt`) from build-replay narration, framed with DESIGN purpose/audience plus Capability Brief, Test Plan, and module-docs
 - `docs/CONSTRUCTION_NARRATION_PRONUNCIATION.pdf` — how to pronounce SFTP, paths (never “slash”), JDBC, etc. for construction videos (`tools/export_construction_narration_pronunciation_pdf.py`)
 - `tools/log_build_experience.py` — append narrated Experience-tab events (decisions, SQL, tests, …)
@@ -531,7 +563,7 @@ Schema: copy `docs/templates/build-timing.example.json`. Keep updating the file 
 
 1. Create `documents/build-timing.json` early with `started_at`.  
 2. Update phase timestamps as work progresses (approximate is OK; prefer honest ranges over precision theater).  
-3. On completion: set `completed_at`, compute durations, fill `slowest_phases`, `bottlenecks`, `speedup_ideas`, and a §5.1 Docker snapshot.  
+3. On completion: set `completed_at`, compute durations, fill `slowest_phases`, `bottlenecks`, `speedup_ideas`, and a §5.1 Docker snapshot. If a speedup idea would have skipped a debug loop on **any** future demo, promote it into §1.4 / §10 immediately — do not leave it only in that demo’s Timing tab.  
 4. Mention total minutes + top 1–2 slow phases in the completion chat summary.  
 5. Retain a short Hindsight note for the bank `PilotFish-Sandbox` when a demo is marked complete (document id like `build-timing-<slug>`), so future sessions can recall bottlenecks.
 
@@ -707,7 +739,7 @@ Rules:
 5. Collapsed box UX (stakeholder-readable): dashed border, title **Processor Group**, short description, footer like `▸ N processors · see detail page`.
 6. Detail pages start with a **Processor Group · Detail** banner, then the full processor chain (+ transports when listed).
 
-**Reference implementation:** `Clients/Demos/fhir-r4-platform/` (`diagram-groups.json` on routes 1 / 3 / 3b, `export_route_diagrams.py` CAPTURE list, Web UI API).
+**Reference implementation:** `Clients/Demos/Medical/FHIR/fhir-r4-platform/` (`diagram-groups.json` on routes 1 / 3 / 3b, `export_route_diagrams.py` CAPTURE list, Web UI API).
 
 ### 6.1a Stakeholder Capability Brief PDF → `documents/` (**required for every new interface**)
 
@@ -748,7 +780,7 @@ Whenever an agent produces a PDF the user needs to review (route diagrams, resea
 
 When a demo writes SNIP results (`output/snip/*_snip.xml` or similar), the Web UI **must** show a rendered **HTML** report on the “HTML report” tab — not raw / escaped SNIP XML.
 
-**Reference implementation:** `Clients/Demos/edi-837-snip-sqlserver/webui/` (`snip_report.py`, `xslt/*.xslt`, `/api/snip-report`, iframe `#snip-html`).
+**Reference implementation:** `Clients/Demos/Insurance/EDI/edi-837-snip-sqlserver/webui/` (`snip_report.py`, `xslt/*.xslt`, `/api/snip-report`, iframe `#snip-html`).
 
 | Piece | Role |
 |-------|------|
@@ -782,11 +814,12 @@ Load Highlight.js (XML) + those assets in `templates/index.html` **before** `app
 Every Sandbox demo Web UI **must** expose an **Info** tab (or equivalent top-level view) with the same layout family used by `edi-837-snip-sqlserver`:
 
 1. Title + short blurb (what the demo does)  
-2. **Info & review PDFs** list: demo-only note, EIP URL, LAN UI URL, and links to  
+2. **Access** list (`info_urls`): **every** URL you would paste in chat after spin-up — Local Web UI (`http://127.0.0.1:<webui>/`), LAN Web UI, EIP, plus each extra service (HTTP POST path, FTP/SFTP, SQL Studio, RabbitMQ management, mock payer, OCI mock, …). Put demo credentials in `note` (e.g. `demo / demo`). AMQP/SFTP host:port can be a `value` (not a href) on the same list.  
+3. **Info & review PDFs** list: demo-only note and links to  
    `/documents/capability-brief.pdf`, `/documents/route-diagrams.pdf`, `/documents/test-plan.pdf`, `/documents/test-results.pdf`  
-   (plus optional demo-specific PDF links)  
-3. **Ports** table/list (host ports from compose)  
-4. Optional extra sections (e.g. SNIP levels) when DESIGN.md warrants them  
+   (plus optional demo-specific PDF links). Do **not** leave Access URLs only in chat or README.  
+4. **Ports** table/list (host ports from compose)  
+5. Optional extra sections (e.g. SNIP levels) when DESIGN.md warrants them  
 
 **Shared assets / wiring:**
 
@@ -804,11 +837,11 @@ In `index.html`:
 <!-- INFO_TAB_STANDARD:END -->
 ```
 
-Flask must provide context (`info_title`, `info_blurb`, `info_note`, `eip_url`, `lan_hint`, `info_ports`, `test_results_pdf`, optional `info_extra_links` / `info_extra_sections`). Prefer a `@app.context_processor` so every page gets them.
+Flask must provide context (`info_title`, `info_blurb`, `info_note`, `eip_url`, `lan_hint`, `info_urls`, `info_ports`, `test_results_pdf`, optional `info_extra_links` / `info_extra_sections`). Prefer a `@app.context_processor` so every page gets them.
 
 **Hard rules:**
 
-1. Do not ship an Info tab that is only LAN/EIP URLs.  
+1. Do not ship an Info tab that is only LAN/EIP URLs — PDFs still required. Do not announce Local/LAN/EIP/RabbitMQ/SFTP/SQL links in chat unless the same links are on the Info tab.  
 2. PDF aliases must return `application/pdf` when the file exists under `documents/` (§6.2).  
 3. New demos: copy the partial + `document_routes.py` (or re-run the apply script) before claiming Web UI done.  
 4. After changing shared partial / `document_routes.py`, re-run `tools/apply_info_tab_standard.py` (or sync copies) so demos stay aligned.
@@ -865,7 +898,7 @@ Minimum bar:
 - [ ] **Stakeholder Capability Brief PDF** written under `documents/` (`tools/export_stakeholder_brief.py`)
 - [ ] **Test Plan PDF** written under `documents/` (`tools/export_test_plan_pdf.py`)
 - [ ] **Automated tests run** (`tools/run_interface_tests.py --wait`) with results in `documents/test-results.json` / `.html` / `.pdf`
-- [ ] **Info tab** shows blurb, EIP/LAN, capability/route/test-plan/test-results PDF links, and ports (§6.5)
+- [ ] **Info tab** shows blurb, **Access** URLs (local + LAN + EIP + every extra service with creds), capability/route/test-plan/test-results PDF links, and ports (§6.5)
 - [ ] **Timing tab** loads (empty-state OK) or renders `documents/build-timing.json` (§6.6)
 - [ ] **Browser/LAN PDF URLs** work (HTTP 200, `application/pdf`) for every review PDF (§6.2)
 - [ ] No silent claim of partner-grade validation unless gated
@@ -1043,6 +1076,11 @@ Every interface README must include:
 | Emitting EDI/HL7 without an intermediate structured XML audit in demos | Write EDI/HL7 XML to debug/output next to the wire file |
 | Leaving X12 demos on expired trial tables / basic Segment XML when Sandbox TableData exists | Mount `EDI/TableData/x12` + `TransactionDataWithVersion` → `edi-tabledata/<IG>` (§3.6) |
 | Hand-rolling sample EDI / duplicate WPC trees outside `EDI/TableData` | Prefer `EDI/TableData/x12/<IG>/examples` (+ XSDs/PDFs); keep story fixtures only when demo logic needs them |
+| RabbitMQ **URI** `amqp://…:5672/` on `23R1` | **Host and Port** + `VirtualHost=/` (§1.4); copy `http-post-to-rabbitmq` |
+| HTTP Post **`Synchronous=true`** into a queue / fire-and-forget transport | **`Synchronous=false`** (§1.4); RabbitMQ `SyncAck` does not complete the HTTP wait |
+| Writing an XML file without pretty-print | Target-side `XMLFormattingProcessor` on the transport before the file write (§1.4) |
+| Two processors on one route with the same `name=` | Unique names; EIP will not load the route otherwise (§1.4) |
+| XPath `//ExpectedPaid` after Database SQL | SQLXML result tags are `EXPECTEDPAID` — match both cases (§1.4) |
 
 ---
 

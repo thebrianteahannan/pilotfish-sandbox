@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="00de461c-7185-4f49-8296-be4a83874622" name="Debug Write Forked Transaction" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:(getAttribute('AuthTraceNumber') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('AuthTraceNumber')).trim().isEmpty() ? getAttribute('AuthTraceNumber') : 'unknown') + '_txn.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

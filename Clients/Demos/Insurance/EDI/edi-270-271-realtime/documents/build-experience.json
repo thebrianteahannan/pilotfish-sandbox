@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "title": "Interface construction experience",
+  "demo": "edi-270-271-realtime",
+  "events": [
+    {
+      "id": "e001",
+      "kind": "decision",
+      "title": "HttpPost owns the payer round-trip",
+      "summary": "Clinic posts once to /eligibility/check. PilotFish builds the 270, HTTP POSTs the payer, then replies with JSON.",
+      "detail": "",
+      "rationale": "Same PostProcessors pattern as FHIR Keycloak JWT Auth. Orig demo taught the three hops; this one is the production-shaped sync call.",
+      "at": "2026-08-13T06:56:08Z",
+      "alternatives": [
+        "UI orchestrates build/payer/parse",
+        "Async queue between 270 and 271"
+      ]
+    },
+    {
+      "id": "e002",
+      "kind": "route",
+      "title": "1 - Realtime Eligibility Check: listener + transports scaffold",
+      "summary": "Published diagram snapshot for 1 - Realtime Eligibility Check",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:56:08Z",
+      "route_id": "1-realtime-eligibility-check",
+      "replay_step": "0001"
+    },
+    {
+      "id": "e003",
+      "kind": "route",
+      "title": "1 - Realtime Eligibility Check: adding \u201cSnapshot Inbound Request\u201d (1/9)",
+      "summary": "Published diagram snapshot for 1 - Realtime Eligibility Check",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:56:10Z",
+      "route_id": "1-realtime-eligibility-check",
+      "replay_step": "0002"
+    },
+    {
+      "id": "e004",
+      "kind": "route",
+      "title": "1 - Realtime Eligibility Check: adding \u201cMap Request To 270 EDI XML\u201d (2/9)",
+      "summary": "Published diagram snapshot for 1 - Realtime Eligibility Check",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:56:12Z",
+      "route_id": "1-realtime-eligibility-check",
+      "replay_step": "0003"
+    },
+    {
+      "id": "e005",
+      "kind": "route",
+      "title": "1 - Realtime Eligibility Check: adding \u201cPretty-Print 270 EDI XML\u201d (3/9)",
+      "summary": "Published diagram snapshot for 1 - Realtime Eligibility Check",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:56:14Z",
+      "route_id": "1-realtime-eligibility-check",
+      "replay_step": "0004"
+    },
+    {
+      "id": "e006",
+      "kind": "route",
+      "title": "1 - Realtime Eligibility Check: adding \u201cWrite 270 EDI XML\u201d (4/9)",
+      "summary": "Published diagram snapshot for 1 - Realtime Eligibility Check",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:56:16Z",
+      "route_id": "1-realtime-eligibility-check",
+      "replay_step": "0005"
+    },
+    {
+      "id": "e007",
+      "kind": "route",
+      "title": "1 - Realtime Eligibility Check: adding \u201cXML to EDI 270\u201d (5/9)",
+      "summary": "Published diagram snapshot for 1 - Realtime Eligibility Check",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:56:18Z",
+      "route_id": "1-realtime-eligibility-check",
+      "replay_step": "0006"
+    },
+    {
+      "id": "e008",
+      "kind": "route",
+      "title": "1 - Realtime Eligibility Check: adding \u201cWrite 270 EDI Wire\u201d (6/9)",
+      "summary": "Published diagram snapshot for 1 - Realtime Eligibility Check",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:56:20Z",
+      "route_id": "1-realtime-eligibility-check",
+      "replay_step": "0007"
+    },
+    {
+      "id": "e009",
+      "kind": "route",
+      "title": "1 - Realtime Eligibility Check: adding \u201cEmpty Error Body\u201d (7/9)",
+      "summary": "Published diagram snapshot for 1 - Realtime Eligibility Check",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:56:23Z",
+      "route_id": "1-realtime-eligibility-check",
+      "replay_step": "0008"
+    },
+    {
+      "id": "e010",
+      "kind": "route",
+      "title": "1 - Realtime Eligibility Check: adding \u201cSet 405\u201d (8/9)",
+      "summary": "Published diagram snapshot for 1 - Realtime Eligibility Check",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:56:25Z",
+      "route_id": "1-realtime-eligibility-check",
+      "replay_step": "0009"
+    },
+    {
+      "id": "e011",
+      "kind": "route",
+      "title": "1 - Realtime Eligibility Check: complete (9 processors)",
+      "summary": "Published diagram snapshot for 1 - Realtime Eligibility Check",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:56:27Z",
+      "route_id": "1-realtime-eligibility-check",
+      "replay_step": "0010"
+    },
+    {
+      "id": "e012",
+      "kind": "route",
+      "title": "1 - Realtime Eligibility Check: complete \u2014 diagram live",
+      "summary": "Published diagram snapshot for 1 - Realtime Eligibility Check",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-13T06:56:27Z",
+      "route_id": "1-realtime-eligibility-check",
+      "replay_step": "0011"
+    },
+    {
+      "id": "e013",
+      "kind": "test",
+      "title": "12/12 tests passed",
+      "summary": "FAIL001 AAA 72 and OK001 active benefits on a single /eligibility/check round-trip.",
+      "detail": "UI check returned mode=realtime. HttpPost PostProcessors wrap raw 271 then structural XSLT to JSON.",
+      "rationale": "",
+      "at": "2026-08-13T06:59:33Z"
+    }
+  ],
+  "updated_at": "2026-08-13T06:59:33Z"
+}

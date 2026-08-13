@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FHIR R4 Expandable Platform</title>
+  <link rel="stylesheet" href="/static/pf-theme.css" />
+  <link rel="stylesheet" href="/static/app.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css" />
+  <link rel="stylesheet" href="/static/code-highlight.css" />
+  <link rel="stylesheet" href="/static/timing-tab.css" />
+  <link rel="stylesheet" href="/static/build-live.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="app-bar">
+      <p class="brand">PilotFish · FHIR R4 Platform (Phase 6)</p>
+      <nav class="tabs" role="tablist">
+        <button type="button" class="tab active" data-tab="demo">Demo</button>
+        <button type="button" class="tab" data-tab="routes">Routes</button>
+        {% if has_xslt %}<button type="button" class="tab" data-tab="xslt">XSLT</button>{% endif %}
+        <button type="button" class="tab" data-tab="tests">Tests</button>
+        <button type="button" class="tab" data-tab="timing" aria-selected="false">Timing</button>
+        <button type="button" class="tab" data-tab="info">Info</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="tab-demo" class="panel">
+    <section class="cardish">
+      <h2>FHIR operations</h2>
+      <div class="form-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;">
+        <label>Method
+          <select id="method">
+            <option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option>
+          </select>
+        </label>
+        <label>Resource type
+          <select id="resourceType">
+            <option value="metadata">metadata</option>
+            {% for t in resource_types %}<option value="{{ t }}" {% if t=='Patient' %}selected{% endif %}>{{ t }}</option>{% endfor %}
+          </select>
+        </label>
+        <label>Id <input id="id" placeholder="pat-alice-001" /></label>
+        <label>Query (search) <input id="query" placeholder="family=Smith or _id=pat-alice-001" /></label>
+        <label>Sample
+          <select id="sample"><option value="">—</option></select>
+        </label>
+        <label class="auto-refresh"><input type="checkbox" id="proxy" /> Proxy to remote FHIR</label>
+        <label style="grid-column:1/-1;">Bearer token (required for POST/PUT/DELETE)
+          <div style="display:flex;gap:.5rem;align-items:center;">
+            <input id="bearer" style="flex:1;" placeholder="paste access_token or click Fetch" />
+            <button type="button" id="btn-token" class="secondary">Fetch Keycloak token</button>
+          </div>
+        </label>
+      </div>
+      <div id="search-helpers" class="form-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;margin:.65rem 0;">
+        <label>family <input id="sp-family" data-sp="family" placeholder="Smith" /></label>
+        <label>given <input id="sp-given" data-sp="given" placeholder="Alice" /></label>
+        <label>identifier <input id="sp-identifier" data-sp="identifier" placeholder="MRN-1001" /></label>
+        <label>patient <input id="sp-patient" data-sp="patient" placeholder="Patient/pat-alice-001" /></label>
+        <label>code <input id="sp-code" data-sp="code" placeholder="8867-4" /></label>
+        <label>status <input id="sp-status" data-sp="status" placeholder="final" /></label>
+        <label>name <input id="sp-name" data-sp="name" /></label>
+        <label>gender <input id="sp-gender" data-sp="gender" placeholder="female" /></label>
+        <label>birthdate <input id="sp-birthdate" data-sp="birthdate" placeholder="1985-03-12" /></label>
+      </div>
+      <p class="muted" id="search-hint" style="margin:.25rem 0 .75rem;font-size:.88rem;">Phase 2 helpers for core-6 types. Apply into Query, or type the query string directly. Other types: <code>_id</code> / <code>q</code>.</p>
+      <label>Body (POST/PUT)
+        <textarea id="body" rows="8" style="width:100%;font-family:ui-monospace,monospace;font-size:12px;"></textarea>
+      </label>
+      <div class="actions">
+        <button type="button" id="btn-invoke" class="btn primary">Invoke</button>
+        <button type="button" id="btn-meta" class="btn">GET metadata</button>
+        <button type="button" id="btn-outbound" class="btn">Enqueue outbound GET (Route 2)</button>
+        <button type="button" id="btn-txn" class="btn">Load transaction Bundle sample</button>
+        <a class="btn" href="/documents/route-diagrams.pdf" target="_blank" rel="noreferrer">Route PDF</a>
+        <a class="btn" href="/documents/capability-brief.pdf" target="_blank" rel="noreferrer">Capability Brief</a>
+        <a class="btn" href="/documents/expert-due-diligence.pdf" target="_blank" rel="noreferrer">Expert Due Diligence</a>
+        <a class="btn" href="/documents/aws-deployment-guide.pdf" target="_blank" rel="noreferrer">AWS Deploy Guide</a>
+      </div>
+      <p id="status" class="status"></p>
+      <pre id="result" class="log">Result…</pre>
+    </section>
+    <section>
+      <h2>SQL store (latest)</h2>
+      <button type="button" id="btn-refresh" class="btn">Refresh</button>
+      <pre id="sql-rows" class="log">—</pre>
+    </section>
+  </main>
+
+  <div id="tab-routes" class="routes-tab" hidden>
+    <div class="routes-toolbar">
+      <label>V2 route <select id="route-select"></select></label>
+      <span id="routes-status" class="muted"></span>
+    </div>
+    <iframe id="route-viewer-frame" class="route-viewer-frame" title="Route viewer" src="about:blank"></iframe>
+  </div>
+
+  {% if has_xslt %}
+  <div id="tab-xslt" class="xslt-tab" hidden>
+    <aside class="xslt-sidebar">
+      <div class="xslt-sidebar-head"><h2>XSLT</h2><span id="xslt-status" class="muted"></span></div>
+      <select id="xslt-select"></select>
+    </aside>
+    <div class="xslt-viewer">
+      <div class="xslt-viewer-head"><span class="xslt-path" id="xslt-path"></span></div>
+      <pre class="xslt-source"><code id="xslt-view"></code></pre>
+    </div>
+  </div>
+  {% endif %}
+
+  <main id="tab-tests" class="panel tests-tab" hidden>
+    <div class="tests-toolbar">
+      <h2 style="margin:0;">Interface tests</h2>
+      <button type="button" id="btn-tests-refresh" class="btn">Refresh results</button>
+      <a class="btn" href="/documents/test-plan.pdf" target="_blank" rel="noreferrer">Test Plan PDF</a>
+      <a class="btn" href="/documents/test-results.pdf" target="_blank" rel="noreferrer">Results PDF</a>
+      <a class="btn" href="/documents/test-results.html" target="_blank" rel="noreferrer">Results HTML</a>
+      <span id="tests-summary" class="muted">No results yet</span>
+    </div>
+    <p class="muted" style="margin:.35rem 0 .75rem;">
+      Run on the demo host (not inside Docker):
+      <code>python3 tools/run_interface_tests.py --wait</code>
+      · watch mode: <code>python3 tools/run_interface_tests.py --watch</code>
+    </p>
+    <div class="table-wrap">
+      <table id="tests-table">
+        <thead>
+          <tr><th>Status</th><th>Suite</th><th>Test</th><th>Message</th><th>ms</th></tr>
+        </thead>
+        <tbody id="tests-body">
+          <tr><td colspan="5" class="muted">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- TIMING_TAB_STANDARD:START -->
+  {% include 'partials/timing_tab.html' %}
+  <!-- TIMING_TAB_STANDARD:END -->
+  <!-- INFO_TAB_STANDARD:START -->
+  {% include 'partials/info_tab.html' %}
+  <!-- INFO_TAB_STANDARD:END -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
+  <script src="/static/code-highlight.js"></script>
+  <script src="/static/build-live.js"></script>
+  <script src="/static/app.js"></script>
+  <script src="/static/timing-tab.js"></script>
+</body>
+</html>

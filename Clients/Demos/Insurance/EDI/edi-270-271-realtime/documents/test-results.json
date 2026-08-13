@@ -1,0 +1,124 @@
+{
+  "interface": "EDI 270/271 Realtime Eligibility",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-270-271-realtime",
+  "started_at": "2026-08-13T06:59:15.985344+00:00",
+  "finished_at": "2026-08-13T06:59:16.579138+00:00",
+  "summary": {
+    "pass": 12,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 12
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 32,
+      "message": "UI OK (http://127.0.0.1:8121/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 10,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 4,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "wait-eip",
+      "name": "EIP is reachable",
+      "suite": "Realtime check",
+      "status": "pass",
+      "duration_ms": 6,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"payer\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "wait-payer",
+      "name": "Mock payer is reachable",
+      "suite": "Realtime check",
+      "status": "pass",
+      "duration_ms": 5,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"payer\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "aaa",
+      "name": "FAIL001 AAA via single /check",
+      "suite": "Realtime check",
+      "status": "pass",
+      "duration_ms": 247,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "ok",
+      "name": "OK001 benefits via single /check",
+      "suite": "Realtime check",
+      "status": "pass",
+      "duration_ms": 90,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "ui_check",
+      "name": "Web UI single-call orchestration",
+      "suite": "Realtime check",
+      "status": "pass",
+      "duration_ms": 195,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 1,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-270-271-realtime/documents/EDI270_271_Realtime_V2_Route_Diagrams.pdf",
+      "detail": ""
+    },
+    {
+      "id": "capability-pdf",
+      "name": "Capability Brief PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-270-271-realtime/documents/EDI270_271_Realtime_Capability_Brief.pdf",
+      "detail": ""
+    },
+    {
+      "id": "test-plan-pdf",
+      "name": "Test Plan PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-270-271-realtime/documents/EDI270_271_Realtime_Test_Plan.pdf",
+      "detail": ""
+    },
+    {
+      "id": "diff-pdf",
+      "name": "Orig vs realtime PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-270-271-realtime/documents/EDI270_271_Orig_vs_Realtime_Differences.pdf",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-270-271-realtime/tests/plan.json"
+}

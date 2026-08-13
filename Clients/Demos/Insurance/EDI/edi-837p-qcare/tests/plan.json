@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "interface": "EDI 837P to QCare",
+  "short_name": "EDI837P_QCare",
+  "description": "Directory poll 837P → QCare 2100-byte flat file via EDI TableData + XSLT.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8125",
+    "eip": "http://127.0.0.1:8123/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8125/",
+    "http://127.0.0.1:8125/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["837P", "inject-form"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["1-map-837p-to-qcare"] }
+        }
+      ]
+    },
+    {
+      "id": "map",
+      "name": "Map sample 803",
+      "tests": [
+        {
+          "id": "wait-eip",
+          "name": "EIP is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"eip\":true"]
+          }
+        },
+        {
+          "id": "reset",
+          "name": "Reset outputs",
+          "type": "http",
+          "request": { "method": "POST", "url": "{webui}/api/reset" },
+          "expect": { "status": 200, "contains": ["ok"] }
+        },
+        {
+          "id": "inject",
+          "name": "Inject sample 837P 803",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/inject",
+            "headers": { "Content-Type": "application/json" },
+            "body": { "sample": "MCQRQ74837PS803.TXT" }
+          },
+          "expect": { "status": 200, "contains": ["MCQRQ74837PS803.TXT"] }
+        },
+        {
+          "id": "qcare-stone",
+          "name": "QCare 2100-byte STONE record",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 3,
+            "contains": ["STONE", "70487"]
+          }
+        },
+        {
+          "id": "qcare-sharon",
+          "name": "QCare SHARON and procedure 70487",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 30,
+            "interval_sec": 2,
+            "contains": ["SHARON"]
+          }
+        },
+        {
+          "id": "qcare-file",
+          "name": "QCare filename from CLM01",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 30,
+            "interval_sec": 2,
+            "contains": ["051301228883_qcare.txt"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837P_QCare_V2_Route_Diagrams.pdf" }
+        },
+        {
+          "id": "capability-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837P_QCare_Capability_Brief.pdf" }
+        },
+        {
+          "id": "test-plan-pdf",
+          "name": "Test Plan PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837P_QCare_Test_Plan.pdf" }
+        }
+      ]
+    }
+  ]
+}

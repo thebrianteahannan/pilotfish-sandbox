@@ -1,0 +1,100 @@
+services:
+  sqlserver:
+    profiles: ["full"]
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-edi837scrub-sqlserver
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "PilotFish_Demo1!"
+      MSSQL_PID: Developer
+    ports:
+      - "14341:1433"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"PilotFish_Demo1!\" -C -Q \"SELECT 1\" || exit 1",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 25s
+
+  sqlserver-init:
+    profiles: ["full"]
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-edi837scrub-sqlserver-init
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ./sql:/sql:ro
+    entrypoint:
+      - /bin/bash
+      - -lc
+      - |
+        set -euo pipefail
+        echo "Initializing Edi837ClaimScrub..."
+        /opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P 'PilotFish_Demo1!' -C -i /sql/01_init.sql
+        echo "SQL seed complete."
+
+  pilotfish:
+    profiles: ["full"]
+    build:
+      context: ./pilotfish
+    image: pilotfish-edi837-claim-scrub:23R1
+    container_name: pf-edi837scrub-pilotfish
+    restart: unless-stopped
+    depends_on:
+      sqlserver-init:
+        condition: service_completed_successfully
+    environment:
+      CATALINA_OPTS: "-Xms1024M -Xmx6144M -server -XX:+UseG1GC -XX:MaxGCPauseMillis=200"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8114:8080"
+    volumes:
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+      - ./pilotfish/demo-eip-root/routes:/usr/local/tomcat/webapps/eip/eip-root/routes
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/usr/local/tomcat/webapps/eip/eip-root/environment-settings.conf:ro
+      - ../../../../../EDI/TableData/x12:/usr/local/tomcat/webapps/eip/eip-root/edi-tabledata:ro
+
+  webui:
+    profiles: ["stage", "full"]
+    build:
+      context: ./webui
+    image: pilotfish-edi-837-claim-scrub-webui:latest
+    container_name: pf-edi-837-claim-scrub-webui
+    restart: unless-stopped
+    environment:
+      WEBUI_PORT: "8115"
+      DEMO_SLUG: "edi-837-claim-scrub"
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      OUTPUT_DIR: /output
+      LAN_HINT: "http://192.168.68.62:8115/"
+      EIP_PUBLIC_URL: "http://127.0.0.1:8114/eip/"
+      EIP_HEALTH_URL: "http://pilotfish:8080/eip/"
+      DB_HOST: sqlserver
+      DB_PORT: "1433"
+      DB_USER: sa
+      DB_PASSWORD: "PilotFish_Demo1!"
+      DB_NAME: Edi837ClaimScrub
+      SQL_PUBLIC: "127.0.0.1:14341"
+    ports:
+      - "8115:8115"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./documents:/documents:ro
+      - ./output:/output
+      - ./pilotfish/demo-eip-root/routes:/routes:ro
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/environment-settings.conf:ro
+      - ./webui/static:/app/static:ro
+      - ./webui/templates:/app/templates:ro
+      - ./webui/app.py:/app/app.py:ro
+      - ./webui/document_routes.py:/app/document_routes.py:ro
+      - ./webui/snip_report.py:/app/snip_report.py:ro
+      - ./webui/xslt:/app/xslt:ro

@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "interface": "HTTP POST To RabbitMQ",
+  "slug": "http-post-to-rabbitmq",
+  "path": "Clients/Demos/Other/http-post-to-rabbitmq",
+  "requested_by": "user",
+  "started_at": "2026-08-13T03:57:47Z",
+  "completed_at": "2026-08-13T04:01:50Z",
+  "completed_by": "cursor-agent",
+  "duration_minutes": 4.1,
+  "compose_project": "http-post-to-rabbitmq",
+  "docker_at_completion": {
+    "sandbox_compose_projects_running": 1,
+    "sandbox_demo_containers_running": 4,
+    "this_demo_containers": [
+      "pf-http-post-to-rabbitmq-pilotfish",
+      "pf-http-post-to-rabbitmq-rabbitmq",
+      "pf-http-post-to-rabbitm-webui"
+    ],
+    "running_projects": ["http-post-to-rabbitmq"],
+    "inventory_command": "python3 tools/list_sandbox_demo_docker.py",
+    "captured_at": "2026-08-13T04:01:50Z",
+    "notes": "Left pf-healthcare-buzz-scout running (not a Clients/ demo stack)."
+  },
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-13T03:57:47Z",
+      "ended_at": "2026-08-13T03:58:00Z",
+      "duration_minutes": 0.2,
+      "notes": "Deleted previous tree; scaffolded Other/http-post-to-rabbitmq on 8135"
+    },
+    {
+      "id": "design_scaffold",
+      "name": "DESIGN + HTTP Post / RabbitMQ modules + compose",
+      "started_at": "2026-08-13T03:58:00Z",
+      "ended_at": "2026-08-13T03:59:42Z",
+      "duration_minutes": 1.7,
+      "notes": "Host and Port + Synchronous=false from playbook §1.4"
+    },
+    {
+      "id": "routes",
+      "name": "V2 publish + full stack (RabbitMQ + EIP)",
+      "started_at": "2026-08-13T03:59:42Z",
+      "ended_at": "2026-08-13T04:00:18Z",
+      "duration_minutes": 0.6,
+      "notes": "EIP 23R1.127; listener started on /ingress"
+    },
+    {
+      "id": "webui_docs",
+      "name": "Demo inject + PDFs + tests",
+      "started_at": "2026-08-13T04:00:18Z",
+      "ended_at": "2026-08-13T04:01:50Z",
+      "duration_minutes": 1.5,
+      "notes": "9/9 tests pass; ORD-1001 on demo.http.ingress"
+    }
+  ],
+  "slowest_phases": [
+    {"id": "design_scaffold", "duration_minutes": 1.7},
+    {"id": "webui_docs", "duration_minutes": 1.5},
+    {"id": "routes", "duration_minutes": 0.6}
+  ],
+  "bottlenecks": [],
+  "speedup_ideas": [
+    "Applied: RabbitMQ uses Host and Port ($$RABBITMQ_HOSTS) + VirtualHost /, not an amqp:// URI",
+    "Applied: HTTP Post listener is async (Synchronous=false); inject returns immediately then peeks the queue"
+  ]
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="ae8122a6-5501-4823-a4a8-610a2c53e1c3" name="1 - SFTP Poll And Stage">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="afe7ffd6-a10e-4c72-a949-d5a9771131d1" moduleId="1a6dca12-5fcb-4312-9298-fb9fa4a7e48d" label="Poll FTP for 835" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="e5f319f6-478d-48ae-a8f2-d23130af8cf7" moduleId="e6f660bb-2ada-436d-92c8-9e31b510669d" label="Archive Raw 835" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="072ab787-51be-4243-8a53-2170037f2bc9" sourceNodeId="afe7ffd6-a10e-4c72-a949-d5a9771131d1" targetNodeId="e5f319f6-478d-48ae-a8f2-d23130af8cf7" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+   </Connections>
+</Route>

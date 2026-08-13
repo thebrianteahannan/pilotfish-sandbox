@@ -19,8 +19,9 @@ import shutil
 import sys
 from pathlib import Path
 
+from demo_paths import DEMOS, iter_demo_roots
+
 SANDBOX = Path(__file__).resolve().parents[1]
-DEMOS = SANDBOX / "Clients" / "Demos"
 SHARED = DEMOS / "_shared" / "webui"
 
 MARKER_START = "<!-- TIMING_TAB_STANDARD:START -->"
@@ -33,9 +34,7 @@ ASSET_JS = '  <script src="/static/timing-tab.js"></script>'
 
 def demo_roots() -> list[Path]:
     out = []
-    for p in sorted(DEMOS.iterdir()):
-        if p.name.startswith("_"):
-            continue
+    for p in iter_demo_roots():
         if (p / "webui" / "templates" / "index.html").is_file():
             out.append(p)
     return out

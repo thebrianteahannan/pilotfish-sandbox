@@ -21,6 +21,7 @@ import json
 import re
 import subprocess
 import sys
+from demo_paths import require_demo
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -82,6 +83,11 @@ EXACT_REPLACEMENTS: list[tuple[str, str]] = [
 REGEX_REPLACEMENTS: list[tuple[str, str, int]] = [
     (r"\bSFTP\b", "FTP", 0),
     (r"\bSftp\b", "FTP", 0),
+    (
+        r"All of that is Docker for the demo\.?",
+        "All of those are spun up in docker images for this demo.",
+        re.I,
+    ),
     # Formal “Click X — …” UI chrome
     (
         r"Click Create New PilotFish Interface\s*[—\-–]\s*empty canvas,?\s*ready to build\.?",
@@ -139,7 +145,7 @@ REGEX_REPLACEMENTS: list[tuple[str, str, int]] = [
         re.I,
     ),
     (
-        r"Decision\s*[—\-–]\s*",
+        r"\bDecision\s+[—\-–]\s*",
         "",
         re.I,
     ),
@@ -368,7 +374,7 @@ def main() -> int:
         return 0
     if not args.root:
         ap.error("--root is required unless --text is set")
-    demo = Path(args.root).expanduser().resolve()
+    demo = require_demo(args.root)
     counts = naturalize_demo_root(demo)
     print(
         f"Naturalized {demo.name}: "

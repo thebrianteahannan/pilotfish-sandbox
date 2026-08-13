@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "interface": "EDI 837 Claim Scrub",
+  "short_name": "EDI837_Claim_Scrub",
+  "description": "SQL claims through payer edits to kickout or clean 837 plus SNIP.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8115",
+    "eip": "http://127.0.0.1:8114/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8115/",
+    "http://127.0.0.1:8115/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["Claim Scrub", "inject-form", "Kickout"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["1-poll-sql-server-claims", "2-scrub-claim-and-route"] }
+        },
+        {
+          "id": "payer-rules",
+          "name": "Payer rules seeded",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/payer-rules" },
+          "expect": { "status": 200, "contains": ["MISSING_REFERRING_NPI", "INVALID_POS", "66783JJT"] }
+        }
+      ]
+    },
+    {
+      "id": "pipeline",
+      "name": "Scrub pipeline",
+      "tests": [
+        {
+          "id": "wait-eip",
+          "name": "EIP is reachable",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/health",
+            "timeout_sec": 180,
+            "interval_sec": 4,
+            "contains": ["\"eip\":true"]
+          }
+        },
+        {
+          "id": "kickout-5002",
+          "name": "5002 missing NPI kickout",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 120,
+            "interval_sec": 4,
+            "contains": ["5002_CLM-5002_kickout.xml"]
+          }
+        },
+        {
+          "id": "kickout-5003",
+          "name": "5003 invalid POS kickout",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 4,
+            "contains": ["5003_CLM-5003_kickout.xml"]
+          }
+        },
+        {
+          "id": "edi-5001",
+          "name": "5001 clean 837",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 4,
+            "contains": ["5001_CLM-5001.edi"]
+          }
+        },
+        {
+          "id": "edi-5004",
+          "name": "5004 clean 837",
+          "type": "wait",
+          "wait": {
+            "url": "{webui}/api/results",
+            "timeout_sec": 90,
+            "interval_sec": 4,
+            "contains": ["5004_CLM-5004.edi"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837_Claim_Scrub_V2_Route_Diagrams.pdf" }
+        },
+        {
+          "id": "capability-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837_Claim_Scrub_Capability_Brief.pdf" }
+        },
+        {
+          "id": "test-plan-pdf",
+          "name": "Test Plan PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI837_Claim_Scrub_Test_Plan.pdf" }
+        }
+      ]
+    }
+  ]
+}

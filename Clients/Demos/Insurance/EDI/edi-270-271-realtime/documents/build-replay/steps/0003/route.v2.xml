@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="1bd71a69-55d5-4550-a1fb-7c00dc19bf06" name="1 - Realtime Eligibility Check">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="9b2baaf5-90e0-4849-90c6-84166ada4037" moduleId="7b45743b-026c-4b26-840f-7e0b0f314312" label="Realtime Eligibility REST" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="70700ed6-84d0-4b5d-9a29-eb04f39f16e0" moduleId="938da918-3c64-4d10-8f2c-2c202cb2cf90" label="Snapshot Inbound Request" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="5e2daa42-e33f-4537-a406-3dcabb420d8e" sourceNodeId="9b2baaf5-90e0-4849-90c6-84166ada4037" targetNodeId="70700ed6-84d0-4b5d-9a29-eb04f39f16e0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+   </Connections>
+</Route>

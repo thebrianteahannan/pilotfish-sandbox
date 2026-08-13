@@ -1,0 +1,10 @@
+{
+  "groups": [
+    {
+      "id": "split",
+      "title": "ST fork to JSON",
+      "description": "EDI→XML, fork each Transaction, map to JSON, archive, then HTTP POST to the mock bucket.",
+      "labels": ["Extract ST Control Number", "Map Transaction To JSON", "Write JSON Archive"]
+    }
+  ]
+}

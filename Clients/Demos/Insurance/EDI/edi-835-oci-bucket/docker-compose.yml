@@ -1,0 +1,89 @@
+services:
+  sftp:
+    profiles: ["full"]
+    image: atmoz/sftp:alpine
+    platform: linux/amd64
+    container_name: pf-edi835oci-sftp
+    restart: unless-stopped
+    ports:
+      - "2222:22"
+    volumes:
+      - ./sftp-seed/upload:/home/demo/upload
+      - ./sftp/sshd_config:/etc/ssh/sshd_config:ro
+    command: demo:demo:1001:1001:upload
+
+  oci-mock:
+    profiles: ["full"]
+    build:
+      context: ./oci-mock
+    image: pilotfish-edi835-oci-mock:latest
+    container_name: pf-edi835oci-mock
+    restart: unless-stopped
+    environment:
+      OCI_DATA_DIR: /data
+      OCI_FLAT_DIR: /flat
+      PORT: "4599"
+    ports:
+      - "4599:4599"
+    volumes:
+      - ./output/oci-received:/flat
+      - ./output/oci-data:/data
+
+  pilotfish:
+    profiles: ["full"]
+    build:
+      context: ./pilotfish
+    image: pilotfish-edi835-oci:23R1
+    container_name: pf-edi835oci-pilotfish
+    restart: unless-stopped
+    depends_on:
+      - sftp
+      - oci-mock
+    environment:
+      CATALINA_OPTS: "-Xms512M -Xmx2048M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8104:8080"
+    volumes:
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+      - ./pilotfish/demo-eip-root/routes:/usr/local/tomcat/webapps/eip/eip-root/routes
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/usr/local/tomcat/webapps/eip/eip-root/environment-settings.conf:ro
+      - ../../../../../EDI/TableData/x12:/usr/local/tomcat/webapps/eip/eip-root/edi-tabledata:ro
+
+  webui:
+    profiles: ["stage", "full"]
+    build:
+      context: ./webui
+    image: pilotfish-edi-835-oci-bucket-webui:latest
+    container_name: pf-edi-835-oci-bucket-webui
+    restart: unless-stopped
+    environment:
+      WEBUI_PORT: "8105"
+      DEMO_SLUG: "edi-835-oci-bucket"
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      SAMPLE_DIR: /samples
+      SFTP_UPLOAD_DIR: /sftp-upload
+      OUTPUT_DIR: /output
+      LAN_HINT: "http://192.168.68.62:8105/"
+      EIP_PUBLIC_URL: "http://127.0.0.1:8104/eip/"
+      EIP_HEALTH_URL: "http://pilotfish:8080/eip/"
+      OCI_HEALTH_URL: "http://oci-mock:4599/health"
+      OCI_PUBLIC: "http://127.0.0.1:4599/"
+      SFTP_PUBLIC: "127.0.0.1:2222"
+    ports:
+      - "8105:8105"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./documents:/documents:ro
+      - ./samples:/samples:ro
+      - ./output:/output
+      - ./sftp-seed/upload:/sftp-upload
+      - ./pilotfish/demo-eip-root/routes:/routes:ro
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/environment-settings.conf:ro
+      - ./webui/static:/app/static:ro
+      - ./webui/templates:/app/templates:ro
+      - ./webui/app.py:/app/app.py:ro
+      - ./webui/document_routes.py:/app/document_routes.py:ro

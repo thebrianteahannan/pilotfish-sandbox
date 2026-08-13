@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="f00417e1-c5db-4b83-a700-0930218ee20e" name="1 - Map 837P To QCare">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="3235664c-9389-4ce1-b8c1-12ceab539794" moduleId="0c5c7930-b4ab-4d0b-ad5f-4787705f61a6" label="Poll EDI 837P Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="9dca32cc-f7e6-4655-9ea3-d8af604ac8bc" moduleId="e227cd01-2a67-48f5-b03d-f9c150ed14be" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="5be96ed2-64d9-4d92-9eac-f5ee95024b4f" moduleId="c6a70712-9b34-46a1-b538-f716a1a9ac54" label="Extract Claim Identity" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="d865dc08-f4b5-4bcf-9137-1f424e7a11ee" moduleId="fcaea180-39ea-4ae1-89e4-866280901f26" label="Pretty-Print EDI XML" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="fd5fa489-1131-4103-9f42-35c82820e23f" sourceNodeId="3235664c-9389-4ce1-b8c1-12ceab539794" targetNodeId="9dca32cc-f7e6-4655-9ea3-d8af604ac8bc" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="c202cb6a-a228-461e-9ee9-79fbf3562d32" sourceNodeId="5be96ed2-64d9-4d92-9eac-f5ee95024b4f" targetNodeId="d865dc08-f4b5-4bcf-9137-1f424e7a11ee" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="474b08ab-0037-4f57-b5a2-c2eb695b3e30" sourceNodeId="9dca32cc-f7e6-4655-9ea3-d8af604ac8bc" targetNodeId="5be96ed2-64d9-4d92-9eac-f5ee95024b4f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+   
+   </Connections>
+</Route>

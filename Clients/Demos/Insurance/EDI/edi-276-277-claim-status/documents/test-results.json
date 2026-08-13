@@ -1,0 +1,124 @@
+{
+  "interface": "EDI 276/277 Claim Status",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-276-277-claim-status",
+  "started_at": "2026-08-13T07:55:32.309275+00:00",
+  "finished_at": "2026-08-13T07:55:41.404071+00:00",
+  "summary": {
+    "pass": 12,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 12
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "UI OK (http://127.0.0.1:8127/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 4,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "wait-eip",
+      "name": "EIP is reachable",
+      "suite": "276 to 277",
+      "status": "pass",
+      "duration_ms": 3,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "reset",
+      "name": "Reset outputs",
+      "suite": "276 to 277",
+      "status": "pass",
+      "duration_ms": 7,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "inject",
+      "name": "Inject sample 276",
+      "suite": "276 to 277",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "found-file",
+      "name": "ABCXYZ1 found bucket",
+      "suite": "276 to 277",
+      "status": "pass",
+      "duration_ms": 9053,
+      "message": "HTTP 200: {\"debug\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><XCSData>\\n   <Interchange AuthorizationQual=\\\"00\\\" AuthorizationInfo=\\\"          \\\" SecurityQual=\\\"00\\\" SecurityInf",
+      "detail": ""
+    },
+    {
+      "id": "277-file",
+      "name": "ABCXYZ1 277 response",
+      "suite": "276 to 277",
+      "status": "pass",
+      "duration_ms": 8,
+      "message": "HTTP 200: {\"debug\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><XCSData>\\n   <Interchange AuthorizationQual=\\\"00\\\" AuthorizationInfo=\\\"          \\\" SecurityQual=\\\"00\\\" SecurityInf",
+      "detail": ""
+    },
+    {
+      "id": "277-st",
+      "name": "277 wire starts with ST 277",
+      "suite": "276 to 277",
+      "status": "pass",
+      "duration_ms": 7,
+      "message": "HTTP 200: {\"debug\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><XCSData>\\n   <Interchange AuthorizationQual=\\\"00\\\" AuthorizationInfo=\\\"          \\\" SecurityQual=\\\"00\\\" SecurityInf",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-276-277-claim-status/documents/EDI276_277_V2_Route_Diagrams.pdf",
+      "detail": ""
+    },
+    {
+      "id": "capability-pdf",
+      "name": "Capability Brief PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-276-277-claim-status/documents/EDI276_277_Capability_Brief.pdf",
+      "detail": ""
+    },
+    {
+      "id": "test-plan-pdf",
+      "name": "Test Plan PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-276-277-claim-status/documents/EDI276_277_Test_Plan.pdf",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-276-277-claim-status/tests/plan.json"
+}

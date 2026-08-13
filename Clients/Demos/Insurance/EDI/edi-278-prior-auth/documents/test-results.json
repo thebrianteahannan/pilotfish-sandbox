@@ -1,0 +1,160 @@
+{
+  "interface": "EDI 278 Prior Auth",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-278-prior-auth",
+  "started_at": "2026-08-13T07:19:54.596944+00:00",
+  "finished_at": "2026-08-13T07:20:12.911555+00:00",
+  "summary": {
+    "pass": 16,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 16
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "UI OK (http://127.0.0.1:8121/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 13,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "wait-sql",
+      "name": "SQL is reachable",
+      "suite": "278 scoring",
+      "status": "pass",
+      "duration_ms": 12,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"sql\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "wait-eip",
+      "name": "EIP is reachable",
+      "suite": "278 scoring",
+      "status": "pass",
+      "duration_ms": 11,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"sql\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "auth-seed",
+      "name": "AuthRequest seed rows",
+      "suite": "278 scoring",
+      "status": "pass",
+      "duration_ms": 9,
+      "message": "HTTP 200: {\"ok\":true,\"rows\":[{\"AttachmentFlag\":\"Y\",\"AuthTraceNumber\":\"PACOMPLETE01\",\"DiagnosisCode\":\"M17.11\",\"MemberId\":\"MEM001\",\"Notes\":\"Catalog disposition APPROVE\",\"PatientFirstName\":\"JAN",
+      "detail": ""
+    },
+    {
+      "id": "reset-drop",
+      "name": "Reset AuthRequest",
+      "suite": "278 scoring",
+      "status": "pass",
+      "duration_ms": 31,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "inject-sample",
+      "name": "Inject sample 278",
+      "suite": "278 scoring",
+      "status": "pass",
+      "duration_ms": 3,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "approved-complete",
+      "name": "PACOMPLETE01 approved",
+      "suite": "278 scoring",
+      "status": "pass",
+      "duration_ms": 18179,
+      "message": "HTTP 200: {\"ok\":true,\"rows\":[{\"AttachmentFlag\":\"Y\",\"AuthTraceNumber\":\"PACOMPLETE01\",\"DiagnosisCode\":\"M17.11\",\"MemberId\":\"MEM001\",\"Notes\":\"Catalog disposition APPROVE\",\"PatientFirstName\":\"JAN",
+      "detail": ""
+    },
+    {
+      "id": "incomplete-missing-dx",
+      "name": "PAINCOMPLETE01 incomplete",
+      "suite": "278 scoring",
+      "status": "pass",
+      "duration_ms": 11,
+      "message": "HTTP 200: {\"ok\":true,\"rows\":[{\"AttachmentFlag\":\"Y\",\"AuthTraceNumber\":\"PACOMPLETE01\",\"DiagnosisCode\":\"M17.11\",\"MemberId\":\"MEM001\",\"Notes\":\"Catalog disposition APPROVE\",\"PatientFirstName\":\"JAN",
+      "detail": ""
+    },
+    {
+      "id": "denied-mri",
+      "name": "PADENY01 denied",
+      "suite": "278 scoring",
+      "status": "pass",
+      "duration_ms": 10,
+      "message": "HTTP 200: {\"ok\":true,\"rows\":[{\"AttachmentFlag\":\"Y\",\"AuthTraceNumber\":\"PACOMPLETE01\",\"DiagnosisCode\":\"M17.11\",\"MemberId\":\"MEM001\",\"Notes\":\"Catalog disposition APPROVE\",\"PatientFirstName\":\"JAN",
+      "detail": ""
+    },
+    {
+      "id": "pended-lumbar",
+      "name": "PAPEND01 pended",
+      "suite": "278 scoring",
+      "status": "pass",
+      "duration_ms": 11,
+      "message": "HTTP 200: {\"ok\":true,\"rows\":[{\"AttachmentFlag\":\"Y\",\"AuthTraceNumber\":\"PACOMPLETE01\",\"DiagnosisCode\":\"M17.11\",\"MemberId\":\"MEM001\",\"Notes\":\"Catalog disposition APPROVE\",\"PatientFirstName\":\"JAN",
+      "detail": ""
+    },
+    {
+      "id": "bucket-files",
+      "name": "Decision buckets and 278/ORU files",
+      "suite": "278 scoring",
+      "status": "pass",
+      "duration_ms": 13,
+      "message": "HTTP 200: {\"approved\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><AuthDecision>\\n   <AuthTraceNumber>PACOMPLETE01</AuthTraceNumber>\\n   <MemberId>MEM001</MemberId>\\n   <PatientLa",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-278-prior-auth/documents/EDI278_Prior_Auth_V2_Route_Diagrams.pdf",
+      "detail": ""
+    },
+    {
+      "id": "capability-pdf",
+      "name": "Capability Brief PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-278-prior-auth/documents/EDI278_Prior_Auth_Capability_Brief.pdf",
+      "detail": ""
+    },
+    {
+      "id": "test-plan-pdf",
+      "name": "Test Plan PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-278-prior-auth/documents/EDI278_Prior_Auth_Test_Plan.pdf",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-278-prior-auth/tests/plan.json"
+}

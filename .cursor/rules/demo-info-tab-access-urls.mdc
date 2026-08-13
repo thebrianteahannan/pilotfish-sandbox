@@ -1,0 +1,15 @@
+---
+description: Put every spun-up demo URL on the Info tab Access list, not only in chat
+alwaysApply: true
+---
+
+# Info tab Access URLs
+
+Whenever a Sandbox demo Web UI is running, or you paste Local / LAN / EIP / extra-service links in chat:
+
+1. Put **the same links** on that demo’s Info tab **Access** list (`info_urls` in Flask; `Clients/Demos/_shared/webui/templates/partials/info_tab.html`).
+2. Include Local Web UI (`http://127.0.0.1:<port>/`), LAN Web UI, EIP, and every other thing you spun up (HTTP POST path, FTP/SFTP, SQL, RabbitMQ management, mock payer, …).
+3. Put demo credentials in the row `note` (e.g. `demo / demo`). Host:port-only endpoints can use `value` instead of `href`.
+4. Do not leave those URLs only in chat, README, or DESIGN.md.
+
+See playbook §6.5.
