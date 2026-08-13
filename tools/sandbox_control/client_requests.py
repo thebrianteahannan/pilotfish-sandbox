@@ -112,13 +112,15 @@ def _summary(meta: dict) -> dict:
         "from": meta.get("from") or "",
         "subject": meta.get("subject") or "",
         "received_at": meta.get("received_at") or meta.get("created_at") or "",
-        "status": meta.get("status") or "received",
+        "status": "ready" if meta.get("git_merged") else (meta.get("status") or "received"),
         "phase": meta.get("phase") or "",
         "message": meta.get("message") or "",
         "plan_pdf": bool(meta.get("plan_pdf")),
         "zip": meta.get("zip") or "",
         "tests_ok": (meta.get("tests") or {}).get("ok") if isinstance(meta.get("tests"), dict) else None,
         "change_count": len(meta.get("changes") or []),
+        "git_merged": bool(meta.get("git_merged")),
+        "git_branch": meta.get("git_branch") or "",
     }
 
 
@@ -137,6 +139,104 @@ def list_requests(slug: str) -> list[dict]:
         rows.append(_summary(load_meta(child)))
     rows.sort(key=lambda r: r.get("id") or "", reverse=True)
     return rows
+
+
+def set_comments(slug: str, req_id: str, text: str) -> dict:
+    folder = request_path(clients.require_root(slug), req_id)
+    meta = load_meta(folder)
+    if not meta:
+        raise FileNotFoundError(req_id)
+    meta["comments"] = str(text or "").strip()
+    save_meta(folder, meta)
+    return meta
+
+
+def _comment_log(meta: dict) -> list:
+    log = list(meta.get("comment_log") or [])
+    if not log and str(meta.get("comments") or "").strip():
+        log.append({"at": str(meta.get("updated_at") or ""), "text": str(meta["comments"]).strip()})
+    return log
+
+
+def _store_comments(folder: Path, meta: dict, log: list) -> dict:
+    meta["comment_log"] = log
+    meta["comments"] = "\n\n".join(str(c.get("text") or "") for c in log if c.get("text"))
+    save_meta(folder, meta)
+    return meta
+
+
+def _load_comment_meta(slug: str, req_id: str) -> tuple[Path, dict]:
+    folder = request_path(clients.require_root(slug), req_id)
+    meta = load_meta(folder)
+    if not meta:
+        raise FileNotFoundError(req_id)
+    return folder, meta
+
+
+def _take_inbox_shot(root: Path, folder: Path, rel: str) -> str:
+    inbox = (root / "requests" / "_inbox").resolve()
+    rel = str(rel or "").strip()
+    if not rel:
+        return ""
+    src = (clients.ROOT / rel).resolve() if not Path(rel).is_absolute() else Path(rel).resolve()
+    try:
+        src.relative_to(inbox)
+    except ValueError:
+        return ""
+    if not src.is_file():
+        return ""
+    ext = src.suffix.lower() or ".png"
+    n = 1
+    while (folder / f"comment-shot-{n}{ext}").exists():
+        n += 1
+    dest = folder / f"comment-shot-{n}{ext}"
+    shutil.copy2(src, dest)
+    sidecar = Path(str(src) + ".ocr.json")
+    if sidecar.is_file():
+        shutil.copy2(sidecar, folder / f"{dest.stem}.ocr.json")
+    return dest.name
+
+
+def add_comment(slug: str, req_id: str, text: str, screenshot: str = "") -> dict:
+    text = str(text or "").strip()
+    if not text:
+        raise ValueError("Comment is empty")
+    folder, meta = _load_comment_meta(slug, req_id)
+    rec: dict = {"at": utc_now(), "text": text}
+    if screenshot:
+        name = _take_inbox_shot(clients.require_root(slug), folder, screenshot)
+        if name:
+            rec["screenshot"] = name
+    log = _comment_log(meta)
+    log.append(rec)
+    return _store_comments(folder, meta, log)
+
+
+def edit_comment(slug: str, req_id: str, index: int, text: str) -> dict:
+    text = str(text or "").strip()
+    if not text:
+        raise ValueError("Comment is empty")
+    folder, meta = _load_comment_meta(slug, req_id)
+    log = _comment_log(meta)
+    if index < 0 or index >= len(log):
+        raise ValueError("Unknown comment")
+    log[index]["text"] = text
+    log[index]["edited_at"] = utc_now()
+    return _store_comments(folder, meta, log)
+
+
+def delete_comment(slug: str, req_id: str, index: int) -> dict:
+    folder, meta = _load_comment_meta(slug, req_id)
+    log = _comment_log(meta)
+    if index < 0 or index >= len(log):
+        raise ValueError("Unknown comment")
+    rec = log.pop(index)
+    name = str(rec.get("screenshot") or "")
+    if name.startswith("comment-shot-"):
+        for path in (folder / name, folder / f"{Path(name).stem}.ocr.json"):
+            if path.is_file():
+                path.unlink()
+    return _store_comments(folder, meta, log)
 
 
 def get_request(slug: str, req_id: str) -> dict:
@@ -160,6 +260,20 @@ def get_request(slug: str, req_id: str) -> dict:
     meta["email"] = email
     meta["plan"] = plan
     meta["diff"] = diff[-20000:]
+    tests_path = folder / "tests.json"
+    if tests_path.is_file():
+        try:
+            loaded_tests = json.loads(tests_path.read_text(encoding="utf-8"))
+            if isinstance(loaded_tests, dict) and loaded_tests.get("items"):
+                try:
+                    import client_proof
+
+                    loaded_tests["items"] = client_proof.hydrate(folder, loaded_tests["items"])
+                except Exception:
+                    pass
+                meta["tests"] = loaded_tests
+        except (OSError, json.JSONDecodeError):
+            pass
     side_path = folder / "changes-side.html"
     meta["diff_html"] = side_path.read_text(encoding="utf-8", errors="replace") if side_path.is_file() else ""
     meta["folder"] = folder.relative_to(clients.ROOT).as_posix()
@@ -178,24 +292,37 @@ def get_request(slug: str, req_id: str) -> dict:
                     "codes": loaded.get("codes") or [],
                     "risks": loaded.get("risks") or [],
                     "edit_count": len(loaded.get("edits") or []),
+                    "comments": loaded.get("comments") or "",
+                    "delta": loaded.get("delta") or [],
                     "files": [{"path": f.get("path"), "hits": f.get("hits") or []} for f in (loaded.get("files") or [])],
                 }
         except (OSError, json.JSONDecodeError):
             dive = {}
     meta["dive"] = dive
     shots = []
+    base = f"/api/clients/{meta.get('slug')}/requests/{folder.name}/screenshot/"
     for name in meta.get("screenshots") or []:
         p = folder / str(name)
         if p.is_file():
-            shots.append(f"/api/clients/{meta.get('slug')}/requests/{folder.name}/screenshot/{p.name}")
+            shots.append(base + p.name)
     meta["screenshot_urls"] = shots
+    for rec in meta.get("comment_log") or []:
+        name = str(rec.get("screenshot") or "")
+        if name and (folder / name).is_file():
+            rec["screenshot_url"] = base + name
+    import client_request_video
+
+    meta["video"] = client_request_video.snapshot(folder, meta.get("slug") or slug, folder.name)
+    if meta.get("git_merged"):
+        meta["status"] = "ready"
     return meta
 
 
 def create_request(slug: str, body: dict) -> dict:
     root = clients.require_root(slug)
     sender = str(body.get("from") or "").strip()
-    subject = str(body.get("subject") or "").strip() or "Client request"
+    subject = re.sub(r"[\u20ac€©]?\s*summarize this email", "", str(body.get("subject") or ""), flags=re.I)
+    subject = subject.strip(" \t-–—|") or "Client request"
     received = str(body.get("received_at") or "").strip() or utc_now()
     email = str(body.get("email") or "").strip()
     if not email:
@@ -216,6 +343,7 @@ def create_request(slug: str, body: dict) -> dict:
         "status": "received",
         "phase": "",
         "message": "Saved",
+        "comments": "",
         "asks": [],
         "likely_files": [],
         "changes": [],

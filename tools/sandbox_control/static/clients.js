@@ -8,9 +8,9 @@
   if (!listEl) return;
 
   let rows = [], pipeline = {}, job = {}, selected = "", selectedReq = "", detail = null;
-  let timer = null, q = "", draft = emptyDraft(), ocrBusy = false, viewSig = "", planOpen = null;
+  let timer = null, q = "", draft = emptyDraft(), ocrBusy = false, viewSig = "", planOpen = null, commentsOpen = false;
 
-  function emptyDraft() { return { from: "", subject: "", received_at: "", email: "", screenshots: [], previews: [], status: "" }; }
+  function emptyDraft() { return { from: "", subject: "", received_at: "", email: "", comments: "", screenshots: [], previews: [], status: "" }; }
 
   function esc(s) {
     return String(s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -23,14 +23,11 @@
     if (!banner) return;
     const err = (job && job.error) || (pipeline && pipeline.error) || "";
     const msg = (pipeline && pipeline.busy && (pipeline.message || "Processing client request…")) || (job && job.busy && (job.message || "")) || err;
-    if (msg) {
-      banner.hidden = false;
-      banner.textContent = err || msg;
-      banner.classList.toggle("is-err", !!err);
-    } else banner.hidden = true;
+    banner.hidden = !msg;
+    if (msg) { banner.textContent = err || msg; banner.classList.toggle("is-err", !!err); }
   }
 
-  const statusLabel = (s) => ({ planned: "plan ready", processing: "working", tested: "review", ready: "zip ready", applied: "applied" }[s] || s || "saved");
+  const statusLabel = (s) => ({ planned: "plan ready", processing: "working", tested: "review", ready: "ready to deploy", applied: "applied" }[s] || s || "saved");
   const busy = () => !!(job && job.busy) || !!(pipeline && pipeline.busy);
 
   function renderList() {
@@ -39,10 +36,7 @@
       return `${c.title} ${c.name} ${c.slug}`.toLowerCase().includes(q);
     });
     $("client-count").textContent = `${shown.length} client${shown.length === 1 ? "" : "s"}`;
-    if (!shown.length) {
-      listEl.innerHTML = '<p class="empty">No clients under Clients/ (excluding Demos).</p>';
-      return;
-    }
+    if (!shown.length) { listEl.innerHTML = '<p class="empty">No clients under Clients/ (excluding Demos).</p>'; return; }
     listEl.innerHTML = shown
       .map((c) => {
         const urls = c.local_url
@@ -79,7 +73,7 @@
 
   function testsHtml(tests) {
     if (!tests || !tests.items) return "";
-    return `<p class="${tests.ok ? "ok" : "bad"}"><strong>${tests.ok ? "All tests passed" : "Sandbox tests failed"}</strong></p>` + tests.items.map((i) => `<div class="row"><span>${esc(i.name)}</span><strong class="${i.ok ? "ok" : "bad"}">${i.ok ? "PASS" : "FAIL"}</strong><span class="muted">${esc(i.detail || "")}</span></div>`).join("");
+    return window.pfTests ? window.pfTests.html(tests, esc) : "";
   }
 
   function renderDetail() {
@@ -116,59 +110,48 @@
         </div>
       </form>
     </details>`;
-    const hist = `<article class="panel">
-      <h2>Request history</h2>
-      ${
-        reqs.length
-          ? `<div class="req-hist">${reqs
-              .map(
-                (r) =>
-                  `<button type="button" class="req-item ${open && open.id === r.id ? "is-on" : ""}" data-rid="${esc(r.id)}">
-                    <strong>${esc(r.subject || r.id)}</strong>
-                    <span class="muted">${esc(r.from)} · ${esc(r.received_at || "")}</span>
-                    <span class="badge ${r.status === "ready" || r.status === "planned" || r.status === "tested" ? "on" : r.status === "error" ? "err" : "off"}">${esc(statusLabel(r.status))}</span>
-                  </button>`
-              )
-              .join("")}</div>`
-          : '<p class="empty">No requests saved yet.</p>'
-      }
-    </article>`;
+    const top = window.pfGroup ? window.pfGroup.top(reqs, detail && detail.deploy, processing) : null;
+    const hist = window.pfGroup
+      ? window.pfGroup.hist(reqs, open)
+      : `<article class="panel"><h2>Request history</h2><p class="empty">No requests saved yet.</p></article>`;
     let reqPanel = "";
     if (open) {
-      const showResults = ["tested", "ready", "error"].includes(open.status);
+      const showResults = ["processing", "tested", "ready", "error", "applied"].includes(open.status);
       const testsOk = !!(open.tests && open.tests.ok);
-      const zipNext = open.status === "tested" && testsOk && !processing;
-      const zipIcon = open.status === "ready" && open.zip
-        ? `<a class="zip-open" href="/api/clients/${encodeURIComponent(selected)}/requests/${encodeURIComponent(open.id)}/zip" title="Download TEST deploy ZIP" aria-label="Download TEST deploy ZIP"></a>`
-        : "";
-      const showPlan = planOpen == null ? !(processing || showResults || open.status === "applied") : planOpen;
+      const reviewOk = testsOk && !processing && (open.status === "tested" || open.status === "ready" || open.status === "error");
+      const canMerge = reviewOk && !open.git_merged;
       const pdfUrl = open.plan_pdf_url || "";
+      const showPlan = planOpen == null ? (open.status === "planned" && !!pdfUrl) : planOpen;
       const pdfIcon = pdfUrl ? `<a class="pdf-open" href="${esc(pdfUrl)}" target="_blank" rel="noopener" title="Open change plan PDF" aria-label="Open change plan PDF"></a>` : "";
-      const pdfBody = showPlan && pdfUrl
+      const pdfBody = pdfUrl
         ? `<iframe class="plan-frame" src="${esc(pdfUrl)}" title="Change plan PDF"></iframe>`
-        : (!pdfUrl ? '<p class="muted">Build a change plan to inspect eip-root and write a PDF of the proposed edits.</p>' : "");
+        : '<p class="muted">Build a change plan to inspect eip-root and write a PDF of the proposed edits.</p>';
       const hasDiff = open.diff && !String(open.diff).startsWith("(no file");
       const diffView = open.diff_html
         ? `<div class="diff-side">${open.diff_html}</div>`
         : (hasDiff ? `<pre class="diff-view">${esc(open.diff)}</pre>` : "");
       reqPanel = `<article class="panel">
-        <h2 class="req-head">${esc(open.subject || open.id)}<span class="file-icons">${pdfIcon}${zipIcon}</span></h2>
+        <h2 class="req-head">${esc(open.subject || open.id)}<span class="file-icons">${pdfIcon}${window.pfVideo ? window.pfVideo.icon(open, selected) : ""}</span></h2>
         <p class="muted">${esc(open.from)} · ${esc(open.received_at)} · ${esc(statusLabel(open.status))}${open.phase ? " · " + esc(open.phase) : ""}</p>
+        ${window.pfGroup ? window.pfGroup.where(open, canMerge) : ""}
         <p>${esc(open.message || "")}</p>
         <div class="actions" style="margin:0.6rem 0">
-          <button type="button" class="btn" id="req-process" ${processing ? "disabled" : ""}>Build change plan</button>
-          <button type="button" class="btn${zipNext ? "" : " btn-primary"}" id="req-work" ${processing || !pdfUrl ? "disabled" : ""}>Start work</button>
-          <button type="button" class="btn${zipNext ? " btn-go" : ""}" id="req-zip" ${zipNext ? "" : "disabled"}>Generate TEST Deploy ZIP</button>
-        </div>
-        ${open.tests ? `<div class="tests-block${testsOk ? " is-ok" : ""}"><h3>Sandbox tests</h3>${testsHtml(open.tests)}</div>` : ""}
+          ${open.tests ? `<a class="test-jump ${testsOk ? "ok" : "bad"}" href="#req-tests">${testsOk ? "Tests passed" : "Tests failed"}</a>` : ""}
+          <button type="button" class="btn" id="req-process" ${processing ? "disabled" : ""}>${pdfUrl ? "Re-Build plan" : "Build plan"}</button>
+          <button type="button" class="btn${!testsOk && pdfUrl ? " btn-primary" : ""}" id="req-work" ${processing || !pdfUrl ? "disabled" : ""}>${showResults || open.git_branch ? "Re-Implement plan" : "Implement"}</button>
+          ${window.pfVideo ? window.pfVideo.bar(open, reviewOk, processing, selected) : ""}
+        </div>${window.pfVideo ? window.pfVideo.place(open, selected) : ""}
+        ${(open.request_summary || (open.dive && (open.dive.ask || open.dive.summary)) || open.subject) ? `<div class="change-blurb"><strong>What is being requested</strong><p>${esc(open.request_summary || (open.dive && (open.dive.ask || open.dive.summary)) || open.subject)}</p></div>` : ""}
+        ${window.pfComments ? window.pfComments.fold(open, commentsOpen) : ""}
+        ${(open.dive && (open.dive.delta || []).length) ? `<div class="comment-delta"><strong>From your comments</strong>${open.dive.delta.map((d) => `<p>${esc(d)}</p>`).join("")}</div>` : ""}
         <h3>Email</h3>
-        ${(open.screenshot_urls || []).length ? `<div class="req-shots">${(open.screenshot_urls || []).map((u) => `<img class="req-shot" src="${esc(u)}" alt="Request screenshot" />`).join("")}</div>` : ""}
+        ${(open.screenshot_urls || []).length ? `<div class="req-shots">${(open.screenshot_urls || []).map((u) => `<a href="${esc(u)}" target="_blank" rel="noopener"><img class="req-shot" src="${esc(u)}" alt="Request screenshot" /></a>`).join("")}</div>` : ""}
         <details class="fold"><summary>OCR text</summary><pre class="email-view">${esc(open.email || "")}</pre></details>
         <details class="fold plan-fold" id="req-plan"${showPlan ? " open" : ""}>
           <summary>Proposed changes</summary>
           ${pdfBody}
         </details>
-        ${showResults && diffView ? `<h3>Code changes</h3>${diffView}` : ""}
+        ${showResults && diffView ? `${(open.change_summary || (open.dive && open.dive.summary)) ? `<div class="change-blurb"><strong>What changed</strong><p>${esc(open.change_summary || open.dive.summary)}</p></div>` : ""}<h3>Code changes</h3>${diffView}` : ""}${open.tests ? `<div class="tests-block${testsOk ? " is-ok" : ""}" id="req-tests"><h3>Test results</h3>${testsHtml(open.tests)}</div>` : ""}
       </article>`;
     }
     detailEl.innerHTML =
@@ -182,12 +165,15 @@
           <span class="badge ${c.running ? "on" : "off"}">${c.running ? "Running" : "Stopped"}</span>
           <button type="button" class="btn" data-cact="start" ${busy() || c.running || !c.has_sandbox ? "disabled" : ""}>Start sandbox</button>
           <button type="button" class="btn btn-quiet" data-cact="stop" ${busy() || !c.running ? "disabled" : ""}>Stop</button>
+          ${top ? top.btn : ""}
         </div>
       </article>` +
+      (top ? top.strip : "") +
       form +
       hist +
       reqPanel;
     applyDraft();
+    if (window.pfDiff) window.pfDiff.fold(detailEl);
   }
 
   function captureDraft() {
@@ -238,7 +224,7 @@
     captureDraft();
     const resp = await fetch(`/api/clients/${encodeURIComponent(selected)}/requests`, { cache: "no-store" });
     const data = await resp.json();
-    detail = { requests: data.requests || [], pipeline: data.pipeline || {}, request: null };
+    detail = { requests: data.requests || [], pipeline: data.pipeline || {}, request: null, deploy: data.deploy || null };
     pipeline = detail.pipeline;
     if (selectedReq) {
       const one = await fetch(
@@ -251,7 +237,8 @@
     }
     paintBanner();
     const r = (detail && detail.request) || {};
-    const sig = [selected, selectedReq, r.updated_at, r.status, r.phase, r.message, r.plan_pdf_url, r.zip, !!(r.diff_html), (r.changes || []).length, pipeline && pipeline.busy, ((detail && detail.requests) || []).map((x) => x.id + x.status).join()].join("|");
+    const v = r.video || {};
+    const sig = [selected, selectedReq, r.updated_at, r.status, r.phase, r.message, r.plan_pdf_url, r.git_merged, !!(r.diff_html), (r.changes || []).length, pipeline && pipeline.busy, v.status, v.ready, v.phase, v.step, v.message, detail && detail.deploy && detail.deploy.path, ((detail && detail.requests) || []).map((x) => x.id + x.status).join()].join("|");
     if (sig === viewSig && $("req-form")) return;
     viewSig = sig;
     if (window.pfHub && window.pfHub.holdScroll) window.pfHub.holdScroll(renderDetail);
@@ -262,7 +249,7 @@
     if (timer) clearTimeout(timer);
     const on = $("tab-clients") && !$("tab-clients").hidden;
     if (!on) return;
-    const rec = pipeline && pipeline.busy;
+    const rec = (pipeline && pipeline.busy) || ((detail && detail.request && detail.request.video && detail.request.video.status) === "running");
     timer = setTimeout(async () => {
       try {
         await loadList();
@@ -278,7 +265,7 @@
     selected = "";
     selectedReq = "";
     viewSig = "";
-    planOpen = null;
+    planOpen = null; commentsOpen = false;
     draft = emptyDraft();
     remember({ client: "", request: "" });
     await loadList();
@@ -289,7 +276,7 @@
     selected = slug;
     selectedReq = reqId || "";
     viewSig = "";
-    planOpen = null;
+    planOpen = null; commentsOpen = false;
     draft = emptyDraft();
     listView.hidden = true;
     detailView.hidden = false;
@@ -413,6 +400,7 @@
   });
   window.addEventListener("paste", (ev) => {
     if (!($("tab-clients") && !$("tab-clients").hidden && selected && detailView && !detailView.hidden)) return;
+    if ($("req-notes-fold") && $("req-notes-fold").open) return;
     const files = clipFiles(ev.clipboardData);
     if (!files.length) return;
     ev.preventDefault();
@@ -420,9 +408,7 @@
   });
 
   detailEl.addEventListener("toggle", (ev) => {
-    if (ev.target.id !== "req-plan") return;
-    planOpen = ev.target.open;
-    if (planOpen && !ev.target.querySelector("iframe.plan-frame")) renderDetail();
+    if (ev.target.id === "req-plan") planOpen = ev.target.open; else if (ev.target.id === "req-notes-fold") commentsOpen = ev.target.open;
   });
 
   detailEl.addEventListener("click", async (ev) => {
@@ -438,20 +424,21 @@
     const item = ev.target.closest("button[data-rid]");
     if (item) {
       selectedReq = item.dataset.rid;
-      planOpen = null;
+      planOpen = null; commentsOpen = false;
       remember({ request: selectedReq });
       await loadDetail();
       return;
     }
-    const actBtn = ev.target.closest("#req-process, #req-work, #req-zip");
+    if (window.pfGroup && await window.pfGroup.handle(ev, selected, () => loadDetail())) return;
+    if (window.pfComments && await window.pfComments.handle(ev, selected, selectedReq, () => { commentsOpen = true; return loadDetail(); })) return;
+    if (window.pfVideo && await window.pfVideo.handle(ev, selected, selectedReq, () => loadDetail())) return;
+    const actBtn = ev.target.closest("#req-process, #req-work, #req-merge");
     if (actBtn && selectedReq) {
-      const kind = actBtn.id === "req-process" ? "process" : actBtn.id === "req-zip" ? "zip" : "work";
-      if (kind === "work") planOpen = false;
+      const kind = actBtn.id === "req-process" ? "process" : actBtn.id === "req-merge" ? "merge" : "work";
+      if (kind === "work") planOpen = false; else if (kind === "process") planOpen = true;
       actBtn.disabled = true;
-      const resp = await fetch(
-        `/api/clients/${encodeURIComponent(selected)}/requests/${encodeURIComponent(selectedReq)}/${kind}`,
-        { method: "POST" }
-      );
+      const comments = kind === "process" && $("req-comments") ? $("req-comments").value : "";
+      const resp = await fetch(`/api/clients/${encodeURIComponent(selected)}/requests/${encodeURIComponent(selectedReq)}/${kind}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ comments }) });
       const data = await resp.json().catch(() => ({}));
       if (!resp.ok) alert(data.error || "Request failed");
       await loadDetail();
@@ -493,6 +480,7 @@
     await loadDetail();
   });
 
+  if (window.pfComments) window.pfComments.bind(detailEl, () => ({ selected, selectedReq, reload() { commentsOpen = true; return loadDetail(); } }));
   window.pfClients = { show, openClient, restore };
   if (window.pfHub && window.pfHub.boot) window.pfHub.boot();
 })();

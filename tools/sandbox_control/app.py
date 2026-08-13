@@ -18,7 +18,9 @@ if str(HERE) not in sys.path:
 from flask import Flask, jsonify, render_template, request, send_file
 
 import client_ocr
+import client_package
 import client_pipeline
+import client_request_video
 import client_requests
 import clients
 import demos
@@ -142,7 +144,14 @@ def api_client_requests(slug: str):
         clients.require_root(slug)
     except ValueError as exc:
         return jsonify({"ok": False, "error": str(exc)}), 404
-    return jsonify({"ok": True, "requests": client_requests.list_requests(slug), "pipeline": client_pipeline.job_snapshot()})
+    return jsonify(
+        {
+            "ok": True,
+            "requests": client_requests.list_requests(slug),
+            "pipeline": client_pipeline.job_snapshot(),
+            "deploy": client_package.snapshot(slug),
+        }
+    )
 
 
 @app.post("/api/clients/<slug>/requests/screenshot")
@@ -213,6 +222,16 @@ def api_client_request_work(slug: str, req_id: str):
     return jsonify(result), (202 if result.get("ok") else 409)
 
 
+@app.post("/api/clients/<slug>/requests/<req_id>/merge")
+def api_client_request_merge(slug: str, req_id: str):
+    try:
+        client_requests.get_request(slug, req_id)
+    except (ValueError, FileNotFoundError) as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 404
+    result = client_pipeline.enqueue_merge(slug, req_id)
+    return jsonify(result), (202 if result.get("ok") else 409)
+
+
 @app.get("/api/clients/<slug>/requests/<req_id>/plan.pdf")
 def api_client_plan_pdf(slug: str, req_id: str):
     try:
@@ -228,6 +247,61 @@ def api_client_plan_pdf(slug: str, req_id: str):
     return resp
 
 
+@app.post("/api/clients/<slug>/requests/<req_id>/comments")
+def api_client_request_comments(slug: str, req_id: str):
+    body = request.get_json(silent=True) or {}
+    try:
+        client_requests.add_comment(slug, req_id, str(body.get("text") or body.get("comments") or ""))
+        meta = client_requests.get_request(slug, req_id)
+    except ValueError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 400
+    except FileNotFoundError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    return jsonify({"ok": True, "request": meta})
+
+
+@app.post("/api/clients/<slug>/requests/<req_id>/comments/screenshot")
+def api_client_request_comment_screenshot(slug: str, req_id: str):
+    try:
+        client_requests.get_request(slug, req_id)
+    except (ValueError, FileNotFoundError) as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    upload = request.files.get("file")
+    if upload is None or not upload.filename:
+        return jsonify({"ok": False, "error": "Drop a screenshot image."}), 400
+    data = upload.read()
+    if not data:
+        return jsonify({"ok": False, "error": "Empty file."}), 400
+    parsed = client_ocr.ingest(slug, data, upload.filename)
+    if parsed.get("error") and not parsed.get("email"):
+        return jsonify({"ok": False, **parsed}), 422
+    text = str(parsed.get("email") or parsed.get("ocr") or "").strip()
+    if not text:
+        return jsonify({"ok": False, "error": "Could not read text from the screenshot."}), 422
+    try:
+        client_requests.add_comment(slug, req_id, text, screenshot=str(parsed.get("path") or ""))
+        meta = client_requests.get_request(slug, req_id)
+    except ValueError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 400
+    return jsonify({"ok": True, "request": meta})
+
+
+@app.route("/api/clients/<slug>/requests/<req_id>/comments/<int:idx>", methods=["PATCH", "DELETE"])
+def api_client_request_comment_item(slug: str, req_id: str, idx: int):
+    try:
+        if request.method == "DELETE":
+            client_requests.delete_comment(slug, req_id, idx)
+        else:
+            body = request.get_json(silent=True) or {}
+            client_requests.edit_comment(slug, req_id, idx, str(body.get("text") or body.get("comments") or ""))
+        meta = client_requests.get_request(slug, req_id)
+    except ValueError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 400
+    except FileNotFoundError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    return jsonify({"ok": True, "request": meta})
+
+
 @app.post("/api/clients/<slug>/requests/<req_id>/process")
 def api_client_request_process(slug: str, req_id: str):
     try:
@@ -238,14 +312,30 @@ def api_client_request_process(slug: str, req_id: str):
     return jsonify(result), (202 if result.get("ok") else 409)
 
 
-@app.post("/api/clients/<slug>/requests/<req_id>/zip")
-def api_client_request_zip_build(slug: str, req_id: str):
+@app.post("/api/clients/<slug>/requests/deploy")
+def api_client_deploy_build(slug: str):
     try:
-        client_requests.get_request(slug, req_id)
-    except (ValueError, FileNotFoundError) as extra:
-        return jsonify({"ok": False, "error": str(extra)}), 404
-    result = client_pipeline.enqueue_zip(slug, req_id)
+        clients.require_root(slug)
+    except ValueError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 404
+    result = client_pipeline.enqueue_deploy(slug)
     return jsonify(result), (202 if result.get("ok") else 409)
+
+
+@app.get("/api/clients/<slug>/requests/deploy")
+def api_client_deploy_file(slug: str):
+    try:
+        root = clients.require_root(slug)
+    except ValueError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 404
+    info = client_package.snapshot(slug)
+    name = str(info.get("name") or "")
+    zpath = client_package.deploy_dir(root) / name if name else None
+    if not zpath or not zpath.is_file():
+        return jsonify({"ok": False, "error": "No TEST zip yet"}), 404
+    resp = send_file(zpath, mimetype="application/zip", as_attachment=True, download_name=name)
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
 
 
 @app.get("/api/clients/<slug>/requests/<req_id>/file")
@@ -258,6 +348,31 @@ def api_client_request_file(slug: str, req_id: str):
     except FileNotFoundError:
         return jsonify({"ok": False, "error": "File not found"}), 404
     return jsonify({"ok": True, **data})
+
+
+@app.post("/api/clients/<slug>/requests/<req_id>/video")
+def api_client_request_video(slug: str, req_id: str):
+    try:
+        client_requests.get_request(slug, req_id)
+    except (ValueError, FileNotFoundError) as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    result = client_pipeline.enqueue_video(slug, req_id)
+    return jsonify(result), (202 if result.get("ok") else 409)
+
+
+@app.get("/api/clients/<slug>/requests/<req_id>/video/file")
+def api_client_request_video_file(slug: str, req_id: str):
+    try:
+        root = clients.require_root(slug)
+        folder = client_requests.request_path(root, req_id)
+    except ValueError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 404
+    path = folder / client_request_video.MP4_NAME
+    if not path.is_file():
+        return jsonify({"ok": False, "error": "No request demo video yet"}), 404
+    resp = send_file(path, mimetype="video/mp4", as_attachment=False, download_name=client_request_video.MP4_NAME)
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
 
 
 @app.get("/api/clients/<slug>/requests/<req_id>/zip")

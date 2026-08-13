@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PilotFish Sandbox</title>
-  <link rel="stylesheet" href="/static/app.css?v=27" />
+  <link rel="stylesheet" href="/static/app.css?v=43" />
 </head>
 <body>
   <header>
@@ -31,7 +31,7 @@
     </div>
     <div id="family-chips" class="chips" role="group" aria-label="Folder filters"></div>
     <div id="category-chips" class="chips" role="group" aria-label="Category filters"></div>
-    <p class="hint">Grouped like <code>Clients/Demos</code> on disk. One stack at a time — Start stops the others first (compose down, never -v). Create video records <code>construction-replay.mp4</code> (starts the demo if needed). One recording at a time.</p>
+    <p class="hint">Grouped like <code>Clients/Demos</code> on disk. Start leaves other stacks running — use the Docker tab to stop what you do not need. Create video records <code>construction-replay.mp4</code> (starts the demo if needed). One recording at a time.</p>
     <div id="demo-list" class="demo-list"></div>
   </section>
 
@@ -41,7 +41,7 @@
         <input id="client-filter" type="search" placeholder="Filter clients…" />
         <span id="client-count" class="muted"></span>
       </div>
-      <p class="hint">Drop or paste a client email, build a change plan, Start work (applies edits, loads EIP, runs tests), review the diff, then generate the TEST zip to deploy.</p>
+      <p class="hint">Build a plan, Implement on a feature branch, Merge into main one request at a time. Merged requests are ready to deploy. Deploy (top of the client) always zips from main.</p>
       <div id="client-list" class="demo-list"></div>
     </div>
     <div id="client-detail-view" hidden>
@@ -85,7 +85,7 @@
       <button type="button" class="btn" id="docker-refresh">Refresh</button>
       <span id="docker-total" class="muted"></span>
     </div>
-    <p class="hint">Running containers whose compose files or mounts live under <code>Clients/</code> (demos and client sandboxes). Other host Docker is hidden. One demo stack at a time — compose down never <code>-v</code>.</p>
+    <p class="hint">Running containers whose compose files or mounts live under <code>Clients/</code> (demos and client sandboxes). Other host Docker is hidden. Stop here does compose down, never <code>-v</code>.</p>
     <article class="panel">
       <h2>Running containers</h2>
       <div id="docker-containers"></div>
@@ -108,9 +108,13 @@
     </div>
   </div>
 
-  <script src="/static/app.js?v=11"></script>
+  <script src="/static/app.js?v=12"></script>
   <script src="/static/docker.js?v=2"></script>
-  <script src="/static/clients.js?v=24"></script>
+  <script src="/static/req-comments.js?v=4"></script>
+  <script src="/static/req-tests.js?v=3"></script>
+  <script src="/static/req-video.js?v=3"></script>
+  <script src="/static/req-group.js?v=5"></script>
+  <script src="/static/clients.js?v=55"></script>
   <script src="/static/file-view.js?v=3"></script>
 </body>
 </html>

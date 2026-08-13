@@ -9,16 +9,17 @@ import threading
 import time
 import urllib.error
 import urllib.request
-import zipfile
-from datetime import datetime
 from html import escape as html_esc
 from pathlib import Path
 
+import client_comment_plan
 import client_dive
+import client_git
+import client_package
 import client_plan_pdf
+import client_proof
 import client_requests as reqs
 import clients
-import demos
 import hub_ntfy
 
 SKIP_DIR = {".venv", "lib", "icons", "__pycache__", "node_modules", ".git", "requests", "deploy"}
@@ -94,7 +95,10 @@ def side_table(old: str, new: str, rel: str) -> str:
         (old or "").splitlines(), (new or "").splitlines(),
         fromdesc="Before", todesc="After", context=True, numlines=3,
     )
-    return f'<div class="diff-file"><p class="diff-name"><button type="button" class="diff-file-open" data-rel="{html_esc(rel)}" title="{html_esc(rel)}">{html_esc(rel)}</button></p>{table}</div>'
+    return (
+        f'<details class="diff-file"><summary class="diff-name"><span class="diff-path">{html_esc(rel)}</span>'
+        f'<button type="button" class="diff-file-open" data-rel="{html_esc(rel)}" title="{html_esc(rel)}">Open</button></summary>{table}</details>'
+    )
 
 
 def collect_changes(root: Path, folder: Path, likely: list[str]) -> tuple[list[dict], str, str]:
@@ -150,7 +154,7 @@ def collect_changes(root: Path, folder: Path, likely: list[str]) -> tuple[list[d
     return changes, "\n\n".join(chunks), "\n".join(html_parts)
 
 
-def wait_url(url: str, timeout: float = 60.0) -> bool:
+def wait_url(url: str, timeout: float = 60) -> bool:
     deadline = time.time() + timeout
     while time.time() < deadline:
         try:
@@ -199,30 +203,9 @@ def test_crl_plus(root: Path, folder: Path) -> dict:
 
 
 def test_med_rec(folder: Path, dive: dict | None = None) -> dict:
-    items = []
-    url = "http://127.0.0.1:8080/eip/"
-    up = wait_url(url, timeout=90)
-    items.append({"name": "EIP http://127.0.0.1:8080/eip/", "ok": up, "detail": "up" if up else "not responding"})
-    log = clients.ROOT / "logs" / "eip.log"
-    if log.is_file():
-        tail = log.read_text(encoding="utf-8", errors="replace")[-4000:]
-        bad = "SEVERE" in tail and "Exception" in tail
-        items.append({"name": "eip.log present", "ok": True, "detail": "recent SEVERE+Exception" if bad else "ok"})
-    else:
-        items.append({"name": "eip.log present", "ok": False, "detail": "no log yet"})
-    seen: set[str] = set()
-    for ed in (dive or {}).get("edits") or []:
-        code = str(ed.get("code") or "")
-        rel = str(ed.get("path") or "")
-        if ed.get("action") != "remove_when" or not code or not rel or code in seen:
-            continue
-        seen.add(code)
-        inner = rel.split("eip-root/", 1)[-1]
-        dest = f"/usr/local/tomcat/webapps/eip/eip-root/{inner}"
-        rc, _ = demos.run(["docker", "exec", "pilotfish-eip", "grep", "-F", code, dest], timeout=20)
-        gone = rc != 0
-        items.append({"name": f"EIP stripped {code}", "ok": gone, "detail": "absent" if gone else "still present"})
-    result = {"ok": all(i["ok"] for i in items), "items": items}
+    dive = dive or {}
+    items = client_proof.smoke_eip(wait_url) + client_proof.prove(folder.parents[1], dive, folder)
+    result = {"ok": all(i["ok"] for i in items), "items": items, "note": client_proof.note(dive)}
     (folder / "tests.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
     return result
 
@@ -233,74 +216,6 @@ def ensure_sandbox(root: Path, folder: Path) -> None:
         return
     reqs.append_log(folder, f"Starting {root.name} sandbox…")
     clients.start_client(root)
-
-
-def write_deploy_txt(root: Path, meta: dict, changes: list[dict], tests: dict) -> str:
-    asks = meta.get("asks") or []
-    lines = [
-        "=" * 72,
-        f"{root.name} — TEST deploy package",
-        f"Request: {meta.get('id')}",
-        f"Prepared: {datetime.now().strftime('%Y-%m-%d')}",
-        "=" * 72,
-        "",
-        "WHAT THIS PACKAGE IS FOR",
-        "-" * 24,
-        meta.get("subject") or "",
-        f"From: {meta.get('from') or ''}",
-        "",
-    ]
-    if asks:
-        lines.append("Asks:")
-        lines.extend(f"  - {a}" for a in asks)
-        lines.append("")
-    lines += ["CONTENTS", "-" * 8, "  DEPLOY.txt", "  email.txt", "  changes-needed.md", "  tests.json", "  changes.diff", ""]
-    if changes:
-        lines.append("  Changed interface files:")
-        lines.extend(f"    {c['path']}" for c in changes)
-    else:
-        lines.append("  (no eip-root diffs vs last deploy — zip still includes the email, plan, and tests)")
-    lines += ["", "SANDBOX TESTS", "-" * 13]
-    for item in (tests or {}).get("items") or []:
-        mark = "PASS" if item.get("ok") else "FAIL"
-        lines.append(f"  [{mark}] {item.get('name')} — {item.get('detail')}")
-    lines += [
-        "",
-        "DEPLOY",
-        "-" * 6,
-        "  1. Backup TEST copies of every eip-root path listed above.",
-        "  2. Copy those files onto TEST, preserving relative paths under eip-root/.",
-        "  3. Restart eiPlatform / Tomcat on TEST.",
-        "  4. Re-run the client’s smoke case.",
-        "",
-        f"SOURCE  {root.as_posix()}",
-        "",
-    ]
-    return "\n".join(lines)
-
-
-def package_zip(root: Path, folder: Path, meta: dict, changes: list[dict], tests: dict) -> Path:
-    name = reqs.zip_filename(root.name, folder, meta)
-    pack = name[:-4] if name.endswith(".zip") else name
-    zpath = folder / name
-    for old in folder.glob("*.zip"):
-        if old != zpath:
-            old.unlink()
-    deploy_txt = write_deploy_txt(root, meta, changes, tests)
-    (folder / "DEPLOY.txt").write_text(deploy_txt, encoding="utf-8")
-    with zipfile.ZipFile(zpath, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-        for fname in ("DEPLOY.txt", "email.txt", "changes-needed.md", "changes-needed.pdf", "dive.json", "tests.json", "changes.diff", "request.json"):
-            p = folder / fname
-            if p.is_file():
-                zf.write(p, f"{pack}/{fname}")
-        for rec in changes:
-            src = root / rec["path"]
-            if src.is_file():
-                zf.write(src, f"{pack}/{rec['path']}")
-        for shot in sorted(folder.glob("screenshot-*")):
-            if shot.is_file() and shot.suffix.lower() in {".png", ".jpg", ".jpeg", ".webp", ".gif", ".tif", ".tiff"}:
-                zf.write(shot, f"{pack}/{shot.name}")
-    return zpath
 
 
 def _run_tests(slug: str, root: Path, folder: Path, meta: dict, dive: dict | None = None) -> dict:
@@ -338,17 +253,26 @@ def process_request(slug: str, req_id: str) -> None:
         meta["phase"] = "analyzing"
         reqs.save_meta(folder, meta)
         email = (folder / "email.txt").read_text(encoding="utf-8", errors="replace")
+        comments = str(meta.get("comments") or "")
+        prev = client_plan_pdf.previous_dive(folder)
         _set(message="Reading eip-root against the email…")
-        dive = client_dive.dive(root, email, str(meta.get("subject") or ""))
+        dive = client_dive.dive(root, email, str(meta.get("subject") or ""), "")
+        dive = client_comment_plan.refine(root, dive, comments, prev)
+        if comments:
+            dive["comments"] = comments
+            dive["delta"] = client_comment_plan.human_delta(prev or {}, dive)
         client_dive.write_markdown(folder, meta, dive)
         pdf = client_plan_pdf.write_plan_pdf(folder, meta, dive)
         meta["asks"] = dive.get("codes") or []
+        meta["request_summary"] = client_plan_pdf.describe_request(dive, meta)
         meta["likely_files"] = [f["path"] for f in dive.get("files") or []]
         meta["plan_pdf"] = pdf.name
         meta["edit_count"] = len(dive.get("edits") or [])
         meta["status"] = "planned"
         meta["phase"] = "review"
         meta["message"] = "Change plan PDF ready — review it, then Start work"
+        if comments and dive.get("delta"):
+            meta["message"] = "Change plan rebuilt from comments — review Proposed changes, then Start work"
         reqs.save_meta(folder, meta)
         reqs.append_log(folder, f"Plan PDF: {len(dive.get('codes') or [])} code(s), {meta['edit_count']} edit(s)")
         hub_ntfy.notify("Change plan ready", f"{root.name}: {meta.get('subject') or req_id}", slug=slug, req_id=req_id, tags="clipboard")
@@ -364,27 +288,6 @@ def process_request(slug: str, req_id: str) -> None:
         _set(busy=False)
 
 
-def _work_paths(root: Path, meta: dict, dive: dict, applied: list[dict]) -> list[str]:
-    rels: list[str] = []
-    for rec in applied or meta.get("applied") or []:
-        if rec.get("path") and rec["path"] not in rels:
-            rels.append(rec["path"])
-    for rec in dive.get("files") or []:
-        if rec.get("path") and rec["path"] not in rels:
-            rels.append(rec["path"])
-    for rec in meta.get("likely_files") or []:
-        if rec and rec not in rels:
-            rels.append(rec)
-    extra: list[str] = []
-    for path in root.joinpath("eip-root").rglob("*.bak-req") if (root / "eip-root").is_dir() else []:
-        src = path.with_name(path.name[: -len(".bak-req")])
-        if src.is_file():
-            rel = src.relative_to(root).as_posix()
-            if rel not in rels:
-                extra.append(rel)
-    return rels + extra
-
-
 def apply_work(slug: str, req_id: str) -> None:
     _set(busy=True, slug=slug, request_id=req_id, message="Applying planned edits…", error="")
     root = clients.require_root(slug)
@@ -398,10 +301,12 @@ def apply_work(slug: str, req_id: str) -> None:
         if not dive_path.is_file():
             raise ValueError("No change plan yet. Build the change plan first.")
         dive = json.loads(dive_path.read_text(encoding="utf-8"))
+        meta["git_branch"] = client_git.ensure_work_branch(slug, req_id, meta)
         meta["status"] = "processing"
         meta["phase"] = "applying"
         meta["zip"] = ""
         reqs.save_meta(folder, meta)
+        reqs.append_log(folder, f"Branch {meta['git_branch']}")
         hub_ntfy.notify("Work started", f"{root.name}: {meta.get('subject') or req_id}", slug=slug, req_id=req_id, tags="hammer")
         applied = client_dive.apply_edits(root, dive)
         if not applied:
@@ -410,7 +315,7 @@ def apply_work(slug: str, req_id: str) -> None:
         else:
             meta["applied"] = applied
             reqs.append_log(folder, f"Applied {len(applied)} file edit(s)")
-        rels = _work_paths(root, meta, dive, applied)
+        rels = client_git.work_paths(root, meta, dive, applied)
         meta["phase"] = "loading"
         reqs.save_meta(folder, meta)
         _set(message="Loading edits into the sandbox…")
@@ -421,11 +326,13 @@ def apply_work(slug: str, req_id: str) -> None:
         reqs.save_meta(folder, meta)
         tests = _run_tests(slug, root, folder, meta, dive)
         meta = reqs.load_meta(folder)
+        meta["git_branch"] = meta.get("git_branch") or client_git.branch_for(slug, req_id)
+        reqs.append_log(folder, client_git.commit_work(root, req_id, meta))
         meta["status"] = "tested"
         meta["phase"] = "review"
         meta["tests"] = tests
         if tests.get("ok"):
-            meta["message"] = "Tests passed. Review the code diff, then generate the TEST zip."
+            meta["message"] = f"Tests passed on {meta['git_branch']}. Review the diff, then Merge into main."
         else:
             meta["message"] = "Tests failed. Review the diff before generating a zip."
         reqs.save_meta(folder, meta)
@@ -442,37 +349,12 @@ def apply_work(slug: str, req_id: str) -> None:
         _set(busy=False)
 
 
-def package_request(slug: str, req_id: str) -> None:
-    _set(busy=True, slug=slug, request_id=req_id, message="Building TEST zip…", error="")
-    root = clients.require_root(slug)
-    folder = reqs.request_path(root, req_id)
-    meta = reqs.load_meta(folder)
-    if not meta:
-        _set(busy=False, error="Unknown request")
-        return
+def package_client(slug: str, req_id: str = "") -> None:
     try:
-        if meta.get("status") not in {"tested", "ready"}:
-            _set(error="Start work and review the results before generating a zip.", message="Zip not ready")
-            return
-        tests = meta.get("tests") if isinstance(meta.get("tests"), dict) else {}
-        changes = meta.get("changes") if isinstance(meta.get("changes"), list) else []
-        zpath = package_zip(root, folder, meta, changes, tests)
-        meta["zip"] = zpath.name
-        meta["zip_kb"] = zpath.stat().st_size // 1024
-        meta["status"] = "ready"
-        meta["phase"] = "done"
-        meta["message"] = f"TEST zip ready ({meta['zip_kb']} KB)"
-        reqs.save_meta(folder, meta)
-        reqs.append_log(folder, f"Packaged {zpath.name} ({meta['zip_kb']} KB)")
-        hub_ntfy.notify("TEST deploy ZIP ready", f"{zpath.name}\n{root.name}: {meta.get('subject') or req_id}", slug=slug, req_id=req_id, tags="package")
-        _set(message=meta["message"])
+        client_package.package_main(slug, _set)
+        hub_ntfy.notify("TEST deploy ZIP ready", f"{slug}: zip from main", slug=slug, tags="package")
     except Exception as exc:
-        reqs.append_log(folder, f"Zip failed: {exc}")
-        meta = reqs.load_meta(folder)
-        meta["status"] = "error"
-        meta["error"] = str(exc)[:800]
-        reqs.save_meta(folder, meta)
-        _set(error=str(exc)[:800], message="Zip failed")
+        _set(error=str(exc)[:800], message="Deploy failed")
     finally:
         _set(busy=False)
 
@@ -494,5 +376,64 @@ def enqueue_work(slug: str, req_id: str) -> dict:
     return _enqueue(apply_work, slug, req_id)
 
 
-def enqueue_zip(slug: str, req_id: str) -> dict:
-    return _enqueue(package_request, slug, req_id)
+def merge_request(slug: str, req_id: str) -> None:
+    _set(busy=True, slug=slug, request_id=req_id, message="Merging into main…", error="")
+    root = clients.require_root(slug)
+    folder = reqs.request_path(root, req_id)
+    meta = reqs.load_meta(folder)
+    if not meta:
+        _set(busy=False, error="Unknown request")
+        return
+    try:
+        tests = meta.get("tests") if isinstance(meta.get("tests"), dict) else {}
+        if not tests.get("ok"):
+            _set(error="Tests must pass before merging into main.", message="Merge not ready")
+            return
+        if meta.get("git_merged"):
+            _set(message="Already merged into main")
+            return
+        if not meta.get("git_branch"):
+            meta["git_branch"] = client_git.ensure_work_branch(slug, req_id, meta)
+        reqs.append_log(folder, client_git.commit_work(root, req_id, meta))
+        git_msg = client_git.push_and_merge(slug, req_id, meta)
+        meta = reqs.load_meta(folder)
+        meta["git_merged"] = True
+        meta["status"] = "ready"
+        meta["phase"] = "merged"
+        meta["error"] = ""
+        meta["message"] = f"{git_msg} Ready to deploy."
+        reqs.save_meta(folder, meta)
+        reqs.append_log(folder, git_msg)
+        _set(message=git_msg)
+    except Exception as exc:
+        reqs.append_log(folder, f"Merge failed: {exc}")
+        meta = reqs.load_meta(folder)
+        meta["status"] = "error"
+        meta["error"] = str(exc)[:800]
+        reqs.save_meta(folder, meta)
+        _set(error=str(exc)[:800], message="Merge failed")
+    finally:
+        _set(busy=False)
+
+
+def enqueue_deploy(slug: str) -> dict:
+    return _enqueue(package_client, slug, "")
+
+
+def enqueue_merge(slug: str, req_id: str) -> dict:
+    return _enqueue(merge_request, slug, req_id)
+
+
+def record_video(slug: str, req_id: str) -> None:
+    try:
+        import client_request_video
+
+        client_request_video.run(slug, req_id, _set)
+    except Exception as exc:
+        _set(error=str(exc)[:800], message="Video failed")
+    finally:
+        _set(busy=False)
+
+
+def enqueue_video(slug: str, req_id: str) -> dict:
+    return _enqueue(record_video, slug, req_id)
