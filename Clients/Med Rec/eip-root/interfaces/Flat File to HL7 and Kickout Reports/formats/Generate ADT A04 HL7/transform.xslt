@@ -1480,14 +1480,7 @@
                 <IN1.13 />
                 <IN1.14 />
                 <IN1.15>
-                  <xsl:choose>
-                    <xsl:when test="$partitionName = 'ARA' and Insurance1/adminsmne = 'SELFPAY'">
-                      <xsl:text>P</xsl:text>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:text>S</xsl:text>
-                    </xsl:otherwise>
-                  </xsl:choose>
+                  <xsl:text>S</xsl:text>
                 </IN1.15>
                 <IN1.16>
                   <xsl:choose>
@@ -1522,35 +1515,6 @@
                       <XPN.2>
                         <xsl:value-of select="normalize-space(substring-after(Guarantor/admGuarName, ','))" />
                       </XPN.2>
-                    </xsl:when>
-                    <!-- ARA self-pay: Insurance1 IN1 is skipped, so this is the IN1 we send. Fill IN1.16. -->
-                    <xsl:when test="$partitionName = 'ARA' and Insurance1/adminsmne = 'SELFPAY'">
-                      <xsl:choose>
-                        <xsl:when test="string-length(normalize-space(Insurance2/adminsinsuredname)) != 0">
-                          <XCN.1>
-                            <xsl:value-of select="normalize-space(substring-before(Insurance2/adminsinsuredname, ','))" />
-                          </XCN.1>
-                          <XCN.2>
-                            <xsl:value-of select="normalize-space(substring-after(Insurance2/adminsinsuredname, ','))" />
-                          </XCN.2>
-                        </xsl:when>
-                        <xsl:when test="string-length(normalize-space(Insurance1/adminsinsuredname)) != 0">
-                          <XCN.1>
-                            <xsl:value-of select="normalize-space(substring-before(Insurance1/adminsinsuredname, ','))" />
-                          </XCN.1>
-                          <XCN.2>
-                            <xsl:value-of select="normalize-space(substring-after(Insurance1/adminsinsuredname, ','))" />
-                          </XCN.2>
-                        </xsl:when>
-                        <xsl:otherwise>
-                          <XCN.1>
-                            <xsl:value-of select="normalize-space(substring-before(PatientDemographics/admname, ','))" />
-                          </XCN.1>
-                          <XCN.2>
-                            <xsl:value-of select="normalize-space(substring-after(PatientDemographics/admname, ','))" />
-                          </XCN.2>
-                        </xsl:otherwise>
-                      </xsl:choose>
                     </xsl:when>
                     <xsl:otherwise>
                       <XCN.1>

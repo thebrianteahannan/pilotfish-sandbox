@@ -132,6 +132,9 @@
                 <xsl:when test="$locationAbbr = 'HH HPC'">
                   <xsl:value-of select="'HAX'" />
                 </xsl:when>
+                <xsl:when test="$locationAbbr = 'HH IPM'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
                 <xsl:when test="$locationAbbr = 'HHECDBS'">
                   <xsl:value-of select="'HAX'" />
                 </xsl:when>
@@ -145,6 +148,9 @@
                   <xsl:value-of select="'HAX'" />
                 </xsl:when>
                 <xsl:when test="$locationAbbr = 'HMC'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC 201'">
                   <xsl:value-of select="'HAX'" />
                 </xsl:when>
                 <xsl:when test="$locationAbbr = 'HMC CT'">
@@ -210,6 +216,9 @@
                 <xsl:when test="$locationAbbr = 'NSB HGC   E'">
                   <xsl:value-of select="'HAX'" />
                 </xsl:when>
+                <xsl:when test="$locationAbbr = 'OR TL'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
                 <xsl:when test="$locationAbbr = 'ORM CCH'">
                   <xsl:value-of select="'HAX'" />
                 </xsl:when>
@@ -223,6 +232,9 @@
                   <xsl:value-of select="'HAX'" />
                 </xsl:when>
                 <xsl:when test="$locationAbbr = 'PO CAH P'">
+                  <xsl:value-of select="'HAX'" />
+                </xsl:when>
+                <xsl:when test="$locationAbbr = 'TL GI'">
                   <xsl:value-of select="'HAX'" />
                 </xsl:when>
                 <!-- Crosswalk → HED -->
@@ -287,9 +299,6 @@
                 </xsl:when>
                 <xsl:when test="$locationAbbr = 'PO FSED XR'">
                   <xsl:value-of select="'PXE'" />
-                </xsl:when>
-                <xsl:when test="$locationAbbr = 'HMC 201' or $locationAbbr = 'HH IPM' or $locationAbbr = 'TL GI' or $locationAbbr = 'TLGI' or $locationAbbr = 'OR TL'">
-                  <xsl:value-of select="$locationAbbr" />
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:value-of select="'HAX'" />
