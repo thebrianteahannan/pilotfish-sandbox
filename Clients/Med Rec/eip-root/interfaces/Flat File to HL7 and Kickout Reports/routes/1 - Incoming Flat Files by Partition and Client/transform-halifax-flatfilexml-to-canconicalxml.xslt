@@ -288,6 +288,9 @@
                 <xsl:when test="$locationAbbr = 'PO FSED XR'">
                   <xsl:value-of select="'PXE'" />
                 </xsl:when>
+                <xsl:when test="$locationAbbr = 'HMC 201' or $locationAbbr = 'HH IPM' or $locationAbbr = 'TL GI' or $locationAbbr = 'TLGI' or $locationAbbr = 'OR TL'">
+                  <xsl:value-of select="$locationAbbr" />
+                </xsl:when>
                 <xsl:otherwise>
                   <xsl:value-of select="'HAX'" />
                 </xsl:otherwise>
