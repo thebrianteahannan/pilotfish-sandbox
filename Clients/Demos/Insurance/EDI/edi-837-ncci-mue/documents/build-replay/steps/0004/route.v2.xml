@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="f26e8f07-3a95-4615-a4a4-1d7b43c07f08" name="1 - Poll And Score MUE">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="e1108ae6-3b2a-4b57-8ace-fe13316a92de" moduleId="4fcb6122-4394-4331-9417-bad4f8bbe0b2" label="Poll EDI 837P Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="fa39565b-2f88-4c4e-8d3f-7da037b45dd5" moduleId="f5353496-b768-4979-aace-2945ad47f314" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="0e3feeec-ba29-4f3f-aed7-42384075f6b1" moduleId="79793221-a9c8-4da3-8381-b812878df7ba" label="Extract Claim Identity" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="4d6e36f4-b222-4f4f-b85a-c3309e62a76c" sourceNodeId="e1108ae6-3b2a-4b57-8ace-fe13316a92de" targetNodeId="fa39565b-2f88-4c4e-8d3f-7da037b45dd5" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="b6ba0835-9256-44ba-8d84-88f820f38230" sourceNodeId="fa39565b-2f88-4c4e-8d3f-7da037b45dd5" targetNodeId="0e3feeec-ba29-4f3f-aed7-42384075f6b1" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+   
+   </Connections>
+</Route>

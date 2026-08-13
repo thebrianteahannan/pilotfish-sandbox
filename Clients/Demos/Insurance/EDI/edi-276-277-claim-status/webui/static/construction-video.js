@@ -162,17 +162,10 @@
 
   function apply(data) {
     let job = (data && data.job) || null;
-    const ready = Boolean(data && (data.mp4 || data.ready));
-    if (job && job.status === "running" && ready) {
-      const updated = Date.parse(job.updated_at || "") || 0;
-      if (updated && Date.now() - updated > 45000) {
-        job = Object.assign({}, job, {
-          status: "done",
-          phase: "done",
-          message: "Construction video ready",
-        });
-      }
+    if (!job && lastJob && lastJob.status === "running") {
+      job = lastJob;
     }
+    const ready = Boolean(data && (data.mp4 || data.ready));
     lastJob = job;
     const running = !!(job && job.status === "running");
     const size = fmtSize(data && data.size_kb);
@@ -205,20 +198,47 @@
     return running;
   }
 
+  let inFlight = false;
+
+  function stillRunning() {
+    return wasRunning || !!(lastJob && lastJob.status === "running");
+  }
+
+  function schedulePoll(keep) {
+    if (pollTimer) {
+      clearTimeout(pollTimer);
+      pollTimer = null;
+    }
+    if (keep) pollTimer = setTimeout(refresh, 1000);
+  }
+
   async function refresh() {
+    if (inFlight) {
+      schedulePoll(true);
+      return;
+    }
+    inFlight = true;
+    let keep = false;
     try {
-      const resp = await fetch("/api/construction-video", { cache: "no-store" });
-      const data = await resp.json();
-      const running = apply(data);
-      if (running && !pollTimer) {
-        pollTimer = setInterval(refresh, 1000);
-      }
-      if (!running && pollTimer) {
-        clearInterval(pollTimer);
-        pollTimer = null;
+      const ctrl = new AbortController();
+      const abortAt = setTimeout(() => ctrl.abort(), 8000);
+      try {
+        const resp = await fetch("/api/construction-video", {
+          cache: "no-store",
+          signal: ctrl.signal,
+        });
+        const data = await resp.json();
+        keep = apply(data);
+      } finally {
+        clearTimeout(abortAt);
       }
     } catch (err) {
-      setStatus("Could not read video status.");
+      keep = stillRunning();
+      if (keep) setStatus("Reconnecting to video progress…");
+      else setStatus("Could not read video status.");
+    } finally {
+      inFlight = false;
+      schedulePoll(keep);
     }
   }
 
@@ -266,6 +286,10 @@
     if (banner) banner.hidden = true;
   }
   if (link) link.addEventListener("click", dismissCelebrate);
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && stillRunning()) refresh();
+  });
 
   refresh();
 })();

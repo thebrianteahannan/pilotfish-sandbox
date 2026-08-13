@@ -1,0 +1,151 @@
+{
+  "interface": "EDI 837 NCCI PTP",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-ptp",
+  "started_at": "2026-08-13T13:01:16.122514+00:00",
+  "finished_at": "2026-08-13T13:01:37.310293+00:00",
+  "summary": {
+    "pass": 15,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 15
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 27,
+      "message": "UI OK (http://127.0.0.1:8133/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 14,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "wait-sql",
+      "name": "SQL is reachable",
+      "suite": "PTP scoring",
+      "status": "pass",
+      "duration_ms": 12,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"sql\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "wait-eip",
+      "name": "EIP is reachable",
+      "suite": "PTP scoring",
+      "status": "pass",
+      "duration_ms": 11,
+      "message": "HTTP 200: {\"eip\":true,\"ok\":true,\"sql\":true}\n",
+      "detail": ""
+    },
+    {
+      "id": "ptp-catalog",
+      "name": "PTP catalog seeded",
+      "suite": "PTP scoring",
+      "status": "pass",
+      "duration_ms": 18,
+      "message": "HTTP 200: {\"ok\":true,\"rows\":[{\"Column1\":\"45378\",\"Column2\":\"45380\",\"Description\":\"Colonoscopy + biopsy - modifier 59 may bypass\",\"ModifierIndicator\":\"1\"},{\"Column1\":\"93000\",\"Column2\":\"93005\",",
+      "detail": ""
+    },
+    {
+      "id": "reset-drop",
+      "name": "Reset then drop sample 837P",
+      "suite": "PTP scoring",
+      "status": "pass",
+      "duration_ms": 4,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "inject-sample",
+      "name": "Inject sample 837P",
+      "suite": "PTP scoring",
+      "status": "pass",
+      "duration_ms": 3,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "pass-001",
+      "name": "PTPCLM001 single code pass",
+      "suite": "PTP scoring",
+      "status": "pass",
+      "duration_ms": 12040,
+      "message": "HTTP 200: {\"kickout\":[],\"ok\":true,\"pass\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><PtpDecision>\\n   <ClaimControlNumber>PTPCLM001</ClaimControlNumber>\\n   <ProcedureCode1>45378",
+      "detail": ""
+    },
+    {
+      "id": "kickout-002",
+      "name": "PTPCLM002 pair without modifier",
+      "suite": "PTP scoring",
+      "status": "pass",
+      "duration_ms": 6026,
+      "message": "HTTP 200: {\"kickout\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><PtpDecision>\\n   <ClaimControlNumber>PTPCLM002</ClaimControlNumber>\\n   <ProcedureCode1>45378</ProcedureCode1>\\n ",
+      "detail": ""
+    },
+    {
+      "id": "pass-003",
+      "name": "PTPCLM003 pair with modifier 59",
+      "suite": "PTP scoring",
+      "status": "pass",
+      "duration_ms": 6,
+      "message": "HTTP 200: {\"kickout\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><PtpDecision>\\n   <ClaimControlNumber>PTPCLM002</ClaimControlNumber>\\n   <ProcedureCode1>45378</ProcedureCode1>\\n ",
+      "detail": ""
+    },
+    {
+      "id": "kickout-004",
+      "name": "PTPCLM004 indicator 0 even with 59",
+      "suite": "PTP scoring",
+      "status": "pass",
+      "duration_ms": 3019,
+      "message": "HTTP 200: {\"kickout\":[{\"content\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?><PtpDecision>\\n   <ClaimControlNumber>PTPCLM004</ClaimControlNumber>\\n   <ProcedureCode1>93000</ProcedureCode1>\\n ",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-ptp/documents/EDI837_NCCI_PTP_V2_Route_Diagrams.pdf",
+      "detail": ""
+    },
+    {
+      "id": "capability-pdf",
+      "name": "Capability Brief PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-ptp/documents/EDI837_NCCI_PTP_Capability_Brief.pdf",
+      "detail": ""
+    },
+    {
+      "id": "test-plan-pdf",
+      "name": "Test Plan PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-ptp/documents/EDI837_NCCI_PTP_Test_Plan.pdf",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-ptp/tests/plan.json"
+}

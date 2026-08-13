@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="d419202d-6887-4ac0-b9ce-97cc233147bc" name="Extract Decision Attributes" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:ClaimControlNumber:eip_name:normalize-space(string((//ClaimControlNumber)[1])):eip_value][eip_pair:Reason:eip_name:normalize-space(string((//Reason)[1])):eip_value][eip_pair:MatchBucket:eip_name:normalize-space(string((//MatchBucket)[1])):eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>

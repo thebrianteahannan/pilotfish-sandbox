@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="f26e8f07-3a95-4615-a4a4-1d7b43c07f08" name="1 - Poll And Score MUE">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="e1108ae6-3b2a-4b57-8ace-fe13316a92de" moduleId="4fcb6122-4394-4331-9417-bad4f8bbe0b2" label="Poll EDI 837P Files" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="fa39565b-2f88-4c4e-8d3f-7da037b45dd5" moduleId="f5353496-b768-4979-aace-2945ad47f314" label="Fork - XPath" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="0e3feeec-ba29-4f3f-aed7-42384075f6b1" moduleId="79793221-a9c8-4da3-8381-b812878df7ba" label="Extract Claim Identity" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="2e82a4a5-d3de-4615-8a5d-8ca7e85167f9" moduleId="b23a15f8-486b-49df-b650-b3547e710b07" label="Debug Write Forked Transaction" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="f321c83e-3982-4a88-998a-3ee44e6f4c8c" moduleId="1c0ff96d-f9c2-4746-bdd2-7beb44dc9648" label="Extract Claim Line XML" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="07d4a4d9-5617-4e2e-81ee-e089bff1ccc7" moduleId="3b84db5a-9baa-4613-934e-dace7acc6fac" label="Read Claim Line Fields" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="8cd1f2f7-7857-4712-a756-547339985e91" moduleId="b7d846e3-816e-4ce7-9ea4-d5003d1ba858" label="Lookup MUE Catalog" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="e6b9f741-7bf5-47a8-bcc7-e4fd6d1c29a3" moduleId="285f7ed3-5437-4003-891c-1858c5f65a4a" label="Extract MUE Catalog Fields" x="2600.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="4d6e36f4-b222-4f4f-b85a-c3309e62a76c" sourceNodeId="e1108ae6-3b2a-4b57-8ace-fe13316a92de" targetNodeId="fa39565b-2f88-4c4e-8d3f-7da037b45dd5" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="d0410d24-d30f-43a0-8d2d-82bb622712b4" sourceNodeId="0e3feeec-ba29-4f3f-aed7-42384075f6b1" targetNodeId="2e82a4a5-d3de-4615-8a5d-8ca7e85167f9" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="c2fbf3a5-e76e-4092-b956-fd265fb64681" sourceNodeId="2e82a4a5-d3de-4615-8a5d-8ca7e85167f9" targetNodeId="f321c83e-3982-4a88-998a-3ee44e6f4c8c" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="ce1db985-64ff-4c01-b676-1422c02bb209" sourceNodeId="f321c83e-3982-4a88-998a-3ee44e6f4c8c" targetNodeId="07d4a4d9-5617-4e2e-81ee-e089bff1ccc7" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="10cd4c63-75fc-4d72-a1c2-6f0a7e2a2b28" sourceNodeId="07d4a4d9-5617-4e2e-81ee-e089bff1ccc7" targetNodeId="8cd1f2f7-7857-4712-a756-547339985e91" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="4a3dee6c-c1cc-40c0-b113-002a31dd24e8" sourceNodeId="8cd1f2f7-7857-4712-a756-547339985e91" targetNodeId="e6b9f741-7bf5-47a8-bcc7-e4fd6d1c29a3" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="b6ba0835-9256-44ba-8d84-88f820f38230" sourceNodeId="fa39565b-2f88-4c4e-8d3f-7da037b45dd5" targetNodeId="0e3feeec-ba29-4f3f-aed7-42384075f6b1" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+   
+   </Connections>
+</Route>

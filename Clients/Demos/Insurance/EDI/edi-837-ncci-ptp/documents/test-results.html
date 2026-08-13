@@ -1,0 +1,26 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/><title>Test results — EDI 837 NCCI PTP</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:1.5rem;background:#0b1c33;color:#e8eef8}
+h1{font-size:1.25rem} .sum span{margin-right:1rem;font-weight:700}
+table{border-collapse:collapse;width:100%;margin-top:1rem}
+th,td{border-bottom:1px solid #2a4466;padding:.45rem .5rem;text-align:left;vertical-align:top}
+tr.pass td:first-child{color:#3dd68c} tr.fail td:first-child,tr.error td:first-child{color:#ff6b6b}
+tr.skip td:first-child{color:#f0a202}
+</style></head><body>
+<h1>Test results — EDI 837 NCCI PTP</h1>
+<p class="sum">
+<span>pass 15</span>
+<span>fail 0</span>
+<span>error 0</span>
+<span>skip 0</span>
+<span>total 15</span>
+</p>
+<p>Finished 2026-08-13T13:01:37.310293+00:00</p>
+<table><thead><tr><th>Status</th><th>Suite</th><th>Test</th><th>Message</th><th>Time</th></tr></thead>
+<tbody>
+<tr class='pass'><td>PASS</td><td>Health</td><td>Web UI loads</td><td>UI OK (http://127.0.0.1:8133/)</td><td>27ms</td></tr><tr class='pass'><td>PASS</td><td>Health</td><td>API health</td><td>HTTP 200</td><td>14ms</td></tr><tr class='pass'><td>PASS</td><td>Health</td><td>Routes API</td><td>HTTP 200</td><td>2ms</td></tr><tr class='pass'><td>PASS</td><td>PTP scoring</td><td>SQL is reachable</td><td>HTTP 200: {&quot;eip&quot;:true,&quot;ok&quot;:true,&quot;sql&quot;:true}
+</td><td>12ms</td></tr><tr class='pass'><td>PASS</td><td>PTP scoring</td><td>EIP is reachable</td><td>HTTP 200: {&quot;eip&quot;:true,&quot;ok&quot;:true,&quot;sql&quot;:true}
+</td><td>11ms</td></tr><tr class='pass'><td>PASS</td><td>PTP scoring</td><td>PTP catalog seeded</td><td>HTTP 200: {&quot;ok&quot;:true,&quot;rows&quot;:[{&quot;Column1&quot;:&quot;45378&quot;,&quot;Column2&quot;:&quot;45380&quot;,&quot;Description&quot;:&quot;Colonoscopy + biopsy - modifier 59 may bypass&quot;,&quot;ModifierIndicator&quot;:&quot;1&quot;},{&quot;Column1&quot;:&quot;93000&quot;,&quot;Column2&quot;:&quot;93005&quot;,</td><td>18ms</td></tr><tr class='pass'><td>PASS</td><td>PTP scoring</td><td>Reset then drop sample 837P</td><td>HTTP 200</td><td>4ms</td></tr><tr class='pass'><td>PASS</td><td>PTP scoring</td><td>Inject sample 837P</td><td>HTTP 200</td><td>3ms</td></tr><tr class='pass'><td>PASS</td><td>PTP scoring</td><td>PTPCLM001 single code pass</td><td>HTTP 200: {&quot;kickout&quot;:[],&quot;ok&quot;:true,&quot;pass&quot;:[{&quot;content&quot;:&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&lt;PtpDecision&gt;\n   &lt;ClaimControlNumber&gt;PTPCLM001&lt;/ClaimControlNumber&gt;\n   &lt;ProcedureCode1&gt;45378</td><td>12040ms</td></tr><tr class='pass'><td>PASS</td><td>PTP scoring</td><td>PTPCLM002 pair without modifier</td><td>HTTP 200: {&quot;kickout&quot;:[{&quot;content&quot;:&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&lt;PtpDecision&gt;\n   &lt;ClaimControlNumber&gt;PTPCLM002&lt;/ClaimControlNumber&gt;\n   &lt;ProcedureCode1&gt;45378&lt;/ProcedureCode1&gt;\n </td><td>6026ms</td></tr><tr class='pass'><td>PASS</td><td>PTP scoring</td><td>PTPCLM003 pair with modifier 59</td><td>HTTP 200: {&quot;kickout&quot;:[{&quot;content&quot;:&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&lt;PtpDecision&gt;\n   &lt;ClaimControlNumber&gt;PTPCLM002&lt;/ClaimControlNumber&gt;\n   &lt;ProcedureCode1&gt;45378&lt;/ProcedureCode1&gt;\n </td><td>6ms</td></tr><tr class='pass'><td>PASS</td><td>PTP scoring</td><td>PTPCLM004 indicator 0 even with 59</td><td>HTTP 200: {&quot;kickout&quot;:[{&quot;content&quot;:&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&lt;PtpDecision&gt;\n   &lt;ClaimControlNumber&gt;PTPCLM004&lt;/ClaimControlNumber&gt;\n   &lt;ProcedureCode1&gt;93000&lt;/ProcedureCode1&gt;\n </td><td>3019ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Route PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-ptp/documents/EDI837_NCCI_PTP_V2_Route_Diagrams.pdf</td><td>0ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Capability Brief PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-ptp/documents/EDI837_NCCI_PTP_Capability_Brief.pdf</td><td>0ms</td></tr><tr class='pass'><td>PASS</td><td>Documents</td><td>Test Plan PDF on disk</td><td>/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-837-ncci-ptp/documents/EDI837_NCCI_PTP_Test_Plan.pdf</td><td>0ms</td></tr>
+</tbody></table>
+</body></html>

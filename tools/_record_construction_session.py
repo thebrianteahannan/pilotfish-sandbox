@@ -88,7 +88,7 @@ THEATER_CSS = """
 }
 .pf-ognl-legend { margin: 12px 0 0; color: #64748b; font-size: 13px; }
 .pf-xslt-card {
-  width: min(1120px, 96vw); height: min(780px, 88vh); max-height: 88vh;
+  width: min(1180px, 96vw); height: min(820px, 90vh); max-height: 90vh;
   display: flex; flex-direction: column;
   background: #0b1220; color: #e8eef8; border: 1px solid #334155; border-radius: 14px;
   box-shadow: 0 28px 80px rgba(0,0,0,0.5); overflow: hidden;
@@ -101,22 +101,35 @@ THEATER_CSS = """
 .pf-xslt-head span { color: #94a3b8; font-size: 13px; }
 .pf-xslt-scroll {
   overflow: auto; padding: 0; flex: 1 1 auto; min-height: 0; background: #282c34;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+}
+.pf-xslt-card .viewer,
+.pf-xslt-card pre.xslt-source,
+.pf-xslt-card pre#pf-xslt-view {
+  max-height: none !important; min-height: 0 !important; height: auto !important;
+  overflow: visible !important; border: 0 !important; border-radius: 0 !important;
+  background: transparent !important;
 }
 .pf-xslt-scroll pre.xslt-source,
 .pf-xslt-scroll pre#pf-xslt-view {
-  margin: 0; padding: 0; background: transparent;
+  margin: 0; padding: 0; background: transparent; width: 100%;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 13.5px; line-height: 1.55; color: #abb2bf;
-  white-space: pre !important; word-break: normal !important; overflow-wrap: normal !important;
-  min-width: max-content;
+  white-space: pre-wrap !important; word-break: break-word !important;
+  overflow-wrap: anywhere !important; min-width: 0 !important;
 }
 .pf-xslt-scroll pre.xslt-source > code,
 .pf-xslt-scroll pre#pf-xslt-view > code {
-  display: block; padding: 18px 22px 56px; background: transparent !important;
-  white-space: pre !important; word-break: normal !important; overflow-wrap: normal !important;
-  min-width: max-content;
+  display: block; padding: 18px 22px 72px; background: transparent !important;
+  white-space: pre-wrap !important; word-break: break-word !important;
+  overflow-wrap: anywhere !important; min-width: 0 !important; width: 100%;
 }
+.pf-xslt-caption {
+  flex: 0 0 auto; padding: 12px 18px; min-height: 3.1em;
+  background: #0f172a; border-top: 1px solid #1e293b;
+  color: #e2e8f0; font-size: 15px; line-height: 1.4;
+}
+.pf-xslt-caption em { color: #5eead4; font-style: normal; font-weight: 600; }
 .pf-welcome-card {
   width: min(720px, 92vw); text-align: center; background: #0f172a; color: #e8eef8;
   border: 1px solid #334155; border-radius: 18px; padding: 48px 44px 44px;
@@ -518,14 +531,30 @@ def ensure_xslt_highlight_assets(page) -> None:
     )
 
 
-def show_xslt_overlay(page, step: dict) -> None:
+def show_xslt_overlay(page, step: dict, duration_ms: int = 12000) -> None:
     name = str(step.get("xslt_name") or "stylesheet.xslt")
     text = str(step.get("xslt_text") or "")
     if not text:
         return
+    subtitle = str(step.get("xslt_subtitle") or "Stock XSLT · mapping")
+    beats = step.get("xslt_beats") if isinstance(step.get("xslt_beats"), list) else []
+    clean_beats = []
+    for beat in beats:
+        if not isinstance(beat, dict):
+            continue
+        caption = str(beat.get("caption") or "").strip()
+        if not caption:
+            continue
+        try:
+            line = max(1, int(beat.get("line") or 1))
+        except (TypeError, ValueError):
+            line = 1
+        clean_beats.append({"line": line, "caption": caption})
+    if not clean_beats:
+        clean_beats = [{"line": 1, "caption": "Walking through the mapping"}]
     ensure_xslt_highlight_assets(page)
     page.evaluate(
-        """({ name, text }) => {
+        """({ name, text, subtitle, beats, durationMs }) => {
           const root = document.getElementById('pf-theater-root');
           if (!root) return;
           const esc = (s) => String(s)
@@ -536,11 +565,12 @@ def show_xslt_overlay(page, step: dict) -> None:
               <div class="pf-xslt-card">
                 <div class="pf-xslt-head">
                   <strong>${esc(name)}</strong>
-                  <span>Custom mapping · Dialect A columns → SQL insert fields</span>
+                  <span>${esc(subtitle)}</span>
                 </div>
                 <div class="pf-xslt-scroll" id="pf-xslt-scroll">
-                  <pre class="xslt-source viewer" id="pf-xslt-view"><code class="language-xml"></code></pre>
+                  <pre class="xslt-source" id="pf-xslt-view"><code class="language-xml"></code></pre>
                 </div>
+                <div class="pf-xslt-caption" id="pf-xslt-caption"><em></em></div>
               </div>
             </div>`;
           const pre = document.getElementById('pf-xslt-view');
@@ -552,36 +582,34 @@ def show_xslt_overlay(page, step: dict) -> None:
             window.hljs.highlightElement(code);
           }
           const sc = document.getElementById('pf-xslt-scroll');
-          if (!sc) return;
-          // Tour the stylesheet: down through mappings, then sideways for long lines.
-          let phase = 0;
-          let ticks = 0;
-          const timer = setInterval(() => {
-            ticks += 1;
+          const cap = document.getElementById('pf-xslt-caption');
+          if (!sc || !cap) return;
+          const nLines = Math.max(1, String(text).split('\\n').length);
+          const setCap = (msg) => { cap.innerHTML = '<em>' + esc(msg || '') + '</em>'; };
+          setCap(beats[0] && beats[0].caption);
+          const dur = Math.max(3500, Number(durationMs) || 12000);
+          const t0 = performance.now();
+          const tick = (now) => {
+            const t = Math.min(1, (now - t0) / dur);
             const maxY = Math.max(0, sc.scrollHeight - sc.clientHeight);
-            const maxX = Math.max(0, sc.scrollWidth - sc.clientWidth);
-            if (phase === 0) {
-              sc.scrollTop = Math.min(maxY, sc.scrollTop + 22);
-              if (sc.scrollTop >= maxY - 2 || ticks > 28) {
-                phase = 1;
-                ticks = 0;
-              }
-            } else if (phase === 1) {
-              sc.scrollLeft = Math.min(maxX, sc.scrollLeft + 28);
-              if (sc.scrollLeft >= maxX - 2 || ticks > 22 || maxX < 8) {
-                phase = 2;
-                ticks = 0;
-              }
-            } else if (phase === 2) {
-              sc.scrollLeft = Math.max(0, sc.scrollLeft - 36);
-              sc.scrollTop = Math.max(0, sc.scrollTop - 26);
-              if ((sc.scrollLeft <= 1 && sc.scrollTop <= 1) || ticks > 24) {
-                clearInterval(timer);
-              }
+            if (maxY > 0) sc.scrollTop = maxY * t;
+            let msg = beats[0] && beats[0].caption;
+            for (const b of beats) {
+              const at = (Number(b.line) - 1) / nLines;
+              if (at <= t + 0.04) msg = b.caption;
             }
-          }, 180);
+            setCap(msg);
+            if (t < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(() => requestAnimationFrame(tick));
         }""",
-        {"name": name, "text": text},
+        {
+            "name": name,
+            "text": text,
+            "subtitle": subtitle,
+            "beats": clean_beats,
+            "durationMs": int(duration_ms or 12000),
+        },
     )
 
 
@@ -1013,9 +1041,9 @@ def hold_construction_step(page, step: dict, index: int, total: int) -> None:
     )
     t0 = time.time()
     if step.get("show_xslt") and step.get("xslt_text"):
-        # Brief glance at the focused module, then open the stylesheet
-        page.wait_for_timeout(900)
-        show_xslt_overlay(page, step)
+        page.wait_for_timeout(700)
+        remaining = int(max(4000, dwell - (time.time() - t0) * 1000))
+        show_xslt_overlay(page, step, duration_ms=remaining)
     remaining = int(max(0, dwell - (time.time() - t0) * 1000))
     if remaining:
         page.wait_for_timeout(remaining)

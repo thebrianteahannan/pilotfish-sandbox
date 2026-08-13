@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="936869f7-1036-4d7c-95dd-a15409738a06" name="Debug Write PTP Decision XML" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$DEBUG_OUTPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:(getAttribute('ClaimControlNumber') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimControlNumber')).trim().isEmpty() ? getAttribute('ClaimControlNumber') : 'unknown') + '_decision.xml'}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

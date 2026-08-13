@@ -1,0 +1,31 @@
+/* Tweaks for highlight.js inside Sandbox demo viewers */
+.viewer.hljs-host,
+pre.viewer.hljs-host,
+pre.log.hljs-host,
+#xslt-view.hljs-host,
+#snip-view.hljs-host,
+#kickout-view.hljs-host {
+  padding: 0.75rem;
+}
+.viewer.hljs-host > code.hljs,
+pre.viewer.hljs-host > code.hljs,
+pre.log.hljs-host > code.hljs,
+#xslt-view.hljs-host > code.hljs,
+.xslt-source > code.hljs {
+  display: block;
+  padding: 0;
+  background: transparent;
+  font: inherit;
+  white-space: inherit;
+  overflow: visible;
+  color: inherit;
+}
+.xslt-source > code.hljs {
+  padding: 0.85rem 1rem 1.25rem;
+}
+/* Keep dark panels readable if a light theme leaks in */
+.viewer .hljs,
+.xslt-source .hljs,
+pre.log .hljs {
+  background: transparent;
+}

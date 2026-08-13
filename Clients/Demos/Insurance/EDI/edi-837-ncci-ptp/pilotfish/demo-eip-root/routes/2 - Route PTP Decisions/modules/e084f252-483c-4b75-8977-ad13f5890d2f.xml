@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="e084f252-483c-4b75-8977-ad13f5890d2f" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="ff62abbe-aebd-4086-9a6f-5f3ec007a499" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="81becc6f-98be-4a57-a069-5ba0cef456b7" name="Rule 1 - Write Pass" type="XPATH">
+               <condition>//MatchBucket = 'pass'</condition>
+            </output>
+            <output id="0ad5a925-13c8-4a96-a783-ba4b749c7a06" name="Rule 2 - Write Kickout" type="XPATH">
+               <condition>//MatchBucket = 'kickout'</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

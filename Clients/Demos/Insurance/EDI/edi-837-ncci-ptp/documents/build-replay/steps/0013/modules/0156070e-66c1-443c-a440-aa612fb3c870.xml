@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="0156070e-66c1-443c-a440-aa612fb3c870" name="Stage PTP Decision" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory>$$STAGED_DECISION_DIRECTORY</TargetDirectory>
+      
+        
+      <FileName>{ognl:(getAttribute('ClaimControlNumber') != null &amp;&amp; !@java.lang.String@valueOf(getAttribute('ClaimControlNumber')).trim().isEmpty() ? getAttribute('ClaimControlNumber') : 'unknown') + '_' + (getAttribute('StControlNumber') != null ? getAttribute('StControlNumber') : 'st') + '_decision'}</FileName>
+      
+        
+      <FileExtension>xml</FileExtension>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <AppendToFile>Overwrite</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

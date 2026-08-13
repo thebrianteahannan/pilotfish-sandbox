@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="0e4c6d82-e855-4f8f-9c29-50664c3407de" name="2 - Route PTP Decisions">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   
+   
+   <Nodes>
+      <Node id="1dec2bb5-9f71-4d59-bb17-bde986b123c9" moduleId="420e3a51-bebb-49d2-8743-920cde5681de" label="Poll Staged PTP Decisions" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="67175c48-d3d4-4fec-a129-f98a8098fb92" moduleId="caa0064b-cee9-4ec5-9725-32e20bb5582c" label="Extract Decision Attributes" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+      <Node id="bb832953-9dac-4676-af40-a666a81d22c6" moduleId="e084f252-483c-4b75-8977-ad13f5890d2f" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="72.0"/>
+      
+      
+      <Node id="f026ff44-8d14-4d8c-aaaf-351aa46fca03" moduleId="8aaff4ec-a63b-4a36-9f8b-8e5a140f40cf" label="Pretty-Print Pass XML" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      
+      
+   </Nodes>
+   <Connections>
+      <Connection id="a1bdd3a6-893a-4a2f-8342-7ca0efe79bba" sourceNodeId="1dec2bb5-9f71-4d59-bb17-bde986b123c9" targetNodeId="67175c48-d3d4-4fec-a129-f98a8098fb92" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      
+      
+      <Connection id="3c8f0f98-6b4f-424a-8f47-4a4d168c5106" sourceNodeId="67175c48-d3d4-4fec-a129-f98a8098fb92" targetNodeId="bb832953-9dac-4676-af40-a666a81d22c6" sourceConnector="right-output" targetConnector="router-input:ff62abbe-aebd-4086-9a6f-5f3ec007a499" condition="true"/>
+      
+      
+      <Connection id="a82a7d12-f10e-4896-a7e8-b11a124418e9" sourceNodeId="bb832953-9dac-4676-af40-a666a81d22c6" targetNodeId="f026ff44-8d14-4d8c-aaaf-351aa46fca03" sourceConnector="router-output:81becc6f-98be-4a57-a069-5ba0cef456b7" targetConnector="left-input" condition="true"/>
+      
+      
+   </Connections>
+</Route>

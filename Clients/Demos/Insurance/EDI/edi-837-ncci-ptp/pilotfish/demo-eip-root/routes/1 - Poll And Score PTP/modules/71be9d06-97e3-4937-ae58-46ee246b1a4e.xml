@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="71be9d06-97e3-4937-ae58-46ee246b1a4e" name="Build PTP Decision XML" type="XSLT Transformation" tag="Processor" class="com.pilotfish.eip.modules.transform.XSLTProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <XSLTPath>build-ptp-decision.xslt</XSLTPath>
+      
+          
+      <CacheXSLTToXML>false</CacheXSLTToXML>
+      
+          
+      <XSLTEngine>Saxon</XSLTEngine>
+      
+          
+      <XSLTParameters>[eip_pair:ClaimControlNumber:eip_name:{ognl:getAttribute('ClaimControlNumber')}:eip_value][eip_pair:ProcedureCode1:eip_name:{ognl:getAttribute('ProcedureCode1')}:eip_value][eip_pair:ProcedureCode2:eip_name:{ognl:getAttribute('ProcedureCode2')}:eip_value][eip_pair:Modifier2:eip_name:{ognl:getAttribute('Modifier2')}:eip_value][eip_pair:ModifierIndicator:eip_name:{ognl:getAttribute('ModifierIndicator')}:eip_value][eip_pair:CatalogDescription:eip_name:{ognl:getAttribute('CatalogDescription')}:eip_value][eip_pair:SourceFile:eip_name:{ognl:getAttribute('com.pilotfish.FileName')}:eip_value]</XSLTParameters>
+      
+          
+      <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+      
+          
+      <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+      
+        
+   </ModuleConfig>
+</Module>
