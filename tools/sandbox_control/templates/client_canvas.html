@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title }} — Route canvas</title>
+  <link rel="stylesheet" href="/static/app.css?v=49" />
+  <style>
+    html, body { height: 100%; }
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+    .canvas-bar {
+      display: flex; flex-wrap: wrap; gap: 0.65rem 1rem; align-items: center;
+      padding: 0.7rem 1.2rem; background: #fff; border-bottom: 1px solid var(--line);
+    }
+    .canvas-bar strong { color: var(--pf-blue-deep); }
+    .canvas-bar select {
+      min-width: min(28rem, 100%); padding: 0.35rem 0.5rem;
+      border: 1px solid var(--line); border-radius: 8px; font: inherit;
+    }
+    .canvas-blurb {
+      margin: 0; padding: 0.7rem 1.2rem 0.85rem;
+      background: #eef7fd; border-bottom: 1px solid #b7d4e8;
+      color: var(--ink); max-width: 72rem; line-height: 1.45;
+    }
+    #route-viewer-frame { flex: 1; width: 100%; border: 0; min-height: 0; background: #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <strong>{{ title }}</strong>
+      <span>Route canvas — same viewer as demo Routes</span>
+    </div>
+    <p class="meta"><a href="/">← Hub</a>
+      · Local <a href="http://127.0.0.1:{{ port }}/clients/{{ slug }}/canvas">127.0.0.1:{{ port }}</a>
+      · LAN <a href="http://{{ lan }}:{{ port }}/clients/{{ slug }}/canvas">{{ lan }}:{{ port }}</a></p>
+  </header>
+  <div class="canvas-bar">
+    <label>Route
+      <select id="route-select">
+        {% set ns = namespace(iface="") %}
+        {% for r in routes %}
+          {% if r.interface != ns.iface %}
+            {% if ns.iface %}</optgroup>{% endif %}
+            <optgroup label="{{ r.interface }}">
+            {% set ns.iface = r.interface %}
+          {% endif %}
+          <option value="{{ r.id }}" data-blurb="{{ r.blurb }}">{{ r.name }}</option>
+        {% endfor %}
+        {% if routes %}</optgroup>{% endif %}
+      </select>
+    </label>
+    <span class="muted" id="routes-status">{% if routes %}{{ routes|length }} routes{% else %}No V2 routes yet — generate the implementation guide first.{% endif %}</span>
+  </div>
+  <p class="canvas-blurb" id="route-blurb">{% if routes %}{{ routes[0].blurb }}{% endif %}</p>
+  <iframe id="route-viewer-frame" class="route-viewer-frame" title="Route viewer" src="about:blank"></iframe>
+  <script>
+    (function () {
+      const slug = {{ slug|tojson }};
+      const sel = document.getElementById("route-select");
+      const frame = document.getElementById("route-viewer-frame");
+      const blurb = document.getElementById("route-blurb");
+      const api = "/api/clients/" + encodeURIComponent(slug) + "/v2";
+      function show(id) {
+        const opt = sel.selectedOptions[0];
+        if (blurb) blurb.textContent = (opt && opt.dataset.blurb) || "";
+        if (!id) return;
+        frame.src = "/route-viewer/index.html?route=" + encodeURIComponent(id) +
+          "&api=" + encodeURIComponent(api) + "&layout=pipeline&config=compact";
+      }
+      sel.addEventListener("change", () => show(sel.value));
+      if (sel.value) show(sel.value);
+    })();
+  </script>
+</body>
+</html>

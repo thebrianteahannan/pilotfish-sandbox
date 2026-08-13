@@ -206,11 +206,21 @@ button.btn-link:hover { text-decoration: underline; }
 .req-pick { display: flex; align-items: center; justify-content: center; }
 .req-pick input { margin: 0; }
 .req-item {
-  display: grid; grid-template-columns: 1fr auto; gap: 0.15rem 0.75rem; text-align: left;
+  display: grid; grid-template-columns: auto 1fr auto; gap: 0.15rem 0.75rem; text-align: left;
   border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 0.55rem 0.7rem; font: inherit; cursor: pointer;
 }
 .req-item.is-on { border-color: var(--pf-blue); background: #eef7fd; }
-.req-item .muted { grid-column: 1; font-size: 0.82rem; }
+.req-item .hours-tag { grid-row: 1 / span 2; align-self: center; }
+.req-item strong { grid-column: 2; }
+.req-item .muted { grid-column: 2; font-size: 0.82rem; }
+.req-item .badge { grid-column: 3; grid-row: 1 / span 2; align-self: center; }
+.hours-tag {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 2.35rem; padding: 0.16rem 0.45rem; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em;
+  background: #fff6d8; color: #8a5a00; border: 1px solid #e6d089; flex-shrink: 0;
+}
+.req-head .hours-tag { margin-right: 0.45rem; }
 .email-view, .plan-view, .diff-view {
   white-space: pre-wrap; word-break: break-word; background: #f7fafc; border: 1px solid var(--line);
   border-radius: 8px; padding: 0.65rem 0.75rem; font-family: var(--mono); font-size: 0.78rem; max-height: 280px; overflow: auto;

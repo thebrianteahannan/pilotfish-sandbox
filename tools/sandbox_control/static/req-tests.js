@@ -9,6 +9,14 @@
     return `<div><p class="tmeta"><strong>${esc(title)}</strong>${label ? ` <code>${esc(label)}</code>` : ""}</p>${text ? `<pre class="tev">${esc(text)}</pre>` : ""}</div>`;
   }
 
+  function isCode(label) {
+    return /\.(xslt|xsl)(\.bak-req)?$/i.test(String(label || ""));
+  }
+
+  function looksFinal(text) {
+    return /^(MSH|BHS|ISA|ST\*|UNH)[|^]/m.test(String(text || ""));
+  }
+
   function html(tests, esc) {
     const head = `<p class="${tests.ok ? "ok" : "bad"}"><strong>${tests.ok ? "All tests passed" : "Tests failed"}</strong></p>` +
       (tests.note ? `<p class="muted">${esc(tests.note)}</p>` : "");
@@ -17,7 +25,8 @@
       const out = side(i.output);
       const inText = inn.text || i.input_text || i.before || "";
       const outText = out.text || i.output_text || i.after || "";
-      const pair = (inn.label || out.label || inText || outText)
+      const hide = isCode(inn.label) && isCode(out.label) && !looksFinal(outText);
+      const pair = !hide && (inn.label || out.label || inText || outText)
         ? `<div class="tpair">${pane("Input", inn.label, inText, esc)}${pane("Output", out.label, outText, esc)}</div>`
         : "";
       const ev = (i.evidence || []).filter((row) => row && !String(row).startsWith("IN1."));

@@ -1,0 +1,20 @@
+---
+description: Test proofs and Test results UI must show the file the interface writes, never XSLT
+alwaysApply: true
+---
+
+# Test proofs = the interface's final output
+
+When writing or showing tests (demo `tests/plan.json`, hub `tests.json`, Test results UI, request demo video):
+
+- **Output pane** = the file that interface writes (HL7 ADT/DFT, X12, kickout Excel, JSON drop, SQL export).
+- **Input pane** = that interface's real inbound file (or a slim slice). Not a synthetic `<acct>` / `<proof>` wrapper unless that is the wire format.
+- Never use `.xslt` / `.xslt.bak-req` as the Test results Input or Output pane. Stylesheet diffs belong on the Changes tab.
+- Intermediary XML (`xsltproc` `<proof>…`, canonical Charge XML) only when the change cannot be seen in the final file, or the user asks to debug a mid-route step. Say so in the test name.
+- One test per outcome. Do not list EIP-is-up / `eip.log` as numbered interface tests.
+
+Examples:
+
+- Med Rec strip → outgoing ADT/DFT + kickout Excel, not a map-line edit
+- Ariana IN1.16 → outgoing ADT (`IN1|…|P|LAST^FIRST`), not a sliced IN1 stylesheet dump
+- EDI demo → the 271/835/837/999 on disk, not transform-source XML
