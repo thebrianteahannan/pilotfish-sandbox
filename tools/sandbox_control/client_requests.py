@@ -106,7 +106,10 @@ def append_log(folder: Path, text: str) -> None:
         save_meta(folder, meta)
 
 
-def _summary(meta: dict) -> dict:
+def _summary(meta: dict, folder: Path | None = None) -> dict:
+    import client_hours
+
+    hours = client_hours.for_request(meta, folder)
     return {
         "id": meta.get("id"),
         "from": meta.get("from") or "",
@@ -121,6 +124,8 @@ def _summary(meta: dict) -> dict:
         "change_count": len(meta.get("changes") or []),
         "git_merged": bool(meta.get("git_merged")),
         "git_branch": meta.get("git_branch") or "",
+        "billable_hours": hours["hours"],
+        "billable_label": hours["label"],
     }
 
 
@@ -136,7 +141,7 @@ def list_requests(slug: str) -> list[dict]:
     for child in folder.iterdir():
         if not child.is_dir() or child.name.startswith("_") or not meta_path(child).is_file():
             continue
-        rows.append(_summary(load_meta(child)))
+        rows.append(_summary(load_meta(child), child))
     rows.sort(key=lambda r: r.get("id") or "", reverse=True)
     return rows
 
@@ -299,6 +304,11 @@ def get_request(slug: str, req_id: str) -> dict:
         except (OSError, json.JSONDecodeError):
             dive = {}
     meta["dive"] = dive
+    import client_hours
+
+    hours = client_hours.for_request(meta, folder, dive)
+    meta["billable_hours"] = hours["hours"]
+    meta["billable_label"] = hours["label"]
     shots = []
     base = f"/api/clients/{meta.get('slug')}/requests/{folder.name}/screenshot/"
     for name in meta.get("screenshots") or []:

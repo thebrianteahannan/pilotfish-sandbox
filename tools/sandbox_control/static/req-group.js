@@ -23,11 +23,19 @@
     return { btn, strip };
   }
 
+  function hours(open) {
+    const label = (open && (open.billable_label || (open.billable_hours != null ? `${open.billable_hours}h` : ""))) || "";
+    return label
+      ? `<span class="hours-tag" title="Best guess if you did this by hand in eiConsole">${esc(label)}</span>`
+      : "";
+  }
+
   function hist(reqs, open) {
     const items = reqs
       .map((r) => {
         const on = open && open.id === r.id;
         return `<button type="button" class="req-item ${on ? "is-on" : ""}" data-rid="${esc(r.id)}">
+          ${hours(r)}
           <strong>${esc(r.subject || r.id)}</strong>
           <span class="muted">${esc(r.from)} · ${esc(r.received_at || "")}${r.git_merged ? " · on main" : r.git_branch ? " · feature " + esc(r.git_branch) : ""}</span>
           <span class="badge ${r.status === "ready" || r.status === "planned" || r.status === "tested" ? "on" : r.status === "error" ? "err" : "off"}">${esc(statusLabel(r.status))}</span>
@@ -48,5 +56,5 @@
     return true;
   }
 
-  window.pfGroup = { hist, handle, top, where };
+  window.pfGroup = { hist, handle, top, where, hours };
 })();

@@ -8,7 +8,7 @@
   if (!listEl) return;
 
   let rows = [], pipeline = {}, job = {}, selected = "", selectedReq = "", detail = null;
-  let timer = null, q = "", draft = emptyDraft(), ocrBusy = false, viewSig = "", planOpen = null, commentsOpen = false;
+  let timer = null, q = "", draft = emptyDraft(), ocrBusy = false, viewSig = "", planOpen = null, commentsOpen = false, newOpen = null;
 
   function emptyDraft() { return { from: "", subject: "", received_at: "", email: "", comments: "", screenshots: [], previews: [], status: "" }; }
 
@@ -77,6 +77,8 @@
   }
 
   function renderDetail() {
+    const live = $("req-new");
+    if (live) newOpen = live.open;
     const c = rows.find((x) => x.slug === selected);
     if (!c) {
       detailEl.innerHTML = '<p class="empty">Client not found.</p>';
@@ -87,7 +89,7 @@
     const open = detail && detail.request;
     const pipe = (detail && detail.pipeline) || pipeline;
     const processing = !!(pipe && pipe.busy && pipe.slug === selected);
-    const formOpen = !reqs.length || ocrBusy || !!(draft.email || draft.from || draft.subject || (draft.screenshots || []).length);
+    const formOpen = newOpen || !reqs.length || ocrBusy || !!(draft.email || draft.from || draft.subject || (draft.screenshots || []).length);
     const form = `<details class="panel" id="req-new"${formOpen ? " open" : ""}>
       <summary>New email request</summary>
       <form id="req-form" class="req-form">
@@ -131,7 +133,7 @@
         ? `<div class="diff-side">${open.diff_html}</div>`
         : (hasDiff ? `<pre class="diff-view">${esc(open.diff)}</pre>` : "");
       reqPanel = `<article class="panel">
-        <h2 class="req-head">${esc(open.subject || open.id)}<span class="file-icons">${pdfIcon}${window.pfVideo ? window.pfVideo.icon(open, selected) : ""}</span></h2>
+        <h2 class="req-head">${window.pfGroup ? window.pfGroup.hours(open) : ""}${esc(open.subject || open.id)}<span class="file-icons">${pdfIcon}${window.pfVideo ? window.pfVideo.icon(open, selected) : ""}</span></h2>
         <p class="muted">${esc(open.from)} · ${esc(open.received_at)} · ${esc(statusLabel(open.status))}${open.phase ? " · " + esc(open.phase) : ""}</p>
         ${window.pfGroup ? window.pfGroup.where(open, canMerge) : ""}
         <p>${esc(open.message || "")}</p>
@@ -265,7 +267,7 @@
     selected = "";
     selectedReq = "";
     viewSig = "";
-    planOpen = null; commentsOpen = false;
+    planOpen = null; commentsOpen = false; newOpen = null;
     draft = emptyDraft();
     remember({ client: "", request: "" });
     await loadList();
@@ -276,7 +278,7 @@
     selected = slug;
     selectedReq = reqId || "";
     viewSig = "";
-    planOpen = null; commentsOpen = false;
+    planOpen = null; commentsOpen = false; newOpen = null;
     draft = emptyDraft();
     listView.hidden = true;
     detailView.hidden = false;

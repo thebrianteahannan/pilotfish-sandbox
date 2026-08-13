@@ -1,0 +1,19 @@
+{
+  "title": "Med Rec interface implementation",
+  "pdf": "documents/MedRec_Interface_Implementation.pdf",
+  "strip_is_not_map_delete": true,
+  "partition_is_not_facility": true,
+  "strip_means": "Mark the record in the stripping route so it is left out of ADT and DFT and listed on the strip report.",
+  "location_map_means": "Assign a facility so the record splits to the right output. Not a strip.",
+  "strip_route": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/2 - Stripping and Tweaking/strip_data.xslt",
+  "strip_report": "FLG Location Charges",
+  "flg_table": "FLG_LOCATIONS",
+  "never": [
+    "Delete xsl:when location-map lines because an email said strip",
+    "Treat HAL and HAX as the same thing",
+    "Change the HAX default to accomplish a strip"
+  ],
+  "diagrams": "documents/MedRec_V2_Route_Diagrams.pdf",
+  "routes": 40,
+  "story": "documents/how-it-works.md"
+}

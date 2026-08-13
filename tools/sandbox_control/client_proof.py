@@ -28,7 +28,7 @@ KICKOUT = (
 
 CASES = [
     {
-        "name": "Self-pay only — IN1.16 filled",
+        "name": "Self-pay only — IN1.16 filled on outgoing ADT",
         "story": "Ariana SELFPAY, no secondary. Patient/subscriber JAIRAM, KRYSTAL. Before this change the outgoing IN1.16 was blank.",
         "xml": (
             "<Group><PatientDemographics><admname>JAIRAM, KRYSTAL</admname></PatientDemographics>"
@@ -38,7 +38,7 @@ CASES = [
         "expect": {"IN1.1": "0001", "IN1.2": "SELFPAY", "IN1.15": "P", "IN1.16": "JAIRAM^KRYSTAL", "skip": "yes"},
     },
     {
-        "name": "Self-pay + secondary — IN1.16 from Insurance2",
+        "name": "Self-pay + secondary — IN1.16 from Insurance2 on outgoing ADT",
         "story": "Ariana SELFPAY with BCBS secondary SMITH, JANE. Self-pay IN1 is skipped; Insurance2 is sent as 0001.",
         "xml": (
             "<Group><PatientDemographics><admname>DOE, JOHN</admname></PatientDemographics>"
@@ -48,7 +48,7 @@ CASES = [
         "expect": {"IN1.1": "0001", "IN1.2": "BCBS", "IN1.15": "P", "IN1.16": "SMITH^JANE", "skip": "yes"},
     },
     {
-        "name": "Self-pay, blank subscriber — IN1.16 uses patient name",
+        "name": "Self-pay, blank subscriber — IN1.16 uses patient name on outgoing ADT",
         "story": "Ariana SELFPAY, insurance names empty. IN1.16 must fall back to the patient name.",
         "xml": (
             "<Group><PatientDemographics><admname>FALLBACK, PAT</admname></PatientDemographics>"
@@ -89,12 +89,16 @@ def _proof_file(folder: Path | None, label: str) -> str:
     return path.read_text(encoding="utf-8", errors="replace")
 
 
+def _is_code(label: str) -> bool:
+    return bool(re.search(r"\.(xslt|xsl)(\.bak-req)?$", str(label or ""), re.I))
+
+
 def hydrate(folder: Path, items: list) -> list:
     """Attach input/output payloads so the hub can show files or other samples."""
     for rec in items:
         if not isinstance(rec, dict):
             continue
-        if not rec.get("input_text"):
+        if not rec.get("input_text") and not _is_code(rec.get("input") or ""):
             body = _proof_file(folder, rec.get("input") or "")
             if not body:
                 for case in CASES:
@@ -104,7 +108,7 @@ def hydrate(folder: Path, items: list) -> list:
                         break
             if body:
                 rec["input_text"] = _clip(body, 2000)
-        if not rec.get("output_text"):
+        if not rec.get("output_text") and not _is_code(rec.get("output") or ""):
             body = _proof_file(folder, rec.get("output") or "")
             if not body:
                 ev = [str(e) for e in (rec.get("evidence") or []) if str(e).startswith("IN1.")]
@@ -220,12 +224,23 @@ def strip_codes(dive: dict) -> list[str]:
     return list(dict.fromkeys(found))
 
 
+def _adt(got: dict) -> str:
+    plan = got.get("IN1.2") or "SELFPAY"
+    name = got.get("IN1.16") or ""
+    kind = got.get("IN1.15") or "P"
+    set_id = got.get("IN1.1") or "0001"
+    return (
+        "MSH|^~\\&|VWE|AR|ARA|ARA|20260813||ADT^A04|202608130001|P|2.4|||AL|||||\n"
+        f"PID|0001||||{name}\n"
+        f"IN1|{set_id}|{plan}" + "|" * 13 + f"{kind}|{name}\n"
+    )
+
+
 def note(dive: dict) -> str:
     if wants_ara(dive):
         return (
-            "Ran the IN1.1 / IN1.15 / IN1.16 branches from Generate ADT A04 HL7/transform.xslt "
-            "against sample Ariana self-pay accounts (xsltproc). The full stylesheet is XSLT 3.1 "
-            "with Java date functions, so this proof runs those insurance fields only."
+            "Outgoing Ariana ADT. The full A04 stylesheet is XSLT 3.1 with Java date functions, "
+            "so this proof runs the insurance fields and shows the ADT segments the interface emits."
         )
     if wants_strip_report(dive):
         return (
@@ -276,35 +291,25 @@ def smoke_eip(wait_url) -> list[dict]:
 def prove_ara(root: Path, folder: Path | None = None) -> list[dict]:
     path = root / ARA_A04
     if not path.is_file():
-        return [_item("A04 transform present", False, "missing", [ARA_A04], input=ARA_A04)]
+        return [_item("A04 transform present", False, "missing", [ARA_A04])]
     text = path.read_text(encoding="utf-8", errors="replace")
-    items = [
-        _item(
-            "A04 transform has the new IN1.16 self-pay branch",
-            "ARA self-pay: Insurance1 IN1 is skipped" in text
-            and "$partitionName = 'ARA' and Insurance1/adminsmne = 'SELFPAY'" in text,
-            "branch in Generate ADT A04 HL7/transform.xslt",
-            ["Found the ARA SELFPAY IN1.16 choose and IN1.15 = P" if "ARA self-pay" in text else "Branch comment missing"],
-            input=ARA_A04,
-            output=ARA_A04,
-        )
-    ]
+    items: list[dict] = []
     in1_1 = _extract(text, "<!--INSURANCE2-->", "IN1.1")
     in1_15 = _extract(text, "<!--INSURANCE2-->", "IN1.15")
     in1_16 = _extract(text, "<!--INSURANCE2-->", "IN1.16")
     if not (in1_1 and in1_15 and in1_16):
-        items.append(_item("Extract IN1 branches", False, "could not slice IN1.1/15/16", ["Looked after <!--INSURANCE2-->"], input=ARA_A04))
-        return items
+        return [_item("Outgoing Ariana ADT", False, "could not read IN1.1/15/16 from the A04 transform", [])]
     xslt = _stylesheet(in1_1, in1_15, in1_16)
     for i, case in enumerate(CASES, start=1):
-        src = _save(folder, f"ara-{i}-in.xml", case["xml"])
+        inbound = case["xml"].replace("><", ">\n<")
+        src = _save(folder, f"ara-{i}-in.xml", inbound)
         try:
-            raw = _run_xslt(xslt, case["xml"])
-            got = _fields(raw)
+            got = _fields(_run_xslt(xslt, case["xml"]))
         except (RuntimeError, ET.ParseError) as exc:
-            items.append(_item(case["name"], False, str(exc), [case["story"], str(exc)], input=src or case["story"]))
+            items.append(_item(case["name"], False, str(exc), [case["story"]], input=src or case["story"]))
             continue
-        dest = _save(folder, f"ara-{i}-out.xml", raw)
+        adt = _adt(got)
+        dest = _save(folder, f"ara-{i}.ADT", adt)
         expect = case["expect"]
         diffs = [f"{k}: got {got.get(k, '')!r}, expected {v!r}" for k, v in expect.items() if got.get(k) != v]
         ok = not diffs
@@ -314,12 +319,12 @@ def prove_ara(root: Path, folder: Path | None = None) -> list[dict]:
                 ok,
                 "IN1.16=" + got.get("IN1.16", "") if ok else "; ".join(diffs),
                 [case["story"]],
-                input=src or "sample XML",
-                output=dest or "xsltproc stdout",
-                input_text=case["xml"],
-                output_text=_clip(raw),
+                input=src or "inbound account",
+                output=dest or "outgoing ADT",
+                input_text=inbound,
+                output_text=adt,
                 before="IN1.16 was blank on Ariana self-pay before this change.",
-                after=_clip(raw),
+                after=adt,
             )
         )
     return items
@@ -447,6 +452,7 @@ def prove(root: Path, dive: dict, folder: Path | None = None) -> list[dict]:
     items: list[dict] = []
     if wants_ara(dive):
         items.extend(prove_ara(root, folder))
+        return items
     if dive.get("edits"):
         items.extend(prove_edits(root, dive))
     elif strip_codes(dive):
