@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="023ed3a5-6de9-44ee-8830-79c3f21fac04" name="Save Backup of Route XML File" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>{ognl:#properties.get('LISTENER_ROUTE_XML_DIR') + @java.io.File@separatorChar + 'backups'}</TargetDirectory>
+      
+          
+      <TargetFileName>{ognl:getAttribute('Client') + "_" + new java.text.SimpleDateFormat('yyyyMMddHHmmss').format(new java.util.Date()) + "_" + #properties.get('LISTENER_ROUTE_XML_FILENAME')}</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="6b315727-0343-48c4-9e9e-f7dfc9ea5941" name="Swap Query Info Results Into Data - SPG ONLY" type="Data Attribute Swapper" tag="Processor" class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('Client') == 'SPG'}</ExecuteProcessor>
+      
+          
+      <AttributeName>split_info_query_results</AttributeName>
+      
+          
+      <SAVEOUTTAG>true</SAVEOUTTAG>
+      
+          
+      <SAVEINTAG>false</SAVEINTAG>
+      
+          
+      <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+      
+          
+      <StoreAsStream>false</StoreAsStream>
+      
+          
+      <IsGlobalAttribute>false</IsGlobalAttribute>
+      
+          
+      <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+      
+        
+   </ModuleConfig>
+</Module>

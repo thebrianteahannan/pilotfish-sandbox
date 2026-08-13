@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="269b57c9-0b6a-45bb-a847-c3c0e474c005" name="Set Facility Name - FPS - AP Logs" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:PartitionName:eip_name:FPS:eip_value][eip_pair:FacilityCode:eip_name:{ognl:getAttribute('com.pilotfish.FileName').substring(8,getAttribute('com.pilotfish.FileName').indexOf('_T'))}:eip_value][eip_pair:FacilityName:eip_name:HCA AP Logs:eip_value][eip_pair:FacilityNameShouldBe:eip_name:HCA AP Logs:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="55aa8c84-aeaa-4942-b89d-f07ecc47c4db" name="Get SplitCode, Facility Code, AccountNumAlpha Into Trans Attrs" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:SplitCode:eip_name://Split/@split_code:eip_value][eip_pair:FacilityCode:eip_name://Split/@facility_code:eip_value][eip_pair:AccountNumAlpha:eip_name://Split/@account_num_alpha:eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>

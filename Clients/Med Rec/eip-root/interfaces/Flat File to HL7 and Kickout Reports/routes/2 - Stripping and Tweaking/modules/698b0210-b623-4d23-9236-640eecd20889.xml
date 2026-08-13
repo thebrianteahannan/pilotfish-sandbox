@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="698b0210-b623-4d23-9236-640eecd20889" name="Put Import XML back into TransData - PPS ONLY" type="Data Attribute Swapper" tag="Processor" class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('Partition') == 'PPS'}</ExecuteProcessor>
+      
+          
+      <AttributeName>xml</AttributeName>
+      
+          
+      <SAVEOUTTAG>true</SAVEOUTTAG>
+      
+          
+      <SAVEINTAG>false</SAVEINTAG>
+      
+          
+      <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+      
+          
+      <StoreAsStream>true</StoreAsStream>
+      
+          
+      <IsGlobalAttribute>false</IsGlobalAttribute>
+      
+          
+      <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+      
+        
+   </ModuleConfig>
+</Module>

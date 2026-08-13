@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="a724ba86-2d75-4e08-bc07-b5fe714a0c49" name="Remove the temp attrs to store ap and cp files into memory - NGP" type="AttributeRemovalProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.AttributeRemovalProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetAttributes>[eip_pair:demographics_xml:eip_name:don't need anymore:eip_value][eip_pair:charges_xml:eip_name:don't need anymore:eip_value]</TargetAttributes>
+      
+          
+      <GlobalAttributes/>
+      
+        
+   </ModuleConfig>
+</Module>

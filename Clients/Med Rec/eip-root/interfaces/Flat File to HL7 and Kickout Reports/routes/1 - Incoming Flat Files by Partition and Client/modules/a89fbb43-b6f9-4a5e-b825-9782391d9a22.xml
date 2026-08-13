@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="a89fbb43-b6f9-4a5e-b825-9782391d9a22" name="Set Facility Name - REU" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:FacilityNameShouldBe:eip_name:Retreat Doctors' Hospital:eip_value][eip_pair:PartitionName:eip_name:FPS:eip_value][eip_pair:ClientName:eip_name:REU:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="acda2c8d-6935-492c-98a8-3f6eca504d3f" name="5 - Generate DFT">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="44af251f-870c-4299-9479-1319d4d482c6" moduleId="95eede6d-cc48-410d-8afb-0d094cab4514" label="88363 Log to HL7 DFT.3 - Generate DFT.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="722fffe7-5b10-4996-9984-a427543b37a5" moduleId="82c671b1-e7d8-472c-af37-1b5484970cc3" label="88363 Log to HL7 DFT.5 - Generate DFT.Processor" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="b5f0814f-8a12-4e4d-a3cf-152389876077" moduleId="673f42b2-0a89-4bc1-a05a-6a237d3fa37c" label="Cleanup Empty Lines 1" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="61819b98-f967-4aca-ad49-f6822901c70b" moduleId="164b64b1-3157-42d6-b496-bb4bb541cdda" label="Cleanup Empty Lines 2" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="c95f6c0b-301b-4954-9599-110cbf9e9e31" moduleId="754a249a-4d1d-43e7-9ea5-d0101d969a1c" label="88363 Log to HL7 DFT.3 - Generate DFT.Directory / File Transport" x="1820.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="89113dfa-2b65-4448-97be-46d6cedcbfe4" sourceNodeId="44af251f-870c-4299-9479-1319d4d482c6" targetNodeId="722fffe7-5b10-4996-9984-a427543b37a5" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="b5b04934-e7c5-4140-b833-16950c41d79c" sourceNodeId="b5f0814f-8a12-4e4d-a3cf-152389876077" targetNodeId="61819b98-f967-4aca-ad49-f6822901c70b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="2f4522d1-098a-46aa-8c8a-37bf888b2340" sourceNodeId="61819b98-f967-4aca-ad49-f6822901c70b" targetNodeId="c95f6c0b-301b-4954-9599-110cbf9e9e31" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="9d6e5fdc-0d0a-4eee-85fa-b354d9062d67" sourceNodeId="722fffe7-5b10-4996-9984-a427543b37a5" targetNodeId="b5f0814f-8a12-4e4d-a3cf-152389876077" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

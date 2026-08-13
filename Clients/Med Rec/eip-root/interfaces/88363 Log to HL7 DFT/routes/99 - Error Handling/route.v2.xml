@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="26965912-fac8-4648-9382-3d4b62aa89a7" name="99 - Error Handling">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="e69d37e0-9435-46e3-872f-cb9a8089bd31" moduleId="05c6b4de-51c8-45a5-815f-c57ad74d6443" label="88363 Log to HL7 DFT.99 - Error Handling.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="97c0518e-9315-4c67-86ad-5cbc1acc9956" moduleId="17969b31-bdf2-428a-927e-970861984392" label="88363 Log to HL7 DFT.99 - Error Handling.Directory / File Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="fe54d7da-ff5c-4ecd-8ef2-10a9e29bd496" sourceNodeId="e69d37e0-9435-46e3-872f-cb9a8089bd31" targetNodeId="97c0518e-9315-4c67-86ad-5cbc1acc9956" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

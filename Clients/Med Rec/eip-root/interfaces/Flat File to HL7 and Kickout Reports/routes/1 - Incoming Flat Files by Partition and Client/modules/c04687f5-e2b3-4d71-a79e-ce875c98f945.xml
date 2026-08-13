@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c04687f5-e2b3-4d71-a79e-ce875c98f945" name="Translate facility code ap to client name" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:ClientName:eip_name:{ognl:getAttribute('FacilityCode') == 'COCYS' ? 'REA' : getAttribute('FacilityCode') == 'COCSS' ? 'STB' : getAttribute('FacilityCode') == 'COCCC' ? 'CHJ' : getAttribute('FacilityCode') == 'COCTC' ? 'JRN' : getAttribute('FacilityCode') == 'COCJW' ? 'JWI' : getAttribute('FacilityCode') == 'COCHR' ? 'HEO' : getAttribute('FacilityCode') == 'COCPD' ? 'PAS' : getAttribute('FacilityCode') == 'COCRD' ? 'REU' : getAttribute('FacilityCode') == 'COCSAA' ? 'SPP' : 'NONE'}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

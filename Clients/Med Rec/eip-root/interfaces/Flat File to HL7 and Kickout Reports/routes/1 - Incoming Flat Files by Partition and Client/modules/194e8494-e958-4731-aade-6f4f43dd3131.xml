@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="194e8494-e958-4731-aade-6f4f43dd3131" name="Flat File to HL7 and Kickout Reports.1 - Incoming Flat Files by Partition and Client.Processor6" type="ExceptionThrowerProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.ExceptionThrowerProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('NotAllFilesSame') &gt; 0 ? true : false}</ExecuteProcessor>
+      
+          
+      <ExceptionMessage>{ognl:'You are attempting to process the different facilities at the same time. Please check the file contents and file name, then reupload.'}</ExceptionMessage>
+      
+        
+   </ModuleConfig>
+</Module>

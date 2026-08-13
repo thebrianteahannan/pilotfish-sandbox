@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="35321e64-7be3-4218-8d53-56a8606ec2e2" name="Blank Admit Date and Discharge Date - First Available - GLF Expanse ONLY" type="XSLT Transformation" tag="Processor" class="com.pilotfish.eip.modules.transform.XSLTProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('PartitionName') == 'GLF' &amp;&amp; (getAttribute('ClientName') == 'CMX' || getAttribute('ClientName') == 'KIX' || getAttribute('ClientName') == 'CYX' || getAttribute('ClientName') == 'HWX' || getAttribute('ClientName') == 'TWX')}</ExecuteProcessor>
+      
+          
+      <XSLTPath>transform-glf-expanse-admit-discharge-dates.xslt</XSLTPath>
+      
+          
+      <CacheXSLTToXML>false</CacheXSLTToXML>
+      
+          
+      <XSLTEngine>Saxon</XSLTEngine>
+      
+          
+      <XSLTParameters>null</XSLTParameters>
+      
+          
+      <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+      
+          
+      <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+      
+        
+   </ModuleConfig>
+</Module>

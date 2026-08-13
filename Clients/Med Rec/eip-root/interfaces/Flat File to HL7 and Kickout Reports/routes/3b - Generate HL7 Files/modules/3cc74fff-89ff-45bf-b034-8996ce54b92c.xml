@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="3cc74fff-89ff-45bf-b034-8996ce54b92c" name="Flat File to HL7 and Kickout Reports.3b - Generate HL7 Files.Post-Processor-Copy-1" type="CallRouteProcessor" tag="Processor" class="com.pilotfish.eip.modules.internal.CallRouteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:#properties.get('is_debug')}</ExecuteProcessor>
+      
+          
+      <Listener>Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Programmable (Trigger) Listener</Listener>
+      
+          
+      <Synchronous>false</Synchronous>
+      
+          
+      <Timeout>60</Timeout>
+      
+        
+   </ModuleConfig>
+</Module>

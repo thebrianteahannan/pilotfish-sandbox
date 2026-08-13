@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="6977f23e-d3fa-4e51-8bea-e39d26d7b20c" name="2 - Flat File to XML">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="8be8400b-2ed1-450a-a843-7be9200063f4" moduleId="b0fbbb9e-ae79-49c9-a365-f1550896111c" label="88363 Log to HL7 DFT.2 - Flat File to XML.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="4cd725ad-cfe7-4c39-ac65-7a9f92cda882" moduleId="ca82fbf0-b8fc-4223-888c-2d9943630024" label="88363 Log to HL7 DFT.2 - Flat File to XML.Processor" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="66af6c5a-6b0e-4aeb-af05-7076f598e8a9" moduleId="87a0b9b9-748d-47ba-82a8-e094ad5651be" label="Performing Doctors Logic" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="727a4f59-5b64-4611-ae3d-b0c654f8ffa6" moduleId="0f68ba8a-0f73-4a4a-8dcd-7edce0cbf715" label="Default Empty Performing Doctors to SU" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="9e1ae9cd-338f-4064-92ae-44828b39c912" moduleId="fbb7ef1e-7b31-41d7-95e9-c2b797ce12a1" label="Get SU Accounts Count" x="1820.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="9d920083-49d1-44df-9ada-4c72e53d694e" moduleId="822c42b0-81fa-415b-8b6e-35ff461d5950" label="Call Route to Generate SU Kickout Report" x="2080.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="0011b665-c0a6-400f-85ef-afe8580a4056" moduleId="cad1a9b0-92a4-4034-81aa-b46c055ec227" label="Normalize Space - Performing Doctors" x="2340.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="00b3c521-1fd6-490d-8795-11a4c9acf68f" moduleId="a3231d81-e572-4cb1-a445-3eac3e3f095e" label="88363 Log to HL7 DFT.2 - Flat File to XML.Route to Route Transport" x="2600.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="07468dbc-e36f-47f0-ba53-86f3aa2e95c4" sourceNodeId="8be8400b-2ed1-450a-a843-7be9200063f4" targetNodeId="4cd725ad-cfe7-4c39-ac65-7a9f92cda882" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="be67c7af-f897-48cf-a860-8cdeaa9f225f" sourceNodeId="66af6c5a-6b0e-4aeb-af05-7076f598e8a9" targetNodeId="727a4f59-5b64-4611-ae3d-b0c654f8ffa6" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="1d489c72-5a3f-43f1-9e57-2f6ee0b489ef" sourceNodeId="727a4f59-5b64-4611-ae3d-b0c654f8ffa6" targetNodeId="9e1ae9cd-338f-4064-92ae-44828b39c912" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="a52557fc-d007-4bc1-9161-e1ef781c0646" sourceNodeId="9e1ae9cd-338f-4064-92ae-44828b39c912" targetNodeId="9d920083-49d1-44df-9ada-4c72e53d694e" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="bd4afd22-c5ba-4896-94a9-daa668728a60" sourceNodeId="9d920083-49d1-44df-9ada-4c72e53d694e" targetNodeId="0011b665-c0a6-400f-85ef-afe8580a4056" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="378a49b4-1a81-4e83-9efd-6ec656e475c9" sourceNodeId="0011b665-c0a6-400f-85ef-afe8580a4056" targetNodeId="00b3c521-1fd6-490d-8795-11a4c9acf68f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="c8d44372-3ae0-41b6-b353-28e8ffeea972" sourceNodeId="4cd725ad-cfe7-4c39-ac65-7a9f92cda882" targetNodeId="66af6c5a-6b0e-4aeb-af05-7076f598e8a9" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

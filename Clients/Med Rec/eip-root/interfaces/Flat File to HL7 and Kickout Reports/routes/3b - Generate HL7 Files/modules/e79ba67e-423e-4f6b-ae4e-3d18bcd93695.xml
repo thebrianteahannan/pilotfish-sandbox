@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="e79ba67e-423e-4f6b-ae4e-3d18bcd93695" name="If there is no FacilityCode then use the Default FacilityCode" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('FacilityCode') == null || getAttribute('FacilityCode').toString().length() == 0}</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:FacilityCode:eip_name:{ognl:getAttribute('DefaultFacilityCode')}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

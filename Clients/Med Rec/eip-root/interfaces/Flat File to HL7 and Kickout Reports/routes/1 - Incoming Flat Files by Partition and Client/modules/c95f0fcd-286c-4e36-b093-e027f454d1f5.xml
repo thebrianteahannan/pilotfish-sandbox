@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c95f0fcd-286c-4e36-b093-e027f454d1f5" name="Remove Special Chars-charges" type="RegExProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.RegExProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <UseDefaultEncoding>false</UseDefaultEncoding>
+      
+          
+      <Encoding>UTF-8</Encoding>
+      
+          
+      <REGEX_TABLE_TAG>[eip_pair:\xC9:eip_name:E:eip_value]</REGEX_TABLE_TAG>
+      
+          
+      <PostProcessOptions>Replace all \n with newlines</PostProcessOptions>
+      
+        
+   </ModuleConfig>
+</Module>

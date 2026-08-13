@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="7230dc7a-b55c-4187-a4c1-8522819feac4" name="Go pickup ap demographics csv for this charges file from input directory - NGP" type="StaticFileProcessor" tag="Processor" class="com.pilotfish.eip.modules.file.StaticFileProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <FileName>{ognl:#properties.get('FLAT_FILE_INPUT_DIRECTORY') + '/' + getAttribute('com.pilotfish.FileName').replace('OH_MEDRC_HBLabCharges','OH_MEDRC_Demo') + '.csv'}</FileName>
+      
+          
+      <PostProcessOperation>Move</PostProcessOperation>
+      
+          
+      <TargetDirectory>$$FLAT_FILE_ARCHIVE_DIRECTORY</TargetDirectory>
+      
+        
+   </ModuleConfig>
+</Module>

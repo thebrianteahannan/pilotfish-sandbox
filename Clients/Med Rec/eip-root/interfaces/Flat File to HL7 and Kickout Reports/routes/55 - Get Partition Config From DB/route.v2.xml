@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="072a4cca-7d73-47a9-a67a-38352a9572d2" name="55 - Get Partition Config From DB">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="3e337db1-d829-46fa-8bdb-174c308d474a" moduleId="d16a6cf0-2633-4313-98c2-b89f40ecefc4" label="Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Directory / File Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="8207bd7b-52a3-4b31-960b-9352d87e8a18" moduleId="764fcc18-4da1-45ce-b59e-ed78e5ee0de6" label="Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Processor" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="3a041a04-00a9-40ee-916f-f84d99e0875b" moduleId="93eddc5f-d112-497d-9c5b-2edf0c7c0597" label="Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Processor1" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="3d664b01-5efd-43a3-98e3-6a9e47b30cc7" moduleId="d12b6ea1-c5bc-43c9-8509-ddff0586ec85" label="Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Processor2" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="9da89466-53b4-4d4b-a0b0-740eacdcf0a2" moduleId="026e1f5c-24d1-4a75-ab27-63e02b059051" label="Flat File to HL7 and Kickout Reports.55 - Get Partition Config From DB.Database (SQL) Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="0304e8ba-8d3d-4e00-bb15-9a0ca898404b" sourceNodeId="3e337db1-d829-46fa-8bdb-174c308d474a" targetNodeId="8207bd7b-52a3-4b31-960b-9352d87e8a18" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="01d625b0-1fe7-4a0b-86cc-34317fbc93db" sourceNodeId="8207bd7b-52a3-4b31-960b-9352d87e8a18" targetNodeId="3a041a04-00a9-40ee-916f-f84d99e0875b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="3e0b453e-78ba-4107-ae61-820d56c1516f" sourceNodeId="3a041a04-00a9-40ee-916f-f84d99e0875b" targetNodeId="3d664b01-5efd-43a3-98e3-6a9e47b30cc7" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="6b1d4c03-a7ce-4bb0-a004-fc8f892ba9b6" sourceNodeId="3d664b01-5efd-43a3-98e3-6a9e47b30cc7" targetNodeId="9da89466-53b4-4d4b-a0b0-740eacdcf0a2" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="d1a24478-2ae8-463b-9a77-b23b75392708" name="4a2 - Kickout Reports - Cumulative">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="8f2ed0b0-7738-470a-9aaf-e4f10498c57a" moduleId="31ec546a-6ef9-4136-a643-92bbb0f6bd6f" label="Flat File to HL7 and Kickout Reports.4a2 - Kickout Reports - Cumulative.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="37e8e6a1-a798-469a-8cf7-4cb4873a6458" moduleId="8e8dc48d-8a9b-409e-a6d8-26dcc06bd35c" label="Flat File to HL7 and Kickout Reports.4a2 - Kickout Reports - Cumulative.Processor" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="1836a29f-367e-4c44-ae21-c6fdcc50cf8c" moduleId="abf60c7f-b0f1-463a-bd95-eedc235d690d" label="Write DB Lookup XML to Disk-Copy-45" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="5dcf3317-ae6d-49dd-93cd-d59bd594b100" moduleId="9d768096-0a22-45e0-987a-e3cfee0e7986" label="Flat File to HL7 and Kickout Reports.4a2 - Kickout Reports - Cumulative.Directory / File Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="c2a48928-b2b4-4956-8d9a-6f32a5b1532b" moduleId="326880cc-49da-47c9-a3cf-b0f778f12cb0" label="Flat File to HL7 and Kickout Reports.4a2 - Kickout Reports - Cumulative.Directory / File Transport2" x="1300.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="5edcbb14-50d3-4ae3-a973-40f55943e7d0" moduleId="1e429133-746e-417e-b4cd-3ec631440c44" label="Flat File to HL7 and Kickout Reports.4a2 - Kickout Reports - Cumulative.Directory / File Transport1" x="1300.0" y="280.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="fdd7f3e8-903e-42a1-86ac-faaf71dc2f3f" moduleId="9c8f0cd1-d7c4-4c41-ba29-b22b13b5b4e6" label="Flat File to HL7 and Kickout Reports.4a2 - Kickout Reports - Cumulative.Directory / File Transport3" x="1300.0" y="420.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="53884ab3-0206-4e9b-a5e9-f9a2427dbf43" sourceNodeId="8f2ed0b0-7738-470a-9aaf-e4f10498c57a" targetNodeId="37e8e6a1-a798-469a-8cf7-4cb4873a6458" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="dbc34db4-1505-4dbe-ada4-ae3c5421078d" sourceNodeId="37e8e6a1-a798-469a-8cf7-4cb4873a6458" targetNodeId="1836a29f-367e-4c44-ae21-c6fdcc50cf8c" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="b3732f4f-fb3a-4a0d-99ac-eb693e42768d" sourceNodeId="1836a29f-367e-4c44-ae21-c6fdcc50cf8c" targetNodeId="5dcf3317-ae6d-49dd-93cd-d59bd594b100" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="f021e03d-c723-4653-b4d9-0e2d8b539f0f" sourceNodeId="1836a29f-367e-4c44-ae21-c6fdcc50cf8c" targetNodeId="c2a48928-b2b4-4956-8d9a-6f32a5b1532b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="4d6c4f8f-ff9b-4444-8429-4f2199f948b8" sourceNodeId="1836a29f-367e-4c44-ae21-c6fdcc50cf8c" targetNodeId="5edcbb14-50d3-4ae3-a973-40f55943e7d0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="49d13f02-2366-443d-849d-b67cfad340cd" sourceNodeId="1836a29f-367e-4c44-ae21-c6fdcc50cf8c" targetNodeId="fdd7f3e8-903e-42a1-86ac-faaf71dc2f3f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="6c4032e9-9ccf-412f-b14c-e6d35d8ab9fd" name="Set Facility Name - SPG" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:FacilityNameShouldBe:eip_name:Stamford Facility:eip_value][eip_pair:PartitionName:eip_name:SPG:eip_value][eip_pair:ClientName:eip_name:SPG:eip_value][eip_pair:SplitCode:eip_name:SPG:eip_value][eip_pair:AccountNumAlpha:eip_name:CA:eip_value][eip_pair:FacilityCode:eip_name:CA:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

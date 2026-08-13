@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="620d40c4-a039-4059-9d6c-c07f246ad909" name="Get Split Codes List From DB" type="Database (SQL)" tag="Processor" class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor">
+   <ModuleConfig>
+      <InputFile/>
+      
+          
+      <WriteQuery>true</WriteQuery>
+      
+          
+      <Query>select * from client_codes_spec_alpha_88363</Query>
+      
+          
+      <QueryParams/>
+      
+          
+      <UserName>$$DATABASE_USERNAME</UserName>
+      
+          
+      <Password>$$DATABASE_PASSWORD</Password>
+      
+          
+      <UseDataSource>false</UseDataSource>
+      
+          
+      <DataSource/>
+      
+          
+      <JdbcDriver>$$DATABASE_DRIVER</JdbcDriver>
+      
+          
+      <JdbcURL>$$DATABASE_URL</JdbcURL>
+      
+          
+      <KeepConnection>false</KeepConnection>
+      
+          
+      <Autocommit>false</Autocommit>
+      
+          
+      <EnableTimeout>false</EnableTimeout>
+      
+          
+      <Timeout>600</Timeout>
+      
+          
+      <RestrictMetaDataToCatalog/>
+      
+          
+      <RestrictMetaDataToSchema/>
+      
+          
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+          
+      <CallbackListenerName/>
+      
+          
+      <UseSingleOutputStream>false</UseSingleOutputStream>
+      
+          
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+          
+      <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+      
+          
+      <JDBCProperties>null</JDBCProperties>
+      
+          
+      <UseConnectionPooling>false</UseConnectionPooling>
+      
+          
+      <PermittedDBConnections>5</PermittedDBConnections>
+      
+          
+      <LogMetadata>false</LogMetadata>
+      
+          
+      <LogSQL>false</LogSQL>
+      
+          
+      <UseJdbcTyping>false</UseJdbcTyping>
+      
+          
+      <TransactionIsolationLevel>Default</TransactionIsolationLevel>
+      
+          
+      <TransactionIsolationDriverSpecific>-1</TransactionIsolationDriverSpecific>
+      
+        
+   </ModuleConfig>
+</Module>

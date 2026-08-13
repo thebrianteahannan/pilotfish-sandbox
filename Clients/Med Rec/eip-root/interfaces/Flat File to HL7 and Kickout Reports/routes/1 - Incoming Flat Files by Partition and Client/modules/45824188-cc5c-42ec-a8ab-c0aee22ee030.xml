@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="45824188-cc5c-42ec-a8ab-c0aee22ee030" name="Replace special characters NGP CAQ" type="RegExProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.RegExProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <UseDefaultEncoding>false</UseDefaultEncoding>
+      
+          
+      <Encoding>ISO-8859-1</Encoding>
+      
+          
+      <REGEX_TABLE_TAG>[eip_pair:\xA0:eip_name::eip_value][eip_pair:\xE9:eip_name::eip_value][eip_pair:\xC9:eip_name::eip_value][eip_pair:\xED:eip_name::eip_value][eip_pair:\xF3:eip_name::eip_value][eip_pair:\xC3:eip_name::eip_value][eip_pair:\xC2:eip_name::eip_value][eip_pair:\x82:eip_name::eip_value][eip_pair:\x92:eip_name::eip_value][eip_pair:\xE7:eip_name::eip_value][eip_pair:\xFA:eip_name::eip_value]</REGEX_TABLE_TAG>
+      
+          
+      <PostProcessOptions>Replace all \n with newlines</PostProcessOptions>
+      
+        
+   </ModuleConfig>
+</Module>

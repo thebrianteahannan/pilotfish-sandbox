@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="cc85c140-c319-4bcf-a1d1-a1806d8664ee" name="Flat File to HL7 and Kickout Reports.88b - Add Split to Facility.Database (SQL) Transport" type="Database (SQL)" tag="Transport" class="com.pilotfish.eip.modules.db.DatabaseSqlTransport">
+   <ModuleConfig>
+      <InputFile/>
+      
+        
+      <WriteQuery>false</WriteQuery>
+      
+        
+      <Query/>
+      
+        
+      <QueryParams/>
+      
+        
+      <UserName>$$DATABASE_USERNAME</UserName>
+      
+        
+      <Password>$$DATABASE_PASSWORD</Password>
+      
+        
+      <UseDataSource>false</UseDataSource>
+      
+        
+      <DataSource/>
+      
+        
+      <JdbcDriver>$$DATABASE_DRIVER</JdbcDriver>
+      
+        
+      <JdbcURL>$$DATABASE_URL</JdbcURL>
+      
+        
+      <KeepConnection>false</KeepConnection>
+      
+        
+      <Autocommit>false</Autocommit>
+      
+        
+      <EnableTimeout>false</EnableTimeout>
+      
+        
+      <Timeout>600</Timeout>
+      
+        
+      <RestrictMetaDataToCatalog/>
+      
+        
+      <RestrictMetaDataToSchema/>
+      
+        
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+        
+      <CallbackListenerName/>
+      
+        
+      <UseSingleOutputStream>false</UseSingleOutputStream>
+      
+        
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+        
+      <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+      
+        
+      <JDBCProperties>null</JDBCProperties>
+      
+        
+      <UseConnectionPooling>false</UseConnectionPooling>
+      
+        
+      <PermittedDBConnections>5</PermittedDBConnections>
+      
+        
+      <LogMetadata>false</LogMetadata>
+      
+        
+      <LogSQL>false</LogSQL>
+      
+        
+      <UseJdbcTyping>false</UseJdbcTyping>
+      
+        
+      <TransactionIsolationLevel>Default</TransactionIsolationLevel>
+      
+        
+      <TransactionIsolationDriverSpecific>-1</TransactionIsolationDriverSpecific>
+      
+      
+   </ModuleConfig>
+</Module>

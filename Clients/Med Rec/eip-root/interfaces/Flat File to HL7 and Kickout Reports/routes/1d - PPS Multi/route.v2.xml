@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="b2a81e12-b62b-4d9e-ab88-427ab165bb72" name="1d - PPS Multi">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="3d762a7b-72fc-4755-8aa8-361c316709d1" moduleId="e96747e3-dec9-458a-bc1e-d2e0cd08d9e3" label="Flat File to HL7 and Kickout Reports.1d - PPS Multi.Directory / File Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="3ad374bc-bd6e-4ebc-8a4a-9bb9f3e64744" moduleId="d4e58296-5914-4e5a-9eb3-8659b55a1fb6" label="Flat File to HL7 and Kickout Reports.1d - PPS Multi.Directory / File Listener1" x="0.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="b0c3a077-bbc9-41b7-a395-aa74fdf0f399" moduleId="54dc1e39-b8f8-46f3-84d8-4f70249a8319" label="Flat File to HL7 and Kickout Reports.1d - PPS Multi.Directory / File Listener1-1" x="0.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="613cc417-f002-491f-9405-dea5a32e293f" moduleId="c98dddcc-a8f0-48ca-8fa3-eb946a9256da" label="Flat File to HL7 and Kickout Reports.1d - PPS Multi.Directory / File Listener1-1-1" x="0.0" y="420.0" width="180.0" height="64.0"/>
+      <Node id="5d3ab9e8-9662-4b73-a3d0-855ca3169d2b" moduleId="5bb35c38-e260-4d86-9cd3-046162702355" label="Flat File to HL7 and Kickout Reports.1d - PPS Multi.Directory / File Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="301443d1-7eda-44ab-82ab-99e428690819" sourceNodeId="3d762a7b-72fc-4755-8aa8-361c316709d1" targetNodeId="5d3ab9e8-9662-4b73-a3d0-855ca3169d2b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="1fe41f68-f964-4041-8b1d-0904d178fb13" sourceNodeId="3ad374bc-bd6e-4ebc-8a4a-9bb9f3e64744" targetNodeId="5d3ab9e8-9662-4b73-a3d0-855ca3169d2b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="5c89b9db-a0ee-4532-ab3d-f011c5926e00" sourceNodeId="b0c3a077-bbc9-41b7-a395-aa74fdf0f399" targetNodeId="5d3ab9e8-9662-4b73-a3d0-855ca3169d2b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="b9dfe39f-b237-4bd6-b075-c287174923ba" sourceNodeId="613cc417-f002-491f-9405-dea5a32e293f" targetNodeId="5d3ab9e8-9662-4b73-a3d0-855ca3169d2b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

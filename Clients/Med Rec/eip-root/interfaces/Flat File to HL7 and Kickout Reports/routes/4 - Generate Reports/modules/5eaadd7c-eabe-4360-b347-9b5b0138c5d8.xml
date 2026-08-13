@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="5eaadd7c-eabe-4360-b347-9b5b0138c5d8" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="5e36f1b5-9b68-448b-a099-4b604af24936" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="8aa801dd-83b0-4eee-a3e3-d1ce167135cc" name="Rule 1 - Flat File to HL7 and Kickout Reports.4 - Generate Reports.Route to Route Transport1" type="XPATH">
+               <condition>true()</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

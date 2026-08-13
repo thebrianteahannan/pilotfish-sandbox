@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="f1cfc056-ca8d-4b16-899e-00c60ded3a6a" name="Set Facility Name - NSP" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:FacilityCodeFromFilename:eip_name:{ognl:getAttribute('com.pilotfish.FileName').substring(0,3)}:eip_value][eip_pair:PartitionName:eip_name:NSP:eip_value][eip_pair:FacilityCode:eip_name:{ognl:getAttribute('FacilityCodeFromFilename') == 'NOS' ? 'NSR' : (getAttribute('FacilityCodeFromFilename') == 'FLO' ? 'FMF' : (getAttribute('FacilityCodeFromFilename') == 'HIA' ? 'HIC' : 'NA') )}:eip_value][eip_pair:ClientName:eip_name:NSR:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="6c75c871-6d53-4530-b607-c9393df2ed18" name="Strip Charges If radExamServeDate Before DATE_RANGE from DB" type="XSLT Transformation" tag="Processor" class="com.pilotfish.eip.modules.transform.XSLTProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:(getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'ANC') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'FTW') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'ARL') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'NOH') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'PLA') || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'SAC') || (getAttribute('Partition') == 'PPA') || (getAttribute('Partition') == 'IRL' &amp;&amp; getAttribute('Client') == 'COX') || (getAttribute('Partition') == 'IRL' &amp;&amp; getAttribute('Client') == 'JFX') || (getAttribute('Partition') == 'IRL' &amp;&amp; getAttribute('Client') == 'LWX') || (getAttribute('Partition') == 'IRL' &amp;&amp; getAttribute('Client') == 'PWX') || getAttribute('Client') == 'ARA' || (getAttribute('Partition') == 'NTX' &amp;&amp; getAttribute('Client') == 'DEC')}</ExecuteProcessor>
+      
+          
+      <XSLTPath>transform-strip-before-date-range.xslt</XSLTPath>
+      
+          
+      <CacheXSLTToXML>false</CacheXSLTToXML>
+      
+          
+      <XSLTEngine>Saxon</XSLTEngine>
+      
+          
+      <XSLTParameters>[eip_pair:DateRange:eip_name:{ognl:getAttribute('DateRange')}:eip_value]</XSLTParameters>
+      
+          
+      <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+      
+          
+      <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+      
+        
+   </ModuleConfig>
+</Module>

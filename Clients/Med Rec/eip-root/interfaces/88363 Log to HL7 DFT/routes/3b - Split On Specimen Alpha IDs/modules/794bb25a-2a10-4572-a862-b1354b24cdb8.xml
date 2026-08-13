@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="794bb25a-2a10-4572-a862-b1354b24cdb8" name="88363 Log to HL7 DFT.4 - Split On Specimen Alpha IDs.Processor" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:SplitName:eip_name://Split/@name:eip_value][eip_pair:SplitShortName:eip_name://Split/@shortname:eip_value][eip_pair:SplitPrefix:eip_name://Split/@prefix:eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>

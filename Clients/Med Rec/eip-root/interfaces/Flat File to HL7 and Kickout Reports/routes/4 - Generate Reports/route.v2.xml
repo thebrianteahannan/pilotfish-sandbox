@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="c90921f8-9939-46ca-b037-59526e89b6ef" name="4 - Generate Reports">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="da7a975b-081b-4d34-a632-b414c73099b6" moduleId="6f9749a0-c427-42c1-b187-c7834fee63a3" label="Flat File to HL7 and Kickout Reports.3-0 - Generate Reports.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="20697b9c-92e5-4a05-b63e-9532922c95e4" moduleId="e6dc5a96-2cb7-4d2d-8e68-1e3cf5008428" label="New Architecture.3 - Generate Kickout Reports.Processor-Copy-1" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="2b65c85e-04cb-4625-848e-ba6f5e225719" moduleId="5eaadd7c-eabe-4360-b347-9b5b0138c5d8" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="4fa54836-fba9-436e-a53b-8361649b221b" moduleId="6e203cb0-328a-4aea-a21f-36a810eb1604" label="Flat File to HL7 and Kickout Reports.4 - Generate Reports.Route to Route Transport1" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="700ddffd-8fe9-46f0-a3b2-f3b0c0ac254c" moduleId="42bbaf60-b5f2-4b69-863a-f99b3f19c6ca" label="Flat File to HL7 and Kickout Reports.3-0 - Generate Reports.Route to Route Transport2" x="1300.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="98dc8f66-e861-4e75-b455-718144246079" moduleId="827f5196-b41e-49c0-a0db-1a2a753cfdf6" label="Flat File to HL7 and Kickout Reports.4 - Generate Reports.Route to Route Transport" x="1300.0" y="280.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="a4da32aa-5dfd-4c62-8157-d61cde1a2bc9" sourceNodeId="da7a975b-081b-4d34-a632-b414c73099b6" targetNodeId="20697b9c-92e5-4a05-b63e-9532922c95e4" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="c4089734-be99-4c1c-ad4b-798c23202685" sourceNodeId="20697b9c-92e5-4a05-b63e-9532922c95e4" targetNodeId="2b65c85e-04cb-4625-848e-ba6f5e225719" sourceConnector="right-output" targetConnector="router-input:5e36f1b5-9b68-448b-a099-4b604af24936" condition="true"/>
+      <Connection id="00bd34a5-6460-40fc-8ef9-af088ce802ae" sourceNodeId="2b65c85e-04cb-4625-848e-ba6f5e225719" targetNodeId="4fa54836-fba9-436e-a53b-8361649b221b" sourceConnector="router-output:8aa801dd-83b0-4eee-a3e3-d1ce167135cc" targetConnector="left-input" condition="true"/>
+      <Connection id="fe1748ca-453a-4ce0-88d3-f26b168ee3d8" sourceNodeId="2b65c85e-04cb-4625-848e-ba6f5e225719" targetNodeId="700ddffd-8fe9-46f0-a3b2-f3b0c0ac254c" sourceConnector="router-output:8aa801dd-83b0-4eee-a3e3-d1ce167135cc" targetConnector="left-input" condition="true"/>
+      <Connection id="507cdfa4-4b11-4b31-a1fa-9ac41a3665f6" sourceNodeId="2b65c85e-04cb-4625-848e-ba6f5e225719" targetNodeId="98dc8f66-e861-4e75-b455-718144246079" sourceConnector="router-output:8aa801dd-83b0-4eee-a3e3-d1ce167135cc" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

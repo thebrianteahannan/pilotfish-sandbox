@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="76c010cb-c22d-4e8f-900e-0078e1fcb7e3" name="88f - Add New ER_INS_PLAN_CODES">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="7990b7ac-e6ed-4d35-ba92-2b451e484e3f" moduleId="6d264bf9-fff2-48a3-9582-8f615a1c3c08" label="Flat File to HL7 and Kickout Reports.88f - Add New ER_INS_PLAN_CODES.Directory / File Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="2a23b12d-d4a6-4f31-a099-b9240d237456" moduleId="8a956ee7-a438-45ae-836d-793b269eb944" label="Flat File to HL7 and Kickout Reports.88f - Add New ER_INS_PLAN_CODES.Database (SQL) Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="baf9d936-7eaa-470d-809c-eaf7366868be" sourceNodeId="7990b7ac-e6ed-4d35-ba92-2b451e484e3f" targetNodeId="2a23b12d-d4a6-4f31-a099-b9240d237456" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

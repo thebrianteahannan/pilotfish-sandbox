@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="1be7bdec-7cab-4dc1-9859-ac5d60908a64" name="Set Facility Name - PPS" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:FacilityCodeFromFilename:eip_name:{ognl:getAttribute('com.pilotfish.FileName').substring(0,3)}:eip_value][eip_pair:PartitionName:eip_name:PPS:eip_value][eip_pair:FacilityCode:eip_name:{ognl:getAttribute('FacilityCodeFromFilename') == 'CGM' ? 'CGJ' : (getAttribute('FacilityCodeFromFilename') == 'PGM' ? 'PGJ' : 'NA')}:eip_value][eip_pair:ClientName:eip_name:CGJ:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

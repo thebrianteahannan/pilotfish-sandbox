@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="e4da1bee-e871-40dd-bbdd-ce82efca3070" name="4d - CDM Appended A Report">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="a3d5fe0a-0e48-4af4-a9d4-fa308996d6a9" moduleId="dae081ed-675a-41c9-95d4-8c67df8db2f1" label="Flat File to HL7 and Kickout Reports.4d - CDM Appended A Report.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="5e3236dd-e8e8-440a-8e59-62b674375952" moduleId="4661ffba-61d0-4b7b-aa71-e3c696206884" label="Flat File to HL7 and Kickout Reports.4d - CDM Appended A Report.Directory / File Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="085ecc06-bce9-4af3-80ea-f52d9cf2893c" sourceNodeId="a3d5fe0a-0e48-4af4-a9d4-fa308996d6a9" targetNodeId="5e3236dd-e8e8-440a-8e59-62b674375952" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="11e76273-8307-46fc-9c79-2cb47ba47b61" name="1c - Halifax Multi">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="c718d75d-c719-4e1a-b279-50273f0d15bd" moduleId="781eab45-6873-4aa2-8a7d-e07888d63f8c" label="Flat File to HL7 and Kickout Reports.1c - Halifax Multi.Directory / File Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="a523cb28-e515-4ba2-9de9-25b2a7e4354d" moduleId="511309d5-a204-4ebd-adea-6e6847034275" label="Flat File to HL7 and Kickout Reports.1c - Halifax Multi.Directory / File Listener2" x="0.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="1a9d4753-c169-48d5-b966-f7447de8e55d" moduleId="2bd88104-8f9b-4641-8c9e-bb6fb92ccd8e" label="Flat File to HL7 and Kickout Reports.1c - Halifax Multi.Directory / File Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="2c5191cd-08f0-4ebd-b502-e5dca04d9158" sourceNodeId="c718d75d-c719-4e1a-b279-50273f0d15bd" targetNodeId="1a9d4753-c169-48d5-b966-f7447de8e55d" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="9a196861-36de-45a9-8be9-e44d4b2e4ef8" sourceNodeId="a523cb28-e515-4ba2-9de9-25b2a7e4354d" targetNodeId="1a9d4753-c169-48d5-b966-f7447de8e55d" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

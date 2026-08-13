@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="339eda4a-d029-48ee-9f4f-67f02c3c6f9e" name="Store XML to Attribute - Stream - PPS ONLY" type="Data Attribute Swapper" tag="Processor" class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('Partition') == 'PPS'}</ExecuteProcessor>
+      
+          
+      <AttributeName>xml</AttributeName>
+      
+          
+      <SAVEOUTTAG>false</SAVEOUTTAG>
+      
+          
+      <SAVEINTAG>true</SAVEINTAG>
+      
+          
+      <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+      
+          
+      <StoreAsStream>true</StoreAsStream>
+      
+          
+      <IsGlobalAttribute>false</IsGlobalAttribute>
+      
+          
+      <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+      
+        
+   </ModuleConfig>
+</Module>

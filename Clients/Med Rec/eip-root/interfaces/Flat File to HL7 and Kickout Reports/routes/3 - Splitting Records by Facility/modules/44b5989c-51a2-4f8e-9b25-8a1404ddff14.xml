@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="44b5989c-51a2-4f8e-9b25-8a1404ddff14" name="Query Database for Split Information" type="Database (SQL)" tag="Processor" class="com.pilotfish.eip.modules.db.DatabaseSqlProcessor">
+   <ModuleConfig>
+      <InputFile/>
+      
+          
+      <WriteQuery>true</WriteQuery>
+      
+          
+      <Query>select * from client_splits cs left join client_codes cc on cs.facility = cc.facility and cs.softwareid = cc.software_id
+where cs.partition = ? and cs.client like ?</Query>
+      
+          
+      <QueryParams>[eip_pair:Partition:eip_name:{ognl:getAttribute('Partition').toUpperCase()}:eip_value][eip_pair:Client:eip_name:{ognl:getAttribute('Client').toUpperCase()}:eip_value]</QueryParams>
+      
+          
+      <UserName>$$DATABASE_USERNAME</UserName>
+      
+          
+      <Password>$$DATABASE_PASSWORD</Password>
+      
+          
+      <UseDataSource>false</UseDataSource>
+      
+          
+      <DataSource/>
+      
+          
+      <JdbcDriver>$$DATABASE_DRIVER</JdbcDriver>
+      
+          
+      <JdbcURL>$$DATABASE_URL</JdbcURL>
+      
+          
+      <KeepConnection>false</KeepConnection>
+      
+          
+      <Autocommit>false</Autocommit>
+      
+          
+      <EnableTimeout>false</EnableTimeout>
+      
+          
+      <Timeout>600</Timeout>
+      
+          
+      <RestrictMetaDataToCatalog/>
+      
+          
+      <RestrictMetaDataToSchema/>
+      
+          
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+          
+      <CallbackListenerName/>
+      
+          
+      <UseSingleOutputStream>false</UseSingleOutputStream>
+      
+          
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+          
+      <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+      
+          
+      <JDBCProperties>null</JDBCProperties>
+      
+          
+      <UseConnectionPooling>false</UseConnectionPooling>
+      
+          
+      <PermittedDBConnections>5</PermittedDBConnections>
+      
+          
+      <LogMetadata>false</LogMetadata>
+      
+          
+      <LogSQL>false</LogSQL>
+      
+          
+      <UseJdbcTyping>false</UseJdbcTyping>
+      
+          
+      <TransactionIsolationLevel>Default</TransactionIsolationLevel>
+      
+          
+      <TransactionIsolationDriverSpecific>-1</TransactionIsolationDriverSpecific>
+      
+        
+   </ModuleConfig>
+</Module>

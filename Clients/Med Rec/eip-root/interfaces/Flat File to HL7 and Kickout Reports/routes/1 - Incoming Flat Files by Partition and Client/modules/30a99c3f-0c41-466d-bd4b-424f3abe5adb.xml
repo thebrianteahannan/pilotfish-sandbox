@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="30a99c3f-0c41-466d-bd4b-424f3abe5adb" name="Flat File to HL7 and Kickout Reports.1 - Incoming Flat Files by Partition and Client.Processor1-Copy-1" type="ZIPArchiveDecompressToDirProcessor" tag="Processor" class="com.pilotfish.eip.modules.archive.ZIPArchiveDecompressToDirProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('NotAllFilesSame') &gt; 0 ? false : true}</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$FLAT_FILE_INPUT_DIRECTORY</TargetDirectory>
+      
+          
+      <LoadExternalZipFile>true</LoadExternalZipFile>
+      
+          
+      <ExternalZipFileName>{ognl:#properties.get('FLAT_FILE_INPUT_DIRECTORY') + @java.io.File@separatorChar + getAttribute('com.pilotfish.FileName') + "." + getAttribute('com.pilotfish.FileExtension')}</ExternalZipFileName>
+      
+          
+      <ZipPassword/>
+      
+        
+   </ModuleConfig>
+</Module>

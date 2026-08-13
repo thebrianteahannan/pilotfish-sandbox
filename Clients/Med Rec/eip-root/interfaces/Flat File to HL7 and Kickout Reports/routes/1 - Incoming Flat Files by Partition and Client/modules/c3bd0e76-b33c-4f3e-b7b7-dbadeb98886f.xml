@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c3bd0e76-b33c-4f3e-b7b7-dbadeb98886f" name="Flat File to HL7 and Kickout Reports.1 - Incoming Flat Files by Partition and Client.Processor7" type="FileOperationProcessor" tag="Processor" class="com.pilotfish.eip.modules.file.FileOperationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>false</ExecuteProcessor>
+      
+          
+      <FileName>$$FLAT_FILE_STAGE_DIRECTORY</FileName>
+      
+          
+      <Overwrite>false</Overwrite>
+      
+          
+      <ExceptionOnFailure>true</ExceptionOnFailure>
+      
+          
+      <PostProcessOperation>Delete</PostProcessOperation>
+      
+          
+      <TargetDirectory/>
+      
+        
+   </ModuleConfig>
+</Module>

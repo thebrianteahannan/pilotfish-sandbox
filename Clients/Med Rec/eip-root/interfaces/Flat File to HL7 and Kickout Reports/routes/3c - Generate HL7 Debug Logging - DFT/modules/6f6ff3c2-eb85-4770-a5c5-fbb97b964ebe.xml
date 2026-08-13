@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="6f6ff3c2-eb85-4770-a5c5-fbb97b964ebe" name="Flat File to HL7 and Kickout Reports.3c - Generate HL7 Debug Logging - DFT.Directory / File Transport1" type="Directory / File" tag="Transport" class="com.pilotfish.eip.modules.file.DirectoryTransport">
+   <ModuleConfig>
+      <TargetDirectory>{ognl:#properties.get('HL7_TARGET_DIRECTORY') + ( #properties.get('is_debug') ?  @java.io.File@separatorChar + getAttribute('SplitCode') + new java.text.SimpleDateFormat('hhmm').format(new java.util.Date()) : '' )}</TargetDirectory>
+      
+        
+      <FileName>{ognl:getAttribute('SplitCode').toString().toUpperCase() + new java.text.SimpleDateFormat('MMdd').format(new java.util.Date()) + 'd_filtered'}</FileName>
+      
+        
+      <FileExtension>DFT</FileExtension>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <AppendToFile>Overwrite</AppendToFile>
+      
+        
+      <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+      
+        
+      <FileNameConflictPattern/>
+      
+        
+      <BatchSensitive>false</BatchSensitive>
+      
+        
+      <Command/>
+      
+        
+      <Shell>/bin/bash</Shell>
+      
+      
+   </ModuleConfig>
+</Module>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="007acfa5-c120-4bed-8543-7362ec0a3cec" name="88363 Log to HL7 DFT.3 - Determine If Splitting Or Not.Processor" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:is_splitting:eip_name:{ognl:getAttribute('facilityName') == 'SKY' || getAttribute('facilityName') == 'SKR' || getAttribute('facilityName') == 'SWO' ? true : false}:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

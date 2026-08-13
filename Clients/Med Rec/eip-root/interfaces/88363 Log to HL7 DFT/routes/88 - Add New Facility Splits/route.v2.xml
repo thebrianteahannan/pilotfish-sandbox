@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="4e5fb288-c026-4f08-882f-f998f7de4742" name="88 - Add New Facility Splits">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="d83851f9-1564-43d7-9e05-b35927ac7ee8" moduleId="e8971b2f-b2a0-4181-988e-adf80db7f0f9" label="88363 Log to HL7 DFT.88 - Add New Client Splits.Directory / File Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="0a46b542-30dc-4bf0-a24d-ffb2e3cba4fa" moduleId="0e9fcac5-e864-4bdf-9b45-d9ef6a506de0" label="88363 Log to HL7 DFT.88 - Add New Client Splits.Database (SQL) Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="c395ce91-b731-432a-95e0-d660dffffb7d" sourceNodeId="d83851f9-1564-43d7-9e05-b35927ac7ee8" targetNodeId="0a46b542-30dc-4bf0-a24d-ffb2e3cba4fa" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

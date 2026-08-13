@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c7563c5b-0000-4743-9ace-a5957c100d07" name="Remove Duplicates That Don't Have a Split Code Assigned" type="XSLT Transformation" tag="Processor" class="com.pilotfish.eip.modules.transform.XSLTProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('Client') != 'SPG'}</ExecuteProcessor>
+      
+          
+      <XSLTPath>transformRemoveDuplicates.xslt</XSLTPath>
+      
+          
+      <CacheXSLTToXML>false</CacheXSLTToXML>
+      
+          
+      <XSLTEngine>Saxon</XSLTEngine>
+      
+          
+      <XSLTParameters>[eip_pair:DefaultSplitCode:eip_name:{ognl:getAttribute('DefaultSplitCode')}:eip_value][eip_pair:DefaultFacilityCode:eip_name:{ognl:getAttribute('DefaultFacilityCode')}:eip_value][eip_pair:DefaultAccountNumAlpha:eip_name:{ognl:getAttribute('DefaultAccountNumAlpha')}:eip_value]</XSLTParameters>
+      
+          
+      <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+      
+          
+      <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+      
+        
+   </ModuleConfig>
+</Module>

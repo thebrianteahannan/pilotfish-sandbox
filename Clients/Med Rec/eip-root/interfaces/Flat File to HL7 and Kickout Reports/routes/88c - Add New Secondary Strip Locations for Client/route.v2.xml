@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="c2188ffa-923a-4f86-ad58-274280b6789f" name="88c - Add New Secondary Strip Locations for Client">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="2784afbc-1dd9-4a0c-8571-c535b2b0273b" moduleId="1d3b6a12-1215-4ecc-bc0a-19fa19114d70" label="Flat File to HL7 and Kickout Reports.88c - Add New Secondary Strip Locations for Client.Directory / File Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="2e673a1d-35ab-4fc0-89de-a194a4e8e952" moduleId="5d884d59-1e84-494f-bfa1-3284036b51a0" label="Flat File to HL7 and Kickout Reports.88c - Add New Secondary Strip Locations for Client.Database (SQL) Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="a4d6ad77-bf1a-4d89-a222-392db275f565" sourceNodeId="2784afbc-1dd9-4a0c-8571-c535b2b0273b" targetNodeId="2e673a1d-35ab-4fc0-89de-a194a4e8e952" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

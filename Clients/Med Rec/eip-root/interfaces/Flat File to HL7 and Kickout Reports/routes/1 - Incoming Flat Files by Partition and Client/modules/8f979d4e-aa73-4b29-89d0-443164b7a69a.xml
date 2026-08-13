@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="8f979d4e-aa73-4b29-89d0-443164b7a69a" name="Flat File to HL7 and Kickout Reports.1 - Incoming Flat Files by Partition and Client.Processor12" type="LogMessageProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.LogMessageProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('is_csv') == 'true'}</ExecuteProcessor>
+      
+          
+      <Message>{ognl:'!!!!!!IT IS A CSV FILE INCOMING!!!!!!'}</Message>
+      
+          
+      <Level>INFO</Level>
+      
+        
+   </ModuleConfig>
+</Module>

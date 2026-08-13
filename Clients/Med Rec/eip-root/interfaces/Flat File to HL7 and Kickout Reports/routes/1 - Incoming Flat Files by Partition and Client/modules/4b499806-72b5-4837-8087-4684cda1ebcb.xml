@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="4b499806-72b5-4837-8087-4684cda1ebcb" name="Remove the temp attrs to store ap and cp files into memory - PPS" type="AttributeRemovalProcessor" tag="Processor" class="com.pilotfish.eip.modules.other.AttributeRemovalProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetAttributes>[eip_pair:demographics_xml:eip_name:don't need anymore:eip_value][eip_pair:charges_xml:eip_name:don't need anymore:eip_value]</TargetAttributes>
+      
+          
+      <GlobalAttributes/>
+      
+        
+   </ModuleConfig>
+</Module>

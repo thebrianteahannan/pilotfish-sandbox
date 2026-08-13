@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="ff206fb3-a15f-4659-9f71-d2637baca395" name="Set Facility Name - BRB" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:FacilityNameShouldBe:eip_name:MRA_CRYSTALRIVERS:eip_value][eip_pair:is_csv:eip_name:true:eip_value][eip_pair:FacilityName:eip_name:MRA_CRYSTALRIVERS:eip_value][eip_pair:ClientName:eip_name:BRB:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

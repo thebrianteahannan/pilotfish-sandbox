@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="511309d5-a204-4ebd-adea-6e6847034275" name="Flat File to HL7 and Kickout Reports.1c - Halifax Multi.Directory / File Listener2" type="Directory / File" tag="Listener" class="com.pilotfish.eip.modules.file.DirectoryListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <CLIAllowed>false</CLIAllowed>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <StopWhenPollingFailure>true</StopWhenPollingFailure>
+      
+        
+      <FIFOQueueName/>
+      
+        
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      
+        
+      <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      
+        
+      <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+      
+        
+      <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      
+        
+      <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+      
+        
+      <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+      
+        
+      <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+      
+        
+      <CheckInactivity>false</CheckInactivity>
+      
+        
+      <InactivityTransactionCount>1</InactivityTransactionCount>
+      
+        
+      <InactivityPolling>500</InactivityPolling>
+      
+        
+      <MonitoringTime>15:09-15:09</MonitoringTime>
+      
+        
+      <InactivityExcludedDays/>
+      
+        
+      <InactivityIncludeErrors>false</InactivityIncludeErrors>
+      
+        
+      <ThrottlingMode>None</ThrottlingMode>
+      
+        
+      <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+      
+        
+      <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+      
+        
+      <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+      
+        
+      <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+      
+        
+      <PollingInterval>120</PollingInterval>
+      
+        
+      <PollingDirectory>C:\PilotFish\input\HAL-Multi\in</PollingDirectory>
+      
+        
+      <FileNameRestriction>MedReceivables_Demographic.*</FileNameRestriction>
+      
+        
+      <FileExtensionRestriction>txt</FileExtensionRestriction>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <PostProcessOperation>Move</PostProcessOperation>
+      
+        
+      <TargetDirectory>C:\PilotFish\input\HAL-Multi\archive</TargetDirectory>
+      
+        
+      <CompatModeMoved>false</CompatModeMoved>
+      
+        
+      <Tokenizers/>
+      
+        
+      <SerializedTransactionsTag>250</SerializedTransactionsTag>
+      
+        
+      <SubFolderIterationTag>false</SubFolderIterationTag>
+      
+        
+      <FullFolderPathRestrictionsTag/>
+      
+        
+      <HiddenFilesTag>false</HiddenFilesTag>
+      
+        
+      <SchedulerStartTag/>
+      
+        
+      <SchedulerEndTag/>
+      
+        
+      <ExcludeDaysTag/>
+      
+        
+      <ExcludeDatesTag/>
+      
+        
+      <TimeZone>System Default</TimeZone>
+      
+        
+      <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+      
+        
+      <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+      
+        
+      <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+      
+        
+      <CombineFiles>true</CombineFiles>
+      
+        
+      <HeaderLines>1</HeaderLines>
+      
+        
+      <SynchResponse>false</SynchResponse>
+      
+        
+      <Timeout>60</Timeout>
+      
+        
+      <FileSortingMethod>System Default</FileSortingMethod>
+      
+        
+      <FileSortingDirection>Ascending</FileSortingDirection>
+      
+      
+   </ModuleConfig>
+</Module>

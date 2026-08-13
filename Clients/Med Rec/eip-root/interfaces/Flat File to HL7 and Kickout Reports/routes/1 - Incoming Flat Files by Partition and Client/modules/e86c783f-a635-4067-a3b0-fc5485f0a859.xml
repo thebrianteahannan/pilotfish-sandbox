@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="e86c783f-a635-4067-a3b0-fc5485f0a859" name="Set Partition and Client Name-ARA-ALI" type="Attribute Population" tag="Processor" class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>{ognl:getAttribute('PartitionName') == 'ARA' &amp;&amp; getAttribute('ClientName') == 'ALI'}</ExecuteProcessor>
+      
+          
+      <AttributePairs>[eip_pair:Partition:eip_name:ARA:eip_value][eip_pair:Client:eip_name:ALI:eip_value][eip_pair:FacilityNameFromFile:eip_name:Ariana:eip_value]</AttributePairs>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <GlobalAttributes>BUCKET</GlobalAttributes>
+      
+        
+   </ModuleConfig>
+</Module>

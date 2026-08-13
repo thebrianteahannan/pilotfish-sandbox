@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="39a5db70-a33c-4f82-8455-7fa3c8812def" name="99a - Error - Charge Without Demo">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="71c6f6fb-561f-4f81-88ec-94ff8b87550c" moduleId="b2f433bc-faf2-40c6-a115-8299cf4cc5e9" label="Flat File to HL7 and Kickout Reports.99a - Error - Charge Without Demo.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="cbe077ba-68ce-43ad-883c-b581ae90d471" moduleId="d582e64a-008c-4afe-a465-fae57e99328c" label="Flat File to HL7 and Kickout Reports.99a - Error - Charge Without Demo.Processor" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="de2852f4-e5dc-49e8-a928-4825f5506891" moduleId="81e8680e-3454-4002-be7d-cc54f23b9602" label="Flat File to HL7 and Kickout Reports.99a - Error - Charge Without Demo.Directory / File Transport" x="1560.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="d417be44-7b31-4161-9804-2f895ad23553" sourceNodeId="cbe077ba-68ce-43ad-883c-b581ae90d471" targetNodeId="de2852f4-e5dc-49e8-a928-4825f5506891" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="d6f5b041-3cab-4f5f-a046-c164156a4d44" sourceNodeId="71c6f6fb-561f-4f81-88ec-94ff8b87550c" targetNodeId="cbe077ba-68ce-43ad-883c-b581ae90d471" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

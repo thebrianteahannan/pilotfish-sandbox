@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="e7e13caf-17a8-4501-b08b-b69b83bcab8a" name="Flat File to HL7 and Kickout Reports.1 - Incoming Flat Files by Partition and Client.Processor5" type="XPath Evaluation" tag="Processor" class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <AttributeScope>Transaction</AttributeScope>
+      
+          
+      <XPathExpressions>[eip_pair:NotAllFilesSame:eip_name:count(//File[
+  not(contains(@name,
+    if (matches(//File[1]/@name, '^\d{8}'))
+    then substring(//File[1]/@name, 9)
+    else substring(//File[1]/@name, 1, 6)
+  ))
+  and not(contains(@path,'__MACOSX'))
+]):eip_value]</XPathExpressions>
+      
+          
+      <GlobalAttributeExpressions/>
+      
+          
+      <Namespaces>null</Namespaces>
+      
+          
+      <Namespace/>
+      
+          
+      <XPath1Compatibility>false</XPath1Compatibility>
+      
+        
+   </ModuleConfig>
+</Module>

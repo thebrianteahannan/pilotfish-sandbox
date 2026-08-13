@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="6f9749a0-c427-42c1-b187-c7834fee63a3" name="Flat File to HL7 and Kickout Reports.3-0 - Generate Reports.Programmable (Trigger) Listener" type="Programmable (Trigger)" tag="Listener" class="com.pilotfish.eip.modules.core.TriggerableListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <CLIAllowed>false</CLIAllowed>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <FIFOQueueName/>
+      
+        
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      
+        
+      <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      
+        
+      <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+      
+        
+      <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      
+        
+      <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+      
+        
+      <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+      
+        
+      <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+      
+        
+      <CheckInactivity>false</CheckInactivity>
+      
+        
+      <InactivityTransactionCount>1</InactivityTransactionCount>
+      
+        
+      <InactivityPolling>500</InactivityPolling>
+      
+        
+      <MonitoringTime>11:40-11:40</MonitoringTime>
+      
+        
+      <InactivityExcludedDays/>
+      
+        
+      <InactivityIncludeErrors>false</InactivityIncludeErrors>
+      
+        
+      <ThrottlingMode>None</ThrottlingMode>
+      
+        
+      <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+      
+        
+      <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+      
+        
+      <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+      
+        
+      <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+      
+        
+      <CallingRoutes/>
+      
+      
+   </ModuleConfig>
+</Module>

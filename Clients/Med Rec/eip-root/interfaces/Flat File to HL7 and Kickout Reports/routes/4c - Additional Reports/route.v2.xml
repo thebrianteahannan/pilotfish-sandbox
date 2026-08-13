@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="aa9730ab-9b2c-4b23-a28d-cd63fc2339c9" name="4c - Additional Reports">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="cf828fbb-8f42-41c7-b634-5c9a13f9c9b0" moduleId="fd08a7a9-cb31-492d-af71-fb2d935426e3" label="Flat File to HL7 and Kickout Reports.3-2 - Reports - Additional.Programmable (Trigger) Listener" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="7e22e6ee-f8be-4141-b4a0-4863236d8852" moduleId="2ec2ef67-467d-499e-a2cc-9c59a28cb70e" label="Flat File to HL7 and Kickout Reports.3-3 - Reports - Additional.Directory / File Transport" x="1300.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="35ffa03d-c2ec-4877-8d8a-b88af292ae87" moduleId="9f84b891-3f88-495c-afec-45cdc66761b6" label="Flat File to HL7 and Kickout Reports.3-3 - Reports - Additional.Directory / File Transport1" x="1300.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="12f0ef94-1a04-412d-8f3a-5178c65dc4e6" moduleId="f6a732ce-20b5-4e5f-abbc-2ce2ed9fa389" label="Flat File to HL7 and Kickout Reports.3-3 - Reports - Additional.Directory / File Transport3" x="1300.0" y="280.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="02efe934-c282-4c7b-9d69-a092a855cb48" sourceNodeId="cf828fbb-8f42-41c7-b634-5c9a13f9c9b0" targetNodeId="7e22e6ee-f8be-4141-b4a0-4863236d8852" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="383574a3-f6c9-41cf-81aa-4c9c737a2e62" sourceNodeId="cf828fbb-8f42-41c7-b634-5c9a13f9c9b0" targetNodeId="35ffa03d-c2ec-4877-8d8a-b88af292ae87" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="9ed9174f-2d90-41e9-92cd-43c5da9d8a3b" sourceNodeId="cf828fbb-8f42-41c7-b634-5c9a13f9c9b0" targetNodeId="12f0ef94-1a04-412d-8f3a-5178c65dc4e6" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>
