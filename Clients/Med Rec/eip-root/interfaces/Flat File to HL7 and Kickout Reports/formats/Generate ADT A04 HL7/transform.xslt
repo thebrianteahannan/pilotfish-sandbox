@@ -1230,7 +1230,7 @@
             </xsl:if>
           </xsl:if>
           <!--INSURANCE1 - Stamford ONLY - blank insurances default to PPP-->
-          <xsl:if test="($partitionName = 'SPG' or $partitionName = 'PPA' or $partitionName = 'NGP' or $partitionName = 'HAL') and Insurance1[(string-length(adminsmne) = 0 or adminsmne = 'BLANK') and string-length(admInsName) = 0] and Insurance2[string-length(adminsmne) = 0]">
+          <xsl:if test="($partitionName = 'SPG' or $partitionName = 'PPA' or $partitionName = 'NGP' or $partitionName = 'HAL') and Insurance1[(string-length(adminsmne) = 0 or adminsmne = 'BLANK') and (string-length(admInsName) = 0 or ($partitionName = 'NGP' and (contains(upper-case(translate(normalize-space(admInsName), '-', ' ')), 'SELF PAY') or upper-case(normalize-space(admInsName)) = 'SELFPAY' or upper-case(normalize-space(admInsName)) = 'NOT APPLICABLE')))] and Insurance2[string-length(adminsmne) = 0]">
             <ADT_A01.INSURANCE>
               <!--IN1-->
               <IN1>
