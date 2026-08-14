@@ -415,14 +415,15 @@
             <adminsPaCode />
             <absPatientUnit />
             <admInsName>
-              <!-- Prefer Primary Payer; fall back to Primary Cvg Payer when blank (Karen IN1.4). -->
+              <!-- Prefer Primary Payer; fall back to Primary Cvg Payer when blank (Karen IN1.4).
+                   Leave self-pay labels empty so ADT still emits the PPP IN1. -->
               <xsl:choose>
-                <xsl:when test="string-length(normalize-space(PRIMARY_PAYER)) != 0">
+                <xsl:when test="string-length(normalize-space(PRIMARY_PAYER)) != 0 and not(contains(upper-case(translate(normalize-space(PRIMARY_PAYER), '-', ' ')), 'SELF PAY') or upper-case(normalize-space(PRIMARY_PAYER)) = 'SELFPAY' or upper-case(normalize-space(PRIMARY_PAYER)) = 'NOT APPLICABLE')">
                   <xsl:value-of select="normalize-space(PRIMARY_PAYER)" />
                 </xsl:when>
-                <xsl:otherwise>
+                <xsl:when test="string-length(normalize-space(PRIMARY_CVG_PAYER)) != 0 and not(contains(upper-case(translate(normalize-space(PRIMARY_CVG_PAYER), '-', ' ')), 'SELF PAY') or upper-case(normalize-space(PRIMARY_CVG_PAYER)) = 'SELFPAY' or upper-case(normalize-space(PRIMARY_CVG_PAYER)) = 'NOT APPLICABLE')">
                   <xsl:value-of select="normalize-space(PRIMARY_CVG_PAYER)" />
-                </xsl:otherwise>
+                </xsl:when>
               </xsl:choose>
             </admInsName>
             <admAcctNum />
