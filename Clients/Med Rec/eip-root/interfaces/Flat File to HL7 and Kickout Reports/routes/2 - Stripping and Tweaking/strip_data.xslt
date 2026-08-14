@@ -56,7 +56,7 @@
     <xsl:variable name="radAcctNum" select="radAcctNum" />
     <xsl:variable name="admLocation" select="../PatientDemographics/admLocation" />
     <xsl:variable name="flaggedCount" select="count(/XCSData/query_results/FLAGGED_ACCOUNT/FLAGGED_ACCOUNT[CODE = $admLocation and SOFTWARE_ID = $SoftwareID])" />
-    <xsl:variable name="stripLocationsCount" select="count(/XCSData/query_results/LOCATION/LOCATION[LOC_MNEMONIC = $admLocation and SOFTWARE_ID = $SoftwareID]) + (if ($Partition = 'HAL' and (admLocationAbbr, ../PatientDemographics/admLocationAbbr) = ('HMC 201','HH IPM','TL GI','TLGI','OR TL')) then 1 else 0)" />
+    <xsl:variable name="stripLocationsCount" select="count(/XCSData/query_results/LOCATION/LOCATION[LOC_MNEMONIC = $admLocation and SOFTWARE_ID = $SoftwareID]) + (if ($Partition = 'HAL' and (admLocationAbbr, ../PatientDemographics/admLocationAbbr) = ('HMC 201','HH IPM','TL GI','TLGI','OR TL')) then 1 else 0) + (if ($Partition = 'NHL' and $SoftwareID = '513' and $admLocation = ('R.EH','R.LABND')) then 1 else 0)" />
     <xsl:variable name="flabCount" select="count(/XCSData/query_results/FLAB_ACCOUNTS/FLAB_ACCOUNT[admAcctNum = $radAcctNum])" />
     <xsl:variable name="frlabCount" select="count(/XCSData/query_results/FRLAB_ACCOUNTS/FRLAB_ACCOUNT[admAcctNum = $radAcctNum])" />
     <xsl:choose>
@@ -94,7 +94,7 @@
     <xsl:variable name="admAcctNum" select="admAcctNum" />
     <xsl:variable name="admLocation" select="admLocation" />
     <xsl:variable name="flaggedCount" select="count(/XCSData/query_results/FLAGGED_ACCOUNT/FLAGGED_ACCOUNT[CODE = $admLocation and SOFTWARE_ID = $SoftwareID])" />
-    <xsl:variable name="stripLocationsCount" select="count(/XCSData/query_results/LOCATION/LOCATION[LOC_MNEMONIC = $admLocation and SOFTWARE_ID = $SoftwareID]) + (if ($Partition = 'HAL' and (admLocationAbbr, ../PatientDemographics/admLocationAbbr) = ('HMC 201','HH IPM','TL GI','TLGI','OR TL')) then 1 else 0)" />
+    <xsl:variable name="stripLocationsCount" select="count(/XCSData/query_results/LOCATION/LOCATION[LOC_MNEMONIC = $admLocation and SOFTWARE_ID = $SoftwareID]) + (if ($Partition = 'HAL' and (admLocationAbbr, ../PatientDemographics/admLocationAbbr) = ('HMC 201','HH IPM','TL GI','TLGI','OR TL')) then 1 else 0) + (if ($Partition = 'NHL' and $SoftwareID = '513' and $admLocation = ('R.EH','R.LABND')) then 1 else 0)" />
     <xsl:variable name="flabCount" select="count(/XCSData/query_results/FLAB_ACCOUNTS/FLAB_ACCOUNT[admAcctNum = $admAcctNum])" />
     <xsl:variable name="frlabCount" select="count(/XCSData/query_results/FRLAB_ACCOUNTS/FRLAB_ACCOUNT[admAcctNum = $admAcctNum])" />
     <xsl:variable name="Ins2Name" select="../Insurance2/adminsmne" />
@@ -145,7 +145,7 @@
   <xsl:template match="Group[string-length(./PatientDemographics[admLocation != 'F.RLAB']/admLocation) &gt; 0 and string-length(./PatientDemographics/Filler2) &gt; 0]/PatientDemographics">
     <xsl:variable name="location1" select="admLocation" />
     <xsl:variable name="location2" select="Filler2" />
-    <xsl:variable name="count" select="count(/XCSData/query_results/STRIP_LOCATIONS/STRIP_LOCATIONS[(string-length($location1) != 0 and string-length($location2) != 0 and LOCATION = $location1 and LOCATION2 = $location2) and SOFTWARE_ID = $SoftwareID])" />
+    <xsl:variable name="count" select="count(/XCSData/query_results/STRIP_LOCATIONS/STRIP_LOCATIONS[(string-length($location1) != 0 and string-length($location2) != 0 and LOCATION = $location1 and LOCATION2 = $location2) and SOFTWARE_ID = $SoftwareID]) + (if ($SoftwareID = '513' and (($location1 = 'R.EH' and $location2 = 'CMCEH') or ($location1 = 'R.LAB' and $location2 = 'CMCEH') or ($location1 = 'R.LABND' and $location2 = 'CMCEH') or ($location1 = 'RG.LAB' and $location2 = 'CMCEH'))) then 1 else 0)" />
     <xsl:copy>
       <xsl:choose>
         <xsl:when test="$count &gt; 0">

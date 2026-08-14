@@ -874,7 +874,7 @@
             <GT1.10 />
             <GT1.11>
               <xsl:choose>
-                <xsl:when test="($partitionName = 'NGP' or $partitionName = 'SPG' or $partitionName = 'GLF' or ($partitionName = 'IRL' and $softwareID = ('517','514','515','516','518','519','520','521','522','523')) or ($partitionName = 'FPS' and $softwareID = ('314','315','316','317','318','319','320')) or $softwareID = ('524') ) and string-length(Guarantor/admGuarRel) = 0">
+                <xsl:when test="($partitionName = 'NGP' or $partitionName = 'SPG' or $partitionName = 'GLF' or ($partitionName = 'IRL' and $softwareID = ('517','514','515','516','518','519','520','521','522','523')) or ($partitionName = 'FPS' and $softwareID = ('314','315','316','317','318','319','320')) or $softwareID = ('524')  or ($partitionName = 'NHL' and $softwareID = '513')) and string-length(Guarantor/admGuarRel) = 0">
                   <xsl:choose>
                     <xsl:when test="Guarantor/admGuarName = PatientDemographics/admname">
                       <xsl:value-of select="'SE'" />
@@ -1137,7 +1137,7 @@
                           </xsl:otherwise>
                         </xsl:choose>
                       </xsl:when>
-                      <xsl:when test="($partitionName = 'SPG' or $partitionName = 'NGP' or $partitionName = 'HAL') and string-length(Insurance1/adminsinsuredrel) = 0">
+                      <xsl:when test="($partitionName = 'SPG' or $partitionName = 'NGP' or $partitionName = 'HAL' or ($partitionName = 'NHL' and $softwareID = '513')) and string-length(Insurance1/adminsinsuredrel) = 0">
                         <xsl:choose>
                           <xsl:when test="Guarantor/admGuarName = PatientDemographics/admname">
                             <xsl:value-of select="'SE'" />
@@ -1270,7 +1270,7 @@
                 </IN1.16>
                 <IN1.17>
                   <xsl:choose>
-                    <xsl:when test="($partitionName = 'SPG' or $partitionName = 'NGP' or $partitionName = 'HAL') and string-length(Insurance1/adminsinsuredrel) = 0">
+                    <xsl:when test="($partitionName = 'SPG' or $partitionName = 'NGP' or $partitionName = 'HAL' or ($partitionName = 'NHL' and $softwareID = '513')) and string-length(Insurance1/adminsinsuredrel) = 0">
                       <xsl:choose>
                         <xsl:when test="Guarantor/admGuarName = PatientDemographics/admname">
                           <xsl:value-of select="'SE'" />
