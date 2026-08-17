@@ -215,7 +215,7 @@
             </xsl:variable>
             <xsl:choose>
               <!--NORMAL NON-MUE EDIT FT1's-->
-              <xsl:when test="$softwareID != '120' and $partitionName != 'NHL' and count(//MUE_EDITS[SOFTWARE_ID = $softwareID and CPT = $CPT]) = 0">
+              <xsl:when test="$softwareID != '120' and $partitionName != 'NHL' and $partitionName != 'HAL' and $partitionName != 'NSP' and $partitionName != 'PPS' and not($partitionName = 'NGP' and $softwareID = '652') and count(//MUE_EDITS[SOFTWARE_ID = $softwareID and CPT = $CPT]) = 0">
                 <xsl:variable name="sumNum" select="sum(current-group()/radNumOfTimes)" />
                 <xsl:if test="number($sumNum) &gt; 0">
                   <xsl:for-each select="(current-group())[1]">
@@ -234,7 +234,7 @@
                   </xsl:for-each>
                 </xsl:if>
               </xsl:when>
-              <xsl:when test="$softwareID != '120' and $partitionName = 'NHL' and count(//MUE_EDITS[SOFTWARE_ID = $softwareID and CDM = $CDM]) = 0">
+              <xsl:when test="$softwareID != '120' and ($partitionName = 'NHL' or $partitionName = 'HAL' or $partitionName = 'NSP' or $partitionName = 'PPS' or ($partitionName = 'NGP' and $softwareID = '652')) and count(//MUE_EDITS[SOFTWARE_ID = $softwareID and CDM = $CDM]) = 0">
                 <xsl:variable name="sumNum" select="sum(current-group()/radNumOfTimes)" />
                 <xsl:if test="number($sumNum) &gt; 0">
                   <xsl:for-each select="(current-group())[1]">
@@ -388,7 +388,7 @@
         <FT1.6 />
         <xsl:variable name="theCPT">
           <xsl:choose>
-            <xsl:when test="$partitionName = 'NHL' and $isMUE = 'yes'">
+            <xsl:when test="($partitionName = 'NHL' or $partitionName = 'HAL' or $partitionName = 'NSP' or $partitionName = 'PPS' or ($partitionName = 'NGP' and $softwareID = '652')) and $isMUE = 'yes'">
               <xsl:value-of select="$cpt" />
             </xsl:when>
             <xsl:when test="string-length(radExamCPT) &gt; 0">
