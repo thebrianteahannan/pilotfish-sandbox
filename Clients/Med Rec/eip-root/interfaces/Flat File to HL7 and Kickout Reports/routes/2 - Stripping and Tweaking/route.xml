@@ -306,6 +306,17 @@
           <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
         </ModuleConfig>
       </Processor>
+      <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Apply Stripping - NHL CAT - Huggins Monadnock Charges">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('Partition') == 'NHL' &amp;&amp; getAttribute('Client') == 'CAT'}</ExecuteProcessor>
+          <XSLTPath>transform-CAT-huggins-monadnock-strip.xslt</XSLTPath>
+          <CacheXSLTToXML>false</CacheXSLTToXML>
+          <XSLTEngine>Saxon</XSLTEngine>
+          <XSLTParameters>null</XSLTParameters>
+          <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+          <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+        </ModuleConfig>
+      </Processor>
       <Processor class="com.pilotfish.eip.modules.transform.XSLTProcessor" name="Strip Charges If radExamServeDate Before DATE_RANGE from DB">
         <ModuleConfig>
           <!-- NTX FRI removed from strip-before: end-date only (strip-after) as of 2026-08-07 Karen #5 -->
