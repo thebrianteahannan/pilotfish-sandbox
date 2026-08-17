@@ -1577,6 +1577,50 @@
                         </xsl:when>
                       </xsl:choose>
                     </xsl:when>
+                    <!-- ARA self-pay: Insurance1 IN1 is skipped; relationship lives on Insurance1. -->
+                    <xsl:when test="$partitionName = 'ARA' and Insurance1/adminsmne = 'SELFPAY'">
+                      <xsl:choose>
+                        <xsl:when test="string-length(normalize-space(Insurance2/adminsinsuredrel)) != 0">
+                          <xsl:value-of select="Insurance2/adminsinsuredrel" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of select="Insurance1/adminsinsuredrel" />
+                        </xsl:otherwise>
+                      </xsl:choose>
+                    </xsl:when>
+                    <!-- ARA self-pay: Insurance1 IN1 is skipped; relationship lives on Insurance1. -->
+                    <xsl:when test="$partitionName = 'ARA' and Insurance1/adminsmne = 'SELFPAY'">
+                      <xsl:choose>
+                        <xsl:when test="string-length(normalize-space(Insurance2/adminsinsuredrel)) != 0">
+                          <xsl:value-of select="Insurance2/adminsinsuredrel" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of select="Insurance1/adminsinsuredrel" />
+                        </xsl:otherwise>
+                      </xsl:choose>
+                    </xsl:when>
+                    <!-- ARA self-pay: Insurance1 IN1 is skipped; relationship lives on Insurance1. -->
+                    <xsl:when test="$partitionName = 'ARA' and Insurance1/adminsmne = 'SELFPAY'">
+                      <xsl:choose>
+                        <xsl:when test="string-length(normalize-space(Insurance2/adminsinsuredrel)) != 0">
+                          <xsl:value-of select="Insurance2/adminsinsuredrel" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of select="Insurance1/adminsinsuredrel" />
+                        </xsl:otherwise>
+                      </xsl:choose>
+                    </xsl:when>
+                    <!-- ARA self-pay: Insurance1 IN1 is skipped; relationship lives on Insurance1. -->
+                    <xsl:when test="$partitionName = 'ARA' and Insurance1/adminsmne = 'SELFPAY'">
+                      <xsl:choose>
+                        <xsl:when test="string-length(normalize-space(Insurance2/adminsinsuredrel)) != 0">
+                          <xsl:value-of select="Insurance2/adminsinsuredrel" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of select="Insurance1/adminsinsuredrel" />
+                        </xsl:otherwise>
+                      </xsl:choose>
+                    </xsl:when>
                     <xsl:otherwise>
                       <xsl:value-of select="Insurance2/adminsinsuredrel" />
                     </xsl:otherwise>
