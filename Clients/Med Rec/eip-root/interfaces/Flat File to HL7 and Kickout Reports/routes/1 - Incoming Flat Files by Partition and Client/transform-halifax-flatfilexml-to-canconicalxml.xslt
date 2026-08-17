@@ -67,7 +67,7 @@
               <!-- Karen #2 Halifax LocationAbbreviation crosswalk (HAX). Source: Halifax Location Crosswalk.xlsx -->
               <!-- Legacy EMSHM/EMSHC/HPO kept: those codes are not in the new crosswalk. Unknown → HAX. -->
               <xsl:variable name="deptAbbr" select="Demographics/XCSRecord[1]/DEPARTMENT_ABBR" />
-              <xsl:variable name="locationAbbr" select="Demographics/XCSRecord[1]/LOCATION_ABBR" />
+              <xsl:variable name="locationAbbr" select="normalize-space(Demographics/XCSRecord[1]/LOCATION_ABBR)" />
               <xsl:choose>
                 <!-- Legacy dept+location pairs (pre-crosswalk) -->
                 <xsl:when test="$locationAbbr = 'EMSHM' and $deptAbbr = 'ND FSED ED'">
@@ -306,7 +306,7 @@
               </xsl:choose>
             </admLocation>
             <admLocationAbbr>
-              <xsl:value-of select="Demographics/XCSRecord[1]/LOCATION_ABBR" />
+              <xsl:value-of select="normalize-space(Demographics/XCSRecord[1]/LOCATION_ABBR)" />
             </admLocationAbbr>
             <admpatsex>
               <xsl:value-of select="Demographics/XCSRecord[1]/PAT_SEX" />
