@@ -411,19 +411,40 @@
                   <xsl:value-of select="concat(PatientDemographics/admpatienttype,PatientDemographics/admLocation)" />
                 </xsl:when>
                 <xsl:when test="$partitionName = 'NTX' and $facilityName = 'ANC' and PatientDemographics/admLocation = 'BB.SOLIS'">
-                  <xsl:value-of select="concat(PatientDemographics/admpatienttype,PatientDemographics/admLocation)" />
+                  <xsl:value-of select="'24'" />
                 </xsl:when>
-                <xsl:when test="$partitionName = 'NTX' and $facilityName = 'FTW' and PatientDemographics/admLocation = 'M.ASC'">
-                  <xsl:value-of select="concat(PatientDemographics/admpatienttype,PatientDemographics/admLocation)" />
+                <xsl:when test="$partitionName = 'NTX' and $facilityName = 'ARL' and (PatientDemographics/admLocation = 'I.TPC' or PatientDemographics/admLocation = 'LTPC' or PatientDemographics/admLocation = 'I.SOLIS')">
+                  <xsl:value-of select="'24'" />
+                </xsl:when>
+                <xsl:when test="$partitionName = 'NTX' and $facilityName = 'DEN' and (PatientDemographics/admLocation = 'G.SOLIS' or PatientDemographics/admLocation = 'G.ASC')">
+                  <xsl:value-of select="'24'" />
+                </xsl:when>
+                <xsl:when test="$partitionName = 'NTX' and $facilityName = 'FTW' and (PatientDemographics/admLocation = 'M.ASC' or PatientDemographics/admLocation = 'M.ASC ALLI')">
+                  <xsl:value-of select="'24'" />
+                </xsl:when>
+                <xsl:when test="$partitionName = 'NTX' and $facilityName = 'LAS' and PatientDemographics/admLocation = 'AF.SOLIS'">
+                  <xsl:value-of select="'24'" />
+                </xsl:when>
+                <xsl:when test="$partitionName = 'NTX' and $facilityName = 'LEW' and PatientDemographics/admLocation = 'L.SOLIS'">
+                  <xsl:value-of select="'24'" />
+                </xsl:when>
+                <xsl:when test="$partitionName = 'NTX' and $facilityName = 'MCK' and PatientDemographics/admLocation = 'Q.SOLIS'">
+                  <xsl:value-of select="'24'" />
+                </xsl:when>
+                <xsl:when test="$partitionName = 'NTX' and $facilityName = 'MED' and (PatientDemographics/admLocation = 'H.SOLIS' or PatientDemographics/admLocation = 'H.ASC')">
+                  <xsl:value-of select="'24'" />
+                </xsl:when>
+                <xsl:when test="$partitionName = 'NTX' and $facilityName = 'PLA' and PatientDemographics/admLocation = 'E.SOLIS'">
+                  <xsl:value-of select="'24'" />
+                </xsl:when>
+                <xsl:when test="$partitionName = 'NTX' and $facilityName = 'WEA' and (PatientDemographics/admLocation = 'BE.SOLIS' or PatientDemographics/admLocation = 'BE.LABSOLI' or PatientDemographics/admLocation = 'BE.LABSOLIS')">
+                  <xsl:value-of select="'24'" />
                 </xsl:when>
                 <xsl:when test="$partitionName = 'NTX' and ($facilityName = 'PLA' or $facilityName = 'FRI' or $facilityName = 'SAC') and (PatientDemographics/admLocation = 'E.SOLIS' or PatientDemographics/admLocation = 'E.DS')">
                   <xsl:value-of select="concat(PatientDemographics/admpatienttype,PatientDemographics/admLocation)" />
                 </xsl:when>
                 <xsl:when test="$facilityName = 'CLO' and PatientDemographics/admLocation = 'G.BASC'">
                   <xsl:value-of select="concat(PatientDemographics/admpatienttype,PatientDemographics/admLocation)" />
-                </xsl:when>
-                <xsl:when test="$partitionName = 'NTX' and $facilityName = 'ARL' and PatientDemographics/admLocation = 'I.TPC'">
-                  <xsl:value-of select="'24'" />
                 </xsl:when>
                 <xsl:when test="$partitionName = 'ARA' and PatientDemographics/admLocation = 'PBPPA24'">
                   <xsl:value-of select="'24'" />
