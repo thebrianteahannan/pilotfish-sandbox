@@ -895,7 +895,20 @@
             <GT1.10 />
             <GT1.11>
               <xsl:choose>
-                <xsl:when test="($partitionName = 'NGP' or $partitionName = 'SPG' or $partitionName = 'GLF' or ($partitionName = 'IRL' and $softwareID = ('517','514','515','516','518','519','520','521','522','523')) or ($partitionName = 'FPS' and $softwareID = ('314','315','316','317','318','319','320')) or $softwareID = ('524')  or ($partitionName = 'NHL' and ($clientName = 'CAT' or $softwareID = ('513','524')))) and string-length(Guarantor/admGuarRel) = 0">
+                <xsl:when test="$partitionName = 'NHL' and ($clientName = 'CAT' or $softwareID = ('513','524')) and (normalize-space(PatientDemographics/Filler2) = ('HUGGINSHOS','MONCOMHOS') or translate(upper-case(normalize-space(PatientDemographics/admLocation)), '.', '') = 'REH') and string-length(normalize-space(Guarantor/admGuarRel)) = 0">
+                  <xsl:choose>
+                    <xsl:when test="mr:relName((Guarantor/admGuarName[normalize-space(.)], PatientDemographics/admname)[1]) = mr:relName(PatientDemographics/admname)">
+                      <xsl:value-of select="'SE'" />
+                    </xsl:when>
+                    <xsl:when test="number($PatientAge) &lt; 18">
+                      <xsl:value-of select="'CH'" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:value-of select="'UN'" />
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:when>
+                <xsl:when test="($partitionName = 'NGP' or $partitionName = 'SPG' or $partitionName = 'GLF' or ($partitionName = 'IRL' and $softwareID = ('517','514','515','516','518','519','520','521','522','523')) or ($partitionName = 'FPS' and $softwareID = ('314','315','316','317','318','319','320')) or $softwareID = ('524')) and string-length(Guarantor/admGuarRel) = 0">
                   <xsl:choose>
                     <xsl:when test="Guarantor/admGuarName = PatientDemographics/admname">
                       <xsl:value-of select="'SE'" />
@@ -1158,7 +1171,20 @@
                           </xsl:otherwise>
                         </xsl:choose>
                       </xsl:when>
-                      <xsl:when test="($partitionName = 'SPG' or $partitionName = 'NGP' or $partitionName = 'HAL' or ($partitionName = 'NHL' and ($clientName = 'CAT' or $softwareID = ('513','524')))) and string-length(Insurance1/adminsinsuredrel) = 0">
+                      <xsl:when test="$partitionName = 'NHL' and ($clientName = 'CAT' or $softwareID = ('513','524')) and (normalize-space(PatientDemographics/Filler2) = ('HUGGINSHOS','MONCOMHOS') or translate(upper-case(normalize-space(PatientDemographics/admLocation)), '.', '') = 'REH') and string-length(normalize-space(Insurance1/adminsinsuredrel)) = 0">
+                        <xsl:choose>
+                          <xsl:when test="mr:relName((Insurance1/subscribername, Insurance1/adminsinsuredname, Guarantor/admGuarName, PatientDemographics/admname)[normalize-space(.)][1]) = mr:relName(PatientDemographics/admname)">
+                            <xsl:value-of select="'SE'" />
+                          </xsl:when>
+                          <xsl:when test="number($PatientAge) &lt; 18">
+                            <xsl:value-of select="'CH'" />
+                          </xsl:when>
+                          <xsl:otherwise>
+                            <xsl:value-of select="'UN'" />
+                          </xsl:otherwise>
+                        </xsl:choose>
+                      </xsl:when>
+                      <xsl:when test="($partitionName = 'SPG' or $partitionName = 'NGP' or $partitionName = 'HAL') and string-length(Insurance1/adminsinsuredrel) = 0">
                         <xsl:choose>
                           <xsl:when test="Guarantor/admGuarName = PatientDemographics/admname">
                             <xsl:value-of select="'SE'" />
@@ -1291,7 +1317,20 @@
                 </IN1.16>
                 <IN1.17>
                   <xsl:choose>
-                    <xsl:when test="($partitionName = 'SPG' or $partitionName = 'NGP' or $partitionName = 'HAL' or ($partitionName = 'NHL' and ($clientName = 'CAT' or $softwareID = ('513','524')))) and string-length(Insurance1/adminsinsuredrel) = 0">
+                    <xsl:when test="$partitionName = 'NHL' and ($clientName = 'CAT' or $softwareID = ('513','524')) and (normalize-space(PatientDemographics/Filler2) = ('HUGGINSHOS','MONCOMHOS') or translate(upper-case(normalize-space(PatientDemographics/admLocation)), '.', '') = 'REH') and string-length(normalize-space(Insurance1/adminsinsuredrel)) = 0">
+                      <xsl:choose>
+                      <xsl:when test="mr:relName((Insurance1/subscribername, Insurance1/adminsinsuredname, Guarantor/admGuarName, PatientDemographics/admname)[normalize-space(.)][1]) = mr:relName(PatientDemographics/admname)">
+                          <xsl:value-of select="'SE'" />
+                        </xsl:when>
+                      <xsl:when test="number($PatientAge) &lt; 18">
+                          <xsl:value-of select="'CH'" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of select="'UN'" />
+                        </xsl:otherwise>
+                      </xsl:choose>
+                      </xsl:when>
+                    <xsl:when test="($partitionName = 'SPG' or $partitionName = 'NGP' or $partitionName = 'HAL') and string-length(Insurance1/adminsinsuredrel) = 0">
                       <xsl:choose>
                         <xsl:when test="Guarantor/admGuarName = PatientDemographics/admname">
                           <xsl:value-of select="'SE'" />
@@ -1777,6 +1816,10 @@
         <xsl:value-of select="''" />
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:function>
+  <xsl:function name="mr:relName" as="xs:string">
+    <xsl:param name="n" as="item()*" />
+    <xsl:sequence select="translate(upper-case(normalize-space(string(($n[normalize-space(string(.))])[1]))), ' ,.^', '')" />
   </xsl:function>
   <!-- Template to calculate age -->
   <xsl:template name="calculateAge">
