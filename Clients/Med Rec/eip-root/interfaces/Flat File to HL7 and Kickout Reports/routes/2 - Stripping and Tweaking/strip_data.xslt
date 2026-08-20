@@ -55,8 +55,9 @@
   <xsl:template match="Charge">
     <xsl:variable name="radAcctNum" select="radAcctNum" />
     <xsl:variable name="admLocation" select="../PatientDemographics/admLocation" />
-    <xsl:variable name="flaggedCount" select="count(/XCSData/query_results/FLAGGED_ACCOUNT/FLAGGED_ACCOUNT[CODE = $admLocation and SOFTWARE_ID = $SoftwareID])" />
-    <xsl:variable name="stripLocationsCount" select="count(/XCSData/query_results/LOCATION/LOCATION[LOC_MNEMONIC = $admLocation and SOFTWARE_ID = $SoftwareID]) + (if (($Partition = 'HAL' or $SoftwareID = '750') and translate(upper-case(normalize-space((admLocationAbbr, ../PatientDemographics/admLocationAbbr, $admLocation)[1])), ' ', '') = ('HMC201','HHIPM','TLGI','ORTL')) then 1 else 0) + (if ($Partition = 'NHL' and ($Client = 'CAT' or $SoftwareID = ('513','524')) and (translate(upper-case(normalize-space($admLocation)), '.', '') = ('REH','RLABND') or (normalize-space(../PatientDemographics/Filler2) = 'CMCEH' and $admLocation = ('R.EH','R.LAB','R.LABND','RG.LAB')))) then 1 else 0)" />
+    <xsl:variable name="locAbbr" select="normalize-space((../PatientDemographics/admLocationAbbr, admLocationAbbr)[normalize-space(.)][1])" />
+    <xsl:variable name="flaggedCount" select="count(/XCSData/query_results/FLAGGED_ACCOUNT/FLAGGED_ACCOUNT[SOFTWARE_ID = $SoftwareID and (CODE = $admLocation or ($locAbbr != '' and translate(upper-case(normalize-space(CODE)), ' .', '') = translate(upper-case($locAbbr), ' .', '')))])" />
+    <xsl:variable name="stripLocationsCount" select="count(/XCSData/query_results/LOCATION/LOCATION[LOC_MNEMONIC = $admLocation and SOFTWARE_ID = $SoftwareID]) + (if (($Partition = 'HAL' or $SoftwareID = '750') and translate(upper-case($locAbbr), ' ', '') = ('HMC201','HHIPM','TLGI','ORTL')) then 1 else 0) + (if ($Partition = 'NHL' and ($Client = 'CAT' or $SoftwareID = ('513','524')) and (translate(upper-case(normalize-space($admLocation)), '.', '') = ('REH','RLABND') or (normalize-space(../PatientDemographics/Filler2) = 'CMCEH' and $admLocation = ('R.EH','R.LAB','R.LABND','RG.LAB')))) then 1 else 0)" />
     <xsl:variable name="flabCount" select="count(/XCSData/query_results/FLAB_ACCOUNTS/FLAB_ACCOUNT[admAcctNum = $radAcctNum])" />
     <xsl:variable name="frlabCount" select="count(/XCSData/query_results/FRLAB_ACCOUNTS/FRLAB_ACCOUNT[admAcctNum = $radAcctNum])" />
     <xsl:choose>
@@ -93,8 +94,9 @@
   <xsl:template match="PatientDemographics">
     <xsl:variable name="admAcctNum" select="admAcctNum" />
     <xsl:variable name="admLocation" select="admLocation" />
-    <xsl:variable name="flaggedCount" select="count(/XCSData/query_results/FLAGGED_ACCOUNT/FLAGGED_ACCOUNT[CODE = $admLocation and SOFTWARE_ID = $SoftwareID])" />
-    <xsl:variable name="stripLocationsCount" select="count(/XCSData/query_results/LOCATION/LOCATION[LOC_MNEMONIC = $admLocation and SOFTWARE_ID = $SoftwareID]) + (if (($Partition = 'HAL' or $SoftwareID = '750') and translate(upper-case(normalize-space((admLocationAbbr, ../PatientDemographics/admLocationAbbr, $admLocation)[1])), ' ', '') = ('HMC201','HHIPM','TLGI','ORTL')) then 1 else 0) + (if ($Partition = 'NHL' and ($Client = 'CAT' or $SoftwareID = ('513','524')) and (translate(upper-case(normalize-space($admLocation)), '.', '') = ('REH','RLABND') or (normalize-space(Filler2) = 'CMCEH' and $admLocation = ('R.EH','R.LAB','R.LABND','RG.LAB')))) then 1 else 0)" />
+    <xsl:variable name="locAbbr" select="normalize-space((admLocationAbbr, ../PatientDemographics/admLocationAbbr)[normalize-space(.)][1])" />
+    <xsl:variable name="flaggedCount" select="count(/XCSData/query_results/FLAGGED_ACCOUNT/FLAGGED_ACCOUNT[SOFTWARE_ID = $SoftwareID and (CODE = $admLocation or ($locAbbr != '' and translate(upper-case(normalize-space(CODE)), ' .', '') = translate(upper-case($locAbbr), ' .', '')))])" />
+    <xsl:variable name="stripLocationsCount" select="count(/XCSData/query_results/LOCATION/LOCATION[LOC_MNEMONIC = $admLocation and SOFTWARE_ID = $SoftwareID]) + (if (($Partition = 'HAL' or $SoftwareID = '750') and translate(upper-case($locAbbr), ' ', '') = ('HMC201','HHIPM','TLGI','ORTL')) then 1 else 0) + (if ($Partition = 'NHL' and ($Client = 'CAT' or $SoftwareID = ('513','524')) and (translate(upper-case(normalize-space($admLocation)), '.', '') = ('REH','RLABND') or (normalize-space(Filler2) = 'CMCEH' and $admLocation = ('R.EH','R.LAB','R.LABND','RG.LAB')))) then 1 else 0)" />
     <xsl:variable name="flabCount" select="count(/XCSData/query_results/FLAB_ACCOUNTS/FLAB_ACCOUNT[admAcctNum = $admAcctNum])" />
     <xsl:variable name="frlabCount" select="count(/XCSData/query_results/FRLAB_ACCOUNTS/FRLAB_ACCOUNT[admAcctNum = $admAcctNum])" />
     <xsl:variable name="Ins2Name" select="../Insurance2/adminsmne" />
