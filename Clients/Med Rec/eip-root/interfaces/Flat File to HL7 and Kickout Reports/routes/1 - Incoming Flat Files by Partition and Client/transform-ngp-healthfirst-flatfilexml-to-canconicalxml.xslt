@@ -255,6 +255,12 @@
                 <xsl:value-of select="ORDERING_PHYSICIAN_NAME" />
               </misOrderingPhyName>
               <misOrderingPhyAddr />
+              <specimenNo>
+                <xsl:value-of select="normalize-space(ACCESSION_NUMBER)" />
+              </specimenNo>
+              <pathologist>
+                <xsl:value-of select="normalize-space(REFERRING_PROVIDER)" />
+              </pathologist>
             </Charge>
           </xsl:if>
           <!--</xsl:for-each>-->
