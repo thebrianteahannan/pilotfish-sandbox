@@ -1,0 +1,12 @@
+name: probe-back-filemgmt
+steps:
+  - id: file
+    action: click
+    target: { type: JMenu, text: File }
+    detail: "File menu."
+    dwell_ms: 500
+  - id: filemgmt
+    action: click
+    target: { type: menuitem, contains: "File Management" }
+    detail: "Back to File Management."
+    dwell_ms: 2000

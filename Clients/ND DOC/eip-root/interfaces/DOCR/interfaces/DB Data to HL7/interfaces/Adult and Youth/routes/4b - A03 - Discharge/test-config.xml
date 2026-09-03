@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TestConfigurations>
+  <TestConfig name="Test HL7 Generation">
+    <AlternateDataSource>From Text</AlternateDataSource>
+    <StartingText>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;OldestRecord&gt;
+	&lt;EVENT&gt;
+		&lt;EVENTTYPE&gt;discharge&lt;/EVENTTYPE&gt;
+		&lt;ALIASNAMETYPE&gt;G&lt;/ALIASNAMETYPE&gt;
+		&lt;ROOTOFFENDERID&gt;36593&lt;/ROOTOFFENDERID&gt;
+		&lt;LASTNAME&gt;BRANDER&lt;/LASTNAME&gt;
+		&lt;FIRSTNAME&gt;BRADLEY&lt;/FIRSTNAME&gt;
+		&lt;BIRTHDATE&gt;1990-01-05 00:00:00.0&lt;/BIRTHDATE&gt;
+		&lt;SEXCODE&gt;M&lt;/SEXCODE&gt;
+		&lt;RACECODE&gt;CAUCASIAN&lt;/RACECODE&gt;
+		&lt;OFFENDERBOOKID&gt;118530&lt;/OFFENDERBOOKID&gt;
+		&lt;MOVEMENTDATE&gt;2022-01-16 00:00:00.0&lt;/MOVEMENTDATE&gt;
+		&lt;MOVEMENTTIME&gt;2022-01-16 08:22:48.0&lt;/MOVEMENTTIME&gt;
+		&lt;MOVEMENTTYPE&gt;REL&lt;/MOVEMENTTYPE&gt;
+		&lt;MOVEMENTSEQ&gt;6&lt;/MOVEMENTSEQ&gt;
+		&lt;MOVEMENTREASONCODE&gt;XSNT&lt;/MOVEMENTREASONCODE&gt;
+		&lt;FROMAGYLOCID&gt;NDSP&lt;/FROMAGYLOCID&gt;
+		&lt;TOAGYLOCID&gt;OUT&lt;/TOAGYLOCID&gt;
+		&lt;LEVEL1CODE /&gt;
+		&lt;LEVEL2CODE /&gt;
+		&lt;LEVEL3CODE /&gt;
+		&lt;LVL3 /&gt;
+	&lt;/EVENT&gt;
+&lt;/OldestRecord&gt;
+
+</StartingText>
+    <Stage>
+      <Identifier>xslt@transport=New Architecture.4d - A03 - Discharge.Route to Route Transport</Identifier>
+      <IsStart>true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=New Architecture.4d - A03 - Discharge.Route to Route Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=New Architecture.4d - A03 - Discharge.Route to Route Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>true</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=New Architecture.4d - A03 - Discharge.Route to Route Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+</TestConfigurations>

@@ -1,0 +1,41 @@
+{
+  "rss": [
+    {"id": "fierce-healthcare", "name": "Fierce Healthcare", "url": "https://www.fiercehealthcare.com/rss/xml", "focus": "healthcare"},
+    {"id": "healthcareitnews", "name": "Healthcare IT News", "url": "https://www.healthcareitnews.com/rss.xml", "focus": "healthcare"},
+    {"id": "beckers", "name": "Becker's Hospital Review", "url": "https://www.beckershospitalreview.com/feed/", "focus": "healthcare"},
+    {"id": "beckers-payer", "name": "Becker's Payer", "url": "https://www.beckerspayer.com/feed/", "focus": "healthcare"},
+    {"id": "healthcare-dive", "name": "Healthcare Dive", "url": "https://www.healthcaredive.com/feeds/news/", "focus": "healthcare"},
+    {"id": "onc-buzz", "name": "ONC Buzz Blog", "url": "https://www.healthit.gov/buzz-blog/feed", "focus": "healthcare"},
+    {"id": "hl7-blog", "name": "HL7 Blog", "url": "https://blog.hl7.org/rss.xml", "focus": "healthcare"},
+    {"id": "wedi", "name": "WEDI", "url": "https://www.wedi.org/feed/", "focus": "healthcare"},
+    {"id": "insurance-journal", "name": "Insurance Journal", "url": "https://www.insurancejournal.com/feed/", "focus": "insurance"},
+    {"id": "insurance-business", "name": "Insurance Business", "url": "https://www.insurancebusinessmag.com/us/rss/", "focus": "insurance"}
+  ],
+  "google_news": [
+    "healthcare (\"interface engine\" OR Mirth OR Rhapsody OR Cloverleaf) (sunset OR EOL OR replace OR alternative)",
+    "(TEFCA OR QHIN OR \"information blocking\" OR \"CMS interoperability\" OR \"prior authorization\") (FHIR OR HL7 OR API)",
+    "(ACORD OR TxLife OR Guidewire OR \"Duck Creek\" OR \"life insurance\") (integration OR interface OR EDI OR STP)",
+    "(SNIP OR \"companion guide\" OR \"X12 8020\" OR \"X12 5010\" OR WEDI) (EDI OR claims)"
+  ],
+  "federal_register_terms": [
+    "FHIR OR TEFCA OR \"prior authorization\" OR interoperability OR HL7 OR \"information blocking\""
+  ],
+  "stackexchange_tags": ["hl7", "fhir", "hl7-fhir", "x12"],
+  "hackernews_queries": ["FHIR", "HL7", "Mirth", "TEFCA", "ACORD"],
+  "job_queries": [
+    "site:indeed.com \"HL7 Interface\"",
+    "site:indeed.com HL7 (analyst OR engineer OR developer)",
+    "site:indeed.com \"EDI Analyst\" (healthcare OR hospital OR HIPAA OR 837)",
+    "site:indeed.com FHIR (engineer OR developer OR analyst)",
+    "site:indeed.com \"interface analyst\" (Epic OR Cerner OR HL7 OR hospital)",
+    "site:indeed.com \"integration analyst\" (healthcare OR HL7 OR Epic)",
+    "site:indeed.com (ACORD OR TxLife OR Guidewire) (integration OR interface OR EDI)",
+    "site:jobs.lever.co (HL7 OR FHIR OR \"EDI Analyst\")",
+    "site:boards.greenhouse.io (HL7 OR \"FHIR Engineer\" OR \"Interface Analyst\" OR \"EMR Integration\")"
+  ],
+  "job_ats": [
+    {"kind": "lever", "token": "bellese", "name": "Bellese"},
+    {"kind": "greenhouse", "token": "cadwell", "name": "Cadwell"},
+    {"kind": "greenhouse", "token": "billiontoone", "name": "BillionToOne"}
+  ]
+}

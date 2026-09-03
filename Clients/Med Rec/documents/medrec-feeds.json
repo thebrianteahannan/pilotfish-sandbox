@@ -1,0 +1,3085 @@
+{
+  "updated": "2026-09-01",
+  "source": "reports/CLIENT_SPLITS_full.csv",
+  "note": "Extract of H2 CLIENT_SPLITS. Re-run catalog refresh when the DB changes.",
+  "feeds": [
+    {
+      "partition": "FPS",
+      "software_id": "308",
+      "name": "Lewis Gale Alleghany",
+      "split_codes": [
+        "ALE"
+      ],
+      "facilities": [
+        "ALE"
+      ],
+      "aliases": [
+        "Lewis Gale Alleghany",
+        "FPS",
+        "ALE"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "330",
+      "name": "Lewis Gale Alleghany",
+      "split_codes": [
+        "ALX"
+      ],
+      "facilities": [
+        "ALX"
+      ],
+      "aliases": [
+        "Lewis Gale Alleghany",
+        "FPS",
+        "ALX"
+      ]
+    },
+    {
+      "partition": "NTX",
+      "software_id": "400",
+      "name": "Alliance Medical Center",
+      "split_codes": [
+        "ANC"
+      ],
+      "facilities": [
+        "ANC"
+      ],
+      "aliases": [
+        "Alliance Medical Center",
+        "NTX",
+        "ANC"
+      ]
+    },
+    {
+      "partition": "NGP",
+      "software_id": "651",
+      "name": "NextGen Pathology",
+      "split_codes": [
+        "AP"
+      ],
+      "facilities": [
+        "SEP",
+        "STP"
+      ],
+      "aliases": [
+        "NextGen Pathology",
+        "NGP",
+        "AP",
+        "SEP",
+        "STP",
+        "NGP AP",
+        "NextGen AP",
+        "NextGen"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-ngp-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "ARA",
+      "software_id": "800",
+      "name": "Travelers",
+      "split_codes": [
+        "ARA"
+      ],
+      "facilities": [
+        "AHS",
+        "ALI"
+      ],
+      "aliases": [
+        "Travelers",
+        "ARA",
+        "AHS",
+        "ALI",
+        "Ariana",
+        "LigoLab"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-travelers.xslt"
+    },
+    {
+      "partition": "ARA",
+      "software_id": "801",
+      "name": "Ariana",
+      "split_codes": [
+        "ARA"
+      ],
+      "facilities": [
+        "ADS",
+        "ADT",
+        "AND",
+        "ANG",
+        "ARA",
+        "ARG",
+        "ARI",
+        "EAC",
+        "EAS",
+        "EAT",
+        "ECP",
+        "PAL",
+        "PBE",
+        "PLB",
+        "PPT"
+      ],
+      "aliases": [
+        "Ariana",
+        "ARA",
+        "ADS",
+        "ADT",
+        "AND",
+        "ANG",
+        "ARG",
+        "ARI",
+        "EAC",
+        "EAS",
+        "EAT",
+        "ECP",
+        "PAL",
+        "PBE",
+        "PLB",
+        "PPT",
+        "LigoLab",
+        "Travelers"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-travelers.xslt"
+    },
+    {
+      "partition": "NTX",
+      "software_id": "403",
+      "name": "Med Ctr of Arlington",
+      "split_codes": [
+        "ARL"
+      ],
+      "facilities": [
+        "ARL"
+      ],
+      "aliases": [
+        "Med Ctr of Arlington",
+        "NTX",
+        "ARL"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "250",
+      "name": "Drs of Augusta",
+      "split_codes": [
+        "AUG"
+      ],
+      "facilities": [
+        "AUG"
+      ],
+      "aliases": [
+        "Drs of Augusta",
+        "IRL",
+        "AUG"
+      ]
+    },
+    {
+      "partition": "CON",
+      "software_id": "256",
+      "name": "Aurora",
+      "split_codes": [
+        "AUR"
+      ],
+      "facilities": [
+        "AUR"
+      ],
+      "aliases": [
+        "Aurora",
+        "CON",
+        "AUR"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "120",
+      "name": "IRL Aventura Hospital",
+      "split_codes": [
+        "AVE"
+      ],
+      "facilities": [
+        "AVE",
+        "AVF"
+      ],
+      "aliases": [
+        "IRL Aventura Hospital",
+        "IRL",
+        "AVE",
+        "AVF"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "171",
+      "name": "Bayonet Point",
+      "split_codes": [
+        "BAY"
+      ],
+      "facilities": [
+        "BAY"
+      ],
+      "aliases": [
+        "Bayonet Point",
+        "IRL",
+        "BAY"
+      ]
+    },
+    {
+      "partition": "MID",
+      "software_id": "265",
+      "name": "Belton",
+      "split_codes": [
+        "BEL"
+      ],
+      "facilities": [
+        "BEL"
+      ],
+      "aliases": [
+        "Belton",
+        "MID",
+        "BEL"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "172",
+      "name": "Blake",
+      "split_codes": [
+        "BLA"
+      ],
+      "facilities": [
+        "BLA"
+      ],
+      "aliases": [
+        "Blake",
+        "IRL",
+        "BLA"
+      ]
+    },
+    {
+      "partition": "APS",
+      "software_id": "508",
+      "name": "Crystal Rivers",
+      "split_codes": [
+        "BRB"
+      ],
+      "facilities": [
+        "BRB"
+      ],
+      "aliases": [
+        "Crystal Rivers",
+        "APS",
+        "BRB"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "206",
+      "name": "Brandon",
+      "split_codes": [
+        "BRN"
+      ],
+      "facilities": [
+        "BRE",
+        "BRN",
+        "BRO",
+        "TEM"
+      ],
+      "aliases": [
+        "Brandon",
+        "IRL",
+        "BRN",
+        "BRE",
+        "BRO",
+        "TEM"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "999",
+      "name": "BrianTest",
+      "split_codes": [
+        "BTH"
+      ],
+      "facilities": [
+        "BTH"
+      ],
+      "aliases": [
+        "BrianTest",
+        "IRL",
+        "BTH"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "240",
+      "name": "Capital",
+      "split_codes": [
+        "CAP"
+      ],
+      "facilities": [
+        "CAP",
+        "CAQ",
+        "CAR",
+        "CAS"
+      ],
+      "aliases": [
+        "Capital",
+        "IRL",
+        "CAP",
+        "CAQ",
+        "CAR",
+        "CAS"
+      ]
+    },
+    {
+      "partition": "NGP",
+      "software_id": "652",
+      "name": "NextGen Pathology",
+      "split_codes": [
+        "CAQ"
+      ],
+      "facilities": [
+        "CAQ",
+        "HOM",
+        "PAM",
+        "VIF"
+      ],
+      "aliases": [
+        "NextGen Pathology",
+        "NGP",
+        "CAQ",
+        "HOM",
+        "PAM",
+        "VIF",
+        "NGP AP",
+        "NextGen AP",
+        "NextGen",
+        "NGP Healthfirst",
+        "NGP HealthFirst",
+        "Healthfirst",
+        "Health First"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-ngp-healthfirst-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "IRL",
+      "software_id": "518",
+      "name": "Capital Reg Med Ctr",
+      "split_codes": [
+        "CAX"
+      ],
+      "facilities": [
+        "CAU",
+        "CAV",
+        "CAW",
+        "CAX"
+      ],
+      "aliases": [
+        "Capital Reg Med Ctr",
+        "IRL",
+        "CAX",
+        "CAU",
+        "CAV",
+        "CAW"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "175",
+      "name": "Central Florida",
+      "split_codes": [
+        "CEN"
+      ],
+      "facilities": [
+        "CEN",
+        "CEQ"
+      ],
+      "aliases": [
+        "Central Florida",
+        "IRL",
+        "CEN",
+        "CEQ"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "175",
+      "name": "Lake Monroe",
+      "split_codes": [
+        "CEN"
+      ],
+      "facilities": [
+        "CEO",
+        "CEP"
+      ],
+      "aliases": [
+        "Lake Monroe",
+        "IRL",
+        "CEN",
+        "CEO",
+        "CEP"
+      ]
+    },
+    {
+      "partition": "PPS",
+      "software_id": "761",
+      "name": "Florida Pathology",
+      "split_codes": [
+        "CGJ"
+      ],
+      "facilities": [
+        "CGJ",
+        "PGJ"
+      ],
+      "aliases": [
+        "Florida Pathology",
+        "PPS",
+        "CGJ",
+        "PGJ",
+        "NSP"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-pps-and-nsp-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "FPS",
+      "software_id": "285",
+      "name": "Chippenham",
+      "split_codes": [
+        "CHI"
+      ],
+      "facilities": [
+        "CHI",
+        "JWH"
+      ],
+      "aliases": [
+        "Chippenham",
+        "FPS",
+        "CHI",
+        "JWH"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "314",
+      "name": "Chippenham Expanse",
+      "split_codes": [
+        "CHJ"
+      ],
+      "facilities": [
+        "CHJ"
+      ],
+      "aliases": [
+        "Chippenham Expanse",
+        "FPS",
+        "CHJ"
+      ]
+    },
+    {
+      "partition": "GLF",
+      "software_id": "341",
+      "name": "Clearlake",
+      "split_codes": [
+        "CLR"
+      ],
+      "facilities": [
+        "CLO",
+        "CLR"
+      ],
+      "aliases": [
+        "Clearlake",
+        "GLF",
+        "CLR",
+        "CLO",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "GLF",
+      "software_id": "325",
+      "name": "Conroe Medical Center",
+      "split_codes": [
+        "CMC"
+      ],
+      "facilities": [
+        "CMC"
+      ],
+      "aliases": [
+        "Conroe Medical Center",
+        "GLF",
+        "CMC",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "GLF",
+      "software_id": "385",
+      "name": "Conroe Medical Center",
+      "split_codes": [
+        "CMX"
+      ],
+      "facilities": [
+        "CMX"
+      ],
+      "aliases": [
+        "Conroe Medical Center",
+        "GLF",
+        "CMX",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "FPS",
+      "software_id": "513",
+      "name": "Central Lab",
+      "split_codes": [
+        "CNL"
+      ],
+      "facilities": [
+        "CNL"
+      ],
+      "aliases": [
+        "Central Lab",
+        "FPS",
+        "CNL"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "112",
+      "name": "IRL Columbia Hospital",
+      "split_codes": [
+        "COL"
+      ],
+      "facilities": [
+        "COL"
+      ],
+      "aliases": [
+        "IRL Columbia Hospital",
+        "IRL",
+        "COL"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "517",
+      "name": "Columbia Expanse",
+      "split_codes": [
+        "COX"
+      ],
+      "facilities": [
+        "COX"
+      ],
+      "aliases": [
+        "Columbia Expanse",
+        "IRL",
+        "COX"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "245",
+      "name": "Colleton",
+      "split_codes": [
+        "CTN"
+      ],
+      "facilities": [
+        "CTN"
+      ],
+      "aliases": [
+        "Colleton",
+        "IRL",
+        "CTN"
+      ]
+    },
+    {
+      "partition": "MID",
+      "software_id": "266",
+      "name": "Centerpoint",
+      "split_codes": [
+        "CTP"
+      ],
+      "facilities": [
+        "CTP"
+      ],
+      "aliases": [
+        "Centerpoint",
+        "MID",
+        "CTP"
+      ]
+    },
+    {
+      "partition": "GLF",
+      "software_id": "328",
+      "name": "North Cypress",
+      "split_codes": [
+        "CYP"
+      ],
+      "facilities": [
+        "CYP"
+      ],
+      "aliases": [
+        "North Cypress",
+        "GLF",
+        "CYP",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "GLF",
+      "software_id": "387",
+      "name": "North Cypress",
+      "split_codes": [
+        "CYX"
+      ],
+      "facilities": [
+        "CYX"
+      ],
+      "aliases": [
+        "North Cypress",
+        "GLF",
+        "CYX",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "NTX",
+      "software_id": "408",
+      "name": "Decatur",
+      "split_codes": [
+        "DEC"
+      ],
+      "facilities": [
+        "DEC"
+      ],
+      "aliases": [
+        "Decatur",
+        "NTX",
+        "DEC"
+      ]
+    },
+    {
+      "partition": "NTX",
+      "software_id": "367",
+      "name": "MedCity Denton",
+      "split_codes": [
+        "DEN"
+      ],
+      "facilities": [
+        "DEN"
+      ],
+      "aliases": [
+        "MedCity Denton",
+        "NTX",
+        "DEN"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "169",
+      "name": "Englewood",
+      "split_codes": [
+        "ENG"
+      ],
+      "facilities": [
+        "ENG"
+      ],
+      "aliases": [
+        "Englewood",
+        "IRL",
+        "ENG"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "274",
+      "name": "Fairview",
+      "split_codes": [
+        "FAI"
+      ],
+      "facilities": [
+        "FAI"
+      ],
+      "aliases": [
+        "Fairview",
+        "IRL",
+        "FAI"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "170",
+      "name": "Fawcett",
+      "split_codes": [
+        "FAW"
+      ],
+      "facilities": [
+        "FAW",
+        "FAX",
+        "FAY"
+      ],
+      "aliases": [
+        "Fawcett",
+        "IRL",
+        "FAW",
+        "FAX",
+        "FAY"
+      ]
+    },
+    {
+      "partition": "NTX",
+      "software_id": "406",
+      "name": "Medcity Frisco",
+      "split_codes": [
+        "FRI"
+      ],
+      "facilities": [
+        "FRI"
+      ],
+      "aliases": [
+        "Medcity Frisco",
+        "NTX",
+        "FRI"
+      ]
+    },
+    {
+      "partition": "NHL",
+      "software_id": "501",
+      "name": "Frisbie Hospital",
+      "split_codes": [
+        "FRJ"
+      ],
+      "facilities": [
+        "FRJ",
+        "FRP"
+      ],
+      "aliases": [
+        "Frisbie Hospital",
+        "NHL",
+        "FRJ",
+        "FRP"
+      ]
+    },
+    {
+      "partition": "NHL",
+      "software_id": "510",
+      "name": "Frisbie Hospital",
+      "split_codes": [
+        "FRK"
+      ],
+      "facilities": [
+        "FRK"
+      ],
+      "aliases": [
+        "Frisbie Hospital",
+        "NHL",
+        "FRK"
+      ]
+    },
+    {
+      "partition": "NTX",
+      "software_id": "401",
+      "name": "Medcity Ft Worth",
+      "split_codes": [
+        "FTW"
+      ],
+      "facilities": [
+        "FTW"
+      ],
+      "aliases": [
+        "Medcity Ft Worth",
+        "NTX",
+        "FTW"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "337",
+      "name": "IRL Florida University",
+      "split_codes": [
+        "FUH"
+      ],
+      "facilities": [
+        "FUH"
+      ],
+      "aliases": [
+        "IRL Florida University",
+        "IRL",
+        "FUH"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "221",
+      "name": "Grand Strand",
+      "split_codes": [
+        "GRA"
+      ],
+      "facilities": [
+        "GRA",
+        "SOS"
+      ],
+      "aliases": [
+        "Grand Strand",
+        "IRL",
+        "GRA",
+        "SOS"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "302",
+      "name": "Gulf Coast",
+      "split_codes": [
+        "GUL"
+      ],
+      "facilities": [
+        "GUL",
+        "GUM",
+        "GUN"
+      ],
+      "aliases": [
+        "Gulf Coast",
+        "IRL",
+        "GUL",
+        "GUM",
+        "GUN"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "522",
+      "name": "Gulf Coast Med Ctr",
+      "split_codes": [
+        "GUX"
+      ],
+      "facilities": [
+        "GUP",
+        "GUQ",
+        "GUX"
+      ],
+      "aliases": [
+        "Gulf Coast Med Ctr",
+        "IRL",
+        "GUX",
+        "GUP",
+        "GUQ"
+      ]
+    },
+    {
+      "partition": "HAL",
+      "software_id": "751",
+      "name": "Halifax",
+      "split_codes": [
+        "HAA"
+      ],
+      "facilities": [
+        "DEA",
+        "HAA",
+        "POA"
+      ],
+      "aliases": [
+        "Halifax",
+        "HAL",
+        "HAA",
+        "DEA",
+        "POA",
+        "Halifax HAA",
+        "HAX"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-halifax-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "HAL",
+      "software_id": "750",
+      "name": "Halifax",
+      "split_codes": [
+        "HAX"
+      ],
+      "facilities": [
+        "DEX",
+        "HAX",
+        "HED",
+        "POX",
+        "PXE"
+      ],
+      "aliases": [
+        "Halifax",
+        "HAL",
+        "HAX",
+        "DEX",
+        "HED",
+        "POX",
+        "PXE",
+        "Halifax HAA",
+        "HAA"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-halifax-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "FPS",
+      "software_id": "284",
+      "name": "Henrico",
+      "split_codes": [
+        "HEN"
+      ],
+      "facilities": [
+        "HEN",
+        "PAR",
+        "RET"
+      ],
+      "aliases": [
+        "Henrico",
+        "FPS",
+        "HEN",
+        "PAR",
+        "RET"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "316",
+      "name": "Henrico Expanse",
+      "split_codes": [
+        "HEO"
+      ],
+      "facilities": [
+        "HEO"
+      ],
+      "aliases": [
+        "Henrico Expanse",
+        "FPS",
+        "HEO"
+      ]
+    },
+    {
+      "partition": "GLF",
+      "software_id": "326",
+      "name": "Houston Medical Ctr",
+      "split_codes": [
+        "HMC"
+      ],
+      "facilities": [
+        "HMC"
+      ],
+      "aliases": [
+        "Houston Medical Ctr",
+        "GLF",
+        "HMC",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "GLF",
+      "software_id": "329",
+      "name": "Houston Med Ctr",
+      "split_codes": [
+        "HMD"
+      ],
+      "facilities": [
+        "HMD"
+      ],
+      "aliases": [
+        "Houston Med Ctr",
+        "GLF",
+        "HMD",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "IRL",
+      "software_id": "287",
+      "name": "IRL Highlands Regional",
+      "split_codes": [
+        "HRM"
+      ],
+      "facilities": [
+        "HRM"
+      ],
+      "aliases": [
+        "IRL Highlands Regional",
+        "IRL",
+        "HRM"
+      ]
+    },
+    {
+      "partition": "GLF",
+      "software_id": "342",
+      "name": "Houston Southeast",
+      "split_codes": [
+        "HSE"
+      ],
+      "facilities": [
+        "HSE"
+      ],
+      "aliases": [
+        "Houston Southeast",
+        "GLF",
+        "HSE",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "GLF",
+      "software_id": "346",
+      "name": "Houston West",
+      "split_codes": [
+        "HWE"
+      ],
+      "facilities": [
+        "HWE"
+      ],
+      "aliases": [
+        "Houston West",
+        "GLF",
+        "HWE",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "GLF",
+      "software_id": "388",
+      "name": "Houston West",
+      "split_codes": [
+        "HWX"
+      ],
+      "facilities": [
+        "HWX"
+      ],
+      "aliases": [
+        "Houston West",
+        "GLF",
+        "HWX",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "IRL",
+      "software_id": "109",
+      "name": "IRL JFK Hospital",
+      "split_codes": [
+        "JFK"
+      ],
+      "facilities": [
+        "JFK",
+        "JFL",
+        "JFM"
+      ],
+      "aliases": [
+        "IRL JFK Hospital",
+        "IRL",
+        "JFK",
+        "JFL",
+        "JFM"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "514",
+      "name": "JFK Expanse",
+      "split_codes": [
+        "JFX"
+      ],
+      "facilities": [
+        "JFN",
+        "JFP",
+        "JFX"
+      ],
+      "aliases": [
+        "JFK Expanse",
+        "IRL",
+        "JFX",
+        "JFN",
+        "JFP"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "283",
+      "name": "John Randolph",
+      "split_codes": [
+        "JRM"
+      ],
+      "facilities": [
+        "JRM"
+      ],
+      "aliases": [
+        "John Randolph",
+        "FPS",
+        "JRM"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "319",
+      "name": "John Randolph Expanse",
+      "split_codes": [
+        "JRN"
+      ],
+      "facilities": [
+        "JRN"
+      ],
+      "aliases": [
+        "John Randolph Expanse",
+        "FPS",
+        "JRN"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "315",
+      "name": "Johnston-Willis Expanse",
+      "split_codes": [
+        "JWI"
+      ],
+      "facilities": [
+        "JWI"
+      ],
+      "aliases": [
+        "Johnston-Willis Expanse",
+        "FPS",
+        "JWI"
+      ]
+    },
+    {
+      "partition": "GLF",
+      "software_id": "327",
+      "name": "Kingwood",
+      "split_codes": [
+        "KIN"
+      ],
+      "facilities": [
+        "KIN"
+      ],
+      "aliases": [
+        "Kingwood",
+        "GLF",
+        "KIN",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "GLF",
+      "software_id": "386",
+      "name": "Kingwood",
+      "split_codes": [
+        "KIX"
+      ],
+      "facilities": [
+        "KIX"
+      ],
+      "aliases": [
+        "Kingwood",
+        "GLF",
+        "KIX",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "IRL",
+      "software_id": "118",
+      "name": "IRL Kendall Regional",
+      "split_codes": [
+        "KRE"
+      ],
+      "facilities": [
+        "KRD",
+        "KRE",
+        "KRF",
+        "KRT"
+      ],
+      "aliases": [
+        "IRL Kendall Regional",
+        "IRL",
+        "KRE",
+        "KRD",
+        "KRF",
+        "KRT"
+      ]
+    },
+    {
+      "partition": "MID",
+      "software_id": "267",
+      "name": "Lafayette",
+      "split_codes": [
+        "LAF"
+      ],
+      "facilities": [
+        "LAF"
+      ],
+      "aliases": [
+        "Lafayette",
+        "MID",
+        "LAF"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "239",
+      "name": "Lake City",
+      "split_codes": [
+        "LAK"
+      ],
+      "facilities": [
+        "LAK"
+      ],
+      "aliases": [
+        "Lake City",
+        "IRL",
+        "LAK"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "503",
+      "name": "Lake City",
+      "split_codes": [
+        "LAM"
+      ],
+      "facilities": [
+        "LAM"
+      ],
+      "aliases": [
+        "Lake City",
+        "IRL",
+        "LAM"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "165",
+      "name": "Largo",
+      "split_codes": [
+        "LAR"
+      ],
+      "facilities": [
+        "CLE",
+        "IND",
+        "LAR"
+      ],
+      "aliases": [
+        "Largo",
+        "IRL",
+        "LAR",
+        "CLE",
+        "IND"
+      ]
+    },
+    {
+      "partition": "NTX",
+      "software_id": "378",
+      "name": "MedCity Las Colinas",
+      "split_codes": [
+        "LAS"
+      ],
+      "facilities": [
+        "LAS"
+      ],
+      "aliases": [
+        "MedCity Las Colinas",
+        "NTX",
+        "LAS"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "352",
+      "name": "IRL Lawnwood",
+      "split_codes": [
+        "LAW"
+      ],
+      "facilities": [
+        "LAW",
+        "LAX"
+      ],
+      "aliases": [
+        "IRL Lawnwood",
+        "IRL",
+        "LAW",
+        "LAX"
+      ]
+    },
+    {
+      "partition": "MID",
+      "software_id": "268",
+      "name": "Lee",
+      "split_codes": [
+        "LEE"
+      ],
+      "facilities": [
+        "LEE"
+      ],
+      "aliases": [
+        "Lee",
+        "MID",
+        "LEE"
+      ]
+    },
+    {
+      "partition": "NTX",
+      "software_id": "379",
+      "name": "MedCity Lewisville",
+      "split_codes": [
+        "LEW"
+      ],
+      "facilities": [
+        "LEW"
+      ],
+      "aliases": [
+        "MedCity Lewisville",
+        "NTX",
+        "LEW"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "305",
+      "name": "Lewis Gale medical Center",
+      "split_codes": [
+        "LGM"
+      ],
+      "facilities": [
+        "LGM"
+      ],
+      "aliases": [
+        "Lewis Gale medical Center",
+        "FPS",
+        "LGM"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "321",
+      "name": "Lewis Gale medical Center",
+      "split_codes": [
+        "LGX"
+      ],
+      "facilities": [
+        "LGX"
+      ],
+      "aliases": [
+        "Lewis Gale medical Center",
+        "FPS",
+        "LGX"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "515",
+      "name": "Lawnwood Expanse",
+      "split_codes": [
+        "LWX"
+      ],
+      "facilities": [
+        "LAZ",
+        "LWX"
+      ],
+      "aliases": [
+        "Lawnwood Expanse",
+        "IRL",
+        "LWX",
+        "LAZ"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "505",
+      "name": "West Marion",
+      "split_codes": [
+        "MAX"
+      ],
+      "facilities": [
+        "MAX"
+      ],
+      "aliases": [
+        "West Marion",
+        "IRL",
+        "MAX"
+      ]
+    },
+    {
+      "partition": "NTX",
+      "software_id": "380",
+      "name": "MedCity McKinney",
+      "split_codes": [
+        "MCK"
+      ],
+      "facilities": [
+        "MCK"
+      ],
+      "aliases": [
+        "MedCity McKinney",
+        "NTX",
+        "MCK"
+      ]
+    },
+    {
+      "partition": "NTX",
+      "software_id": "295",
+      "name": "MedCity Dallas",
+      "split_codes": [
+        "MED"
+      ],
+      "facilities": [
+        "MED",
+        "MER"
+      ],
+      "aliases": [
+        "MedCity Dallas",
+        "NTX",
+        "MED",
+        "MER"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "220",
+      "name": "Memorial Hospital of Jacksonville",
+      "split_codes": [
+        "MEM"
+      ],
+      "facilities": [
+        "MAN",
+        "MEA",
+        "MEJ",
+        "MEM"
+      ],
+      "aliases": [
+        "Memorial Hospital of Jacksonville",
+        "IRL",
+        "MEM",
+        "MAN",
+        "MEA",
+        "MEJ"
+      ]
+    },
+    {
+      "partition": "MID",
+      "software_id": "269",
+      "name": "Menorah",
+      "split_codes": [
+        "MEN"
+      ],
+      "facilities": [
+        "MEN"
+      ],
+      "aliases": [
+        "Menorah",
+        "MID",
+        "MEN"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "122",
+      "name": "IRL Mercy Hospital",
+      "split_codes": [
+        "MER"
+      ],
+      "facilities": [
+        "MER",
+        "MES"
+      ],
+      "aliases": [
+        "IRL Mercy Hospital",
+        "IRL",
+        "MER",
+        "MES"
+      ]
+    },
+    {
+      "partition": "GLF",
+      "software_id": "340",
+      "name": "Mainland Medical",
+      "split_codes": [
+        "MMC"
+      ],
+      "facilities": [
+        "MMC"
+      ],
+      "aliases": [
+        "Mainland Medical",
+        "GLF",
+        "MMC",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "FPS",
+      "software_id": "309",
+      "name": "Lewis Gale Montgomery",
+      "split_codes": [
+        "MNT"
+      ],
+      "facilities": [
+        "MNT"
+      ],
+      "aliases": [
+        "Lewis Gale Montgomery",
+        "FPS",
+        "MNT"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "331",
+      "name": "Lewis Gale Montgomery",
+      "split_codes": [
+        "MNX"
+      ],
+      "facilities": [
+        "MNX"
+      ],
+      "aliases": [
+        "Lewis Gale Montgomery",
+        "FPS",
+        "MNX"
+      ]
+    },
+    {
+      "partition": "PPA",
+      "software_id": "701",
+      "name": "Precision Pathology Assoc",
+      "split_codes": [
+        "NEO"
+      ],
+      "facilities": [
+        "CCA",
+        "GMA",
+        "HMA",
+        "LCA",
+        "LMA"
+      ],
+      "aliases": [
+        "Precision Pathology Assoc",
+        "PPA",
+        "NEO",
+        "CCA",
+        "GMA",
+        "HMA",
+        "LCA",
+        "LMA"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-ppa-neo-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "IRL",
+      "software_id": "231",
+      "name": "IRL N Florida Regional Medical Center",
+      "split_codes": [
+        "NFL"
+      ],
+      "facilities": [
+        "DER",
+        "MIL",
+        "NFE",
+        "NFL"
+      ],
+      "aliases": [
+        "IRL N Florida Regional Medical Center",
+        "IRL",
+        "NFL",
+        "DER",
+        "MIL",
+        "NFE"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "506",
+      "name": "N Florida Reg Med Ct",
+      "split_codes": [
+        "NFX"
+      ],
+      "facilities": [
+        "DEX",
+        "MIX",
+        "NFX",
+        "NXX"
+      ],
+      "aliases": [
+        "N Florida Reg Med Ct",
+        "IRL",
+        "NFX",
+        "DEX",
+        "MIX",
+        "NXX"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "402",
+      "name": "Lake Nona",
+      "split_codes": [
+        "NOA"
+      ],
+      "facilities": [
+        "NOA"
+      ],
+      "aliases": [
+        "Lake Nona",
+        "IRL",
+        "NOA"
+      ]
+    },
+    {
+      "partition": "NTX",
+      "software_id": "404",
+      "name": "North Hills Hosp",
+      "split_codes": [
+        "NOH"
+      ],
+      "facilities": [
+        "NOH"
+      ],
+      "aliases": [
+        "North Hills Hosp",
+        "NTX",
+        "NOH"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "306",
+      "name": "Lake Nona",
+      "split_codes": [
+        "NON"
+      ],
+      "facilities": [
+        "NON"
+      ],
+      "aliases": [
+        "Lake Nona",
+        "IRL",
+        "NON"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "176",
+      "name": "Northside",
+      "split_codes": [
+        "NOR"
+      ],
+      "facilities": [
+        "NOR"
+      ],
+      "aliases": [
+        "Northside",
+        "IRL",
+        "NOR"
+      ]
+    },
+    {
+      "partition": "NSP",
+      "software_id": "760",
+      "name": "Florida Medical Ctr",
+      "split_codes": [
+        "NSR"
+      ],
+      "facilities": [
+        "FMF"
+      ],
+      "aliases": [
+        "Florida Medical Ctr",
+        "NSP",
+        "NSR",
+        "FMF"
+      ]
+    },
+    {
+      "partition": "NSP",
+      "software_id": "760",
+      "name": "Hialeah Hospital",
+      "split_codes": [
+        "NSR"
+      ],
+      "facilities": [
+        "HIC"
+      ],
+      "aliases": [
+        "Hialeah Hospital",
+        "NSP",
+        "NSR",
+        "HIC"
+      ]
+    },
+    {
+      "partition": "NSP",
+      "software_id": "760",
+      "name": "North Shore Hospital",
+      "split_codes": [
+        "NSR"
+      ],
+      "facilities": [
+        "NSR"
+      ],
+      "aliases": [
+        "North Shore Hospital",
+        "NSP",
+        "NSR"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "114",
+      "name": "IRL Northwest",
+      "split_codes": [
+        "NWM"
+      ],
+      "facilities": [
+        "NWM"
+      ],
+      "aliases": [
+        "IRL Northwest",
+        "IRL",
+        "NWM"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "167",
+      "name": "Oak Hill",
+      "split_codes": [
+        "OAK"
+      ],
+      "facilities": [
+        "OAK"
+      ],
+      "aliases": [
+        "Oak Hill",
+        "IRL",
+        "OAK"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "212",
+      "name": "Ocala",
+      "split_codes": [
+        "OCA"
+      ],
+      "facilities": [
+        "MAR",
+        "OCA",
+        "OCE",
+        "SFE"
+      ],
+      "aliases": [
+        "Ocala",
+        "IRL",
+        "OCA",
+        "MAR",
+        "OCE",
+        "SFE"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "212",
+      "name": "Ocala Regional Medical Center",
+      "split_codes": [
+        "OCA"
+      ],
+      "facilities": [
+        "OCF"
+      ],
+      "aliases": [
+        "Ocala Regional Medical Center",
+        "IRL",
+        "OCA",
+        "OCF"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "507",
+      "name": "Ocala Medical Ctr",
+      "split_codes": [
+        "OCX"
+      ],
+      "facilities": [
+        "OCX",
+        "OMC",
+        "OXX",
+        "SUN"
+      ],
+      "aliases": [
+        "Ocala Medical Ctr",
+        "IRL",
+        "OCX",
+        "OMC",
+        "OXX",
+        "SUN"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "222",
+      "name": "Orange Park",
+      "split_codes": [
+        "ORA"
+      ],
+      "facilities": [
+        "ONP",
+        "ORA",
+        "OWE"
+      ],
+      "aliases": [
+        "Orange Park",
+        "IRL",
+        "ORA",
+        "ONP",
+        "OWE"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "178",
+      "name": "Osceola",
+      "split_codes": [
+        "OSC"
+      ],
+      "facilities": [
+        "OSC",
+        "OSE",
+        "OSF",
+        "OSG"
+      ],
+      "aliases": [
+        "Osceola",
+        "IRL",
+        "OSC",
+        "OSE",
+        "OSF",
+        "OSG"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "241",
+      "name": "Oviedo Medical Center",
+      "split_codes": [
+        "OVI"
+      ],
+      "facilities": [
+        "OVE"
+      ],
+      "aliases": [
+        "Oviedo Medical Center",
+        "IRL",
+        "OVI",
+        "OVE"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "241",
+      "name": "Oviedo",
+      "split_codes": [
+        "OVI"
+      ],
+      "facilities": [
+        "OVF",
+        "OVG",
+        "OVI"
+      ],
+      "aliases": [
+        "Oviedo",
+        "IRL",
+        "OVI",
+        "OVF",
+        "OVG"
+      ]
+    },
+    {
+      "partition": "MID",
+      "software_id": "270",
+      "name": "Overland",
+      "split_codes": [
+        "OVR"
+      ],
+      "facilities": [
+        "OVR"
+      ],
+      "aliases": [
+        "Overland",
+        "MID",
+        "OVR"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "317",
+      "name": "Parham Expanse",
+      "split_codes": [
+        "PAS"
+      ],
+      "facilities": [
+        "PAS"
+      ],
+      "aliases": [
+        "Parham Expanse",
+        "FPS",
+        "PAS"
+      ]
+    },
+    {
+      "partition": "NHL",
+      "software_id": "502",
+      "name": "Parkland Hospital",
+      "split_codes": [
+        "PAS"
+      ],
+      "facilities": [
+        "PAS"
+      ],
+      "aliases": [
+        "Parkland Hospital",
+        "NHL",
+        "PAS"
+      ]
+    },
+    {
+      "partition": "NHL",
+      "software_id": "511",
+      "name": "Parkland Hospital",
+      "split_codes": [
+        "PAT"
+      ],
+      "facilities": [
+        "PAT"
+      ],
+      "aliases": [
+        "Parkland Hospital",
+        "NHL",
+        "PAT"
+      ]
+    },
+    {
+      "partition": "GLF",
+      "software_id": "345",
+      "name": "Pearland",
+      "split_codes": [
+        "PEA"
+      ],
+      "facilities": [
+        "PEA"
+      ],
+      "aliases": [
+        "Pearland",
+        "GLF",
+        "PEA",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "NTX",
+      "software_id": "405",
+      "name": "Plano",
+      "split_codes": [
+        "PLA"
+      ],
+      "facilities": [
+        "PLA"
+      ],
+      "aliases": [
+        "Plano",
+        "NTX",
+        "PLA"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "179",
+      "name": "Poinciana",
+      "split_codes": [
+        "POI"
+      ],
+      "facilities": [
+        "POI",
+        "POJ",
+        "POK"
+      ],
+      "aliases": [
+        "Poinciana",
+        "IRL",
+        "POI",
+        "POJ",
+        "POK"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "168",
+      "name": "Palms of Pasadena",
+      "split_codes": [
+        "POP"
+      ],
+      "facilities": [
+        "POP"
+      ],
+      "aliases": [
+        "Palms of Pasadena",
+        "IRL",
+        "POP"
+      ]
+    },
+    {
+      "partition": "NHL",
+      "software_id": "500",
+      "name": "Portsmouth Hospital",
+      "split_codes": [
+        "POS"
+      ],
+      "facilities": [
+        "POS",
+        "POU",
+        "POV"
+      ],
+      "aliases": [
+        "Portsmouth Hospital",
+        "NHL",
+        "POS",
+        "POU",
+        "POV"
+      ]
+    },
+    {
+      "partition": "NHL",
+      "software_id": "512",
+      "name": "Portsmouth Hospital",
+      "split_codes": [
+        "POT"
+      ],
+      "facilities": [
+        "POT",
+        "POV"
+      ],
+      "aliases": [
+        "Portsmouth Hospital",
+        "NHL",
+        "POT",
+        "POV"
+      ]
+    },
+    {
+      "partition": "PPA",
+      "software_id": "700",
+      "name": "Precision Pathology Assoc",
+      "split_codes": [
+        "PPA"
+      ],
+      "facilities": [
+        "CCH",
+        "GMC",
+        "HMC",
+        "LCP",
+        "LMG"
+      ],
+      "aliases": [
+        "Precision Pathology Assoc",
+        "PPA",
+        "CCH",
+        "GMC",
+        "HMC",
+        "LCP",
+        "LMG"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-ppa-neo-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "CON",
+      "software_id": "259",
+      "name": "PSL",
+      "split_codes": [
+        "PSL"
+      ],
+      "facilities": [
+        "PSL"
+      ],
+      "aliases": [
+        "PSL",
+        "CON"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "307",
+      "name": "Lewis Gale Pulaski",
+      "split_codes": [
+        "PUL"
+      ],
+      "facilities": [
+        "PUL"
+      ],
+      "aliases": [
+        "Lewis Gale Pulaski",
+        "FPS",
+        "PUL"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "254",
+      "name": "Putnam",
+      "split_codes": [
+        "PUT"
+      ],
+      "facilities": [
+        "PUT"
+      ],
+      "aliases": [
+        "Putnam",
+        "IRL",
+        "PUT"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "504",
+      "name": "Putnam",
+      "split_codes": [
+        "PUX"
+      ],
+      "facilities": [
+        "PUX"
+      ],
+      "aliases": [
+        "Putnam",
+        "IRL",
+        "PUX"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "110",
+      "name": "IRL Palms West",
+      "split_codes": [
+        "PWE"
+      ],
+      "facilities": [
+        "PWE"
+      ],
+      "aliases": [
+        "IRL Palms West",
+        "IRL",
+        "PWE"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "516",
+      "name": "Palms West Expanse",
+      "split_codes": [
+        "PWX"
+      ],
+      "facilities": [
+        "PWX"
+      ],
+      "aliases": [
+        "Palms West Expanse",
+        "IRL",
+        "PWX"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "322",
+      "name": "Lewis Gale Pulaski",
+      "split_codes": [
+        "PXL"
+      ],
+      "facilities": [
+        "PXL"
+      ],
+      "aliases": [
+        "Lewis Gale Pulaski",
+        "FPS",
+        "PXL"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "126",
+      "name": "IRL Raulerson GED",
+      "split_codes": [
+        "RAU"
+      ],
+      "facilities": [
+        "RAU"
+      ],
+      "aliases": [
+        "IRL Raulerson GED",
+        "IRL",
+        "RAU"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "312",
+      "name": "Reston",
+      "split_codes": [
+        "REA"
+      ],
+      "facilities": [
+        "REA",
+        "REC"
+      ],
+      "aliases": [
+        "Reston",
+        "FPS",
+        "REA",
+        "REC"
+      ]
+    },
+    {
+      "partition": "MID",
+      "software_id": "271",
+      "name": "Research",
+      "split_codes": [
+        "RES"
+      ],
+      "facilities": [
+        "RES"
+      ],
+      "aliases": [
+        "Research",
+        "MID",
+        "RES"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "310",
+      "name": "Reston",
+      "split_codes": [
+        "RES"
+      ],
+      "facilities": [
+        "REO",
+        "RES"
+      ],
+      "aliases": [
+        "Reston",
+        "FPS",
+        "RES",
+        "REO"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "318",
+      "name": "Retreat Expanse",
+      "split_codes": [
+        "REU"
+      ],
+      "facilities": [
+        "REU"
+      ],
+      "aliases": [
+        "Retreat Expanse",
+        "FPS",
+        "REU"
+      ]
+    },
+    {
+      "partition": "GLF",
+      "software_id": "382",
+      "name": "Rio Grande",
+      "split_codes": [
+        "RIO"
+      ],
+      "facilities": [
+        "RIO"
+      ],
+      "aliases": [
+        "Rio Grande",
+        "GLF",
+        "RIO",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "CON",
+      "software_id": "258",
+      "name": "Rose",
+      "split_codes": [
+        "ROS"
+      ],
+      "facilities": [
+        "ROS"
+      ],
+      "aliases": [
+        "Rose",
+        "CON",
+        "ROS"
+      ]
+    },
+    {
+      "partition": "NTX",
+      "software_id": "407",
+      "name": "Medcity Sachse",
+      "split_codes": [
+        "SAC"
+      ],
+      "facilities": [
+        "SAC"
+      ],
+      "aliases": [
+        "Medcity Sachse",
+        "NTX",
+        "SAC"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "174",
+      "name": "Sarasota",
+      "split_codes": [
+        "SAR"
+      ],
+      "facilities": [
+        "SAE",
+        "SAR"
+      ],
+      "aliases": [
+        "Sarasota",
+        "IRL",
+        "SAR",
+        "SAE"
+      ]
+    },
+    {
+      "partition": "CON",
+      "software_id": "257",
+      "name": "Sky",
+      "split_codes": [
+        "SKY"
+      ],
+      "facilities": [
+        "SKR",
+        "SKY"
+      ],
+      "aliases": [
+        "Sky",
+        "CON",
+        "SKY",
+        "SKR"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "180",
+      "name": "South Bay",
+      "split_codes": [
+        "SOU"
+      ],
+      "facilities": [
+        "SOU"
+      ],
+      "aliases": [
+        "South Bay",
+        "IRL",
+        "SOU"
+      ]
+    },
+    {
+      "partition": "SPG",
+      "software_id": "600",
+      "name": "Stamford",
+      "split_codes": [
+        "SPG"
+      ],
+      "facilities": [
+        "SPG"
+      ],
+      "aliases": [
+        "Stamford",
+        "SPG"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-stamford-flat-file.xslt"
+    },
+    {
+      "partition": "FPS",
+      "software_id": "304",
+      "name": "Spotsylvania Reginoal",
+      "split_codes": [
+        "SPO"
+      ],
+      "facilities": [
+        "SPO"
+      ],
+      "aliases": [
+        "Spotsylvania Reginoal",
+        "FPS",
+        "SPO"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "320",
+      "name": "Spotsylvania Expanse",
+      "split_codes": [
+        "SPP"
+      ],
+      "facilities": [
+        "SPP"
+      ],
+      "aliases": [
+        "Spotsylvania Expanse",
+        "FPS",
+        "SPP"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "313",
+      "name": "Stone Springs",
+      "split_codes": [
+        "STB"
+      ],
+      "facilities": [
+        "STB"
+      ],
+      "aliases": [
+        "Stone Springs",
+        "FPS",
+        "STB"
+      ]
+    },
+    {
+      "partition": "NGP",
+      "software_id": "650",
+      "name": "NextGen Pathology",
+      "split_codes": [
+        "STF"
+      ],
+      "facilities": [
+        "SEC",
+        "STF"
+      ],
+      "aliases": [
+        "NextGen Pathology",
+        "NGP",
+        "STF",
+        "SEC",
+        "NGP AP",
+        "NextGen AP",
+        "NextGen"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-ngp-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "IRL",
+      "software_id": "123",
+      "name": "IRL St. Lucie",
+      "split_codes": [
+        "STL"
+      ],
+      "facilities": [
+        "DAR",
+        "STL"
+      ],
+      "aliases": [
+        "IRL St. Lucie",
+        "IRL",
+        "STL",
+        "DAR"
+      ]
+    },
+    {
+      "partition": "FPS",
+      "software_id": "311",
+      "name": "Stone Springs",
+      "split_codes": [
+        "STO"
+      ],
+      "facilities": [
+        "STO"
+      ],
+      "aliases": [
+        "Stone Springs",
+        "FPS",
+        "STO"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "177",
+      "name": "St Petersburg",
+      "split_codes": [
+        "STP"
+      ],
+      "facilities": [
+        "STP"
+      ],
+      "aliases": [
+        "St Petersburg",
+        "IRL",
+        "STP"
+      ]
+    },
+    {
+      "partition": "CON",
+      "software_id": "255",
+      "name": "Suburban",
+      "split_codes": [
+        "SUB"
+      ],
+      "facilities": [
+        "SUB"
+      ],
+      "aliases": [
+        "Suburban",
+        "CON",
+        "SUB"
+      ]
+    },
+    {
+      "partition": "CON",
+      "software_id": "253",
+      "name": "Swedish",
+      "split_codes": [
+        "SWE"
+      ],
+      "facilities": [
+        "SWE"
+      ],
+      "aliases": [
+        "Swedish",
+        "CON",
+        "SWE"
+      ]
+    },
+    {
+      "partition": "GLF",
+      "software_id": "375",
+      "name": "Tomball Medical Center",
+      "split_codes": [
+        "TOM"
+      ],
+      "facilities": [
+        "TOM"
+      ],
+      "aliases": [
+        "Tomball Medical Center",
+        "GLF",
+        "TOM",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "GLF",
+      "software_id": "384",
+      "name": "Tomball",
+      "split_codes": [
+        "TON"
+      ],
+      "facilities": [
+        "TON"
+      ],
+      "aliases": [
+        "Tomball",
+        "GLF",
+        "TON",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "IRL",
+      "software_id": "251",
+      "name": "Trident Regional",
+      "split_codes": [
+        "TRD"
+      ],
+      "facilities": [
+        "CPE",
+        "MON",
+        "SUM",
+        "TPH",
+        "TRD"
+      ],
+      "aliases": [
+        "Trident Regional",
+        "IRL",
+        "TRD",
+        "CPE",
+        "MON",
+        "SUM",
+        "TPH"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "173",
+      "name": "Trinity",
+      "split_codes": [
+        "TRI"
+      ],
+      "facilities": [
+        "CIP",
+        "LUT",
+        "TRI"
+      ],
+      "aliases": [
+        "Trinity",
+        "IRL",
+        "TRI",
+        "CIP",
+        "LUT"
+      ]
+    },
+    {
+      "partition": "GLF",
+      "software_id": "336",
+      "name": "Woman's Texas",
+      "split_codes": [
+        "TWH"
+      ],
+      "facilities": [
+        "TWF",
+        "TWH"
+      ],
+      "aliases": [
+        "Woman's Texas",
+        "GLF",
+        "TWH",
+        "TWF",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "IRL",
+      "software_id": "278",
+      "name": "Twin Cities",
+      "split_codes": [
+        "TWI"
+      ],
+      "facilities": [
+        "TWI"
+      ],
+      "aliases": [
+        "Twin Cities",
+        "IRL",
+        "TWI"
+      ]
+    },
+    {
+      "partition": "GLF",
+      "software_id": "389",
+      "name": "Woman's Texas",
+      "split_codes": [
+        "TWX"
+      ],
+      "facilities": [
+        "TWX"
+      ],
+      "aliases": [
+        "Woman's Texas",
+        "GLF",
+        "TWX",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "IRL",
+      "software_id": "519",
+      "name": "Twin Cities Hosp",
+      "split_codes": [
+        "TWX"
+      ],
+      "facilities": [
+        "TWX"
+      ],
+      "aliases": [
+        "Twin Cities Hosp",
+        "IRL",
+        "TWX"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "111",
+      "name": "IRL University Hospital",
+      "split_codes": [
+        "UNI"
+      ],
+      "facilities": [
+        "UNI"
+      ],
+      "aliases": [
+        "IRL University Hospital",
+        "IRL",
+        "UNI"
+      ]
+    },
+    {
+      "partition": "GLF",
+      "software_id": "383",
+      "name": "Valley Regional",
+      "split_codes": [
+        "VLY"
+      ],
+      "facilities": [
+        "VLY"
+      ],
+      "aliases": [
+        "Valley Regional",
+        "GLF",
+        "VLY",
+        "Gulf"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "IRL",
+      "software_id": "279",
+      "name": "Fort Walton",
+      "split_codes": [
+        "WAL"
+      ],
+      "facilities": [
+        "DES",
+        "DET",
+        "WAL"
+      ],
+      "aliases": [
+        "Fort Walton",
+        "IRL",
+        "WAL",
+        "DES",
+        "DET"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "521",
+      "name": "Ft Walton Hospital",
+      "split_codes": [
+        "WAX"
+      ],
+      "facilities": [
+        "DEV",
+        "DEW",
+        "WAX"
+      ],
+      "aliases": [
+        "Ft Walton Hospital",
+        "IRL",
+        "WAX",
+        "DEV",
+        "DEW"
+      ]
+    },
+    {
+      "partition": "WCH",
+      "software_id": "324",
+      "name": "Woodlawn Medical Center",
+      "split_codes": [
+        "WDL"
+      ],
+      "facilities": [
+        "WDL"
+      ],
+      "aliases": [
+        "Woodlawn Medical Center",
+        "WCH",
+        "WDL"
+      ]
+    },
+    {
+      "partition": "NTX",
+      "software_id": "381",
+      "name": "MedCity Weatherford",
+      "split_codes": [
+        "WEA"
+      ],
+      "facilities": [
+        "WEA"
+      ],
+      "aliases": [
+        "MedCity Weatherford",
+        "NTX",
+        "WEA"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "113",
+      "name": "IRL Westside",
+      "split_codes": [
+        "WES"
+      ],
+      "facilities": [
+        "WER",
+        "WES"
+      ],
+      "aliases": [
+        "IRL Westside",
+        "IRL",
+        "WES",
+        "WER"
+      ]
+    },
+    {
+      "partition": "WCH",
+      "software_id": "323",
+      "name": "Wesley Medical Center",
+      "split_codes": [
+        "WES"
+      ],
+      "facilities": [
+        "WEO",
+        "WES"
+      ],
+      "aliases": [
+        "Wesley Medical Center",
+        "WCH",
+        "WES",
+        "WEO"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "276",
+      "name": "West Florida Regional",
+      "split_codes": [
+        "WFL"
+      ],
+      "facilities": [
+        "PER",
+        "WFL",
+        "WFM",
+        "WFN"
+      ],
+      "aliases": [
+        "West Florida Regional",
+        "IRL",
+        "WFL",
+        "PER",
+        "WFM",
+        "WFN"
+      ]
+    },
+    {
+      "partition": "IRL",
+      "software_id": "520",
+      "name": "W Florida Reg",
+      "split_codes": [
+        "WFX"
+      ],
+      "facilities": [
+        "PES",
+        "WFP",
+        "WFQ",
+        "WFX"
+      ],
+      "aliases": [
+        "W Florida Reg",
+        "IRL",
+        "WFX",
+        "PES",
+        "WFP",
+        "WFQ"
+      ]
+    }
+  ],
+  "xslt": [
+    {
+      "partition": "ARA",
+      "software_id": "",
+      "name": "ariana-part2",
+      "split_codes": [],
+      "facilities": [],
+      "aliases": [
+        "Ariana",
+        "ARA",
+        "LigoLab"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-ariana-part2.xslt"
+    },
+    {
+      "partition": "GLF",
+      "software_id": "",
+      "name": "glf-expanse-admit-discharge-dates",
+      "split_codes": [],
+      "facilities": [],
+      "aliases": [
+        "Gulf",
+        "GLF"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-glf-expanse-admit-discharge-dates.xslt"
+    },
+    {
+      "partition": "HAL",
+      "software_id": "",
+      "name": "hal-haa-flatfile-xml-to-canonical-xml",
+      "split_codes": [],
+      "facilities": [],
+      "aliases": [
+        "Halifax HAA",
+        "HAA"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-hal-haa-flatfile-xml-to-canonical-xml.xslt"
+    },
+    {
+      "partition": "HAL",
+      "software_id": "",
+      "name": "halifax",
+      "split_codes": [],
+      "facilities": [],
+      "aliases": [
+        "Halifax",
+        "HAL",
+        "HAX",
+        "HAA"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-halifax-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "PPA",
+      "software_id": "",
+      "name": "merge-from-multiple-files-ppa",
+      "split_codes": [],
+      "facilities": [],
+      "aliases": [
+        "PPA"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-merge-from-multiple-files-ppa.xslt"
+    },
+    {
+      "partition": "NGP",
+      "software_id": "",
+      "name": "ngp-ap",
+      "split_codes": [],
+      "facilities": [],
+      "aliases": [
+        "NGP AP",
+        "NextGen AP"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-ngp-ap-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "NGP",
+      "software_id": "",
+      "name": "ngp",
+      "split_codes": [],
+      "facilities": [],
+      "aliases": [
+        "NGP",
+        "NextGen Pathology",
+        "NextGen"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-ngp-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "NGP",
+      "software_id": "",
+      "name": "ngp-healthfirst",
+      "split_codes": [],
+      "facilities": [],
+      "aliases": [
+        "NGP Healthfirst",
+        "NGP HealthFirst",
+        "Healthfirst",
+        "Health First",
+        "CAQ"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-ngp-healthfirst-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "PPA",
+      "software_id": "",
+      "name": "ppa",
+      "split_codes": [],
+      "facilities": [],
+      "aliases": [
+        "PPA"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-ppa-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "PPA",
+      "software_id": "",
+      "name": "ppa-neo",
+      "split_codes": [],
+      "facilities": [],
+      "aliases": [
+        "PPA"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-ppa-neo-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "PPS",
+      "software_id": "",
+      "name": "pps-and-nsp",
+      "split_codes": [],
+      "facilities": [],
+      "aliases": [
+        "PPS",
+        "NSP"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-pps-and-nsp-flatfilexml-to-canconicalxml.xslt"
+    },
+    {
+      "partition": "SPG",
+      "software_id": "",
+      "name": "stamford-flat-file",
+      "split_codes": [],
+      "facilities": [],
+      "aliases": [
+        "Stamford",
+        "SPG"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-stamford-flat-file.xslt"
+    },
+    {
+      "partition": "ARA",
+      "software_id": "",
+      "name": "travelers",
+      "split_codes": [],
+      "facilities": [],
+      "aliases": [
+        "Travelers"
+      ],
+      "xslt": "eip-root/interfaces/Flat File to HL7 and Kickout Reports/routes/1 - Incoming Flat Files by Partition and Client/transform-travelers.xslt"
+    }
+  ],
+  "partitions": [
+    "APS",
+    "ARA",
+    "CON",
+    "FPS",
+    "GLF",
+    "HAL",
+    "IRL",
+    "MID",
+    "NGP",
+    "NHL",
+    "NSP",
+    "NTX",
+    "PPA",
+    "PPS",
+    "SPG",
+    "WCH"
+  ]
+}

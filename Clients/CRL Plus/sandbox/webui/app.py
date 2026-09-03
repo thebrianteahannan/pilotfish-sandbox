@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""CRL Plus American Income Life (AIL) sandbox — HTTP POST + LAN results UI."""
+"""CRL Plus sandbox Web UI — inject 121s for every carrier into EIP / local mocks."""
 
 from __future__ import annotations
 
@@ -8,7 +8,10 @@ import json
 import os
 import socket
 import threading
+import time
 import uuid
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from xml.etree import ElementTree as ET
@@ -16,6 +19,7 @@ from xml.etree import ElementTree as ET
 from flask import Flask, jsonify, render_template, request
 
 app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 OUTPUT_DIR = Path(os.environ.get("OUTPUT_DIR", str(Path(__file__).resolve().parents[1] / "output")))
 SAMPLE_DIR = Path(os.environ.get("SAMPLE_DIR", str(Path(__file__).resolve().parents[1] / "sample-data")))
@@ -23,6 +27,12 @@ AUTH_USER = os.environ.get("AIL_AUTH_USER", "ail")
 AUTH_PASS = os.environ.get("AIL_AUTH_PASS", "AilSandbox$Test1")
 SKIP_OUTBOUND = os.environ.get("AIL_SKIP_OUTBOUND", "true").lower() in {"1", "true", "yes"}
 PORT = int(os.environ.get("PORT", "8094"))
+EIP_INJECT = os.environ.get("EIP_INJECT_BASE", "http://127.0.0.1:8180/eip/http-post").rstrip("/")
+MOCKS_INTERNAL = os.environ.get("MOCKS_INTERNAL", "http://127.0.0.1:8095").rstrip("/")
+CARRIERS_PATH = Path(os.environ.get("CARRIERS_FILE", str(Path(__file__).resolve().parents[1] / "carriers.json")))
+CARRIERS = json.loads(CARRIERS_PATH.read_text(encoding="utf-8")) if CARRIERS_PATH.is_file() else []
+EIP_INPUT = Path(os.environ.get("EIP_INPUT", str(Path(__file__).resolve().parents[1] / "input")))
+MOCKS_OUT = OUTPUT_DIR / "mocks"
 
 _lock = threading.Lock()
 _transactions: list[dict] = []
@@ -31,7 +41,7 @@ NS = {"a": "http://ACORD.org/Standards/Life/2"}
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds")
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def _lan_ip() -> str:
@@ -149,6 +159,133 @@ def _record(tx: dict) -> None:
     )
 
 
+def _sample_121(code: str, name: str) -> bytes:
+    guid = f"{code}-{uuid.uuid4().hex[:8]}"
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<TXLife xmlns="http://ACORD.org/Standards/Life/2">
+  <TXLifeRequest>
+    <TransRefGUID>{guid}</TransRefGUID>
+    <TransType tc="121">General Requirement Order Request</TransType>
+    <OLifE>
+      <SourceInfo><SourceInfoName>{code}</SourceInfoName><SourceInfoDescription>{name}</SourceInfoDescription></SourceInfo>
+      <Holding id="Holding_1"><HoldingTypeCode tc="2">Policy</HoldingTypeCode>
+        <Policy><PolNumber>{code}-POL-10001</PolNumber>
+          <RequirementInfo id="Req_1"><ReqCode tc="5">Paramedical</ReqCode><ReqStatus tc="1">Outstanding</ReqStatus>
+            <TrackingID>{guid}</TrackingID></RequirementInfo></Policy></Holding>
+      <Party id="Party_Insured"><Person><FirstName>Jordan</FirstName><LastName>Ellis</LastName></Person></Party>
+    </OLifE>
+  </TXLifeRequest>
+</TXLife>
+""".encode()
+
+
+def _http(url: str, data: bytes, headers: dict | None = None, timeout: int = 20) -> tuple[int, str]:
+    req = urllib.request.Request(url, data=data, headers=headers or {}, method="POST")
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return resp.status, resp.read().decode("utf-8", errors="replace")[:400]
+    except urllib.error.HTTPError as exc:
+        return exc.code, exc.read().decode("utf-8", errors="replace")[-400:]
+    except (OSError, TimeoutError) as exc:
+        return 0, str(exc)
+
+
+def _soap_wrap(xml_121: bytes, user: str, password: str) -> bytes:
+    inner = xml_121.decode("utf-8").replace("]]>", "]]]]><![CDATA[>")
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" '
+        'xmlns:doc="http://crlcorp.com/DocumentService">'
+        "<soap:Header><doc:WSSecurity><doc:Credentials>"
+        f"<doc:Username>{user}</doc:Username><doc:Password>{password}</doc:Password>"
+        "</doc:Credentials></doc:WSSecurity></soap:Header>"
+        "<soap:Body><doc:SubmitOrderData><doc:OrderData><![CDATA["
+        f"{inner}]]></doc:OrderData></doc:SubmitOrderData></soap:Body></soap:Envelope>"
+    ).encode()
+
+
+def _mock_snapshot(code: str) -> set[str]:
+    folder = MOCKS_OUT / code.lower()
+    if not folder.is_dir():
+        return set()
+    return {p.name for p in folder.iterdir() if p.is_file()}
+
+
+def _wait_eip_mock(code: str, before: set[str], seconds: float = 14.0) -> list[Path]:
+    folder = MOCKS_OUT / code.lower()
+    deadline = time.time() + seconds
+    found: list[Path] = []
+    while time.time() < deadline:
+        if folder.is_dir():
+            found = [p for p in folder.iterdir() if p.is_file() and p.name not in before]
+            if found:
+                return found
+        time.sleep(1.2)
+    return found
+
+
+def _inject_one(c: dict) -> dict:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    code, name = c["code"], c["name"]
+    path = str(c.get("path") or "").lstrip("/")
+    drop = str(c.get("dropDir") or code)
+    body = _sample_121(code, name)
+    before = _mock_snapshot(code)
+    drop_dir = EIP_INPUT / drop
+    drop_dir.mkdir(parents=True, exist_ok=True)
+    drop_file = drop_dir / f"{code}-{uuid.uuid4().hex[:8]}-121.xml"
+    drop_file.write_bytes(body)
+    eip = None
+    if path and c.get("user"):
+        payload = _soap_wrap(body, c["user"], c["password"]) if c.get("soap") else body
+        token = base64.b64encode(f"{c['user']}:{c['password']}".encode()).decode("ascii")
+        headers = {
+            "Authorization": f"Basic {token}",
+            "Content-Type": "text/xml; charset=UTF-8",
+            "SOAPAction": "http://crlcorp.com/DocumentService/SubmitOrderData",
+        }
+        eip_code, eip_body = _http(f"{EIP_INJECT}/{path}", payload, headers, 12)
+        eip = {"http": eip_code, "body": eip_body[:240]}
+    mock_files = _wait_eip_mock(code, before)
+    eip_ok = bool(eip) and eip["http"] in (200, 202)
+    mock_ok = bool(mock_files)
+    if not eip:
+        eip_detail = (
+            f"Dropped ACORD 121 on EIP input/{drop}/ ({drop_file.name}). "
+            "This carrier has no HTTP 121 listener in the package."
+        )
+        eip_ok = drop_file.is_file()
+    elif eip["http"] == 404:
+        eip_detail = (
+            f"HTTP 404 at /eip/http-post/{path}. Also dropped {drop_file.name} in input/{drop}/ "
+            "for the DirectoryListener (10s settle + poll)."
+        )
+        eip_ok = False
+    elif eip_ok:
+        eip_detail = f"eiPlatform HTTP {eip['http']} at /eip/http-post/{path}. File drop: {drop_file.name}."
+    else:
+        eip_detail = f"HTTP {eip['http']} at /eip/http-post/{path}. {eip.get('body','')[:180]}"
+    mock_detail = (
+        f"EIP posted {len(mock_files)} file(s) into mocks/{code.lower()}/: "
+        + ", ".join(p.name for p in mock_files[:3])
+        if mock_ok
+        else "No new file in the carrier mock inbox — EIP did not complete outbound 1122 yet."
+    )
+    _record(
+        {
+            "receivedAt": _now(),
+            "via": f"inject {code}",
+            "summary": f"{name}: inbound {'ok' if eip_ok else 'failed'}; mock 1122 from EIP {'yes' if mock_ok else 'no'}.",
+            "meta": {"trackingId": code, "polNumber": f"{code}-POL-10001", "insured": "Ellis, Jordan"},
+            "steps": [
+                {"route": "eiPlatform inbound 121", "ok": eip_ok, "detail": eip_detail},
+                {"route": f"{name} mock 1122 (from EIP)", "ok": mock_ok, "detail": mock_detail},
+            ],
+        }
+    )
+    return {"code": code, "name": name, "path": path, "eip": eip, "mockFiles": [p.name for p in mock_files]}
+
+
 def _run_pipeline(xml_bytes: bytes, via: str) -> dict:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     for sub in ("orders", "status", "responses"):
@@ -259,6 +396,12 @@ def index():
         transactions=txs,
         external_url="https://plus.intg.crlcorp.com/http-post/ail",
         local_url=f"http://{lan}:{PORT}/http-post/ail",
+        eip_url=os.environ.get("EIP_PUBLIC_URL", "http://127.0.0.1:8180/eip/"),
+        mocks_url=os.environ.get("MOCKS_URL", "http://127.0.0.1:8095/"),
+        sftp_hint=os.environ.get("SFTP_HINT", "localhost:2226 demo/demo"),
+        sql_hint=os.environ.get("SQL_HINT", "localhost:14342"),
+        mail_hint=os.environ.get("MAIL_HINT", "http://127.0.0.1:8026/"),
+        carriers=CARRIERS,
     )
 
 
@@ -289,11 +432,29 @@ def http_post_ail():
 
 @app.post("/api/run-sample")
 def run_sample():
+    ail = next((c for c in CARRIERS if c.get("code") == "AIL"), None)
+    if ail:
+        return jsonify({"ok": True, "result": _inject_one(ail)})
     sample = SAMPLE_DIR / "ail-121-order.xml"
-    if not sample.exists():
+    if not sample.is_file():
         return jsonify({"ok": False, "error": "sample missing"}), 404
     tx = _run_pipeline(sample.read_bytes(), via="UI sample inject")
     return jsonify({"ok": True, "transaction": tx})
+
+
+@app.post("/api/inject")
+def api_inject():
+    code = (request.json or {}).get("code") if request.is_json else request.args.get("code")
+    hit = next((c for c in CARRIERS if c["code"] == code), None)
+    if not hit:
+        return jsonify({"ok": False, "error": "unknown carrier"}), 404
+    return jsonify({"ok": True, "result": _inject_one(hit)})
+
+
+@app.post("/api/inject-all")
+def api_inject_all():
+    results = [_inject_one(c) for c in CARRIERS]
+    return jsonify({"ok": True, "results": results})
 
 
 @app.post("/ail/status")
@@ -316,7 +477,8 @@ def health():
     return jsonify(
         {
             "ok": True,
-            "client": "AmericanIncomeLife",
+            "client": "CRL Plus",
+            "carriers": len(CARRIERS),
             "sourceClient": "AIL",
             "requestPath": "ail",
             "lan": f"http://{_lan_ip()}:{PORT}/",
@@ -326,4 +488,4 @@ def health():
 
 if __name__ == "__main__":
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    app.run(host=os.environ.get("HOST", "0.0.0.0"), port=PORT, debug=False)
+    app.run(host=os.environ.get("HOST", "0.0.0.0"), port=PORT, debug=False, use_reloader=False)

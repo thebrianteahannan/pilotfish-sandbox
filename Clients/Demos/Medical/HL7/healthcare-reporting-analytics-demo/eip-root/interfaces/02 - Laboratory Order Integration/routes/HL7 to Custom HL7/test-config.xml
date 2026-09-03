@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><TestConfigurations>
+  <TestConfig name="hl7_test">
+    <AlternateDataSource>From File</AlternateDataSource>
+    <Stage>
+      <Identifier>transform@listener=EHR HL7 LLP Listener</Identifier>
+      <IsStart file="/usr/local/pfcommon/HIMSS_Demo/HIMSS 2018 Demos/interfaces/02 - Laboratory Order Integration/data/samples/Single_Lab_ORM_Sample.hl7">true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>forking@listener=EHR HL7 LLP Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>routing</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=LIS HL7 LLP Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=LIS HL7 LLP Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=LIS HL7 LLP Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=LIS HL7 LLP Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=Manitoba MOH FTP Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=Manitoba MOH FTP Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=Manitoba MOH FTP Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=Manitoba MOH FTP Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=Ontario MOH SOAP Service</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=Ontario MOH SOAP Service</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=Ontario MOH SOAP Service</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=Ontario MOH SOAP Service</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=Quebec MOH HTTP Post Destination</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=Quebec MOH HTTP Post Destination</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=Quebec MOH HTTP Post Destination</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=Quebec MOH HTTP Post Destination</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+</TestConfigurations>

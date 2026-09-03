@@ -1,0 +1,1510 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TestConfigurations>
+  <TestConfig name="Test - Re-admit">
+        
+    <AlternateDataSource>From Text</AlternateDataSource>
+        
+    <StartingText>MSH|^~\&amp;||OUT|CSM|NDSP|20211130130000.0000||ADT^A22|8537il90-6ass-6a30-b175-2835159bc440|T|2.3.1&#13;
+EVN|A22|20211207100000.0000||||20211207100000.0000|&#13;
+PID|||000000231||TORTOISE^RAPHAELL||19810806|M||||||||||124124&#13;
+PV1||I||||NDSPSU^SU^NDSPSU1108B||||NDSP||||||||||||||||||||||||||||||||||20211207100000.0000|&#13;
+PV2|1|ROOMBOARD&#13;
+ZLR|TRN|9</StartingText>
+        
+    <Stage>
+            
+      <Identifier>transform@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener</Identifier>
+            
+      <IsStart>true</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>forking@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>routing</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>joining@transport=1 - New Admissions.3 - Send HL7 File.HL7 LLP Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>transform@transport=1 - New Admissions.3 - Send HL7 File.HL7 LLP Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>transport@transport=1 - New Admissions.3 - Send HL7 File.HL7 LLP Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>processor@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener,processor=1 - Admissions (ADT_A01).3 - Send HL7 File.Post-Processor1</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>processor@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener,processor=1 - Admissions (ADT_A01).3 - Send HL7 File.Post-Processor</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>processor@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener,processor=1 - Admissions (ADT_A01).3 - Send HL7 File.Post-Processor2</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>joining@transport=1 - Admissions (ADT_A01).3 - Send HL7 File.Directory / File Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>transform@transport=1 - Admissions (ADT_A01).3 - Send HL7 File.Directory / File Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>transport@transport=1 - Admissions (ADT_A01).3 - Send HL7 File.Directory / File Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+      
+  </TestConfig>
+  <TestConfig name="Test1 adt a05">
+                    
+    
+    
+    
+    <AlternateDataSource>From Text</AlternateDataSource>
+                    
+    
+    
+    
+    <StartingText>MSH|^~\&amp;||OUT|CSM|NDSP|20211124090000.0000||ADT^A05|8476ij80-4af4-4a30-b175-2835159bc440|T|2.3.1&#13;
+EVN|A05|20211129120000.0000&#13;
+PID||000000223|000000223||TURTLE^RAPHAEL||19810806|M||||||||||123555&#13;
+NK1|1&#13;
+PV1||I||||||||NDSP||||||||||||||||||||||||||||||||||20211129120000.0000|&#13;
+PV2|1|ROOMBOARD&#13;
+GT1|1||TURTLE^RAPHAEL</StartingText>
+                    
+    
+    
+    
+    <Stage>
+                              
+      
+      
+      
+      <Identifier>transform@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener</Identifier>
+                              
+      
+      
+      
+      <IsStart>true</IsStart>
+                              
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                              
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                              
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                            
+    
+    
+    
+    </Stage>
+                    
+    
+    
+    
+    <Stage>
+                              
+      
+      
+      
+      <Identifier>forking@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener</Identifier>
+                              
+      
+      
+      
+      <IsStart>false</IsStart>
+                              
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                              
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                              
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                            
+    
+    
+    
+    </Stage>
+                    
+    
+    
+    
+    <Stage>
+                              
+      
+      
+      
+      <Identifier>routing</Identifier>
+                              
+      
+      
+      
+      <IsStart>false</IsStart>
+                              
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                              
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                              
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                            
+    
+    
+    
+    </Stage>
+                    
+    
+    
+    
+    <Stage>
+                              
+      
+      
+      
+      <Identifier>joining@transport=1 - New Admissions.3 - Send HL7 File.HL7 LLP Transport</Identifier>
+                              
+      
+      
+      
+      <IsStart>false</IsStart>
+                              
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                              
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                              
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                            
+    
+    
+    
+    </Stage>
+                    
+    
+    
+    
+    <Stage>
+                              
+      
+      
+      
+      <Identifier>transform@transport=1 - New Admissions.3 - Send HL7 File.HL7 LLP Transport</Identifier>
+                              
+      
+      
+      
+      <IsStart>false</IsStart>
+                              
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                              
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                              
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                            
+    
+    
+    
+    </Stage>
+                    
+    
+    
+    
+    <Stage>
+                              
+      
+      
+      
+      <Identifier>transport@transport=1 - New Admissions.3 - Send HL7 File.HL7 LLP Transport</Identifier>
+                              
+      
+      
+      
+      <IsStart>false</IsStart>
+                              
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                              
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                              
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                            
+    
+    
+    
+    </Stage>
+                    
+    
+    
+    
+    <Stage>
+                              
+      
+      
+      
+      <Identifier>processor@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener,processor=1 - Admissions (ADT_A01).3 - Send HL7 File.Post-Processor1</Identifier>
+                              
+      
+      
+      
+      <IsStart>false</IsStart>
+                              
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                              
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                              
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                            
+    
+    
+    
+    </Stage>
+                    
+    
+    
+    
+    <Stage>
+                              
+      
+      
+      
+      <Identifier>processor@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener,processor=1 - Admissions (ADT_A01).3 - Send HL7 File.Post-Processor</Identifier>
+                              
+      
+      
+      
+      <IsStart>false</IsStart>
+                              
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                              
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                              
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                            
+    
+    
+    
+    </Stage>
+                    
+    
+    
+    
+    <Stage>
+                              
+      
+      
+      
+      <Identifier>processor@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener,processor=1 - Admissions (ADT_A01).3 - Send HL7 File.Post-Processor2</Identifier>
+                              
+      
+      
+      
+      <IsStart>false</IsStart>
+                              
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                              
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                              
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                            
+    
+    
+    
+    </Stage>
+                    
+    
+    
+    
+    <Stage>
+                              
+      
+      
+      
+      <Identifier>joining@transport=1 - Admissions (ADT_A01).3 - Send HL7 File.Directory / File Transport</Identifier>
+                              
+      
+      
+      
+      <IsStart>false</IsStart>
+                              
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                              
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                              
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                            
+    
+    
+    
+    </Stage>
+                    
+    
+    
+    
+    <Stage>
+                              
+      
+      
+      
+      <Identifier>transform@transport=1 - Admissions (ADT_A01).3 - Send HL7 File.Directory / File Transport</Identifier>
+                              
+      
+      
+      
+      <IsStart>false</IsStart>
+                              
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                              
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                              
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                            
+    
+    
+    
+    </Stage>
+                    
+    
+    
+    
+    <Stage>
+                              
+      
+      
+      
+      <Identifier>transport@transport=1 - Admissions (ADT_A01).3 - Send HL7 File.Directory / File Transport</Identifier>
+                              
+      
+      
+      
+      <IsStart>false</IsStart>
+                              
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                              
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                              
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                            
+    
+    
+    
+    </Stage>
+                  
+  
+  
+  
+  </TestConfig>
+  <TestConfig name="Test - Leave of Absence">
+        
+    <AlternateDataSource>From Text</AlternateDataSource>
+        
+    <StartingText>MSH|^~\&amp;||OUT|CSM|NDSP|20211130130000.0000||ADT^A21|8537il90-6aks-6a30-b175-2835159bc440|T|2.3.1&#13;
+EVN|A21|20211207100000.0000||||20211207100000.0000|&#13;
+PID|||000000231||TORTOISE^RAPHAELL||19810806|M||||||||||124124&#13;
+PV1||I||||NDSPSU^SU^NDSPSU1108B||||NDSP||||||||||||||||||||||||||||||||||20211207100000.0000|&#13;
+PV2|1|ROOMBOARD&#13;
+ZLR|TRN|9</StartingText>
+        
+    <Stage>
+            
+      <Identifier>transform@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener</Identifier>
+            
+      <IsStart>true</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>forking@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>routing</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>joining@transport=1 - New Admissions.3 - Send HL7 File.HL7 LLP Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>transform@transport=1 - New Admissions.3 - Send HL7 File.HL7 LLP Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>transport@transport=1 - New Admissions.3 - Send HL7 File.HL7 LLP Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>processor@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener,processor=1 - Admissions (ADT_A01).3 - Send HL7 File.Post-Processor1</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>processor@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener,processor=1 - Admissions (ADT_A01).3 - Send HL7 File.Post-Processor</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>processor@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener,processor=1 - Admissions (ADT_A01).3 - Send HL7 File.Post-Processor2</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>joining@transport=1 - Admissions (ADT_A01).3 - Send HL7 File.Directory / File Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>transform@transport=1 - Admissions (ADT_A01).3 - Send HL7 File.Directory / File Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>transport@transport=1 - Admissions (ADT_A01).3 - Send HL7 File.Directory / File Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+      
+  </TestConfig>
+  <TestConfig name="Test2">
+                                
+    
+    
+    
+    
+    
+    
+    <AlternateDataSource>From Text</AlternateDataSource>
+                                
+    
+    
+    
+    
+    
+    
+    <StartingText>MSH|^~\&amp;||YCC|CSM|YCC|20211109120000.0000||ADT^A01|d9957b39-4bb4-4432-8e11-42aee9c43595|T|2.3.1&#13;
+EVN|A01|20211109120000.0000&#13;
+PID|||11037916||MILLER^TYLER||20050215|M||||||||||59120&#13;
+NK1|1&#13;
+PV1||I|YCCPINE^COTTAGE^YCCPINECOTTAGE11037916|||||||YCC||||||||||||||||||||||||||||||||||20211109120000.0000&#13;
+PV2|1|ROOMBOARD&#13;
+GT1|1||MILLER^TYLER&#13;
+&#13;
+</StartingText>
+                                
+    
+    
+    
+    
+    
+    
+    <Stage>
+                                                
+      
+      
+      
+      
+      
+      
+      <Identifier>transform@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener</Identifier>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsStart>true</IsStart>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                                              
+    
+    
+    
+    
+    
+    
+    </Stage>
+                                
+    
+    
+    
+    
+    
+    
+    <Stage>
+                                                
+      
+      
+      
+      
+      
+      
+      <Identifier>forking@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener</Identifier>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsStart>false</IsStart>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                                              
+    
+    
+    
+    
+    
+    
+    </Stage>
+                                
+    
+    
+    
+    
+    
+    
+    <Stage>
+                                                
+      
+      
+      
+      
+      
+      
+      <Identifier>routing</Identifier>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsStart>false</IsStart>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                                              
+    
+    
+    
+    
+    
+    
+    </Stage>
+                                
+    
+    
+    
+    
+    
+    
+    <Stage>
+                                                
+      
+      
+      
+      
+      
+      
+      <Identifier>joining@transport=1 - New Admissions.3 - Send HL7 File.HL7 LLP Transport</Identifier>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsStart>false</IsStart>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                                              
+    
+    
+    
+    
+    
+    
+    </Stage>
+                                
+    
+    
+    
+    
+    
+    
+    <Stage>
+                                                
+      
+      
+      
+      
+      
+      
+      <Identifier>transform@transport=1 - New Admissions.3 - Send HL7 File.HL7 LLP Transport</Identifier>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsStart>false</IsStart>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                                              
+    
+    
+    
+    
+    
+    
+    </Stage>
+                                
+    
+    
+    
+    
+    
+    
+    <Stage>
+                                                
+      
+      
+      
+      
+      
+      
+      <Identifier>transport@transport=1 - New Admissions.3 - Send HL7 File.HL7 LLP Transport</Identifier>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsStart>false</IsStart>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                                              
+    
+    
+    
+    
+    
+    
+    </Stage>
+                                
+    
+    
+    
+    
+    
+    
+    <Stage>
+                                                
+      
+      
+      
+      
+      
+      
+      <Identifier>processor@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener,processor=1 - Admissions (ADT_A01).3 - Send HL7 File.Post-Processor1</Identifier>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsStart>false</IsStart>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                                              
+    
+    
+    
+    
+    
+    
+    </Stage>
+                                
+    
+    
+    
+    
+    
+    
+    <Stage>
+                                                
+      
+      
+      
+      
+      
+      
+      <Identifier>processor@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener,processor=1 - Admissions (ADT_A01).3 - Send HL7 File.Post-Processor</Identifier>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsStart>false</IsStart>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                                              
+    
+    
+    
+    
+    
+    
+    </Stage>
+                                
+    
+    
+    
+    
+    
+    
+    <Stage>
+                                                
+      
+      
+      
+      
+      
+      
+      <Identifier>processor@listener=1 - New Admissions.3 - Send HL7 File.Programmable (Trigger) Listener,processor=1 - Admissions (ADT_A01).3 - Send HL7 File.Post-Processor2</Identifier>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsStart>false</IsStart>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                                              
+    
+    
+    
+    
+    
+    
+    </Stage>
+                                
+    
+    
+    
+    
+    
+    
+    <Stage>
+                                                
+      
+      
+      
+      
+      
+      
+      <Identifier>joining@transport=1 - Admissions (ADT_A01).3 - Send HL7 File.Directory / File Transport</Identifier>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsStart>false</IsStart>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                                              
+    
+    
+    
+    
+    
+    
+    </Stage>
+                                
+    
+    
+    
+    
+    
+    
+    <Stage>
+                                                
+      
+      
+      
+      
+      
+      
+      <Identifier>transform@transport=1 - Admissions (ADT_A01).3 - Send HL7 File.Directory / File Transport</Identifier>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsStart>false</IsStart>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                                              
+    
+    
+    
+    
+    
+    
+    </Stage>
+                                
+    
+    
+    
+    
+    
+    
+    <Stage>
+                                                
+      
+      
+      
+      
+      
+      
+      <Identifier>transport@transport=1 - Admissions (ADT_A01).3 - Send HL7 File.Directory / File Transport</Identifier>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsStart>false</IsStart>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsTrace>false</IsTrace>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsEnd>false</IsEnd>
+                                                
+      
+      
+      
+      
+      
+      
+      <IsSkipping>false</IsSkipping>
+                                              
+    
+    
+    
+    
+    
+    
+    </Stage>
+                              
+  
+  
+  
+  
+  
+  
+  </TestConfig>
+</TestConfigurations>

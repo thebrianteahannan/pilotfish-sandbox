@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+import os
 import re
 import threading
 from pathlib import Path
@@ -11,6 +13,8 @@ import demos
 ROOT = demos.ROOT
 CLIENTS = demos.CLIENTS
 SKIP_NAMES = {"Demos", "_shared", "_incoming"}
+EIP_VERSION_FILE = "eip-version.json"
+MEDREC_EIP_PORT = 18080
 
 _job_lock = threading.Lock()
 _job: dict = {"busy": False, "action": "", "slug": "", "message": "Idle", "error": ""}
@@ -50,6 +54,32 @@ def require_root(slug: str) -> Path:
     raise ValueError(f"Unknown client {slug!r}")
 
 
+def eip_version(root: Path) -> str:
+    path = root / EIP_VERSION_FILE
+    if not path.is_file():
+        return ""
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return ""
+    if isinstance(data, dict):
+        return str(data.get("version") or "").strip()
+    return str(data).strip()
+
+
+def set_eip_version(slug: str, version: str) -> dict:
+    root = require_root(slug)
+    ver = " ".join(str(version or "").split())[:40]
+    if any(ch in ver for ch in "/\\"):
+        raise ValueError("Invalid eiPlatform version")
+    path = root / EIP_VERSION_FILE
+    if not ver:
+        path.unlink(missing_ok=True)
+        return {"ok": True, "eip_version": ""}
+    path.write_text(json.dumps({"version": ver}, indent=2) + "\n", encoding="utf-8")
+    return {"ok": True, "eip_version": ver}
+
+
 def client_title(root: Path) -> str:
     readme = root / "README.md"
     if readme.is_file():
@@ -72,7 +102,7 @@ def _webui_port(root: Path) -> int | None:
         if m:
             return int(m.group(1))
     if slug_for(root.name) == "med-rec":
-        return 8080
+        return MEDREC_EIP_PORT
     return None
 
 
@@ -80,7 +110,26 @@ def _crl_running() -> bool:
     code, out = demos.run(["docker", "ps", "--format", "{{.Names}}"], timeout=15)
     if code != 0:
         return False
-    return any(n.strip() == "pf-crlplus-ail-sandbox" for n in out.splitlines())
+    names = {n.strip() for n in out.splitlines()}
+    return bool(names & {"pf-crlplus-ail-sandbox", "pf-crlplus-eip"})
+
+
+def _free_host_port(port: int) -> list[str]:
+    """Stop other containers publishing this host port so Med Rec EIP can bind."""
+    code, out = demos.run(
+        ["docker", "ps", "--filter", f"publish={port}", "--format", "{{.Names}}"],
+        timeout=15,
+    )
+    if code != 0:
+        return []
+    stopped: list[str] = []
+    for name in out.splitlines():
+        name = name.strip()
+        if not name or name == "pilotfish-eip":
+            continue
+        demos.run(["docker", "stop", name], timeout=60)
+        stopped.append(name)
+    return stopped
 
 
 def _medrec_running() -> bool:
@@ -131,6 +180,7 @@ def list_clients() -> list[dict]:
                 "local_url": local,
                 "lan_url": local.replace("127.0.0.1", lan) if local else "",
                 "has_sandbox": bool(_compose_sandbox(root)) or slug == "med-rec",
+                "eip_version": eip_version(root),
                 "request_count": len(reqs),
                 "latest_request": latest,
             }
@@ -189,12 +239,37 @@ def push_eip_files(root: Path, rels: list[str]) -> int:
 def start_client(root: Path) -> str:
     slug = slug_for(root.name)
     stop_demo_stacks()
+    if slug == "crl-plus":
+        import shutil
+
+        import eip_runtime
+
+        if _medrec_running():
+            demos.run(["bash", str(ROOT / "docker-run.sh"), "stop"], cwd=ROOT, timeout=120)
+        ver = eip_version(root) or "26R1"
+        pf_dir = root / "sandbox" / "pilotfish"
+        pf_dir.mkdir(parents=True, exist_ok=True)
+        eip_runtime.stage_war(ver, pf_dir / "eip.war")
+        lic = ROOT / "pflicense.key"
+        if lic.is_file():
+            shutil.copy2(lic, pf_dir / "pflicense.key")
+        elif not (pf_dir / "pflicense.key").is_file():
+            raise RuntimeError("Missing repo-root pflicense.key")
     if slug == "med-rec":
+        import eip_runtime
+
+        taken = _free_host_port(MEDREC_EIP_PORT)
+        ver = eip_version(root) or "23R1"
+        eip_runtime.stage_war(ver, ROOT / "eip.war")
+        env = os.environ.copy()
+        env["EIP_VERSION"] = ver
+        env["HOST_PORT"] = str(MEDREC_EIP_PORT)
         script = ROOT / "docker-run.sh"
-        code, out = demos.run(["bash", str(script), "start"], cwd=ROOT, timeout=180)
+        code, out = demos.run(["bash", str(script), "start"], cwd=ROOT, timeout=600, env=env)
         if code != 0:
             raise RuntimeError(out or "docker-run.sh start failed")
-        return out or "started Med Rec EIP"
+        extra = f" (stopped {', '.join(taken)} on :{MEDREC_EIP_PORT})" if taken else ""
+        return (out or "started Med Rec EIP") + extra
     yml = _compose_sandbox(root)
     if not yml:
         raise RuntimeError(f"{root.name} has no sandbox compose")
@@ -211,7 +286,7 @@ def start_client(root: Path) -> str:
         "-d",
         "--build",
     ]
-    code, out = demos.run(cmd, cwd=yml.parent, timeout=240)
+    code, out = demos.run(cmd, cwd=yml.parent, timeout=600 if slug == "crl-plus" else 240)
     if code != 0:
         raise RuntimeError(out or "compose up failed")
     return out or f"started {slug}"

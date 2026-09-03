@@ -7,8 +7,8 @@
   </xsl:template>
   <!--FILTER CHARGES THAT MATCH STRIP_SITE_LOCATIONS - LAKE NONA ONLY-->
   <xsl:template match="Charge">
-    <xsl:variable name="performingSite" select="./performingSite" />
-    <xsl:variable name="performingSiteCount" select="count(/XCSData/query_results/STRIP_PERFORMING_SITES/STRIP_PERFORMING_SITES[MNEMONIC = $performingSite])" />
+    <xsl:variable name="performingSite" select="normalize-space(./performingSite)" />
+    <xsl:variable name="performingSiteCount" select="count(/XCSData/query_results/STRIP_PERFORMING_SITES/STRIP_PERFORMING_SITES[normalize-space(MNEMONIC) = $performingSite])" />
     <xsl:choose>
       <xsl:when test="$performingSiteCount = 0">
         <xsl:copy>

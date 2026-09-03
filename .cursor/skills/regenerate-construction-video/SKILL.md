@@ -29,6 +29,15 @@ python3 tools/regenerate_construction_video.py <slug>
 
 Needs `tools/.venv-video`. Export can take 2–4 minutes; wait for it.
 
+If they ask to redo **one part** of an existing eiConsole construction video (Data Mapper, Testing Mode, …), do **not** remake the whole take:
+
+```bash
+tools/.venv-video/bin/python tools/export_construction_video.py --root Clients/Demos/<path> --list-sections
+tools/.venv-video/bin/python tools/export_construction_video.py --root Clients/Demos/<path> --section data-mappers
+```
+
+That splices the new stretch into the current `construction-replay.mp4`. `--from-id` / `--to-id` work when there is no named section.
+
 ## After
 
 Confirm:

@@ -12,6 +12,11 @@ CLIENTS = demos.CLIENTS
 KNOWN = {
     "pilotfish-eip": ("client", "Med Rec"),
     "pf-crlplus-ail-sandbox": ("client", "CRL Plus"),
+    "pf-crlplus-eip": ("client", "CRL Plus"),
+    "pf-crlplus-mocks": ("client", "CRL Plus"),
+    "pf-crlplus-sftp": ("client", "CRL Plus"),
+    "pf-crlplus-sql": ("client", "CRL Plus"),
+    "pf-crlplus-mail": ("client", "CRL Plus"),
 }
 
 _demo_slugs: list[str] | None = None

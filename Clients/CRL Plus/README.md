@@ -1,4 +1,4 @@
-# CRL Plus — American Income Life (AIL)
+# CRL Plus
 
 Implements the AIL electronic-order programming request using the Ladder / FGL client pattern.
 

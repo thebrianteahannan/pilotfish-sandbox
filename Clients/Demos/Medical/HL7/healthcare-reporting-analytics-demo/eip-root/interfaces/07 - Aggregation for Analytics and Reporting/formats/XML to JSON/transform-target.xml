@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:json="http://www.pilotfishtechnology.com/schemas/json" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="http://www.pilotfishtechnology.com/schemas/json">
+			<xsd:element name="JSON" type="json:JSON_type" />
+			<xsd:complexType name="OBJECT_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" ref="patients" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="JSON_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="OBJECT" type="json:OBJECT_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="patients" type="patients_type" />
+			<xsd:complexType name="patient_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="mrn">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="pf_json_type" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="lastName">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="pf_json_type" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="firstName">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="pf_json_type" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="dob">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="pf_json_type" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="address">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="pf_json_type" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="city">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="pf_json_type" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="state">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="pf_json_type" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="postalCode">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="pf_json_type" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="patients_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="patient" type="patient_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

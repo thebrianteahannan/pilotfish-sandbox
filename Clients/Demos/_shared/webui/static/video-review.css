@@ -1,0 +1,87 @@
+.pf-video-player-wrap {
+  margin: 0.35rem 0 1rem;
+}
+.pf-video-player-wrap[hidden] {
+  display: none !important;
+}
+.pf-construction-player {
+  display: block;
+  width: 100%;
+  max-height: 68vh;
+  background: #111418;
+  border-radius: 10px;
+}
+.pf-video-review {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #d5e0ea;
+}
+.pf-video-review-compose {
+  display: grid;
+  grid-template-columns: 4.2rem 1fr auto;
+  gap: 0.5rem;
+  align-items: start;
+}
+.pf-video-review-time {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: #005a87;
+  padding-top: 0.45rem;
+}
+.pf-video-review-compose textarea {
+  width: 100%;
+  min-height: 3.2rem;
+  font: inherit;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid #d5e0ea;
+  border-radius: 8px;
+  resize: vertical;
+}
+.pf-video-review-list {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+}
+.pf-video-note {
+  display: grid;
+  grid-template-columns: 4.2rem 1fr auto;
+  gap: 0.5rem;
+  align-items: start;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid #eef2f6;
+}
+.pf-video-note.is-done .pf-video-note-text {
+  color: #6b6b6b;
+  text-decoration: line-through;
+}
+.pf-video-note-time {
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: #007cba;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.pf-video-note-text {
+  margin: 0;
+  line-height: 1.4;
+}
+.pf-video-note-actions {
+  display: flex;
+  gap: 0.35rem;
+}
+.pf-video-note-actions button {
+  font: inherit;
+  font-size: 0.8rem;
+  border: 1px solid #d5e0ea;
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.15rem 0.45rem;
+  cursor: pointer;
+}
+.pf-video-review-empty {
+  margin: 0.55rem 0 0;
+}

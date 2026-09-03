@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "interface": "EDI 834 CSV Excel Conversion",
+  "slug": "edi-csv-excel-834",
+  "path": "Clients/Demos/Insurance/EDI/edi-csv-excel-834",
+  "requested_by": "user",
+  "started_at": "2026-08-28T17:29:08Z",
+  "completed_at": "2026-08-28T17:47:02Z",
+  "completed_by": "cursor-agent",
+  "duration_minutes": 18,
+  "compose_project": "edi-csv-excel-834",
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-28T17:29:08Z",
+      "ended_at": "2026-08-28T17:32:00Z",
+      "duration_minutes": 3,
+      "notes": "Progressive build visibility"
+    },
+    {
+      "id": "swing_copy",
+      "name": "Copy eiConsole Swing driver into sandbox",
+      "started_at": "2026-08-28T17:32:00Z",
+      "ended_at": "2026-08-28T17:36:00Z",
+      "duration_minutes": 4,
+      "notes": "Sibling PilotFish Swing Demo Auto left untouched"
+    },
+    {
+      "id": "routes",
+      "name": "CSV→834 and 834→CSV routes",
+      "started_at": "2026-08-28T17:36:00Z",
+      "ended_at": "2026-08-28T17:45:30Z",
+      "duration_minutes": 10,
+      "notes": "EDITransformationProcessor + mounted 834-A1 table data"
+    },
+    {
+      "id": "docs_tests",
+      "name": "PDFs and interface tests",
+      "started_at": "2026-08-28T17:45:30Z",
+      "ended_at": "2026-08-28T17:47:02Z",
+      "duration_minutes": 2,
+      "notes": "9/9 tests passed"
+    }
+  ],
+  "slowest_phases": ["routes"],
+  "bottlenecks": ["First-pass 834 EDI XML needed an explicit ST child for the transformer"],
+  "speedup_ideas": []
+}

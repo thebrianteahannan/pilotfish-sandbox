@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Format xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" name="EDI to XML">
+  <TransformationModule class="com.pilotfish.eip.modules.transform.edi.EDITransformationModule">
+    <ModuleConfig>
+      <ExecuteTransformation>true</ExecuteTransformation>
+      <UseInternalData>false</UseInternalData>
+      <USE_ENHANCED_CONTEXT>true</USE_ENHANCED_CONTEXT>
+      <TransactionDataWithVersion>[eip_pair:{ognl:#properties.get('root.data')+'/edi-tabledata/837-Q1'}:eip_name:5010:eip_value]</TransactionDataWithVersion>
+      <CUSTOM_METADATA_DIRECTORY>{ognl:#properties.get('root.data')+'/edi-tabledata/837-Q1'}</CUSTOM_METADATA_DIRECTORY>
+      <CODE_DEFS>false</CODE_DEFS>
+      <FriendlyNamesLevel>Add as attributes</FriendlyNamesLevel>
+      <Snip1Validation>true</Snip1Validation>
+      <Snip2Validation>false</Snip2Validation>
+      <Snip3Validation>false</Snip3Validation>
+      <ADD_INLINE_VALIDATION>false</ADD_INLINE_VALIDATION>
+      <OutputEndlines>true</OutputEndlines>
+      <DataDelimiter>*</DataDelimiter>
+      <SubDelimiter>:</SubDelimiter>
+      <RepetitionDelimiter>^</RepetitionDelimiter>
+      <RecordDelimiter>~</RecordDelimiter>
+      <USE_LEGACY_FORMAT>false</USE_LEGACY_FORMAT>
+      <THROW_EXCEPTION_ON_INVALID_MESSAGE>false</THROW_EXCEPTION_ON_INVALID_MESSAGE>
+      <VALIDATE_MESSAGE>false</VALIDATE_MESSAGE>
+      <USE_CUSTOM_METADATA>false</USE_CUSTOM_METADATA>
+      <SubSubDelimiter>^</SubSubDelimiter>
+      <UseFriendlyNames>true</UseFriendlyNames>
+      <ValidationLevel>0. No HIPAA Validation</ValidationLevel>
+    </ModuleConfig>
+  </TransformationModule>
+  <XSLT>
+    <XSLTParameters>null</XSLTParameters>
+    <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+    <CacheXSLTToXML>false</CacheXSLTToXML>
+    <FromXML />
+    <ToXML>EDI to db schema.xslt</ToXML>
+    <ExecuteTransformation>true</ExecuteTransformation>
+    <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+    <XSLTEngine>SAXON</XSLTEngine>
+    <ToXMLAdditional>null</ToXMLAdditional>
+    <CacheXSLTFromXML>false</CacheXSLTFromXML>
+    <XSLTVersion>1.0</XSLTVersion>
+    <FromXMLAdditional>null</FromXMLAdditional>
+  </XSLT>
+  <FormatMetadata />
+  <SplitControl xmlns="http://www.pilotfishtechnology.com/eip/FormatSpec">
+    <JoinModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullJoinModule" />
+    <ForkModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullForkModule" />
+  </SplitControl>
+</Format>
+

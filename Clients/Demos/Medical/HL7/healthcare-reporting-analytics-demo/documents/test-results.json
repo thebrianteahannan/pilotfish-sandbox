@@ -1,0 +1,88 @@
+{
+  "interface": "HL7, EDI & FHIR Data Integration for Analytics & Reporting",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Medical/HL7/healthcare-reporting-analytics-demo",
+  "started_at": "2026-09-02T18:57:32.925556+00:00",
+  "finished_at": "2026-09-02T18:57:33.029852+00:00",
+  "summary": {
+    "pass": 8,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 8
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 1,
+      "message": "UI OK (http://127.0.0.1:8154/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 9,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "send-llp",
+      "name": "Send sample ADT over LLP",
+      "suite": "ADT to SQL and JSON",
+      "status": "pass",
+      "duration_ms": 28,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "sql-row",
+      "name": "SQL row has BUNNY / BUGS",
+      "suite": "ADT to SQL and JSON",
+      "status": "pass",
+      "duration_ms": 13,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "send-fhir",
+      "name": "POST sample FHIR Patient",
+      "suite": "FHIR Patient to SQL",
+      "status": "pass",
+      "duration_ms": 13,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "sql-chalmers",
+      "name": "SQL row has Chalmers",
+      "suite": "FHIR Patient to SQL",
+      "status": "pass",
+      "duration_ms": 15,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "send-edi",
+      "name": "Drop sample 837 on FTP",
+      "suite": "837 over FTP to SQL",
+      "status": "pass",
+      "duration_ms": 7,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "sql-kildare",
+      "name": "SQL row has billing provider Kildare",
+      "suite": "837 over FTP to SQL",
+      "status": "pass",
+      "duration_ms": 15,
+      "message": "HTTP 200",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Medical/HL7/healthcare-reporting-analytics-demo/tests/plan.json"
+}

@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "demo": "healthcare-reporting-analytics-demo",
+  "path": "Clients/Demos/Medical/HL7/healthcare-reporting-analytics-demo",
+  "synced_at": "2026-09-02T18:57:32Z",
+  "documentation_root": "/Users/brianhannan/Documents/PilotFish Documentation/Documents",
+  "modules": [
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.DirectoryListener",
+      "kind": "Listener",
+      "ui_type": "Directory / File",
+      "pdf": "module-docs/PilotFish-Directory-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-Directory-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.ftp.FTPListener",
+      "kind": "Listener",
+      "ui_type": "FTP / SFTP",
+      "pdf": "module-docs/PilotFish-FTP-SFTP-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-FTP-SFTP-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.hl7.HL7TCPListener",
+      "kind": "Listener",
+      "ui_type": "HL7 LLP",
+      "pdf": "module-docs/PilotFish-HL7-LLP-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-HL7-LLP-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.http.HttpPostListener",
+      "kind": "Listener",
+      "ui_type": "HTTP Post",
+      "pdf": "module-docs/PilotFish-HTTP-Post-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-HTTP-Post-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.http.rest.RESTfulWebServiceListener",
+      "kind": "Listener",
+      "ui_type": "RESTful Web Service",
+      "pdf": "module-docs/PilotFish-RESTful-Web-Service-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-RESTful-Web-Service-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.http.SoapHttpPostListener",
+      "kind": "Listener",
+      "ui_type": "SOAP Web Service",
+      "pdf": "module-docs/PilotFish-SOAP-Web-Service-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-SOAP-Web-Service-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.FileWriteProcessor",
+      "kind": "Processor",
+      "ui_type": "File Writing",
+      "pdf": "module-docs/PilotFish-File-Writing-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-File-Writing-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.db.DatabaseSqlTransport",
+      "kind": "Transport",
+      "ui_type": "Database (SQL)",
+      "pdf": "module-docs/PilotFish-Database-SQL-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-Database-SQL-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.ftp.FTPTransport",
+      "kind": "Transport",
+      "ui_type": "FTP / SFTP",
+      "pdf": "module-docs/PilotFish-FTP-SFTP-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-FTP-SFTP-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.http.HttpPostTransport",
+      "kind": "Transport",
+      "ui_type": "HTTP Post",
+      "pdf": "module-docs/PilotFish-HTTP-Post-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-HTTP-Post-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.http.SoapHttpPostTransport",
+      "kind": "Transport",
+      "ui_type": "SOAP Web Service",
+      "pdf": "module-docs/PilotFish-SOAP-Web-Service-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-SOAP-Web-Service-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    }
+  ],
+  "missing": [
+    "com.pilotfish.eip.modules.hl7.HL7TCPTransport (unresolved kind/type)"
+  ],
+  "note": "Auto-synced from route.xml / modules/*.xml. Re-run tools/sync_module_docs.py after route changes."
+}

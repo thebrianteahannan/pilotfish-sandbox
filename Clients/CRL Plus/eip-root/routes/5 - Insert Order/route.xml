@@ -108,7 +108,7 @@
   <Target icon="" name="System Unnamed">
     <FormatProfile name="Relay (System Format)" />
     <TargetMetadata />
-    <Transport class="com.pilotfish.eip.modules.db.DatabaseSqlTransport" name="5 - Insert Order.Database SQL Transport Transport" retries="2" retryDelayMs="60000">
+    <Transport class="com.pilotfish.eip.modules.db.DatabaseSqlTransport" name="5 - Insert Order.Database SQL Transport Transport" retries="1" retryDelayMs="1000">
       <ModuleConfig>
         <InputFile />
         <WriteQuery>false</WriteQuery>

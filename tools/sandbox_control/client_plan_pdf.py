@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from datetime import date
 from pathlib import Path
 
@@ -11,6 +12,37 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import inch
 from reportlab.platypus import ListFlowable, ListItem, Paragraph, SimpleDocTemplate, Spacer
+
+
+def previous_dive(folder: Path) -> dict:
+    path = folder / "dive.json"
+    if not path.is_file():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def describe_request(dive: dict, meta: dict | None = None) -> str:
+    ask = str(dive.get("ask") or "").strip()
+    summary = str(dive.get("summary") or "").strip()
+    if ask:
+        return ask if ask.endswith(".") else ask + "."
+    if summary:
+        return summary.rstrip(".") + "."
+    codes = [str(c) for c in (dive.get("codes") or []) if c and not str(c).startswith("$")]
+    if codes:
+        if len(codes) == 1:
+            listed = codes[0]
+        elif len(codes) == 2:
+            listed = f"{codes[0]} and {codes[1]}"
+        else:
+            listed = ", ".join(codes[:-1]) + ", and " + codes[-1]
+        return f"Change location codes {listed}."
+    sub = str((meta or {}).get("subject") or "").strip()
+    return sub + "." if sub and not sub.endswith(".") else (sub or "See the saved email.")
 
 
 def _esc(s: str) -> str:
@@ -52,6 +84,34 @@ def write_plan_pdf(folder: Path, meta: dict, dive: dict) -> Path:
         Paragraph(_esc(dive.get("ask") or "See the saved email."), styles["body"]),
         Paragraph(f"From {_esc(meta.get('from') or '—')}  ·  {_esc(dive.get('subject') or meta.get('subject') or '')}", styles["note"]),
     ]
+    llm = ((dive.get("plan_trace") or {}).get("llm") or meta.get("llm") or {})
+    if llm.get("ok"):
+        bits = [f"Classified on this Mac with {_esc(llm.get('model') or 'Ollama')}"]
+        if llm.get("kind"):
+            bits.append(str(llm["kind"]))
+        if llm.get("partition"):
+            bits.append(str(llm["partition"]))
+        story.append(Paragraph(" · ".join(bits), styles["note"]))
+    elif llm.get("error"):
+        story.append(
+            Paragraph(
+                f"Ollama did not classify this request ({_esc(llm.get('error'))}). The plan used the mechanical search instead.",
+                styles["note"],
+            )
+        )
+    for sec in dive.get("build_plan") or []:
+        story.append(Paragraph(_esc(sec.get("title") or "Section"), styles["h2"]))
+        for p in sec.get("paras") or []:
+            story.append(Paragraph(_esc(p), styles["body"]))
+        bullets = sec.get("bullets") or []
+        if bullets:
+            story.append(
+                ListFlowable(
+                    [ListItem(Paragraph(_esc(b), styles["bu"]), leftIndent=8) for b in bullets],
+                    bulletType="bullet",
+                    start="•",
+                )
+            )
     codes = dive.get("codes") or []
     if codes:
         story.append(Paragraph("Codes to change", styles["h2"]))
@@ -62,10 +122,11 @@ def write_plan_pdf(folder: Path, meta: dict, dive: dict) -> Path:
                 start="•",
             )
         )
-    story.append(Paragraph("Where it lives", styles["h2"]))
     files = dive.get("files") or []
-    if not files:
-        story.append(Paragraph("No matching mapping lines were found under eip-root (skipped backups, tests, and giant route.xml files).", styles["body"]))
+    if files or not dive.get("build_plan"):
+        story.append(Paragraph("Where it lives", styles["h2"]))
+        if not files:
+            story.append(Paragraph("No matching mapping lines were found under eip-root (skipped backups, tests, and giant route.xml files).", styles["body"]))
     for rec in files:
         story.append(Paragraph(f"<b>{_esc(rec.get('path'))}</b>", styles["left"]))
         for hit in rec.get("hits") or []:
@@ -78,6 +139,8 @@ def write_plan_pdf(folder: Path, meta: dict, dive: dict) -> Path:
             )
         story.append(Spacer(1, 0.08 * inch))
     story.append(Paragraph("What Start work will do", styles["h2"]))
+    if dive.get("start_work"):
+        story.append(Paragraph(_esc(dive["start_work"]), styles["body"]))
     edits = dive.get("edits") or []
     if edits:
         items = []
@@ -112,13 +175,24 @@ def write_plan_pdf(folder: Path, meta: dict, dive: dict) -> Path:
                 styles["note"],
             )
         )
-    else:
+    elif not dive.get("start_work"):
         story.append(
             Paragraph(
                 "Nothing the hub can apply automatically. Open the files above in eiConsole or Cursor and edit by hand.",
                 styles["body"],
             )
         )
+    qs = [q for q in (dive.get("questions") or []) if q.get("text")]
+    if qs:
+        story.append(Paragraph("Questions for the client", styles["h2"]))
+        items = []
+        for q in qs:
+            mark = "Closed" if q.get("status") == "closed" else "Open"
+            body = f"<b>{mark}.</b> {_esc(q.get('text'))}"
+            if q.get("answer"):
+                body += f"<br/>Reply: {_esc(q.get('answer'))}"
+            items.append(ListItem(Paragraph(body, styles["bu"]), leftIndent=8))
+        story.append(ListFlowable(items, bulletType="bullet", start="•"))
     if dive.get("risks"):
         story.append(Paragraph("Watch-outs", styles["h2"]))
         story.append(

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Route Viewer — route.v2.xml</title>
+    <link rel="stylesheet" href="./route-node-editor-web.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <h1 id="route-title">Route</h1>
+        <span class="meta" id="route-meta"></span>
+        <label class="config-mode-label" for="config-mode">Box config
+          <select id="config-mode" title="Inline configuration inside boxes">
+            <option value="compact">Names only</option>
+            <option value="changed">Non-default values</option>
+            <option value="all">All values</option>
+          </select>
+        </label>
+        <span class="status" id="status"></span>
+      </header>
+
+      <div class="workspace">
+        <aside class="sidebar" aria-label="Modules">
+          <h2>Modules</h2>
+          <div id="tree"></div>
+        </aside>
+
+        <section class="route-graph-container" aria-label="Route graph">
+          <div class="graph-toolbar">
+            <button type="button" class="hyperlink zoom zoom-out" id="zoom-out" title="Zoom out">−</button>
+            <button type="button" class="hyperlink zoom" id="zoom-100" title="100%">1:1</button>
+            <button type="button" class="hyperlink zoom zoom-in" id="zoom-in" title="Zoom in">+</button>
+            <button type="button" class="hyperlink zoom" id="zoom-fit" title="Fit" style="width:auto;min-width:36px;padding:0 6px">Fit</button>
+          </div>
+
+          <div class="minimap" title="Overview">
+            <canvas id="minimap-canvas"></canvas>
+            <div class="minimap-locator" id="minimap-locator"></div>
+          </div>
+
+          <div class="graph-editor" id="graph-editor">
+            <div class="graph-world" id="graph-world">
+              <svg class="graph-editor-connection-layer" id="connection-layer" xmlns="http://www.w3.org/2000/svg"></svg>
+              <div class="graph-editor-node-layer" id="node-layer"></div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="sidebar right" aria-label="Configuration">
+          <h2>Configuration</h2>
+          <div id="config"></div>
+        </aside>
+      </div>
+    </div>
+
+    <script src="./module-config.js"></script>
+    <script src="./diagram-groups.js"></script>
+    <script src="./route-viewer.js"></script>
+  </body>
+</html>

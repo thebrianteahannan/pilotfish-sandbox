@@ -1,0 +1,66 @@
+{# Demo video tab. Include from index.html after info_tab:
+
+     {% include 'partials/video_tab.html' %}
+
+   Add a main-tab button: data-main-tab="video" label Video
+#}
+<div id="tab-video" hidden>
+  <main>
+    <section class="panel">
+      <h2>Demo video</h2>
+      <div id="pf-construction-video-row">
+        <div class="pf-video-watch" id="pf-video-watch" hidden>
+          <span class="pf-video-ready-badge" id="pf-video-ready-badge"></span>
+          <a href="/documents/construction-replay.mp4" target="_blank" rel="noopener" id="pf-construction-video-link" class="muted">Open mp4 in a new tab</a>
+        </div>
+        <p class="muted pf-construction-video-hint" id="pf-construction-video-hint" hidden>Watch here. Pause anywhere, add a note on that moment, then hit play again.</p>
+        <div class="pf-video-player-wrap" id="pf-video-player-wrap" hidden>
+          <video id="pf-construction-player" class="pf-construction-player" controls preload="metadata" src="/documents/construction-replay.mp4"></video>
+          <div class="pf-video-review">
+            <p class="muted">Pause at the spot you care about, write what should change, then keep watching.</p>
+            <div class="pf-video-review-compose">
+              <span class="pf-video-review-time" id="pf-video-review-time">0:00</span>
+              <textarea id="pf-video-review-text" rows="2" placeholder="What should change here?"></textarea>
+              <button type="button" class="btn" id="pf-video-review-add">Add note</button>
+            </div>
+            <p class="muted pf-video-review-empty" id="pf-video-review-empty">No notes yet.</p>
+            <ul class="pf-video-review-list" id="pf-video-review-list"></ul>
+          </div>
+        </div>
+        <div class="pf-create-video">
+          <button type="button" class="btn btn-primary" id="pf-create-video-btn">Create construction video</button>
+          <span class="muted" id="pf-create-video-status"></span>
+        </div>
+        <div class="pf-video-section-row" id="pf-video-section-row" hidden>
+          <label class="muted" for="pf-video-section">Re-record one part
+            <select id="pf-video-section"></select>
+          </label>
+          <button type="button" class="btn" id="pf-rerecord-section-btn">Re-record this section</button>
+          <p class="muted">Keeps the rest of the current video. Use this to try a change before remaking the whole take.</p>
+        </div>
+        <div id="pf-create-video-panel" class="pf-video-panel" hidden>
+          <p class="pf-video-panel-phase" id="pf-video-panel-phase"></p>
+          <div class="pf-video-panel-barwrap" id="pf-video-panel-barwrap" hidden>
+            <progress id="pf-video-panel-bar" max="1" value="0"></progress>
+          </div>
+          <p class="pf-video-panel-msg" id="pf-video-panel-msg"></p>
+          <p class="muted" id="pf-video-panel-time"></p>
+          <ul class="pf-video-panel-log" id="pf-video-panel-log"></ul>
+        </div>
+      </div>
+      <ul>
+        <li>
+          <a href="/documents/construction-replay-transcript.pdf" target="_blank" rel="noopener">Construction replay transcript (PDF)</a>
+          <span class="muted"> —
+            <a href="/documents/construction-replay-transcript.txt" target="_blank" rel="noopener">plain text</a>
+          </span>
+        </li>
+        {% for link in info_extra_links or [] %}
+        {% if 'youtube.com' in (link.href or '') or 'youtu.be' in (link.href or '') %}
+        <li><a href="{{ link.href }}" target="_blank" rel="noopener">{{ link.label }}</a></li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+</div>

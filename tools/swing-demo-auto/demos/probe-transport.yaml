@@ -1,0 +1,7 @@
+name: probe-transport
+steps:
+  - id: transport
+    action: click
+    target: { type: table, contains: RoutingSource, column: 5 }
+    detail: "Transport."
+    dwell_ms: 1200

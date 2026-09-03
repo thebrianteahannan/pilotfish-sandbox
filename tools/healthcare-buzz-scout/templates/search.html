@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>When People Search · Buzz Scout</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <p class="kicker">PilotFish Sandbox · Buzz Scout</p>
+      <h1>Who shows up when they search for our hops</h1>
+      <p class="lead">Buyer queries from Signals, Companies, Marketing, and the demos. Live Bing ranks (Google looks the same; DuckDuckGo blocks bots). Comparison articles are what AI engines cite. Paste a ChatGPT / Claude / Perplexity answer to see who the model named.</p>
+    </div>
+    <div class="actions">
+      <button id="probe-btn" class="btn primary" type="button">Probe searches now</button>
+      <span id="probe-status" class="muted"></span>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <a href="{{ url_for('briefing') }}">Find work</a>
+    <a href="{{ url_for('index') }}">Signals</a>
+    <a href="{{ url_for('companies') }}">Companies</a>
+    <a href="{{ url_for('market') }}">Market</a>
+    <a class="on" href="{{ url_for('search') }}">When People Search</a>
+    <a href="{{ url_for('marketing') }}">Marketing</a>
+  </nav>
+
+  <section class="stats">
+    <div><span class="n">{{ query_count }}</span><span class="l">queries last probe</span></div>
+    <div><span class="n">{{ us_present }}</span><span class="l">queries we appear on</span></div>
+    <div><span class="n">{{ hit_count }}</span><span class="l">named results</span></div>
+    <div class="wide muted">Loudest other name: <strong>{{ top_other }}</strong>{% if last and last.finished_at %} · last probe {{ last.finished_at }}{% endif %}{% if last and last.error %} · <span class="err">{{ last.error }}</span>{% endif %}</div>
+  </section>
+
+  <main class="brief">
+    <section class="panel">
+      <h2>How to penetrate</h2>
+      {% if not plays %}
+      <p class="empty">Run a probe to see where we are missing.</p>
+      {% endif %}
+      <ol class="playbook">
+        {% for p in plays %}<li>{{ p }}</li>{% endfor %}
+      </ol>
+    </section>
+
+    <section class="panel">
+      <h2>Share of the result pages</h2>
+      <p class="muted">How often a company is named across the probed queries. Not purchased share — who the searcher actually sees.</p>
+      {% for r in ranked %}
+      <div class="share-row{% if r.us %} us{% endif %}">
+        <span class="share-name">{{ r.name }}</span>
+        <div class="share-bar"><i style="width: {% if r.count * 12 > 100 %}100{% else %}{{ r.count * 12 }}{% endif %}%"></i></div>
+        <span class="share-pct">{{ r.count }}</span>
+        <span class="muted">hits</span>
+      </div>
+      {% endfor %}
+    </section>
+
+    <section class="panel">
+      <h2>Each search</h2>
+      <p class="muted">Web = typed Google/Bing query. Ask = the question they paste into an AI box (we still read the public web results for that phrasing).</p>
+      <div class="lanes">
+        {% for rec in queries %}
+        <details class="lane">
+          <summary class="theme-head">
+            <strong>{{ rec.query }}</strong>
+            <span class="muted">{% if rec.us_rank %}we are #{{ rec.us_rank }}{% else %}we are absent{% endif %} · {{ rec.channel }}</span>
+          </summary>
+          <p>{% if rec.players %}{{ rec.players | join(' · ') }}{% else %}No named vendors in the top results.{% endif %}</p>
+        </details>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>What AI engines see and say</h2>
+      <p class="muted">Listicles the models cite, plus a paste box for a real ChatGPT / Claude / Gemini / Perplexity answer. We do not scrape those products.</p>
+      {% if cites %}
+      <p><strong>Named in comparison articles:</strong> {{ cites | join(' · ') }}</p>
+      {% else %}
+      <p class="empty">Probe to read the comparison articles.</p>
+      {% endif %}
+      {% if models %}
+      <p><strong>Named in pasted AI answers:</strong> {{ models | join(' · ') }}</p>
+      {% endif %}
+      <h3 class="subhead">Prompts to paste into ChatGPT, Claude, or Perplexity</h3>
+      {% for pr in prompts %}
+      <p class="ad-copy">{{ pr }}</p>
+      {% endfor %}
+      <form class="notes" method="post" action="{{ url_for('api_search_ai_paste') }}">
+        <label>Which engine
+          <select name="source">
+            <option value="chatgpt">ChatGPT</option>
+            <option value="claude">Claude</option>
+            <option value="perplexity">Perplexity</option>
+            <option value="gemini">Gemini</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+        <label>Paste the answer
+          <textarea name="text" rows="6" placeholder="Paste the model’s reply. We pull vendor names and add them to this board."></textarea>
+        </label>
+        <button class="btn primary" type="submit">Save who they named</button>
+      </form>
+    </section>
+  </main>
+  <script>
+    const btn = document.getElementById("probe-btn");
+    const st = document.getElementById("probe-status");
+    btn?.addEventListener("click", async () => {
+      btn.disabled = true;
+      st.textContent = "Probing Bing + comparison articles (about a minute)…";
+      try {
+        const res = await fetch("/api/search/probe", { method: "POST" });
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || "failed");
+        st.textContent = `Done — ${data.hits} hits`;
+        setTimeout(() => location.reload(), 600);
+      } catch (e) {
+        st.textContent = e.message || String(e);
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

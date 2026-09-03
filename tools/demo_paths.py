@@ -40,6 +40,8 @@ CATEGORY_LAYOUT: dict[str, tuple[str, ...]] = {
         "hl7-healthcare-automation",
         "medical-device-hl7-ehr",
         "medical-lab-hl7-llp",
+        "hl7-interface-engine-demo",
+        "healthcare-reporting-analytics-demo",
     ),
     "Medical/FHIR": ("fhir-r4-platform",),
     "Other": (

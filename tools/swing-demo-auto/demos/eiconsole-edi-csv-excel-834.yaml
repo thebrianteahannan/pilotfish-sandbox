@@ -1,0 +1,342 @@
+# Generated from route.xml — clicks into configured fields, not just stages.
+name: eiconsole-edi-csv-excel-834
+steps:
+  - id: wait-fm
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 400
+  - id: basic
+    action: click
+    target: { type: tab, contains: "Basic" }
+    detail: "This is Route File Management. The working directory holds the interface packages."
+    dwell_ms: 600
+  - id: tools
+    action: click
+    target: { type: JMenu, text: Tools }
+    detail: "Tools has the emulator and the H2 database if you need a local file database."
+    optional: true
+    dwell_ms: 700
+  - id: tools-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: open-pkg
+    action: double_click
+    target: { type: table, contains: "EDI 834 CSV Excel Conversion" }
+    detail: "This green box is the interface package — EDI 834 CSV Excel Conversion."
+    dwell_ms: 600
+  - id: r1-open
+    action: double_click
+    target: { type: table, contains: "1 - CSV TXT to EDI 834" }
+    detail: "Each puzzle piece is one route. This is 1 - CSV TXT to EDI 834."
+    dwell_ms: 600
+  - id: r1-src
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 0 }
+    detail: "Source System and Target System are documentation. The work is the modules in between."
+    optional: true
+    dwell_ms: 400
+  - id: r1-listener
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 1 }
+    detail: "Work starts at the Listener — Poll Enrollment CSV TXT. This is a Directory Listener."
+    dwell_ms: 450
+  - id: r1-lrow
+    action: click
+    target: { type: table, contains: "Poll Enrollment CSV TXT" }
+    detail: ""
+    optional: true
+    dwell_ms: 300
+  - id: r1-ltype
+    action: click
+    target: { contains: "Listener Type" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-lbasic
+    action: click
+    target: { type: tab, contains: "Basic" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-lpoll
+    action: click
+    target: { contains: "Polling" }
+    detail: "It polls the inbound folder every 5 seconds."
+    optional: true
+    dwell_ms: 400
+  - id: r1-lpost
+    action: click
+    target: { contains: "Post-Process" }
+    detail: "After pickup, post-process is Move into the archive folder."
+    optional: true
+    dwell_ms: 450
+  - id: r1-larch
+    action: click
+    target: { contains: "Target directory" }
+    detail: ""
+    optional: true
+    dwell_ms: 250
+  - id: r1-stx
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 2 }
+    detail: "Source Transform is the CSV to XML format. That's the CSV transformer."
+    dwell_ms: 450
+  - id: r1-sfmt
+    action: click
+    target: { type: table, contains: "CSV to XML" }
+    detail: ""
+    optional: true
+    dwell_ms: 300
+  - id: r1-smod
+    action: click
+    target: { contains: "Transformation Module" }
+    detail: ""
+    optional: true
+    dwell_ms: 250
+  - id: r1-sdelim
+    action: click
+    target: { contains: "Delimiter" }
+    detail: "Delimiter is a comma. Detect delimiter is on, so tab or pipe still works."
+    optional: true
+    dwell_ms: 400
+  - id: r1-scols
+    action: click
+    target: { contains: "Columns" }
+    detail: "Named columns: MemberId, LastName, FirstName, BirthDate, GenderCode, RelationshipCode…."
+    optional: true
+    dwell_ms: 500
+  - id: r1-route
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 3 }
+    detail: "Routing decides who gets the 834 and who goes to kickout."
+    dwell_ms: 400
+  - id: r1-rrules
+    action: click
+    target: { type: tab, contains: "Routing Rules" }
+    detail: ""
+    optional: true
+    dwell_ms: 250
+  - id: r1-rxpath
+    action: click
+    target: { contains: "XPath" }
+    detail: "The rule looks for a member id or last name."
+    optional: true
+    dwell_ms: 350
+  - id: r1-ttx
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 4 }
+    detail: "Target Transform is CSV XML to 834 — that's the XSLT."
+    dwell_ms: 450
+  - id: r1-tfmt
+    action: click
+    target: { type: table, contains: "CSV XML to 834" }
+    detail: ""
+    optional: true
+    dwell_ms: 300
+  - id: r1-txslt
+    action: click
+    target: { contains: "XSLT" }
+    detail: "The mappings pull each field from the input onto the output."
+    optional: true
+    dwell_ms: 500
+  - id: r1-tr
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 5 }
+    detail: "Transport writes the file. This one is Write EDI 834."
+    dwell_ms: 400
+  - id: r1-trrow
+    action: click
+    target: { type: table, contains: "Write EDI 834" }
+    detail: ""
+    optional: true
+    dwell_ms: 300
+  - id: r1-trtab
+    action: click
+    target: { type: tab, contains: "Transport Configuration" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-trdir
+    action: click
+    target: { contains: "Target directory" }
+    detail: "Target directory is the output folder. Extension is edi."
+    optional: true
+    dwell_ms: 450
+  - id: r1-trext
+    action: click
+    target: { contains: "Target file extension" }
+    detail: ""
+    optional: true
+    dwell_ms: 250
+  - id: r1-proc1
+    action: click
+    target: { type: table, contains: "XML to EDI 834" }
+    detail: "XML to EDI 834. table data 834-A1, 5010. star and tilde delimiters. friendly names None."
+    optional: true
+    dwell_ms: 500
+  - id: r1-pdel1
+    action: click
+    target: { contains: "Data Delimiter" }
+    detail: ""
+    optional: true
+    dwell_ms: 250
+  - id: r1-prec1
+    action: click
+    target: { contains: "Record Delimiter" }
+    detail: ""
+    optional: true
+    dwell_ms: 250
+  - id: r1-psub1
+    action: click
+    target: { contains: "Sub Delimiter" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-file
+    action: click
+    target: { type: JMenu, text: File }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-fm
+    action: click
+    target: { type: menuitem, contains: "File Management" }
+    detail: ""
+    optional: true
+    dwell_ms: 400
+  - id: r1-basic
+    action: click
+    target: { type: tab, contains: "Basic" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-pkg
+    action: double_click
+    target: { type: table, contains: "EDI 834 CSV Excel Conversion" }
+    detail: ""
+    optional: true
+    dwell_ms: 400
+  - id: r2-open
+    action: double_click
+    target: { type: table, contains: "2 - EDI 834 to CSV" }
+    detail: "Each puzzle piece is one route. This is 2 - EDI 834 to CSV."
+    optional: true
+    dwell_ms: 600
+  - id: r2-src
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 0 }
+    detail: "Source System and Target System are documentation. The work is the modules in between."
+    optional: true
+    dwell_ms: 400
+  - id: r2-listener
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 1 }
+    detail: "Work starts at the Listener — Poll EDI 834. This is a Directory Listener."
+    optional: true
+    dwell_ms: 450
+  - id: r2-lrow
+    action: click
+    target: { type: table, contains: "Poll EDI 834" }
+    detail: ""
+    optional: true
+    dwell_ms: 300
+  - id: r2-ltype
+    action: click
+    target: { contains: "Listener Type" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r2-lbasic
+    action: click
+    target: { type: tab, contains: "Basic" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r2-lpoll
+    action: click
+    target: { contains: "Polling" }
+    detail: "It polls the inbound folder every 5 seconds."
+    optional: true
+    dwell_ms: 400
+  - id: r2-lpost
+    action: click
+    target: { contains: "Post-Process" }
+    detail: "After pickup, post-process is Move into the archive folder."
+    optional: true
+    dwell_ms: 450
+  - id: r2-larch
+    action: click
+    target: { contains: "Target directory" }
+    detail: ""
+    optional: true
+    dwell_ms: 250
+  - id: r2-stx
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 2 }
+    detail: "Source Transform is the EDI 834 to XML format. That's the EDI transformer."
+    optional: true
+    dwell_ms: 450
+  - id: r2-sfmt
+    action: click
+    target: { type: table, contains: "EDI 834 to XML" }
+    detail: ""
+    optional: true
+    dwell_ms: 300
+  - id: r2-smod
+    action: click
+    target: { contains: "Transformation Module" }
+    detail: ""
+    optional: true
+    dwell_ms: 250
+  - id: r2-ttx
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 4 }
+    detail: "Target Transform is 834 XML to CSV — that's the XSLT."
+    optional: true
+    dwell_ms: 450
+  - id: r2-tfmt
+    action: click
+    target: { type: table, contains: "834 XML to CSV" }
+    detail: ""
+    optional: true
+    dwell_ms: 300
+  - id: r2-txslt
+    action: click
+    target: { contains: "XSLT" }
+    detail: "The mappings pull each field from the input onto the output."
+    optional: true
+    dwell_ms: 500
+  - id: r2-tr
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 5 }
+    detail: "Transport writes the file. This one is Write Enrollment CSV."
+    optional: true
+    dwell_ms: 400
+  - id: r2-trrow
+    action: click
+    target: { type: table, contains: "Write Enrollment CSV" }
+    detail: ""
+    optional: true
+    dwell_ms: 300
+  - id: r2-trtab
+    action: click
+    target: { type: tab, contains: "Transport Configuration" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r2-trdir
+    action: click
+    target: { contains: "Target directory" }
+    detail: "Target directory is the output folder. Extension is csv."
+    optional: true
+    dwell_ms: 450
+  - id: r2-trext
+    action: click
+    target: { contains: "Target file extension" }
+    detail: ""
+    optional: true
+    dwell_ms: 250

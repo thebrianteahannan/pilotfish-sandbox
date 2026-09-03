@@ -12,14 +12,16 @@
 #   ./docker-run.sh shell          Open a shell in the running container
 #   ./docker-run.sh url            Print the EIP URL
 #
-# Or just: ./docker-run.sh         (build if needed, then start, then follow eip.log)
+#   EIP_VERSION=24R1 ./docker-run.sh start
+#   (WAR comes from PilotFish Documentation/PilotFish WARs)
 
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-IMAGE_NAME="${IMAGE_NAME:-pilotfish-eip:23R1}"
+EIP_VERSION="${EIP_VERSION:-23R1}"
+IMAGE_NAME="${IMAGE_NAME:-pilotfish-eip:${EIP_VERSION}}"
 CONTAINER_NAME="${CONTAINER_NAME:-pilotfish-eip}"
-HOST_PORT="${HOST_PORT:-8080}"
+HOST_PORT="${HOST_PORT:-18080}"
 
 DATA_DIR="${ROOT_DIR}/data"
 LOGS_DIR="${ROOT_DIR}/logs"
@@ -49,9 +51,58 @@ image_exists() {
   docker image inspect "${IMAGE_NAME}" >/dev/null 2>&1
 }
 
+wars_dir() {
+  if [[ -n "${EIP_WARS_DIR:-}" ]]; then
+    echo "${EIP_WARS_DIR}"
+    return
+  fi
+  local loc="${ROOT_DIR}/PilotFish_Documentation/DOCUMENTATION_LOCATION.txt"
+  local docs="${HOME}/Documents/PilotFish Documentation"
+  if [[ -f "${loc}" ]]; then
+    local line
+    line="$(grep -E '^/' "${loc}" | head -1 | tr -d '\r')"
+    if [[ -n "${line}" ]]; then
+      docs="${line}"
+    fi
+  fi
+  echo "${docs}/PilotFish WARs"
+}
+
+stage_war() {
+  local dir war
+  dir="$(wars_dir)"
+  if [[ -d "${dir}" ]]; then
+    war="$(ls -1 "${dir}"/eip.war.hs."${EIP_VERSION}"* 2>/dev/null | tail -1 || true)"
+  fi
+  if [[ -z "${war}" && -f "${ROOT_DIR}/eip.war.hs.${EIP_VERSION}" ]]; then
+    war="${ROOT_DIR}/eip.war.hs.${EIP_VERSION}"
+  fi
+  if [[ -z "${war}" ]]; then
+    war="$(ls -1 "${ROOT_DIR}"/eip.war.hs."${EIP_VERSION}"* 2>/dev/null | tail -1 || true)"
+  fi
+  if [[ -z "${war}" || ! -f "${war}" ]]; then
+    echo "No eiPlatform WAR for ${EIP_VERSION} in ${dir}" >&2
+    echo "Add eip.war.hs.${EIP_VERSION}* to the Documentation project's PilotFish WARs folder." >&2
+    exit 1
+  fi
+  echo "Using WAR ${war} → ${IMAGE_NAME}"
+  cp "${war}" "${ROOT_DIR}/eip.war"
+}
+
+tomcat_image_for_version() {
+  # 20R1 / 21R1 WARs are javax.servlet; Tomcat 10 is jakarta and /eip/ 404s.
+  case "${EIP_VERSION}" in
+    20*|21*) echo "tomcat:9.0-jdk11-temurin" ;;
+    *) echo "tomcat:10.1-jdk17-temurin" ;;
+  esac
+}
+
 cmd_build() {
-  echo "Building ${IMAGE_NAME} ..."
-  docker build -t "${IMAGE_NAME}" "${ROOT_DIR}"
+  stage_war
+  local base
+  base="$(tomcat_image_for_version)"
+  echo "Building ${IMAGE_NAME} (FROM ${base}) ..."
+  docker build --build-arg "TOMCAT_IMAGE=${base}" -t "${IMAGE_NAME}" "${ROOT_DIR}"
   echo "Build complete."
 }
 
@@ -65,17 +116,33 @@ cmd_stop() {
   fi
 }
 
+running_image() {
+  docker inspect -f '{{.Config.Image}}' "${CONTAINER_NAME}" 2>/dev/null || true
+}
+
+image_base() {
+  docker image inspect -f '{{index .Config.Labels "pf.tomcat_image"}}' "${IMAGE_NAME}" 2>/dev/null || true
+}
+
 cmd_start() {
   ensure_dirs
 
-  if ! image_exists; then
+  local want
+  want="$(tomcat_image_for_version)"
+  if ! image_exists || [[ "$(image_base)" != "${want}" ]]; then
     cmd_build
   fi
 
   if docker ps --format '{{.Names}}' | grep -qx "${CONTAINER_NAME}"; then
-    echo "Container ${CONTAINER_NAME} is already running."
-    cmd_url
-    return 0
+    local have
+    have="$(docker inspect -f '{{index .Config.Labels "pf.tomcat_image"}}' "${CONTAINER_NAME}" 2>/dev/null || true)"
+    if [[ "$(running_image)" == "${IMAGE_NAME}" && "${have}" == "${want}" ]]; then
+      echo "Container ${CONTAINER_NAME} is already running."
+      cmd_url
+      return 0
+    fi
+    echo "Recreating ${CONTAINER_NAME} on ${IMAGE_NAME} (${want}) ..."
+    cmd_stop
   fi
 
   # Recreate if a stopped container exists

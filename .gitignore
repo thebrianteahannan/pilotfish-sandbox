@@ -41,8 +41,11 @@ Clients/Demos/**/data/**
 Clients/Demos/**/Chat_User_Prompts*.pdf
 
 # Local process logs / helpers
-Clients/CRL Plus/sandbox/*.log
-Clients/CRL Plus/sandbox/*.out
+Clients/CRL Plus/sandbox/pilotfish/eip.war
+Clients/CRL Plus/sandbox/pilotfish/pflicense.key
+Clients/CRL Plus/sandbox/output/**
+Clients/CRL Plus/sandbox/logs/**
+Clients/CRL Plus/eip-root/environment-settings.conf
 
 # Local tooling
 .venv*/
@@ -74,4 +77,16 @@ tools/voices/clips/
 Clients/**/requests/**
 !Clients/**/requests/.gitkeep
 *.bak-req
-tools/.construction-video-worker.log
+Clients/**/regression/**/last/**
+Clients/**/regression/last-run.json
+Clients/**/regression/timings.json
+tools/sandbox_control/static/regr-live.json
+tools/sandbox_control/static/regr-timing.json
+tools/sandbox_control/static/regr-score.json
+
+# Demo handoff image tars / zips (do not commit)
+Clients/Demos/**/handoff/*.tar
+Clients/Demos/**/handoff/*.tar.gz
+Clients/Demos/**/handoff/*.zip
+Clients/Demos/Insurance/EDI/edi-270-271-realtime/edi-270-271-realtime-windows.zip
+Clients/Demos/Insurance/EDI/edi-270-271-realtime/pilotfish-eip-23R1-amd64.tar.gz

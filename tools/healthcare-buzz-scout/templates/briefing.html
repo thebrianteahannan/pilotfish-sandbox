@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Find work · Buzz Scout</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <p class="kicker">PilotFish Sandbox · Buzz Scout</p>
+      <h1>Find more PilotFish work</h1>
+      <p class="lead">How we get work: an engine sunsets, a mandate hits, hard EDI, a current client needs the next hop, people are stuck on a weak engine, or a company is hiring the integration themselves — we can offer PilotFish instead of (or beside) that hire.</p>
+    </div>
+    <div class="actions">
+      <a class="btn" href="{{ url_for('index') }}">Open signal feed</a>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <a class="on" href="{{ url_for('briefing') }}">Find work</a>
+    <a href="{{ url_for('index') }}">Signals</a>
+    <a href="{{ url_for('companies') }}">Companies</a>
+    <a href="{{ url_for('market') }}">Market</a>
+    <a href="{{ url_for('search') }}">When People Search</a>
+    <a href="{{ url_for('marketing') }}">Marketing</a>
+  </nav>
+
+  <section class="stats">
+    <div><span class="n">{{ active_count }}</span><span class="l">active asks</span></div>
+    <div><span class="n">{{ demand|length }}</span><span class="l">capability themes</span></div>
+    <div><span class="n">{{ lane_counts.get('sunset', 0) + lane_counts.get('stuck', 0) }}</span><span class="l">sunset / stuck engine</span></div>
+    <div><span class="n">{{ lane_counts.get('mandate', 0) }}</span><span class="l">mandate / rule</span></div>
+    <div><span class="n">{{ hiring_companies|length }}</span><span class="l">companies hiring</span></div>
+    <div class="wide muted">
+      {% if top_theme %}Hottest theme right now: <strong>{{ top_theme }}</strong>.{% else %}Run the scout so this board has live numbers.{% endif %}
+      Last two years only. Expand current clients first when the theme matches what they already run.
+    </div>
+  </section>
+
+  <main class="brief">
+    <section class="panel">
+      <h2>How we get work</h2>
+      <p class="muted">These lanes are the real motion. Counts are live from the feed (expand is matched to Med Rec / CRL, not a public post).</p>
+      <div class="lanes">
+        {% for lane in live_lanes %}
+        <details class="lane lane-{{ lane.id }}">
+          <summary class="theme-head">
+            <strong>{{ lane.title }}</strong>
+            <span class="muted">{% if lane.id == 'expand' %}{{ expansions|length }} client match{{ 'es' if expansions|length != 1 else '' }}{% else %}{{ lane.count }} signal{{ 's' if lane.count != 1 else '' }}{% endif %}</span>
+          </summary>
+          <p>{{ lane.pitch }}</p>
+          <p><strong>Do:</strong> {{ lane.do }}</p>
+          {% if lane.id == 'expand' and expansions %}
+          <ul class="samples">
+            {% for e in expansions %}
+            <li><strong>{{ e.name }}</strong> already does {{ e.already }}. This week’s theme <em>{{ e.theme }}</em> ({{ e.theme_count }}) → {{ e.more }}</li>
+            {% endfor %}
+          </ul>
+          {% elif lane.id == 'hire' and hiring_companies %}
+          <ul class="samples">
+            {% for c in hiring_companies[:3] %}
+            <li><strong>{{ c.company }}</strong> · {{ c.count }} role{{ 's' if c.count != 1 else '' }}{% if c.hops %} · {{ c.hops[0] }}{% endif %}</li>
+            {% endfor %}
+          </ul>
+          {% elif lane.samples %}
+          <ul class="samples">
+            {% for s in lane.samples %}
+            <li><a href="{{ url_for('post_detail', post_id=s.id) }}">{{ s.title }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </details>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Systems in play — and hops they still do not have</h2>
+      <p class="muted">Named stacks in this week’s feed, plus language that says the interface is missing, manual, or they are looking for one.</p>
+      <div class="lanes">
+        <details class="lane">
+          <summary class="theme-head"><strong>What they already run</strong><span class="muted">{{ systems_in_use|length }} named</span></summary>
+          {% if not systems_in_use %}
+          <p class="empty">No named engines / EHRs / RCM / insurance cores in the current set.</p>
+          {% else %}
+          <ul class="samples">
+            {% for s in systems_in_use %}
+            <li><strong>{{ s.name }}</strong> <span class="muted">{{ s.kind }} · {{ s.count }}</span>
+              {% for sm in s.samples %} · <a href="{{ url_for('post_detail', post_id=sm.id) }}">{{ sm.title }}</a>{% endfor %}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </details>
+        <details class="lane">
+          <summary class="theme-head"><strong>What they do not have yet</strong><span class="muted">{{ systems_missing|length }} gap cue{{ 's' if systems_missing|length != 1 else '' }}</span></summary>
+          {% if not systems_missing %}
+          <p class="empty">No “we don’t have this / still Excel” language in the current set.</p>
+          {% else %}
+          <ul class="samples">
+            {% for s in systems_missing %}
+            <li><strong>{{ s.label }}</strong> <span class="muted">{{ s.count }}</span>
+              {% for sm in s.samples %} · <a href="{{ url_for('post_detail', post_id=sm.id) }}">{{ sm.title }}</a>{% endfor %}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </details>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Companies hiring the integration</h2>
+      <p class="muted">Public job posts for HL7 / EDI / FHIR / interface work. The hop is in the title. Named companies land on the <a href="{{ url_for('companies') }}">running company list</a>.</p>
+      {% if not hiring_companies %}
+        <p class="empty">No integration job posts in the current pull.</p>
+      {% endif %}
+      <ul class="samples">
+        {% for c in hiring_companies %}
+        <li>
+          <strong>{{ c.company }}</strong>
+          <span class="muted">{{ c.count }} role{{ 's' if c.count != 1 else '' }}{% if c.hops %} · {{ c.hops[:2] | join(', ') }}{% endif %}</span>
+          {% for sm in c.samples %}
+          · <a href="{{ url_for('post_detail', post_id=sm.id) }}">{{ sm.title }}</a>
+          {% endfor %}
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Do these next</h2>
+      <p class="muted">Live plays from this week’s feed. The standing playbook is below.</p>
+      {% if not moves %}
+        <p class="empty">No live moves yet — run the scout from Signals.</p>
+      {% endif %}
+      {% for m in moves %}
+      <article class="move">
+        <h3>{{ m.title }}</h3>
+        <p>{{ m.do }}</p>
+      </article>
+      {% endfor %}
+    </section>
+
+    <section class="panel">
+      <h2>What’s buzzing — and what we can give them</h2>
+      {% if not demand %}
+        <p class="empty">No scored capabilities yet.</p>
+      {% endif %}
+      {% for d in demand %}
+      <article class="theme">
+        <div class="theme-head">
+          <strong>{{ d.label }}</strong>
+          <span class="muted">{{ d.count }} ask{{ 's' if d.count != 1 else '' }} · avg {{ d.avg_relevance }}</span>
+        </div>
+        <p><strong>Needed:</strong> people are hitting this gap in public.</p>
+        <p><strong>We can give them:</strong> {{ d.we_can_ship }} — {{ d.shows }}</p>
+        {% if d.existing_demos %}
+        <p class="hints">Sandbox already nearby: {{ d.existing_demos | join(', ') }}</p>
+        {% endif %}
+        {% if d.samples %}
+        <ul class="samples">
+          {% for s in d.samples %}
+          <li><a href="{{ url_for('post_detail', post_id=s.id) }}">{{ s.title }}</a> <span class="muted">{{ source_label(s.source) }} · {{ s.relevance }}</span></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </section>
+
+    <section class="panel">
+      <h2>Prospect-shaped signals</h2>
+      <p class="muted">Sunset, mandate, and stuck-engine first. Open the thread before you treat it as a lead.</p>
+      {% if not prospects %}
+        <p class="empty">No strong signals in the current set.</p>
+      {% endif %}
+      <div class="prospects">
+        {% for p in prospects %}
+        <article class="card prospect kind-{{ p.kind }}">
+          <div class="meta">
+            <span class="badge">{{ p.kind_label }}</span>
+            <span class="score">{{ p.relevance }}</span>
+            <span class="src {{ p.source or 'reddit' }}">{{ source_label(p.source) }}</span>
+            {% if (p.source or '') == 'jobs' and p.product_name %}
+            <span class="co">{{ p.product_name }}</span>
+            {% endif %}
+            <span class="sub">{% if (p.source or 'reddit') == 'reddit' %}r/{{ p.subreddit }}{% else %}{{ p.subreddit }}{% endif %}</span>
+            {% set posted = format_when(p.created_utc, p.fetched_at) %}
+            {% if posted %}<span class="when{% if when_stale(p.created_utc, p.fetched_at) %} old{% endif %}">{{ posted }}</span>{% endif %}
+          </div>
+          <h3><a href="{{ url_for('post_detail', post_id=p.id) }}">{{ p.title }}</a></h3>
+          <p class="hints">Give them: {{ p.we_can_ship }}</p>
+          <div class="row">
+            <a class="btn" href="{{ url_for('post_detail', post_id=p.id) }}">Open</a>
+            {% if p.permalink %}<a class="btn ghost" href="{{ p.permalink }}" target="_blank" rel="noopener">Source</a>{% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>The plays, every week</h2>
+      <p class="muted">Same lanes as above. Use them even when the feed is quiet.</p>
+      <ol class="playbook">
+        {% for s in playbook %}
+        <li>
+          <strong>{{ s.title }}</strong>
+          <p>{{ s.do }}</p>
+          <p class="muted">{{ s.why }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

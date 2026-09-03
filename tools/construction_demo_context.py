@@ -694,14 +694,27 @@ def detect_demo_test(url: str, demo: Path) -> dict | None:
 
 def logo_data_uri(demo: Path | None = None) -> str:
     """Inline PilotFish logo so the welcome card never depends on a missing static file."""
-    candidates: list[Path] = []
-    if demo is not None:
-        candidates.append(demo / "webui" / "static" / "pilotfish-logo.jpg")
-    candidates.append(
-        Path(__file__).resolve().parents[1] / "Clients" / "Demos" / "_shared" / "webui" / "static" / "pilotfish-logo.jpg"
+    shared = (
+        Path(__file__).resolve().parents[1]
+        / "Clients"
+        / "Demos"
+        / "_shared"
+        / "webui"
+        / "static"
     )
+    roots: list[Path] = []
+    if demo is not None:
+        roots.append(demo / "webui" / "static")
+    roots.append(shared)
+    candidates: list[Path] = []
+    for name in ("pilotfish-logo.png", "pilotfish-logo.jpg"):
+        for root in roots:
+            candidates.append(root / name)
+    # Prefer any PNG (sharp lockup) over a leftover header JPEG.
+    candidates.sort(key=lambda p: 0 if p.suffix.lower() == ".png" else 1)
     for path in candidates:
         if path.is_file():
             b64 = base64.b64encode(path.read_bytes()).decode("ascii")
-            return f"data:image/jpeg;base64,{b64}"
-    return "/static/pilotfish-logo.jpg"
+            mime = "image/png" if path.suffix.lower() == ".png" else "image/jpeg"
+            return f"data:{mime};base64,{b64}"
+    return "/static/pilotfish-logo.png"

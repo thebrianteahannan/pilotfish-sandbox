@@ -2074,6 +2074,282 @@
       </Processor>
     </Processors>
   </Source>
+  <Source icon="DocFlatFile2_Orange_1.png" name="Pickup Flat Files - IRL - CEX">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="1 - Incoming Raw File - Dir Listener - IRL - CEX">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>16:21-16:21</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <PollingInterval>120</PollingInterval>
+        <PollingDirectory>$$FLAT_FILE_INPUT_DIRECTORY</PollingDirectory>
+        <FileNameRestriction>PTH5.COCCN.*</FileNameRestriction>
+        <FileExtensionRestriction>txt</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>$$FLAT_FILE_ARCHIVE_DIRECTORY</TargetDirectory>
+        <CompatModeMoved>false</CompatModeMoved>
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>true</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+        <SynchResponse>false</SynchResponse>
+        <Timeout>60</Timeout>
+        <FileSortingMethod>System Default</FileSortingMethod>
+        <FileSortingDirection>Ascending</FileSortingDirection>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Facility Name - CEX">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:FacilityNameShouldBe:eip_name:HCA FL Lake Monroe:eip_value][eip_pair:PartitionName:eip_name:IRL:eip_value][eip_pair:ClientName:eip_name:CEX:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="DocFlatFile2_Orange_1.png" name="Pickup Flat Files - IRL - OSX">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="1 - Incoming Raw File - Dir Listener - IRL - OSX">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>16:21-16:21</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <PollingInterval>120</PollingInterval>
+        <PollingDirectory>$$FLAT_FILE_INPUT_DIRECTORY</PollingDirectory>
+        <FileNameRestriction>PTH5.COCOS.*</FileNameRestriction>
+        <FileExtensionRestriction>txt</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>$$FLAT_FILE_ARCHIVE_DIRECTORY</TargetDirectory>
+        <CompatModeMoved>false</CompatModeMoved>
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>true</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+        <SynchResponse>false</SynchResponse>
+        <Timeout>60</Timeout>
+        <FileSortingMethod>System Default</FileSortingMethod>
+        <FileSortingDirection>Ascending</FileSortingDirection>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Facility Name - OSX">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:FacilityNameShouldBe:eip_name:HCA FL Osceola:eip_value][eip_pair:PartitionName:eip_name:IRL:eip_value][eip_pair:ClientName:eip_name:OSX:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="DocFlatFile2_Orange_1.png" name="Pickup Flat Files - IRL - POX">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="1 - Incoming Raw File - Dir Listener - IRL - POX">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>16:21-16:21</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <PollingInterval>120</PollingInterval>
+        <PollingDirectory>$$FLAT_FILE_INPUT_DIRECTORY</PollingDirectory>
+        <FileNameRestriction>PTH5.COCPMA.*</FileNameRestriction>
+        <FileExtensionRestriction>txt</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>$$FLAT_FILE_ARCHIVE_DIRECTORY</TargetDirectory>
+        <CompatModeMoved>false</CompatModeMoved>
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>true</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+        <SynchResponse>false</SynchResponse>
+        <Timeout>60</Timeout>
+        <FileSortingMethod>System Default</FileSortingMethod>
+        <FileSortingDirection>Ascending</FileSortingDirection>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Facility Name - POX">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:FacilityNameShouldBe:eip_name:HCA FL Poinciana:eip_value][eip_pair:PartitionName:eip_name:IRL:eip_value][eip_pair:ClientName:eip_name:POX:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Source icon="DocFlatFile2_Orange_1.png" name="Pickup Flat Files - IRL - OVX">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="1 - Incoming Raw File - Dir Listener - IRL - OVX">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>16:21-16:21</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <PollingInterval>120</PollingInterval>
+        <PollingDirectory>$$FLAT_FILE_INPUT_DIRECTORY</PollingDirectory>
+        <FileNameRestriction>PTH5.COCOMC.*</FileNameRestriction>
+        <FileExtensionRestriction>txt</FileExtensionRestriction>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>$$FLAT_FILE_ARCHIVE_DIRECTORY</TargetDirectory>
+        <CompatModeMoved>false</CompatModeMoved>
+        <Tokenizers />
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>10</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>true</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+        <SynchResponse>false</SynchResponse>
+        <Timeout>60</Timeout>
+        <FileSortingMethod>System Default</FileSortingMethod>
+        <FileSortingDirection>Ascending</FileSortingDirection>
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Facility Name - OVX">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributePairs>[eip_pair:FacilityNameShouldBe:eip_name:HCA FL Oviedo Medical Center:eip_value][eip_pair:PartitionName:eip_name:IRL:eip_value][eip_pair:ClientName:eip_name:OVX:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
   <Source icon="DocFlatFile2_Orange_1.png" name="Pickup Flat Files - IRL - CAX">
     <FormatProfile name="Relay (System Format)" />
     <SourceMetadata />
@@ -12362,6 +12638,38 @@
           <GlobalAttributes>BUCKET</GlobalAttributes>
         </ModuleConfig>
       </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Partition and Client Name-IRL-CEX">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('PartitionName') == 'IRL' &amp;&amp; getAttribute('ClientName') == 'CEX'}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:Partition:eip_name:IRL:eip_value][eip_pair:Client:eip_name:CEX:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Partition and Client Name-IRL-OSX">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('PartitionName') == 'IRL' &amp;&amp; getAttribute('ClientName') == 'OSX'}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:Partition:eip_name:IRL:eip_value][eip_pair:Client:eip_name:OSX:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Partition and Client Name-IRL-POX">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('PartitionName') == 'IRL' &amp;&amp; getAttribute('ClientName') == 'POX'}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:Partition:eip_name:IRL:eip_value][eip_pair:Client:eip_name:POX:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Partition and Client Name-IRL-OVX">
+        <ModuleConfig>
+          <ExecuteProcessor>{ognl:getAttribute('PartitionName') == 'IRL' &amp;&amp; getAttribute('ClientName') == 'OVX'}</ExecuteProcessor>
+          <AttributePairs>[eip_pair:Partition:eip_name:IRL:eip_value][eip_pair:Client:eip_name:OVX:eip_value]</AttributePairs>
+          <AttributeScope>Transaction</AttributeScope>
+          <GlobalAttributes>BUCKET</GlobalAttributes>
+        </ModuleConfig>
+      </Processor>
       <Processor class="com.pilotfish.eip.modules.internal.TransactionAttributePopulationProcessor" name="Set Partition and Client Name-IRL-TWX">
         <ModuleConfig>
           <ExecuteProcessor>{ognl:getAttribute('PartitionName') == 'IRL' &amp;&amp; getAttribute('ClientName') == 'TWX'}</ExecuteProcessor>
@@ -12476,13 +12784,13 @@
       </Processor>
       <Processor class="com.pilotfish.custom.FlatFileProcessor" name="Transform Flat File to XML">
         <ModuleConfig>
-          <ExecuteProcessor>{ognl:(getAttribute('ClientName') != 'NOA' &amp;&amp; getAttribute('ClientName') != 'LAM' &amp;&amp; getAttribute('ClientName') != 'MAX' &amp;&amp; getAttribute('ClientName') != 'NFX' &amp;&amp; getAttribute('ClientName') != 'OCX' &amp;&amp; getAttribute('ClientName') != 'PUX' &amp;&amp; getAttribute('ClientName') != 'PAT' &amp;&amp; getAttribute('ClientName') != 'POT' &amp;&amp; getAttribute('ClientName') != 'FRK' &amp;&amp; getAttribute('ClientName') != 'SPG' &amp;&amp; getAttribute('ClientName') != 'REA') &amp;&amp; getAttribute('ClientName') != 'REC' &amp;&amp; getAttribute('ClientName') != 'STB' &amp;&amp; getAttribute('ClientName') != 'PPA' &amp;&amp; getAttribute('ClientName') != 'ARA' &amp;&amp; getAttribute('ClientName') != 'JFX' &amp;&amp; getAttribute('ClientName') != 'LWX' &amp;&amp; getAttribute('ClientName') != 'PWX' &amp;&amp; getAttribute('ClientName') != 'COX' &amp;&amp; getAttribute('ClientName') != 'ALI' &amp;&amp; getAttribute('ClientName') != 'SPP' &amp;&amp; getAttribute('ClientName') != 'REU' &amp;&amp; getAttribute('ClientName') != 'PAS' &amp;&amp; getAttribute('ClientName') != 'JWI' &amp;&amp; getAttribute('ClientName') != 'JRN' &amp;&amp; getAttribute('ClientName') != 'HEO' &amp;&amp; getAttribute('ClientName') != 'CHJ' &amp;&amp; getAttribute('ClientName') != 'STF' &amp;&amp; getAttribute('ClientName') != 'NEO' &amp;&amp; getAttribute('ClientName') != 'AP' &amp;&amp; getAttribute('ClientName') != 'CAQ' &amp;&amp; getAttribute('ClientName') != 'HMD' &amp;&amp; getAttribute('ClientName') != 'TON' &amp;&amp; getAttribute('ClientName') != 'CMX' &amp;&amp; getAttribute('ClientName') != 'KIX' &amp;&amp; getAttribute('ClientName') != 'CYX' &amp;&amp; getAttribute('ClientName') != 'HWX' &amp;&amp; getAttribute('ClientName') != 'CAX' &amp;&amp; getAttribute('ClientName') != 'GUX' &amp;&amp; getAttribute('ClientName') != 'CAT' &amp;&amp; getAttribute('ClientName') != 'GAN' &amp;&amp; getAttribute('ClientName') != 'WAX' &amp;&amp; getAttribute('ClientName') != 'WFX' &amp;&amp; getAttribute('ClientName') != 'TWX'  &amp;&amp; getAttribute('ClientName') != 'HAX'  &amp;&amp; getAttribute('ClientName') != 'HAA'   &amp;&amp; getAttribute('ClientName') != 'LGX'   &amp;&amp; getAttribute('ClientName') != 'PXL'  &amp;&amp; getAttribute('ClientName') != 'ALX'  &amp;&amp; getAttribute('ClientName') != 'MNX' &amp;&amp; getAttribute('PartitionName') != 'PPS' &amp;&amp; getAttribute('PartitionName') != 'NSP' &amp;&amp; (getAttribute('is_csv') == null || getAttribute('is_csv') != 'true')}</ExecuteProcessor>
+          <ExecuteProcessor>{ognl:(getAttribute('ClientName') != 'NOA' &amp;&amp; getAttribute('ClientName') != 'LAM' &amp;&amp; getAttribute('ClientName') != 'MAX' &amp;&amp; getAttribute('ClientName') != 'NFX' &amp;&amp; getAttribute('ClientName') != 'OCX' &amp;&amp; getAttribute('ClientName') != 'PUX' &amp;&amp; getAttribute('ClientName') != 'PAT' &amp;&amp; getAttribute('ClientName') != 'POT' &amp;&amp; getAttribute('ClientName') != 'FRK' &amp;&amp; getAttribute('ClientName') != 'SPG' &amp;&amp; getAttribute('ClientName') != 'REA') &amp;&amp; getAttribute('ClientName') != 'REC' &amp;&amp; getAttribute('ClientName') != 'STB' &amp;&amp; getAttribute('ClientName') != 'PPA' &amp;&amp; getAttribute('ClientName') != 'ARA' &amp;&amp; getAttribute('ClientName') != 'JFX' &amp;&amp; getAttribute('ClientName') != 'LWX' &amp;&amp; getAttribute('ClientName') != 'PWX' &amp;&amp; getAttribute('ClientName') != 'COX' &amp;&amp; getAttribute('ClientName') != 'ALI' &amp;&amp; getAttribute('ClientName') != 'SPP' &amp;&amp; getAttribute('ClientName') != 'REU' &amp;&amp; getAttribute('ClientName') != 'PAS' &amp;&amp; getAttribute('ClientName') != 'JWI' &amp;&amp; getAttribute('ClientName') != 'JRN' &amp;&amp; getAttribute('ClientName') != 'HEO' &amp;&amp; getAttribute('ClientName') != 'CHJ' &amp;&amp; getAttribute('ClientName') != 'STF' &amp;&amp; getAttribute('ClientName') != 'NEO' &amp;&amp; getAttribute('ClientName') != 'AP' &amp;&amp; getAttribute('ClientName') != 'CAQ' &amp;&amp; getAttribute('ClientName') != 'HMD' &amp;&amp; getAttribute('ClientName') != 'TON' &amp;&amp; getAttribute('ClientName') != 'CMX' &amp;&amp; getAttribute('ClientName') != 'KIX' &amp;&amp; getAttribute('ClientName') != 'CYX' &amp;&amp; getAttribute('ClientName') != 'HWX' &amp;&amp; getAttribute('ClientName') != 'CAX' &amp;&amp; getAttribute('ClientName') != 'GUX' &amp;&amp; getAttribute('ClientName') != 'CAT' &amp;&amp; getAttribute('ClientName') != 'GAN' &amp;&amp; getAttribute('ClientName') != 'CEX' &amp;&amp; getAttribute('ClientName') != 'OSX' &amp;&amp; getAttribute('ClientName') != 'POX' &amp;&amp; getAttribute('ClientName') != 'OVX' &amp;&amp; getAttribute('ClientName') != 'WAX' &amp;&amp; getAttribute('ClientName') != 'WFX' &amp;&amp; getAttribute('ClientName') != 'TWX'  &amp;&amp; getAttribute('ClientName') != 'HAX'  &amp;&amp; getAttribute('ClientName') != 'HAA'   &amp;&amp; getAttribute('ClientName') != 'LGX'   &amp;&amp; getAttribute('ClientName') != 'PXL'  &amp;&amp; getAttribute('ClientName') != 'ALX'  &amp;&amp; getAttribute('ClientName') != 'MNX' &amp;&amp; getAttribute('PartitionName') != 'PPS' &amp;&amp; getAttribute('PartitionName') != 'NSP' &amp;&amp; (getAttribute('is_csv') == null || getAttribute('is_csv') != 'true')}</ExecuteProcessor>
           <XmlConfigFile>raw-flat-file-specification.xml</XmlConfigFile>
         </ModuleConfig>
       </Processor>
       <Processor class="com.pilotfish.custom.FlatFileProcessor" name="Transform Flat File to XML-New-Expanse-Expanded-CDM">
         <ModuleConfig>
-          <ExecuteProcessor>{ognl:getAttribute('FacilityName') != 'HCA AP Logs' &amp;&amp; (getAttribute('ClientName') == 'NOA' || getAttribute('ClientName') == 'LAM' || getAttribute('ClientName') == 'MAX' || getAttribute('ClientName') == 'NFX' || getAttribute('ClientName') == 'OCX' || getAttribute('ClientName') == 'PUX' || getAttribute('ClientName') == 'PAT' || getAttribute('ClientName') == 'POT' || getAttribute('ClientName') == 'FRK' || getAttribute('ClientName') == 'REA' || getAttribute('ClientName') == 'REC' || getAttribute('ClientName') == 'STB' || getAttribute('ClientName') == 'JFX' || getAttribute('ClientName') == 'LWX' || getAttribute('ClientName') == 'PWX' || getAttribute('ClientName') == 'COX' || getAttribute('ClientName') == 'ALI' || getAttribute('ClientName') == 'SPP' || getAttribute('ClientName') == 'REU' || getAttribute('ClientName') == 'PAS' || getAttribute('ClientName') == 'JWI' || getAttribute('ClientName') == 'JRN' || getAttribute('ClientName') == 'HEO' || getAttribute('ClientName') == 'CHJ' || getAttribute('ClientName') == 'HMD'|| getAttribute('ClientName') == 'TON' || getAttribute('ClientName') == 'CMX' || getAttribute('ClientName') == 'KIX' || getAttribute('ClientName') == 'CYX' || getAttribute('ClientName') == 'HWX' || getAttribute('ClientName') == 'CAX' || getAttribute('ClientName') == 'GUX' || getAttribute('ClientName') == 'CAT' || getAttribute('ClientName') == 'GAN' || getAttribute('ClientName') == 'TWX' || getAttribute('ClientName') == 'WAX' || getAttribute('ClientName') == 'WFX' || getAttribute('ClientName') == 'LGX' || getAttribute('ClientName') == 'PXL' || getAttribute('ClientName') == 'ALX' || getAttribute('ClientName') == 'MNX' &amp;&amp; (getAttribute('is_csv') == null || getAttribute('is_csv') != 'true') &amp;&amp; getAttribute('ClientName') != 'SPG' &amp;&amp; getAttribute('ClientName') != 'PPA' &amp;&amp; getAttribute('ClientName') != 'NEO' &amp;&amp; getAttribute('ClientName') != 'AP' &amp;&amp; getAttribute('ClientName') != 'ARA' &amp;&amp; getAttribute('ClientName') != 'ALI') &amp;&amp; getAttribute('ClientName') != 'STF' &amp;&amp; getAttribute('ClientName') != 'HAX' &amp;&amp; getAttribute('ClientName') != 'HAA' &amp;&amp; getAttribute('PartitionName') != 'PPS' &amp;&amp; getAttribute('PartitionName') != 'NSP'}</ExecuteProcessor>
+          <ExecuteProcessor>{ognl:getAttribute('FacilityName') != 'HCA AP Logs' &amp;&amp; (getAttribute('ClientName') == 'NOA' || getAttribute('ClientName') == 'LAM' || getAttribute('ClientName') == 'MAX' || getAttribute('ClientName') == 'NFX' || getAttribute('ClientName') == 'OCX' || getAttribute('ClientName') == 'PUX' || getAttribute('ClientName') == 'PAT' || getAttribute('ClientName') == 'POT' || getAttribute('ClientName') == 'FRK' || getAttribute('ClientName') == 'REA' || getAttribute('ClientName') == 'REC' || getAttribute('ClientName') == 'STB' || getAttribute('ClientName') == 'JFX' || getAttribute('ClientName') == 'LWX' || getAttribute('ClientName') == 'PWX' || getAttribute('ClientName') == 'COX' || getAttribute('ClientName') == 'ALI' || getAttribute('ClientName') == 'SPP' || getAttribute('ClientName') == 'REU' || getAttribute('ClientName') == 'PAS' || getAttribute('ClientName') == 'JWI' || getAttribute('ClientName') == 'JRN' || getAttribute('ClientName') == 'HEO' || getAttribute('ClientName') == 'CHJ' || getAttribute('ClientName') == 'HMD'|| getAttribute('ClientName') == 'TON' || getAttribute('ClientName') == 'CMX' || getAttribute('ClientName') == 'KIX' || getAttribute('ClientName') == 'CYX' || getAttribute('ClientName') == 'HWX' || getAttribute('ClientName') == 'CAX' || getAttribute('ClientName') == 'GUX' || getAttribute('ClientName') == 'CAT' || getAttribute('ClientName') == 'GAN' || getAttribute('ClientName') == 'CEX' || getAttribute('ClientName') == 'OSX' || getAttribute('ClientName') == 'POX' || getAttribute('ClientName') == 'OVX' || getAttribute('ClientName') == 'TWX' || getAttribute('ClientName') == 'WAX' || getAttribute('ClientName') == 'WFX' || getAttribute('ClientName') == 'LGX' || getAttribute('ClientName') == 'PXL' || getAttribute('ClientName') == 'ALX' || getAttribute('ClientName') == 'MNX' &amp;&amp; (getAttribute('is_csv') == null || getAttribute('is_csv') != 'true') &amp;&amp; getAttribute('ClientName') != 'SPG' &amp;&amp; getAttribute('ClientName') != 'PPA' &amp;&amp; getAttribute('ClientName') != 'NEO' &amp;&amp; getAttribute('ClientName') != 'AP' &amp;&amp; getAttribute('ClientName') != 'ARA' &amp;&amp; getAttribute('ClientName') != 'ALI') &amp;&amp; getAttribute('ClientName') != 'STF' &amp;&amp; getAttribute('ClientName') != 'HAX' &amp;&amp; getAttribute('ClientName') != 'HAA' &amp;&amp; getAttribute('PartitionName') != 'PPS' &amp;&amp; getAttribute('PartitionName') != 'NSP'}</ExecuteProcessor>
           <XmlConfigFile>raw-flat-file-specification-expanded-cdm.xml</XmlConfigFile>
         </ModuleConfig>
       </Processor>

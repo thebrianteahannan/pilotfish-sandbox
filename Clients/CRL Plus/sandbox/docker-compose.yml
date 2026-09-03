@@ -1,8 +1,8 @@
 services:
-  ail-sandbox:
+  webui:
     build: ./webui
     container_name: pf-crlplus-ail-sandbox
-    restart: unless-stopped
+    restart: "no"
     environment:
       OUTPUT_DIR: /output
       SAMPLE_DIR: /sample-data
@@ -11,10 +11,116 @@ services:
       AIL_SKIP_OUTBOUND: "true"
       HOST: 0.0.0.0
       PORT: 8094
-      # Host LAN IP shown in the UI (override if your NIC changes)
-      LAN_IP: ${LAN_IP:-192.168.68.52}
+      LAN_IP: ${LAN_IP:-192.168.68.62}
+      EIP_PUBLIC_URL: http://127.0.0.1:8180/eip/
+      MOCKS_URL: http://127.0.0.1:8095/
+      EIP_INJECT_BASE: http://eip:8080/eip/http-post
+      MOCKS_INTERNAL: http://mocks:8095
+      CARRIERS_FILE: /carriers.json
+      EIP_INPUT: /eip-input
+      SFTP_HINT: "localhost:2226 demo/demo"
+      SQL_HINT: "localhost:14342 sa / PilotFish_Demo1!  CRLPlus"
+      MAIL_HINT: "http://127.0.0.1:8026/"
     ports:
       - "8094:8094"
     volumes:
       - ./output:/output
       - ./sample-data:/sample-data:ro
+      - ./carriers.json:/carriers.json:ro
+      - ./webui/app.py:/app/app.py:ro
+      - ./webui/templates:/app/templates:ro
+      - ./input:/eip-input
+
+  mocks:
+    build: ./mocks
+    container_name: pf-crlplus-mocks
+    restart: "no"
+    environment:
+      OUTPUT_DIR: /output
+      PORT: "8095"
+    ports:
+      - "8095:8095"
+    volumes:
+      - ./output/mocks:/output
+
+  sftp:
+    image: atmoz/sftp:alpine
+    platform: linux/amd64
+    container_name: pf-crlplus-sftp
+    restart: "no"
+    ports:
+      - "2226:22"
+    command: demo:demo:1001:1001:upload,output,reconcile,teledex,aig1122,aigimages,aiglifeplans,axa,paclife,images
+
+  mail:
+    image: mailhog/mailhog
+    platform: linux/amd64
+    container_name: pf-crlplus-mail
+    restart: "no"
+    ports:
+      - "1026:1025"
+      - "8026:8025"
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-crlplus-sql
+    restart: "no"
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "PilotFish_Demo1!"
+      MSSQL_PID: Developer
+    ports:
+      - "14342:1433"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"PilotFish_Demo1!\" -C -Q \"SELECT 1\" || exit 1",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  sqlserver-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-crlplus-sql-init
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ./sql:/sql:ro
+    entrypoint:
+      - /bin/bash
+      - -lc
+      - |
+        set -euo pipefail
+        /opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P 'PilotFish_Demo1!' -C -i /sql/01_init.sql
+        echo "CRLPlus SQL seed complete."
+
+  eip:
+    build:
+      context: ./pilotfish
+    image: pilotfish-crl-plus:26R1
+    container_name: pf-crlplus-eip
+    restart: "no"
+    depends_on:
+      sqlserver-init:
+        condition: service_completed_successfully
+      mocks:
+        condition: service_started
+      sftp:
+        condition: service_started
+      mail:
+        condition: service_started
+    ports:
+      - "8180:8080"
+    volumes:
+      - ./pilotfish/entrypoint.sh:/entrypoint.sh:ro
+      - ../eip-root:/usr/local/tomcat/webapps/eip/eip-root
+      - ./environment-settings.conf:/opt/sandbox/environment-settings.conf:ro
+      - ./lib-src:/opt/sandbox/lib-src:ro
+      - ./data/tabular-mappings:/opt/pilotfish/tabular-mappings:ro
+      - ./input:/opt/pilotfish/input
+      - ./output/eip:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs

@@ -1,0 +1,22 @@
+IF DB_ID(N'Hl7MeasuresDemo') IS NULL
+BEGIN
+  CREATE DATABASE Hl7MeasuresDemo;
+END
+GO
+
+USE Hl7MeasuresDemo;
+GO
+
+IF OBJECT_ID(N'dbo.Patients', N'U') IS NOT NULL DROP TABLE dbo.Patients;
+GO
+
+CREATE TABLE dbo.Patients (
+  RowId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  PatientId NVARCHAR(64) NULL,
+  LastName NVARCHAR(100) NULL,
+  FirstName NVARCHAR(100) NULL,
+  DateOfBirth DATE NULL,
+  MessageControlId NVARCHAR(64) NULL,
+  LoadedAt DATETIME2 NOT NULL CONSTRAINT DF_Patients_LoadedAt DEFAULT (SYSUTCDATETIME())
+);
+GO

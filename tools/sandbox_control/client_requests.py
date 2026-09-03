@@ -9,6 +9,7 @@ import threading
 from datetime import datetime, timezone
 from pathlib import Path
 
+import client_dive
 import clients
 import difflib
 
@@ -28,6 +29,17 @@ def requests_dir(root: Path) -> Path:
     return path
 
 
+def packaged_ids(root: Path) -> set[str]:
+    latest = requests_dir(root) / "_deploy" / "latest.json"
+    if not latest.is_file():
+        return set()
+    try:
+        data = json.loads(latest.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return set()
+    return {str(i) for i in (data.get("ids") or []) if i}
+
+
 _ZIP_SKIP = {"summarize", "this", "email", "fwd", "re", "fw"}
 
 
@@ -45,7 +57,7 @@ def zip_filename(client: str, folder: Path, meta: dict) -> str:
             subject = str(dive.get("subject") or subject)
         except (OSError, json.JSONDecodeError):
             pass
-    cleaned = re.sub(r"[\u20ac€©]?\s*summarize this email", "", subject or "", flags=re.I)
+    cleaned = client_dive.clean_subject(subject)
     parts = [p for p in _slug_bit(cleaned).split("-") if p and not p.isdigit() and p not in _ZIP_SKIP]
     short = "-".join(parts[:3]) or "request"
     base = re.sub(r"[^A-Za-z0-9]+", "", client or "Client")
@@ -106,16 +118,21 @@ def append_log(folder: Path, text: str) -> None:
         save_meta(folder, meta)
 
 
-def _summary(meta: dict, folder: Path | None = None) -> dict:
+def _summary(meta: dict, folder: Path | None = None, packaged: set[str] | None = None) -> dict:
     import client_hours
 
     hours = client_hours.for_request(meta, folder)
+    rid = str(meta.get("id") or (folder.name if folder else ""))
+    packed = bool(meta.get("deploy_zip")) or rid in (packaged or set())
     return {
         "id": meta.get("id"),
         "from": meta.get("from") or "",
         "subject": meta.get("subject") or "",
         "received_at": meta.get("received_at") or meta.get("created_at") or "",
-        "status": "ready" if meta.get("git_merged") else (meta.get("status") or "received"),
+        "status": "applied" if packed else ("ready" if meta.get("git_merged") else (meta.get("status") or "received")),
+        "deployed": packed,
+        "deploy_zip": meta.get("deploy_zip") or "",
+        "deploy_path": meta.get("deploy_path") or "",
         "phase": meta.get("phase") or "",
         "message": meta.get("message") or "",
         "plan_pdf": bool(meta.get("plan_pdf")),
@@ -137,11 +154,12 @@ def list_requests(slug: str) -> list[dict]:
     folder = root / "requests"
     if not folder.is_dir():
         return []
+    packed = packaged_ids(root)
     rows = []
     for child in folder.iterdir():
         if not child.is_dir() or child.name.startswith("_") or not meta_path(child).is_file():
             continue
-        rows.append(_summary(load_meta(child), child))
+        rows.append(_summary(load_meta(child), child, packed))
     rows.sort(key=lambda r: r.get("id") or "", reverse=True)
     return rows
 
@@ -250,6 +268,13 @@ def get_request(slug: str, req_id: str) -> dict:
     meta = load_meta(folder)
     if not meta:
         raise FileNotFoundError(req_id)
+    try:
+        import client_request_diffs
+
+        client_request_diffs.refresh(root, folder, meta)
+        meta = load_meta(folder) or meta
+    except Exception:
+        pass
     email = ""
     email_path = folder / "email.txt"
     if email_path.is_file():
@@ -323,7 +348,11 @@ def get_request(slug: str, req_id: str) -> dict:
     import client_request_video
 
     meta["video"] = client_request_video.snapshot(folder, meta.get("slug") or slug, folder.name)
-    if meta.get("git_merged"):
+    rid = str(meta.get("id") or folder.name)
+    if meta.get("deploy_zip") or rid in packaged_ids(root):
+        meta["deployed"] = True
+        meta["status"] = "applied"
+    elif meta.get("git_merged"):
         meta["status"] = "ready"
     return meta
 
@@ -331,8 +360,7 @@ def get_request(slug: str, req_id: str) -> dict:
 def create_request(slug: str, body: dict) -> dict:
     root = clients.require_root(slug)
     sender = str(body.get("from") or "").strip()
-    subject = re.sub(r"[\u20ac€©]?\s*summarize this email", "", str(body.get("subject") or ""), flags=re.I)
-    subject = subject.strip(" \t-–—|") or "Client request"
+    subject = client_dive.clean_subject(str(body.get("subject") or "")) or "Client request"
     received = str(body.get("received_at") or "").strip() or utc_now()
     email = str(body.get("email") or "").strip()
     if not email:

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XCSData>
+	<ediroot eid="1">
+		<interchange AckRequest="0" Control="000000248" Date="120923" Standard="ANSI X.12" TestIndicator="P" Time="2017" Version="00501" eid="1">
+			<sender eid="1">
+				<address Id="S32433" Qual="ZZ" eid="1" />
+			</sender>
+			<receiver eid="1">
+				<address Id="Zirmed" Qual="ZZ" eid="2" />
+			</receiver>
+			<group ApplReceiver="Zirmed" ApplSender="S32433" Control="248" Date="20120923" GroupType="HC" StandardCode="X" StandardVersion="005010X222A1" Time="2017" eid="1">
+				<transaction Control="000000248" DocType="837" Name="Health Care Claim" eid="1">
+					<BHT_BeginningOfHierarchicalTransaction eid="1">
+						<BHT01_HierarchicalStructureCode eid="1">0019</BHT01_HierarchicalStructureCode>
+						<BHT02_TransactionSetPurposeCode eid="1">00</BHT02_TransactionSetPurposeCode>
+						<BHT03_OriginatorApplicationTransactionIdentifier eid="1">000000248</BHT03_OriginatorApplicationTransactionIdentifier>
+						<BHT04_TransactionSetCreationDate eid="1">20120923</BHT04_TransactionSetCreationDate>
+						<BHT05_TransactionSetCreationTime eid="1">2017</BHT05_TransactionSetCreationTime>
+						<BHT06_ClaimOrEncounterIdentifier eid="1">CH</BHT06_ClaimOrEncounterIdentifier>
+					</BHT_BeginningOfHierarchicalTransaction>
+					<LOOP_1000_Submitter_Name eid="1">
+						<NM1_SubmitterName eid="1">
+							<NM101_EntityIdentifierCode eid="1">41</NM101_EntityIdentifierCode>
+							<NM102_EntityTypeQualifier eid="1">2</NM102_EntityTypeQualifier>
+							<NM103_SubmitterLastOrOrganizationName eid="1">Mayo Clinic</NM103_SubmitterLastOrOrganizationName>
+							<NM108_IdentificationCodeQualifier eid="1">46</NM108_IdentificationCodeQualifier>
+							<NM109_SubmitterIdentifier eid="1">S32433</NM109_SubmitterIdentifier>
+						</NM1_SubmitterName>
+						<PER_SubmitterEDIContactInformation eid="1">
+							<PER01_ContactFunctionCode eid="1">IC</PER01_ContactFunctionCode>
+							<PER02_SubmitterContactName eid="1">Mayo Clinic</PER02_SubmitterContactName>
+							<PER03_CommunicationNumberQualifier eid="1">TE</PER03_CommunicationNumberQualifier>
+							<PER04_CommunicationNumber eid="1">9547487111</PER04_CommunicationNumber>
+							<PER05_CommunicationNumberQualifier eid="1">FX</PER05_CommunicationNumberQualifier>
+							<PER06_CommunicationNumber eid="1">9547487222</PER06_CommunicationNumber>
+						</PER_SubmitterEDIContactInformation>
+					</LOOP_1000_Submitter_Name>
+					<LOOP_1000_Submitter_Name eid="2">
+						<NM1_SubmitterName eid="2">
+							<NM101_EntityIdentifierCode eid="2">40</NM101_EntityIdentifierCode>
+							<NM102_EntityTypeQualifier eid="2">2</NM102_EntityTypeQualifier>
+							<NM103_SubmitterLastOrOrganizationName eid="2">Zirmed</NM103_SubmitterLastOrOrganizationName>
+							<NM108_IdentificationCodeQualifier eid="2">46</NM108_IdentificationCodeQualifier>
+							<NM109_SubmitterIdentifier eid="2">Zirmed</NM109_SubmitterIdentifier>
+						</NM1_SubmitterName>
+					</LOOP_1000_Submitter_Name>
+					<LOOP_2000_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+						<HL_BillingPayToProviderHierarchicalLevel eid="1">
+							<HL01_HierarchicalIDNumber eid="1">1</HL01_HierarchicalIDNumber>
+							<HL03_HierarchicalLevelCode eid="1">20</HL03_HierarchicalLevelCode>
+							<HL04_HierarchicalChildCode eid="1">1</HL04_HierarchicalChildCode>
+						</HL_BillingPayToProviderHierarchicalLevel>
+						<LOOP_2010_Billing_Provider_Name eid="1">
+							<NM1_BillingProviderName eid="1">
+								<NM101_EntityIdentifierCode eid="3">85</NM101_EntityIdentifierCode>
+								<NM102_EntityTypeQualifier eid="3">1</NM102_EntityTypeQualifier>
+								<NM103_BillingProviderLastOrOrganizationalName eid="1">Sean</NM103_BillingProviderLastOrOrganizationalName>
+								<NM104_BillingProviderFirstName eid="1">Smith</NM104_BillingProviderFirstName>
+								<NM105_BillingProviderMiddleName eid="1">K</NM105_BillingProviderMiddleName>
+								<NM108_IdentificationCodeQualifier eid="3">XX</NM108_IdentificationCodeQualifier>
+								<NM109_BillingProviderIdentifier eid="1">6565656565</NM109_BillingProviderIdentifier>
+							</NM1_BillingProviderName>
+							<N3_BillingProviderAddress eid="1">
+								<N301_BillingProviderAddressLine eid="1">5537 KINGS HIGHWAY</N301_BillingProviderAddressLine>
+								<N302_BillingProviderAddressLine eid="1">APT 6G</N302_BillingProviderAddressLine>
+							</N3_BillingProviderAddress>
+							<N4_BillingProviderCityStateZIPCode eid="1">
+								<N401_BillingProviderCityName eid="1">Frisco City</N401_BillingProviderCityName>
+								<N402_BillingProviderStateOrProvinceCode eid="1">NY</N402_BillingProviderStateOrProvinceCode>
+								<N403_BillingProviderPostalZoneOrZIPCode eid="1">112348888</N403_BillingProviderPostalZoneOrZIPCode>
+							</N4_BillingProviderCityStateZIPCode>
+							<REF_BillingProviderSecondaryIdentification eid="1">
+								<REF01_ReferenceIdentificationQualifier eid="1">EI</REF01_ReferenceIdentificationQualifier>
+								<REF02_BillingProviderAdditionalIdentifier eid="1">222222222</REF02_BillingProviderAdditionalIdentifier>
+							</REF_BillingProviderSecondaryIdentification>
+						</LOOP_2010_Billing_Provider_Name>
+					</LOOP_2000_Billing_Pay-to_Provider_Hierarchical_Level>
+					<LOOP_2000_Billing_Pay-to_Provider_Hierarchical_Level eid="2">
+						<HL_BillingPayToProviderHierarchicalLevel eid="2">
+							<HL01_HierarchicalIDNumber eid="2">2</HL01_HierarchicalIDNumber>
+							<HL02_NotUsed eid="1">1</HL02_NotUsed>
+							<HL03_HierarchicalLevelCode eid="2">22</HL03_HierarchicalLevelCode>
+							<HL04_HierarchicalChildCode eid="2">0</HL04_HierarchicalChildCode>
+						</HL_BillingPayToProviderHierarchicalLevel>
+						<SBR_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+							<SBR01_Billing_Pay-to_Provider_Hierarchical_Level eid="1">P</SBR01_Billing_Pay-to_Provider_Hierarchical_Level>
+							<SBR02_Billing_Pay-to_Provider_Hierarchical_Level eid="1">18</SBR02_Billing_Pay-to_Provider_Hierarchical_Level>
+							<SBR03_Billing_Pay-to_Provider_Hierarchical_Level eid="1">K34532</SBR03_Billing_Pay-to_Provider_Hierarchical_Level>
+							<SBR04_Billing_Pay-to_Provider_Hierarchical_Level eid="1">GFAMPLAN</SBR04_Billing_Pay-to_Provider_Hierarchical_Level>
+							<SBR09_Billing_Pay-to_Provider_Hierarchical_Level eid="1">ZZ</SBR09_Billing_Pay-to_Provider_Hierarchical_Level>
+						</SBR_Billing_Pay-to_Provider_Hierarchical_Level>
+						<LOOP_2010_Billing_Provider_Name eid="2">
+							<NM1_BillingProviderName eid="2">
+								<NM101_EntityIdentifierCode eid="4">IL</NM101_EntityIdentifierCode>
+								<NM102_EntityTypeQualifier eid="4">1</NM102_EntityTypeQualifier>
+								<NM103_BillingProviderLastOrOrganizationalName eid="2">SIMMONS</NM103_BillingProviderLastOrOrganizationalName>
+								<NM104_BillingProviderFirstName eid="2">FOSTER</NM104_BillingProviderFirstName>
+								<NM108_IdentificationCodeQualifier eid="4">MI</NM108_IdentificationCodeQualifier>
+								<NM109_BillingProviderIdentifier eid="2">Y333RF3333</NM109_BillingProviderIdentifier>
+							</NM1_BillingProviderName>
+							<N3_BillingProviderAddress eid="2">
+								<N301_BillingProviderAddressLine eid="2">8367 ALIQUAM ROAD</N301_BillingProviderAddressLine>
+								<N302_BillingProviderAddressLine eid="2">AP #117-8770</N302_BillingProviderAddressLine>
+							</N3_BillingProviderAddress>
+							<N4_BillingProviderCityStateZIPCode eid="2">
+								<N401_BillingProviderCityName eid="2">SUGAR LAND</N401_BillingProviderCityName>
+								<N402_BillingProviderStateOrProvinceCode eid="2">CA</N402_BillingProviderStateOrProvinceCode>
+								<N403_BillingProviderPostalZoneOrZIPCode eid="2">743434232</N403_BillingProviderPostalZoneOrZIPCode>
+							</N4_BillingProviderCityStateZIPCode>
+							<DMG_Billing_Provider_Name eid="1">
+								<DMG01_Billing_Provider_Name eid="1">D8</DMG01_Billing_Provider_Name>
+								<DMG02_Billing_Provider_Name eid="1">19451123</DMG02_Billing_Provider_Name>
+								<DMG03_Billing_Provider_Name eid="1">M</DMG03_Billing_Provider_Name>
+							</DMG_Billing_Provider_Name>
+						</LOOP_2010_Billing_Provider_Name>
+						<LOOP_2010_Billing_Provider_Name eid="3">
+							<NM1_BillingProviderName eid="3">
+								<NM101_EntityIdentifierCode eid="5">PR</NM101_EntityIdentifierCode>
+								<NM102_EntityTypeQualifier eid="5">2</NM102_EntityTypeQualifier>
+								<NM103_BillingProviderLastOrOrganizationalName eid="3">AETNA HEALTH INC</NM103_BillingProviderLastOrOrganizationalName>
+								<NM108_IdentificationCodeQualifier eid="5">PI</NM108_IdentificationCodeQualifier>
+								<NM109_BillingProviderIdentifier eid="3">9393</NM109_BillingProviderIdentifier>
+							</NM1_BillingProviderName>
+							<N3_BillingProviderAddress eid="3">
+								<N301_BillingProviderAddressLine eid="3">P.O. BOX 1125</N301_BillingProviderAddressLine>
+							</N3_BillingProviderAddress>
+							<N4_BillingProviderCityStateZIPCode eid="3">
+								<N401_BillingProviderCityName eid="3">Blue Bell</N401_BillingProviderCityName>
+								<N402_BillingProviderStateOrProvinceCode eid="3">PA</N402_BillingProviderStateOrProvinceCode>
+								<N403_BillingProviderPostalZoneOrZIPCode eid="3">19422</N403_BillingProviderPostalZoneOrZIPCode>
+							</N4_BillingProviderCityStateZIPCode>
+						</LOOP_2010_Billing_Provider_Name>
+						<LOOP_2300_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+							<CLM_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+								<CLM01_Billing_Pay-to_Provider_Hierarchical_Level eid="1">249</CLM01_Billing_Pay-to_Provider_Hierarchical_Level>
+								<CLM02_Billing_Pay-to_Provider_Hierarchical_Level eid="1">60</CLM02_Billing_Pay-to_Provider_Hierarchical_Level>
+								<CLM05_Billing_Pay-to_Provider_Hierarchical_Level Composite="yes" eid="1">
+									<subelement_Billing_Pay-to_Provider_Hierarchical_Level Sequence="1" eid="1">11</subelement_Billing_Pay-to_Provider_Hierarchical_Level>
+									<subelement_Billing_Pay-to_Provider_Hierarchical_Level Sequence="2" eid="2">B</subelement_Billing_Pay-to_Provider_Hierarchical_Level>
+									<subelement_Billing_Pay-to_Provider_Hierarchical_Level Sequence="3" eid="3">1</subelement_Billing_Pay-to_Provider_Hierarchical_Level>
+								</CLM05_Billing_Pay-to_Provider_Hierarchical_Level>
+								<CLM06_Billing_Pay-to_Provider_Hierarchical_Level eid="1">Y</CLM06_Billing_Pay-to_Provider_Hierarchical_Level>
+								<CLM07_Billing_Pay-to_Provider_Hierarchical_Level eid="1">A</CLM07_Billing_Pay-to_Provider_Hierarchical_Level>
+								<CLM08_Billing_Pay-to_Provider_Hierarchical_Level eid="1">Y</CLM08_Billing_Pay-to_Provider_Hierarchical_Level>
+								<CLM09_Billing_Pay-to_Provider_Hierarchical_Level eid="1">Y</CLM09_Billing_Pay-to_Provider_Hierarchical_Level>
+							</CLM_Billing_Pay-to_Provider_Hierarchical_Level>
+							<REF_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+								<REF01_Billing_Pay-to_Provider_Hierarchical_Level eid="1">X4</REF01_Billing_Pay-to_Provider_Hierarchical_Level>
+								<REF02_Billing_Pay-to_Provider_Hierarchical_Level eid="1">CL324234</REF02_Billing_Pay-to_Provider_Hierarchical_Level>
+							</REF_Billing_Pay-to_Provider_Hierarchical_Level>
+							<HI_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+								<HI01_Billing_Pay-to_Provider_Hierarchical_Level Composite="yes" eid="1">
+									<subelement_Billing_Pay-to_Provider_Hierarchical_Level Sequence="1" eid="4">BK</subelement_Billing_Pay-to_Provider_Hierarchical_Level>
+									<subelement_Billing_Pay-to_Provider_Hierarchical_Level Sequence="2" eid="5">41012</subelement_Billing_Pay-to_Provider_Hierarchical_Level>
+								</HI01_Billing_Pay-to_Provider_Hierarchical_Level>
+							</HI_Billing_Pay-to_Provider_Hierarchical_Level>
+							<LOOP_2310_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+								<NM1_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+									<NM101_Billing_Pay-to_Provider_Hierarchical_Level eid="1">82</NM101_Billing_Pay-to_Provider_Hierarchical_Level>
+									<NM102_Billing_Pay-to_Provider_Hierarchical_Level eid="1">1</NM102_Billing_Pay-to_Provider_Hierarchical_Level>
+									<NM103_Billing_Pay-to_Provider_Hierarchical_Level eid="1">Sean</NM103_Billing_Pay-to_Provider_Hierarchical_Level>
+									<NM104_Billing_Pay-to_Provider_Hierarchical_Level eid="1">Smith</NM104_Billing_Pay-to_Provider_Hierarchical_Level>
+									<NM105_Billing_Pay-to_Provider_Hierarchical_Level eid="1">K</NM105_Billing_Pay-to_Provider_Hierarchical_Level>
+									<NM108_Billing_Pay-to_Provider_Hierarchical_Level eid="1">XX</NM108_Billing_Pay-to_Provider_Hierarchical_Level>
+									<NM109_Billing_Pay-to_Provider_Hierarchical_Level eid="1">6565656565</NM109_Billing_Pay-to_Provider_Hierarchical_Level>
+								</NM1_Billing_Pay-to_Provider_Hierarchical_Level>
+							</LOOP_2310_Billing_Pay-to_Provider_Hierarchical_Level>
+							<LOOP_2310_Billing_Pay-to_Provider_Hierarchical_Level eid="2">
+								<NM1_Billing_Pay-to_Provider_Hierarchical_Level eid="2">
+									<NM101_Billing_Pay-to_Provider_Hierarchical_Level eid="2">77</NM101_Billing_Pay-to_Provider_Hierarchical_Level>
+									<NM102_Billing_Pay-to_Provider_Hierarchical_Level eid="2">2</NM102_Billing_Pay-to_Provider_Hierarchical_Level>
+									<NM103_Billing_Pay-to_Provider_Hierarchical_Level eid="2">NY Office</NM103_Billing_Pay-to_Provider_Hierarchical_Level>
+									<NM108_Billing_Pay-to_Provider_Hierarchical_Level eid="2">XX</NM108_Billing_Pay-to_Provider_Hierarchical_Level>
+									<NM109_Billing_Pay-to_Provider_Hierarchical_Level eid="2">1336177328</NM109_Billing_Pay-to_Provider_Hierarchical_Level>
+								</NM1_Billing_Pay-to_Provider_Hierarchical_Level>
+								<N3_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+									<N301_Billing_Pay-to_Provider_Hierarchical_Level eid="1">5081 Tellus. Avenue</N301_Billing_Pay-to_Provider_Hierarchical_Level>
+									<N302_Billing_Pay-to_Provider_Hierarchical_Level eid="1">668-2204 Non Rd.</N302_Billing_Pay-to_Provider_Hierarchical_Level>
+								</N3_Billing_Pay-to_Provider_Hierarchical_Level>
+								<N4_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+									<N401_Billing_Pay-to_Provider_Hierarchical_Level eid="1">White Plains</N401_Billing_Pay-to_Provider_Hierarchical_Level>
+									<N402_Billing_Pay-to_Provider_Hierarchical_Level eid="1">NY</N402_Billing_Pay-to_Provider_Hierarchical_Level>
+									<N403_Billing_Pay-to_Provider_Hierarchical_Level eid="1">809051232</N403_Billing_Pay-to_Provider_Hierarchical_Level>
+								</N4_Billing_Pay-to_Provider_Hierarchical_Level>
+								<REF_Billing_Pay-to_Provider_Hierarchical_Level eid="2">
+									<REF01_Billing_Pay-to_Provider_Hierarchical_Level eid="2">LU</REF01_Billing_Pay-to_Provider_Hierarchical_Level>
+									<REF02_Billing_Pay-to_Provider_Hierarchical_Level eid="2">484345</REF02_Billing_Pay-to_Provider_Hierarchical_Level>
+								</REF_Billing_Pay-to_Provider_Hierarchical_Level>
+							</LOOP_2310_Billing_Pay-to_Provider_Hierarchical_Level>
+							<LOOP_2400_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+								<LX_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+									<LX01_Billing_Pay-to_Provider_Hierarchical_Level eid="1">1</LX01_Billing_Pay-to_Provider_Hierarchical_Level>
+								</LX_Billing_Pay-to_Provider_Hierarchical_Level>
+								<SV1_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+									<SV101_Billing_Pay-to_Provider_Hierarchical_Level Composite="yes" eid="1">
+										<subelement_Billing_Pay-to_Provider_Hierarchical_Level Sequence="1" eid="6">HC</subelement_Billing_Pay-to_Provider_Hierarchical_Level>
+										<subelement_Billing_Pay-to_Provider_Hierarchical_Level Sequence="2" eid="7">99214</subelement_Billing_Pay-to_Provider_Hierarchical_Level>
+									</SV101_Billing_Pay-to_Provider_Hierarchical_Level>
+									<SV102_Billing_Pay-to_Provider_Hierarchical_Level eid="1">60</SV102_Billing_Pay-to_Provider_Hierarchical_Level>
+									<SV103_Billing_Pay-to_Provider_Hierarchical_Level eid="1">UN</SV103_Billing_Pay-to_Provider_Hierarchical_Level>
+									<SV104_Billing_Pay-to_Provider_Hierarchical_Level eid="1">1</SV104_Billing_Pay-to_Provider_Hierarchical_Level>
+									<SV105_Billing_Pay-to_Provider_Hierarchical_Level eid="1">11</SV105_Billing_Pay-to_Provider_Hierarchical_Level>
+									<SV107_Billing_Pay-to_Provider_Hierarchical_Level eid="1">1</SV107_Billing_Pay-to_Provider_Hierarchical_Level>
+								</SV1_Billing_Pay-to_Provider_Hierarchical_Level>
+								<DTP_Billing_Pay-to_Provider_Hierarchical_Level eid="1">
+									<DTP01_Billing_Pay-to_Provider_Hierarchical_Level eid="1">472</DTP01_Billing_Pay-to_Provider_Hierarchical_Level>
+									<DTP02_Billing_Pay-to_Provider_Hierarchical_Level eid="1">RD8</DTP02_Billing_Pay-to_Provider_Hierarchical_Level>
+									<DTP03_Billing_Pay-to_Provider_Hierarchical_Level eid="1">20120921-20120921</DTP03_Billing_Pay-to_Provider_Hierarchical_Level>
+								</DTP_Billing_Pay-to_Provider_Hierarchical_Level>
+								<REF_Billing_Pay-to_Provider_Hierarchical_Level eid="3">
+									<REF01_Billing_Pay-to_Provider_Hierarchical_Level eid="3">6R</REF01_Billing_Pay-to_Provider_Hierarchical_Level>
+									<REF02_Billing_Pay-to_Provider_Hierarchical_Level eid="3">1134</REF02_Billing_Pay-to_Provider_Hierarchical_Level>
+								</REF_Billing_Pay-to_Provider_Hierarchical_Level>
+							</LOOP_2400_Billing_Pay-to_Provider_Hierarchical_Level>
+						</LOOP_2300_Billing_Pay-to_Provider_Hierarchical_Level>
+					</LOOP_2000_Billing_Pay-to_Provider_Hierarchical_Level>
+				</transaction>
+			</group>
+		</interchange>
+	</ediroot>
+</XCSData>
+

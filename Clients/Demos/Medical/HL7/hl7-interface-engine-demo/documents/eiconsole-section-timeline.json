@@ -1,0 +1,483 @@
+{
+  "name": "eiconsole-hl7-interface-engine-demo",
+  "session_start_epoch_ms": 1788363313004,
+  "steps": [
+    {
+      "id": "wait-fm",
+      "action": "wait_for",
+      "detail": "",
+      "started_at_ms": 291,
+      "ended_at_ms": 649,
+      "dwell_ms": 350,
+      "skipped": false
+    },
+    {
+      "id": "basic",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 650,
+      "ended_at_ms": 3123,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "open-pkg",
+      "action": "double_click",
+      "detail": "",
+      "started_at_ms": 3127,
+      "ended_at_ms": 6357,
+      "dwell_ms": 700,
+      "skipped": false
+    },
+    {
+      "id": "r1-open",
+      "action": "double_click",
+      "detail": "",
+      "started_at_ms": 6359,
+      "ended_at_ms": 9601,
+      "dwell_ms": 700,
+      "skipped": false
+    },
+    {
+      "id": "r1-grid",
+      "action": "wait_for",
+      "detail": "",
+      "started_at_ms": 9603,
+      "ended_at_ms": 9964,
+      "dwell_ms": 350,
+      "skipped": false
+    },
+    {
+      "id": "r1-src",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 9965,
+      "ended_at_ms": 12341,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-listener",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 12342,
+      "ended_at_ms": 14720,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-lmod",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 14722,
+      "ended_at_ms": 17099,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-ltype",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 17101,
+      "ended_at_ms": 19542,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-lbasic",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 19544,
+      "ended_at_ms": 21946,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-lport",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 21948,
+      "ended_at_ms": 24323,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-stx",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 24325,
+      "ended_at_ms": 26699,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-sfmt",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 26700,
+      "ended_at_ms": 29062,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-sfmt-wait",
+      "action": "wait_for",
+      "detail": "",
+      "started_at_ms": 29062,
+      "ended_at_ms": 29421,
+      "dwell_ms": 350,
+      "skipped": false
+    },
+    {
+      "id": "r1-smod",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 29421,
+      "ended_at_ms": 31799,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-sto",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 31800,
+      "ended_at_ms": 34155,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-sfmt-esc",
+      "action": "escape",
+      "detail": "",
+      "started_at_ms": 34158,
+      "ended_at_ms": 34670,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-sfmt-off",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 34670,
+      "ended_at_ms": 37021,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-sedit",
+      "action": "click",
+      "detail": "Then we'll move on to the logical transformation. Data transformations in the eiConsole are handled using PilotFish's Data Mapper.",
+      "started_at_ms": 37023,
+      "ended_at_ms": 48862,
+      "dwell_ms": 9636,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap-tab",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 48864,
+      "ended_at_ms": 52266,
+      "dwell_ms": 1200,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap-opensrc",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 52267,
+      "ended_at_ms": 55121,
+      "dwell_ms": 700,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap-opensrc-esc",
+      "action": "escape",
+      "detail": "",
+      "started_at_ms": 55125,
+      "ended_at_ms": 55624,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap-opentgt",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 55625,
+      "ended_at_ms": 58497,
+      "dwell_ms": 700,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap-opentgt-esc",
+      "action": "escape",
+      "detail": "",
+      "started_at_ms": 58501,
+      "ended_at_ms": 59016,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap-drag",
+      "action": "drag",
+      "detail": "",
+      "started_at_ms": 59017,
+      "ended_at_ms": 63903,
+      "dwell_ms": 500,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap2",
+      "action": "wait_for",
+      "detail": "All of your logical mapping is done here between your source format — in this case our HL7 data represented as a tree to the left — and our target format, a custom XML representation of some of the patient data we wanted to retain in our database.",
+      "started_at_ms": 63908,
+      "ended_at_ms": 82422,
+      "dwell_ms": 18492,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap3",
+      "action": "wait_for",
+      "detail": "Logical mapping rules are created through dragging and dropping onto the structure in the middle, with green nodes representing XML elements from our custom XML file and our blue nodes representing values mapped to those fields.",
+      "started_at_ms": 82425,
+      "ended_at_ms": 98581,
+      "dwell_ms": 16140,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap4",
+      "action": "wait_for",
+      "detail": "Here we can see the patient information mapped into the person's last name, first name, and date of birth field.",
+      "started_at_ms": 98595,
+      "ended_at_ms": 106530,
+      "dwell_ms": 7908,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap5",
+      "action": "wait_for",
+      "detail": "We can also see a yellow note underneath the birth date that demonstrates how the eiConsole's Data Mapper can be used to perform data manipulation during the mapping process.",
+      "started_at_ms": 106536,
+      "ended_at_ms": 117228,
+      "dwell_ms": 10668,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap6",
+      "action": "wait_for",
+      "detail": "Here we're formatting the date of birth value coming in from our HL7 into an XML date format using our date formatting tool from the palette above.",
+      "started_at_ms": 117233,
+      "ended_at_ms": 127759,
+      "dwell_ms": 10500,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap7",
+      "action": "wait_for",
+      "detail": "PID.7 is coming in with this format yyyyMMdd. Our desired output format for our XML file will be yyyy-MM-dd.",
+      "started_at_ms": 127766,
+      "ended_at_ms": 140849,
+      "dwell_ms": 13044,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap8",
+      "action": "wait_for",
+      "detail": "We define that using our date-time formatter so that all incoming data will automatically change to that format. As this mapping was created, XSLT was generated under the covers.",
+      "started_at_ms": 140852,
+      "ended_at_ms": 154203,
+      "dwell_ms": 13332,
+      "skipped": false
+    },
+    {
+      "id": "r1-smap9",
+      "action": "wait_for",
+      "detail": "Once all of our fields have been mapped and our mapping is complete, we can move on to the Routing stage.",
+      "started_at_ms": 154205,
+      "ended_at_ms": 161154,
+      "dwell_ms": 6924,
+      "skipped": false
+    },
+    {
+      "id": "r1-sback",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 161159,
+      "ended_at_ms": 163808,
+      "dwell_ms": 400,
+      "skipped": false
+    },
+    {
+      "id": "r1-snosave",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 163810,
+      "ended_at_ms": 166061,
+      "dwell_ms": 200,
+      "skipped": true
+    },
+    {
+      "id": "r1-route",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 166062,
+      "ended_at_ms": 168487,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-ttx",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 168490,
+      "ended_at_ms": 170861,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-tfmt",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 170863,
+      "ended_at_ms": 173235,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-tfmt-wait",
+      "action": "wait_for",
+      "detail": "",
+      "started_at_ms": 173235,
+      "ended_at_ms": 173596,
+      "dwell_ms": 350,
+      "skipped": false
+    },
+    {
+      "id": "r1-tfrom",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 173597,
+      "ended_at_ms": 176033,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-tfmt-esc",
+      "action": "escape",
+      "detail": "",
+      "started_at_ms": 176034,
+      "ended_at_ms": 176543,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-tfmt-off",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 176544,
+      "ended_at_ms": 178935,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-tedit",
+      "action": "click",
+      "detail": "On the left-hand side of our Data Mapper, you can see that simplified patient data that we took from the HL7 message initially, then parsed out and created this custom XML file with.",
+      "started_at_ms": 178937,
+      "ended_at_ms": 194331,
+      "dwell_ms": 13188,
+      "skipped": false
+    },
+    {
+      "id": "r1-tmap-tab",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 194335,
+      "ended_at_ms": 197763,
+      "dwell_ms": 1200,
+      "skipped": false
+    },
+    {
+      "id": "r1-tmap-opensrc",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 197766,
+      "ended_at_ms": 200634,
+      "dwell_ms": 700,
+      "skipped": false
+    },
+    {
+      "id": "r1-tmap-opensrc-esc",
+      "action": "escape",
+      "detail": "",
+      "started_at_ms": 200636,
+      "ended_at_ms": 201145,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-tmap-opentgt",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 201146,
+      "ended_at_ms": 204012,
+      "dwell_ms": 700,
+      "skipped": false
+    },
+    {
+      "id": "r1-tmap-opentgt-esc",
+      "action": "escape",
+      "detail": "",
+      "started_at_ms": 204015,
+      "ended_at_ms": 204527,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-tmap-drag",
+      "action": "drag",
+      "detail": "",
+      "started_at_ms": 204527,
+      "ended_at_ms": 209457,
+      "dwell_ms": 500,
+      "skipped": false
+    },
+    {
+      "id": "r1-txslt2",
+      "action": "wait_for",
+      "detail": "On the right-hand side we have connected up to a database and loaded in our tables, and also have statements and functions below.",
+      "started_at_ms": 209466,
+      "ended_at_ms": 217995,
+      "dwell_ms": 8508,
+      "skipped": false
+    },
+    {
+      "id": "r1-txslt3",
+      "action": "wait_for",
+      "detail": "Our mapping here in the middle indicates that we will insert this information from our source system into these rows and tables.",
+      "started_at_ms": 218001,
+      "ended_at_ms": 225906,
+      "dwell_ms": 7884,
+      "skipped": false
+    },
+    {
+      "id": "r1-tback",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 225908,
+      "ended_at_ms": 228524,
+      "dwell_ms": 400,
+      "skipped": false
+    },
+    {
+      "id": "r1-tnosave",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 228526,
+      "ended_at_ms": 230753,
+      "dwell_ms": 200,
+      "skipped": true
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+name: probe-open-from-adv
+steps:
+  - id: wait
+    action: wait_for
+    target: { type: table, contains: "EDI 834 CSV Excel Conversion" }
+    detail: "Wait for package in Advanced View."
+    dwell_ms: 400
+  - id: open-pkg
+    action: double_click
+    target: { type: table, contains: "EDI 834 CSV Excel Conversion" }
+    detail: "Open the package from Advanced View."
+    dwell_ms: 2000

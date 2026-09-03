@@ -40,11 +40,11 @@ RECORDER = ROOT / "tools" / "_record_construction_session.py"
 # Keep dwell close to spoken length — avoid long silent holds on empty canvases
 DEFAULT_MIN_DWELL_MS = 2200
 DEFAULT_FOCUS_MIN_DWELL_MS = 2800
-DEFAULT_POST_SPEECH_MS = 400
-DEFAULT_EMPTY_POST_SPEECH_MS = 250
+DEFAULT_POST_SPEECH_MS = 180
+DEFAULT_EMPTY_POST_SPEECH_MS = 180
 DEFAULT_INTRO_MS = 1200
 DEFAULT_PACE = 1.0
-DEFAULT_EDGE_RATE = "+8%"
+DEFAULT_EDGE_RATE = "-10%"
 
 
 def resolve_root(raw: str | None) -> Path:
@@ -69,7 +69,7 @@ def bump_webui_status(
         sys.path.insert(0, str(ROOT / "tools"))
         from construction_video_job import update_job
     payload = {
-        "status": "running",
+        "status": "error" if phase == "error" else ("done" if phase == "done" else "running"),
         "slug": demo.name,
         "message": message,
         "phase": phase,
@@ -161,7 +161,12 @@ def build_theater_preamble_entries(
         if not welcome.endswith("."):
             welcome += "."
         welcome += " " + extra
-    entries: list[dict] = [
+    tools = Path(__file__).resolve().parent
+    if str(tools) not in sys.path:
+        sys.path.insert(0, str(tools))
+    from construction_official_open import preamble_open_entries
+
+    entries: list[dict] = preamble_open_entries(demo, welcome) if demo else [
         {
             "kind": "ui_gesture",
             "action": "show_welcome",
@@ -243,13 +248,21 @@ def build_outro_entries(*, demo: Path | None = None) -> list[dict]:
     else:
         name = ctx.load_demo_display_name(demo) if demo else "this interface"
         detail = f"That's the walkthrough of {name}. Thanks for choosing PilotFish."
+    tools = Path(__file__).resolve().parent
+    if str(tools) not in sys.path:
+        sys.path.insert(0, str(tools))
+    from construction_official_open import product_line, trial_url
+
+    line = product_line(demo) if demo else "for Healthcare"
     return [
         {
             "kind": "outro",
             "action": "thank_you",
-            "id": "outro-thanks",
+            "id": "outro-close",
             "message": "Demo complete",
             "detail": detail,
+            "product_line": line,
+            "trial_url": trial_url(demo) if demo else "www.PilotFishTechnology.com",
             "logo_url": ctx.logo_data_uri(demo),
         },
     ]
@@ -380,7 +393,20 @@ def synthesize_plan_audio(
     wav_parts: list[Path] = []
     for i, entry in enumerate(entries, start=1):
         raw = clean_speech(str(entry.get("detail") or entry.get("message") or ""))
-        text = for_speech(raw) if raw else f"Step {i}."
+        text = for_speech(raw) if raw else ""
+        if entry.get("silent"):
+            text = ""
+        if not text:
+            dwell = max(int(entry.get("min_dwell_ms") or 0), 200)
+            silence = work / f"{stem_prefix}_{i:04d}_silence.wav"
+            build_silent_wav(silence, dwell)
+            wav_parts.append(silence)
+            out = dict(entry)
+            out["dwell_ms"] = dwell
+            out["speech_ms"] = 0
+            out["text"] = ""
+            plans.append(out)
+            continue
         wav = synthesize_voice(
             text,
             work,
@@ -405,6 +431,10 @@ def synthesize_plan_audio(
             dwell = max(speech_ms + post_speech_ms, 2800)
         elif action == "spotlight_ognl":
             dwell = max(floor, speech_ms + post_speech_ms + 2000, 10000)
+        elif action == "show_brand":
+            dwell = max(floor, 2200)
+        elif action == "show_product_demo":
+            dwell = max(floor, speech_ms + post_speech_ms + 800, 4500)
         elif action == "show_welcome":
             dwell = max(floor, speech_ms + post_speech_ms + 800, 5500)
         elif action == "show_pipeline":
@@ -640,7 +670,7 @@ def narration_for_step(step: dict, index: int, total: int) -> str:
     message = clean_speech(str(step.get("message") or ""))
     body = detail or message
     if not body:
-        return f"Step {index} of {total}."
+        return ""
     return for_speech(body)
 
 
@@ -651,26 +681,30 @@ def synthesize_edge(text: str, out_mp3: Path, *, voice: str, edge_rate: str = DE
     rate_arg = edge_rate if edge_rate.startswith(("+", "-")) else f"+{edge_rate}"
     if not rate_arg.endswith("%"):
         rate_arg += "%"
-    proc = subprocess.run(
-        [
-            str(py),
-            "-m",
-            "edge_tts",
-            "--voice",
-            voice,
-            f"--rate={rate_arg}",
-            "--text",
-            text,
-            "--write-media",
-            str(out_mp3),
-        ],
-        capture_output=True,
-        text=True,
-    )
-    if proc.returncode != 0 or not out_mp3.is_file():
-        print(proc.stderr or proc.stdout, file=sys.stderr)
-        raise SystemExit(f"edge-tts failed ({proc.returncode})")
-    return out_mp3
+    last_err = ""
+    for attempt in range(1, 4):
+        proc = subprocess.run(
+            [
+                str(py),
+                "-m",
+                "edge_tts",
+                "--voice",
+                voice,
+                f"--rate={rate_arg}",
+                "--text",
+                text,
+                "--write-media",
+                str(out_mp3),
+            ],
+            capture_output=True,
+            text=True,
+        )
+        if proc.returncode == 0 and out_mp3.is_file() and out_mp3.stat().st_size > 200:
+            return out_mp3
+        last_err = (proc.stderr or proc.stdout or "").strip()
+        time.sleep(0.8 * attempt)
+    print(last_err, file=sys.stderr)
+    raise SystemExit(f"edge-tts failed ({text[:80]!r})")
 
 
 def media_to_wav(src: Path, wav: Path) -> Path:
@@ -759,7 +793,9 @@ def concat_wavs(parts: list[Path], out: Path) -> Path:
     return out
 
 
-def mux_video_audio(video: Path, audio_wav: Path, dest_mp4: Path) -> None:
+def mux_video_audio(
+    video: Path, audio_wav: Path, dest_mp4: Path, *, duration_ms: int | None = None
+) -> None:
     ffmpeg = shutil.which("ffmpeg")
     if not ffmpeg:
         raise SystemExit("ffmpeg is required to mux narration")
@@ -779,11 +815,17 @@ def mux_video_audio(video: Path, audio_wav: Path, dest_mp4: Path) -> None:
         "aac",
         "-b:a",
         "160k",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
         "-shortest",
         "-movflags",
         "+faststart",
-        str(dest_mp4),
     ]
+    if duration_ms and duration_ms > 1000:
+        cmd.extend(["-t", f"{duration_ms / 1000.0:.3f}"])
+    cmd.append(str(dest_mp4))
     proc = subprocess.run(cmd, capture_output=True, text=True)
     if proc.returncode != 0:
         print(proc.stderr[-2000:], file=sys.stderr)
@@ -984,7 +1026,7 @@ def main() -> int:
     ap.add_argument(
         "--edge-rate",
         default=DEFAULT_EDGE_RATE,
-        help=f"edge-tts rate (default: {DEFAULT_EDGE_RATE})",
+        help=f"edge-tts rate (default: {DEFAULT_EDGE_RATE.replace('%', '%%')})",
     )
     ap.add_argument(
         "--pace",
@@ -1024,6 +1066,17 @@ def main() -> int:
         action="store_true",
         help="Write build-replay / narration / transcript; do not record mp4",
     )
+    ap.add_argument(
+        "--section",
+        help="Re-record one named walkthrough section and splice it into the existing mp4",
+    )
+    ap.add_argument("--from-id", help="First walkthrough step id to re-record")
+    ap.add_argument("--to-id", help="Last walkthrough step id to re-record")
+    ap.add_argument(
+        "--list-sections",
+        action="store_true",
+        help="Print named walkthrough sections and exit",
+    )
     args = ap.parse_args()
 
     # If user picks a classic say voice name with default engine, switch to say
@@ -1034,6 +1087,26 @@ def main() -> int:
 
     demo = resolve_root(args.root)
     os.environ["CONSTRUCTION_VIDEO_DEMO"] = str(demo.resolve())
+    eiconsole_script = demo / "documents" / "eiconsole-walkthrough.yaml"
+    if eiconsole_script.is_file():
+        from export_eiconsole_construction_video import export_eiconsole, find_script
+
+        if args.list_sections:
+            from construction_video_sections import catalog, load_yaml, write_sections_json
+
+            script = find_script(demo)
+            write_sections_json(script)
+            for item in catalog(load_yaml(script)):
+                spans = ", ".join(f"{r['from']}…{r['to']}" for r in item["ranges"])
+                print(f"{item['id']}\t{item['title']}\t{spans}")
+            return 0
+        return export_eiconsole(
+            demo,
+            prepare_only=args.prepare_only,
+            section=args.section,
+            from_id=args.from_id,
+            to_id=args.to_id,
+        )
     if args.prepare_only:
         return prepare_construction_assets(demo, url=args.url)
     steps, title = load_steps(demo)
@@ -1104,7 +1177,11 @@ def main() -> int:
             for te in preamble_entries:
                 item = dict(te)
                 action = item.get("action")
-                if action == "show_welcome":
+                if action == "show_brand":
+                    item["dwell_ms"] = 2200
+                elif action == "show_product_demo":
+                    item["dwell_ms"] = 4500
+                elif action == "show_welcome":
                     item["dwell_ms"] = 5000
                 elif action == "spotlight_ognl":
                     item["dwell_ms"] = 7000

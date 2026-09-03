@@ -1,0 +1,66 @@
+services:
+  pilotfish:
+    profiles: ["full"]
+    build:
+      context: ./pilotfish
+      pull: false
+      additional_contexts:
+        eip_base: docker-image://pilotfish-eip:23R1
+    pull_policy: never
+    image: pilotfish-edi-csv-excel-834:23R1
+    container_name: pf-edi-csv-excel-834-pilotfish
+    restart: unless-stopped
+    environment:
+      CATALINA_OPTS: "-Xms512M -Xmx2048M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8139:8080"
+    volumes:
+      - ./input:/opt/pilotfish/input
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+      - ./pilotfish/demo-eip-root/routes:/usr/local/tomcat/webapps/eip/eip-root/routes
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/usr/local/tomcat/webapps/eip/eip-root/environment-settings.conf:ro
+      - ./pilotfish/edi-tabledata:/usr/local/tomcat/webapps/eip/eip-root/edi-tabledata:ro
+
+  webui:
+    profiles: ["stage", "full"]
+    build:
+      context: ./webui
+    image: pilotfish-edi-csv-excel-834-webui:latest
+    container_name: pf-edi-csv-excel-834-webui
+    restart: unless-stopped
+    environment:
+      WEBUI_PORT: "8140"
+      DEMO_SLUG: "edi-csv-excel-834"
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      SAMPLE_DIR: /samples
+      INBOUND_DIR: /inbound
+      EDI_INBOUND_DIR: /edi-inbound
+      EDI_OUT_DIR: /output/834
+      CSV_OUT_DIR: /output/csv
+      KICKOUT_DIR: /output/kickout
+      ARCHIVE_DIR: /output/archive
+      ENV_SETTINGS_FILE: /environment-settings.conf
+      LAN_HINT: "http://192.168.68.62:8140/"
+      EIP_PUBLIC_URL: "http://127.0.0.1:8139/eip/"
+      EIP_HEALTH_URL: "http://pilotfish:8080/eip/"
+      ROUTE_PDF_NAME: "EDI834_CSV_Excel_V2_Route_Diagrams.pdf"
+      CAPABILITY_PDF_NAME: "EDI834_CSV_Excel_Capability_Brief.pdf"
+    ports:
+      - "8140:8140"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./documents:/documents:ro
+      - ./samples:/samples:ro
+      - ./input/inbound:/inbound
+      - ./input/edi:/edi-inbound
+      - ./output:/output
+      - ./pilotfish/demo-eip-root/routes:/routes:ro
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/environment-settings.conf:ro
+      - ./webui/static:/app/static:ro
+      - ./webui/templates:/app/templates:ro
+      - ./webui/app.py:/app/app.py:ro
+      - ./webui/document_routes.py:/app/document_routes.py:ro

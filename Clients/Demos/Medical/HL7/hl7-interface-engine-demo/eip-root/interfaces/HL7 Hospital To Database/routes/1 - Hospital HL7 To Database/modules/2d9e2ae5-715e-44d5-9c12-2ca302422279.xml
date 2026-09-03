@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="2d9e2ae5-715e-44d5-9c12-2ca302422279" name="Snapshot Patient XML" type="File Writing" tag="Processor" class="com.pilotfish.eip.modules.file.FileWriteProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <TargetDirectory>$$HL7_SNAPSHOT_DIRECTORY</TargetDirectory>
+      
+          
+      <TargetFileName>patient.xml</TargetFileName>
+      
+        
+   </ModuleConfig>
+</Module>

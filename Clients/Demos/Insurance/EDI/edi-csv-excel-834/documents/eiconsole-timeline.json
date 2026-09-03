@@ -1,0 +1,527 @@
+{
+  "name": "eiconsole-edi-csv-excel-834",
+  "steps": [
+    {
+      "id": "wait-fm",
+      "action": "wait_for",
+      "detail": "",
+      "started_at_ms": 427,
+      "ended_at_ms": 857,
+      "dwell_ms": 400,
+      "skipped": false
+    },
+    {
+      "id": "basic",
+      "action": "click",
+      "detail": "This is Route File Management. The working directory holds the interface packages.",
+      "started_at_ms": 934,
+      "ended_at_ms": 9288,
+      "dwell_ms": 5462,
+      "skipped": false
+    },
+    {
+      "id": "tools",
+      "action": "click",
+      "detail": "Tools has the emulator and the H2 database if you need a local file database.",
+      "started_at_ms": 9292,
+      "ended_at_ms": 16608,
+      "dwell_ms": 5150,
+      "skipped": false
+    },
+    {
+      "id": "tools-esc",
+      "action": "escape",
+      "detail": "",
+      "started_at_ms": 16610,
+      "ended_at_ms": 17120,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "open-pkg",
+      "action": "double_click",
+      "detail": "This green box is the interface package — EDI 834 CSV Excel Conversion.",
+      "started_at_ms": 17121,
+      "ended_at_ms": 25581,
+      "dwell_ms": 5894,
+      "skipped": false
+    },
+    {
+      "id": "r1-open",
+      "action": "double_click",
+      "detail": "Each puzzle piece is one route. This is 1 - CSV TXT to EDI 834.",
+      "started_at_ms": 25589,
+      "ended_at_ms": 34609,
+      "dwell_ms": 6422,
+      "skipped": false
+    },
+    {
+      "id": "r1-src",
+      "action": "click",
+      "detail": "Source System and Target System are documentation. The work is the modules in between.",
+      "started_at_ms": 34612,
+      "ended_at_ms": 42835,
+      "dwell_ms": 6014,
+      "skipped": false
+    },
+    {
+      "id": "r1-listener",
+      "action": "click",
+      "detail": "Work starts at the Listener — Poll Enrollment CSV TXT. This is a Directory Listener.",
+      "started_at_ms": 42839,
+      "ended_at_ms": 50807,
+      "dwell_ms": 5774,
+      "skipped": false
+    },
+    {
+      "id": "r1-lrow",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 50812,
+      "ended_at_ms": 55060,
+      "dwell_ms": 300,
+      "skipped": true
+    },
+    {
+      "id": "r1-ltype",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 55064,
+      "ended_at_ms": 57442,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-lbasic",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 57447,
+      "ended_at_ms": 59851,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-lpoll",
+      "action": "click",
+      "detail": "It polls the inbound folder every 5 seconds.",
+      "started_at_ms": 59852,
+      "ended_at_ms": 65510,
+      "dwell_ms": 3518,
+      "skipped": false
+    },
+    {
+      "id": "r1-lpost",
+      "action": "click",
+      "detail": "After pickup, post-process is Move into the archive folder.",
+      "started_at_ms": 65511,
+      "ended_at_ms": 72138,
+      "dwell_ms": 4334,
+      "skipped": false
+    },
+    {
+      "id": "r1-larch",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 72143,
+      "ended_at_ms": 74593,
+      "dwell_ms": 250,
+      "skipped": false
+    },
+    {
+      "id": "r1-stx",
+      "action": "click",
+      "detail": "Source Transform is the CSV to XML format. That's the CSV transformer.",
+      "started_at_ms": 74596,
+      "ended_at_ms": 82640,
+      "dwell_ms": 5870,
+      "skipped": false
+    },
+    {
+      "id": "r1-sfmt",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 82647,
+      "ended_at_ms": 86895,
+      "dwell_ms": 300,
+      "skipped": true
+    },
+    {
+      "id": "r1-smod",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 86902,
+      "ended_at_ms": 89355,
+      "dwell_ms": 250,
+      "skipped": false
+    },
+    {
+      "id": "r1-sdelim",
+      "action": "click",
+      "detail": "Delimiter is a comma. Detect delimiter is on, so tab or pipe still works.",
+      "started_at_ms": 89357,
+      "ended_at_ms": 97384,
+      "dwell_ms": 5846,
+      "skipped": false
+    },
+    {
+      "id": "r1-scols",
+      "action": "click",
+      "detail": "Named columns: MemberId, LastName, FirstName, BirthDate, GenderCode, RelationshipCode….",
+      "started_at_ms": 97391,
+      "ended_at_ms": 101655,
+      "dwell_ms": 7718,
+      "skipped": true
+    },
+    {
+      "id": "r1-route",
+      "action": "click",
+      "detail": "Routing decides who gets the 834 and who goes to kickout.",
+      "started_at_ms": 101657,
+      "ended_at_ms": 108164,
+      "dwell_ms": 4358,
+      "skipped": false
+    },
+    {
+      "id": "r1-rrules",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 108167,
+      "ended_at_ms": 110625,
+      "dwell_ms": 250,
+      "skipped": false
+    },
+    {
+      "id": "r1-rxpath",
+      "action": "click",
+      "detail": "The rule looks for a member id or last name.",
+      "started_at_ms": 110629,
+      "ended_at_ms": 116082,
+      "dwell_ms": 3278,
+      "skipped": false
+    },
+    {
+      "id": "r1-ttx",
+      "action": "click",
+      "detail": "Target Transform is CSV XML to 834 — that's the XSLT.",
+      "started_at_ms": 116084,
+      "ended_at_ms": 123988,
+      "dwell_ms": 5702,
+      "skipped": false
+    },
+    {
+      "id": "r1-tfmt",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 123991,
+      "ended_at_ms": 128218,
+      "dwell_ms": 300,
+      "skipped": true
+    },
+    {
+      "id": "r1-txslt",
+      "action": "click",
+      "detail": "The mappings pull each field from the input onto the output.",
+      "started_at_ms": 128222,
+      "ended_at_ms": 134060,
+      "dwell_ms": 3638,
+      "skipped": false
+    },
+    {
+      "id": "r1-tr",
+      "action": "click",
+      "detail": "Transport writes the file. This one is Write EDI 834.",
+      "started_at_ms": 134064,
+      "ended_at_ms": 141185,
+      "dwell_ms": 4934,
+      "skipped": false
+    },
+    {
+      "id": "r1-trrow",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 141187,
+      "ended_at_ms": 145423,
+      "dwell_ms": 300,
+      "skipped": true
+    },
+    {
+      "id": "r1-trtab",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 145424,
+      "ended_at_ms": 147817,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-trdir",
+      "action": "click",
+      "detail": "Target directory is the output folder. Extension is edi.",
+      "started_at_ms": 147821,
+      "ended_at_ms": 154538,
+      "dwell_ms": 4526,
+      "skipped": false
+    },
+    {
+      "id": "r1-trext",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 154542,
+      "ended_at_ms": 156977,
+      "dwell_ms": 250,
+      "skipped": false
+    },
+    {
+      "id": "r1-proc1",
+      "action": "click",
+      "detail": "XML to EDI 834. table data 834-A1, 5010. star and tilde delimiters. friendly names None.",
+      "started_at_ms": 156981,
+      "ended_at_ms": 161232,
+      "dwell_ms": 9566,
+      "skipped": true
+    },
+    {
+      "id": "r1-pdel1",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 161233,
+      "ended_at_ms": 165458,
+      "dwell_ms": 250,
+      "skipped": true
+    },
+    {
+      "id": "r1-prec1",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 165461,
+      "ended_at_ms": 169683,
+      "dwell_ms": 250,
+      "skipped": true
+    },
+    {
+      "id": "r1-psub1",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 169687,
+      "ended_at_ms": 173930,
+      "dwell_ms": 200,
+      "skipped": true
+    },
+    {
+      "id": "r1-file",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 173932,
+      "ended_at_ms": 176308,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-fm",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 176312,
+      "ended_at_ms": 180757,
+      "dwell_ms": 400,
+      "skipped": false
+    },
+    {
+      "id": "r1-basic",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 180760,
+      "ended_at_ms": 183145,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r1-pkg",
+      "action": "double_click",
+      "detail": "",
+      "started_at_ms": 183150,
+      "ended_at_ms": 187370,
+      "dwell_ms": 400,
+      "skipped": true
+    },
+    {
+      "id": "r2-open",
+      "action": "double_click",
+      "detail": "Each puzzle piece is one route. This is 2 - EDI 834 to CSV.",
+      "started_at_ms": 187371,
+      "ended_at_ms": 191580,
+      "dwell_ms": 5582,
+      "skipped": true
+    },
+    {
+      "id": "r2-src",
+      "action": "click",
+      "detail": "Source System and Target System are documentation. The work is the modules in between.",
+      "started_at_ms": 191582,
+      "ended_at_ms": 195842,
+      "dwell_ms": 6014,
+      "skipped": true
+    },
+    {
+      "id": "r2-listener",
+      "action": "click",
+      "detail": "Work starts at the Listener — Poll EDI 834. This is a Directory Listener.",
+      "started_at_ms": 195846,
+      "ended_at_ms": 200073,
+      "dwell_ms": 5486,
+      "skipped": true
+    },
+    {
+      "id": "r2-lrow",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 200074,
+      "ended_at_ms": 204326,
+      "dwell_ms": 300,
+      "skipped": true
+    },
+    {
+      "id": "r2-ltype",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 204328,
+      "ended_at_ms": 208566,
+      "dwell_ms": 200,
+      "skipped": true
+    },
+    {
+      "id": "r2-lbasic",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 208567,
+      "ended_at_ms": 210953,
+      "dwell_ms": 200,
+      "skipped": false
+    },
+    {
+      "id": "r2-lpoll",
+      "action": "click",
+      "detail": "It polls the inbound folder every 5 seconds.",
+      "started_at_ms": 210955,
+      "ended_at_ms": 215188,
+      "dwell_ms": 3518,
+      "skipped": true
+    },
+    {
+      "id": "r2-lpost",
+      "action": "click",
+      "detail": "After pickup, post-process is Move into the archive folder.",
+      "started_at_ms": 215189,
+      "ended_at_ms": 219413,
+      "dwell_ms": 4334,
+      "skipped": true
+    },
+    {
+      "id": "r2-larch",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 219415,
+      "ended_at_ms": 223645,
+      "dwell_ms": 250,
+      "skipped": true
+    },
+    {
+      "id": "r2-stx",
+      "action": "click",
+      "detail": "Source Transform is the EDI 834 to XML format. That's the EDI transformer.",
+      "started_at_ms": 223646,
+      "ended_at_ms": 227855,
+      "dwell_ms": 6878,
+      "skipped": true
+    },
+    {
+      "id": "r2-sfmt",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 227857,
+      "ended_at_ms": 232098,
+      "dwell_ms": 300,
+      "skipped": true
+    },
+    {
+      "id": "r2-smod",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 232102,
+      "ended_at_ms": 236348,
+      "dwell_ms": 250,
+      "skipped": true
+    },
+    {
+      "id": "r2-ttx",
+      "action": "click",
+      "detail": "Target Transform is 834 XML to CSV — that's the XSLT.",
+      "started_at_ms": 236351,
+      "ended_at_ms": 240602,
+      "dwell_ms": 5534,
+      "skipped": true
+    },
+    {
+      "id": "r2-tfmt",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 240606,
+      "ended_at_ms": 244840,
+      "dwell_ms": 300,
+      "skipped": true
+    },
+    {
+      "id": "r2-txslt",
+      "action": "click",
+      "detail": "The mappings pull each field from the input onto the output.",
+      "started_at_ms": 244842,
+      "ended_at_ms": 249109,
+      "dwell_ms": 3638,
+      "skipped": true
+    },
+    {
+      "id": "r2-tr",
+      "action": "click",
+      "detail": "Transport writes the file. This one is Write Enrollment CSV.",
+      "started_at_ms": 249113,
+      "ended_at_ms": 253340,
+      "dwell_ms": 4622,
+      "skipped": true
+    },
+    {
+      "id": "r2-trrow",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 253341,
+      "ended_at_ms": 257545,
+      "dwell_ms": 300,
+      "skipped": true
+    },
+    {
+      "id": "r2-trtab",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 257547,
+      "ended_at_ms": 261782,
+      "dwell_ms": 200,
+      "skipped": true
+    },
+    {
+      "id": "r2-trdir",
+      "action": "click",
+      "detail": "Target directory is the output folder. Extension is csv.",
+      "started_at_ms": 261783,
+      "ended_at_ms": 266036,
+      "dwell_ms": 4670,
+      "skipped": true
+    },
+    {
+      "id": "r2-trext",
+      "action": "click",
+      "detail": "",
+      "started_at_ms": 266040,
+      "ended_at_ms": 270291,
+      "dwell_ms": 250,
+      "skipped": true
+    }
+  ]
+}

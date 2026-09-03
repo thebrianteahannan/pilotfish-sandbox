@@ -1,0 +1,7 @@
+name: probe-listener
+steps:
+  - id: listener
+    action: click
+    target: { type: table, contains: RoutingSource, column: 1 }
+    detail: "Listener stage."
+    dwell_ms: 1200

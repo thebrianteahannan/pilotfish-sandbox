@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="11185d06-bfc5-463a-88db-075bfe29b97d" name="RESTful Service" type="HttpPostTransport" tag="Transport" class="com.pilotfish.eip.modules.http.HttpPostTransport">
+   <ModuleConfig>
+      <TargetURL>{ognl:#properties.get('simple.server.path') + '/aggregationanalytics/restservice'}</TargetURL>
+      
+        
+      <UserName/>
+      
+        
+      <AUTH_HOST_TAG/>
+      
+        
+      <AUTH_PORT_TAG/>
+      
+        
+      <Password/>
+      
+        
+      <PreemptiveAuthentication>false</PreemptiveAuthentication>
+      
+        
+      <ResponseListener/>
+      
+        
+      <ResponseCodeHandling>Error Only On Listed Codes</ResponseCodeHandling>
+      
+        
+      <Timeout>-1</Timeout>
+      
+        
+      <ResponseCodeList>1</ResponseCodeList>
+      
+        
+      <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+      
+        
+      <SynchronizationKey/>
+      
+        
+      <FormElement/>
+      
+        
+      <HTTPHeaders>[eip_pair:Content-Type:eip_name:application/json;charset=UTF-8:eip_value]</HTTPHeaders>
+      
+        
+      <useProxy>false</useProxy>
+      
+        
+      <proxyHost>127.0.0.1</proxyHost>
+      
+        
+      <proxyPort>8080</proxyPort>
+      
+        
+      <proxyUsername/>
+      
+        
+      <proxyPassword/>
+      
+        
+      <SpecifyTLS>false</SpecifyTLS>
+      
+        
+      <TLSVersion>TLSv1.1</TLSVersion>
+      
+        
+      <KeyStoreFilePath/>
+      
+        
+      <KeyStoreFileType/>
+      
+        
+      <KeyStoreFilePassword/>
+      
+        
+      <UseCertificateAttribute>false</UseCertificateAttribute>
+      
+        
+      <CertificateAttribute/>
+      
+        
+      <TrustStoreFilePath/>
+      
+        
+      <TrustStoreFileType/>
+      
+        
+      <TrustStoreFilePassword/>
+      
+        
+      <UseCertificateAttribute>false</UseCertificateAttribute>
+      
+        
+      <CertificateAttribute/>
+      
+        
+      <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      
+      
+   </ModuleConfig>
+</Module>

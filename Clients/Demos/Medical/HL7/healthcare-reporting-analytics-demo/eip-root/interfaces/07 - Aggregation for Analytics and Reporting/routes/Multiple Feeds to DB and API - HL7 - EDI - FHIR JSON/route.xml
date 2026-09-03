@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2018-03-02T16:02:32-05:00" ModifiedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="/opt/pilotfish/output/debug-trace" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source icon="DocGreen_HL7_1.png" name="Hospital - HL7 ADT">
+    <FormatProfile name="HL7 to XML" />
+    <Listener class="com.pilotfish.eip.modules.hl7.HL7TCPListener" enabled="true" name="HL7 Source System">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <Port>10001</Port>
+        <Engine>PilotFish</Engine>
+        <SynchronousTag>false</SynchronousTag>
+        <AutogenerateSynchronousACK>true</AutogenerateSynchronousACK>
+        <TimeoutTag>0</TimeoutTag>
+        <Validate>false</Validate>
+        <AckModeTag>Always</AckModeTag>
+        <IgnoreAckTag>false</IgnoreAckTag>
+        <EnableComplianceMode>false</EnableComplianceMode>
+        <InvalidCharacterHandling>Reject</InvalidCharacterHandling>
+        <CloseOnError>false</CloseOnError>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Source icon="DocEDIX12_Blue_1.png" name="Provider - EDI">
+    <FormatProfile name="EDI to XML" />
+    <Listener class="com.pilotfish.eip.modules.file.ftp.FTPListener" enabled="true" name="FTP Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <FTPListenerType>Regular FTP</FTPListenerType>
+        <Host>ftp</Host>
+        <Port>21</Port>
+        <PollingInterval>3</PollingInterval>
+        <PollingDirectory>/ftp/in</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction />
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <FilenameIsMvsDsn>false</FilenameIsMvsDsn>
+        <SerializedTransactionsTag>250</SerializedTransactionsTag>
+        <Timeout>300</Timeout>
+        <Sftp_SocketTimeout>0</Sftp_SocketTimeout>
+        <RetryConnection>false</RetryConnection>
+        <RetryDelay>1</RetryDelay>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private</Protection>
+        <FileType>Binary</FileType>
+        <StopWhenPollingFailure>false</StopWhenPollingFailure>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <UseChangeDirectoryCommand>false</UseChangeDirectoryCommand>
+        <ReconnectAfterBytes>102400</ReconnectAfterBytes>
+        <CacheType>File Cache</CacheType>
+        <PostProcessOperation>Delete</PostProcessOperation>
+        <TargetDirectory />
+        <UserName>demo</UserName>
+        <Password>demo</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <CheckFTPPermissions>true</CheckFTPPermissions>
+        <CheckPreviouslyProcessed>true</CheckPreviouslyProcessed>
+        <CheckWriteInProgress>true</CheckWriteInProgress>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <ProcessByDirectory>false</ProcessByDirectory>
+        <HeaderLines>0</HeaderLines>
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <CombineFiles>false</CombineFiles>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <MinSecondsSinceFileModified>2</MinSecondsSinceFileModified>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Source icon="DocFHIRGreen_1.png" name="Cloud EMR - FHIR JSON">
+    <FormatProfile name="JSON-FHIR to XML" />
+    <Listener class="com.pilotfish.eip.modules.http.rest.RESTfulWebServiceListener" enabled="true" name="RESTful Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <SERVICE_NAME>FHIR</SERVICE_NAME>
+        <USER_NAME />
+        <PASSWORD />
+        <POST_SUPPORTED>true</POST_SUPPORTED>
+        <GET_SUPPORTED>false</GET_SUPPORTED>
+        <PUT_SUPPORTED>false</PUT_SUPPORTED>
+        <DELETE_SUPPORTED>false</DELETE_SUPPORTED>
+        <SupportedResources>Patient</SupportedResources>
+        <Timeout>600</Timeout>
+        <RequireSSL>false</RequireSSL>
+        <Synchronous>false</Synchronous>
+        <HTTPHeaders />
+        <WadlFile />
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target icon="DataStoreOrangePurple_2.png" name="Quality Measures Data Store">
+    <FormatProfile name="XML to DB" />
+    <Transport class="com.pilotfish.eip.modules.db.DatabaseSqlTransport" name="Populate Database" retries="1">
+      <ModuleConfig>
+        <InputFile />
+        <WriteQuery>false</WriteQuery>
+        <Query />
+        <QueryParams />
+        <UserName>$$db.user</UserName>
+        <Password>$$db.password</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$db.driver</JdbcDriver>
+        <JdbcURL>$$db.url</JdbcURL>
+        <KeepConnection>false</KeepConnection>
+        <Autocommit>false</Autocommit>
+        <EnableTimeout>false</EnableTimeout>
+        <Timeout>600</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema />
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <CallbackListenerName />
+        <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+        <JDBCProperties>null</JDBCProperties>
+        <UseConnectionPooling>false</UseConnectionPooling>
+        <PermittedDBConnections>5</PermittedDBConnections>
+        <LogMetadata>false</LogMetadata>
+        <LogSQL>true</LogSQL>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Snapshot SQL XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$HL7_SNAPSHOT_DIRECTORY</TargetDirectory>
+          <TargetFileName>sqlxml.xml</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="PieChart_2.png" name="Quality Reporting Service">
+    <FormatProfile name="XML to JSON" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="RESTful Service" retries="1">
+      <ModuleConfig>
+        <TargetURL>{ognl:#properties.get('simple.server.path') + '/aggregationanalytics/restservice'}</TargetURL>
+        <UserName />
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password />
+        <PreemptiveAuthentication>false</PreemptiveAuthentication>
+        <ResponseListener />
+        <ResponseCodeHandling>Error Only On Listed Codes</ResponseCodeHandling>
+        <Timeout>-1</Timeout>
+        <ResponseCodeList>1</ResponseCodeList>
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <SynchronizationKey />
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:application/json;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <SpecifyTLS>false</SpecifyTLS>
+        <TLSVersion>TLSv1.1</TLSVersion>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Snapshot JSON">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$HL7_SNAPSHOT_DIRECTORY</TargetDirectory>
+          <TargetFileName>analytics.json</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <HealthConfiguration>
+    <enabled>true</enabled>
+    <ProcessingTimes />
+    <Volumes />
+    <Errors>
+      <Error>
+        <description>Errors counted every 00 m should be less than 1</description>
+        <displayedTime>0</displayedTime>
+        <durationMS>0</durationMS>
+        <id>00</id>
+        <typeAction>LESS_ACTION_TYPE</typeAction>
+        <startDate>0</startDate>
+        <endDate>0</endDate>
+        <transactionsCount>1</transactionsCount>
+      </Error>
+    </Errors>
+  </HealthConfiguration>
+</Route>
+

@@ -6,7 +6,7 @@ Args: <base_url> <plan.json> <out.webm>
 Plan entries:
   Construction: id, dwell_ms, message, detail, route_id, focus_label, focus_node_id, kind
   Optional on construction: show_xslt, xslt_name, xslt_text, xslt_highlight_lines
-  ui_gesture: action=show_welcome|show_pipeline|spotlight_systems|create_interface|spotlight_ognl|hide_overlays
+  ui_gesture: action=show_brand|show_product_demo|show_welcome|show_pipeline|spotlight_systems|create_interface|spotlight_ognl|hide_overlays
   demo_test: action=open_demo|inject|wait_results|show_results
   outro: closing thank-you screen
 """
@@ -18,6 +18,12 @@ import sys
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
+
+try:
+    from construction_official_open import OPEN_CSS, brand_html, close_html, product_html
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from construction_official_open import OPEN_CSS, brand_html, close_html, product_html
 
 
 THEATER_CSS = """
@@ -225,7 +231,7 @@ body.pf-theater-recording #pf-build-stage {
   outline: 3px solid #14b8a6; outline-offset: 6px; border-radius: 12px;
   box-shadow: 0 0 0 10px rgba(20, 184, 166, 0.15);
 }
-"""
+""" + OPEN_CSS
 
 
 def step_frame_src(step: dict) -> str:
@@ -613,6 +619,31 @@ def show_xslt_overlay(page, step: dict, duration_ms: int = 12000) -> None:
     )
 
 
+def show_brand(page, step: dict) -> None:
+    clear_theater_overlay(page)
+    logo = str(step.get("logo_url") or "/static/pilotfish-logo.jpg")
+    page.evaluate(
+        """({ html }) => {
+          const root = document.getElementById('pf-theater-root');
+          if (root) root.innerHTML = html;
+        }""",
+        {"html": brand_html(logo)},
+    )
+
+
+def show_product_demo(page, step: dict) -> None:
+    clear_theater_overlay(page)
+    title = str(step.get("demo_name") or step.get("message") or "PilotFish Demo")
+    line = str(step.get("product_line") or "")
+    page.evaluate(
+        """({ html }) => {
+          const root = document.getElementById('pf-theater-root');
+          if (root) root.innerHTML = html;
+        }""",
+        {"html": product_html(title, line)},
+    )
+
+
 def show_welcome(page, step: dict) -> None:
     """Opening brand screen: PilotFish logo + welcome + demo name."""
     clear_theater_overlay(page)
@@ -752,32 +783,25 @@ def show_systems_spotlight(page, step: dict) -> None:
 
 def show_outro(page, step: dict) -> None:
     clear_theater_overlay(page)
-    title = str(step.get("message") or "Demo complete")
-    body = str(step.get("detail") or "Thanks for choosing PilotFish.")
-    logo = str(step.get("logo_url") or "/static/pilotfish-logo.jpg")
+    line = str(step.get("product_line") or "for Healthcare")
+    url = str(step.get("trial_url") or "www.PilotFishTechnology.com")
     page.evaluate(
-        """({ title, body, logo }) => {
+        """({ html }) => {
           const root = document.getElementById('pf-theater-root');
-          if (!root) return;
-          const esc = (s) => String(s)
-            .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-            .replace(/"/g,'&quot;');
-          root.innerHTML = `
-            <div class="pf-t-layer pf-outro-layer">
-              <div class="pf-outro-card">
-                <img class="logo" src="${esc(logo)}" alt="PilotFish" />
-                <p class="mark">PilotFish</p>
-                <h1>${esc(title)}</h1>
-                <p>${esc(body)}</p>
-              </div>
-            </div>`;
+          if (root) root.innerHTML = html;
         }""",
-        {"title": title, "body": body, "logo": logo},
+        {"html": close_html(line, url)},
     )
 
 
 def run_ui_gesture(page, step: dict) -> None:
     action = str(step.get("action") or "")
+    if action == "show_brand":
+        show_brand(page, step)
+        return
+    if action == "show_product_demo":
+        show_product_demo(page, step)
+        return
     if action == "show_welcome":
         show_welcome(page, step)
         return
@@ -1164,12 +1188,13 @@ def main() -> int:
             (
                 s
                 for s in plan
-                if s.get("action") == "show_welcome" or s.get("id") == "welcome"
+                if s.get("action") in {"show_brand", "show_product_demo", "show_welcome"}
+                or s.get("id") in {"open-brand", "welcome"}
             ),
             None,
         )
         if welcome:
-            show_welcome(page, welcome)
+            run_ui_gesture(page, welcome)
         else:
             switch_tab(page, "routes")
         page.wait_for_timeout(200)

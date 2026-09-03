@@ -1,0 +1,1 @@
+Runtime X12 tables for this demo (`270-A1`, `271-A1`), copied from repo-root `EDI/TableData/x12/`. Compose mounts this folder at `eip-root/edi-tabledata`. Required for a handoff that does not have the Sandbox repo.

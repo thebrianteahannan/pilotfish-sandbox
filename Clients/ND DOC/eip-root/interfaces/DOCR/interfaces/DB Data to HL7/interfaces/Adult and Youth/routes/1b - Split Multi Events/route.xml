@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Adult.5 - Send HL7 File.Transaction Monitor-Copy-1">
+      <ModuleConfig>
+        <ErrorListenerName>Error Handling Insert Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <MustContainString />
+        <MustNotContainString />
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="Event Query Results">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Adult.1b - Split Multi Events.Programmable (Trigger) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>10:03-10:03</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target icon="" name="Get Oldest Event">
+    <FormatProfile name="Split Multi Events" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="Adult.1b - Split Multi Events.Route to Route Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>Adult.1c - Add Sequence No.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

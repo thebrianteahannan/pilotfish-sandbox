@@ -18,13 +18,17 @@
     construction_video: "Creating construction video",
   };
   let demos = [];
+  let scout = {};
+  let docs = {};
   let videoWorker = {};
   let busy = false;
   let diskLoaded = false;
   let familyFilter = "";
   let catFilter = "";
   let pollTimer = null;
-  const TABS = ["demos", "clients", "disk", "docker"];
+  const MAIN = ["clients", "calendar", "demos", "website", "admin"];
+  const ADMIN = ["docker", "ollama", "speech", "disk"];
+  const TABS = MAIN.concat(ADMIN);
   const STORE = "pf-hub-ui";
 
   function hubRead() {
@@ -42,11 +46,20 @@
   }
   function paintTab(tab) {
     if (!TABS.includes(tab)) tab = "demos";
-    document.querySelectorAll(".tab").forEach((b) => b.classList.toggle("is-on", b.dataset.tab === tab));
+    const isAdmin = tab === "admin" || ADMIN.includes(tab);
+    const main = isAdmin ? "admin" : tab;
+    const sub = isAdmin ? (ADMIN.includes(tab) ? tab : hubRead().tab && ADMIN.includes(hubRead().tab) ? hubRead().tab : "docker") : "";
+    document.querySelectorAll("header + nav.tabs .tab").forEach((b) => b.classList.toggle("is-on", b.dataset.tab === main));
     document.querySelectorAll(".tab-panel").forEach((p) => {
-      p.hidden = p.id !== "tab-" + tab;
+      p.hidden = p.id !== "tab-" + main;
     });
-    return tab;
+    if (isAdmin) {
+      document.querySelectorAll("#tab-admin .subtabs .tab").forEach((b) => b.classList.toggle("is-on", b.dataset.tab === sub));
+      document.querySelectorAll("#tab-admin .admin-sub").forEach((p) => {
+        p.hidden = p.id !== "sub-" + sub;
+      });
+    }
+    return sub || main;
   }
   window.pfHub = {
     read: hubRead,
@@ -74,7 +87,11 @@
       const st = hubRead();
       if (st.tab === "disk") loadDisk();
       if (st.tab === "docker" && window.pfDocker) window.pfDocker.load();
+      if (st.tab === "ollama" && window.pfOllama) window.pfOllama.load();
+      if (st.tab === "speech" && window.pfSpeech) window.pfSpeech.load();
       if (st.tab === "clients" && window.pfClients) window.pfClients.restore();
+      if (st.tab === "calendar" && window.pfCal) window.pfCal.show();
+      if (st.tab === "website" && window.pfWebsite) window.pfWebsite.load();
     },
   };
 
@@ -85,13 +102,29 @@
   catFilter = saved.cat || "";
   paintTab(saved.tab || "demos");
 
-  document.querySelectorAll(".tab").forEach((btn) => {
+  function loadAdmin(tab) {
+    if (tab === "disk" && !diskLoaded) loadDisk();
+    if (tab === "docker" && window.pfDocker) window.pfDocker.load();
+    if (tab === "ollama" && window.pfOllama) window.pfOllama.load();
+    if (tab === "speech" && window.pfSpeech) window.pfSpeech.load();
+  }
+
+  document.querySelectorAll("header + nav.tabs .tab").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const want = btn.dataset.tab === "admin" ? "docker" : btn.dataset.tab;
+      const tab = paintTab(want);
+      hubWrite({ tab });
+      if (tab === "clients" && window.pfClients) window.pfClients.show();
+      if (tab === "calendar" && window.pfCal) window.pfCal.show();
+      if (tab === "website" && window.pfWebsite) window.pfWebsite.load();
+      loadAdmin(tab);
+    });
+  });
+  document.querySelectorAll("#tab-admin .subtabs .tab").forEach((btn) => {
     btn.addEventListener("click", () => {
       const tab = paintTab(btn.dataset.tab);
       hubWrite({ tab });
-      if (tab === "disk" && !diskLoaded) loadDisk();
-      if (tab === "docker" && window.pfDocker) window.pfDocker.load();
-      if (tab === "clients" && window.pfClients) window.pfClients.show();
+      loadAdmin(tab);
     });
   });
 
@@ -149,7 +182,6 @@
     let isErr = !!err;
     if (busy || err) text = err || msg;
     else if (rec) text = `Recording construction video for ${rec.slug}…` + (queuedN ? ` · ${queuedN} queued` : "");
-    else if (!videoWorker.up) text = "Video worker is down — Create video will start it.";
     else if (msg && msg !== "Idle") text = msg;
     if (text) {
       jobBanner.hidden = false;
@@ -306,6 +338,34 @@
         .join("");
   }
 
+  function renderService(id, s, attr) {
+    const el = $(id);
+    if (!el) return;
+    const job = s.job || {};
+    const on = !!s.running;
+    const sbusy = !!job.busy;
+    const urls = `<div class="urls"><a href="${esc(s.local_url || "#")}" target="_blank" rel="noopener">Open</a>${s.lan_url ? ` · <a href="${esc(s.lan_url)}" target="_blank" rel="noopener">LAN</a>` : ""}</div>`;
+    const note = job.error ? `<p class="hint">${esc(job.error)}</p>` : job.message ? `<p class="hint">${esc(job.message)}</p>` : "";
+    el.innerHTML = `<article class="card">
+      <div>
+        <h3>${esc(s.title || "")}</h3>
+        <p class="muted" style="margin:0">${esc(s.kind === "host" ? "Host process · not a container" : s.kind === "docker" ? "Docker container" : "")}${s.kind ? " · " : ""}${esc(s.blurb || "")}</p>
+        ${urls}
+        ${s.root ? `<div class="path">${esc(s.root)}</div>` : ""}
+        ${note}
+      </div>
+      <div>
+        <div style="text-align:right;margin-bottom:0.4rem">
+          <span class="badge ${on ? "on" : "off"}">${on ? (s.kind === "host" ? "Running on host" : "Running") : "Stopped"}</span>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" ${attr}="start" ${sbusy || on ? "disabled" : ""}>Start</button>
+          <button type="button" class="btn" ${attr}="stop" ${sbusy || !on ? "disabled" : ""}>Stop</button>
+        </div>
+      </div>
+    </article>`;
+  }
+
   function renderDemos() {
     const q = (filter.value || "").trim().toLowerCase();
     const rows = demos.filter((d) => matches(d, q));
@@ -345,9 +405,15 @@
       const resp = await fetch("/api/demos", { cache: "no-store" });
       const data = await resp.json();
       demos = data.demos || [];
+      scout = data.scout || {};
+      docs = data.docs || {};
       videoWorker = data.video_worker || {};
       setJob(data.job);
-      window.pfHub.holdScroll(renderDemos);
+      window.pfHub.holdScroll(() => {
+        renderService("scout-card", scout, "data-scout");
+        renderService("docs-card", docs, "data-docs");
+        renderDemos();
+      });
     } catch (err) {
       if (jobBanner) {
         jobBanner.hidden = false;
@@ -373,6 +439,41 @@
     if (catFilter) familyFilter = catFilter.split("/")[0];
     hubWrite({ family: familyFilter, cat: catFilter });
     renderDemos();
+  });
+
+  $("scout-card").addEventListener("click", async (ev) => {
+    const btn = ev.target.closest("button[data-scout]");
+    if (!btn || btn.disabled) return;
+    btn.disabled = true;
+    try {
+      const resp = await fetch(`/api/scout/${encodeURIComponent(btn.dataset.scout)}`, { method: "POST" });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok && data.error) {
+        scout.job = { busy: false, error: data.error, message: "" };
+        renderService("scout-card", scout, "data-scout");
+      }
+    } catch (err) {
+      scout.job = { busy: false, error: "Could not reach the hub.", message: "" };
+      renderService("scout-card", scout, "data-scout");
+    }
+    loadDemos();
+  });
+  $("docs-card").addEventListener("click", async (ev) => {
+    const btn = ev.target.closest("button[data-docs]");
+    if (!btn || btn.disabled) return;
+    btn.disabled = true;
+    try {
+      const resp = await fetch(`/api/docs/${encodeURIComponent(btn.dataset.docs)}`, { method: "POST" });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok && data.error) {
+        docs.job = { busy: false, error: data.error, message: "" };
+        renderService("docs-card", docs, "data-docs");
+      }
+    } catch (err) {
+      docs.job = { busy: false, error: "Could not reach the hub.", message: "" };
+      renderService("docs-card", docs, "data-docs");
+    }
+    loadDemos();
   });
 
   demoList.addEventListener("click", async (ev) => {
@@ -493,5 +594,26 @@
     loadDisk(true);
   });
 
+  async function showSlug(slug) {
+    slug = String(slug || "").trim();
+    if (!slug) return;
+    filter.value = slug;
+    runningOnly.checked = false;
+    familyFilter = "";
+    catFilter = "";
+    hubWrite({ tab: "demos", demoQ: slug, runningOnly: false, family: "", cat: "" });
+    paintTab("demos");
+    if (!demos.some((d) => d.slug === slug)) await loadDemos();
+    else renderDemos();
+    const card = demoList.querySelector(`[data-slug="${CSS.escape(slug)}"]`);
+    if (card) {
+      card.classList.add("is-focus");
+      card.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(() => card.classList.remove("is-focus"), 2800);
+    }
+  }
+  window.pfDemos = { showSlug };
+
   loadDemos();
+  if ((hubRead().tab || "") === "disk") loadDisk();
 })();

@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "interface": "eiConsole for Healthcare \u2013 HL7 Demo",
+  "slug": "hl7-interface-engine-demo",
+  "path": "Clients/Demos/Medical/HL7/hl7-interface-engine-demo",
+  "requested_by": "user",
+  "started_at": "2026-08-31T18:21:07Z",
+  "completed_at": null,
+  "completed_by": null,
+  "duration_minutes": null,
+  "compose_project": "hl7-interface-engine-demo",
+  "phases": [
+    {
+      "id": "webui_early",
+      "name": "Stage Web UI + docs scaffold",
+      "started_at": "2026-08-31T18:21:07Z",
+      "ended_at": "2026-08-31T18:22:30Z",
+      "duration_minutes": 1,
+      "notes": "Progressive build visibility"
+    },
+    {
+      "id": "routes",
+      "name": "LLP to SQL route",
+      "started_at": "2026-08-31T18:22:30Z",
+      "ended_at": "2026-08-31T18:28:00Z",
+      "duration_minutes": 6,
+      "notes": "HL7 over LLP, HL7 2.x to XML, PID.7 date map, Database transport"
+    },
+    {
+      "id": "docs_tests",
+      "name": "PDFs and interface tests",
+      "started_at": "2026-08-31T18:28:00Z",
+      "ended_at": "2026-08-31T18:35:00Z",
+      "duration_minutes": 7,
+      "notes": "4/4 tests pass. Construction video prepare-only (no mp4)."
+    }
+  ],
+  "slowest_phases": [],
+  "bottlenecks": [],
+  "speedup_ideas": []
+}

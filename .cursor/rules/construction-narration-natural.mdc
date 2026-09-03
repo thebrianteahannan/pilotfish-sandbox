@@ -27,6 +27,8 @@ Do **not** run that script (or `export_construction_video.py` without `--prepare
 See `.cursor/skills/regenerate-construction-video/SKILL.md`.
 
 ## Required voice
+- Shared Edge rate is **`-10%`** (`DEFAULT_EDGE_RATE`). Do not use `+8%` — it sounds rushed. Keep post-speech pad ~180 ms.
+- Website-verbatim: learn pronunciation from the source YouTube audio; do not rewrite official spoken lines with the naturalizer.
 - Write like a person giving a live PilotFish demo — short, concrete, conversational.
 - Prefer: “First up…”, “Here's the flow…”
 - Avoid: rhetorical questions (“Why this demo?”), live-audience banter, choppy catalog fragments (“Stock module — …”), telling the viewer to click UI (“Click Create New…”), “Next I'll create…”, catalog readouts, “Module documentation for this step”, key=value dumps, formal route titles read aloud (“1 - SFTP Poll And Stage”).
@@ -38,6 +40,7 @@ See `.cursor/skills/regenerate-construction-video/SKILL.md`.
 - All of the above lives in the shared exporters (`tools/export_construction_video.py`, `tools/record_module_replay.py`, `tools/_record_construction_session.py`, `tools/construction_demo_context.py`) so **every** demo video gets the same treatment. Do not special-case a slug.
 
 ## Where the copy lives
+- Official open and close cards: `tools/construction_official_open.py` — required on every construction video
 - Naturalizer: `tools/construction_narration_naturalize.py`
 - Module/route steps: `tools/record_module_replay.py` → `build-replay/manifest.json`
 - Setup / systems / outro: `tools/export_construction_video.py`

@@ -1,0 +1,1365 @@
+{
+  "in_root": "data/in",
+  "out_dir": "data/out",
+  "timeout_sec": 300,
+  "cases": [
+    {
+      "id": "ngp-healthfirst",
+      "title": "NGP CAQ \u2014 NextGen Pathology (652)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "NGP",
+      "client": "CAQ",
+      "software_id": "652"
+    },
+    {
+      "id": "ariana-ligolab",
+      "title": "ARA ARA \u2014 Ariana (801)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "ARA",
+      "client": "ARA",
+      "software_id": "801"
+    },
+    {
+      "id": "mue-hal-ngp-nsp-pps",
+      "title": "MUE HAL / NGP Healthfirst / NSP / PPS",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "HAL+NGP+NSP+PPS",
+      "client": "",
+      "software_id": ""
+    },
+    {
+      "id": "conaur",
+      "title": "CON AUR \u2014 Aurora (256)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "CON",
+      "client": "AUR",
+      "software_id": "256"
+    },
+    {
+      "id": "conpsl",
+      "title": "CON PSL \u2014 PSL (259)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "CON",
+      "client": "PSL",
+      "software_id": "259"
+    },
+    {
+      "id": "conros",
+      "title": "CON ROS \u2014 Rose (258)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "CON",
+      "client": "ROS",
+      "software_id": "258"
+    },
+    {
+      "id": "consky",
+      "title": "CON SKY \u2014 Sky (257)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "CON",
+      "client": "SKY",
+      "software_id": "257"
+    },
+    {
+      "id": "consub",
+      "title": "CON SUB \u2014 Suburban (255)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "CON",
+      "client": "SUB",
+      "software_id": "255"
+    },
+    {
+      "id": "conswe",
+      "title": "CON SWE \u2014 Swedish (253)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "CON",
+      "client": "SWE",
+      "software_id": "253"
+    },
+    {
+      "id": "cp-charges",
+      "title": "PPA PPA \u2014 Precision Pathology Assoc (700)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "PPA",
+      "client": "PPA",
+      "software_id": "700"
+    },
+    {
+      "id": "fpsale",
+      "title": "FPS ALE \u2014 Lewis Gale Alleghany (308)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "FPS",
+      "client": "ALE",
+      "software_id": "308"
+    },
+    {
+      "id": "fpsaleexp",
+      "title": "FPS ALX \u2014 Lewis Gale Alleghany (330)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "FPS",
+      "client": "ALX",
+      "software_id": "330"
+    },
+    {
+      "id": "fpschi",
+      "title": "FPS CHI \u2014 Chippenham (285)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "FPS",
+      "client": "CHI",
+      "software_id": "285"
+    },
+    {
+      "id": "fpshen",
+      "title": "FPS HEN \u2014 Henrico (284)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "FPS",
+      "client": "HEN",
+      "software_id": "284"
+    },
+    {
+      "id": "fpsjrm",
+      "title": "FPS JRM \u2014 John Randolph (283)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "FPS",
+      "client": "JRM",
+      "software_id": "283"
+    },
+    {
+      "id": "fpslgm",
+      "title": "FPS LGM \u2014 Lewis Gale medical Center (305)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "FPS",
+      "client": "LGM",
+      "software_id": "305"
+    },
+    {
+      "id": "fpslgmexp",
+      "title": "FPS LGX \u2014 Lewis Gale medical Center (321)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "FPS",
+      "client": "LGX",
+      "software_id": "321"
+    },
+    {
+      "id": "fpsmnt",
+      "title": "FPS MNT \u2014 Lewis Gale Montgomery (309)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "FPS",
+      "client": "MNT",
+      "software_id": "309"
+    },
+    {
+      "id": "fpsmntexp",
+      "title": "FPS MNX \u2014 Lewis Gale Montgomery (331)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "FPS",
+      "client": "MNX",
+      "software_id": "331"
+    },
+    {
+      "id": "fpspul",
+      "title": "FPS PUL \u2014 Lewis Gale Pulaski (307)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "FPS",
+      "client": "PUL",
+      "software_id": "307"
+    },
+    {
+      "id": "fpspulexp",
+      "title": "FPS PXL \u2014 Lewis Gale Pulaski (322)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "FPS",
+      "client": "PXL",
+      "software_id": "322"
+    },
+    {
+      "id": "fpsspo",
+      "title": "FPS SPO \u2014 Spotsylvania Reginoal (304)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "FPS",
+      "client": "SPO",
+      "software_id": "304"
+    },
+    {
+      "id": "glfclr",
+      "title": "GLF CLR \u2014 Clearlake (341)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "GLF",
+      "client": "CLR",
+      "software_id": "341"
+    },
+    {
+      "id": "glfcmcexp",
+      "title": "GLF CMX \u2014 Conroe Medical Center (385)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "GLF",
+      "client": "CMX",
+      "software_id": "385"
+    },
+    {
+      "id": "glfcypexp",
+      "title": "GLF CYX \u2014 North Cypress (387)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "GLF",
+      "client": "CYX",
+      "software_id": "387"
+    },
+    {
+      "id": "glfhmcexp",
+      "title": "GLF HMD \u2014 Houston Med Ctr (329)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "GLF",
+      "client": "HMD",
+      "software_id": "329"
+    },
+    {
+      "id": "glfhweexp",
+      "title": "GLF HWX \u2014 Houston West (388)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "GLF",
+      "client": "HWX",
+      "software_id": "388"
+    },
+    {
+      "id": "glfkinexp",
+      "title": "GLF KIX \u2014 Kingwood (386)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "GLF",
+      "client": "KIX",
+      "software_id": "386"
+    },
+    {
+      "id": "glftomexp",
+      "title": "GLF TON \u2014 Tomball (384)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "GLF",
+      "client": "TON",
+      "software_id": "384"
+    },
+    {
+      "id": "glftwhexp",
+      "title": "GLF TWX \u2014 Woman's Texas (389)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "GLF",
+      "client": "TWX",
+      "software_id": "389"
+    },
+    {
+      "id": "glfval",
+      "title": "GLF VLY \u2014 Valley Regional (383)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "GLF",
+      "client": "VLY",
+      "software_id": "383"
+    },
+    {
+      "id": "hal-halifax",
+      "title": "HAL HAA \u2014 Halifax (750)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "HAL",
+      "client": "HAA",
+      "software_id": "750"
+    },
+    {
+      "id": "irlaug",
+      "title": "IRL AUG \u2014 Drs of Augusta (250)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "AUG",
+      "software_id": "250"
+    },
+    {
+      "id": "irlave",
+      "title": "IRL AVE \u2014 IRL Aventura Hospital (120)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "AVE",
+      "software_id": "120"
+    },
+    {
+      "id": "irlbay",
+      "title": "IRL BAY \u2014 Bayonet Point (171)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "BAY",
+      "software_id": "171"
+    },
+    {
+      "id": "irlbla",
+      "title": "IRL BLA \u2014 Blake (172)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "BLA",
+      "software_id": "172"
+    },
+    {
+      "id": "irlbrn",
+      "title": "IRL BRN \u2014 Brandon (206)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "BRN",
+      "software_id": "206"
+    },
+    {
+      "id": "irlcap",
+      "title": "IRL CAP \u2014 Capital (240)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "CAP",
+      "software_id": "240"
+    },
+    {
+      "id": "irlcapexp",
+      "title": "IRL CAX \u2014 Capital Reg Med Ctr (518)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "CAX",
+      "software_id": "518"
+    },
+    {
+      "id": "irlcen",
+      "title": "IRL CEN \u2014 Lake Monroe (175)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "CEN",
+      "software_id": "175"
+    },
+    {
+      "id": "irlcol",
+      "title": "IRL COL \u2014 IRL Columbia Hospital (112)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "COL",
+      "software_id": "112"
+    },
+    {
+      "id": "irlctn",
+      "title": "IRL CTN \u2014 Colleton (245)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "CTN",
+      "software_id": "245"
+    },
+    {
+      "id": "irleng",
+      "title": "IRL ENG \u2014 Englewood (169)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "ENG",
+      "software_id": "169"
+    },
+    {
+      "id": "irlfai",
+      "title": "IRL FAI \u2014 Fairview (274)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "FAI",
+      "software_id": "274"
+    },
+    {
+      "id": "irlfaw",
+      "title": "IRL FAW \u2014 Fawcett (170)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "FAW",
+      "software_id": "170"
+    },
+    {
+      "id": "irlfuh",
+      "title": "IRL FUH \u2014 IRL Florida University (337)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "FUH",
+      "software_id": "337"
+    },
+    {
+      "id": "irlgra",
+      "title": "IRL GRA \u2014 Grand Strand (221)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "GRA",
+      "software_id": "221"
+    },
+    {
+      "id": "irlgulexp",
+      "title": "IRL GUX \u2014 Gulf Coast Med Ctr (522)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "GUX",
+      "software_id": "522"
+    },
+    {
+      "id": "irlhrm",
+      "title": "IRL HRM \u2014 IRL Highlands Regional (287)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "HRM",
+      "software_id": "287"
+    },
+    {
+      "id": "irljfk",
+      "title": "IRL JFK \u2014 IRL JFK Hospital (109)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "JFK",
+      "software_id": "109"
+    },
+    {
+      "id": "irlkre",
+      "title": "IRL KRE \u2014 IRL Kendall Regional (118)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "KRE",
+      "software_id": "118"
+    },
+    {
+      "id": "irllar",
+      "title": "IRL LAR \u2014 Largo (165)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "LAR",
+      "software_id": "165"
+    },
+    {
+      "id": "irllaw",
+      "title": "IRL LAW \u2014 IRL Lawnwood (352)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "LAW",
+      "software_id": "352"
+    },
+    {
+      "id": "irlmem",
+      "title": "IRL MEM \u2014 Memorial Hospital of Jacksonville (220)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "MEM",
+      "software_id": "220"
+    },
+    {
+      "id": "irlmer",
+      "title": "IRL MER \u2014 IRL Mercy Hospital (122)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "MER",
+      "software_id": "122"
+    },
+    {
+      "id": "irlnor",
+      "title": "IRL NOR \u2014 Northside (176)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "NOR",
+      "software_id": "176"
+    },
+    {
+      "id": "irlnwm",
+      "title": "IRL NWM \u2014 IRL Northwest (114)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "NWM",
+      "software_id": "114"
+    },
+    {
+      "id": "irloak",
+      "title": "IRL OAK \u2014 Oak Hill (167)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "OAK",
+      "software_id": "167"
+    },
+    {
+      "id": "irlora",
+      "title": "IRL ORA \u2014 Orange Park (222)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "ORA",
+      "software_id": "222"
+    },
+    {
+      "id": "irlpop",
+      "title": "IRL POP \u2014 Palms of Pasadena (168)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "POP",
+      "software_id": "168"
+    },
+    {
+      "id": "irlpwe",
+      "title": "IRL PWE \u2014 IRL Palms West (110)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "PWE",
+      "software_id": "110"
+    },
+    {
+      "id": "irlrau",
+      "title": "IRL RAU \u2014 IRL Raulerson GED (126)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "RAU",
+      "software_id": "126"
+    },
+    {
+      "id": "irlsar",
+      "title": "IRL SAR \u2014 Sarasota (174)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "SAR",
+      "software_id": "174"
+    },
+    {
+      "id": "irlsou",
+      "title": "IRL SOU \u2014 South Bay (180)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "SOU",
+      "software_id": "180"
+    },
+    {
+      "id": "irlstl",
+      "title": "IRL STL \u2014 IRL St. Lucie (123)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "STL",
+      "software_id": "123"
+    },
+    {
+      "id": "irlstp",
+      "title": "IRL STP \u2014 St Petersburg (177)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "STP",
+      "software_id": "177"
+    },
+    {
+      "id": "irltrd",
+      "title": "IRL TRD \u2014 Trident Regional (251)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "TRD",
+      "software_id": "251"
+    },
+    {
+      "id": "irltri",
+      "title": "IRL TRI \u2014 Trinity (173)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "TRI",
+      "software_id": "173"
+    },
+    {
+      "id": "irltwiexp",
+      "title": "IRL TWX \u2014 Twin Cities Hosp (519)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "TWX",
+      "software_id": "519"
+    },
+    {
+      "id": "irluni",
+      "title": "IRL UNI \u2014 IRL University Hospital (111)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "UNI",
+      "software_id": "111"
+    },
+    {
+      "id": "irlwalexp",
+      "title": "IRL WAX \u2014 Ft Walton Hospital (521)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "WAX",
+      "software_id": "521"
+    },
+    {
+      "id": "irlwes",
+      "title": "IRL WES \u2014 IRL Westside (113)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "WES",
+      "software_id": "113"
+    },
+    {
+      "id": "irlwflexp",
+      "title": "IRL WFX \u2014 W Florida Reg (520)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "WFX",
+      "software_id": "520"
+    },
+    {
+      "id": "medreceivables-charges",
+      "title": "HAL HAX \u2014 Halifax (750)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "HAL",
+      "client": "HAX",
+      "software_id": "750"
+    },
+    {
+      "id": "midbel",
+      "title": "MID BEL \u2014 Belton (265)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "MID",
+      "client": "BEL",
+      "software_id": "265"
+    },
+    {
+      "id": "midctp",
+      "title": "MID CTP \u2014 Centerpoint (266)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "MID",
+      "client": "CTP",
+      "software_id": "266"
+    },
+    {
+      "id": "midlaf",
+      "title": "MID LAF \u2014 Lafayette (267)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "MID",
+      "client": "LAF",
+      "software_id": "267"
+    },
+    {
+      "id": "midlee",
+      "title": "MID LEE \u2014 Lee (268)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "MID",
+      "client": "LEE",
+      "software_id": "268"
+    },
+    {
+      "id": "midmen",
+      "title": "MID MEN \u2014 Menorah (269)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "MID",
+      "client": "MEN",
+      "software_id": "269"
+    },
+    {
+      "id": "midovr",
+      "title": "MID OVR \u2014 Overland (270)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "MID",
+      "client": "OVR",
+      "software_id": "270"
+    },
+    {
+      "id": "midres",
+      "title": "MID RES \u2014 Research (271)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "MID",
+      "client": "RES",
+      "software_id": "271"
+    },
+    {
+      "id": "ngp-export",
+      "title": "NGP AP \u2014 NextGen Pathology (651)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "NGP",
+      "client": "AP",
+      "software_id": "651"
+    },
+    {
+      "id": "nsp-oh-pblab",
+      "title": "NGP AP \u2014 NextGen Pathology (651)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "NGP",
+      "client": "AP",
+      "software_id": "651"
+    },
+    {
+      "id": "ntxarl",
+      "title": "NTX ARL \u2014 Med Ctr of Arlington (403)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "NTX",
+      "client": "ARL",
+      "software_id": "403"
+    },
+    {
+      "id": "ntxwea",
+      "title": "NTX WEA \u2014 MedCity Weatherford (381)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "NTX",
+      "client": "WEA",
+      "software_id": "381"
+    },
+    {
+      "id": "pps-neo-pb",
+      "title": "PPA NEO \u2014 Precision Pathology Assoc (701)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "PPA",
+      "client": "NEO",
+      "software_id": "701"
+    },
+    {
+      "id": "pth5-cmc",
+      "title": "NHL CAT \u2014 Catholic Medical Center",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "NHL",
+      "client": "CAT",
+      "software_id": ""
+    },
+    {
+      "id": "pth5-coculn",
+      "title": "IRL NOA \u2014 Lake Nona (402)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "NOA",
+      "software_id": "402"
+    },
+    {
+      "id": "pth5-fmh",
+      "title": "NHL FRJ \u2014 Frisbie Hospital (501)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "NHL",
+      "client": "FRJ",
+      "software_id": "501"
+    },
+    {
+      "id": "pth5-ga",
+      "title": "IRL GAN \u2014 HCA FL Gainesville Hospital",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "GAN",
+      "software_id": ""
+    },
+    {
+      "id": "pth5-ie",
+      "title": "IRL LAM \u2014 Lake City (503)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "LAM",
+      "software_id": "503"
+    },
+    {
+      "id": "pth5-jr",
+      "title": "FPS JRN \u2014 John Randolph Expanse (319)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "FPS",
+      "client": "JRN",
+      "software_id": "319"
+    },
+    {
+      "id": "pth5-ue",
+      "title": "IRL PUX \u2014 Putnam (504)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "PUX",
+      "software_id": "504"
+    },
+    {
+      "id": "pth5-vw4",
+      "title": "IRL LWX \u2014 Lawnwood Expanse (515)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "LWX",
+      "software_id": "515"
+    },
+    {
+      "id": "pth5-xj",
+      "title": "IRL NFX \u2014 N Florida Reg Med Ct (506)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "NFX",
+      "software_id": "506"
+    },
+    {
+      "id": "pth5-yko",
+      "title": "IRL OCX \u2014 Ocala Medical Ctr (507)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "OCX",
+      "software_id": "507"
+    },
+    {
+      "id": "pth5-ykw",
+      "title": "IRL MAX \u2014 West Marion (505)",
+      "drop": ".",
+      "collect": [
+        ".ADT",
+        ".DFT",
+        ".adt",
+        ".dft"
+      ],
+      "partition": "IRL",
+      "client": "MAX",
+      "software_id": "505"
+    }
+  ]
+}

@@ -192,7 +192,7 @@
             <PID.31 />
           </PID>
           <!--<xsl:for-each-group group-by="concat(radExamServDate,radExamPerformingPhyMne,radExamCPT,radExamBillingCode,radExamBillingCodeOrig,radAcctNum)" select="Charge">-->
-          <xsl:for-each-group group-by="concat(radExamServDate,radExamPerformingPhyMne,radExamCPT,radExamBillingCode,radAcctNum)" select="Charge">
+          <xsl:for-each-group group-by="concat(radExamServDate,radExamPerformingPhyMne,radExamCPT,radExamBillingCode,radAcctNum)" select="Charge[not(@stripped = 'true')]">
             <xsl:sort order="ascending" select="radExamServDate" />
             <xsl:sort order="ascending" select="radExamCPT" />
             <xsl:variable name="CPT" select="radExamCPT" />
@@ -200,7 +200,7 @@
               <xsl:choose>
                 <xsl:when test="string-length(radExamBillingCode) &gt; 0">
                   <xsl:choose>
-                    <xsl:when test="$partitionName = 'NHL'">
+                    <xsl:when test="$partitionName = 'NHL' or $partitionName = 'NSP' or $partitionName = 'PPS'">
                       <xsl:value-of select="radExamBillingCodeOrig" />
                     </xsl:when>
                     <xsl:otherwise>

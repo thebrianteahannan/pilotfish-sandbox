@@ -21,7 +21,7 @@ Do **not** dumbed-down the on-screen transcript. Rewrite **only** for speech syn
   - `/opt/pilotfish/input/staged` → “the staged input folder”
   - `/opt/pilotfish/output/archive` → “the archive output folder”
 - If the full path must be spoken, say folder segments with short pauses: `opt, pilotfish, input, staged`.
-- File extensions: `.csv` → “dot C S V”.
+- File extensions: `.csv` → “dot csv”. Do not letter-spell csv or xml.
 
 ## Letter-by-letter terms
 
@@ -34,9 +34,7 @@ Spell these out (spaces between letters) unless noted:
 | SSH | S S H |
 | JSCH | J S C H |
 | JDBC | J D B C |
-| CSV | C S V |
-| XML | X M L |
-| XSLT | X S L T |
+| EDI | E D I |
 | SQLXML | S Q L X M L |
 | API | A P I |
 | HTTP / HTTPS | H T T P / H T T P S |
@@ -47,6 +45,11 @@ Spell these out (spaces between letters) unless noted:
 
 | Term | Say |
 |------|-----|
+| 834 | eight thirty-four (never eight hundred thirty-four) |
+| X12 | X twelve |
+| CSV | csv (as a word, not C S V) |
+| XML | xml (as a word, not X M L) |
+| XSLT | xslt (as a word, not X S L T) |
 | SQL Server | sequel Server |
 | SQL (alone) | sequel |
 | JSON | jay son |
@@ -59,7 +62,7 @@ Spell these out (spaces between letters) unless noted:
 ## Filenames & IDs
 
 - Prefer human OGNL summaries already in the transcript (`{sourceFileName}_<timestamp>.csv`).
-- For speech, “source file name, underscore, timestamp, dot C S V”.
+- For speech, “source file name, underscore, timestamp, dot csv”.
 - Do **not** read UUID module ids aloud — say “module id”.
 
 ## Regenerating the PDF

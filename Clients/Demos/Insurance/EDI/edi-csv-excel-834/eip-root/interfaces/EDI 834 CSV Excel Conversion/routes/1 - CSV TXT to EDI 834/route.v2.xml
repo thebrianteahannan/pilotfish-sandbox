@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="d16560c5-6e6c-4fc0-8230-dde7bb92b0ec" name="1 - CSV TXT to EDI 834">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="dafdec99-e59f-43c3-a394-bce4b644c89e" moduleId="2fc244f8-f7ca-41fb-861d-49a2285ab13f" label="Poll Enrollment CSV TXT" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="a1c9690c-266c-4af0-9b35-ca5cdccacc9b" moduleId="524c3c5b-7dc8-433c-b291-ffaba3a2d6b9" label="CSV to XML" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="7b2c7d18-6b44-4a24-b27a-5c45b37e88e9" moduleId="06828f4b-776a-4622-bf0e-255aa96298b0" label="Conditional Router" x="780.0" y="0.0" width="180.0" height="72.0"/>
+      <Node id="90b6c8cd-4d12-46eb-910b-347e04923908" moduleId="07f54f7e-99bd-4173-9229-16ef0d0e5132" label="Map CSV XML to 834 EDI XML" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="a0462d37-9783-4186-8b69-509e2647ebca" moduleId="3bdc15f0-a7a8-4265-a206-b49edcbcb624" label="XML to EDI 834" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="93c297a0-f742-4435-a6ab-4ca0e4522e59" moduleId="3fac710c-a8b6-4968-a38c-ad2c45e93079" label="Write EDI 834" x="1820.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="316929f1-2344-4504-a0d4-a1f17b29909f" moduleId="bb8caaa5-979b-4afd-bf85-27caf13a50a9" label="Write Kickout" x="1300.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="e987e23e-8d99-49a2-8933-c5d9e80683fd" sourceNodeId="dafdec99-e59f-43c3-a394-bce4b644c89e" targetNodeId="a1c9690c-266c-4af0-9b35-ca5cdccacc9b" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="af6587ab-0372-4878-8cfb-3c7a1159d738" sourceNodeId="90b6c8cd-4d12-46eb-910b-347e04923908" targetNodeId="a0462d37-9783-4186-8b69-509e2647ebca" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="423b2fb3-d48a-493a-b682-a4648d2435a6" sourceNodeId="a0462d37-9783-4186-8b69-509e2647ebca" targetNodeId="93c297a0-f742-4435-a6ab-4ca0e4522e59" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="0c62e501-d43d-4788-92bf-4a94c88c2dc3" sourceNodeId="a1c9690c-266c-4af0-9b35-ca5cdccacc9b" targetNodeId="7b2c7d18-6b44-4a24-b27a-5c45b37e88e9" sourceConnector="right-output" targetConnector="router-input:b051a7e3-2ed1-497c-95f7-318821dafdf8" condition="true"/>
+      <Connection id="54970787-a74a-476c-a146-398eaaa262b4" sourceNodeId="7b2c7d18-6b44-4a24-b27a-5c45b37e88e9" targetNodeId="90b6c8cd-4d12-46eb-910b-347e04923908" sourceConnector="router-output:c181a1ef-e6eb-416b-8b4b-948715ee65c9" targetConnector="left-input" condition="true"/>
+      <Connection id="6afdac7a-bf03-479c-bfe5-ab7f7cad0ac5" sourceNodeId="7b2c7d18-6b44-4a24-b27a-5c45b37e88e9" targetNodeId="316929f1-2344-4504-a0d4-a1f17b29909f" sourceConnector="router-output:b1db4cce-8f5b-48bd-a37f-71e263314e34" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

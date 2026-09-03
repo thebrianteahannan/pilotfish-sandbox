@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="87c76750-ff38-4d0d-a7ff-8289fc86a67f" name="EDI 834 to XML" type="EDI Transformation" tag="Processor" class="com.pilotfish.eip.modules.transform.EDITransformationProcessor">
+   <ModuleConfig>
+      <ExecuteProcessor>true</ExecuteProcessor>
+      
+          
+      <ExecuteTransformation>true</ExecuteTransformation>
+      
+          
+      <TransformationDirection>EDI to XML</TransformationDirection>
+      
+          
+      <UseInternalData>false</UseInternalData>
+      
+          
+      <USE_ENHANCED_CONTEXT>true</USE_ENHANCED_CONTEXT>
+      
+          
+      <TransactionDataWithVersion>[eip_pair:{ognl:@com.pilotfish.utils.PilotFishUtils@getWorkingDirectory()+'/edi-tabledata/834-A1'}:eip_name:5010:eip_value]</TransactionDataWithVersion>
+      
+          
+      <FriendlyNamesLevel>None</FriendlyNamesLevel>
+      
+          
+      <CODE_DEFS>false</CODE_DEFS>
+      
+          
+      <SegmentIndexing>true</SegmentIndexing>
+      
+          
+      <OutputEndlines>true</OutputEndlines>
+      
+          
+      <UseProvidedDelimiters>true</UseProvidedDelimiters>
+      
+          
+      <DataDelimiter>*</DataDelimiter>
+      
+          
+      <SubDelimiter>:</SubDelimiter>
+      
+          
+      <RepetitionDelimiter>^</RepetitionDelimiter>
+      
+          
+      <RecordDelimiter>~</RecordDelimiter>
+      
+          
+      <USE_LEGACY_FORMAT>false</USE_LEGACY_FORMAT>
+      
+        
+   </ModuleConfig>
+</Module>

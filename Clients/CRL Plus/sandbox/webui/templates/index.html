@@ -51,6 +51,7 @@
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 16px;
+      align-items: stretch;
     }
     @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
     .panel {
@@ -111,8 +112,54 @@
       background: rgba(11, 110, 79, 0.06);
       font-size: 0.9rem;
     }
-    .flow li strong { display: block; margin-bottom: 2px; }
-    .results { margin-top: 16px; animation: rise 0.9s ease both; animation-delay: 0.12s; }
+    .carrier-search { position: relative; margin: 0 0 12px; }
+    .carrier-search input {
+      width: 100%;
+      font: 0.95rem "DM Sans", sans-serif;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      background: #fff;
+      color: var(--ink);
+    }
+    .carrier-search input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+    #carrier-suggest {
+      display: none;
+      position: absolute;
+      z-index: 5;
+      left: 0; right: 0; top: 100%;
+      margin: 2px 0 0;
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      box-shadow: var(--shadow);
+      max-height: 16rem;
+      overflow: auto;
+    }
+    #carrier-suggest.is-open { display: block; }
+    #carrier-suggest button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      color: var(--ink);
+      font: 500 0.9rem "DM Sans", sans-serif;
+      padding: 8px 12px;
+      border-radius: 0;
+    }
+    #carrier-suggest button:hover, #carrier-suggest button.is-on { background: rgba(11, 110, 79, 0.1); }
+    #carrier-suggest .mono { font-size: 0.78rem; }
+    .panel.access {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .panel.access .results {
+      margin-top: 16px;
+      flex: 1;
+      min-height: 12rem;
+      overflow: auto;
+    }
     .tx {
       border-top: 1px solid var(--line);
       padding: 14px 0;
@@ -130,10 +177,8 @@
       gap: 8px;
       font-size: 0.9rem;
     }
-    .dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--ok); margin-top: 5px;
-    }
+    .dot.bad { background: var(--accent-2); }
+    .tx .lede { font-size: 0.92rem; color: var(--muted); margin: 0 0 8px; line-height: 1.4; }
     .empty { color: var(--muted); font-size: 0.95rem; }
     .toast {
       position: fixed; right: 16px; bottom: 16px;
@@ -153,66 +198,80 @@
 <body>
   <div class="wrap">
     <header>
-      <p class="brand">CRL Plus <span>American Income Life</span></p>
+      <p class="brand">CRL Plus <span>sandbox</span></p>
       <p class="lede">
-        Sandbox for the AIL electronic-order programming request — Ladder/FGL pattern:
-        HTTP POST intake, Status.4 client routing, and 1122 status/result handling.
+        Local 26R1 stack for the whole CRL Plus package. American Income Life is one inbound path;
+        carrier HTTP, FTP, SQL, and mail hit Docker mocks — not production.
       </p>
     </header>
 
     <div class="grid">
-      <section class="panel">
-        <h2>Endpoint &amp; credentials</h2>
+      <section class="panel access">
+        <h2>Access</h2>
         <div class="meta">
-          <div class="row"><b>External TEST</b><span class="mono">{{ external_url }}</span></div>
-          <div class="row"><b>LAN sandbox</b><span class="mono">{{ local_url }}</span></div>
-          <div class="row"><b>Web UI</b><span class="mono">http://{{ lan_ip }}:{{ port }}/</span></div>
-          <div class="row"><b>Basic auth</b><span class="mono">{{ auth_user }} / {{ auth_pass }}</span></div>
-          <div class="row"><b>sourceClient</b><span class="mono">AIL</span></div>
-          <div class="row"><b>Outbound 1122</b><span>{% if skip_outbound %}Skipped (awaiting AIL WS details){% else %}Mock POST enabled{% endif %}</span></div>
+          <div class="row"><b>Local Web UI</b><span class="mono">http://127.0.0.1:{{ port }}/</span></div>
+          <div class="row"><b>LAN Web UI</b><span class="mono">http://{{ lan_ip }}:{{ port }}/</span></div>
+          <div class="row"><b>EIP 26R1</b><span class="mono">{{ eip_url }}</span></div>
+          <div class="row"><b>HTTP mocks</b><span class="mono">{{ mocks_url }}</span></div>
+          <div class="row"><b>FTP</b><span class="mono">{{ sftp_hint }}</span></div>
+          <div class="row"><b>SQL</b><span class="mono">{{ sql_hint }}</span></div>
+          <div class="row"><b>Mail</b><span class="mono">{{ mail_hint }}</span></div>
+          <div class="row"><b>AIL POST</b><span class="mono">{{ local_url }}</span></div>
+          <div class="row"><b>AIL auth</b><span class="mono">{{ auth_user }} / {{ auth_pass }}</span></div>
         </div>
         <div class="actions">
-          <button id="runSample" type="button">Run sample 121 order</button>
+          <button id="runSample" type="button">Inject AIL 121</button>
+          <button id="injectAll" type="button">Inject all carriers</button>
           <button id="refresh" class="secondary" type="button">Refresh results</button>
+        </div>
+        <div class="results">
+          <h2>Sandbox results</h2>
+          <p class="empty">Inject sends a sample 121. The mock line is only “did our fake carrier inbox answer?” The EIP line is “did eiPlatform actually take the order?”</p>
+          <div id="results">
+            {% if transactions %}
+              {% for tx in transactions %}
+              <article class="tx">
+                <h3>{{ tx.meta.trackingId }} · {{ tx.meta.insured or 'Insured' }}</h3>
+                {% if tx.summary %}<p class="lede">{{ tx.summary }}</p>{% endif %}
+                <div class="meta">
+                  <div class="row"><b>When</b><span class="when">{{ tx.receivedAt }}</span></div>
+                  <div class="row"><b>Via</b><span>{{ tx.via }}</span></div>
+                  <div class="row"><b>Policy</b><span class="mono">{{ tx.meta.polNumber }}</span></div>
+                </div>
+                <ul class="steps">
+                  {% for step in tx.steps %}
+                  <li><span class="dot{% if step.ok == false %} bad{% endif %}"></span><div><strong>{{ step.route }}</strong><div>{{ step.detail }}</div></div></li>
+                  {% endfor %}
+                </ul>
+              </article>
+              {% endfor %}
+            {% else %}
+              <p class="empty">No transactions yet. Inject a carrier or POST an ACORD 121 to EIP.</p>
+            {% endif %}
+          </div>
         </div>
       </section>
 
       <section class="panel">
-        <h2>Implemented route set</h2>
-        <ol class="flow">
-          <li><strong>1 — 121 Incoming</strong>HttpPostListener path <code>ail</code> + auth-test.txt</li>
-          <li><strong>2 — 121 Response</strong>Synchronous accept/failure response to sender</li>
-          <li><strong>Status.4</strong><code>sourceClient=AIL</code> → <code>AIL 1122 Status</code></li>
-          <li><strong>3 — 1122 Status/Result</strong>Format AIL 1122; outbound optional/skippable</li>
-          <li><strong>4 — 1122 POST Response</strong>Archive + mark status sent</li>
+        <h2>Status.4 carriers</h2>
+        <div class="carrier-search">
+          <input id="carrier-search" type="search" autocomplete="off" placeholder="Search carriers by code or name…" />
+          <div id="carrier-suggest" role="listbox"></div>
+        </div>
+        <ol class="flow" id="carrier-list">
+          {% for c in carriers %}
+          <li data-code="{{ c.code }}" data-search="{{ c.code }} {{ c.name }} {{ c.path or '' }}">
+            <strong>{{ c.code }} — {{ c.name }}</strong>
+            {% if c.path %}HTTP <code>/eip/http-post/{{ c.path }}</code>
+            <button type="button" class="secondary inj" data-code="{{ c.code }}">Inject</button>
+            {% else %}no HTTP listener — mock 1122 + Status.4 only
+            <button type="button" class="secondary inj" data-code="{{ c.code }}">Ping mock</button>
+            {% endif %}
+          </li>
+          {% endfor %}
         </ol>
       </section>
     </div>
-
-    <section class="panel results">
-      <h2>Sandbox results</h2>
-      <div id="results">
-        {% if transactions %}
-          {% for tx in transactions %}
-          <article class="tx">
-            <h3>{{ tx.meta.trackingId }} · {{ tx.meta.insured or 'Insured' }}</h3>
-            <div class="meta">
-              <div class="row"><b>When</b><span>{{ tx.receivedAt }}</span></div>
-              <div class="row"><b>Via</b><span>{{ tx.via }}</span></div>
-              <div class="row"><b>Policy</b><span class="mono">{{ tx.meta.polNumber }}</span></div>
-            </div>
-            <ul class="steps">
-              {% for step in tx.steps %}
-              <li><span class="dot"></span><div><strong>{{ step.route }}</strong><div>{{ step.detail }}</div></div></li>
-              {% endfor %}
-            </ul>
-          </article>
-          {% endfor %}
-        {% else %}
-          <p class="empty">No transactions yet. Run the sample order or POST an ACORD 121 to the LAN endpoint.</p>
-        {% endif %}
-      </div>
-    </section>
   </div>
   <div class="toast" id="toast"></div>
   <script>
@@ -222,40 +281,119 @@
       el.classList.add('show');
       setTimeout(() => el.classList.remove('show'), 2200);
     };
+    const when = (s) => {
+      const raw = String(s || '').trim();
+      if (!raw) return '';
+      let d = new Date(raw);
+      if (Number.isNaN(d.getTime()) && !/Z|[+-]\d{2}:?\d{2}$/.test(raw)) d = new Date(raw + ' UTC');
+      if (Number.isNaN(d.getTime())) return raw;
+      return d.toLocaleString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+    };
     const render = (transactions) => {
       const root = document.getElementById('results');
       if (!transactions.length) {
-        root.innerHTML = '<p class="empty">No transactions yet. Run the sample order or POST an ACORD 121 to the LAN endpoint.</p>';
+        root.innerHTML = '<p class="empty">No transactions yet. Inject a carrier or POST an ACORD 121 to EIP.</p>';
         return;
       }
       root.innerHTML = transactions.map(tx => `
         <article class="tx">
           <h3>${tx.meta.trackingId} · ${tx.meta.insured || 'Insured'}</h3>
+          ${tx.summary ? `<p class="lede">${tx.summary}</p>` : ''}
           <div class="meta">
-            <div class="row"><b>When</b><span>${tx.receivedAt}</span></div>
+            <div class="row"><b>When</b><span>${when(tx.receivedAt)}</span></div>
             <div class="row"><b>Via</b><span>${tx.via}</span></div>
             <div class="row"><b>Policy</b><span class="mono">${tx.meta.polNumber}</span></div>
           </div>
           <ul class="steps">
-            ${tx.steps.map(step => `
-              <li><span class="dot"></span><div><strong>${step.route}</strong><div>${step.detail}</div></div></li>
+            ${(tx.steps || []).map(step => `
+              <li><span class="dot${step.ok === false ? ' bad' : ''}"></span><div><strong>${step.route}</strong><div>${step.detail}</div></div></li>
             `).join('')}
           </ul>
         </article>
       `).join('');
     };
+    document.querySelectorAll('.when').forEach((el) => { el.textContent = when(el.textContent.trim()); });
+    const postInject = async (body) => {
+      const res = await fetch('/api/inject', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+      const text = await res.text();
+      let data = {};
+      try { data = JSON.parse(text); } catch (err) { throw new Error(res.ok ? 'Bad response' : 'Inject failed (server error)'); }
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Inject failed');
+      return data;
+    };
     document.getElementById('runSample').addEventListener('click', async () => {
-      const res = await fetch('/api/run-sample', { method: 'POST' });
-      const data = await res.json();
-      if (!data.ok) { toast(data.error || 'Failed'); return; }
-      toast('Sample 121 processed for AIL');
-      const list = await fetch('/api/transactions').then(r => r.json());
-      render(list.transactions || []);
+      try {
+        await postInject({code:'AIL'});
+        toast('AIL inject sent');
+        const list = await fetch('/api/transactions').then(r => r.json());
+        render(list.transactions || []);
+      } catch (err) { toast(err.message || 'Failed'); }
+    });
+    document.getElementById('injectAll').addEventListener('click', async () => {
+      toast('Injecting all carriers…');
+      try {
+        const res = await fetch('/api/inject-all', { method: 'POST' });
+        const text = await res.text();
+        const data = JSON.parse(text);
+        toast(data.ok ? `Done (${(data.results||[]).length} carriers)` : (data.error || 'Failed'));
+        const list = await fetch('/api/transactions').then(r => r.json());
+        render(list.transactions || []);
+      } catch (err) { toast(err.message || 'Inject all failed'); }
+    });
+    document.querySelectorAll('.inj').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const code = btn.getAttribute('data-code');
+        try {
+          await postInject({code});
+          toast(`${code} sent`);
+          const list = await fetch('/api/transactions').then(r => r.json());
+          render(list.transactions || []);
+        } catch (err) { toast(err.message || 'Failed'); }
+      });
     });
     document.getElementById('refresh').addEventListener('click', async () => {
       const list = await fetch('/api/transactions').then(r => r.json());
       render(list.transactions || []);
       toast('Results refreshed');
+    });
+    const search = document.getElementById('carrier-search');
+    const suggest = document.getElementById('carrier-suggest');
+    const items = [...document.querySelectorAll('#carrier-list li')];
+    const matches = (q) => {
+      const n = q.trim().toLowerCase();
+      if (!n) return items;
+      return items.filter((li) => (li.getAttribute('data-search') || '').toLowerCase().includes(n));
+    };
+    const paintSearch = () => {
+      const hit = matches(search.value);
+      items.forEach((li) => { li.hidden = !hit.includes(li); });
+      const q = search.value.trim();
+      if (!q) { suggest.classList.remove('is-open'); suggest.innerHTML = ''; return; }
+      suggest.innerHTML = hit.slice(0, 12).map((li) => {
+        const code = li.getAttribute('data-code');
+        const label = li.querySelector('strong').textContent;
+        return `<button type="button" role="option" data-pick="${code}">${label}</button>`;
+      }).join('') || `<button type="button" disabled>No match</button>`;
+      suggest.classList.add('is-open');
+    };
+    search.addEventListener('input', paintSearch);
+    search.addEventListener('focus', paintSearch);
+    search.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape') { search.value = ''; paintSearch(); search.blur(); }
+      if (ev.key === 'Enter') {
+        const first = suggest.querySelector('[data-pick]');
+        if (first) { first.click(); ev.preventDefault(); }
+      }
+    });
+    suggest.addEventListener('click', (ev) => {
+      const btn = ev.target.closest('[data-pick]');
+      if (!btn) return;
+      search.value = btn.getAttribute('data-pick');
+      paintSearch();
+      suggest.classList.remove('is-open');
+    });
+    document.addEventListener('click', (ev) => {
+      if (!ev.target.closest('.carrier-search')) suggest.classList.remove('is-open');
     });
   </script>
 </body>

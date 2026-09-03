@@ -10,7 +10,8 @@ from pathlib import Path
 from typing import Any
 
 from db import Store, utc_now
-from g2_client import G2Client
+from feeds import fetch_all, signal_too_old
+from jobs import fetch_jobs
 from reddit_client import RedditClient
 from score import score_post
 
@@ -30,11 +31,17 @@ def db_path() -> Path:
 
 def _ingest(store: Store, posts: list[dict[str, Any]], caps: list[dict[str, Any]], min_score: int, seen_ids: set[str]) -> tuple[int, int, int]:
     seen = new = kept = 0
+    now_ts = datetime.now(timezone.utc).timestamp()
     for post in posts:
         seen += 1
         if post["id"] in seen_ids:
             continue
         seen_ids.add(post["id"])
+        created = float(post.get("created_utc") or 0)
+        if created < 1_000_000_000:
+            post["created_utc"] = now_ts
+        if signal_too_old(post.get("created_utc")):
+            continue
         scored = score_post(post, caps)
         if scored["relevance"] < min_score:
             continue
@@ -50,6 +57,8 @@ def _load_seed(store: Store, caps: list[dict[str, Any]]) -> int:
     items = json.loads(SEED_PATH.read_text(encoding="utf-8"))
     n = 0
     for post in items:
+        if signal_too_old(post.get("created_utc")):
+            continue
         scored = score_post(post, caps)
         post = {**post, **scored, "fetched_at": utc_now()}
         if store.upsert_post(post):
@@ -61,6 +70,7 @@ def run_scout(store: Store | None = None, config: dict[str, Any] | None = None) 
     cfg = config or load_config()
     store = store or Store(db_path())
     client = RedditClient(cfg.get("user_agent") or "PilotFishHealthcareBuzzScout/1.0")
+    store.purge_g2()
     run_id = store.start_run()
     seen = new = kept = 0
     errors: list[str] = []
@@ -68,6 +78,9 @@ def run_scout(store: Store | None = None, config: dict[str, Any] | None = None) 
     seen_ids: set[str] = set()
 
     min_score = int(cfg.get("min_score_to_keep") or 18)
+    feed_min = int(cfg.get("min_score_feeds") or 14)
+    regs_min = int(cfg.get("min_score_regs") or 10)
+    jobs_min = int(cfg.get("min_score_jobs") or 10)
     limit = int(cfg.get("max_posts_per_query") or 25)
     focus_subs = list(cfg.get("subreddits") or [])
     queries = list(cfg.get("queries") or [])
@@ -75,6 +88,33 @@ def run_scout(store: Store | None = None, config: dict[str, Any] | None = None) 
     rate_limited = False
 
     try:
+        extra, extra_by, extra_err = fetch_all(
+            cfg.get("user_agent") or "PilotFishHealthcareBuzzScout/1.0",
+            limit=int(cfg.get("max_feed_items") or 15),
+        )
+        errors.extend(extra_err)
+        by_query.update(extra_by)
+        for src, floor in (("news", feed_min), ("regs", regs_min), ("stack", feed_min), ("hn", feed_min)):
+            batch = [p for p in extra if p.get("source") == src]
+            s, n, k = _ingest(store, batch, caps, floor, seen_ids)
+            seen += s
+            new += n
+            kept += k
+
+        job_posts, job_by, job_err = fetch_jobs(
+            cfg.get("user_agent") or "PilotFishHealthcareBuzzScout/1.0",
+            limit=int(cfg.get("max_feed_items") or 15),
+        )
+        errors.extend(job_err)
+        by_query.update(job_by)
+        s, n, k = _ingest(store, job_posts, caps, jobs_min, seen_ids)
+        seen += s
+        new += n
+        kept += k
+        from jobs import backfill_job_companies
+
+        by_query["job_companies"] = backfill_job_companies(store)
+
         for sub in focus_subs:
             if rate_limited:
                 errors.append(f"{sub}::rss/new: skipped (rate limited earlier)")
@@ -124,8 +164,6 @@ def run_scout(store: Store | None = None, config: dict[str, Any] | None = None) 
             from curate import curate_thread
 
             for post in store.list_posts_needing_comments(limit=3):
-                if (post.get("source") or "reddit") == "g2":
-                    continue
                 try:
                     raw = client.fetch_comments(post)
                     curated = curate_thread(post, raw, caps)
@@ -144,32 +182,9 @@ def run_scout(store: Store | None = None, config: dict[str, Any] | None = None) 
                         rate_limited = True
                         break
 
-        # G2 paying-user reviews (Wayback) — the "check G2 ratings" path
-        g2_seen = g2_new = g2_kept = 0
-        try:
-            g2 = G2Client(cfg.get("user_agent") or "PilotFishHealthcareBuzzScout/1.0", request_gap=2.5)
-            products = g2.load_products()
-            # Rotate through a few products per hour so we don't hammer Wayback
-            hour_bucket = datetime.now(timezone.utc).hour
-            start = (hour_bucket * 3) % max(1, len(products))
-            batch = products[start:] + products[:start]
-            for product in batch[:4]:
-                key = f"g2::{product['slug']}"
-                try:
-                    reviews = g2.fetch_product_reviews(product, limit=int(cfg.get("max_g2_reviews_per_product") or 20))
-                    by_query[key] = len(reviews)
-                    s, n, k = _ingest(store, reviews, caps, min_score, seen_ids)
-                    g2_seen += s
-                    g2_new += n
-                    g2_kept += k
-                    seen += s
-                    new += n
-                    kept += k
-                except Exception as exc:  # noqa: BLE001
-                    errors.append(f"{key}: {exc}")
-        except Exception as exc:  # noqa: BLE001
-            errors.append(f"g2: {exc}")
+        from companies import refresh_companies
 
+        companies_n = refresh_companies(store)
         store.finish_run(
             run_id,
             posts_seen=seen,
@@ -181,9 +196,7 @@ def run_scout(store: Store | None = None, config: dict[str, Any] | None = None) 
                 "errors": errors[:40],
                 "seeded": seeded,
                 "comments_enriched": comments_enriched,
-                "g2_seen": g2_seen,
-                "g2_new": g2_new,
-                "g2_kept": g2_kept,
+                "companies": companies_n,
             },
         )
     except Exception as exc:  # noqa: BLE001

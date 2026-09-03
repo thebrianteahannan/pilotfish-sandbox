@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source icon="HealthShortOrange_1.png" name="Provider EHR">
+    <FormatProfile name="HL7 ADT to XML" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.hl7.HL7TCPListener" enabled="true" name="EHR HL7 Inbound">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>13:26-13:26</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <Engine>HAPI</Engine>
+        <Port>80</Port>
+        <TimeoutTag>600</TimeoutTag>
+        <SynchronousTag>false</SynchronousTag>
+        <SynchronousTimeout>30</SynchronousTimeout>
+        <AutogenerateSynchronousACK>false</AutogenerateSynchronousACK>
+        <MaximumConnections>5</MaximumConnections>
+        <Validate>false</Validate>
+        <EnableComplianceMode>false</EnableComplianceMode>
+        <InvalidCharacterHandling>Reject</InvalidCharacterHandling>
+        <CloseOnError>false</CloseOnError>
+        <AckModeTag>Never</AckModeTag>
+        <IgnoreAckTag>false</IgnoreAckTag>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target icon="MedicalMonitorDevice_Purple_2.png" name="Medical Eqip/Device">
+    <FormatProfile name="XML to JSON" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="Medical Equip RESTful Service" retries="1">
+      <ModuleConfig>
+        <TargetURL>{ognl:#properties.get('simple.server.path') + '/medequipintegration/medicalequip'}</TargetURL>
+        <UserName />
+        <Password />
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <PreemptiveAuthentication>false</PreemptiveAuthentication>
+        <ResponseListener />
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>-1</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <SynchronizationKey />
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:application/json;charset=UTF-8:eip_value]</HTTPHeaders>
+        <DisableChunking>false</DisableChunking>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <TrustSelfSignedCerts>false</TrustSelfSignedCerts>
+        <ValidateHostname>false</ValidateHostname>
+        <SpecifyTLS>false</SpecifyTLS>
+        <TLSVersion>TLSv1.1</TLSVersion>
+        <KeyStoreFilePath />
+        <KeyStoreFileType>PKCS12</KeyStoreFileType>
+        <KeyStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <TrustStoreSource>JVM</TrustStoreSource>
+        <TrustStoreFileType>PKCS12</TrustStoreFileType>
+        <TrustStoreFilePassword />
+        <TrustStoreFilePath />
+        <CertificateAttribute />
+        <UrlParamEncoding>UTF-8</UrlParamEncoding>
+        <FormElementEncoding>UTF-8</FormElementEncoding>
+        <ErrorResponseEncoding>UTF-8</ErrorResponseEncoding>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

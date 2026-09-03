@@ -1,0 +1,33 @@
+EDI 834 CSV Excel Conversion — eiConsole walkthrough
+
+• This is Route File Management. The working directory holds the interface packages.
+
+• Tools has the emulator and the H2 database if you need a local file database.
+
+• This green box is the interface package — E D I eight thirty-four csv Excel Conversion.
+
+• Each puzzle piece is one route. This is 1 - csv TXT to E D I eight thirty-four.
+
+• Source System and Target System are documentation. The work is the modules in between.
+
+• Work starts at the Listener — Poll Enrollment csv TXT. This is a Directory Listener.
+
+• It polls the inbound folder every 5 seconds.
+
+• After pickup, post-process is Move into the archive folder.
+
+• Source Transform is the csv to xml format. That's the csv transformer.
+
+• Delimiter is a comma. Detect delimiter is on, so tab or pipe still works.
+
+• Routing decides who gets the eight thirty-four and who goes to kickout.
+
+• The rule looks for a member id or last name.
+
+• Target Transform is csv xml to eight thirty-four — that's the xslt.
+
+• The mappings pull each field from the input onto the output.
+
+• Transport writes the file. This one is Write E D I eight thirty-four.
+
+• Target directory is the output folder. Extension is edi.

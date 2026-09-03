@@ -112,6 +112,8 @@ These burned the two slowest phases of `http-post-to-rabbitmq` (DESIGN/compose +
 | XML file outbound is one long minified line (SQL-XML, transformer default) | Demo tab / `cat` of the file is unreadable | Target-side **`XMLFormattingProcessor`** (`com.pilotfish.eip.modules.transform.XMLFormattingProcessor`) **on the transport**, not the listener. Module docs: indent is 2 spaces; listener-side has no effect. |
 | Two processors on the **same route** share a **name** (e.g. both `Pretty-Print XML`) | `Route […]: More than one Processor named [Pretty-Print XML] is defined.` — EIP **does not load that route** | Unique `name=` per processor on the route (`Pretty-Print Matched XML` / `Pretty-Print Exception XML`) |
 | XPath after `DatabaseSqlProcessor` uses mixed-case column names (`//ExpectedPaid`) | SQL ran (log shows `Field ExpectedPaid = 500.00`) but extract is empty | SQLXML result tags are **UPPERCASE** (`EXPECTEDPAID`). Match both: `//EXPECTEDPAID \| //ExpectedPaid` |
+| Public video shows Source/Target Transform; we used `Relay` + Listener processors | eiConsole grid says Relay; Brian has to ask for verbatim | FormatProfile does the module + Data Mapper XSLT. Copy `hl7-interface-engine-demo`, not `csv-sftp-to-sql` (§3.1) |
+| Construction video `{ contains: XSLT }` / format-name `table` click | Data Mapper never opens; 4 s of silence per missed optional click | Format **Edit** button after Source/Target Transform; optional FIND timeout 1.2 s; ship `test-config.xml` and **Execute Test** (see `.cursor/rules/construction-video-live-demo.mdc`) |
 
 Opaque JSON/bytes inbound: use `NullRoutingModule`, not XPath `true()` (XPath expects XML).
 
@@ -322,6 +324,8 @@ Listener
   → Target processors (pre-transport map)
   → Transport(s)   # Directory | DatabaseSql | EIP | HTTP …
 ```
+
+**Website-verbatim override (required):** when cloning a public PilotFish page/YouTube, the **video’s eiConsole grid is the layout**. Source Transform and Target Transform are **Format Profiles** (transformation module + Data Mapper XSLT `ToXML` / `FromXML`). Do **not** put those maps on Listener/Transport processors and Relay the format. 23R1 EIP loads `pilotfish/demo-eip-root/formats/<Name>/`. There is no `NullTransformationModule` — use `RelayTransformationModule` for XSLT-only formats. Spoken copy is the official Full Transcript / YouTube captions, not `generate_eiconsole_walkthrough.py`. Construction video: format **Edit** opens the Data Mapper; ship `test-config.xml` and **Execute Test**; TTS `-10%`; learn speak-strings from the source YouTube. See `.cursor/rules/website-verbatim-demo.mdc`, `construction-video-live-demo.mdc`, and `hl7-interface-engine-demo`.
 
 Then run `tools/convert_routes_to_v2.py` (or demo equivalent) so `route.v2.xml` stays aligned for the Routes tab / PDF. Do **not** hand-maintain V2 as the only copy of runtime truth.
 
@@ -1081,6 +1085,7 @@ Every interface README must include:
 | Writing an XML file without pretty-print | Target-side `XMLFormattingProcessor` on the transport before the file write (§1.4) |
 | Two processors on one route with the same `name=` | Unique names; EIP will not load the route otherwise (§1.4) |
 | XPath `//ExpectedPaid` after Database SQL | SQLXML result tags are `EXPECTEDPAID` — match both cases (§1.4) |
+| Website clone with Relay formats and maps on Listener processors | Source/Target Transform Format Profiles + official video script (§3.1, `website-verbatim-demo.mdc`) |
 
 ---
 

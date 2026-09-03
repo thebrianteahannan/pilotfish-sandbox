@@ -71,6 +71,29 @@ def update_job(demo: Path | None = None, **fields) -> dict:
     return data
 
 
+def detect_eiconsole_version(home: Path | None = None) -> str:
+    """Read the installed eiConsole version (26R1.14, 24R1.80, …)."""
+    root = home or Path(os.environ.get("EICONSOLE_HOME") or "/Applications/eiConsole")
+    props = root / "version.properties"
+    if props.is_file():
+        for line in props.read_text(encoding="utf-8", errors="replace").splitlines():
+            if line.startswith("Eip.Version.Number="):
+                val = line.split("=", 1)[1].strip()
+                if val and not val.startswith("@"):
+                    return val
+    i4j = root / ".install4j" / "i4jparams.conf"
+    if i4j.is_file():
+        import re
+
+        match = re.search(
+            r'applicationVersion="([^"]+)"',
+            i4j.read_text(encoding="utf-8", errors="replace"),
+        )
+        if match and match.group(1).strip():
+            return match.group(1).strip()
+    return ""
+
+
 def clip_label(entry: dict | None) -> str:
     if not isinstance(entry, dict):
         return "clip"

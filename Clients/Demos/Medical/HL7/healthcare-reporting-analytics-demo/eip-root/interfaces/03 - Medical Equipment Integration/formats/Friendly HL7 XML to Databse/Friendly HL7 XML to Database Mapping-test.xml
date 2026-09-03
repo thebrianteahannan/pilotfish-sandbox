@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XCSData space="preserve">
+	<ORU_R01_Unsolicited_transmission_of_an_observation_message>
+		<MSH_Message_Header>
+			<MSH.1_Field_Separator>|</MSH.1_Field_Separator>
+			<MSH.2_Encoding_Characters>^~\&amp;amp;</MSH.2_Encoding_Characters>
+			<MSH.3_Sending_Application>
+				<HD.1_Namespace_ID>HL7</HD.1_Namespace_ID>
+				<HD.2_Universal_ID>080019FFFF4F6AC0</HD.2_Universal_ID>
+				<HD.3_Universal_ID_Type>EUI-64</HD.3_Universal_ID_Type>
+			</MSH.3_Sending_Application>
+			<MSH.4_Sending_Facility>MMS</MSH.4_Sending_Facility>
+			<MSH.5_Receiving_Application />
+			<MSH.6_Receiving_Facility />
+			<MSH.7_Date_Time_Of_Message>20081211144500</MSH.7_Date_Time_Of_Message>
+			<MSH.8_Security />
+			<MSH.9_Message_Type>
+				<MSG.1_Message_Code>ORU</MSG.1_Message_Code>
+				<MSG.2_Trigger_Event>R01</MSG.2_Trigger_Event>
+				<MSG.3_Message_Structure>ORU_R01</MSG.3_Message_Structure>
+			</MSH.9_Message_Type>
+			<MSH.10_Message_Control_ID>12d15a9:11df9e61347:-2935 7fee:30456965</MSH.10_Message_Control_ID>
+			<MSH.11_Processing_ID>P</MSH.11_Processing_ID>
+			<MSH.12_Version_ID>2.6</MSH.12_Version_ID>
+			<MSH.13_Sequence_Number>20081211144500</MSH.13_Sequence_Number>
+			<MSH.14_Continuation_Pointer />
+			<MSH.15_Accept_Acknowledgment_Type>NE</MSH.15_Accept_Acknowledgment_Type>
+			<MSH.16_Application_Acknowledgment_Type>AL</MSH.16_Application_Acknowledgment_Type>
+			<MSH.17_Country_Code />
+			<MSH.18_Character_Set>8859/1</MSH.18_Character_Set>
+			<MSH.19_Principal_Language_Of_Message />
+			<MSH.20_Alternate_Character_Set_Handling_Scheme />
+			<MSH.21_Message_Profile_Identifier>
+				<EI.1_Entity_Identifier>IHE PCD ORU-R01 2006</EI.1_Entity_Identifier>
+				<EI.2_Namespace_ID>HL7</EI.2_Namespace_ID>
+				<EI.3_Universal_ID>UniversalID</EI.3_Universal_ID>
+				<EI.4_Universal_ID_Type>HL7</EI.4_Universal_ID_Type>
+			</MSH.21_Message_Profile_Identifier>
+		</MSH_Message_Header>
+		<ORU_R01.PATIENT_RESULT>
+			<ORU_R01.PATIENT>
+				<PID_Patient_Identification>
+					<PID.1_Set_ID_-_PID />
+					<PID.2_Patient_ID />
+					<PID.3_Patient_Identifier_List>
+						<CX.1_ID_Number>AB60001</CX.1_ID_Number>
+						<CX.2_Identifier_Check_Digit />
+						<CX.3_Check_Digit_Scheme />
+						<CX.4_Assigning_Authority>A</CX.4_Assigning_Authority>
+						<CX.5_Identifier_Type_Code>PI</CX.5_Identifier_Type_Code>
+					</PID.3_Patient_Identifier_List>
+					<PID.4_Alternate_Patient_ID_-_PID />
+					<PID.5_Patient_Name>
+						<XPN.1_Family_Name>BROOKS</XPN.1_Family_Name>
+						<XPN.2_Given_Name>ALBERT</XPN.2_Given_Name>
+						<XPN.3_Second_and_Further_Given_Names_or_Initials_Thereof />
+						<XPN.4_Suffix_e.g._JR_or_III_ />
+						<XPN.5_Prefix_e.g._DR_ />
+						<XPN.6_Degree_e.g._MD_ />
+						<XPN.7_Name_Type_Code>L</XPN.7_Name_Type_Code>
+					</PID.5_Patient_Name>
+				</PID_Patient_Identification>
+				<ORU_R01.VISIT>
+					<PV1_Patient_Visit>
+						<PV1.1_Set_ID_-_PV1 />
+						<PV1.2_Patient_Class>E</PV1.2_Patient_Class>
+						<PV1.3_Assigned_Patient_Location>
+							<PL.1_Point_of_Care>3 WEST ICU</PL.1_Point_of_Care>
+							<PL.2_Room>3001</PL.2_Room>
+							<PL.3_Bed>1</PL.3_Bed>
+						</PV1.3_Assigned_Patient_Location>
+					</PV1_Patient_Visit>
+				</ORU_R01.VISIT>
+			</ORU_R01.PATIENT>
+			<ORU_R01.ORDER_OBSERVATION>
+				<OBR_Observation_Request>
+					<OBR.1_Set_ID_-_OBR>1</OBR.1_Set_ID_-_OBR>
+					<OBR.2_Placer_Order_Number>
+						<EI.1_Entity_Identifier>080019FFFF4F6AFE20081211144657</EI.1_Entity_Identifier>
+						<EI.2_Namespace_ID>AwareGateway</EI.2_Namespace_ID>
+						<EI.3_Universal_ID>080019FFFF4F6AC0</EI.3_Universal_ID>
+						<EI.4_Universal_ID_Type>EUI-2940 64</EI.4_Universal_ID_Type>
+					</OBR.2_Placer_Order_Number>
+					<OBR.3_Filler_Order_Number>
+						<EI.1_Entity_Identifier>080019FFFF4F6AC020081211144657</EI.1_Entity_Identifier>
+						<EI.2_Namespace_ID>AwareGateway</EI.2_Namespace_ID>
+						<EI.3_Universal_ID>080019FFFF4F6AC0</EI.3_Universal_ID>
+						<EI.4_Universal_ID_Type>EUI-64</EI.4_Universal_ID_Type>
+					</OBR.3_Filler_Order_Number>
+					<OBR.4_Universal_Service_ID>
+						<CWE.1_Identifier>126.169.95.2</CWE.1_Identifier>
+						<CWE.2_Text>2000</CWE.2_Text>
+						<CWE.3_Name_of_Coding_System>MDC</CWE.3_Name_of_Coding_System>
+					</OBR.4_Universal_Service_ID>
+					<OBR.5_Priority-OBR />
+					<OBR.6_Requested_Date_time />
+					<OBR.7_Observation_Date_Time_>20081211144500</OBR.7_Observation_Date_Time_>
+				</OBR_Observation_Request>
+				<ORU_R01.OBSERVATION>
+					<OBX_Observation_Result>
+						<OBX.1_Set_ID_-_OBX>1</OBX.1_Set_ID_-_OBX>
+						<OBX.2_Value_Type>NM</OBX.2_Value_Type>
+						<OBX.3_Observation_Identifier>
+							<CWE.1_Identifier>147842</CWE.1_Identifier>
+							<CWE.2_Text>MDC_ECG_HEART_RATE</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>MDC</CWE.3_Name_of_Coding_System>
+						</OBX.3_Observation_Identifier>
+						<OBX.4_Observation_Sub-ID>1.6.1.1</OBX.4_Observation_Sub-ID>
+						<OBX.5_Observation_Value>60</OBX.5_Observation_Value>
+						<OBX.6_Units>
+							<CWE.1_Identifier>/min</CWE.1_Identifier>
+							<CWE.2_Text>/min</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>UCUM</CWE.3_Name_of_Coding_System>
+						</OBX.6_Units>
+						<OBX.7_References_Range />
+						<OBX.8_Abnormal_Flags />
+						<OBX.9_Probability />
+						<OBX.10_Nature_of_Abnormal_Test />
+						<OBX.11_Observation_Result_Status>R</OBX.11_Observation_Result_Status>
+					</OBX_Observation_Result>
+				</ORU_R01.OBSERVATION>
+				<ORU_R01.OBSERVATION>
+					<OBX_Observation_Result>
+						<OBX.1_Set_ID_-_OBX>2</OBX.1_Set_ID_-_OBX>
+						<OBX.2_Value_Type>NM</OBX.2_Value_Type>
+						<OBX.3_Observation_Identifier>
+							<CWE.1_Identifier>148065</CWE.1_Identifier>
+							<CWE.2_Text>MDC_ECG_V_P_C_CNT</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>MDC</CWE.3_Name_of_Coding_System>
+						</OBX.3_Observation_Identifier>
+						<OBX.4_Observation_Sub-ID>1.6.1.2</OBX.4_Observation_Sub-ID>
+						<OBX.5_Observation_Value>0</OBX.5_Observation_Value>
+						<OBX.6_Units>
+							<CWE.1_Identifier>/min</CWE.1_Identifier>
+							<CWE.2_Text>/min</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>UCUM</CWE.3_Name_of_Coding_System>
+						</OBX.6_Units>
+						<OBX.7_References_Range />
+						<OBX.8_Abnormal_Flags />
+						<OBX.9_Probability />
+						<OBX.10_Nature_of_Abnormal_Test />
+						<OBX.11_Observation_Result_Status>R</OBX.11_Observation_Result_Status>
+					</OBX_Observation_Result>
+				</ORU_R01.OBSERVATION>
+				<ORU_R01.OBSERVATION>
+					<OBX_Observation_Result>
+						<OBX.1_Set_ID_-_OBX>3</OBX.1_Set_ID_-_OBX>
+						<OBX.2_Value_Type>NM</OBX.2_Value_Type>
+						<OBX.3_Observation_Identifier>
+							<CWE.1_Identifier>150035</CWE.1_Identifier>
+							<CWE.2_Text>MDC_PRESS_BLD_ART_MEAN</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>MDC</CWE.3_Name_of_Coding_System>
+						</OBX.3_Observation_Identifier>
+						<OBX.4_Observation_Sub-ID>1.3.1.1</OBX.4_Observation_Sub-ID>
+						<OBX.5_Observation_Value>92</OBX.5_Observation_Value>
+						<OBX.6_Units>
+							<CWE.1_Identifier>mm[Hg]</CWE.1_Identifier>
+							<CWE.2_Text>mm[Hg]</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>UCUM</CWE.3_Name_of_Coding_System>
+						</OBX.6_Units>
+						<OBX.7_References_Range />
+						<OBX.8_Abnormal_Flags />
+						<OBX.9_Probability />
+						<OBX.10_Nature_of_Abnormal_Test />
+						<OBX.11_Observation_Result_Status>R</OBX.11_Observation_Result_Status>
+						<OBX.12_Date_Last_Obs_Normal_Values />
+						<OBX.13_User_Defined_Access_Checks />
+						<OBX.14_Date_Time_of_the_Observation />
+						<OBX.15_Producer_s_ID />
+						<OBX.16_Responsible_Observer />
+						<OBX.17_Observation_Method />
+						<OBX.18_Equipment_Instance_Identifier />
+						<OBX.19_Date_Time_of_the_Analysis>2945</OBX.19_Date_Time_of_the_Analysis>
+					</OBX_Observation_Result>
+				</ORU_R01.OBSERVATION>
+				<ORU_R01.OBSERVATION>
+					<OBX_Observation_Result>
+						<OBX.1_Set_ID_-_OBX>4</OBX.1_Set_ID_-_OBX>
+						<OBX.2_Value_Type>NM</OBX.2_Value_Type>
+						<OBX.3_Observation_Identifier>
+							<CWE.1_Identifier>150033</CWE.1_Identifier>
+							<CWE.2_Text>MDC_PRESS_BLD_ART_SYS</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>MDC</CWE.3_Name_of_Coding_System>
+						</OBX.3_Observation_Identifier>
+						<OBX.4_Observation_Sub-ID>1.3.1.2</OBX.4_Observation_Sub-ID>
+						<OBX.5_Observation_Value>120</OBX.5_Observation_Value>
+						<OBX.6_Units>
+							<CWE.1_Identifier>mm[Hg]</CWE.1_Identifier>
+							<CWE.2_Text>mm[Hg]</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>UCUM</CWE.3_Name_of_Coding_System>
+						</OBX.6_Units>
+						<OBX.7_References_Range />
+						<OBX.8_Abnormal_Flags />
+						<OBX.9_Probability />
+						<OBX.10_Nature_of_Abnormal_Test />
+						<OBX.11_Observation_Result_Status>R</OBX.11_Observation_Result_Status>
+					</OBX_Observation_Result>
+				</ORU_R01.OBSERVATION>
+				<ORU_R01.OBSERVATION>
+					<OBX_Observation_Result>
+						<OBX.1_Set_ID_-_OBX>5</OBX.1_Set_ID_-_OBX>
+						<OBX.2_Value_Type>NM</OBX.2_Value_Type>
+						<OBX.3_Observation_Identifier>
+							<CWE.1_Identifier>150034</CWE.1_Identifier>
+							<CWE.2_Text>MDC_PRESS_BLD_ART_DIA</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>MDC</CWE.3_Name_of_Coding_System>
+						</OBX.3_Observation_Identifier>
+						<OBX.4_Observation_Sub-ID>1.3.1.3</OBX.4_Observation_Sub-ID>
+						<OBX.5_Observation_Value>80</OBX.5_Observation_Value>
+						<OBX.6_Units>
+							<CWE.1_Identifier>mm[Hg]</CWE.1_Identifier>
+							<CWE.2_Text>mm[Hg]</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>UCUM</CWE.3_Name_of_Coding_System>
+						</OBX.6_Units>
+						<OBX.7_References_Range />
+						<OBX.8_Abnormal_Flags />
+						<OBX.9_Probability />
+						<OBX.10_Nature_of_Abnormal_Test />
+						<OBX.11_Observation_Result_Status>R</OBX.11_Observation_Result_Status>
+					</OBX_Observation_Result>
+				</ORU_R01.OBSERVATION>
+				<ORU_R01.OBSERVATION>
+					<OBX_Observation_Result>
+						<OBX.1_Set_ID_-_OBX>6</OBX.1_Set_ID_-_OBX>
+						<OBX.2_Value_Type>NM</OBX.2_Value_Type>
+						<OBX.3_Observation_Identifier>
+							<CWE.1_Identifier>149522</CWE.1_Identifier>
+							<CWE.2_Text>MDC_BLD_PULS_RATE_INV</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>MDC</CWE.3_Name_of_Coding_System>
+						</OBX.3_Observation_Identifier>
+						<OBX.4_Observation_Sub-ID>1.2.1.1</OBX.4_Observation_Sub-ID>
+						<OBX.5_Observation_Value>60</OBX.5_Observation_Value>
+						<OBX.6_Units>
+							<CWE.1_Identifier>/min</CWE.1_Identifier>
+							<CWE.2_Text>/min</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>UCUM</CWE.3_Name_of_Coding_System>
+						</OBX.6_Units>
+						<OBX.7_References_Range />
+						<OBX.8_Abnormal_Flags />
+						<OBX.9_Probability />
+						<OBX.10_Nature_of_Abnormal_Test />
+						<OBX.11_Observation_Result_Status>R</OBX.11_Observation_Result_Status>
+						<OBX.12_Date_Last_Obs_Normal_Values />
+						<OBX.13_User_Defined_Access_Checks />
+						<OBX.14_Date_Time_of_the_Observation />
+						<OBX.15_Producer_s_ID />
+						<OBX.16_Responsible_Observer />
+						<OBX.17_Observation_Method />
+						<OBX.18_Equipment_Instance_Identifier />
+						<OBX.19_Date_Time_of_the_Analysis />
+						<OBX.20_Reserved_for_harmonization_with_V2.6>2950</OBX.20_Reserved_for_harmonization_with_V2.6>
+					</OBX_Observation_Result>
+				</ORU_R01.OBSERVATION>
+				<ORU_R01.OBSERVATION>
+					<OBX_Observation_Result>
+						<OBX.1_Set_ID_-_OBX>7</OBX.1_Set_ID_-_OBX>
+						<OBX.2_Value_Type>NM</OBX.2_Value_Type>
+						<OBX.3_Observation_Identifier>
+							<CWE.1_Identifier>150047</CWE.1_Identifier>
+							<CWE.2_Text>MDC_PRESS_BLD_ART_PULM_MEAN</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>MDC</CWE.3_Name_of_Coding_System>
+						</OBX.3_Observation_Identifier>
+						<OBX.4_Observation_Sub-ID>1.4.2.1</OBX.4_Observation_Sub-ID>
+						<OBX.5_Observation_Value>14</OBX.5_Observation_Value>
+						<OBX.6_Units>
+							<CWE.1_Identifier>mm[Hg]</CWE.1_Identifier>
+							<CWE.2_Text>mm[Hg]</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>UCUM</CWE.3_Name_of_Coding_System>
+						</OBX.6_Units>
+						<OBX.7_References_Range />
+						<OBX.8_Abnormal_Flags />
+						<OBX.9_Probability />
+						<OBX.10_Nature_of_Abnormal_Test />
+						<OBX.11_Observation_Result_Status>R</OBX.11_Observation_Result_Status>
+					</OBX_Observation_Result>
+				</ORU_R01.OBSERVATION>
+				<ORU_R01.OBSERVATION>
+					<OBX_Observation_Result>
+						<OBX.1_Set_ID_-_OBX>8</OBX.1_Set_ID_-_OBX>
+						<OBX.2_Value_Type>NM</OBX.2_Value_Type>
+						<OBX.3_Observation_Identifier>
+							<CWE.1_Identifier>150045</CWE.1_Identifier>
+							<CWE.2_Text>MDC_PRESS_BLD_ART_PULM_SYS</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>MDC</CWE.3_Name_of_Coding_System>
+						</OBX.3_Observation_Identifier>
+						<OBX.4_Observation_Sub-ID>1.4.2.2</OBX.4_Observation_Sub-ID>
+						<OBX.5_Observation_Value>25</OBX.5_Observation_Value>
+						<OBX.6_Units>
+							<CWE.1_Identifier>mm[Hg]</CWE.1_Identifier>
+							<CWE.2_Text>mm[Hg]</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>UCUM</CWE.3_Name_of_Coding_System>
+						</OBX.6_Units>
+						<OBX.7_References_Range />
+						<OBX.8_Abnormal_Flags />
+						<OBX.9_Probability />
+						<OBX.10_Nature_of_Abnormal_Test />
+						<OBX.11_Observation_Result_Status>R</OBX.11_Observation_Result_Status>
+					</OBX_Observation_Result>
+				</ORU_R01.OBSERVATION>
+				<ORU_R01.OBSERVATION>
+					<OBX_Observation_Result>
+						<OBX.1_Set_ID_-_OBX>9</OBX.1_Set_ID_-_OBX>
+						<OBX.2_Value_Type>NM</OBX.2_Value_Type>
+						<OBX.3_Observation_Identifier>
+							<CWE.1_Identifier>150046</CWE.1_Identifier>
+							<CWE.2_Text>MDC_PRESS_BLD_ART_PULM_DIA</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>MDC</CWE.3_Name_of_Coding_System>
+						</OBX.3_Observation_Identifier>
+						<OBX.4_Observation_Sub-ID>1.4.2.3</OBX.4_Observation_Sub-ID>
+						<OBX.5_Observation_Value>10</OBX.5_Observation_Value>
+						<OBX.6_Units>
+							<CWE.1_Identifier>mm[Hg]</CWE.1_Identifier>
+							<CWE.2_Text>mm[Hg]</CWE.2_Text>
+							<CWE.3_Name_of_Coding_System>UCUM</CWE.3_Name_of_Coding_System>
+						</OBX.6_Units>
+						<OBX.7_References_Range />
+						<OBX.8_Abnormal_Flags />
+						<OBX.9_Probability />
+						<OBX.10_Nature_of_Abnormal_Test />
+						<OBX.11_Observation_Result_Status>R</OBX.11_Observation_Result_Status>
+						<OBX.12_Date_Last_Obs_Normal_Values />
+						<OBX.13_User_Defined_Access_Checks />
+						<OBX.14_Date_Time_of_the_Observation />
+						<OBX.15_Producer_s_ID>2955</OBX.15_Producer_s_ID>
+					</OBX_Observation_Result>
+				</ORU_R01.OBSERVATION>
+			</ORU_R01.ORDER_OBSERVATION>
+		</ORU_R01.PATIENT_RESULT>
+	</ORU_R01_Unsolicited_transmission_of_an_observation_message>
+</XCSData>
+

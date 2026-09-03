@@ -1,0 +1,7 @@
+name: probe-source-tx
+steps:
+  - id: source-tx
+    action: click
+    target: { type: table, contains: RoutingSource, column: 2 }
+    detail: "Source Transform stage."
+    dwell_ms: 1500

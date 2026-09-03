@@ -1,0 +1,522 @@
+# Spoken copy follows the public 7:24 video (source of truth):
+# https://www.youtube.com/watch?v=xgJjWRUqHFw
+# https://healthcare.pilotfishtechnology.com/videos/healthcare-reporting-analytics-demo
+# Do not run generate_eiconsole_walkthrough.py over this file.
+# Do not run the naturalizer over these official spoken lines.
+name: eiconsole-healthcare-reporting-analytics-demo
+sections:
+  source-mapper:
+    title: Source Data Mapper
+    from: r1-sedit
+    to: r1-snosave
+  target-mapper:
+    title: Target Data Mapper
+    from: r1-tedit
+    to: r1-tnosave
+  data-mappers:
+    title: Both Data Mappers
+    parts: [source-mapper, target-mapper]
+steps:
+  - id: wait-fm
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 400
+  - id: open
+    action: wait_for
+    target: { type: table, contains: "Aggregation" }
+    detail: "This is a demonstration of the PilotFish eiConsole, a graphical integrated development environment for the rapid configuration of any Healthcare Interface."
+    dwell_ms: 11244
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_02.wav
+  - id: list
+    action: wait_for
+    target: { type: table, contains: "HIE" }
+    detail: "Here are several example routes that represent real-world uses of the software. Data acquisition and normalization of Health Information Exchange data. Receipt and transformation of laboratory orders, status and results. On-premise medical equipment integration, such as smart cards in a hospital that must be integrated with pharmacy, EMR and billing systems. Acquisition of clinical and administrative data for reporting and analytics. Integration of HL7-based hospital systems with cloud-based solution providers that may be using technology such as JSON, XML and web services."
+    optional: true
+    dwell_ms: 44028
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_03.wav
+  - id: open-pkg
+    action: double_click
+    target: { type: table, contains: "Aggregation for Analytics" }
+    detail: "Now let's take a more in-depth look at this multiple Source route to reporting and analytics example."
+    dwell_ms: 6780
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_04.wav
+  - id: r1-open
+    action: double_click
+    target: { type: table, contains: "HL7 - EDI - FHIR" }
+    detail: "Double-clicking a route takes us to the main route grid, which graphically depicts the flow of data between Source and Target systems."
+    dwell_ms: 9036
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_05.wav
+  - id: r1-grid
+    action: wait_for
+    target: { type: table, contains: "RoutingSource" }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-src
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 0 }
+    detail: "Here we see data coming in as HL7 over LLP. We have some claims-based EDI files being dropped in an FTP folder. We also have some FHIR JSON coming in through a RESTful web service."
+    optional: true
+    dwell_ms: 14628
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_07.wav
+  - id: r1-src2
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "In each case, we'll extract some basic patient information and use it to populate a relational database and execute a simple REST-based JSON service."
+    dwell_ms: 11628
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_08.wav
+  - id: r1-src3
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "To do this, the user configures the eiConsole Interface Assembly Line, a consistent set of stages flexible enough to connect any system to any other, regardless of data format or connectivity protocol."
+    dwell_ms: 15108
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_09.wav
+  - id: r1-src4
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Moving from left to right, we start with the Source system, which maintains descriptive information about the sending system."
+    dwell_ms: 8484
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_10.wav
+  - id: r1-listener
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 1 }
+    detail: "Next is the Listener – the entry point of the interface. To configure a Listener, we select the appropriate listener type from the drop-down and fill out the related property panels."
+    dwell_ms: 12660
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_11.wav
+  - id: r1-lmod
+    action: click
+    target: { type: table, contains: "HL7 Source System" }
+    detail: "The eiConsole supports real-time, periodic, scheduled and triggered listeners. Some commonly implemented listeners include HL7 over LLP, FTP including SFTP and FTPS, SOAP and RESTful based web services, and messaging middleware such as JMS, MSMQ, and RabbitMQ."
+    optional: true
+    dwell_ms: 25356
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_12.wav
+  - id: r1-lproc
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "After the Listeners, configured processors offer a library of widgets for manipulation and validation before data transformation. Common examples include decryption, decompression or validation. Processors, as with other stages in the assembly line, are extensible through an open Java-based API."
+    dwell_ms: 22716
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_13.wav
+  - id: r1-stx
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 2 }
+    detail: "After pre-processing, we move on to the Source Transformation. Here the data is converted from the inbound format into a canonical XML representation through a two-step process."
+    dwell_ms: 12900
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_14.wav
+  - id: r1-sfmt
+    action: click
+    target: { type: table, contains: "HL7 to XML" }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-sfmt-wait
+    action: wait_for
+    target: { contains: "Format Profile" }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-smod
+    action: click
+    target: { contains: "Transformation Module" }
+    detail: "First, parsing to convert data into XML. Transformation modules convert a variety of non-XML formats, including CSVs, delimited and fixed-width files, EDI ANSI X12 and other HIPAA formats, HL7, JSON, Microsoft Excel and others."
+    optional: true
+    dwell_ms: 22236
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_17.wav
+  - id: r1-smod2
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Note that the HL7 transformation module has been specifically designed to be lenient. Given all the various versions and non-standard flavors of HL7 messages, this ensures that virtually anything that even looks like HL7 can be parsed for future processing."
+    dwell_ms: 19452
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_18.wav
+  - id: r1-sto
+    action: click
+    target: { type: tab, contains: "To XML" }
+    detail: "The second step of transformation is logical mapping, which is always an XML to XML transformation represented as XSLT."
+    optional: true
+    dwell_ms: 10260
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_19.wav
+  - id: r1-sfmt-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-sfmt-off
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 2 }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-sedit
+    action: click
+    target: { type: button, text: Edit }
+    detail: "This is the Data Mapper that allows a technical business analyst to drag and drop to build transformations between any two data formats."
+    dwell_ms: 9444
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_22.wav
+  - id: r1-smap-tab
+    action: click
+    target: { type: tab, contains: "Mapping" }
+    detail: "The 3-panel mapping paradigm is unique in its ability to represent even the most complex mappings graphically."
+    dwell_ms: 8196
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_23.wav
+  - id: r1-smap-opensrc
+    action: click
+    target: { text: "Open source format" }
+    detail: "To use the mapper, the Source and Target data formats are built right in through the format builder dialogue. Various types of metadata such as the HL7 data dictionary can be directly imported."
+    dwell_ms: 13548
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_24.wav
+  - id: r1-smap-opensrc-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-smap-opentgt
+    action: click
+    target: { text: "Open target format" }
+    detail: "Sample files can also be used to provide an accurate picture of what a system may actually produce or consume."
+    dwell_ms: 7332
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_26.wav
+  - id: r1-smap-opentgt-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-smap-expand-l
+    action: click
+    target: { type: FormatTree, side: left, contains: "PID" }
+    detail: ""
+    optional: true
+    dwell_ms: 400
+  - id: r1-smap-expand-r
+    action: click
+    target: { type: FormatTree, side: right, contains: "patient" }
+    detail: ""
+    optional: true
+    dwell_ms: 400
+  - id: r1-smap-drag
+    action: drag
+    target: { type: FormatTree, side: left }
+    dest: { type: FormatTree, side: right }
+    detail: ""
+    dwell_ms: 500
+  - id: r1-smap2
+    action: click
+    target: { type: FormatTree, side: left, contains: "PID" }
+    detail: "Note also that when using HL7, Friendly Names can be applied to the elements to make it easier to determine what fields. Here HL7 was loaded as the Source, and a simple XML sample file was used as the Target."
+    optional: true
+    dwell_ms: 15900
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_31.wav
+  - id: r1-smap3
+    action: click
+    target: { type: FormatTree, side: right, contains: "lastName" }
+    detail: "Dragging and dropping these fields together in the center panel creates a one-to-one map."
+    optional: true
+    dwell_ms: 6060
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_32.wav
+  - id: r1-smap-point-fn
+    action: hover
+    target: { type: FormatTree, side: right, contains: "firstName" }
+    detail: ""
+    optional: true
+    dwell_ms: 350
+  - id: r1-smap-point-dob
+    action: hover
+    target: { type: FormatTree, side: right, contains: "dob" }
+    detail: ""
+    optional: true
+    dwell_ms: 350
+  - id: r1-smap4
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "The palette of functions above the mapping allows for conditional logic, looping logic, data manipulation and much more. All of this can be accomplished without custom or proprietary scripting; however, the mapping is directly based on XSLT, a standard transformation language with a strong developer community."
+    dwell_ms: 23772
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_35.wav
+  - id: r1-smap-xslt
+    action: click
+    target: { type: tab, contains: "XSLT" }
+    detail: ""
+    optional: true
+    dwell_ms: 900
+  - id: r1-smap-xslt-body
+    action: click
+    target: { contains: "xsl:template" }
+    detail: ""
+    optional: true
+    dwell_ms: 400
+  - id: r1-smap-xslt-scroll
+    action: page_down
+    target: { type: JMenu, text: File }
+    detail: ""
+    optional: true
+    dwell_ms: 800
+  - id: r1-smap-xslt-scroll2
+    action: page_down
+    target: { type: JMenu, text: File }
+    detail: ""
+    optional: true
+    dwell_ms: 700
+  - id: r1-smap-hold
+    action: pause
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 1800
+  - id: r1-smap-backtab
+    action: click
+    target: { type: tab, contains: "Mapping" }
+    detail: ""
+    optional: true
+    dwell_ms: 800
+  - id: r1-sback
+    action: click
+    target: { contains: "Return to Console" }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-snosave
+    action: click
+    target: { text: "Don't Save" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-smap-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-sconsole
+    action: wait_for
+    target: { type: table, contains: "RoutingSource" }
+    detail: ""
+    dwell_ms: 500
+  - id: r1-route
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 3 }
+    detail: "Returning to the main grid, the next step is Routing. Here XPath or other routing rules can be used to inspect the data and direct the inbound message toward the appropriate Target system or systems."
+    optional: true
+    dwell_ms: 14244
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_46.wav
+  - id: r1-route2
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Proactive error notification via the transaction monitor metaphor is also configured at this point."
+    dwell_ms: 7068
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_47.wav
+  - id: r1-ttx
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 4 }
+    detail: "We then move to the Target side of the interface. Each Target system has an accompanying Transformation and Transport."
+    dwell_ms: 8268
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_48.wav
+  - id: r1-tfmt
+    action: click
+    target: { type: table, contains: "XML to DB" }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-tfmt-wait
+    action: wait_for
+    target: { contains: "Format Profile" }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-tfrom
+    action: click
+    target: { type: tab, contains: "From XML" }
+    detail: "The Target Transform is the mirror image of the Source, transforming the canonical XML format to the format required by the Target system. Note that on the Target side, the Transformation Module executes second, converting the output of any logical mapping into the physical format required by the Target."
+    optional: true
+    dwell_ms: 22356
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_51.wav
+  - id: r1-tfmt-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-tfmt-off
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 4 }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-tfmt2
+    action: click
+    target: { type: table, contains: "XML to DB" }
+    detail: ""
+    dwell_ms: 800
+  - id: r1-tfmt2-prof
+    action: wait_for
+    target: { contains: "Format Profile" }
+    detail: ""
+    optional: true
+    dwell_ms: 600
+  - id: r1-tedit-pause
+    action: pause
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 900
+  - id: r1-tedit-wait
+    action: wait_for
+    target: { type: button, text: Edit }
+    detail: ""
+    optional: true
+    dwell_ms: 300
+  - id: r1-tedit
+    action: click
+    target: { type: button, text: Edit }
+    detail: ""
+    dwell_ms: 500
+  - id: r1-tmap-tab
+    action: click
+    target: { type: tab, contains: "Mapping" }
+    detail: ""
+    dwell_ms: 1200
+  - id: r1-tmap-opensrc
+    action: click
+    target: { text: "Open source format" }
+    detail: ""
+    dwell_ms: 700
+  - id: r1-tmap-opensrc-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-tmap-opentgt
+    action: click
+    target: { text: "Open target format" }
+    detail: ""
+    dwell_ms: 700
+  - id: r1-tmap-opentgt-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-tmap-expand-l
+    action: click
+    target: { type: FormatTree, side: left, contains: "patient" }
+    detail: ""
+    optional: true
+    dwell_ms: 400
+  - id: r1-tmap-expand-r
+    action: click
+    target: { type: FormatTree, side: right, contains: "Insert" }
+    detail: ""
+    optional: true
+    dwell_ms: 400
+  - id: r1-tmap-drag
+    action: drag
+    target: { type: FormatTree, side: left }
+    dest: { type: FormatTree, side: right }
+    detail: ""
+    dwell_ms: 500
+  - id: r1-tmap-point
+    action: hover
+    target: { type: FormatTree, side: right, contains: "Insert" }
+    detail: ""
+    optional: true
+    dwell_ms: 400
+  - id: r1-txslt2
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "On this Target we map the canonical onto SQLXML and indicate an insert into a table called patient."
+    dwell_ms: 8844
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_68.wav
+  - id: r1-tmap-xslt
+    action: click
+    target: { type: tab, contains: "XSLT" }
+    detail: ""
+    optional: true
+    dwell_ms: 900
+  - id: r1-tmap-xslt-scroll
+    action: page_down
+    target: { type: JMenu, text: File }
+    detail: ""
+    optional: true
+    dwell_ms: 800
+  - id: r1-tmap-hold
+    action: pause
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 1600
+  - id: r1-tmap-backtab
+    action: click
+    target: { type: tab, contains: "Mapping" }
+    detail: ""
+    optional: true
+    dwell_ms: 700
+  - id: r1-tback
+    action: click
+    target: { contains: "Return to Console" }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-tnosave
+    action: click
+    target: { text: "Don't Save" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-tr
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 5 }
+    detail: "Finally, we move on to the Transport stage, and in this case, we're updating a relational database and also calling a RESTful web service."
+    dwell_ms: 11148
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_75.wav
+  - id: r1-trmod
+    action: click
+    target: { type: table, contains: "Populate Database" }
+    detail: "However, as is true with a Listener, a wide variety of transmission mechanisms are supported. Both synchronous and asynchronous processing is also possible."
+    optional: true
+    dwell_ms: 11580
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_76.wav
+  - id: r1-tr2
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Pre and post processes are also available in the Transport step for encrypting, compressing or otherwise manipulating the data prior to transmission. In addition, post processes could be used for cleanup tasks and executing subsequent steps in a complex data flow."
+    dwell_ms: 18780
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_77.wav
+  - id: r1-mode
+    action: click
+    target: { type: JMenu, text: Mode }
+    detail: "Once an interface has been configured in the eiConsole, it can then be switched into testing mode."
+    optional: true
+    dwell_ms: 6900
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_78.wav
+  - id: r1-testmode
+    action: click
+    target: { type: JMenuItem, text: "Testing Mode" }
+    detail: "In Test mode, we can test a route from end-to-end or choose a subset of stages we wish to test."
+    optional: true
+    dwell_ms: 6924
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_79.wav
+  - id: r1-test-start
+    action: click
+    target: { contains: "Execute Test" }
+    detail: "When we start in the middle of the process, we're asked to supply a sample file manually. As the file is processed, successful stages are marked with a green check and failures are indicated with a red X."
+    optional: true
+    dwell_ms: 14460
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_80.wav
+  - id: r1-send
+    action: shell
+    text: python3 "$SEND_MLLP" --port 10001 --file "$CONSTRUCTION_VIDEO_DEMO/samples/test.hl7"
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-exec-wait
+    action: pause
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 2500
+  - id: r1-test-talk
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "You can then look at how the data appeared at each stage in our process. Here we supplied an HL7 ADT message for input. The message was converted into XML with the Friendly Names by the HL7 transformation module. Finally, the Source mapping extracted key pieces of patient demographic information into a simple XML canonical."
+    dwell_ms: 24468
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_83.wav
+  - id: r1-test-talk2
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "The data was routed to both defined Targets. The canonical was mapped first onto SQLXML. Here we indicate an insert into a table called patient and second, we simply rendered some JSON. We then will update the database and post it to that RESTful web service."
+    dwell_ms: 20724
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_84.wav
+  - id: r1-deploy
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Now that an interface has been successfully tested from end-to-end, it's ready for deployment to the eiPlatform runtime environment. Deployment can be handled via drag and drop using the server view, also the PilotFish web-based eiDashboard, or through your preferred file-based change management process."
+    dwell_ms: 20844
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_85.wav
+  - id: r1-close
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Once deployed, the eiPlatform provides a myriad of reporting, alerting and monitoring utilities. The eiPlatform is used for Production Management Interfaces. And that's all there is to it!"
+    dwell_ms: 14364
+    speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-video-ump31_bw/step_86.wav

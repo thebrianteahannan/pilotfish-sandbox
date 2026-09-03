@@ -151,6 +151,7 @@ class RedditClient:
                     "score": 0,
                     "num_comments": 0,
                     "flair": "",
+                    "source": "reddit",
                 }
             )
         return out
@@ -342,6 +343,7 @@ class RedditClient:
                     "score": int(d.get("score") or 0),
                     "num_comments": int(d.get("num_comments") or 0),
                     "flair": d.get("link_flair_text") or "",
+                    "source": "reddit",
                 }
             )
         return out

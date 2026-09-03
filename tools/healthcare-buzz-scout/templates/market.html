@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Market analysis · Buzz Scout</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <p class="kicker">PilotFish Sandbox · Buzz Scout</p>
+      <h1>Who has the market — and where we fit</h1>
+      <p class="lead">Bars are <strong>share of this week’s conversation</strong>, not purchased Klas / Gartner share. Search share is who sits on the same result page when we rank. Deep dives are the engines, SI shops, and SERP names we actually sell against. We do not replace Epic or Guidewire.</p>
+    </div>
+    <div class="actions">
+      <a class="btn" href="{{ url_for('briefing') }}">Find work</a>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <a href="{{ url_for('briefing') }}">Find work</a>
+    <a href="{{ url_for('index') }}">Signals</a>
+    <a href="{{ url_for('companies') }}">Companies</a>
+    <a class="on" href="{{ url_for('market') }}">Market</a>
+    <a href="{{ url_for('search') }}">When People Search</a>
+    <a href="{{ url_for('marketing') }}">Marketing</a>
+  </nav>
+
+  <section class="stats">
+    <div><span class="n">{{ named_count }}</span><span class="l">named stacks this week</span></div>
+    <div><span class="n">{{ pf_pct }}%</span><span class="l">PilotFish in the chatter</span></div>
+    <div><span class="n">{{ hire_count }}</span><span class="l">shops hiring the hop</span></div>
+    <div><span class="n">{{ engine_n }}</span><span class="l">engine competitors</span></div>
+    <div class="wide muted">Loudest name this week: <strong>{{ top_name }}</strong>. Hottest problem: <strong>{{ top_theme or '—' }}</strong>. Search queries we appear on: <strong>{{ search_n }}</strong>.</div>
+  </section>
+
+  <main class="brief">
+    <section class="panel">
+      <h2>Where PilotFish fits</h2>
+      <ul class="fit">
+        <li><strong>Take share from engines</strong> — Mirth / Rhapsody / Cloverleaf own the installed base. We win sunset, stuck mapping, and hard EDI, not a checkbox bake-off. {{ lane_counts.get('sunset', 0) + lane_counts.get('stuck', 0) }} sunset/stuck signals this week.</li>
+        <li><strong>Sit beside EHR and cores</strong> — Epic, Cerner, Guidewire, Duck Creek keep the system of record. We own the hop on the edge (ADT, 837, FHIR, TxLife).</li>
+        <li><strong>Beat “hire a team”</strong> — {{ hire_count }} named companies are staffing the hop. Offer the engine plus one owner.</li>
+        <li><strong>Ride the mandate</strong> — {{ lane_counts.get('mandate', 0) }} rule/deadline signals. Same motion as COVID reporting: spec + date + payload.</li>
+        <li><strong>Own hard EDI</strong> — {{ lane_counts.get('edi_hard', 0) }} SNIP / companion-guide asks. Generalist engines bounce; we have people who live in X12.</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Search share — queries we appear on</h2>
+      <p class="muted">Same list as Search, merged here. Who sits on the page with us. Last probe that actually ranked PilotFish.</p>
+      {% if not search_share %}
+      <p class="empty">Probe Search so we have a run where we appear.</p>
+      {% endif %}
+      {% for rec in search_share %}
+      <article class="move">
+        <h3>{{ rec.query }}</h3>
+        <p><strong>we are #{{ rec.us_rank }}</strong> · {{ rec.channel }}</p>
+        <p class="muted">{% if rec.players %}{{ rec.players | join(' · ') }}{% else %}No named vendors.{% endif %}</p>
+      </article>
+      {% endfor %}
+    </section>
+
+    <section class="panel">
+      <h2>Competition deep dive</h2>
+      <p class="muted">Who they are, how long they have been around, what they actually sell, and how we sit next to them. Open one.</p>
+      <div class="lanes">
+        {% for c in competitors %}
+        <details class="lane{% if c.kind == 'us' %} lane-expand{% endif %}">
+          <summary class="theme-head">
+            <strong>{{ c.name }}</strong>
+            <span class="muted">{{ c.kind_label }}{% if c.since and c.since != '—' %} · since {{ c.since }}{% endif %}{% if c.search_hits %} · {{ c.search_hits }} search hit{{ 's' if c.search_hits != 1 else '' }}{% endif %}</span>
+          </summary>
+          <p>{{ c.what }}</p>
+          <p><strong>What they do:</strong> {{ c.does }}</p>
+          <p><strong>What we know:</strong> {{ c.known }}</p>
+          <p><strong>Where we fit:</strong> {{ c.vs_us }}</p>
+          <p class="muted">{{ c.hq }}{% if c.on_queries %} · on {{ c.on_queries | join(', ') }}{% endif %}</p>
+          {% if c.site %}<p><a class="btn" href="{{ c.site }}" target="_blank" rel="noopener">Their site</a></p>{% endif %}
+        </details>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Share of this week’s conversation</h2>
+      <p class="muted">Mentions in the live feed. A quiet name can still have a huge installed base — see seats below.</p>
+      {% for group, rows in [('Interface engines', engines), ('EHR (we sit beside)', ehrs), ('RCM / clearinghouse', rcm), ('Insurance cores', insurance)] %}
+      <h3 class="subhead">{{ group }}</h3>
+      {% for r in rows %}
+      <div class="share-row{% if r.us %} us{% endif %}">
+        <span class="share-name">{{ r.name }}</span>
+        <div class="share-bar" title="{{ r.count }} mention{{ 's' if r.count != 1 else '' }}"><i style="width: {{ r.pct }}%"></i></div>
+        <span class="share-pct">{{ r.pct }}%</span>
+        <span class="muted">{{ r.count }}</span>
+      </div>
+      {% endfor %}
+      {% endfor %}
+    </section>
+
+    <section class="panel">
+      <h2>Problem share — what the market is yelling about</h2>
+      <p class="muted">Capability themes in this week’s feed. This is the work we package.</p>
+      {% for d in problem %}
+      <div class="share-row">
+        <span class="share-name">{{ d.label }}</span>
+        <div class="share-bar"><i style="width: {{ d.pct }}%"></i></div>
+        <span class="share-pct">{{ d.pct }}%</span>
+        <span class="muted">{{ d.count }}</span>
+      </div>
+      {% endfor %}
+    </section>
+
+    <section class="panel">
+      <h2>Installed-base seats — who actually owns what</h2>
+      <p class="muted">Not this week’s chatter. The map we sell against.</p>
+      <div class="lanes">
+        {% for s in seats %}
+        <details class="lane{% if s.us %} lane-expand{% endif %}">
+          <summary class="theme-head">
+            <strong>{{ s.name }}</strong>
+            <span class="muted">{{ kind_label.get(s.kind, s.kind) }}</span>
+          </summary>
+          <p>{{ s.seat }}</p>
+          <p><strong>Where we fit:</strong> {{ s.fit }}</p>
+        </details>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+</body>
+</html>

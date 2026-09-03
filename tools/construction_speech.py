@@ -112,7 +112,19 @@ def _apply_replacements(text: str, guide: dict) -> str:
 
 
 def _rewrite_extensions(text: str) -> str:
+    spoken = {
+        "csv": "csv",
+        "xml": "xml",
+        "xslt": "xslt",
+        "txt": "text",
+        "xlsx": "excel",
+        "edi": "edi",
+    }
+
     def repl(m: re.Match[str]) -> str:
+        ext = m.group(1).lower()
+        if ext in spoken:
+            return " dot " + spoken[ext]
         return " dot " + " ".join(m.group(1).upper())
 
     # Avoid rewriting domain-like tokens; only short file extensions

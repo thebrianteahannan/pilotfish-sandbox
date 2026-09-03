@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="UTF-8"?><TestConfigurations>
+  <TestConfig name="csvtest">
+    <AlternateDataSource>From File</AlternateDataSource>
+    <Stage>
+      <Identifier>transform@listener=1-Directory Listener</Identifier>
+      <IsStart file="/usr/local/pfcommon/HIMSS_Demo/HIMSS 2018 Demos/interfaces/01 - HIE Integration/data/csv/in/test.csv">true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>forking@listener=1-Directory Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@listener=1-Directory Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>routing</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+  <TestConfig name="fhirtest">
+    <AlternateDataSource>From File</AlternateDataSource>
+    <Stage>
+      <Identifier>transform@listener=5-HTTP Post Listener</Identifier>
+      <IsStart file="/usr/local/pfcommon/HIMSS_Demo/HIMSS 2018 Demos/interfaces/01 - HIE Integration/data/samples/test_fhir.xml">true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>forking@listener=5-HTTP Post Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@listener=5-HTTP Post Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>routing</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+  <TestConfig name="hl7test">
+    <AlternateDataSource>From File</AlternateDataSource>
+    <Stage>
+      <Identifier>transform@listener=2-HL7 Source System</Identifier>
+      <IsStart file="/usr/local/pfcommon/HIMSS_Demo/HIMSS 2018 Demos/interfaces/01 - HIE Integration/data/samples/test.hl7">true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>forking@listener=2-HL7 Source System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@listener=2-HL7 Source System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>routing</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+  <TestConfig name="cdatest">
+    <AlternateDataSource>From File</AlternateDataSource>
+    <Stage>
+      <Identifier>transform@listener=3-SOAP Web Service Listener</Identifier>
+      <IsStart file="/usr/local/pfcommon/HIMSS_Demo/HIMSS 2018 Demos/interfaces/01 - HIE Integration/data/samples/C-CDA_101693_20130617091427_Kidd_Kari CCDA.xml">true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>forking@listener=3-SOAP Web Service Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@listener=3-SOAP Web Service Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>routing</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+  <TestConfig name="editest">
+    <AlternateDataSource>From File</AlternateDataSource>
+    <Stage>
+      <Identifier>transform@listener=4-FTP Listener</Identifier>
+      <IsStart file="/usr/local/pfcommon/HIMSS_Demo/HIMSS 2018 Demos/interfaces/01 - HIE Integration/data/samples/837-sample-encounter.edi">true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>forking@listener=4-FTP Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@listener=4-FTP Listener</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>routing</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=RESTful Web Service #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=FTP Dropoff #1</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=RESTful Web Service #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=FTP Dropoff #2</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=HL7 Target System</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+</TestConfigurations>

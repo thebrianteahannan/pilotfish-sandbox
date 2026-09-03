@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <!-- Avoid the machine-wide PilotFish Nexus (often unreachable) for this repo. -->
+    <mirrors>
+        <mirror>
+            <id>central-only</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <mirrorOf>*</mirrorOf>
+        </mirror>
+    </mirrors>
+</settings>

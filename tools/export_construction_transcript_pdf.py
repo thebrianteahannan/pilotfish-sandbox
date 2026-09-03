@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
-"""Export a Construction Replay transcript PDF (and plain-text twin).
+"""Export a Construction Replay shooting-script PDF (and plain-text twin).
 
-Reads documents/build-replay/manifest.json plus the interface documentation
-package (DESIGN.md, capability brief, test plan, module-docs) and writes:
+Timecode, where to click in eiConsole, then the spoken line — the same
+beats an actor (or the construction video) would play.
 
   documents/construction-replay-transcript.pdf
   documents/construction-replay-transcript.txt
-
-The PDF is the readable companion to construction-replay.mp4 for people who
-cannot watch the video. It also frames who the interface is for and which
-review documents the construction produces.
 
 Usage:
   python3 tools/export_construction_transcript_pdf.py --root Clients/Demos/csv-sftp-to-sql
@@ -21,91 +17,148 @@ import argparse
 import json
 import re
 import sys
-from datetime import date
-from demo_paths import require_demo
+from datetime import datetime
 from pathlib import Path
 
+from demo_paths import require_demo
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT
+from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import inch
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
+from reportlab.platypus import KeepTogether, Paragraph, SimpleDocTemplate, Spacer
+
+# Route-grid columns in the eiConsole main table (RoutingSource row).
+GRID = {
+    0: "Source System",
+    1: "Listener",
+    2: "Source Transform",
+    3: "Routing",
+    4: "Target Transform",
+    5: "Transport",
+}
 
 
 def esc(s: str) -> str:
-    return (
-        str(s)
-        .replace("&", "&amp;")
-        .replace("<", "&lt;")
-        .replace(">", "&gt;")
-    )
+    return str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
 def clean(s: str) -> str:
     t = (s or "").strip()
     t = t.replace("\u201c", '"').replace("\u201d", '"').replace("\u2019", "'")
     t = t.replace("\u2014", " — ").replace("\u2192", " to ")
-    t = re.sub(r"\s+", " ", t).strip()
-    return t
+    return re.sub(r"\s+", " ", t).strip()
 
 
-def strip_md(s: str) -> str:
-    t = clean(s)
-    t = re.sub(r"\*\*([^*]+)\*\*", r"\1", t)
-    t = re.sub(r"`([^`]+)`", r"\1", t)
-    t = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", t)
-    return t
+def _design_title(demo: Path) -> str:
+    design = demo / "DESIGN.md"
+    if design.is_file():
+        for line in design.read_text(encoding="utf-8", errors="replace").splitlines():
+            if line.startswith("# "):
+                return line[2:].strip()
+    return ""
 
 
-def parse_design_sections(design_text: str) -> dict[str, str]:
-    """Map lowercase section title → body text from DESIGN.md."""
-    sections: dict[str, str] = {}
-    current = ""
-    buf: list[str] = []
-    for line in design_text.splitlines():
-        m = re.match(r"^#{1,3}\s+(?:\d+\.\s*)?(.+)$", line)
-        if m:
+def _now_label() -> str:
+    now = datetime.now()
+    return f"{now:%A, %B} {now.day}, {now:%Y}"
+
+
+def fmt_clock(ms: int) -> str:
+    s = max(0, int(ms) // 1000)
+    return f"{s // 60}:{s % 60:02d}"
+
+
+def beat_ms(text: str, dwell_ms: int = 0) -> int:
+    """Match construction video pacing: AvaNeural ~-10%, then 180 ms pad."""
+    words = len((text or "").split())
+    if words:
+        speech = int(words / 2.4 * 1000)
+        return max(speech + 180, int(dwell_ms or 0), 500)
+    return max(int(dwell_ms or 0), 200)
+
+
+def _inline_map(raw: str) -> dict:
+    raw = raw.strip()
+    if raw.startswith("{") and raw.endswith("}"):
+        raw = raw[1:-1]
+    out: dict = {}
+    for key, val in re.findall(r'(\w+)\s*:\s*("(?:[^"\\]|\\.)*"|[^\s,]+)', raw):
+        if val.startswith('"') and val.endswith('"'):
+            val = val[1:-1]
+        out[key] = int(val) if key == "column" else val
+    return out
+
+
+def _parse_walkthrough(text: str) -> list[dict]:
+    steps: list[dict] = []
+    current: dict | None = None
+    for line in text.splitlines():
+        if re.match(r"^\s*-\s+id:", line):
             if current:
-                sections[current] = "\n".join(buf).strip()
-            current = m.group(1).strip().lower()
-            buf = []
-        else:
-            buf.append(line)
+                steps.append(current)
+            current = {"id": line.split(":", 1)[1].strip()}
+            continue
+        if current is None:
+            continue
+        stripped = line.strip()
+        if stripped.startswith("action:"):
+            current["action"] = stripped.split(":", 1)[1].strip()
+        elif stripped.startswith("detail:"):
+            val = stripped.split(":", 1)[1].strip()
+            if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'":
+                val = val[1:-1]
+            current["detail"] = val
+        elif stripped.startswith("dwell_ms:"):
+            current["dwell_ms"] = int(stripped.split(":", 1)[1].strip())
+        elif stripped.startswith("target:"):
+            current["target"] = _inline_map(stripped.split(":", 1)[1])
     if current:
-        sections[current] = "\n".join(buf).strip()
-    return sections
+        steps.append(current)
+    return steps
 
 
-def section_match(sections: dict[str, str], *needles: str) -> str:
-    for key, body in sections.items():
-        if any(n in key for n in needles):
-            return body
-    return ""
+def load_eiconsole_steps(demo: Path) -> list[dict] | None:
+    path = demo / "documents" / "eiconsole-walkthrough.yaml"
+    if not path.is_file():
+        return None
+    raw_steps: list[dict] = []
+    try:
+        import yaml  # type: ignore
 
+        raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        if isinstance(raw, dict):
+            raw_steps = [s for s in (raw.get("steps") or []) if isinstance(s, dict)]
+    except Exception:
+        raw_steps = []
+    if not raw_steps:
+        raw_steps = _parse_walkthrough(path.read_text(encoding="utf-8"))
+    if not raw_steps:
+        return None
+    for step in raw_steps:
+        step["eiconsole"] = True
+    try:
+        from construction_official_open import open_intro_line
 
-def bullets_from_md(body: str) -> list[str]:
-    items: list[str] = []
-    for line in body.splitlines():
-        m = re.match(r"^\s*[-*]\s+(.+)$", line)
-        if m:
-            items.append(strip_md(m.group(1)))
-    return items
-
-
-def first_paragraph(body: str) -> str:
-    parts = re.split(r"\n\s*\n", body.strip())
-    for p in parts:
-        p = strip_md(p)
-        if p and not p.startswith("|") and not p.startswith("#"):
-            # drop table-only chunks
-            if p.startswith("- ") or p.startswith("* "):
-                continue
-            return p
-    return ""
+        raw_steps.insert(
+            0,
+            {
+                "id": "open-intro",
+                "action": "open_card",
+                "detail": open_intro_line(demo),
+                "eiconsole": True,
+            },
+        )
+    except Exception:
+        pass
+    return raw_steps
 
 
 def load_steps(demo: Path) -> tuple[list[dict], str, dict]:
+    eco = load_eiconsole_steps(demo)
+    if eco:
+        return eco, _design_title(demo) or demo.name, {"eiconsole": True}
+
     manifest = demo / "documents" / "build-replay" / "manifest.json"
     if not manifest.is_file():
         raise SystemExit(f"Missing {manifest}")
@@ -113,144 +166,14 @@ def load_steps(demo: Path) -> tuple[list[dict], str, dict]:
     steps = data.get("steps") if isinstance(data, dict) else []
     if not isinstance(steps, list):
         steps = []
-    title = ""
-    design = demo / "DESIGN.md"
-    if design.is_file():
-        for line in design.read_text(encoding="utf-8", errors="replace").splitlines():
-            if line.startswith("# "):
-                title = line[2:].strip()
-                break
+    title = _design_title(demo)
     if not title and isinstance(data, dict):
         title = str(data.get("title") or "")
     return steps, title or demo.name, data if isinstance(data, dict) else {}
 
 
-def discover_docs(demo: Path) -> dict:
-    """Collect companion documentation this interface builds / ships."""
-    docs = demo / "documents"
-    design_path = demo / "DESIGN.md"
-    design_text = design_path.read_text(encoding="utf-8", errors="replace") if design_path.is_file() else ""
-    sections = parse_design_sections(design_text) if design_text else {}
-
-    purpose = first_paragraph(section_match(sections, "purpose", "business goal", "goal"))
-    if purpose and re.fullmatch(r"(tbd|todo|n/?a|none|\.+)", purpose, flags=re.I):
-        purpose = ""
-    if purpose:
-        purpose = re.sub(r"\bSFTP\b", "FTP", purpose)
-        purpose = re.sub(r"\bSftp\b", "FTP", purpose)
-    system_actors = bullets_from_md(section_match(sections, "actor", "system", "context"))
-    system_actors = [
-        re.sub(r"\bSftp\b", "FTP", re.sub(r"\bSFTP\b", "FTP", s)) for s in system_actors
-    ]
-    audiences = list(system_actors[:6]) if system_actors else []
-    if not any("transcript" in a.lower() or "video" in a.lower() for a in audiences):
-        audiences.append("Anyone watching the construction video or reading this transcript")
-    actors = audiences
-
-    # Capability brief
-    brief = None
-    for pattern in ("*_Capability_Brief.pdf", "*_capability_brief.pdf"):
-        hits = sorted(docs.glob(pattern)) if docs.is_dir() else []
-        if hits:
-            brief = hits[0]
-            break
-    if brief is None and docs.is_dir():
-        for name in ("capability-brief.pdf", "Capability_Brief.pdf"):
-            p = docs / name
-            if p.is_file():
-                brief = p
-                break
-
-    # Test plan
-    test_plan_pdf = None
-    for pattern in ("*_Test_Plan.pdf", "*_test_plan.pdf"):
-        hits = sorted(docs.glob(pattern)) if docs.is_dir() else []
-        if hits:
-            test_plan_pdf = hits[0]
-            break
-    if test_plan_pdf is None and (docs / "test-plan.pdf").is_file():
-        test_plan_pdf = docs / "test-plan.pdf"
-
-    plan_json = demo / "tests" / "plan.json"
-    plan_meta: dict = {}
-    if plan_json.is_file():
-        try:
-            plan_meta = json.loads(plan_json.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
-            plan_meta = {}
-    case_count = len(plan_meta.get("cases") or []) if isinstance(plan_meta, dict) else 0
-    plan_desc = ""
-    if isinstance(plan_meta, dict):
-        plan_desc = clean(str(plan_meta.get("description") or plan_meta.get("interface") or ""))
-
-    # Module docs
-    mod_manifest = docs / "module-docs" / "manifest.json"
-    modules: list[dict] = []
-    if mod_manifest.is_file():
-        try:
-            mdata = json.loads(mod_manifest.read_text(encoding="utf-8"))
-            modules = [m for m in (mdata.get("modules") or []) if isinstance(m, dict)]
-        except json.JSONDecodeError:
-            modules = []
-
-    route_pdf = None
-    if docs.is_dir():
-        hits = sorted(docs.glob("*_V2_Route_Diagrams.pdf"))
-        if hits:
-            route_pdf = hits[0]
-        elif (docs / "route-diagrams.pdf").is_file():
-            route_pdf = docs / "route-diagrams.pdf"
-
-    companions: list[dict] = []
-    companions.append(
-        {
-            "name": brief.name if brief else "Capability Brief PDF (generate with tools/export_stakeholder_brief.py)",
-            "exists": brief is not None,
-            "role": "Short overview of what the interface does — shareable without reading route XML.",
-            "path": str(brief.relative_to(demo)) if brief else "documents/*_Capability_Brief.pdf",
-        }
-    )
-    companions.append(
-        {
-            "name": test_plan_pdf.name if test_plan_pdf else "Test Plan PDF (from tests/plan.json)",
-            "exists": test_plan_pdf is not None,
-            "role": (
-                "Scenarios that prove the interface works end-to-end"
-                + (f" ({case_count} cases in tests/plan.json)" if case_count else "")
-                + "."
-            ),
-            "path": str(test_plan_pdf.relative_to(demo)) if test_plan_pdf else "documents/*_Test_Plan.pdf",
-        }
-    )
-    if modules:
-        companions.append(
-            {
-                "name": f"Module documentation pack ({len(modules)} deep-dive PDFs)",
-                "exists": True,
-                "role": "PilotFish product PDFs for the modules used in this build.",
-                "path": "documents/module-docs/",
-                "modules": modules,
-            }
-        )
-    if route_pdf:
-        companions.append(
-            {
-                "name": route_pdf.name,
-                "exists": True,
-                "role": "V2 route diagrams for visual review of module topology.",
-                "path": str(route_pdf.relative_to(demo)),
-            }
-        )
-    companions.append(
-        {
-            "name": "construction-replay.mp4 + this transcript",
-            "exists": (docs / "construction-replay.mp4").is_file(),
-            "role": "Narrated walkthrough of building the routes, then a live Demo-tab test when inject is available.",
-            "path": "documents/construction-replay.mp4",
-        }
-    )
-
-    live_test = docs / "construction-demo-test.json"
+def load_video_extras(demo: Path) -> dict:
+    live_test = demo / "documents" / "construction-demo-test.json"
     live_steps: list[dict] = []
     preamble_steps: list[dict] = []
     outro_steps: list[dict] = []
@@ -262,73 +185,11 @@ def discover_docs(demo: Path) -> dict:
             outro_steps = [s for s in (live.get("outro") or []) if isinstance(s, dict)]
         except json.JSONDecodeError:
             live_steps = []
-
     return {
-        "purpose": purpose
-        or f"{demo.name} is a PilotFish Sandbox interface. See DESIGN.md for the working purpose.",
-        "actors": actors,
-        "systems": system_actors,
-        "companions": companions,
-        "modules": modules,
         "live_test_steps": live_steps,
         "preamble_steps": preamble_steps,
         "outro_steps": outro_steps,
-        "design_path": "DESIGN.md" if design_path.is_file() else "",
     }
-
-
-def module_doc_for_step(step: dict, modules: list[dict]) -> str | None:
-    """Best-effort link from a replay step to a synced module deep-dive."""
-    if not modules:
-        return None
-    type_name = clean(str(step.get("module_type") or "")).lower()
-    tag = clean(str(step.get("module_tag") or "")).lower()
-    label = clean(str(step.get("focus_label") or "")).lower()
-    class_name = clean(str(step.get("module_class") or "")).lower()
-    hay = f"{type_name} {tag} {label} {class_name}"
-    if not any((type_name, tag, label, class_name)):
-        return None
-
-    best = None
-    best_score = 0
-    for mod in modules:
-        ui = clean(str(mod.get("ui_type") or "")).lower()
-        kind = clean(str(mod.get("kind") or "")).lower()
-        fqcn = clean(str(mod.get("fqcn") or "")).lower()
-        short = fqcn.rsplit(".", 1)[-1] if fqcn else ""
-        score = 0
-        if ui and ui in hay:
-            score += 5
-        if short and short in class_name:
-            score += 6
-        if kind and kind in hay:
-            score += 1
-        # Light aliases
-        if "sftp" in hay or "ftp" in hay:
-            if "ftp" in ui or "sftp" in ui:
-                score += 4
-        if "csv" in hay and "csv" in ui:
-            score += 4
-        if "xslt" in hay and "xslt" in ui:
-            score += 4
-        if "database" in hay or "sql" in hay:
-            if "database" in ui or "sql" in ui:
-                score += 4
-        if "file writing" in hay and "file writing" in ui:
-            score += 4
-        if "directory" in hay and "directory" in ui:
-            score += 2
-        if score > best_score:
-            best_score = score
-            best = mod
-    if not best or best_score < 4:
-        return None
-    pdf = best.get("pdf") or ""
-    ui = best.get("ui_type") or best.get("fqcn") or "module"
-    name = Path(str(pdf)).name if pdf else ""
-    if name:
-        return f"Module documentation for this step: {ui} → documents/{pdf}"
-    return f"Module documentation for this step: {ui}"
 
 
 def step_transcript(step: dict) -> str:
@@ -337,85 +198,157 @@ def step_transcript(step: dict) -> str:
         sys.path.insert(0, str(tools_dir))
     from construction_narration_naturalize import naturalize_spoken
 
-    detail = naturalize_spoken(clean(str(step.get("detail") or "")))
-    message = naturalize_spoken(clean(str(step.get("message") or "")))
+    detail = clean(str(step.get("detail") or ""))
+    message = clean(str(step.get("message") or ""))
+    # Official YouTube / website-verbatim walkthroughs keep spoken copy as written.
+    if not step.get("eiconsole"):
+        detail = naturalize_spoken(detail)
+        message = naturalize_spoken(message)
     return detail or message
 
 
-def build_plain_text(demo: Path, steps: list[dict], title: str, ctx: dict) -> str:
+def describe_click(step: dict, last_place: str) -> tuple[str, str]:
+    """Return (place, cue). Empty cue = hold / automation wait."""
+    action = str(step.get("action") or "")
+    tgt = step.get("target") if isinstance(step.get("target"), dict) else {}
+    typ = str(tgt.get("type") or "")
+    label = str(tgt.get("contains") or tgt.get("text") or "").strip()
+    col = tgt.get("column")
+
+    if not action and not tgt:
+        route = clean(str(step.get("route_name") or ""))
+        focus = clean(str(step.get("focus_label") or step.get("module_type") or ""))
+        place = focus or route or last_place
+        if route and focus:
+            return place, f"{route} — {focus}"
+        return place, focus or route
+
+    if action == "open_card":
+        return "Opening", "Official open cards"
+
+    if typ == "JMenu" or (action == "wait_for" and label == "File"):
+        return last_place, ""
+
+    if typ == "tab" and label:
+        return last_place or label, f"Click the {label} tab"
+
+    if col is not None and "RoutingSource" in label:
+        place = GRID.get(int(col), f"column {col}")
+        return place, f"Route grid — click the {place} column"
+
+    verb = "Double-click" if action == "double_click" else "Click"
+    if typ == "table" and label:
+        if action == "double_click":
+            if label[:1].isdigit() or " - " in label:
+                return "Route grid", f'Double-click route “{label}”'
+            return "Route File Management", f'Double-click package “{label}”'
+        return last_place or label, f'{verb} “{label}”'
+
+    if label == "XSLT":
+        return "Data Mapper", "Open the Data Mapper"
+    if "Listener Type" in label:
+        return "Listener", "Click Listener Type"
+    if "Transformation Module" in label:
+        return last_place or "Source Transform", "Click Transformation Module"
+    if label:
+        return last_place or label, f"{verb} {label}"
+    return last_place, ""
+
+
+def place_from_line(line: str, place: str) -> str:
+    low = line.lower()
+    if any(k in low for k in ("testing mode", "execute test", "question marks", "pre-saved")):
+        return "Testing Mode"
+    return place
+
+
+def script_beats(steps: list[dict], extras: dict) -> list[dict]:
+    ordered: list[tuple[str, dict]] = []
+    for step in extras.get("preamble_steps") or []:
+        ordered.append(("Opening", step))
+    for step in steps:
+        ordered.append(("", step))
+    for step in extras.get("live_test_steps") or []:
+        ordered.append(("Demo tab", step))
+    for step in extras.get("outro_steps") or []:
+        ordered.append(("Close", step))
+
+    beats: list[dict] = []
+    pending: list[str] = []
+    pending_ms = 0
+    place = "Route File Management"
+    t = 0
+    for fallback, step in ordered:
+        line = step_transcript(step)
+        new_place, cue = describe_click(step, place)
+        if fallback and not cue:
+            cue = fallback
+            new_place = fallback
+        if new_place:
+            place = new_place
+        dwell = int(step.get("dwell_ms") or 0)
+        if line:
+            place = place_from_line(line, place)
+            cues = list(pending)
+            if cue:
+                cues.append(cue)
+            pending = []
+            start = t
+            t += pending_ms
+            pending_ms = 0
+            if not cues:
+                cues = [f"Hold — {place}" if place else "Hold on this screen"]
+            dur = beat_ms(line, dwell)
+            beats.append(
+                {"start": start, "end": t + dur, "cues": cues, "line": line, "place": place}
+            )
+            t += dur
+        elif cue:
+            pending.append(cue)
+            pending_ms += beat_ms("", dwell)
+    if pending:
+        beats.append(
+            {
+                "start": t,
+                "end": t + max(pending_ms, 200),
+                "cues": pending,
+                "line": "",
+                "place": place,
+            }
+        )
+    return beats
+
+
+def build_plain_text(title: str, when: str, beats: list[dict]) -> str:
+    runtime = fmt_clock(beats[-1]["end"]) if beats else "0:00"
     lines = [
-        f"Construction Replay Transcript — {title}",
-        f"Demo: {demo.name}  ·  Generated {date.today().isoformat()}",
-        f"Video: documents/construction-replay.mp4",
+        "Construction Replay Transcript",
+        title,
+        f"{when}  ·  running time {runtime}",
+        "Shooting script: timecode, where to click in eiConsole, then the spoken line.",
         "",
-        "What this interface does",
-        "-" * 40,
-        ctx.get("purpose") or "",
-        "",
-        "Who it's for",
-        "-" * 40,
     ]
-    for a in ctx.get("actors") or []:
-        lines.append(f"- {a}")
-    systems = ctx.get("systems") or []
-    if systems:
-        lines += ["", "Systems involved", "-" * 40]
-        for s in systems:
-            lines.append(f"- {s}")
-    lines += ["", "Documents we also produce", "-" * 40]
-    for c in ctx.get("companions") or []:
-        status = "ready" if c.get("exists") else "generate when ready"
-        lines.append(f"- {c.get('name')} ({status})")
-        role = clean(str(c.get("role") or ""))
-        if role:
-            lines.append(f"  {role}")
-    lines += ["", "=" * 40, "Narration (what you'll hear)", "=" * 40, ""]
-
-    preamble = ctx.get("preamble_steps") or []
-    if preamble:
-        lines += ["[Setup]", ""]
-        for i, step in enumerate(preamble, start=1):
-            lines.append(f"S{i}. {clean(str(step.get('message') or ''))}")
-            lines.append(clean(str(step.get("detail") or step.get("text") or "")) or "")
-            lines.append("")
-
-    current_route = None
-    for i, step in enumerate(steps, start=1):
-        route = clean(str(step.get("route_name") or step.get("route_id") or ""))
-        if route and route != current_route:
-            current_route = route
-            lines.append(f"[{route}]")
-            lines.append("")
-        focus = clean(str(step.get("focus_label") or ""))
-        msg = clean(str(step.get("message") or ""))
-        # Prefer human message over raw diagram labels (e.g. "Poll SFTP for CSV")
-        heading = msg or focus or f"Step {i}"
-        lines.append(f"{i}. {heading}")
-        lines.append(step_transcript(step) or "(no narration)")
+    for beat in beats:
+        clock = f"{fmt_clock(beat['start'])} – {fmt_clock(beat['end'])}"
+        lines.append(clock)
+        for cue in beat.get("cues") or []:
+            lines.append(f"[{cue}]")
+        if beat.get("line"):
+            lines.append(beat["line"])
         lines.append("")
-    live_steps = ctx.get("live_test_steps") or []
-    if live_steps:
-        lines += ["[Live test]", ""]
-        for i, step in enumerate(live_steps, start=1):
-            lines.append(f"T{i}. {clean(str(step.get('message') or ''))}")
-            lines.append(clean(str(step.get("detail") or step.get("text") or "")) or "")
-            lines.append("")
-    outro = ctx.get("outro_steps") or []
-    if outro:
-        lines += ["[Closing]", ""]
-        for i, step in enumerate(outro, start=1):
-            lines.append(f"C{i}. {clean(str(step.get('message') or ''))}")
-            lines.append(clean(str(step.get("detail") or step.get("text") or "")) or "")
-            lines.append("")
     return "\n".join(lines).rstrip() + "\n"
 
 
-def _bullets(items: list[str], style) -> list:
-    """Simple • paragraphs — avoid ReportLab ListFlowable(value='bullet'), which prints the word 'bullet'."""
-    return [Paragraph(f"• {esc(it)}", style) for it in items if str(it).strip()]
+def _footer(canvas, doc) -> None:
+    canvas.saveState()
+    canvas.setFont("Helvetica", 8)
+    canvas.setFillColor(colors.HexColor("#4b5568"))
+    canvas.drawString(0.75 * inch, 0.42 * inch, "PilotFish  ·  Construction Replay Transcript")
+    canvas.drawRightString(letter[0] - 0.75 * inch, 0.42 * inch, str(doc.page))
+    canvas.restoreState()
 
 
-def build_pdf(demo: Path, steps: list[dict], title: str, ctx: dict, out_path: Path) -> Path:
+def build_pdf(title: str, when: str, beats: list[dict], out_path: Path) -> Path:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     base = getSampleStyleSheet()
     green = colors.HexColor("#0b6e4f")
@@ -429,166 +362,79 @@ def build_pdf(demo: Path, steps: list[dict], title: str, ctx: dict, out_path: Pa
             "title",
             parent=base["Heading1"],
             fontName="Helvetica-Bold",
-            fontSize=17,
+            fontSize=18,
             textColor=ink,
             spaceAfter=4,
         ),
         "sub": ParagraphStyle(
-            "sub", parent=base["Normal"], fontSize=10, textColor=muted, spaceAfter=8
-        ),
-        "h2": ParagraphStyle(
-            "h2",
-            parent=base["Heading2"],
-            fontName="Helvetica-Bold",
-            fontSize=12,
-            textColor=green,
-            spaceBefore=12,
-            spaceAfter=6,
-        ),
-        "body": ParagraphStyle(
-            "body",
-            parent=base["Normal"],
-            fontSize=9.5,
-            leading=13,
-            alignment=TA_JUSTIFY,
-            spaceAfter=6,
-        ),
-        "route": ParagraphStyle(
-            "route",
-            parent=base["Heading2"],
-            fontName="Helvetica-Bold",
-            fontSize=12,
-            textColor=green,
-            spaceBefore=14,
-            spaceAfter=6,
-        ),
-        "step": ParagraphStyle(
-            "step",
-            parent=base["Heading3"],
-            fontName="Helvetica-Bold",
-            fontSize=10.5,
-            textColor=ink,
-            spaceBefore=10,
-            spaceAfter=2,
-        ),
-        "meta": ParagraphStyle(
-            "meta", parent=base["Normal"], fontSize=8.5, textColor=muted, spaceAfter=4
+            "sub", parent=base["Normal"], fontSize=10.5, textColor=muted, spaceAfter=6
         ),
         "note": ParagraphStyle(
             "note",
             parent=base["Normal"],
             fontName="Helvetica-Oblique",
-            fontSize=8.5,
+            fontSize=9,
             textColor=muted,
-            spaceAfter=8,
-            alignment=TA_LEFT,
+            spaceAfter=12,
         ),
-        "bullet": ParagraphStyle(
-            "bullet", parent=base["Normal"], fontSize=9.2, leading=12, textColor=ink
+        "time": ParagraphStyle(
+            "time",
+            parent=base["Normal"],
+            fontName="Helvetica-Bold",
+            fontSize=10,
+            textColor=green,
+            spaceBefore=8,
+            spaceAfter=2,
+        ),
+        "cue": ParagraphStyle(
+            "cue",
+            parent=base["Normal"],
+            fontName="Helvetica-Oblique",
+            fontSize=10,
+            textColor=muted,
+            spaceAfter=2,
+        ),
+        "body": ParagraphStyle(
+            "body",
+            parent=base["Normal"],
+            fontSize=10.5,
+            leading=14,
+            alignment=TA_LEFT,
+            textColor=ink,
+            spaceAfter=4,
         ),
     }
-
-    story = []
-    story.append(Paragraph(f"PILOTFISH  ·  {esc(title).upper()}", styles["brand"]))
-    story.append(Paragraph("Construction Replay Transcript", styles["title"]))
-    story.append(
+    runtime = fmt_clock(beats[-1]["end"]) if beats else "0:00"
+    story = [
+        Paragraph("PILOTFISH", styles["brand"]),
+        Paragraph("Construction Replay Transcript", styles["title"]),
+        Paragraph(f"{esc(title)}  ·  {esc(when)}  ·  running time {runtime}", styles["sub"]),
         Paragraph(
-            f"{esc(title)}  ·  {date.today().isoformat()}  ·  "
-            f"what you'll hear in documents/construction-replay.mp4",
-            styles["sub"],
-        )
-    )
-
-    story.append(Paragraph("What this interface does", styles["h2"]))
-    story.append(Paragraph(esc(ctx.get("purpose") or ""), styles["body"]))
-
-    story.append(Paragraph("Who it's for", styles["h2"]))
-    story.extend(_bullets(list(ctx.get("actors") or []), styles["bullet"]))
-    systems = ctx.get("systems") or []
-    if systems:
-        story.append(Paragraph("Systems involved", styles["h2"]))
-        story.extend(_bullets(list(systems), styles["bullet"]))
-    story.append(Spacer(1, 0.08 * inch))
-
-    story.append(Paragraph("Documents we also produce", styles["h2"]))
-    for c in ctx.get("companions") or []:
-        status = "ready" if c.get("exists") else "generate when ready"
-        role = clean(str(c.get("role") or ""))
-        story.append(
-            Paragraph(
-                f"<b>{esc(c.get('name') or '')}</b>  ·  {esc(status)}<br/>"
-                f"{esc(role)}",
-                styles["body"],
-            )
-        )
-
-    story.append(Paragraph("Narration", styles["h2"]))
-    story.append(
-        Paragraph(
-            "Spoken lines from the construction video (setup, build-replay, live test, closing).",
+            "Shooting script: timecode, where to click in eiConsole, then the spoken line.",
             styles["note"],
-        )
-    )
-
-    preamble = ctx.get("preamble_steps") or []
-    if preamble:
-        story.append(Paragraph("Setup", styles["route"]))
-        for step in preamble:
-            heading = clean(str(step.get("message") or step.get("action") or "Setup"))
-            story.append(Paragraph(esc(heading), styles["step"]))
-            body = clean(str(step.get("detail") or step.get("text") or ""))
-            story.append(Paragraph(esc(body or "(no transcript)"), styles["body"]))
-
-    current_route = None
-    for i, step in enumerate(steps, start=1):
-        route = clean(str(step.get("route_name") or step.get("route_id") or ""))
-        if route and route != current_route:
-            current_route = route
-            story.append(Paragraph(esc(route), styles["route"]))
-        focus = clean(str(step.get("focus_label") or ""))
-        msg = clean(str(step.get("message") or ""))
-        # Prefer human message over raw diagram labels (e.g. "Poll SFTP for CSV")
-        heading = msg or focus or f"Step {i}"
-        story.append(Paragraph(esc(heading), styles["step"]))
-        body = step_transcript(step)
-        story.append(Paragraph(esc(body or "(no transcript)"), styles["body"]))
-        story.append(Spacer(1, 0.04 * inch))
-
-    live_steps = ctx.get("live_test_steps") or []
-    if live_steps:
-        story.append(Paragraph("Live test", styles["h2"]))
-        story.append(
-            Paragraph(
-                "After construction, the video switches to the Demo tab and runs a live inject when the UI supports it.",
-                styles["body"],
-            )
-        )
-        for i, step in enumerate(live_steps, start=1):
-            heading = clean(str(step.get("message") or step.get("action") or f"Test {i}"))
-            story.append(Paragraph(esc(heading), styles["step"]))
-            body = clean(str(step.get("detail") or step.get("text") or ""))
-            story.append(Paragraph(esc(body or "(no transcript)"), styles["body"]))
-
-    outro = ctx.get("outro_steps") or []
-    if outro:
-        story.append(Paragraph("Closing", styles["h2"]))
-        for step in outro:
-            heading = clean(str(step.get("message") or "Demo complete"))
-            story.append(Paragraph(esc(heading), styles["step"]))
-            body = clean(str(step.get("detail") or step.get("text") or ""))
-            story.append(Paragraph(esc(body or "(no transcript)"), styles["body"]))
+        ),
+    ]
+    for beat in beats:
+        clock = f"{fmt_clock(beat['start'])} – {fmt_clock(beat['end'])}"
+        chunk = [Paragraph(esc(clock), styles["time"])]
+        for cue in beat.get("cues") or []:
+            chunk.append(Paragraph(f"[{esc(cue)}]", styles["cue"]))
+        if beat.get("line"):
+            chunk.append(Paragraph(esc(beat["line"]), styles["body"]))
+        chunk.append(Spacer(1, 0.06 * inch))
+        story.append(KeepTogether(chunk))
 
     doc = SimpleDocTemplate(
         str(out_path),
         pagesize=letter,
-        leftMargin=0.75 * inch,
-        rightMargin=0.75 * inch,
+        leftMargin=0.8 * inch,
+        rightMargin=0.8 * inch,
         topMargin=0.7 * inch,
         bottomMargin=0.7 * inch,
         title=f"Construction Replay Transcript — {title}",
         author="PilotFish Sandbox",
     )
-    doc.build(story)
+    doc.build(story, onFirstPage=_footer, onLaterPages=_footer)
     return out_path
 
 
@@ -598,7 +444,6 @@ def export(demo: Path, *, out_pdf: Path | None = None, out_txt: Path | None = No
         sys.path.insert(0, str(tools_dir))
     from construction_narration_naturalize import naturalize_demo_root, naturalize_spoken
 
-    # Always run the naturalization pass before writing transcript artifacts.
     counts = naturalize_demo_root(demo)
     if counts.get("manifest") or counts.get("demo_test"):
         print(
@@ -606,38 +451,34 @@ def export(demo: Path, *, out_pdf: Path | None = None, out_txt: Path | None = No
             f"demo-test={counts['demo_test']}"
         )
 
-    steps, title, _manifest = load_steps(demo)
+    steps, title, manifest = load_steps(demo)
     if not steps:
-        raise SystemExit(f"No build-replay steps under {demo / 'documents' / 'build-replay'}")
-    ctx = discover_docs(demo)
-    # Soften front-matter purpose through the same pass
-    if ctx.get("purpose"):
-        ctx["purpose"] = naturalize_spoken(str(ctx["purpose"]))
+        raise SystemExit(f"No narration steps under {demo / 'documents'}")
+    extras = load_video_extras(demo)
+    if manifest.get("eiconsole"):
+        extras = {"preamble_steps": [], "live_test_steps": [], "outro_steps": []}
     for key in ("preamble_steps", "live_test_steps", "outro_steps"):
-        items = ctx.get(key) or []
-        if isinstance(items, list):
-            for step in items:
-                if isinstance(step, dict):
-                    if step.get("detail"):
-                        step["detail"] = naturalize_spoken(str(step["detail"]))
-                    if step.get("text"):
-                        step["text"] = naturalize_spoken(str(step["text"]))
-                    if step.get("message"):
-                        step["message"] = naturalize_spoken(str(step["message"]))
+        for step in extras.get(key) or []:
+            if isinstance(step, dict):
+                for field in ("detail", "text", "message"):
+                    if step.get(field):
+                        step[field] = naturalize_spoken(str(step[field]))
+    beats = script_beats(steps, extras)
     docs = demo / "documents"
     docs.mkdir(parents=True, exist_ok=True)
     pdf_path = out_pdf or (docs / "construction-replay-transcript.pdf")
     txt_path = out_txt or (docs / "construction-replay-transcript.txt")
-    txt_path.write_text(build_plain_text(demo, steps, title, ctx), encoding="utf-8")
-    build_pdf(demo, steps, title, ctx, pdf_path)
+    when = _now_label()
+    txt_path.write_text(build_plain_text(title, when, beats), encoding="utf-8")
+    build_pdf(title, when, beats, pdf_path)
     return pdf_path, txt_path
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--root", required=True, help="Demo root under Clients/Demos/")
-    ap.add_argument("--out", help="PDF output path (default: documents/construction-replay-transcript.pdf)")
-    ap.add_argument("--out-txt", help="Plain-text twin path (default: documents/construction-replay-transcript.txt)")
+    ap.add_argument("--out", help="PDF output path")
+    ap.add_argument("--out-txt", help="Plain-text twin path")
     args = ap.parse_args()
     demo = require_demo(args.root)
     pdf_path = Path(args.out).expanduser().resolve() if args.out else None

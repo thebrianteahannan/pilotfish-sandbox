@@ -7,8 +7,12 @@
 
 from __future__ import annotations
 
+import io
 import os
+import subprocess
 import sys
+import threading
+import urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -17,21 +21,35 @@ if str(HERE) not in sys.path:
 
 from flask import Flask, jsonify, render_template, request, send_file
 
+import client_custom_coding
+import client_regression
+import client_h2
 import client_ocr
 import client_package
+import client_people
 import client_pipeline
 import client_request_video
 import client_requests
 import clients
 import demos
 import disk
+import docs_portal
+import hub_calendar
+import hub_eiconsole
+import hub_llm
+import hub_speech
+import hub_website_demos
 import sandbox_docker
+import scout
 import videos
 
 app = Flask(__name__, template_folder=str(HERE / "templates"), static_folder=str(HERE / "static"))
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config["MAX_CONTENT_LENGTH"] = 20 * 1024 * 1024
 PORT = int(os.environ.get("SANDBOX_HUB_PORT", "8077"))
+hub_calendar.register(app)
+hub_speech.register(app)
+hub_website_demos.register(app)
 
 
 @app.after_request
@@ -48,7 +66,27 @@ def index():
 
 @app.get("/api/health")
 def health():
-    return jsonify({"ok": True, "service": "sandbox-control", "port": PORT})
+    return jsonify({"ok": True, "service": "sandbox-control", "port": PORT, "llm": hub_llm.status()})
+
+
+@app.get("/api/llm")
+def api_llm():
+    return jsonify({"ok": True, **hub_llm.status()})
+
+
+@app.post("/api/llm/start")
+def api_llm_start():
+    return jsonify(hub_llm.start_service())
+
+
+@app.post("/api/llm/pull")
+def api_llm_pull():
+    return jsonify(hub_llm.pull_start()), 202
+
+
+@app.post("/api/llm/ping")
+def api_llm_ping():
+    return jsonify(hub_llm.ping())
 
 
 @app.get("/api/demos")
@@ -60,6 +98,8 @@ def api_demos():
             "video_worker": videos.worker_status(),
             "video_queue": videos.queue_snapshot(),
             "demos": demos.list_demos(),
+            "scout": scout.status(),
+            "docs": docs_portal.status(),
             "lan": demos.lan_ip(),
         }
     )
@@ -72,6 +112,24 @@ def api_demo_action(slug: str, action: str):
         return jsonify({"ok": False, "error": "action must be start, stop, restart, or video"}), 400
     result = demos.enqueue(action, slug)
     code = 202 if result.get("ok") else 409
+    return jsonify(result), code
+
+
+@app.post("/api/scout/<action>")
+def api_scout_action(action: str):
+    result = scout.enqueue(action)
+    code = 202 if result.get("ok") else 400
+    if result.get("error") and "already running" in (result.get("error") or ""):
+        code = 409
+    return jsonify(result), code
+
+
+@app.post("/api/docs/<action>")
+def api_docs_action(action: str):
+    result = docs_portal.enqueue(action)
+    code = 202 if result.get("ok") else 400
+    if result.get("error") and "already running" in (result.get("error") or ""):
+        code = 409
     return jsonify(result), code
 
 
@@ -127,6 +185,165 @@ def api_clients():
             "lan": demos.lan_ip(),
         }
     )
+
+
+@app.get("/api/clients/<slug>/manage")
+def api_client_manage(slug: str):
+    try:
+        data = client_people.snapshot(slug)
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    return jsonify(data)
+
+
+@app.get("/api/clients/<slug>/h2")
+def api_client_h2(slug: str):
+    try:
+        return jsonify(client_h2.snapshot(slug))
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    except RuntimeError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 500
+
+
+@app.get("/api/clients/<slug>/mue-edits")
+def api_client_mue_edits(slug: str):
+    try:
+        return jsonify(client_h2.mue_edits(slug))
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    except RuntimeError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 500
+
+
+@app.get("/api/clients/<slug>/h2/tables/<name>")
+def api_client_h2_table(slug: str, name: str):
+    try:
+        return jsonify(client_h2.table_rows(slug, name))
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 400
+    except RuntimeError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 500
+
+
+@app.get("/api/clients/<slug>/custom-coding")
+def api_client_custom_coding(slug: str):
+    try:
+        return jsonify(client_custom_coding.snapshot(slug))
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    except RuntimeError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 500
+
+
+@app.get("/api/clients/<slug>/custom-coding.pdf")
+def api_client_custom_coding_pdf(slug: str):
+    try:
+        raw = client_custom_coding.pdf_bytes(slug, q=str(request.args.get("q") or ""))
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    except RuntimeError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 500
+    name = "MedRec-client-custom-coding.pdf"
+    resp = send_file(io.BytesIO(raw), mimetype="application/pdf", as_attachment=True, download_name=name)
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
+@app.get("/api/clients/<slug>/regression")
+def api_client_regression(slug: str):
+    try:
+        return jsonify(client_regression.snapshot(slug))
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    except RuntimeError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 500
+
+
+@app.get("/api/clients/<slug>/regression/job")
+def api_client_regression_job(slug: str):
+    try:
+        clients.require_root(slug)
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    return jsonify({"ok": True, "job": client_regression.job()})
+
+
+@app.post("/api/clients/<slug>/regression/stop")
+def api_client_regression_stop(slug: str):
+    try:
+        clients.require_root(slug)
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    return jsonify(client_regression.stop())
+
+
+@app.post("/api/clients/<slug>/regression/run")
+def api_client_regression_run(slug: str):
+    body = request.get_json(silent=True) or {}
+    try:
+        result = client_regression.enqueue(
+            slug,
+            capture=bool(body.get("capture")),
+            case_id=str(body.get("case_id") or ""),
+        )
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 400
+    except RuntimeError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 500
+    return jsonify(result)
+
+
+@app.post("/api/clients/<slug>/people/scan")
+def api_client_people_scan(slug: str):
+    try:
+        people = client_people.harvest(slug)
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    return jsonify({"ok": True, "people": people, **client_people.snapshot(slug)})
+
+
+@app.post("/api/clients/<slug>/people")
+def api_client_people_add(slug: str):
+    body = request.get_json(silent=True) or {}
+    try:
+        data = client_people.add(slug, body.get("name") or "", body.get("email") or "")
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 400
+    return jsonify(data)
+
+
+@app.delete("/api/clients/<slug>/people/<pid>")
+def api_client_people_del(slug: str, pid: str):
+    try:
+        data = client_people.remove(slug, pid)
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    return jsonify(data)
+
+
+@app.put("/api/clients/<slug>/eip-version")
+def api_client_eip_version(slug: str):
+    body = request.get_json(silent=True) or {}
+    try:
+        result = clients.set_eip_version(slug, body.get("eip_version") or body.get("version") or "")
+    except ValueError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 400
+    return jsonify(result)
+
+
+@app.post("/api/clients/<slug>/eiconsole")
+def api_client_eiconsole(slug: str):
+    try:
+        root = clients.require_root(slug)
+        eip = root / "eip-root"
+        return jsonify(hub_eiconsole.open_eip(eip))
+    except ValueError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    except FileNotFoundError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    except Exception as extra:
+        return jsonify({"ok": False, "error": str(extra)[:400]}), 500
 
 
 @app.post("/api/clients/<slug>/<action>")
@@ -222,6 +439,27 @@ def api_client_request_work(slug: str, req_id: str):
     return jsonify(result), (202 if result.get("ok") else 409)
 
 
+@app.post("/api/clients/<slug>/requests/<req_id>/retest")
+def api_client_request_retest(slug: str, req_id: str):
+    try:
+        client_requests.get_request(slug, req_id)
+    except (ValueError, FileNotFoundError) as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    result = client_pipeline.enqueue_retest(slug, req_id)
+    return jsonify(result), (202 if result.get("ok") else 409)
+
+
+@app.post("/api/clients/<slug>/requests/<req_id>/regression")
+def api_client_request_regression(slug: str, req_id: str):
+    try:
+        client_requests.get_request(slug, req_id)
+    except (ValueError, FileNotFoundError) as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    body = request.get_json(silent=True) or {}
+    result = client_pipeline.enqueue_regression(slug, req_id, capture=bool(body.get("capture")))
+    return jsonify(result), (202 if result.get("ok") else 409)
+
+
 @app.post("/api/clients/<slug>/requests/<req_id>/merge")
 def api_client_request_merge(slug: str, req_id: str):
     try:
@@ -312,6 +550,19 @@ def api_client_request_process(slug: str, req_id: str):
     return jsonify(result), (202 if result.get("ok") else 409)
 
 
+@app.post("/api/clients/<slug>/requests/<req_id>/package")
+def api_client_request_package(slug: str, req_id: str):
+    try:
+        client_requests.get_request(slug, req_id)
+        zpath = client_package.package_request(slug, req_id)
+    except (ValueError, FileNotFoundError) as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 404
+    except RuntimeError as extra:
+        return jsonify({"ok": False, "error": str(extra)}), 400
+    kb = zpath.stat().st_size // 1024
+    return jsonify({"ok": True, "name": zpath.name, "size_kb": kb})
+
+
 @app.post("/api/clients/<slug>/requests/deploy")
 def api_client_deploy_build(slug: str):
     try:
@@ -322,18 +573,35 @@ def api_client_deploy_build(slug: str):
     return jsonify(result), (202 if result.get("ok") else 409)
 
 
+@app.post("/api/clients/<slug>/requests/deploy/reveal")
+def api_client_deploy_reveal(slug: str):
+    try:
+        root = clients.require_root(slug)
+    except ValueError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 404
+    body = request.get_json(silent=True) or {}
+    name = str(body.get("name") or request.args.get("name") or "")
+    zpath = client_package.zip_file(root, name)
+    if not zpath:
+        return jsonify({"ok": False, "error": "No TEST zip yet"}), 404
+    try:
+        subprocess.run(["open", "-R", str(zpath)], check=True, timeout=15)
+    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as extra:
+        return jsonify({"ok": False, "error": str(extra) or "Could not open Finder"}), 500
+    return jsonify({"ok": True})
+
+
 @app.get("/api/clients/<slug>/requests/deploy")
 def api_client_deploy_file(slug: str):
     try:
         root = clients.require_root(slug)
     except ValueError as exc:
         return jsonify({"ok": False, "error": str(exc)}), 404
-    info = client_package.snapshot(slug)
-    name = str(info.get("name") or "")
-    zpath = client_package.deploy_dir(root) / name if name else None
-    if not zpath or not zpath.is_file():
+    name = str(request.args.get("name") or "")
+    zpath = client_package.zip_file(root, name)
+    if not zpath:
         return jsonify({"ok": False, "error": "No TEST zip yet"}), 404
-    resp = send_file(zpath, mimetype="application/zip", as_attachment=True, download_name=name)
+    resp = send_file(zpath, mimetype="application/zip", as_attachment=True, download_name=zpath.name)
     resp.headers["Cache-Control"] = "no-store"
     return resp
 
@@ -392,9 +660,42 @@ def api_client_request_zip(slug: str, req_id: str):
     return resp
 
 
+def _ensure_header_services() -> None:
+    try:
+        if not scout.running():
+            scout.start()
+    except Exception as exc:
+        print(f"Buzz Scout did not start: {exc}", flush=True)
+    try:
+        if not docs_portal.running():
+            docs_portal.start()
+    except Exception as exc:
+        print(f"Docs portal did not start: {exc}", flush=True)
+
+
+def _notify_hub_ready() -> None:
+    import time
+
+    import hub_ntfy
+
+    # Wait until the port accepts connections, then ping ntfy.
+    deadline = time.time() + 30
+    while time.time() < deadline:
+        try:
+            with urllib.request.urlopen(f"http://127.0.0.1:{PORT}/api/health", timeout=1) as resp:
+                if resp.status == 200:
+                    hub_ntfy.notify_hub_up(PORT)
+                    return
+        except Exception:
+            time.sleep(0.4)
+    hub_ntfy.notify_hub_up(PORT)
+
+
 def main() -> int:
     print(f"Sandbox control hub http://127.0.0.1:{PORT}/", flush=True)
     print(f"LAN  http://{demos.lan_ip()}:{PORT}/", flush=True)
+    threading.Thread(target=_ensure_header_services, daemon=True).start()
+    threading.Thread(target=_notify_hub_ready, daemon=True).start()
     app.run(host="0.0.0.0", port=PORT, debug=False, threaded=True)
     return 0
 

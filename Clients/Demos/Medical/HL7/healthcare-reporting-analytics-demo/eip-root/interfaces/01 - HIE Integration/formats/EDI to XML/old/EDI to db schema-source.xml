@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="XCSData">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" name="ediroot" type="ediroot_type" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="receiver_type-address_element_type">
+				<xsd:attribute name="Id" type="xsd:string" />
+				<xsd:attribute name="Qual" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:complexType name="ediroot_type-interchange_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="sender" type="sender_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="receiver" type="receiver_type" />
+					<xsd:element maxOccurs="1" minOccurs="1" name="group" type="group_element_type" />
+				</xsd:sequence>
+				<xsd:attribute name="Control" type="xsd:string" />
+				<xsd:attribute name="Date" type="xsd:string" />
+				<xsd:attribute name="Standard" type="xsd:string" />
+				<xsd:attribute name="StandardsId" type="xsd:string" />
+				<xsd:attribute name="Time" type="xsd:string" />
+				<xsd:attribute name="Version" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:complexType name="sender_type-address_element_type">
+				<xsd:attribute name="Id" type="xsd:string" />
+				<xsd:attribute name="Qual" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:complexType name="receiver_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="address" type="receiver_type-address_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="group_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="transaction" type="transaction_element_type" />
+				</xsd:sequence>
+				<xsd:attribute name="ApplReceiver" type="xsd:string" />
+				<xsd:attribute name="ApplSender" type="xsd:string" />
+				<xsd:attribute name="Control" type="xsd:string" />
+				<xsd:attribute name="Date" type="xsd:string" />
+				<xsd:attribute name="GroupType" type="xsd:string" />
+				<xsd:attribute name="StandardCode" type="xsd:string" />
+				<xsd:attribute name="StandardVersion" type="xsd:string" />
+				<xsd:attribute name="Time" type="xsd:string" />
+			</xsd:complexType>
+			<xsd:complexType name="sender_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="address" type="sender_type-address_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ediroot_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="interchange" type="ediroot_type-interchange_element_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="transaction_element_type">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="BHT">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Beginning of Hierarchical Transaction</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element maxOccurs="1" minOccurs="0" name="BHT01" type="xsd:string" />
+							<xsd:element maxOccurs="1" minOccurs="0" name="BHT02" type="xsd:string" />
+							<xsd:element maxOccurs="1" minOccurs="0" name="BHT03" type="xsd:string" />
+							<xsd:element maxOccurs="1" minOccurs="0" name="BHT04" type="xsd:string" />
+							<xsd:element maxOccurs="1" minOccurs="0" name="BHT05" type="xsd:string" />
+							<xsd:element maxOccurs="1" minOccurs="0" name="BHT06" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="LOOP_2000A">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<pf:property name="annotation">Information Source Level</pf:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element maxOccurs="1" minOccurs="0" name="HL">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Information Source Level</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence />
+									<xsd:element maxOccurs="1" minOccurs="0" name="HL01" type="xsd:string" />
+									<xsd:element maxOccurs="1" minOccurs="0" name="HL02" type="xsd:string" />
+									<xsd:element maxOccurs="1" minOccurs="0" name="HL03" type="xsd:string" />
+									<xsd:element maxOccurs="1" minOccurs="0" name="HL04" type="xsd:string" />
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element maxOccurs="1" minOccurs="0" name="LOOP_2100A">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Information Source Name</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence />
+									<xsd:element maxOccurs="1" minOccurs="0" name="NM1">
+										<xsd:annotation>
+											<xsd:appinfo>
+												<pf:property name="annotation">Information Source Name</pf:property>
+											</xsd:appinfo>
+										</xsd:annotation>
+										<xsd:complexType>
+											<xsd:sequence />
+											<xsd:element maxOccurs="1" minOccurs="0" name="NM101" type="xsd:string" />
+											<xsd:element maxOccurs="1" minOccurs="0" name="NM102" type="xsd:string" />
+											<xsd:element maxOccurs="1" minOccurs="0" name="NM103" type="xsd:string" />
+											<xsd:element maxOccurs="1" minOccurs="0" name="NM104" type="xsd:string" />
+											<xsd:element maxOccurs="1" minOccurs="0" name="NM105" type="xsd:string" />
+											<xsd:element maxOccurs="1" minOccurs="0" name="NM106" type="xsd:string" />
+											<xsd:element maxOccurs="1" minOccurs="0" name="NM107" type="xsd:string" />
+											<xsd:element maxOccurs="1" minOccurs="0" name="NM108" type="xsd:string" />
+											<xsd:element maxOccurs="1" minOccurs="0" name="NM109" type="xsd:string" />
+											<xsd:element maxOccurs="1" minOccurs="0" name="NM110" type="xsd:string" />
+											<xsd:element maxOccurs="1" minOccurs="0" name="NM111" type="xsd:string" />
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element maxOccurs="1" minOccurs="0" name="LOOP_2000B">
+								<xsd:annotation>
+									<xsd:appinfo>
+										<pf:property name="annotation">Information Receiver Level</pf:property>
+									</xsd:appinfo>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence />
+									<xsd:element maxOccurs="1" minOccurs="0" name="HL">
+										<xsd:annotation>
+											<xsd:appinfo>
+												<pf:property name="annotation">Information Receiver Level</pf:property>
+											</xsd:appinfo>
+										</xsd:annotation>
+										<xsd:complexType>
+											<xsd:sequence />
+											<xsd:element maxOccurs="1" minOccurs="0" name="HL01" type="xsd:string" />
+											<xsd:element maxOccurs="1" minOccurs="0" name="HL02" type="xsd:string" />
+											<xsd:element maxOccurs="1" minOccurs="0" name="HL03" type="xsd:string" />
+											<xsd:element maxOccurs="1" minOccurs="0" name="HL04" type="xsd:string" />
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element maxOccurs="1" minOccurs="0" name="LOOP_2100B">
+										<xsd:annotation>
+											<xsd:appinfo>
+												<pf:property name="annotation">Information Receiver Name</pf:property>
+											</xsd:appinfo>
+										</xsd:annotation>
+										<xsd:complexType>
+											<xsd:sequence />
+											<xsd:element maxOccurs="1" minOccurs="0" name="NM1">
+												<xsd:annotation>
+													<xsd:appinfo>
+														<pf:property name="annotation">Information Receiver Name</pf:property>
+													</xsd:appinfo>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence />
+													<xsd:element maxOccurs="1" minOccurs="0" name="NM101" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="NM102" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="NM103" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="NM104" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="NM105" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="NM106" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="NM107" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="NM108" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="NM109" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="NM110" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="NM111" type="xsd:string" />
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:element maxOccurs="1" minOccurs="0" name="REF">
+												<xsd:annotation>
+													<xsd:appinfo>
+														<pf:property name="annotation">Information Receiver Additional Identification</pf:property>
+													</xsd:appinfo>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence />
+													<xsd:element maxOccurs="1" minOccurs="0" name="REF01" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="REF02" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="REF03" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="REF04" type="xsd:string" />
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:element maxOccurs="1" minOccurs="0" name="N3">
+												<xsd:annotation>
+													<xsd:appinfo>
+														<pf:property name="annotation">Information Receiver Address</pf:property>
+													</xsd:appinfo>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence />
+													<xsd:element maxOccurs="1" minOccurs="0" name="N301" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="N302" type="xsd:string" />
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:element maxOccurs="1" minOccurs="0" name="N4">
+												<xsd:annotation>
+													<xsd:appinfo>
+														<pf:property name="annotation">Information Receiver City/State/ZIP Code</pf:property>
+													</xsd:appinfo>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence />
+													<xsd:element maxOccurs="1" minOccurs="0" name="N401" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="N402" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="N403" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="N404" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="N405" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="N406" type="xsd:string" />
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:element maxOccurs="1" minOccurs="0" name="PER">
+												<xsd:annotation>
+													<xsd:appinfo>
+														<pf:property name="annotation">Information Receiver Contact Information</pf:property>
+													</xsd:appinfo>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PER01" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PER02" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PER03" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PER04" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PER05" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PER06" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PER07" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PER08" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PER09" type="xsd:string" />
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:element maxOccurs="1" minOccurs="0" name="PRV">
+												<xsd:annotation>
+													<xsd:appinfo>
+														<pf:property name="annotation">Information Receiver Provider Information</pf:property>
+													</xsd:appinfo>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PRV01" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PRV02" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PRV03" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PRV04" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PRV05" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="PRV06" type="xsd:string" />
+												</xsd:complexType>
+											</xsd:element>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element maxOccurs="1" minOccurs="0" name="LOOP_2000C">
+										<xsd:annotation>
+											<xsd:appinfo>
+												<pf:property name="annotation">Subscriber Level</pf:property>
+											</xsd:appinfo>
+										</xsd:annotation>
+										<xsd:complexType>
+											<xsd:sequence />
+											<xsd:element maxOccurs="1" minOccurs="0" name="HL">
+												<xsd:annotation>
+													<xsd:appinfo>
+														<pf:property name="annotation">Subscriber Level</pf:property>
+													</xsd:appinfo>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence />
+													<xsd:element maxOccurs="1" minOccurs="0" name="HL01" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="HL02" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="HL03" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="HL04" type="xsd:string" />
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:element maxOccurs="1" minOccurs="0" name="TRN">
+												<xsd:annotation>
+													<xsd:appinfo>
+														<pf:property name="annotation">Subscriber Trace Number</pf:property>
+													</xsd:appinfo>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence />
+													<xsd:element maxOccurs="1" minOccurs="0" name="TRN01" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="TRN02" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="TRN03" type="xsd:string" />
+													<xsd:element maxOccurs="1" minOccurs="0" name="TRN04" type="xsd:string" />
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:element maxOccurs="1" minOccurs="0" name="LOOP_2100C">
+												<xsd:annotation>
+													<xsd:appinfo>
+														<pf:property name="annotation">Subscriber Name</pf:property>
+													</xsd:appinfo>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence />
+													<xsd:element maxOccurs="1" minOccurs="0" name="NM1">
+														<xsd:annotation>
+															<xsd:appinfo>
+																<pf:property name="annotation">Subscriber Name</pf:property>
+															</xsd:appinfo>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element maxOccurs="1" minOccurs="0" name="NM101" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="NM102" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="NM103" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="NM104" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="NM105" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="NM106" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="NM107" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="NM108" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="NM109" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="NM110" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="NM111" type="xsd:string" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element maxOccurs="1" minOccurs="0" name="REF">
+														<xsd:annotation>
+															<xsd:appinfo>
+																<pf:property name="annotation">Subscriber Additional Identification</pf:property>
+															</xsd:appinfo>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element maxOccurs="1" minOccurs="0" name="REF01" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="REF02" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="REF03" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="REF04" type="xsd:string" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element maxOccurs="1" minOccurs="0" name="N3">
+														<xsd:annotation>
+															<xsd:appinfo>
+																<pf:property name="annotation">Subscriber Address</pf:property>
+															</xsd:appinfo>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element maxOccurs="1" minOccurs="0" name="N301" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="N302" type="xsd:string" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element maxOccurs="1" minOccurs="0" name="N4">
+														<xsd:annotation>
+															<xsd:appinfo>
+																<pf:property name="annotation">Subscriber City/State/ZIP Code</pf:property>
+															</xsd:appinfo>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element maxOccurs="1" minOccurs="0" name="N401" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="N402" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="N403" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="N404" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="N405" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="N406" type="xsd:string" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element maxOccurs="1" minOccurs="0" name="PRV">
+														<xsd:annotation>
+															<xsd:appinfo>
+																<pf:property name="annotation">Provider Information</pf:property>
+															</xsd:appinfo>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element maxOccurs="1" minOccurs="0" name="PRV01" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="PRV02" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="PRV03" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="PRV04" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="PRV05" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="PRV06" type="xsd:string" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element maxOccurs="1" minOccurs="0" name="DMG">
+														<xsd:annotation>
+															<xsd:appinfo>
+																<pf:property name="annotation">Subscriber Demographic Information</pf:property>
+															</xsd:appinfo>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element maxOccurs="1" minOccurs="0" name="DMG01" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="DMG02" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="DMG03" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="DMG04" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="DMG05" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="DMG06" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="DMG07" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="DMG08" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="DMG09" type="xsd:string" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element maxOccurs="1" minOccurs="0" name="INS">
+														<xsd:annotation>
+															<xsd:appinfo>
+																<pf:property name="annotation">Subscriber Relationship</pf:property>
+															</xsd:appinfo>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS01" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS02" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS03" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS04" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS05" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS06" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS07" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS08" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS09" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS10" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS11" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS12" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS13" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS14" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS15" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS16" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS17" type="xsd:string" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element maxOccurs="1" minOccurs="0" name="DTP">
+														<xsd:annotation>
+															<xsd:appinfo>
+																<pf:property name="annotation">Subscriber Date</pf:property>
+															</xsd:appinfo>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element maxOccurs="1" minOccurs="0" name="DTP01" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="DTP02" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="DTP03" type="xsd:string" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element maxOccurs="1" minOccurs="0" name="LOOP_2110C">
+														<xsd:annotation>
+															<xsd:appinfo>
+																<pf:property name="annotation">Subscriber Eligibility or Benefit Inquiry Information</pf:property>
+															</xsd:appinfo>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element maxOccurs="1" minOccurs="0" name="EQ">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Subscriber Eligibility or Benefit Inquiry Information</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="EQ01" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="EQ03" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="EQ04" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="EQ02">
+																		<xsd:annotation>
+																			<xsd:appinfo>
+																				<pf:property name="annotation">Composite Medical Procedure Identifier</pf:property>
+																			</xsd:appinfo>
+																		</xsd:annotation>
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="EQ0201" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="EQ0202" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="EQ0203" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="EQ0204" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="EQ0205" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="EQ0206" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="EQ0207" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element maxOccurs="1" minOccurs="0" name="AMT">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Subscriber Spend Down Amount</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="AMT01" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="AMT02" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="AMT03" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element maxOccurs="1" minOccurs="0" name="III">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Subscriber Eligibility or Benefit Additional Inquiry Information</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="III01" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="III02" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="III03" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="III04" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="III05" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="III06" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="III07" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="III08" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="III09" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element maxOccurs="1" minOccurs="0" name="REF">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Subscriber Additional Information</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="REF01" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="REF02" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="REF03" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="REF04" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element maxOccurs="1" minOccurs="0" name="DTP">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Subscriber Eligibility/Benefit Date</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DTP01" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DTP02" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DTP03" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+														</xsd:complexType>
+													</xsd:element>
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:element maxOccurs="1" minOccurs="0" name="LOOP_2000D">
+												<xsd:annotation>
+													<xsd:appinfo>
+														<pf:property name="annotation">Dependent Level</pf:property>
+													</xsd:appinfo>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence />
+													<xsd:element maxOccurs="1" minOccurs="0" name="HL">
+														<xsd:annotation>
+															<xsd:appinfo>
+																<pf:property name="annotation">Dependent Level</pf:property>
+															</xsd:appinfo>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element maxOccurs="1" minOccurs="0" name="HL01" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="HL02" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="HL03" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="HL04" type="xsd:string" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element maxOccurs="1" minOccurs="0" name="TRN">
+														<xsd:annotation>
+															<xsd:appinfo>
+																<pf:property name="annotation">Dependent Trace Number</pf:property>
+															</xsd:appinfo>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element maxOccurs="1" minOccurs="0" name="TRN01" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="TRN02" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="TRN03" type="xsd:string" />
+															<xsd:element maxOccurs="1" minOccurs="0" name="TRN04" type="xsd:string" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element maxOccurs="1" minOccurs="0" name="LOOP_2100D">
+														<xsd:annotation>
+															<xsd:appinfo>
+																<pf:property name="annotation">Dependent Name</pf:property>
+															</xsd:appinfo>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element maxOccurs="1" minOccurs="0" name="NM1">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Dependent Name</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="NM101" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="NM102" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="NM103" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="NM104" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="NM105" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="NM106" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="NM107" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="NM108" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="NM109" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="NM110" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="NM111" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element maxOccurs="1" minOccurs="0" name="REF">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Dependent Additional Identification</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="REF01" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="REF02" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="REF03" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="REF04" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element maxOccurs="1" minOccurs="0" name="N3">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Dependent Address</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="N301" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="N302" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element maxOccurs="1" minOccurs="0" name="N4">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Dependent City/State/ZIP Code</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="N401" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="N402" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="N403" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="N404" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="N405" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="N406" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element maxOccurs="1" minOccurs="0" name="PRV">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Provider Information</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="PRV01" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="PRV02" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="PRV03" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="PRV04" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="PRV05" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="PRV06" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element maxOccurs="1" minOccurs="0" name="DMG">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Dependent Demographic Information</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DMG01" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DMG02" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DMG03" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DMG04" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DMG05" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DMG06" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DMG07" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DMG08" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DMG09" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element maxOccurs="1" minOccurs="0" name="INS">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Dependent Relationship</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS01" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS02" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS03" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS04" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS05" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS06" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS07" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS08" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS09" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS10" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS11" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS12" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS13" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS14" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS15" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS16" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="INS17" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element maxOccurs="1" minOccurs="0" name="DTP">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Dependent Date</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DTP01" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DTP02" type="xsd:string" />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DTP03" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element maxOccurs="1" minOccurs="0" name="LOOP_2110D">
+																<xsd:annotation>
+																	<xsd:appinfo>
+																		<pf:property name="annotation">Dependent Eligibility or Benefit Inquiry Information</pf:property>
+																	</xsd:appinfo>
+																</xsd:annotation>
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element maxOccurs="1" minOccurs="0" name="EQ">
+																		<xsd:annotation>
+																			<xsd:appinfo>
+																				<pf:property name="annotation">Dependent Eligibility or Benefit Inquiry Information</pf:property>
+																			</xsd:appinfo>
+																		</xsd:annotation>
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="EQ01" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="EQ03" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="EQ04" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="EQ02">
+																				<xsd:annotation>
+																					<xsd:appinfo>
+																						<pf:property name="annotation">Composite Medical Procedure Identifier</pf:property>
+																					</xsd:appinfo>
+																				</xsd:annotation>
+																				<xsd:complexType>
+																					<xsd:sequence />
+																					<xsd:element maxOccurs="1" minOccurs="0" name="EQ0201" type="xsd:string" />
+																					<xsd:element maxOccurs="1" minOccurs="0" name="EQ0202" type="xsd:string" />
+																					<xsd:element maxOccurs="1" minOccurs="0" name="EQ0203" type="xsd:string" />
+																					<xsd:element maxOccurs="1" minOccurs="0" name="EQ0204" type="xsd:string" />
+																					<xsd:element maxOccurs="1" minOccurs="0" name="EQ0205" type="xsd:string" />
+																					<xsd:element maxOccurs="1" minOccurs="0" name="EQ0206" type="xsd:string" />
+																					<xsd:element maxOccurs="1" minOccurs="0" name="EQ0207" type="xsd:string" />
+																				</xsd:complexType>
+																			</xsd:element>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element maxOccurs="1" minOccurs="0" name="III">
+																		<xsd:annotation>
+																			<xsd:appinfo>
+																				<pf:property name="annotation">Dependent Eligibility or Benefit Additional Inquiry Information</pf:property>
+																			</xsd:appinfo>
+																		</xsd:annotation>
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="III01" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="III02" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="III03" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="III04" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="III05" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="III06" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="III07" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="III08" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="III09" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element maxOccurs="1" minOccurs="0" name="REF">
+																		<xsd:annotation>
+																			<xsd:appinfo>
+																				<pf:property name="annotation">Dependent Additional Information</pf:property>
+																			</xsd:appinfo>
+																		</xsd:annotation>
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="REF01" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="REF02" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="REF03" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="REF04" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element maxOccurs="1" minOccurs="0" name="DTP">
+																		<xsd:annotation>
+																			<xsd:appinfo>
+																				<pf:property name="annotation">Dependent Eligibility/Benefit Date</pf:property>
+																			</xsd:appinfo>
+																		</xsd:annotation>
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="DTP01" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="DTP02" type="xsd:string" />
+																			<xsd:element maxOccurs="1" minOccurs="0" name="DTP03" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																</xsd:complexType>
+															</xsd:element>
+														</xsd:complexType>
+													</xsd:element>
+												</xsd:complexType>
+											</xsd:element>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="Control" type="xsd:string" />
+				<xsd:attribute name="DocType" type="xsd:string" />
+				<xsd:attribute name="Name" type="xsd:string" />
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

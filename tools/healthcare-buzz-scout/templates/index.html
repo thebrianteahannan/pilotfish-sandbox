@@ -9,15 +9,24 @@
 <body>
   <header class="top">
     <div>
-      <p class="kicker">PilotFish Sandbox</p>
+      <p class="kicker">PilotFish Sandbox · Buzz Scout</p>
       <h1>Healthcare integration buzz</h1>
-      <p class="lead">Reddit threads <em>and</em> G2 paying-user reviews for EDI / HL7 / FHIR / EHR / ACORD workflow gaps PilotFish could own. Runs hourly.</p>
+      <p class="lead">Reddit, industry news, Federal Register, Stack Overflow, Hacker News, and integration job posts for EDI / HL7 / FHIR / EHR / ACORD gaps PilotFish could own — last two years only. <a href="{{ url_for('briefing') }}">Find work</a> rolls this into demand and plays. <a href="{{ url_for('companies') }}">Companies</a> is the running prospect list.</p>
     </div>
     <div class="actions">
       <button id="run-btn" class="btn primary" type="button">Run scout now</button>
       <span id="run-status" class="muted"></span>
     </div>
   </header>
+
+  <nav class="nav">
+    <a href="{{ url_for('briefing') }}">Find work</a>
+    <a class="on" href="{{ url_for('index') }}">Signals</a>
+    <a href="{{ url_for('companies') }}">Companies</a>
+    <a href="{{ url_for('market') }}">Market</a>
+    <a href="{{ url_for('search') }}">When People Search</a>
+    <a href="{{ url_for('marketing') }}">Marketing</a>
+  </nav>
 
   <section class="stats">
     <div><span class="n">{{ stats.total }}</span><span class="l">tracked</span></div>
@@ -49,8 +58,8 @@
     </label>
     <label>Source
       <select name="source">
-        {% for s in ['all','reddit','g2'] %}
-        <option value="{{ s }}" {% if source==s %}selected{% endif %}>{{ s }}</option>
+        {% for s in SOURCE_CHOICES %}
+        <option value="{{ s }}" {% if source==s %}selected{% endif %}>{{ source_label(s) if s != 'all' else 'all' }}</option>
         {% endfor %}
       </select>
     </label>
@@ -76,30 +85,28 @@
     <article class="card status-{{ p.status }}">
       <div class="meta">
         <span class="score">{{ p.relevance }}</span>
-        {% if (p.source or 'reddit') == 'g2' %}
-        <span class="src g2">G2</span>
-        <span class="sub">{{ p.product_name or p.subreddit }}</span>
-        {% else %}
-        <span class="src reddit">Reddit</span>
-        <span class="sub">r/{{ p.subreddit }}</span>
+        <span class="src {{ p.source or 'reddit' }}">{{ source_label(p.source) }}</span>
+        {% if (p.source or '') == 'jobs' and p.product_name %}
+        <span class="co">{{ p.product_name }}</span>
+        {% endif %}
+        <span class="sub">{% if (p.source or 'reddit') == 'reddit' %}r/{{ p.subreddit }}{% else %}{{ p.subreddit }}{% endif %}</span>
+        {% if (p.source or 'reddit') == 'reddit' %}
         <span class="muted">↑{{ p.score }} · {{ p.num_comments }} comments</span>
         {% endif %}
+        {% set posted = format_when(p.created_utc, p.fetched_at) %}
+        {% if posted %}<span class="when{% if when_stale(p.created_utc, p.fetched_at) %} old{% endif %}">{{ posted }}</span>{% endif %}
         <span class="badge">{{ p.status }}</span>
       </div>
       <h2><a href="{{ p.permalink }}" target="_blank" rel="noopener">{{ p.title }}</a></h2>
       {% if p.capabilities %}
       <ul class="tags">
-        {% for c in p.capabilities %}
+        {% for c in p.capabilities[:4] %}
         <li>{{ c.label }}</li>
         {% endfor %}
       </ul>
       {% endif %}
-      <p class="why">{{ p.why }}</p>
-      {% if p.demo_hints %}
-      <p class="hints"><strong>Nearby demos:</strong> {{ p.demo_hints | join(', ') }}</p>
-      {% endif %}
-      {% if p.pitch_refs %}
-      <p class="hints"><strong>Pitch angles:</strong> {{ p.pitch_refs | join(' · ') }}</p>
+      {% if p.demo_hints or p.pitch_refs %}
+      <p class="extras">{% if p.demo_hints %}{{ p.demo_hints[:3] | join(', ') }}{% endif %}{% if p.demo_hints and p.pitch_refs %} · {% endif %}{% if p.pitch_refs %}{{ p.pitch_refs[:2] | join(' · ') }}{% endif %}</p>
       {% endif %}
       <div class="row">
         <a class="btn" href="{{ url_for('post_detail', post_id=p.id) }}">Open</a>

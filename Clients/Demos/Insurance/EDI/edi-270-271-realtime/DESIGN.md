@@ -71,7 +71,7 @@ Sibling of `edi-270-271-eligibility` (UI orchestrates three hops). Built for Gar
 ## 10. Ops
 
 - Ports: Mock payer **8211**, EIP **8120**, Web UI **8121**
-- Volumes: `./output`, `./logs`, `./samples`, `./documents`, TableData mount (5 `../` from `Insurance/EDI/`)
+- Volumes: `./output`, `./logs`, `./samples`, `./documents`, `./pilotfish/edi-tabledata`
 - Heap: 512M–2GB
 - Dependencies / cold start: EIP ~60–90s
 - Compose project: `edi-270-271-realtime`

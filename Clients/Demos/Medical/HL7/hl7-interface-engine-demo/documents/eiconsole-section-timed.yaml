@@ -1,0 +1,415 @@
+name: eiconsole-hl7-interface-engine-demo
+steps:
+- id: wait-fm
+  action: wait_for
+  target:
+    type: JMenu
+    text: File
+  detail: ''
+  dwell_ms: 350
+- id: basic
+  action: click
+  target:
+    type: tab
+    contains: Basic
+  detail: ''
+  dwell_ms: 200
+- id: open-pkg
+  action: double_click
+  target:
+    type: table
+    contains: HL7 Hospital To Database
+  detail: ''
+  dwell_ms: 700
+- id: r1-open
+  action: double_click
+  target:
+    type: table
+    contains: 1 - Hospital HL7 To Database
+  detail: ''
+  dwell_ms: 700
+- id: r1-grid
+  action: wait_for
+  target:
+    type: table
+    contains: RoutingSource
+  detail: ''
+  dwell_ms: 350
+- id: r1-src
+  action: click
+  target:
+    type: table
+    contains: RoutingSource
+    column: 0
+  detail: ''
+  optional: true
+  dwell_ms: 200
+- id: r1-listener
+  action: click
+  target:
+    type: table
+    contains: RoutingSource
+    column: 1
+  detail: ''
+  dwell_ms: 200
+- id: r1-lmod
+  action: click
+  target:
+    type: table
+    contains: HL7 over LLP
+  detail: ''
+  optional: true
+  dwell_ms: 200
+- id: r1-ltype
+  action: click
+  target:
+    contains: Listener Type
+  detail: ''
+  optional: true
+  dwell_ms: 200
+- id: r1-lbasic
+  action: click
+  target:
+    type: tab
+    contains: Basic
+  detail: ''
+  optional: true
+  dwell_ms: 200
+- id: r1-lport
+  action: click
+  target:
+    type: label
+    contains: Port
+  detail: ''
+  optional: true
+  dwell_ms: 200
+- id: r1-stx
+  action: click
+  target:
+    type: table
+    contains: RoutingSource
+    column: 2
+  detail: ''
+  dwell_ms: 200
+- id: r1-sfmt
+  action: click
+  target:
+    type: table
+    contains: HL7 2.x to XML
+  detail: ''
+  dwell_ms: 200
+- id: r1-sfmt-wait
+  action: wait_for
+  target:
+    contains: Format Profile
+  detail: ''
+  dwell_ms: 350
+- id: r1-smod
+  action: click
+  target:
+    contains: Transformation Module
+  detail: ''
+  optional: true
+  dwell_ms: 200
+- id: r1-sto
+  action: click
+  target:
+    type: tab
+    contains: To XML
+  detail: ''
+  optional: true
+  dwell_ms: 200
+- id: r1-sfmt-esc
+  action: escape
+  target:
+    type: JMenu
+    text: File
+  detail: ''
+  dwell_ms: 200
+- id: r1-sfmt-off
+  action: click
+  target:
+    type: table
+    contains: RoutingSource
+    column: 2
+  detail: ''
+  dwell_ms: 200
+- id: r1-sedit
+  action: click
+  target:
+    type: button
+    text: Edit
+  detail: Then we'll move on to the logical transformation. Data transformations in
+    the eiConsole are handled using PilotFish's Data Mapper.
+  dwell_ms: 9636
+  speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-section-94_qp5za/step_19.wav
+- id: r1-smap-tab
+  action: click
+  target:
+    type: tab
+    contains: Mapping
+  detail: ''
+  dwell_ms: 1200
+- id: r1-smap-opensrc
+  action: click
+  target:
+    text: Open source format
+  detail: ''
+  dwell_ms: 700
+- id: r1-smap-opensrc-esc
+  action: escape
+  target:
+    type: JMenu
+    text: File
+  detail: ''
+  dwell_ms: 200
+- id: r1-smap-opentgt
+  action: click
+  target:
+    text: Open target format
+  detail: ''
+  dwell_ms: 700
+- id: r1-smap-opentgt-esc
+  action: escape
+  target:
+    type: JMenu
+    text: File
+  detail: ''
+  dwell_ms: 200
+- id: r1-smap-drag
+  action: drag
+  target:
+    type: FormatTree
+    side: left
+  dest:
+    type: FormatTree
+    side: right
+  detail: ''
+  dwell_ms: 500
+- id: r1-smap2
+  action: wait_for
+  target:
+    type: JMenu
+    text: File
+  detail: All of your logical mapping is done here between your source format — in
+    this case our HL7 data represented as a tree to the left — and our target format,
+    a custom XML representation of some of the patient data we wanted to retain in
+    our database.
+  dwell_ms: 18492
+  speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-section-94_qp5za/step_26.wav
+- id: r1-smap3
+  action: wait_for
+  target:
+    type: JMenu
+    text: File
+  detail: Logical mapping rules are created through dragging and dropping onto the
+    structure in the middle, with green nodes representing XML elements from our custom
+    XML file and our blue nodes representing values mapped to those fields.
+  dwell_ms: 16140
+  speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-section-94_qp5za/step_27.wav
+- id: r1-smap4
+  action: wait_for
+  target:
+    type: JMenu
+    text: File
+  detail: Here we can see the patient information mapped into the person's last name,
+    first name, and date of birth field.
+  dwell_ms: 7908
+  speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-section-94_qp5za/step_28.wav
+- id: r1-smap5
+  action: wait_for
+  target:
+    type: JMenu
+    text: File
+  detail: We can also see a yellow note underneath the birth date that demonstrates
+    how the eiConsole's Data Mapper can be used to perform data manipulation during
+    the mapping process.
+  dwell_ms: 10668
+  speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-section-94_qp5za/step_29.wav
+- id: r1-smap6
+  action: wait_for
+  target:
+    type: JMenu
+    text: File
+  detail: Here we're formatting the date of birth value coming in from our HL7 into
+    an XML date format using our date formatting tool from the palette above.
+  dwell_ms: 10500
+  speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-section-94_qp5za/step_30.wav
+- id: r1-smap7
+  action: wait_for
+  target:
+    type: JMenu
+    text: File
+  detail: PID.7 is coming in with this format yyyyMMdd. Our desired output format
+    for our XML file will be yyyy-MM-dd.
+  dwell_ms: 13044
+  speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-section-94_qp5za/step_31.wav
+- id: r1-smap8
+  action: wait_for
+  target:
+    type: JMenu
+    text: File
+  detail: We define that using our date-time formatter so that all incoming data will
+    automatically change to that format. As this mapping was created, XSLT was generated
+    under the covers.
+  dwell_ms: 13332
+  speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-section-94_qp5za/step_32.wav
+- id: r1-smap9
+  action: wait_for
+  target:
+    type: JMenu
+    text: File
+  detail: Once all of our fields have been mapped and our mapping is complete, we
+    can move on to the Routing stage.
+  dwell_ms: 6924
+  speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-section-94_qp5za/step_33.wav
+- id: r1-sback
+  action: click
+  target:
+    contains: Return to Console
+  detail: ''
+  dwell_ms: 400
+- id: r1-snosave
+  action: click
+  target:
+    text: Don't Save
+  detail: ''
+  optional: true
+  dwell_ms: 200
+- id: r1-route
+  action: click
+  target:
+    type: table
+    contains: RoutingSource
+    column: 3
+  detail: ''
+  optional: true
+  dwell_ms: 200
+- id: r1-ttx
+  action: click
+  target:
+    type: table
+    contains: RoutingSource
+    column: 4
+  detail: ''
+  dwell_ms: 200
+- id: r1-tfmt
+  action: click
+  target:
+    type: table
+    contains: Patient XML to SQL
+  detail: ''
+  dwell_ms: 200
+- id: r1-tfmt-wait
+  action: wait_for
+  target:
+    contains: Format Profile
+  detail: ''
+  dwell_ms: 350
+- id: r1-tfrom
+  action: click
+  target:
+    type: tab
+    contains: From XML
+  detail: ''
+  optional: true
+  dwell_ms: 200
+- id: r1-tfmt-esc
+  action: escape
+  target:
+    type: JMenu
+    text: File
+  detail: ''
+  dwell_ms: 200
+- id: r1-tfmt-off
+  action: click
+  target:
+    type: table
+    contains: RoutingSource
+    column: 4
+  detail: ''
+  dwell_ms: 200
+- id: r1-tedit
+  action: click
+  target:
+    type: button
+    text: Edit
+  detail: On the left-hand side of our Data Mapper, you can see that simplified patient
+    data that we took from the HL7 message initially, then parsed out and created
+    this custom XML file with.
+  dwell_ms: 13188
+  speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-section-94_qp5za/step_43.wav
+- id: r1-tmap-tab
+  action: click
+  target:
+    type: tab
+    contains: Mapping
+  detail: ''
+  dwell_ms: 1200
+- id: r1-tmap-opensrc
+  action: click
+  target:
+    text: Open source format
+  detail: ''
+  dwell_ms: 700
+- id: r1-tmap-opensrc-esc
+  action: escape
+  target:
+    type: JMenu
+    text: File
+  detail: ''
+  dwell_ms: 200
+- id: r1-tmap-opentgt
+  action: click
+  target:
+    text: Open target format
+  detail: ''
+  dwell_ms: 700
+- id: r1-tmap-opentgt-esc
+  action: escape
+  target:
+    type: JMenu
+    text: File
+  detail: ''
+  dwell_ms: 200
+- id: r1-tmap-drag
+  action: drag
+  target:
+    type: FormatTree
+    side: left
+  dest:
+    type: FormatTree
+    side: right
+  detail: ''
+  dwell_ms: 500
+- id: r1-txslt2
+  action: wait_for
+  target:
+    type: JMenu
+    text: File
+  detail: On the right-hand side we have connected up to a database and loaded in
+    our tables, and also have statements and functions below.
+  dwell_ms: 8508
+  speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-section-94_qp5za/step_50.wav
+- id: r1-txslt3
+  action: wait_for
+  target:
+    type: JMenu
+    text: File
+  detail: Our mapping here in the middle indicates that we will insert this information
+    from our source system into these rows and tables.
+  dwell_ms: 7884
+  speak: /var/folders/lx/6_8c4c7d7h70v8xjmhhsl5_h0000gn/T/eiconsole-section-94_qp5za/step_51.wav
+- id: r1-tback
+  action: click
+  target:
+    contains: Return to Console
+  detail: ''
+  dwell_ms: 400
+- id: r1-tnosave
+  action: click
+  target:
+    text: Don't Save
+  detail: ''
+  optional: true
+  dwell_ms: 200

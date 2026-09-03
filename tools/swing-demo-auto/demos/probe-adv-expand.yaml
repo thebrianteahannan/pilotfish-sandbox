@@ -1,0 +1,17 @@
+name: probe-adv-expand
+steps:
+  - id: wait
+    action: wait_for
+    target: { type: tab, contains: Advanced }
+    detail: "Wait for tabs."
+    dwell_ms: 300
+  - id: advanced
+    action: click
+    target: { type: tab, contains: Advanced }
+    detail: "Advanced View."
+    dwell_ms: 800
+  - id: expand-root
+    action: double_click
+    target: { type: table, contains: eip-root }
+    detail: "Expand working directory."
+    dwell_ms: 1500

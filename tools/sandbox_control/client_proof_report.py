@@ -69,6 +69,7 @@ def prove_strip_report(root: Path, dive: dict, folder: Path | None = None) -> li
     ]
     old_xslt, new_xslt = _flag_xslt([]), _flag_xslt(listed)
     for code in codes:
+        p.tick(f"{code} strip report")
         flagged = ""
         sample = after_xml = before_xml = ""
         for variant in _code_variants(code):

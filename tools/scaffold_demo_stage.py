@@ -72,7 +72,7 @@ def write(path: Path, text: str) -> None:
 def copy_shared_static(webui: Path) -> None:
     static = webui / "static"
     static.mkdir(parents=True, exist_ok=True)
-    for name in ("pf-theme.css", "build-live.js", "build-live.css", "build-stage.js", "timing-tab.js", "timing-tab.css", "code-highlight.js", "code-highlight.css", "pilotfish-logo.jpg", "construction-video.js"):
+    for name in ("pf-theme.css", "build-live.js", "build-live.css", "build-stage.js", "timing-tab.js", "timing-tab.css", "code-highlight.js", "code-highlight.css", "pilotfish-logo.jpg", "construction-video.js", "sandbox-home.js"):
         src = SHARED / "static" / name
         if not src.is_file():
             # timing/code live either under static/ or directly under shared
@@ -255,6 +255,7 @@ INDEX_HTML = '''<!doctype html>
   <script src="/static/build-stage.js"></script>
   <script src="/static/build-live.js"></script>
   <script src="/static/construction-video.js"></script>
+  <script src="/static/sandbox-home.js"></script>
   <script src="/static/app.js"></script>
 </body>
 </html>

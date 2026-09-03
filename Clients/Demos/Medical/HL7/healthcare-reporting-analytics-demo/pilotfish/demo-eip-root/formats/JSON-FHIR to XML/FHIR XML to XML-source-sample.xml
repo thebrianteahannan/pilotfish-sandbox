@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><json:JSON xmlns:json="http://www.pilotfishtechnology.com/schemas/json"><json:OBJECT><resourceType pf_json_type="string">Patient</resourceType><id pf_json_type="string">example</id><text><status pf_json_type="string">generated</status><div pf_json_type="string">&lt;div&gt;
+      
+      &lt;table&gt;
+        
+        &lt;tbody&gt;
+          
+          &lt;tr&gt;
+            
+            &lt;td&gt;Name&lt;/td&gt;
+            
+            &lt;td&gt;Peter James 
+              &lt;b&gt;Chalmers&lt;/b&gt; (&amp;quot;Jim&amp;quot;)
+            &lt;/td&gt;
+          
+          &lt;/tr&gt;
+          
+          &lt;tr&gt;
+            
+            &lt;td&gt;Address&lt;/td&gt;
+            
+            &lt;td&gt;534 Erewhon, Pleasantville, Vic, 3999&lt;/td&gt;
+          
+          &lt;/tr&gt;
+          
+          &lt;tr&gt;
+            
+            &lt;td&gt;Contacts&lt;/td&gt;
+            
+            &lt;td&gt;Home: unknown. Work: (03) 5555 6473&lt;/td&gt;
+          
+          &lt;/tr&gt;
+          
+          &lt;tr&gt;
+            
+            &lt;td&gt;Id&lt;/td&gt;
+            
+            &lt;td&gt;MRN: 12345 (Acme Healthcare)&lt;/td&gt;
+          
+          &lt;/tr&gt;
+        
+        &lt;/tbody&gt;
+      
+      &lt;/table&gt;    
+    
+    &lt;/div&gt;</div></text><identifier pf_json_type="array"><json:OBJECT><fhir_comments pf_json_type="array"><json:ELEMENT pf_json_type="string">   MRN assigned by ACME healthcare on 6-May 2001   </json:ELEMENT></fhir_comments><use pf_json_type="string">usual</use><type><coding pf_json_type="array"><json:OBJECT><system pf_json_type="string">http://hl7.org/fhir/v2/0203</system><code pf_json_type="string">MR</code></json:OBJECT></coding></type><system pf_json_type="string">urn:oid:1.2.36.146.595.217.0.1</system><value pf_json_type="string">12345</value><period><start pf_json_type="string">2001-05-06</start></period><assigner><display pf_json_type="string">Acme Healthcare</display></assigner></json:OBJECT></identifier><active pf_json_type="boolean">true</active><name pf_json_type="array"><json:OBJECT><fhir_comments pf_json_type="array"><json:ELEMENT pf_json_type="string">   Peter James Chalmers, but called "Jim"   </json:ELEMENT></fhir_comments><use pf_json_type="string">official</use><family pf_json_type="array"><json:ELEMENT pf_json_type="string">Chalmers</json:ELEMENT></family><given pf_json_type="array"><json:ELEMENT pf_json_type="string">Peter</json:ELEMENT><json:ELEMENT pf_json_type="string">James</json:ELEMENT></given></json:OBJECT><json:OBJECT><use pf_json_type="string">usual</use><given pf_json_type="array"><json:ELEMENT pf_json_type="string">Jim</json:ELEMENT></given></json:OBJECT></name><telecom pf_json_type="array"><json:OBJECT><fhir_comments pf_json_type="array"><json:ELEMENT pf_json_type="string">   home communication details aren't known   </json:ELEMENT></fhir_comments><use pf_json_type="string">home</use></json:OBJECT><json:OBJECT><system pf_json_type="string">phone</system><value pf_json_type="string">(03) 5555 6473</value><use pf_json_type="string">work</use></json:OBJECT></telecom><gender pf_json_type="string">male</gender><_gender><fhir_comments pf_json_type="array"><json:ELEMENT pf_json_type="string">   use FHIR code system for male / female   </json:ELEMENT></fhir_comments></_gender><birthDate pf_json_type="string">1974-12-25</birthDate><_birthDate><extension pf_json_type="array"><json:OBJECT><url pf_json_type="string">http://hl7.org/fhir/StructureDefinition/patient-birthTime</url><valueDateTime pf_json_type="string">1974-12-25T14:35:45-05:00</valueDateTime></json:OBJECT></extension></_birthDate><deceasedBoolean pf_json_type="boolean">false</deceasedBoolean><address pf_json_type="array"><json:OBJECT><use pf_json_type="string">home</use><type pf_json_type="string">both</type><line pf_json_type="array"><json:ELEMENT pf_json_type="string">534 Erewhon St</json:ELEMENT></line><city pf_json_type="string">PleasantVille</city><district pf_json_type="string">Rainbow</district><state pf_json_type="string">Vic</state><postalCode pf_json_type="string">3999</postalCode><period><start pf_json_type="string">1974-12-25</start></period></json:OBJECT></address><contact pf_json_type="array"><json:OBJECT><relationship pf_json_type="array"><json:OBJECT><coding pf_json_type="array"><json:OBJECT><system pf_json_type="string">http://hl7.org/fhir/patient-contact-relationship</system><code pf_json_type="string">partner</code></json:OBJECT></coding></json:OBJECT></relationship><name><family pf_json_type="array"><json:ELEMENT pf_json_type="string">du</json:ELEMENT><json:ELEMENT pf_json_type="string">Marché</json:ELEMENT></family><_family pf_json_type="array"><json:OBJECT><extension pf_json_type="array"><json:OBJECT><fhir_comments pf_json_type="array"><json:ELEMENT pf_json_type="string">   the "du" part is a family name prefix (VV in iso 21090)   </json:ELEMENT></fhir_comments><url pf_json_type="string">http://hl7.org/fhir/StructureDefinition/iso21090-EN-qualifier</url><valueCode pf_json_type="string">VV</valueCode></json:OBJECT></extension></json:OBJECT><json:ELEMENT pf_json_type="null"/></_family><given pf_json_type="array"><json:ELEMENT pf_json_type="string">Bénédicte</json:ELEMENT></given></name><telecom pf_json_type="array"><json:OBJECT><system pf_json_type="string">phone</system><value pf_json_type="string">+33 (237) 998327</value></json:OBJECT></telecom><gender pf_json_type="string">female</gender><period><start pf_json_type="string">2012</start><_start><fhir_comments pf_json_type="array"><json:ELEMENT pf_json_type="string">   The contact relationship started in 2012   </json:ELEMENT></fhir_comments></_start></period></json:OBJECT></contact><managingOrganization><reference pf_json_type="string">Organization/1</reference></managingOrganization></json:OBJECT></json:JSON>

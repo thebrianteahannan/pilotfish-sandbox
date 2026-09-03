@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Format xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" name="CSV to XML">
+  <TransformationModule class="com.pilotfish.eip.modules.transform.CSVTransformationModule">
+    <ModuleConfig>
+      <ExecuteTransformation>true</ExecuteTransformation>
+      <Delimiter>,</Delimiter>
+      <OutputQuotes>true</OutputQuotes>
+      <DetectDelimiter>false</DetectDelimiter>
+      <Columns>mrn, last, first, dob, address, city, state, zip</Columns>
+      <LinesToSkip>0</LinesToSkip>
+      <ColumnsToSuppress />
+      <SuppressEmptyTags>false</SuppressEmptyTags>
+      <UseUTF8Tag>false</UseUTF8Tag>
+    </ModuleConfig>
+  </TransformationModule>
+  <XSLT>
+    <XSLTParameters>null</XSLTParameters>
+    <SaxonConverterEncoding>UTF-8</SaxonConverterEncoding>
+    <CacheXSLTToXML>false</CacheXSLTToXML>
+    <FromXML />
+    <ToXML>cvs xml to xml.xslt</ToXML>
+    <ExecuteTransformation>true</ExecuteTransformation>
+    <SaxonConverterHandling>Throw Exception</SaxonConverterHandling>
+    <XSLTEngine>SAXON</XSLTEngine>
+    <ToXMLAdditional>null</ToXMLAdditional>
+    <CacheXSLTFromXML>false</CacheXSLTFromXML>
+    <XSLTVersion>1.0</XSLTVersion>
+    <FromXMLAdditional>null</FromXMLAdditional>
+  </XSLT>
+  <FormatMetadata />
+  <SplitControl xmlns="http://www.pilotfishtechnology.com/eip/FormatSpec">
+    <JoinModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullJoinModule" />
+    <ForkModule xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" class="com.pilotfish.eip.modules.internal.NullForkModule" />
+  </SplitControl>
+</Format>
+

@@ -1,0 +1,21 @@
+---
+description: Capture baseline, implement, then run regression against that baseline
+alwaysApply: true
+---
+
+# Feature regression (baseline → implement → compare)
+
+When Brian asks to **run regression** on a feature, request, or change (hub buttons or in chat):
+
+1. **Capture Regression Baseline** — EIP up. Do **not** implement yet. Drop each case `in/` through EIP and store ADT/DFT (and kickout) in `baseline/`.
+2. **Implement** — only files for **that** feature. No drive-by refactors.
+3. **Run Regression** — drop the **same** `in/` files again. Do **not** recapture baseline. Compare new outputs to `baseline/`.
+
+**Pass:** diffs only on feeds that feature is supposed to touch (partition / client / software id / named files).  
+**Fail:** any other client’s ADT/DFT/kickout changed, or a touched feed produced no output.
+
+Hub request page: **Capture Regression Baseline** (before Implement) then **Run Regression** (after Implement). Store `regression` on the request after the compare run. Chat: same steps; show unexpected diffs first.
+
+For Med Rec, the hub copies a 5-second listener poll into the EIP **container only** (host `route.xml` stays 120s), then restores after the run. Do not commit a poll change. Wait until `data/out` files stop growing (and `eip.log` is quiet for that drop) before comparing — do not use a short hard timeout.
+
+Do not treat XSLT as the proof. Proof is the interface output (see test-proofs rule).

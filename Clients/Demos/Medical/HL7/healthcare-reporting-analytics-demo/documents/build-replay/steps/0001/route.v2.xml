@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="21fa08bd-77af-44ad-8da2-b622b870285f" name="Multiple Feeds to DB and API - HL7 - EDI - FHIR JSON">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="12e2af8c-e23a-40a4-9738-eefa0c1e4c26" moduleId="35f786be-1d92-4cfb-98b4-9f3e9b3a9760" label="HL7 Source System" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="58a72efa-e90f-4edf-98c9-e97c8b1e76ee" moduleId="a943b2de-ac39-4c5c-807e-996608505eb8" label="FTP Listener" x="0.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="adeb4413-7714-4d23-993d-e984f38f0102" moduleId="7fae8efb-ef46-4b84-afe9-1c45c2ef81a8" label="RESTful Listener" x="0.0" y="280.0" width="180.0" height="64.0"/>
+      <Node id="6c27617f-5abc-4195-a9ae-1a6445ab457a" moduleId="c91d4232-ab89-4541-b108-f54b2be7ed0b" label="Snapshot SQL XML" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="2c8bdc66-b114-4b18-8168-5c358af1b055" moduleId="2bc0b28b-f2f5-4870-b4ea-aac626ed4cd9" label="Populate Database" x="1560.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+      <Node id="a9ebf0d8-b55f-462a-8347-6fa679866a57" moduleId="9983df2a-d46f-4d29-bd53-353c1906443d" label="Snapshot JSON" x="1300.0" y="140.0" width="180.0" height="64.0"/>
+      <Node id="5fae72ba-db25-4692-bcee-8a9ed0f9e715" moduleId="62f7125c-06ad-44fa-a5ed-c7a25cd064c5" label="RESTful Service" x="1560.0" y="140.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="990edac3-9b2c-4b1b-810d-6c6af96fee94" sourceNodeId="6c27617f-5abc-4195-a9ae-1a6445ab457a" targetNodeId="2c8bdc66-b114-4b18-8168-5c358af1b055" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="34f0aaff-28ee-4d37-90c1-a8f4dc075632" sourceNodeId="a9ebf0d8-b55f-462a-8347-6fa679866a57" targetNodeId="5fae72ba-db25-4692-bcee-8a9ed0f9e715" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="0daba7d8-3b0e-4b25-bb2c-459e1225bb9d" sourceNodeId="12e2af8c-e23a-40a4-9738-eefa0c1e4c26" targetNodeId="6c27617f-5abc-4195-a9ae-1a6445ab457a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="8d5ca954-0769-48b5-ae40-31fcf1c83380" sourceNodeId="12e2af8c-e23a-40a4-9738-eefa0c1e4c26" targetNodeId="a9ebf0d8-b55f-462a-8347-6fa679866a57" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="7fd77a08-1db9-4a96-ae58-c0f86ada5c43" sourceNodeId="58a72efa-e90f-4edf-98c9-e97c8b1e76ee" targetNodeId="6c27617f-5abc-4195-a9ae-1a6445ab457a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="59c16323-08cf-476a-9b5f-8379553d4758" sourceNodeId="58a72efa-e90f-4edf-98c9-e97c8b1e76ee" targetNodeId="a9ebf0d8-b55f-462a-8347-6fa679866a57" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="da54b78b-3fa1-465e-877d-05b7cc2a4faa" sourceNodeId="adeb4413-7714-4d23-993d-e984f38f0102" targetNodeId="6c27617f-5abc-4195-a9ae-1a6445ab457a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="65339ce9-e631-4397-855d-3e6639052009" sourceNodeId="adeb4413-7714-4d23-993d-e984f38f0102" targetNodeId="a9ebf0d8-b55f-462a-8347-6fa679866a57" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

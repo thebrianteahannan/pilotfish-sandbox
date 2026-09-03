@@ -589,16 +589,28 @@
     <xsl:param name="inputFormat" />
     <xsl:param name="outputFormat" />
     <xsl:param name="inputValue" />
-    <!-- Define input and output parameters -->
-    <xsl:variable xmlns:java="xalan://java.text.SimpleDateFormat" name="inputDateFormat" select="java:new($inputFormat)" />
-    <xsl:variable xmlns:java="xalan://java.text.SimpleDateFormat" name="outputDateFormat" select="java:new($outputFormat)" />
-    <!-- Create and set timezone -->
-    <xsl:variable xmlns:java="xalan://java.util.TimeZone" name="timeZoneInstance" select="java:getTimeZone('CST6CDT')" />
-    <xsl:variable xmlns:java="xalan://java.text.SimpleDateFormat" name="dummy" select="java:setTimeZone($inputDateFormat, $timeZoneInstance)" />
-    <xsl:variable xmlns:java="xalan://java.text.SimpleDateFormat" name="dummy" select="java:setTimeZone($outputDateFormat, $timeZoneInstance)" />
-    <!-- Parse the input, then format it out -->
-    <xsl:variable xmlns:java="xalan://java.text.SimpleDateFormat" name="date" select="java:parse($inputDateFormat, $inputValue)" />
-    <xsl:value-of xmlns:java="xalan://java.text.SimpleDateFormat" select="java:format($outputDateFormat, $date)" />
+    <xsl:if test="string-length(normalize-space($inputValue)) &gt; 0">
+      <xsl:variable name="trimmed">
+        <xsl:choose>
+          <xsl:when test="string-length($inputValue) &gt; 19">
+            <xsl:value-of select="substring($inputValue, 1, 19)" />
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$inputValue" />
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <!-- Define input and output parameters -->
+      <xsl:variable xmlns:java="xalan://java.text.SimpleDateFormat" name="inputDateFormat" select="java:new($inputFormat)" />
+      <xsl:variable xmlns:java="xalan://java.text.SimpleDateFormat" name="outputDateFormat" select="java:new($outputFormat)" />
+      <!-- Create and set timezone -->
+      <xsl:variable xmlns:java="xalan://java.util.TimeZone" name="timeZoneInstance" select="java:getTimeZone('CST6CDT')" />
+      <xsl:variable xmlns:java="xalan://java.text.SimpleDateFormat" name="dummy" select="java:setTimeZone($inputDateFormat, $timeZoneInstance)" />
+      <xsl:variable xmlns:java="xalan://java.text.SimpleDateFormat" name="dummy" select="java:setTimeZone($outputDateFormat, $timeZoneInstance)" />
+      <!-- Parse the input, then format it out -->
+      <xsl:variable xmlns:java="xalan://java.text.SimpleDateFormat" name="date" select="java:parse($inputDateFormat, $trimmed)" />
+      <xsl:value-of xmlns:java="xalan://java.text.SimpleDateFormat" select="java:format($outputDateFormat, $date)" />
+    </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
 

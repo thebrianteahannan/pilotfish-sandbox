@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="f3f85eed-40af-4b3e-bbab-121b8f5877a7" name="Poll EDI 834" type="Directory / File" tag="Listener" class="com.pilotfish.eip.modules.file.DirectoryListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <CLIAllowed>false</CLIAllowed>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <StopWhenPollingFailure>true</StopWhenPollingFailure>
+      
+        
+      <FIFOQueueName/>
+      
+        
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      
+        
+      <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      
+        
+      <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+      
+        
+      <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      
+        
+      <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+      
+        
+      <PollingInterval>5</PollingInterval>
+      
+        
+      <PollingDirectory>$$EDI_INBOUND_DIRECTORY</PollingDirectory>
+      
+        
+      <FileNameRestriction>.*\.(edi|834|EDI)</FileNameRestriction>
+      
+        
+      <FileExtensionRestriction/>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <PostProcessOperation>Move</PostProcessOperation>
+      
+        
+      <TargetDirectory>$$EDI_ARCHIVE_DIRECTORY</TargetDirectory>
+      
+        
+      <CompatModeMoved>false</CompatModeMoved>
+      
+        
+      <Tokenizers/>
+      
+        
+      <SerializedTransactionsTag>1</SerializedTransactionsTag>
+      
+        
+      <SubFolderIterationTag>false</SubFolderIterationTag>
+      
+        
+      <FullFolderPathRestrictionsTag/>
+      
+        
+      <HiddenFilesTag>false</HiddenFilesTag>
+      
+        
+      <SchedulerStartTag/>
+      
+        
+      <SchedulerEndTag/>
+      
+        
+      <ExcludeDaysTag/>
+      
+        
+      <ExcludeDatesTag/>
+      
+        
+      <TimeZone>System Default</TimeZone>
+      
+        
+      <MinSecondsSinceFileModified>2</MinSecondsSinceFileModified>
+      
+        
+      <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+      
+        
+      <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+      
+        
+      <CombineFiles>false</CombineFiles>
+      
+        
+      <HeaderLines>0</HeaderLines>
+      
+        
+      <SynchResponse>false</SynchResponse>
+      
+        
+      <Timeout>60</Timeout>
+      
+        
+      <FileSortingMethod>System Default</FileSortingMethod>
+      
+        
+      <FileSortingDirection>Ascending</FileSortingDirection>
+      
+      
+   </ModuleConfig>
+</Module>

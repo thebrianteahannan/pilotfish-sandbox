@@ -241,9 +241,6 @@ def _demo_rationale(cap_id: str, post: dict[str, Any], comments: list[dict[str, 
 
 
 def build_reply(post: dict[str, Any], comments: list[dict[str, Any]], demos: list[dict[str, Any]]) -> str:
-    if (post.get("source") or "reddit") == "g2":
-        return build_g2_talk_track(post, demos)
-
     title = (post.get("title") or "this").strip()
     signals = [c for c in comments if c.get("is_signal")]
     pains = []
@@ -277,40 +274,6 @@ def build_reply(post: dict[str, Any], comments: list[dict[str, Any]], demos: lis
         f"{demo_line}\n\n"
         f"Happy to share a concrete route / sample if helpful (no pitch deck required) — "
         f"what’s the worst manual hop in your stack today?"
-    )
-
-
-def build_g2_talk_track(post: dict[str, Any], demos: list[dict[str, Any]]) -> str:
-    product = post.get("product_name") or post.get("subreddit") or "this product"
-    dislike = re.sub(r"\s+", " ", (post.get("dislike_text") or "").strip())
-    like = re.sub(r"\s+", " ", (post.get("like_text") or "").strip())
-    if len(dislike) > 220:
-        dislike = dislike[:217] + "…"
-    if len(like) > 160:
-        like = like[:157] + "…"
-
-    caps = [c.get("label") for c in (post.get("capabilities") or []) if c.get("label")]
-    cap_line = ", ".join(caps[:3]) if caps else "RCM / EHR integration"
-
-    demo_line = ""
-    if demos:
-        d0 = demos[0]
-        demo_line = (
-            f"\n\nSandbox demo we can stand up: “{d0.get('title')}” — {d0.get('shows')} "
-            f"(pattern: {d0.get('modules')})."
-        )
-
-    return (
-        f"Talk track from a paying-user G2 review of {product}:\n\n"
-        f"Liked: {like or '(not stated)'}\n"
-        f"Workflow gap / dislike: {dislike or '(not stated)'}\n\n"
-        f"PilotFish angle ({cap_line}): don’t replace their billing app — sit beside it. "
-        f"Graphically map the real X12/HL7/FHIR hops, validate SNIP / companion rules, "
-        f"and push exceptions into a workqueue humans already live in. "
-        f"That’s the gap G2 reviewers keep naming: automation that stops at the easy path "
-        f"and leaves eligibility mismatches, delayed remits, and portal/phone rework untouched."
-        f"{demo_line}\n\n"
-        f"Ask: which downstream system still forces a re-key after {product} does its job?"
     )
 
 
@@ -352,8 +315,30 @@ def enrich_post(
     """Fetch comments if needed, curate, persist, return bundle for the UI."""
     from reddit_client import RedditClient  # local import keeps curate testable
 
-    if (post.get("source") or "reddit") == "g2":
-        return _enrich_g2(store, post, capability_map, force=force)
+    if (post.get("source") or "reddit") != "reddit":
+        comments = store.list_comments(post["id"])
+        curated = curate_thread(post, comments, capability_map)
+        if force or not post.get("reply_draft"):
+            store.save_curation(
+                post["id"],
+                reply_draft=curated["reply_draft"],
+                demo_suggestions=curated["demo_suggestions"],
+                themes=curated["themes"],
+                signal_count=curated["signal_count"],
+            )
+            post = store.get_post(post["id"]) or post
+        comments = curated["comments"]
+        return {
+            "post": post,
+            "comments": comments,
+            "signal_comments": [c for c in comments if c.get("is_signal")],
+            "other_comments": [c for c in comments if not c.get("is_signal")],
+            "demo_suggestions": curated["demo_suggestions"],
+            "reply_draft": curated["reply_draft"],
+            "themes": curated["themes"],
+            "signal_count": curated["signal_count"],
+            "error": None,
+        }
 
     existing = store.list_comments(post["id"])
     err: str | None = None
@@ -419,81 +404,4 @@ def enrich_post(
         "themes": themes,
         "signal_count": signal_count,
         "error": err,
-    }
-
-
-def _enrich_g2(
-    store: Any,
-    post: dict[str, Any],
-    capability_map: list[dict[str, Any]],
-    *,
-    force: bool = False,
-) -> dict[str, Any]:
-    """G2 reviews already contain the meat (likes/dislikes) — curate those as signals."""
-    existing = store.list_comments(post["id"])
-    if force or not existing or not post.get("reply_draft"):
-        synthetic = []
-        if post.get("dislike_text"):
-            synthetic.append(
-                {
-                    "id": f"{post['id']}_dislike",
-                    "post_id": post["id"],
-                    "author": "g2-dislike",
-                    "body": post["dislike_text"],
-                    "permalink": post.get("permalink") or "",
-                    "created_utc": post.get("created_utc") or 0,
-                    "score": 0,
-                }
-            )
-        if post.get("like_text"):
-            synthetic.append(
-                {
-                    "id": f"{post['id']}_like",
-                    "post_id": post["id"],
-                    "author": "g2-like",
-                    "body": post["like_text"],
-                    "permalink": post.get("permalink") or "",
-                    "created_utc": post.get("created_utc") or 0,
-                    "score": 0,
-                }
-            )
-        curated = curate_thread(post, synthetic, capability_map)
-        # Force dislike as signal when present
-        for c in curated["comments"]:
-            if c.get("author") == "g2-dislike":
-                c["is_signal"] = True
-                c["relevance"] = max(int(c.get("relevance") or 0), 40)
-        curated["signal_count"] = sum(1 for c in curated["comments"] if c.get("is_signal"))
-        curated["reply_draft"] = build_g2_talk_track(post, curated["demo_suggestions"])
-        store.replace_comments(post["id"], curated["comments"])
-        store.save_curation(
-            post["id"],
-            reply_draft=curated["reply_draft"],
-            demo_suggestions=curated["demo_suggestions"],
-            themes=curated["themes"],
-            signal_count=curated["signal_count"],
-        )
-        post = store.get_post(post["id"]) or post
-        comments = curated["comments"]
-        demos = curated["demo_suggestions"]
-        reply = curated["reply_draft"]
-        themes = curated["themes"]
-        signal_count = curated["signal_count"]
-    else:
-        comments = existing
-        demos = post.get("demo_suggestions") or []
-        reply = post.get("reply_draft") or ""
-        themes = post.get("comment_themes") or []
-        signal_count = int(post.get("signal_comment_count") or 0)
-
-    return {
-        "post": post,
-        "comments": comments,
-        "signal_comments": [c for c in comments if c.get("is_signal")],
-        "other_comments": [c for c in comments if not c.get("is_signal")],
-        "demo_suggestions": demos,
-        "reply_draft": reply,
-        "themes": themes,
-        "signal_count": signal_count,
-        "error": None,
     }

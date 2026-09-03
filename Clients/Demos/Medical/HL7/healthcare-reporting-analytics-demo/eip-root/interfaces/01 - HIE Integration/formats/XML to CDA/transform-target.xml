@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:hl7-org:v3" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter" targetNamespace="urn:hl7-org:v3">
+			<xsd:element name="ClinicalDocument" type="ClinicalDocument_type" />
+			<xsd:complexType name="patientRole_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="id">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="extension" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="root" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="addr">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="streetAddressLine">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="nullFlavor" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="city">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="nullFlavor" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="state">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="nullFlavor" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="postalCode">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="nullFlavor" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="country">
+								<xsd:complexType>
+									<xsd:simpleContent>
+										<xsd:extension base="xsd:string">
+											<xsd:attribute form="unqualified" name="nullFlavor" type="xsd:string" />
+										</xsd:extension>
+									</xsd:simpleContent>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:attribute form="unqualified" name="nullFlavor" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="telecom">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="nullFlavor" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="patient" type="patient_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="providerOrganization" type="providerOrganization_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="addr_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="streetAddressLine">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="nullFlavor" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="city">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="nullFlavor" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="state">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="nullFlavor" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="postalCode">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="nullFlavor" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="country">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="nullFlavor" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="patient_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="name">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="family" type="xsd:string" />
+							<xsd:element form="qualified" maxOccurs="unbounded" minOccurs="1" name="given" type="xsd:string" />
+							<xsd:attribute form="unqualified" name="use" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="administrativeGenderCode">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="code" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="codeSystem" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="birthTime">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="value" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="raceCode">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="code" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="codeSystem" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="displayName" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="ethnicGroupCode">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="code" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="codeSystem" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="displayName" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="birthplace" type="birthplace_type" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="languageCommunication" type="languageCommunication_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ClinicalDocument_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="realmCode">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="code" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="typeId">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="extension" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="root" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="unbounded" minOccurs="1" name="templateId">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="extension" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="root" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="id">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="extension" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="root" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="code">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="code" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="codeSystem" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="codeSystemName" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="displayName" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="title" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="effectiveTime">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="value" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="confidentialityCode">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="code" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="codeSystem" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="languageCode">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="code" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="recordTarget" type="recordTarget_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="providerOrganization_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="id">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="extension" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="root" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="name" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="telecom">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="value" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="addr" type="addr_type_1" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="recordTarget_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="patientRole" type="patientRole_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="birthplace_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="place" type="place_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="languageCommunication_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="unbounded" minOccurs="1" name="templateId">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="root" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="languageCode">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="code" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="preferenceInd">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="value" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="place_type">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="addr" type="addr_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="addr_type_1">
+				<xsd:sequence>
+					<xsd:element form="qualified" maxOccurs="unbounded" minOccurs="1" name="streetAddressLine" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="city" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="state">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute form="unqualified" name="nullFlavor" type="xsd:string" />
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="postalCode" type="xsd:string" />
+					<xsd:element form="qualified" maxOccurs="1" minOccurs="1" name="country" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

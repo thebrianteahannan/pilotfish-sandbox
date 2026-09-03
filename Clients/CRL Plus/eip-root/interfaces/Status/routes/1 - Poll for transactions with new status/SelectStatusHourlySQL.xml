@@ -27,7 +27,7 @@
 			AND (
 				T.PF_PROCESSING_KEY IS NULL
 				OR
-				(sysdate - to_date(PF_PROCESSING_KEY, 'YYYY-MM-DD-HH24-MI_SS')) &gt;= (4.0 / 24.0)
+				(DATEDIFF(hour, TRY_CONVERT(datetime, REPLACE(PF_PROCESSING_KEY, '_','-'), 120), GETDATE()) >= 4)
 			)
 			AND T.PF_SOURCE_CLIENT IN ('ELFP')
 		</SQL>
