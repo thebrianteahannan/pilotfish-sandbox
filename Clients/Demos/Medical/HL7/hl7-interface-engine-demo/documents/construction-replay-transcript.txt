@@ -1,0 +1,177 @@
+Construction Replay Transcript
+eiConsole for Healthcare – HL7 Demo
+Wednesday, September 2, 2026  ·  running time 6:10
+Shooting script: timecode, where to click in eiConsole, then the spoken line.
+
+0:00 – 0:07
+[Official open cards]
+This is PilotFish and the eiConsole, and this is a demo for Creating an End-to-End HL7 Interface.
+
+0:07 – 0:14
+[Click the Basic tab]
+Welcome. In this demonstration you will see some of the unique capabilities of the eiConsole for Healthcare.
+
+0:14 – 0:23
+[Double-click package “HL7 Hospital To Database”]
+In this example, HL7 is coming from a hospital and then sent on to a data measures store or a database.
+
+0:23 – 0:34
+[Double-click route “1 - Hospital HL7 To Database”]
+We begin in the main route grid that depicts the flow of data between our Source System, a hospital, and our Target System, an external database.
+
+0:34 – 0:40
+[Click “RoutingSource”]
+[Route grid — click the Source System column]
+Those end-system names are just labels. The work is the stages in between.
+
+0:40 – 0:46
+[Route grid — click the Listener column]
+We'll begin with our Listener. In this case, we're using HL7 over LLP.
+
+0:46 – 0:53
+[Click “HL7 over LLP”]
+[Click Listener Type]
+[Click the Basic tab]
+[Click Port]
+This listener monitors the specified TCP socket for HL7 messages. Here that socket is port 2578.
+
+0:53 – 1:02
+[Route grid — click the Source Transform column]
+We'll then move on to the Source Transformation. This will take the HL7 data and convert it into a generic XML representation.
+
+1:02 – 1:13
+[Click “HL7 2.x to XML”]
+[Click Format Profile]
+[Click Transformation Module]
+We do this by using the eiConsole's HL7 to XML Transformation Module. In this drop-down, we'll choose HL7 2.x to find our version.
+
+1:13 – 1:21
+[Click the To XML tab]
+[Route grid — click the Source Transform column]
+[Click Edit]
+Then we'll move on to the logical transformation. Data transformations in the eiConsole are handled using PilotFish's Data Mapper.
+
+1:21 – 1:44
+[Click the Mapping tab]
+[Click Open source format]
+[Click Open target format]
+All of your logical mapping is done here between your source format — in this case our HL7 data represented as a tree to the left — and our target format, a custom XML representation of some of the patient data we wanted to retain in our database.
+
+1:44 – 1:59
+[Hold — Source Transform]
+Logical mapping rules are created through dragging and dropping onto the structure in the middle, with green nodes representing XML elements from our custom XML file and our blue nodes representing values mapped to those fields.
+
+1:59 – 2:08
+[Hold — Source Transform]
+Here we can see the patient information mapped into the person's last name, first name, and date of birth field.
+
+2:08 – 2:20
+[Hold — Source Transform]
+We can also see a yellow note underneath the birth date that demonstrates how the eiConsole's Data Mapper can be used to perform data manipulation during the mapping process.
+
+2:20 – 2:31
+[Hold — Source Transform]
+Here we're formatting the date of birth value coming in from our HL7 into an XML date format using our date formatting tool from the palette above.
+
+2:31 – 2:40
+[Hold — Source Transform]
+PID.7 is coming in with this format yyyyMMdd. Our desired output format for our XML file will be yyyy-MM-dd.
+
+2:40 – 2:52
+[Hold — Source Transform]
+We define that using our date-time formatter so that all incoming data will automatically change to that format. As this mapping was created, XSLT was generated under the covers.
+
+2:52 – 3:01
+[Hold — Source Transform]
+Once all of our fields have been mapped and our mapping is complete, we can move on to the Routing stage.
+
+3:01 – 3:16
+[Click Return to Console]
+[Click Don't Save]
+[Route grid — click the Routing column]
+In the Routing stage, we route the data along to our single Target System, which includes the target transformation to convert our generic XML representation of the HL7 into the specific SQL database statement.
+
+3:16 – 3:26
+[Route grid — click the Target Transform column]
+In our next stage, the Target Transform, we will now do another logical transformation — taking that XML representation and creating SQL statements from that.
+
+3:26 – 3:30
+[Click “Patient XML to SQL”]
+[Click Format Profile]
+[Click the From XML tab]
+We'll do this using our Data Mapper.
+
+3:30 – 3:44
+[Route grid — click the Target Transform column]
+[Click Edit]
+On the left-hand side of our Data Mapper, you can see that simplified patient data that we took from the HL7 message initially, then parsed out and created this custom XML file with.
+
+3:44 – 3:56
+[Click the Mapping tab]
+[Click Open source format]
+[Click Open target format]
+On the right-hand side we have connected up to a database and loaded in our tables, and also have statements and functions below.
+
+3:56 – 4:06
+[Hold — Target Transform]
+Our mapping here in the middle indicates that we will insert this information from our source system into these rows and tables.
+
+4:06 – 4:17
+[Click Return to Console]
+[Click Don't Save]
+[Route grid — click the Transport column]
+In our Transport stage, we've chosen that we'll connect up to a database. There are other options for Transport, much like our Listener stage.
+
+4:17 – 4:29
+[Click “Write Patients SQL”]
+[Click the Transport Configuration tab]
+[Click JDBC]
+To connect up to that database we choose this from the drop-down and enter some basic connection credentials. We can also test our database connection below using this button.
+
+4:29 – 4:39
+[Click Testing Mode]
+[Click Don't Save]
+Now that we've viewed the configuration of these stages, let's move along to Testing Mode to see it in action.
+
+4:39 – 4:52
+[Hold — Testing Mode]
+Here we'll see all the stages that we just talked about represented as question marks. We can choose to start our tests at any stage and end it at any stage.
+
+4:52 – 5:00
+[Hold — Testing Mode]
+We'll start the test at the Listener so it's actually listening on that TCP port for an HL7 feed.
+
+5:00 – 5:08
+[Click Test Mode Configuration]
+[Click Sample ADT]
+This saved test starts at the Listener. After we execute, it waits on port 2578 for a message.
+
+5:08 – 5:13
+[Click No]
+[Click Execute Test]
+Once we hit execute test, the listener starts and waits on port 2578.
+
+5:13 – 5:21
+[Hold — Testing Mode]
+Now we send it a sample HL7 message over LLP. The question marks turn to green check marks.
+
+5:21 – 5:31
+[Click Stop]
+[Route grid — click the Listener column]
+Starting at the Listener, we can see each stage output throughout Testing Mode. Here is the HL7 that just arrived over LLP.
+
+5:31 – 5:36
+[Hold — Testing Mode]
+Here we can see an XML representation of that HL7 that was created.
+
+5:36 – 5:43
+[Hold — Testing Mode]
+Here we can see the XML that we parsed just using those simplified patient data.
+
+5:43 – 5:57
+[Route grid — click the Target Transform column]
+At the Target Transform, here we can see the XML representation of what will happen in our SQL database, which will then be sent on to a live database by entering that connectivity information.
+
+5:57 – 6:10
+[Hold — Target Transform]
+And that's all there is to it. It's just that simple to use the eiConsole for Healthcare to manipulate HL7 data and convert HL7 data into virtually any other file format.

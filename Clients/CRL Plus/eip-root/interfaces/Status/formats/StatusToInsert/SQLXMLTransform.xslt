@@ -15,7 +15,7 @@
           <!-- wait for manual attachments -->
           <ns1:Execute>
             <ns1:SQL>
-              <xsl:text>UPDATE CRLTRANSACTION T SET T.AWAITING_ATTACHMENTS='Y', T.LAST_MODIFIED_DATE = SYSDATE, T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null WHERE T.TRANSACTION_ID = ?</xsl:text>
+              <xsl:text>UPDATE T SET T.AWAITING_ATTACHMENTS='Y', T.LAST_MODIFIED_DATE = GETDATE(), T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null FROM CRLTRANSACTION T WHERE T.TRANSACTION_ID = ?</xsl:text>
             </ns1:SQL>
             <ns1:Params>
               <xsl:value-of select="'pilotfish'" />
@@ -29,7 +29,7 @@
           <!-- Case 1: Recently modified -->
           <ns1:Execute>
             <ns1:SQL>
-              <xsl:text>UPDATE CRLTRANSACTION T SET T.LAST_STATUS_DELIVERED_DATE = cast(to_timestamp(?, 'YYYY-MM-DD HH24:MI:SS.FF3') AS DATE), T.LAST_MODIFIED_DATE = SYSDATE, T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null WHERE T.TRANSACTION_ID = ? AND T.LAST_MODIFIED_DATE &gt; cast(to_timestamp(?, 'YYYY-MM-DD HH24:MI:SS.FF3') AS DATE)</xsl:text>
+              <xsl:text>UPDATE T SET T.LAST_STATUS_DELIVERED_DATE = TRY_CONVERT(datetime, ?), T.LAST_MODIFIED_DATE = GETDATE(), T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null FROM CRLTRANSACTION T WHERE T.TRANSACTION_ID = ? AND T.LAST_MODIFIED_DATE &gt; TRY_CONVERT(datetime, ?)</xsl:text>
             </ns1:SQL>
             <ns1:Params>
               <xsl:value-of select="ta:getAttribute($attr, 'com.pilotfish.crl.lastmodifiedate')" />
@@ -47,7 +47,7 @@
           <!-- Case 2: Not recently modified -->
           <ns1:Execute>
             <ns1:SQL>
-              <xsl:text>UPDATE CRLTRANSACTION T SET T.LAST_STATUS_DELIVERED_DATE = SYSDATE, T.LAST_MODIFIED_DATE = SYSDATE, T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null WHERE T.TRANSACTION_ID = ? AND T.LAST_MODIFIED_DATE &lt;= cast(to_timestamp(?, 'YYYY-MM-DD HH24:MI:SS.FF3') AS DATE)</xsl:text>
+              <xsl:text>UPDATE T SET T.LAST_STATUS_DELIVERED_DATE = GETDATE(), T.LAST_MODIFIED_DATE = GETDATE(), T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null FROM CRLTRANSACTION T WHERE T.TRANSACTION_ID = ? AND T.LAST_MODIFIED_DATE &lt;= TRY_CONVERT(datetime, ?)</xsl:text>
             </ns1:SQL>
             <ns1:Params>
               <xsl:value-of select="'pilotfish'" />
@@ -64,7 +64,7 @@
           <!-- status is just staged -->
           <ns1:Execute>
             <ns1:SQL>
-              <xsl:text>UPDATE CRLTRANSACTION T SET T.LAST_STATUS_DELIVERED_DATE = SYSDATE, T.PF_BATCH_NAME = ?, T.LAST_MODIFIED_DATE = SYSDATE, T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null WHERE T.TRANSACTION_ID = ?</xsl:text>
+              <xsl:text>UPDATE T SET T.LAST_STATUS_DELIVERED_DATE = GETDATE(), T.PF_BATCH_NAME = ?, T.LAST_MODIFIED_DATE = GETDATE(), T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null FROM CRLTRANSACTION T WHERE T.TRANSACTION_ID = ?</xsl:text>
             </ns1:SQL>
             <ns1:Params>
               <xsl:value-of select="$stagedBatchName" />
@@ -81,7 +81,7 @@
           <!-- final result delivered -->
           <ns1:Execute>
             <ns1:SQL>
-              <xsl:text>UPDATE CRLTRANSACTION T SET T.FINAL_RESULT_DELIVERED_DATE = SYSDATE, T.LAST_MODIFIED_DATE = SYSDATE, T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null WHERE T.TRANSACTION_ID = ?</xsl:text>
+              <xsl:text>UPDATE T SET T.FINAL_RESULT_DELIVERED_DATE = GETDATE(), T.LAST_MODIFIED_DATE = GETDATE(), T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null FROM CRLTRANSACTION T WHERE T.TRANSACTION_ID = ?</xsl:text>
             </ns1:SQL>
             <ns1:Params>
               <xsl:value-of select="'pilotfish'" />
@@ -95,7 +95,7 @@
           <!-- result is just staged -->
           <ns1:Execute>
             <ns1:SQL>
-              <xsl:text>UPDATE CRLTRANSACTION T SET T.FINAL_RESULT_STAGED_DATE = SYSDATE, T.PF_BATCH_NAME = ?, T.LAST_MODIFIED_DATE = SYSDATE, T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null WHERE T.TRANSACTION_ID = ?</xsl:text>
+              <xsl:text>UPDATE T SET T.FINAL_RESULT_STAGED_DATE = GETDATE(), T.PF_BATCH_NAME = ?, T.LAST_MODIFIED_DATE = GETDATE(), T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null FROM CRLTRANSACTION T WHERE T.TRANSACTION_ID = ?</xsl:text>
             </ns1:SQL>
             <ns1:Params>
               <xsl:value-of select="$stagedBatchName" />
@@ -112,7 +112,7 @@
           <!-- staged batch has been sent: update interim status -->
           <ns1:Execute>
             <ns1:SQL>
-              <xsl:text>UPDATE CRLTRANSACTION T SET T.LAST_STATUS_DELIVERED_DATE = SYSDATE, T.LAST_MODIFIED_DATE = SYSDATE, T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null, T.PF_BATCH_NAME = ? WHERE T.PF_BATCH_NAME = ? and T.FINAL_RESULT_STAGED_DATE IS NULL</xsl:text>
+              <xsl:text>UPDATE T SET T.LAST_STATUS_DELIVERED_DATE = GETDATE(), T.LAST_MODIFIED_DATE = GETDATE(), T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null, T.PF_BATCH_NAME = ? FROM CRLTRANSACTION T WHERE T.PF_BATCH_NAME = ? and T.FINAL_RESULT_STAGED_DATE IS NULL</xsl:text>
             </ns1:SQL>
             <ns1:Params>
               <xsl:value-of select="'pilotfish'" />
@@ -127,7 +127,7 @@
           <!-- staged batch has been sent: update final results -->
           <ns1:Execute>
             <ns1:SQL>
-              <xsl:text>UPDATE CRLTRANSACTION T SET T.FINAL_RESULT_DELIVERED_DATE = SYSDATE, T.LAST_MODIFIED_DATE = SYSDATE, T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null, T.PF_BATCH_NAME = ? WHERE T.PF_BATCH_NAME = ? and T.FINAL_RESULT_STAGED_DATE IS NOT NULL</xsl:text>
+              <xsl:text>UPDATE T SET T.FINAL_RESULT_DELIVERED_DATE = GETDATE(), T.LAST_MODIFIED_DATE = GETDATE(), T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null, T.PF_BATCH_NAME = ? FROM CRLTRANSACTION T WHERE T.PF_BATCH_NAME = ? and T.FINAL_RESULT_STAGED_DATE IS NOT NULL</xsl:text>
             </ns1:SQL>
             <ns1:Params>
               <xsl:value-of select="'pilotfish'" />
@@ -144,7 +144,7 @@
           <!-- staged batch has been sent: update interim status -->
           <ns1:Execute>
             <ns1:SQL>
-              <xsl:text>UPDATE CRLTRANSACTION T SET T.LAST_STATUS_DELIVERED_DATE = SYSDATE, T.LAST_MODIFIED_DATE = SYSDATE, T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null, T.PF_BATCH_NAME = ? WHERE (T.PF_SOURCE_CLIENT=? OR T.TELEDEX_REMOTE_ID=?) AND T.PF_BATCH_NAME = ? and T.FINAL_RESULT_STAGED_DATE IS NULL</xsl:text>
+              <xsl:text>UPDATE T SET T.LAST_STATUS_DELIVERED_DATE = GETDATE(), T.LAST_MODIFIED_DATE = GETDATE(), T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null, T.PF_BATCH_NAME = ? FROM CRLTRANSACTION T WHERE (T.PF_SOURCE_CLIENT=? OR T.TELEDEX_REMOTE_ID=?) AND T.PF_BATCH_NAME = ? and T.FINAL_RESULT_STAGED_DATE IS NULL</xsl:text>
             </ns1:SQL>
             <ns1:Params>
               <xsl:value-of select="'pilotfish'" />
@@ -165,7 +165,7 @@
           <!-- staged batch has been sent: update final results -->
           <ns1:Execute>
             <ns1:SQL>
-              <xsl:text>UPDATE CRLTRANSACTION T SET T.FINAL_RESULT_DELIVERED_DATE = SYSDATE, T.LAST_MODIFIED_DATE = SYSDATE, T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null, T.PF_BATCH_NAME = ? WHERE (T.PF_SOURCE_CLIENT=? OR T.TELEDEX_REMOTE_ID=?) AND T.PF_BATCH_NAME = ? and T.FINAL_RESULT_STAGED_DATE IS NOT NULL</xsl:text>
+              <xsl:text>UPDATE T SET T.FINAL_RESULT_DELIVERED_DATE = GETDATE(), T.LAST_MODIFIED_DATE = GETDATE(), T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null, T.PF_BATCH_NAME = ? FROM CRLTRANSACTION T WHERE (T.PF_SOURCE_CLIENT=? OR T.TELEDEX_REMOTE_ID=?) AND T.PF_BATCH_NAME = ? and T.FINAL_RESULT_STAGED_DATE IS NOT NULL</xsl:text>
             </ns1:SQL>
             <ns1:Params>
               <xsl:value-of select="'pilotfish'" />
@@ -186,7 +186,7 @@
           <!-- staged batch has been sent: increment batch ID -->
           <ns1:Execute>
             <ns1:SQL>
-              <xsl:text>UPDATE BATCH B SET B.PF_BATCH_ID = (B.PF_BATCH_ID + 1) WHERE B.PF_SOURCE_CLIENT=?</xsl:text>
+              <xsl:text>UPDATE B SET B.PF_BATCH_ID = (B.PF_BATCH_ID + 1) FROM BATCH B WHERE B.PF_SOURCE_CLIENT=?</xsl:text>
             </ns1:SQL>
             <ns1:Params>
               <xsl:value-of select="$sourceClient" />
@@ -197,7 +197,7 @@
           <!-- The Electronic Order has been requested -->
           <ns1:Execute>
             <ns1:SQL>
-              <xsl:text>UPDATE STATUS S SET S.MESSAGE_SENT_DATE=SYSDATE WHERE S.MESSAGE_SENT_DATE IS NULL AND S.REQ_INFO_ID IN (SELECT R.REQ_INFO_ID FROM REQ_INFO R, POLICY P WHERE R.POLICY_ID=P.POLICY_ID AND R.REQ_CODE_TC=535 AND P.TRANSACTION_ID=?)</xsl:text>
+              <xsl:text>UPDATE S SET S.MESSAGE_SENT_DATE=GETDATE() FROM STATUS S WHERE S.MESSAGE_SENT_DATE IS NULL AND S.REQ_INFO_ID IN (SELECT R.REQ_INFO_ID FROM REQ_INFO R, POLICY P WHERE R.POLICY_ID=P.POLICY_ID AND R.REQ_CODE_TC=535 AND P.TRANSACTION_ID=?)</xsl:text>
             </ns1:SQL>
             <ns1:Params>
               <xsl:value-of select="ta:getAttribute($attr, 'com.pilotfish.crl.ordertransactionid')" />
@@ -205,7 +205,7 @@
           </ns1:Execute>
           <ns1:Execute>
             <ns1:SQL>
-              <xsl:text>UPDATE CRLTRANSACTION T SET T.LAST_MODIFIED_DATE = SYSDATE, T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null WHERE T.TRANSACTION_ID = ?</xsl:text>
+              <xsl:text>UPDATE T SET T.LAST_MODIFIED_DATE = GETDATE(), T.LAST_MODIFIED_BY = ?, T.PF_PROCESSING_KEY = null FROM CRLTRANSACTION T WHERE T.TRANSACTION_ID = ?</xsl:text>
             </ns1:SQL>
             <ns1:Params>
               <xsl:value-of select="'pilotfish'" />
@@ -231,7 +231,7 @@
     <!-- Update Status -->
     <ns1:Execute>
       <ns1:SQL>
-        <xsl:text>update STATUS set message_sent_date = SYSDATE where status_id = ? and (message_sent_date is null or (message_sent_date &lt; status_event_date))</xsl:text>
+        <xsl:text>update STATUS set message_sent_date = GETDATE() where status_id = ? and (message_sent_date is null or (message_sent_date &lt; status_event_date))</xsl:text>
       </ns1:SQL>
       <ns1:Params>
         <xsl:value-of select="STATUSID" />

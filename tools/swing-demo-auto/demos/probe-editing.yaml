@@ -1,0 +1,17 @@
+name: probe-editing
+steps:
+  - id: mode
+    action: click
+    target: { type: JMenu, text: Mode }
+    detail: "Mode menu."
+    dwell_ms: 400
+  - id: editing
+    action: click
+    target: { type: menuitem, contains: Editing }
+    detail: "Back to Editing Mode."
+    dwell_ms: 1500
+  - id: listener
+    action: click
+    target: { type: table, contains: RoutingSource, column: 1 }
+    detail: "Listener config."
+    dwell_ms: 800

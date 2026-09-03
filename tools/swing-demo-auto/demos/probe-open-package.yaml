@@ -1,0 +1,17 @@
+name: probe-open-package
+steps:
+  - id: wait
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Wait."
+    dwell_ms: 300
+  - id: basic
+    action: click
+    target: { type: tab, contains: Basic }
+    detail: "Basic View."
+    dwell_ms: 800
+  - id: open-pkg
+    action: double_click
+    target: { type: table, contains: "EDI 834 CSV Excel Conversion" }
+    detail: "Open the package."
+    dwell_ms: 2000

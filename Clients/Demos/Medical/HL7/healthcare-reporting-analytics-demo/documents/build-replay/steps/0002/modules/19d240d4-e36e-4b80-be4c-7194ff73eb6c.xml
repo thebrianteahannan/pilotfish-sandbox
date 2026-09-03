@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="19d240d4-e36e-4b80-be4c-7194ff73eb6c" name="FTP Listener" type="Encrypted FTP (JSCH SSH/SFTP)" tag="Listener" class="com.pilotfish.eip.modules.file.ftp.FTPListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <CLIAllowed>false</CLIAllowed>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <FIFOQueueName/>
+      
+        
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      
+        
+      <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      
+        
+      <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+      
+        
+      <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      
+        
+      <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+      
+        
+      <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+      
+        
+      <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+      
+        
+      <FTPListenerType>Regular FTP</FTPListenerType>
+      
+        
+      <Host>ftp</Host>
+      
+        
+      <Port>21</Port>
+      
+        
+      <PollingInterval>3</PollingInterval>
+      
+        
+      <PollingDirectory>/ftp/in</PollingDirectory>
+      
+        
+      <FileNameRestriction/>
+      
+        
+      <FileExtensionRestriction/>
+      
+        
+      <UseFullFilePath>Disabled</UseFullFilePath>
+      
+        
+      <FullPathToFile/>
+      
+        
+      <FilenameIsMvsDsn>false</FilenameIsMvsDsn>
+      
+        
+      <SerializedTransactionsTag>250</SerializedTransactionsTag>
+      
+        
+      <Timeout>300</Timeout>
+      
+        
+      <Sftp_SocketTimeout>0</Sftp_SocketTimeout>
+      
+        
+      <RetryConnection>false</RetryConnection>
+      
+        
+      <RetryDelay>1</RetryDelay>
+      
+        
+      <KeepConnection>false</KeepConnection>
+      
+        
+      <UsePassiveMode>true</UsePassiveMode>
+      
+        
+      <SSLProtocol>TLS</SSLProtocol>
+      
+        
+      <Protection>Private</Protection>
+      
+        
+      <FileType>Binary</FileType>
+      
+        
+      <StopWhenPollingFailure>false</StopWhenPollingFailure>
+      
+        
+      <SubFolderIterationTag>false</SubFolderIterationTag>
+      
+        
+      <UseChangeDirectoryCommand>false</UseChangeDirectoryCommand>
+      
+        
+      <ReconnectAfterBytes>102400</ReconnectAfterBytes>
+      
+        
+      <CacheType>File Cache</CacheType>
+      
+        
+      <PostProcessOperation>Delete</PostProcessOperation>
+      
+        
+      <TargetDirectory/>
+      
+        
+      <UserName>demo</UserName>
+      
+        
+      <Password>demo</Password>
+      
+        
+      <KeyAuthentication>false</KeyAuthentication>
+      
+        
+      <KeyFileName/>
+      
+        
+      <UseKeyStore>false</UseKeyStore>
+      
+        
+      <KeyStoreFilePath/>
+      
+        
+      <KeyStoreFileType/>
+      
+        
+      <KeyStoreFilePassword/>
+      
+        
+      <UseTrustStore>false</UseTrustStore>
+      
+        
+      <TrustStoreFilePath/>
+      
+        
+      <TrustStoreFileType/>
+      
+        
+      <TrustStoreFilePassword/>
+      
+        
+      <CheckFTPPermissions>true</CheckFTPPermissions>
+      
+        
+      <CheckPreviouslyProcessed>true</CheckPreviouslyProcessed>
+      
+        
+      <CheckWriteInProgress>true</CheckWriteInProgress>
+      
+        
+      <SchedulerStartTag/>
+      
+        
+      <SchedulerEndTag/>
+      
+        
+      <ExcludeDaysTag/>
+      
+        
+      <ExcludeDatesTag/>
+      
+        
+      <TimeZone>System Default</TimeZone>
+      
+        
+      <ProcessByDirectory>false</ProcessByDirectory>
+      
+        
+      <HeaderLines>0</HeaderLines>
+      
+        
+      <HiddenFilesTag>false</HiddenFilesTag>
+      
+        
+      <CombineFiles>false</CombineFiles>
+      
+        
+      <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+      
+        
+      <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+      
+        
+      <MinSecondsSinceFileModified>2</MinSecondsSinceFileModified>
+      
+      
+   </ModuleConfig>
+</Module>

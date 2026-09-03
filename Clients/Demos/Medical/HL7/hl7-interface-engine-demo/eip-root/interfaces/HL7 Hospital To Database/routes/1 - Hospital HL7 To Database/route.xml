@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="true" debuggingTraceExpression="" debuggingTracePath="/opt/pilotfish/output/debug-trace" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule">
+    <ModuleConfig />
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="Hospital">
+    <FormatProfile name="HL7 2.x to XML" />
+    <Listener class="com.pilotfish.eip.modules.hl7.HL7TCPListener" enabled="true" name="HL7 over LLP">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <Engine>PilotFish</Engine>
+        <Port>2578</Port>
+        <TimeoutTag>0</TimeoutTag>
+        <SynchronousTag>false</SynchronousTag>
+        <SynchronousTimeout>60</SynchronousTimeout>
+        <AutogenerateSynchronousACK>true</AutogenerateSynchronousACK>
+        <MaximumConnections>10</MaximumConnections>
+      </ModuleConfig>
+    </Listener>
+    <Processors />
+  </Source>
+  <Target icon="" name="External Database">
+    <FormatProfile name="Patient XML to SQL" />
+    <Transport class="com.pilotfish.eip.modules.db.DatabaseSqlTransport" name="Write Patients SQL" retries="1">
+      <ModuleConfig>
+        <InputFile />
+        <WriteQuery>false</WriteQuery>
+        <Query />
+        <QueryParams />
+        <UserName>$$sqlserver.username</UserName>
+        <Password>$$sqlserver.password</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$sqlserver.driver</JdbcDriver>
+        <JdbcURL>$$sqlserver.url</JdbcURL>
+        <KeepConnection>false</KeepConnection>
+        <Autocommit>false</Autocommit>
+        <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+        <Timeout>60</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema />
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <UseSingleOutputStream>true</UseSingleOutputStream>
+        <RefreshHandler>false</RefreshHandler>
+        <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+        <JDBCProperties>null</JDBCProperties>
+        <LogMetadata>false</LogMetadata>
+        <LogSQL>true</LogSQL>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.file.FileWriteProcessor" name="Snapshot SQL XML">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <TargetDirectory>$$HL7_SNAPSHOT_DIRECTORY</TargetDirectory>
+          <TargetFileName>sqlxml.xml</TargetFileName>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+</Route>

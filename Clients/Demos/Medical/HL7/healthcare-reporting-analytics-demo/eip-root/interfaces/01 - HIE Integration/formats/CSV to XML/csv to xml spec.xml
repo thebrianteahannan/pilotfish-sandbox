@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xtr:TransRoot xmlns:xtr="http://www.pilotfishtechnology.com/XCS/TransformEngine" xmlns:ff="http://www.pilotfishtechnology.com/XCS/TransformEngine/FlatFile">
+	<xtr:HandlerConfig>
+		<xtr:Builder>com.pilotfish.eip.transform.flatfile.RecordDeserializer</xtr:Builder>
+		<xtr:Serializer>com.pilotfish.eip.transform.flatfile.RecordSerializer</xtr:Serializer>
+	</xtr:HandlerConfig>
+	<xtr:Initialization>
+		<xtr:Record delimiter="\n" style="delimited" />
+		<xtr:Field delimiter="," style="delimited" />
+		<xtr:Direction selected="ToXML" />
+	</xtr:Initialization>
+	<xtr:ModuleRegistry />
+	<xtr:RecordSegment delimiter="\n" name="Record" quantity="unbound">
+		<xtr:Field delimiter="," name="mrn">
+			<ff:Start>1</ff:Start>
+			<ff:End>1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="last">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="first">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="dob">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="address">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="city">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="state">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+		<xtr:Field delimiter="," name="zip">
+			<ff:Start>0</ff:Start>
+			<ff:End>-1</ff:End>
+		</xtr:Field>
+	</xtr:RecordSegment>
+</xtr:TransRoot>
+

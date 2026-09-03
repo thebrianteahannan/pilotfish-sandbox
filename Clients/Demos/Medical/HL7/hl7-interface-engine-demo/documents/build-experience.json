@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "title": "Interface construction experience",
+  "demo": "hl7-interface-engine-demo",
+  "events": [
+    {
+      "id": "e001",
+      "kind": "route",
+      "title": "Route 1: LLP listener, HL7 2.x to XML, patient map, SQL transport",
+      "summary": "Published diagram snapshot for 1 - Hospital HL7 To Database",
+      "detail": "",
+      "rationale": "",
+      "at": "2026-08-31T18:25:18Z",
+      "route_id": "1-hospital-hl7-to-database",
+      "replay_step": "0001"
+    },
+    {
+      "id": "e002",
+      "kind": "decision",
+      "title": "Website-verbatim HL7 LLP to SQL",
+      "summary": "",
+      "detail": "",
+      "rationale": "Match cms.pilotfishtechnology.com/hl7-interface-engine-demo: LLP, HL7 to XML, PID.7 date format, one database target.",
+      "at": "2026-08-31T18:25:18Z",
+      "alternatives": [
+        "Reuse hl7-healthcare-automation (directory + validation + dual write) \u2014 different story."
+      ]
+    }
+  ],
+  "updated_at": "2026-08-31T18:25:18Z"
+}

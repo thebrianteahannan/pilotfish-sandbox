@@ -1,0 +1,7 @@
+name: probe-file-menu
+steps:
+  - id: file
+    action: click
+    target: { type: JMenu, text: File }
+    detail: "Open File to list items."
+    dwell_ms: 800

@@ -120,9 +120,14 @@ def run_http_test(test: dict[str, Any], root: Path, vars_map: dict[str, str]) ->
         if req.get("body_file"):
             path = root / resolve_vars(req["body_file"], vars_map)
             body = path.read_bytes()
+        elif req.get("json") is not None:
+            body = json.dumps(req["json"]).encode("utf-8")
+            headers.setdefault("Content-Type", "application/json")
         elif req.get("body") is not None:
             b = req["body"]
             body = b.encode("utf-8") if isinstance(b, str) else json.dumps(b).encode("utf-8")
+            if not isinstance(b, str):
+                headers.setdefault("Content-Type", "application/json")
         if req.get("auth_bearer_var"):
             token = vars_map.get(req["auth_bearer_var"], "")
             if not token:

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="" LastModificationTime="2018-02-22T16:49:46-05:00" ModifiedBy="cmiller@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <Source icon="HospPurple_1.png" name="Healthcare Provider">
+    <FormatProfile name="HL7 Lab Order to XML" />
+    <Listener class="com.pilotfish.eip.modules.hl7.HL7TCPListener" enabled="true" name="EHR HL7 LLP Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <Port>10001</Port>
+        <SynchronousTag>false</SynchronousTag>
+        <TimeoutTag>600</TimeoutTag>
+        <Validate>false</Validate>
+        <AckModeTag>Always</AckModeTag>
+        <IgnoreAckTag>false</IgnoreAckTag>
+        <EnableComplianceMode>false</EnableComplianceMode>
+        <InvalidCharacterHandling>Reject</InvalidCharacterHandling>
+        <CloseOnError>false</CloseOnError>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Source icon="LabGreen_1.png" name="Sunquest Laboratory Site">
+    <FormatProfile name="Sunquest HL7 to XML" />
+    <Listener class="com.pilotfish.eip.modules.hl7.HL7TCPListener" enabled="true" name="Inbound TCP IP Channel">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <Port>12345</Port>
+        <SynchronousTag>false</SynchronousTag>
+        <TimeoutTag>600</TimeoutTag>
+        <Validate>false</Validate>
+        <AckModeTag>Always</AckModeTag>
+        <IgnoreAckTag>false</IgnoreAckTag>
+        <EnableComplianceMode>false</EnableComplianceMode>
+        <InvalidCharacterHandling>Reject</InvalidCharacterHandling>
+        <CloseOnError>false</CloseOnError>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target icon="HealthCluster_2.png" name="Laboratory Info System">
+    <FormatProfile name="Friendly HL7 XML to HL7" />
+    <Transport class="com.pilotfish.eip.modules.hl7.HL7TCPTransport" name="LIS HL7 LLP Transport" retries="1">
+      <ModuleConfig>
+        <Host>localhost</Host>
+        <Port>10003</Port>
+        <ResponseListener />
+        <Timeout>600</Timeout>
+        <Validate>false</Validate>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="GovernmentPurple_2.png" name="Manitoba MOH">
+    <FormatProfile name="To Manitoba Custom HL7" />
+    <Transport class="com.pilotfish.eip.modules.file.ftp.FTPTransport" name="Manitoba MOH FTP Transport" retries="1">
+      <ModuleConfig>
+        <FTPTransportType>Encrypted FTP (SSH/SFTP)</FTPTransportType>
+        <Host>localhost</Host>
+        <Port>21</Port>
+        <TargetDirectory>/</TargetDirectory>
+        <FileName>out</FileName>
+        <FileExtension>xml</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <Timeout>2147483647</Timeout>
+        <Sftp_SocketTimeout>0</Sftp_SocketTimeout>
+        <RetryConnection>false</RetryConnection>
+        <RetryDelay>1</RetryDelay>
+        <KeepConnection>false</KeepConnection>
+        <UsePassiveMode>true</UsePassiveMode>
+        <SSLProtocol>TLS</SSLProtocol>
+        <Protection>Private (P)</Protection>
+        <FileType>Binary</FileType>
+        <AppendToFile>false</AppendToFile>
+        <Overwrite>false</Overwrite>
+        <CheckForFileAfterWriting>false</CheckForFileAfterWriting>
+        <FAIL_ON_FALSE_RESULT>true</FAIL_ON_FALSE_RESULT>
+        <WriteFromHome>false</WriteFromHome>
+        <UserName>a</UserName>
+        <Password>1</Password>
+        <KeyAuthentication>false</KeyAuthentication>
+        <KeyFileName />
+        <UseKeyStore>false</UseKeyStore>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseTrustStore>false</UseTrustStore>
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="GovernmentGreen_2.png" name="Ontario MOH">
+    <FormatProfile name="To Ontario Custom HL7" />
+    <Transport class="com.pilotfish.eip.modules.http.SoapHttpPostTransport" name="Ontario MOH SOAP Service" retries="1">
+      <ModuleConfig>
+        <TargetURL>{ognl:#properties.get('simple.server.path') + '/laborderintegration/ontariomoh'}</TargetURL>
+        <UserName />
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password />
+        <PreemptiveAuthentication>false</PreemptiveAuthentication>
+        <ResponseListener />
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>-1</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <SynchronizationKey />
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/plain;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <SpecifyTLS>false</SpecifyTLS>
+        <TLSVersion>TLSv1.1</TLSVersion>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <SoapVersion>SOAP Version 1.2</SoapVersion>
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="GovernmentOrange_2.png" name="Quebec MOH">
+    <FormatProfile name="To Quebec Custom HL7" />
+    <Transport class="com.pilotfish.eip.modules.http.HttpPostTransport" name="Quebec MOH HTTP Post Destination" retries="1">
+      <ModuleConfig>
+        <TargetURL>{ognl:#properties.get('simple.server.path') + '/laborderintegration/quebecmoh'}</TargetURL>
+        <UserName />
+        <AUTH_HOST_TAG />
+        <AUTH_PORT_TAG />
+        <Password />
+        <PreemptiveAuthentication>false</PreemptiveAuthentication>
+        <ResponseListener />
+        <ResponseCodeHandling>Default</ResponseCodeHandling>
+        <Timeout>-1</Timeout>
+        <ResponseCodeList />
+        <ErrorOnConnectionFailure>true</ErrorOnConnectionFailure>
+        <SynchronizationKey />
+        <FormElement />
+        <HTTPHeaders>[eip_pair:Content-Type:eip_name:text/plain;charset=UTF-8:eip_value]</HTTPHeaders>
+        <useProxy>false</useProxy>
+        <proxyHost>127.0.0.1</proxyHost>
+        <proxyPort>8080</proxyPort>
+        <proxyUsername />
+        <proxyPassword />
+        <SpecifyTLS>false</SpecifyTLS>
+        <TLSVersion>TLSv1.1</TLSVersion>
+        <KeyStoreFilePath />
+        <KeyStoreFileType />
+        <KeyStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <TrustStoreFilePath />
+        <TrustStoreFileType />
+        <TrustStoreFilePassword />
+        <UseCertificateAttribute>false</UseCertificateAttribute>
+        <CertificateAttribute />
+        <ReadResponseStreamAsString>true</ReadResponseStreamAsString>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

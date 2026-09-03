@@ -1,0 +1,33 @@
+---
+description: Every construction video starts and ends with the official PilotFish YouTube cards
+alwaysApply: true
+---
+
+# Construction video — official open and close (every demo)
+
+Public PilotFish YouTube demos (e.g. [HL7 end-to-end](https://www.youtube.com/watch?v=RaaR2TcQQHQ)) bookend the walkthrough with full-frame cards. Every sandbox construction-replay must do the same. Do not skip. Do not slug-special-case.
+
+## Open (before any eiConsole / theater work)
+
+**Product Demo** — same first card as the official YouTube demos: “Product Demo”, the official eiConsole wordmark (`eiconsole-logo.png` — red *i* and PilotFish-blue ring, not the CSS circled “ei”), product line, this demo’s title (website catalog title if the slug is in `docs/website-demos.json`, else DESIGN / display name). Speech starts here: “This is PilotFish and the eiConsole, and this is a demo for {catalog title}.” Hold until that line finishes, then the walkthrough. Card blues are PilotFish `#0797f7` / `#007cba`.
+
+Do **not** open on a PilotFish fish lockup. Their public sites only ship a ~140px header JPEG; a drawn stand-in looks fake. The official videos start on this Product Demo card.
+
+## Close (after the last walkthrough beat)
+
+Same light-blue look as the official last frame, with PilotFish `#0797f7` / `#007cba`:
+
+- Official eiConsole wordmark + product line
+- **Download a Free 90-Day Trial**
+- Trial URL (`www.Healthcare.PilotFishTechnology.com` for Healthcare, else `www.PilotFishTechnology.com`)
+- **Learn more by calling: 860 632-9900**
+- © year PilotFish, Inc.
+
+Theater: `show_product_demo` then outro `thank_you` → official close card.  
+eiConsole / website-verbatim: `tools/construction_official_open.py` `wrap_official_cards` (Product Demo in front, trial card after).
+
+## Do not
+
+- Start or end on the route grid, a Welcome-to-the-demo theater card, or a blank canvas
+- Invent a custom intro/outro per slug
+- Auto-record the mp4 after adding the cards — only when Brian asks or he hits Create construction video

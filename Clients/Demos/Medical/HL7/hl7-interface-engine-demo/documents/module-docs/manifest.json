@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "demo": "hl7-interface-engine-demo",
+  "path": "Clients/Demos/Medical/HL7/hl7-interface-engine-demo",
+  "synced_at": "2026-08-31T18:56:01Z",
+  "documentation_root": "/Users/brianhannan/Documents/PilotFish Documentation/Documents",
+  "modules": [
+    {
+      "fqcn": "com.pilotfish.eip.modules.hl7.HL7TCPListener",
+      "kind": "Listener",
+      "ui_type": "HL7 LLP",
+      "pdf": "module-docs/PilotFish-HL7-LLP-Listener-Reference-26R1.11.pdf",
+      "source": "Listeners/26R1.11/PilotFish-HL7-LLP-Listener-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.file.FileWriteProcessor",
+      "kind": "Processor",
+      "ui_type": "File Writing",
+      "pdf": "module-docs/PilotFish-File-Writing-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-File-Writing-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.transform.hl7.HL7TransformationProcessor",
+      "kind": "Processor",
+      "ui_type": "HL7 XML",
+      "pdf": "module-docs/PilotFish-HL7-XML-Guide-26R1.11.md",
+      "source": "Processors/26R1.11/PilotFish-HL7-XML-Guide-26R1.11.md",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.transform.XSLTProcessor",
+      "kind": "Processor",
+      "ui_type": "XSLT Transformation",
+      "pdf": "module-docs/PilotFish-XSLT-Transformation-Reference-26R1.11.pdf",
+      "source": "Processors/26R1.11/PilotFish-XSLT-Transformation-Reference-26R1.11.pdf",
+      "status": "ok"
+    },
+    {
+      "fqcn": "com.pilotfish.eip.modules.db.DatabaseSqlTransport",
+      "kind": "Transport",
+      "ui_type": "Database (SQL)",
+      "pdf": "module-docs/PilotFish-Database-SQL-Transport-Reference-26R1.11.pdf",
+      "source": "Transports/26R1.11/PilotFish-Database-SQL-Transport-Reference-26R1.11.pdf",
+      "status": "ok"
+    }
+  ],
+  "missing": [],
+  "note": "Auto-synced from route.xml / modules/*.xml. Re-run tools/sync_module_docs.py after route changes."
+}

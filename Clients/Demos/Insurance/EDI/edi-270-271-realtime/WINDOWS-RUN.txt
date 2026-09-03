@@ -1,0 +1,44 @@
+EDI 270/271 Realtime Eligibility — Windows (no Sandbox repo)
+
+Docker Desktop must be running in Linux-container mode (WSL2). This folder
+ships a linux/amd64 EIP image. An Apple Silicon (arm64) image will fail with
+"no match for platform in manifest".
+
+Docker cannot docker-load a .zip (that error is "invalid tar header").
+WINDOWS-RUN.cmd reads edi-270-271-realtime-windows.zip and loads the image
+inside it. After extract, it can also load pilotfish-eip-23R1-amd64.tar.gz
+in this same folder.
+
+1. Install Docker Desktop and start it (Linux containers).
+2. Extract the zip. Command Prompt, cd into edi-270-271-realtime.
+   Keep edi-270-271-realtime-windows.zip in this folder if you still have it.
+3. Double-click WINDOWS-RUN.cmd
+
+   Or by hand:
+
+   docker rmi pilotfish-eip:23R1
+   docker load -i pilotfish-eip-23R1-amd64.tar.gz
+   docker tag pilotfish-eip:23R1-amd64 pilotfish-eip:23R1
+   docker image inspect pilotfish-eip:23R1 --format "{{.Os}}/{{.Architecture}}"
+
+   That last line must print linux/amd64.
+
+   If compose hits docker.io / pull access denied:
+
+   set DOCKER_BUILDKIT=0
+   set COMPOSE_DOCKER_CLI_BUILD=0
+   docker compose --profile full up -d --build
+
+4. Wait about 90 seconds. Open http://127.0.0.1:8121/
+
+Jane Doe / FAIL001 → AAA 72
+John Smith / OK001 → active EB
+
+EIP:        http://127.0.0.1:8120/eip/
+Check POST: http://127.0.0.1:8120/eip/rest/eligibility/check
+Mock payer: http://127.0.0.1:8211/x12/270
+
+Status (not "docker -ps"):
+
+   docker compose --profile full ps
+   docker ps

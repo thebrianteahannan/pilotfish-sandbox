@@ -118,36 +118,6 @@ def score_post(post: dict[str, Any], capability_map: list[dict[str, Any]]) -> di
             pitches.add(p)
         why_bits.append(f"{cap['label']} ({', '.join(matched[:4])})")
 
-    source = (post.get("source") or "reddit").lower()
-    # G2 cons often lack EDI keywords but still describe billing workflow gaps
-    if not caps and source == "g2":
-        gaps = _hits(blob, WORKFLOW_GAP_CUES)
-        if gaps:
-            # Soft-map into RCM / EHR buckets from gap language
-            if re.search(r"\b(eligib|prior auth|270|271|278)\b", blob):
-                cap = next((c for c in capability_map if c["id"] == "edi_eligibility_auth"), None)
-            elif re.search(r"\b(claim|denial|remit|835|837|clearinghouse|post(?:ing)?)\b", blob):
-                cap = next((c for c in capability_map if c["id"] == "edi_claims"), None)
-            elif re.search(r"\b(hl7|fhir|interface engine|mirth|rhapsody)\b", blob):
-                cap = next((c for c in capability_map if c["id"] == "hl7_adt_oru"), None)
-            else:
-                cap = next((c for c in capability_map if c["id"] == "rcm_ops"), None)
-            if cap:
-                caps.append(
-                    {
-                        "id": cap["id"],
-                        "label": cap["label"],
-                        "matched": ["g2-workflow-gap"],
-                        "weight": 14 + min(12, gaps * 2),
-                    }
-                )
-                topics.add(cap["id"])
-                for d in cap.get("demo_hints") or []:
-                    demos.add(d)
-                for p in cap.get("pitch_refs") or []:
-                    pitches.add(p)
-                why_bits.append(f"{cap['label']} (G2 workflow-gap cues={gaps})")
-
     if not caps:
         return {
             "relevance": 0,
@@ -162,22 +132,25 @@ def score_post(post: dict[str, Any], capability_map: list[dict[str, Any]]) -> di
     pain = _hits(blob, PAIN_CUES)
     gaps = _hits(blob, WORKFLOW_GAP_CUES)
     reddit_boost = min(15, int(post.get("score") or 0) // 5 + int(post.get("num_comments") or 0) // 3)
-    g2_boost = min(20, gaps * 3 + (8 if (post.get("dislike_text") or "").strip() else 0)) if source == "g2" else 0
     base = sum(c["weight"] for c in caps)
-    relevance = min(100, base + integ * 4 + pain * 5 + reddit_boost + g2_boost)
+    relevance = min(100, base + integ * 4 + pain * 5 + reddit_boost)
 
-    # Prefer posts that sound like an integration need, not career/marketing noise
-    if re.search(r"\b(hiring|job|salary|resume|certification course|when (?:do|am) i supposed to (?:start )?apply)\b", blob):
+    # Job-board posts are the signal. Reddit career chatter is still noise.
+    source = (post.get("source") or "reddit").lower()
+    if source != "jobs" and re.search(r"\b(hiring|job|salary|resume|certification course|when (?:do|am) i supposed to (?:start )?apply)\b", blob):
         relevance = max(0, relevance - 25)
         why_bits.append("downranked: looks like hiring noise")
     if re.search(r"\b(pivot to tech|become an? (?:epic )?analyst|burned out rn|which ai certification)\b", blob):
         relevance = max(0, relevance - 20)
         why_bits.append("downranked: career pivot noise")
+    if source == "jobs":
+        relevance = min(100, relevance + 8)
+        why_bits.append("hiring signal: company is staffing this hop")
 
     why = (
         f"Matched: {'; '.join(why_bits)}. "
         f"Integration cues={integ}, pain/ask cues={pain}, workflow-gap cues={gaps}, "
-        f"reddit boost={reddit_boost}, g2 boost={g2_boost}."
+        f"reddit boost={reddit_boost}."
     )
     return {
         "relevance": relevance,

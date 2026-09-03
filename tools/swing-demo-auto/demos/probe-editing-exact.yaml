@@ -1,0 +1,47 @@
+name: probe-editing-exact
+steps:
+  - id: mode
+    action: click
+    target: { type: JMenu, text: Mode }
+    detail: "Mode menu."
+    dwell_ms: 600
+  - id: editing
+    action: click
+    target: { type: JRadioButtonMenuItem, text: "Editing Mode" }
+    detail: "Select Editing Mode."
+    dwell_ms: 2000
+  - id: listener
+    action: click
+    target: { type: table, contains: RoutingSource, column: 1 }
+    detail: "Listener stage."
+    dwell_ms: 800
+  - id: listener-mod
+    action: click
+    target: { type: table, contains: "Poll Enrollment CSV TXT" }
+    detail: "Listener module row."
+    dwell_ms: 800
+  - id: source-tx
+    action: click
+    target: { type: table, contains: RoutingSource, column: 2 }
+    detail: "Source Transform."
+    dwell_ms: 800
+  - id: csv-mod
+    action: click
+    target: { type: table, contains: "CSV to XML" }
+    detail: "CSV processor."
+    dwell_ms: 800
+  - id: target-tx
+    action: click
+    target: { type: table, contains: RoutingSource, column: 4 }
+    detail: "Target Transform."
+    dwell_ms: 800
+  - id: xslt-mod
+    action: click
+    target: { type: table, contains: "Map CSV XML" }
+    detail: "XSLT map processor."
+    dwell_ms: 800
+  - id: edi-mod
+    action: click
+    target: { type: table, contains: "XML to EDI 834" }
+    detail: "EDI transformer."
+    dwell_ms: 1000

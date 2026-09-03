@@ -1,0 +1,986 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="XCSData" type="XCSData_type" />
+			<xsd:complexType name="XCSData_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ediroot">
+						<xsd:complexType>
+							<xsd:sequence />
+							<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="interchange">
+								<xsd:complexType>
+									<xsd:sequence />
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="sender">
+										<xsd:complexType>
+											<xsd:sequence />
+											<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="address">
+												<xsd:complexType>
+													<xsd:simpleContent>
+														<xsd:extension base="xsd:string">
+															<xsd:attribute form="unqualified" name="Id" type="xsd:string" />
+															<xsd:attribute form="unqualified" name="Qual" type="xsd:string" />
+															<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+														</xsd:extension>
+													</xsd:simpleContent>
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="receiver">
+										<xsd:complexType>
+											<xsd:sequence />
+											<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="address">
+												<xsd:complexType>
+													<xsd:simpleContent>
+														<xsd:extension base="xsd:string">
+															<xsd:attribute form="unqualified" name="Id" type="xsd:string" />
+															<xsd:attribute form="unqualified" name="Qual" type="xsd:string" />
+															<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+														</xsd:extension>
+													</xsd:simpleContent>
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="group">
+										<xsd:complexType>
+											<xsd:sequence />
+											<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="transaction">
+												<xsd:complexType>
+													<xsd:sequence />
+													<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BHT_BeginningOfHierarchicalTransaction">
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BHT01_HierarchicalStructureCode">
+																<xsd:complexType>
+																	<xsd:simpleContent>
+																		<xsd:extension base="xsd:string">
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:extension>
+																	</xsd:simpleContent>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BHT02_TransactionSetPurposeCode">
+																<xsd:complexType>
+																	<xsd:simpleContent>
+																		<xsd:extension base="xsd:string">
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:extension>
+																	</xsd:simpleContent>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BHT03_OriginatorApplicationTransactionIdentifier">
+																<xsd:complexType>
+																	<xsd:simpleContent>
+																		<xsd:extension base="xsd:string">
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:extension>
+																	</xsd:simpleContent>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BHT04_TransactionSetCreationDate">
+																<xsd:complexType>
+																	<xsd:simpleContent>
+																		<xsd:extension base="xsd:string">
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:extension>
+																	</xsd:simpleContent>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BHT05_TransactionSetCreationTime">
+																<xsd:complexType>
+																	<xsd:simpleContent>
+																		<xsd:extension base="xsd:string">
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:extension>
+																	</xsd:simpleContent>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="BHT06_ClaimOrEncounterIdentifier">
+																<xsd:complexType>
+																	<xsd:simpleContent>
+																		<xsd:extension base="xsd:string">
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:extension>
+																	</xsd:simpleContent>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="LOOP_1000_Submitter_Name">
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM1_SubmitterName">
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM101_EntityIdentifierCode">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM102_EntityTypeQualifier">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM103_SubmitterLastOrOrganizationName">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM108_IdentificationCodeQualifier">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM109_SubmitterIdentifier">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PER_SubmitterEDIContactInformation">
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PER01_ContactFunctionCode">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PER02_SubmitterContactName">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PER03_CommunicationNumberQualifier">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PER04_CommunicationNumber">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PER05_CommunicationNumberQualifier">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PER06_CommunicationNumber">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="LOOP_2000_Billing_Pay-to_Provider_Hierarchical_Level">
+														<xsd:complexType>
+															<xsd:sequence />
+															<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="HL_BillingPayToProviderHierarchicalLevel">
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="HL01_HierarchicalIDNumber">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="HL03_HierarchicalLevelCode">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="HL04_HierarchicalChildCode">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="HL02_NotUsed">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="LOOP_2010_Billing_Provider_Name">
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM1_BillingProviderName">
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM101_EntityIdentifierCode">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM102_EntityTypeQualifier">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM103_BillingProviderLastOrOrganizationalName">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM104_BillingProviderFirstName">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM105_BillingProviderMiddleName">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM108_IdentificationCodeQualifier">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM109_BillingProviderIdentifier">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N3_BillingProviderAddress">
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N301_BillingProviderAddressLine">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N302_BillingProviderAddressLine">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N4_BillingProviderCityStateZIPCode">
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N401_BillingProviderCityName">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N402_BillingProviderStateOrProvinceCode">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N403_BillingProviderPostalZoneOrZIPCode">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REF_BillingProviderSecondaryIdentification">
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REF01_ReferenceIdentificationQualifier">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REF02_BillingProviderAdditionalIdentifier">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DMG_Billing_Provider_Name">
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DMG01_Billing_Provider_Name">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DMG02_Billing_Provider_Name">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DMG03_Billing_Provider_Name">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SBR_Billing_Pay-to_Provider_Hierarchical_Level">
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SBR01_Billing_Pay-to_Provider_Hierarchical_Level">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SBR02_Billing_Pay-to_Provider_Hierarchical_Level">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SBR03_Billing_Pay-to_Provider_Hierarchical_Level">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SBR04_Billing_Pay-to_Provider_Hierarchical_Level">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SBR09_Billing_Pay-to_Provider_Hierarchical_Level">
+																		<xsd:complexType>
+																			<xsd:simpleContent>
+																				<xsd:extension base="xsd:string">
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:extension>
+																			</xsd:simpleContent>
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="LOOP_2300_Billing_Pay-to_Provider_Hierarchical_Level">
+																<xsd:complexType>
+																	<xsd:sequence />
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CLM_Billing_Pay-to_Provider_Hierarchical_Level">
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CLM01_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CLM02_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CLM05_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:sequence />
+																					<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="subelement_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="Sequence" type="xsd:string" />
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:attribute form="unqualified" name="Composite" type="xsd:string" />
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CLM06_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CLM07_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CLM08_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CLM09_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REF_Billing_Pay-to_Provider_Hierarchical_Level">
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REF01_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REF02_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:simpleContent>
+																						<xsd:extension base="xsd:string">
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:extension>
+																					</xsd:simpleContent>
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="HI_Billing_Pay-to_Provider_Hierarchical_Level">
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="HI01_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:sequence />
+																					<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="subelement_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="Sequence" type="xsd:string" />
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:attribute form="unqualified" name="Composite" type="xsd:string" />
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="LOOP_2310_Billing_Pay-to_Provider_Hierarchical_Level">
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM1_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:sequence />
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM101_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM102_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM103_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM104_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM105_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM108_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="NM109_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N3_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:sequence />
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N301_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N302_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N4_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:sequence />
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N401_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N402_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="N403_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REF_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:sequence />
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REF01_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REF02_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="LOOP_2400_Billing_Pay-to_Provider_Hierarchical_Level">
+																		<xsd:complexType>
+																			<xsd:sequence />
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="LX_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:sequence />
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="LX01_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SV1_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:sequence />
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SV101_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:sequence />
+																							<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="subelement_Billing_Pay-to_Provider_Hierarchical_Level">
+																								<xsd:complexType>
+																									<xsd:simpleContent>
+																										<xsd:extension base="xsd:string">
+																											<xsd:attribute form="unqualified" name="Sequence" type="xsd:string" />
+																											<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																										</xsd:extension>
+																									</xsd:simpleContent>
+																								</xsd:complexType>
+																							</xsd:element>
+																							<xsd:attribute form="unqualified" name="Composite" type="xsd:string" />
+																							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SV102_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SV103_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SV104_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SV105_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="SV107_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DTP_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:sequence />
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DTP01_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DTP02_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DTP03_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REF_Billing_Pay-to_Provider_Hierarchical_Level">
+																				<xsd:complexType>
+																					<xsd:sequence />
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REF01_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="REF02_Billing_Pay-to_Provider_Hierarchical_Level">
+																						<xsd:complexType>
+																							<xsd:simpleContent>
+																								<xsd:extension base="xsd:string">
+																									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																								</xsd:extension>
+																							</xsd:simpleContent>
+																						</xsd:complexType>
+																					</xsd:element>
+																					<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																				</xsd:complexType>
+																			</xsd:element>
+																			<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																		</xsd:complexType>
+																	</xsd:element>
+																	<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:attribute form="unqualified" name="Control" type="xsd:string" />
+													<xsd:attribute form="unqualified" name="DocType" type="xsd:string" />
+													<xsd:attribute form="unqualified" name="Name" type="xsd:string" />
+													<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+												</xsd:complexType>
+											</xsd:element>
+											<xsd:attribute form="unqualified" name="ApplReceiver" type="xsd:string" />
+											<xsd:attribute form="unqualified" name="ApplSender" type="xsd:string" />
+											<xsd:attribute form="unqualified" name="Control" type="xsd:string" />
+											<xsd:attribute form="unqualified" name="Date" type="xsd:string" />
+											<xsd:attribute form="unqualified" name="GroupType" type="xsd:string" />
+											<xsd:attribute form="unqualified" name="StandardCode" type="xsd:string" />
+											<xsd:attribute form="unqualified" name="StandardVersion" type="xsd:string" />
+											<xsd:attribute form="unqualified" name="Time" type="xsd:string" />
+											<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:attribute form="unqualified" name="AckRequest" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="Control" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="Date" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="Standard" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="TestIndicator" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="Time" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="Version" type="xsd:string" />
+									<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:attribute form="unqualified" name="eid" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PilotFish Sandbox</title>
-  <link rel="stylesheet" href="/static/app.css?v=44" />
+  <link rel="stylesheet" href="/static/app.css?v=89" />
 </head>
 <body>
   <header>
@@ -13,15 +13,19 @@
       <span>Control hub — stays up while you switch demos and clients</span>
     </div>
     <p class="meta">Local <a href="http://127.0.0.1:{{ port }}/">127.0.0.1:{{ port }}</a>
-      · LAN <a href="http://{{ lan }}:{{ port }}/">{{ lan }}:{{ port }}</a></p>
+      · LAN <a href="http://{{ lan }}:{{ port }}/">{{ lan }}:{{ port }}</a>
+      · <a href="http://127.0.0.1:8130/">Buzz Scout</a>
+      · <a href="http://127.0.0.1:8765/docs-search/">Docs</a></p>
   </header>
   <nav class="tabs" role="tablist">
-    <button type="button" class="tab is-on" data-tab="demos">Demos</button>
     <button type="button" class="tab" data-tab="clients">Clients</button>
-    <button type="button" class="tab" data-tab="disk">Disk</button>
-    <button type="button" class="tab" data-tab="docker">Docker</button>
+    <button type="button" class="tab" data-tab="calendar">My Timesheet</button>
+    <button type="button" class="tab is-on" data-tab="demos">Demos</button>
+    <button type="button" class="tab" data-tab="website">Website Demos</button>
+    <button type="button" class="tab" data-tab="admin">Admin</button>
   </nav>
   <p id="job-banner" class="job-banner" hidden></p>
+  <div id="regr-live" class="regr-progress" hidden></div>
 
   <section id="tab-demos" class="tab-panel">
     <div class="toolbar">
@@ -31,8 +35,17 @@
     </div>
     <div id="family-chips" class="chips" role="group" aria-label="Folder filters"></div>
     <div id="category-chips" class="chips" role="group" aria-label="Category filters"></div>
-    <p class="hint">Grouped like <code>Clients/Demos</code> on disk. Start leaves other stacks running — use the Docker tab to stop what you do not need. Create video records <code>construction-replay.mp4</code> (starts the demo if needed). One recording at a time.</p>
+    <p class="hint">Grouped like <code>Clients/Demos</code> on disk. Start leaves other stacks running — use Admin → Docker to stop what you do not need. Create video records <code>construction-replay.mp4</code> (starts the demo if needed). One recording at a time. Train how the robot says PilotFish / eiConsole / HL7 in <strong>Admin → Speech</strong>.</p>
     <div id="demo-list" class="demo-list"></div>
+  </section>
+
+  <section id="tab-website" class="tab-panel" hidden>
+    <div class="toolbar">
+      <span id="wd-count" class="muted"></span>
+    </div>
+    <div id="wd-chips" class="chips" role="group" aria-label="Website demo filters"></div>
+    <p class="hint">Recreations of the public <a id="wd-source" href="https://cms.pilotfishtechnology.com/product-demos/" target="_blank" rel="noopener">product demos</a> catalog. Each group is its own card. <strong>Routes</strong> is whether we were given a pre-built interface or we built it here. <strong>Open</strong> jumps to that sandbox on the Demos tab so you can start it or create the construction video. <strong>Start</strong> opens the official page when the sandbox is not there yet. <strong>New</strong> is that sandbox’s construction video.</p>
+    <div id="wd-groups"></div>
   </section>
 
   <section id="tab-clients" class="tab-panel" hidden>
@@ -51,49 +64,121 @@
       </div>
       <div id="client-detail"></div>
     </div>
+    <div id="client-manage-view" hidden>
+      <div class="toolbar">
+        <button type="button" class="btn" id="client-manage-back">← All clients</button>
+        <span id="client-manage-title" class="muted"></span>
+      </div>
+      <div id="client-manage"></div>
+    </div>
   </section>
 
-  <section id="tab-disk" class="tab-panel" hidden>
-    <div class="toolbar">
-      <button type="button" class="btn" id="disk-refresh">Refresh sizes</button>
-      <button type="button" class="btn btn-danger" id="disk-videos">Delete all construction videos</button>
-      <span id="disk-total" class="muted"></span>
-    </div>
-    <p class="hint">Allowlisted deletes only: construction-replay.mp4, demo logs/, and demo output/ (not routes, samples, PDFs, or Docker volumes).</p>
-    <div class="grid">
-      <article class="panel">
-        <h2>Repo folders</h2>
-        <div id="disk-folders"></div>
-      </article>
-      <article class="panel">
-        <h2>Regenerable junk</h2>
-        <div id="disk-junk"></div>
-      </article>
-    </div>
-    <article class="panel">
-      <h2>Demos by size</h2>
-      <div id="disk-demos"></div>
-    </article>
-    <article class="panel">
-      <h2>Largest files</h2>
-      <div id="disk-files"></div>
-    </article>
+  <section id="tab-calendar" class="tab-panel" hidden>
+    <div id="cal-ui"></div>
   </section>
 
-  <section id="tab-docker" class="tab-panel" hidden>
-    <div class="toolbar">
-      <button type="button" class="btn" id="docker-refresh">Refresh</button>
-      <span id="docker-total" class="muted"></span>
+  <section id="tab-admin" class="tab-panel" hidden>
+    <nav class="subtabs" role="tablist">
+      <button type="button" class="tab is-on" data-tab="docker">Docker</button>
+      <button type="button" class="tab" data-tab="ollama">Ollama</button>
+      <button type="button" class="tab" data-tab="speech">Speech</button>
+      <button type="button" class="tab" data-tab="disk">Disk</button>
+    </nav>
+    <div id="sub-disk" class="admin-sub" hidden>
+      <div class="toolbar">
+        <button type="button" class="btn" id="disk-refresh">Refresh sizes</button>
+        <button type="button" class="btn btn-danger" id="disk-videos">Delete all construction videos</button>
+        <span id="disk-total" class="muted"></span>
+      </div>
+      <p class="hint">Allowlisted deletes only: construction-replay.mp4, demo logs/, and demo output/ (not routes, samples, PDFs, or Docker volumes).</p>
+      <div class="grid">
+        <article class="panel">
+          <h2>Repo folders</h2>
+          <div id="disk-folders"></div>
+        </article>
+        <article class="panel">
+          <h2>Regenerable junk</h2>
+          <div id="disk-junk"></div>
+        </article>
+      </div>
+      <article class="panel">
+        <h2>Demos by size</h2>
+        <div id="disk-demos"></div>
+      </article>
+      <article class="panel">
+        <h2>Largest files</h2>
+        <div id="disk-files"></div>
+      </article>
     </div>
-    <p class="hint">Running containers whose compose files or mounts live under <code>Clients/</code> (demos and client sandboxes). Other host Docker is hidden. Stop here does compose down, never <code>-v</code>.</p>
-    <article class="panel">
-      <h2>Running containers</h2>
-      <div id="docker-containers"></div>
-    </article>
-    <article class="panel">
-      <h2>Images in use</h2>
-      <div id="docker-images"></div>
-    </article>
+    <div id="sub-docker" class="admin-sub">
+      <div class="toolbar">
+        <button type="button" class="btn" id="docker-refresh">Refresh</button>
+        <span id="docker-total" class="muted"></span>
+      </div>
+      <p class="hint">Buzz Scout is Docker (<code>pf-healthcare-buzz-scout</code>). The documentation portal is a host <code>python -m http.server</code> — it will not appear as a container. Below: running containers whose compose files or mounts live under <code>Clients/</code>. Other host Docker is hidden. Stop on a container does compose down, never <code>-v</code>.</p>
+      <div id="scout-card"></div>
+      <article class="panel">
+        <h2>Host process</h2>
+        <p class="hint">Not a Docker image. Start/Stop launches or kills the local HTTP server on port 8765.</p>
+        <div id="docs-card"></div>
+      </article>
+      <article class="panel">
+        <h2>Running containers</h2>
+        <div id="docker-containers"></div>
+      </article>
+      <article class="panel">
+        <h2>Images in use</h2>
+        <div id="docker-images"></div>
+      </article>
+    </div>
+    <div id="sub-ollama" class="admin-sub" hidden>
+      <div class="toolbar">
+        <button type="button" class="btn" id="llm-refresh">Refresh</button>
+        <button type="button" class="btn" id="llm-start">Start Ollama</button>
+        <button type="button" class="btn" id="llm-pull">Pull model</button>
+        <button type="button" class="btn" id="llm-ping">Ping</button>
+        <span id="llm-total" class="muted"></span>
+      </div>
+      <p class="hint">This is a <strong>local</strong> language model on this Mac (Ollama). Nothing is sent to OpenAI or another cloud API. Client emails and interface names stay here.</p>
+      <p class="hint">The hub uses it when you <strong>Build plan</strong> on a client request: it reads the email and catalog and classifies the work (which partition/feed, HL7 field vs location strip, a short ask). It does <em>not</em> write XSLT. <strong>Implement</strong> still applies the planned file edits mechanically.</p>
+      <p class="hint">Cursor’s Hindsight memory in this workspace is also pointed at this same Ollama so session recall can run locally. Default model is <code>llama3.2</code>. Use Start / Pull / Ping if the plan builder says Ollama is down.</p>
+      <article class="panel">
+        <h2>Status</h2>
+        <div id="llm-status"></div>
+      </article>
+      <article class="panel">
+        <h2>Models</h2>
+        <div id="llm-models"></div>
+      </article>
+    </div>
+    <div id="sub-speech" class="admin-sub" hidden>
+      <div class="toolbar">
+        <input id="speech-word" type="text" placeholder="Word as written — eiConsole, HL7, 271…" autocomplete="off" />
+        <button type="button" class="btn btn-primary" id="speech-start">Start speaking</button>
+        <button type="button" class="btn btn-danger" id="speech-stop" disabled>Stop</button>
+        <span id="speech-total" class="muted"></span>
+      </div>
+      <p class="hint">Type the word the way it should appear on screen. Click <strong>Start speaking</strong>, say it, then <strong>Stop</strong>. The hub plays back how the construction-video voice would say it. Confirm if that is right, or record again.</p>
+      <p id="speech-status" class="hint"></p>
+      <article class="panel" id="speech-result" hidden>
+        <h2>How I would say it</h2>
+        <p id="speech-heard" class="hint"></p>
+        <label class="speech-label" for="speech-speak">Robot speak string</label>
+        <div class="toolbar">
+          <input id="speech-speak" type="text" autocomplete="off" />
+          <button type="button" class="btn" id="speech-play">Play</button>
+        </div>
+        <audio id="speech-audio" controls hidden></audio>
+        <div class="actions speech-actions">
+          <button type="button" class="btn btn-go" id="speech-confirm">Confirm this</button>
+          <button type="button" class="btn" id="speech-again">Record again</button>
+        </div>
+      </article>
+      <article class="panel">
+        <h2>Saved words</h2>
+        <div id="speech-terms"></div>
+      </article>
+    </div>
   </section>
 
   <div id="file-view" class="file-view" hidden>
@@ -108,13 +193,18 @@
     </div>
   </div>
 
-  <script src="/static/app.js?v=12"></script>
-  <script src="/static/docker.js?v=2"></script>
+  <script src="/static/app.js?v=21"></script>
+  <script src="/static/docker.js?v=3"></script>
+  <script src="/static/ollama.js?v=2"></script>
+  <script src="/static/speech.js?v=1"></script>
+  <script src="/static/website-demos.js?v=9"></script>
+  <script src="/static/calendar.js?v=14"></script>
   <script src="/static/req-comments.js?v=4"></script>
   <script src="/static/req-tests.js?v=4"></script>
-  <script src="/static/req-video.js?v=3"></script>
-  <script src="/static/req-group.js?v=6"></script>
-  <script src="/static/clients.js?v=57"></script>
+  <script src="/static/req-video.js?v=5"></script>
+  <script src="/static/req-group.js?v=12"></script>
+  <script src="/static/client-manage.js?v=31"></script>
+  <script src="/static/clients.js?v=113"></script>
   <script src="/static/file-view.js?v=3"></script>
 </body>
 </html>

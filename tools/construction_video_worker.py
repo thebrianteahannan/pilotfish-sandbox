@@ -61,15 +61,18 @@ def write_job(demo: Path, data: dict) -> None:
         _job = dict(payload)
 
 
-def run_export(demo: Path) -> None:
+def run_export(demo: Path, section: str | None = None) -> None:
     slug = demo.name
     py = str(VENV_PY) if VENV_PY.is_file() else sys.executable
     script = TOOLS / "export_construction_video.py"
     env = os.environ.copy()
     env["CONSTRUCTION_VIDEO_DEMO"] = str(demo)
     env["PYTHONUNBUFFERED"] = "1"
+    cmd = [py, str(script), "--root", str(demo)]
+    if section:
+        cmd.extend(["--section", section])
     proc = subprocess.run(
-        [py, str(script), "--root", str(demo)],
+        cmd,
         cwd=str(ROOT),
         capture_output=True,
         text=True,
@@ -170,19 +173,27 @@ class Handler(BaseHTTPRequestHandler):
                     },
                 )
                 return
+        section = str(payload.get("section") or "").strip() or None
         write_job(
             demo,
             {
                 "status": "running",
                 "slug": demo.name,
-                "message": "Starting construction video…",
+                "message": f"Re-recording {section}…" if section else "Starting construction video…",
+                "section": section,
                 "started_at": utc_now(),
             },
         )
-        threading.Thread(target=run_export, args=(demo,), daemon=True).start()
+        threading.Thread(target=run_export, args=(demo, section), daemon=True).start()
         self._json(
             202,
-            {"ok": True, "status": "running", "slug": demo.name, "message": "Starting construction video…"},
+            {
+                "ok": True,
+                "status": "running",
+                "slug": demo.name,
+                "section": section,
+                "message": f"Re-recording {section}…" if section else "Starting construction video…",
+            },
         )
 
 

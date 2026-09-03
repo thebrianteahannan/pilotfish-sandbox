@@ -15,7 +15,7 @@
         <sql:Execute as="existingRow" into="existingOrders">
           <xsl:choose>
             <xsl:when test="$sourceClient = 'PACT' or $sourceClient = 'LADDER'">
-              <sql:SQL>select c.TRANSACTION_ID, c.FLOWNET_ORDER_NUM, c.TRANSREFGUID, c.PF_SOURCE_CLIENT, p.POLNUMBER from CRLTRANSACTION c inner join POLICY p on c.TRANSACTION_ID=p.TRANSACTION_ID where c.PF_SOURCE_CLIENT = ? and (c.TRANSREFGUID=? or p.TRACKING_ID=?) and decode(c.FLOWNET_ORDER_NUM,'INVALID',1,0)=0</sql:SQL>
+              <sql:SQL>select c.TRANSACTION_ID, c.FLOWNET_ORDER_NUM, c.TRANSREFGUID, c.PF_SOURCE_CLIENT, p.POLNUMBER from CRLTRANSACTION c inner join POLICY p on c.TRANSACTION_ID=p.TRANSACTION_ID where c.PF_SOURCE_CLIENT = ? and (c.TRANSREFGUID=? or p.TRACKING_ID=?) and CASE WHEN c.FLOWNET_ORDER_NUM='INVALID' THEN 1 ELSE 0 END=0</sql:SQL>
               <sql:Params>
                 <xsl:value-of select="$sourceClient" />
               </sql:Params>
@@ -35,7 +35,7 @@
             </xsl:when>
             <xsl:when test="$sourceClient = 'PRUX'">
               <xsl:variable name="insuredParty" select="ns1:OLifE/ns1:Party[@id = ../ns1:Relation[ns1:RelationRoleCode/@tc=32]/@RelatedObjectID]" />
-              <sql:SQL>select c.TRANSACTION_ID, c.FLOWNET_ORDER_NUM, c.TRANSREFGUID, c.PF_SOURCE_CLIENT, p.POLNUMBER from CRLTRANSACTION c inner join POLICY p on c.TRANSACTION_ID=p.TRANSACTION_ID and p.IS_PRIMARY_POLICY='Y' inner join PARTY y on c.TRANSACTION_ID=y.TRANSACTION_ID where c.PF_SOURCE_CLIENT = ? and (c.TRANSREFGUID=? or p.TRACKING_ID=? or (decode(y.FIRSTNAME,?,1,0)=1 and decode(y.MIDDLENAME,?,1,0)=1 and decode(y.LASTNAME,?,1,0)=1 and y.BIRTHDATE=to_date(?,'YYYY-MM-DD') and p.POLNUMBER=? and c.CREATED_DATE &gt; (sysdate - 60))) and decode(c.FLOWNET_ORDER_NUM,'INVALID',1,0)=0</sql:SQL>
+              <sql:SQL>select c.TRANSACTION_ID, c.FLOWNET_ORDER_NUM, c.TRANSREFGUID, c.PF_SOURCE_CLIENT, p.POLNUMBER from CRLTRANSACTION c inner join POLICY p on c.TRANSACTION_ID=p.TRANSACTION_ID and p.IS_PRIMARY_POLICY='Y' inner join PARTY y on c.TRANSACTION_ID=y.TRANSACTION_ID where c.PF_SOURCE_CLIENT = ? and (c.TRANSREFGUID=? or p.TRACKING_ID=? or (CASE WHEN y.FIRSTNAME=? THEN 1 ELSE 0 END=1 and CASE WHEN y.MIDDLENAME=? THEN 1 ELSE 0 END=1 and CASE WHEN y.LASTNAME=? THEN 1 ELSE 0 END=1 and y.BIRTHDATE=CAST(? AS date) and p.POLNUMBER=? and c.CREATED_DATE &gt; DATEADD(day, -60, GETDATE()))) and CASE WHEN c.FLOWNET_ORDER_NUM='INVALID' THEN 1 ELSE 0 END=0</sql:SQL>
               <sql:Params>
                 <xsl:value-of select="$sourceClient" />
               </sql:Params>
@@ -76,7 +76,7 @@
               </sql:Params>
             </xsl:when>
             <xsl:otherwise>
-              <sql:SQL>select c.TRANSACTION_ID, c.FLOWNET_ORDER_NUM, c.TRANSREFGUID, c.PF_SOURCE_CLIENT, p.POLNUMBER from CRLTRANSACTION c inner join POLICY p on c.TRANSACTION_ID=p.TRANSACTION_ID where c.PF_SOURCE_CLIENT = ? and c.TRANSREFGUID=? and decode(c.FLOWNET_ORDER_NUM,'INVALID',1,0)=0 and (select max(r.REQ_ACCT_NUM) from REQ_INFO r where r.POLICY_ID=p.POLICY_ID)=?</sql:SQL>
+              <sql:SQL>select c.TRANSACTION_ID, c.FLOWNET_ORDER_NUM, c.TRANSREFGUID, c.PF_SOURCE_CLIENT, p.POLNUMBER from CRLTRANSACTION c inner join POLICY p on c.TRANSACTION_ID=p.TRANSACTION_ID where c.PF_SOURCE_CLIENT = ? and c.TRANSREFGUID=? and CASE WHEN c.FLOWNET_ORDER_NUM='INVALID' THEN 1 ELSE 0 END=0 and (select max(r.REQ_ACCT_NUM) from REQ_INFO r where r.POLICY_ID=p.POLICY_ID)=?</sql:SQL>
               <sql:Params>
                 <xsl:value-of select="$sourceClient" />
               </sql:Params>
@@ -109,7 +109,7 @@
           </sql:Insert>
           <!-- NOW THAT WE'VE INSERTED THE ORIGINAL TRANSACTION TEXT INTO THE DATABASE, LET'S GET THAT NEW ROW'S SEQUENCE NUMBER FOR USE LATER -->
           <sql:Execute as="row" into="results">
-            <sql:SQL>SELECT TRANSACTION_TEXT_SEQ.CURRVAL AS CURR_TRANSACTION_TEXT_ID FROM DUAL</sql:SQL>
+            <sql:SQL>SELECT IDENT_CURRENT('pilotfish.TRANSACTION_TEXT') AS CURR_TRANSACTION_TEXT_ID</sql:SQL>
           </sql:Execute>
           <sql:Iterate as="row" over="results">
             <!-- Insert the validation errors into the VALIDATION_ERROR table -->
@@ -132,7 +132,7 @@
               </xsl:attribute>
             </sql:Assign>
             <sql:Execute>
-              <sql:SQL>INSERT INTO VALIDATION_ERROR (PF_SOURCE_CLIENT, POLNUMBER, ERROR_DATE, REQ_CODE_TC, REQ_CODE_TXT, REASON_FOR_ERROR, TRANSACTION_TEXT_ID) VALUES (?, ?, sysdate, ?, ?, ?, ?)</sql:SQL>
+              <sql:SQL>INSERT INTO VALIDATION_ERROR (PF_SOURCE_CLIENT, POLNUMBER, ERROR_DATE, REQ_CODE_TC, REQ_CODE_TXT, REASON_FOR_ERROR, TRANSACTION_TEXT_ID) VALUES (?, ?, GETDATE(), ?, ?, ?, ?)</sql:SQL>
               <sql:Params>
                 <xsl:value-of select="concat('R1_',ta:getAttribute($attributes, 'sourceClient'))" />
               </sql:Params>
@@ -176,7 +176,7 @@
                 <xsl:value-of select="ns1:TransType" />
               </TYPE_TXT>
               <!-- Oracle date format string is different than Java format string.  See http://www.techonthenet.com/oracle/functions/to_date.php -->
-              <EXE_DATE pattern="to_date(?, 'YYYY-MM-DD HH24:MI:SS')" type="VARCHAR">
+              <EXE_DATE type="TIMESTAMP">
                 <xsl:choose>
                   <xsl:when test="string-length(ns1:TransExeDate) &gt; 0">
                     <xsl:call-template name="formatDateTime">
@@ -211,7 +211,7 @@
                   </xsl:otherwise>
                 </xsl:choose>
               </TESTINDICATOR>
-              <CREATION_DATE pattern="to_date(?, 'YYYY-MM-DD HH24:MI:SS')" type="VARCHAR">
+              <CREATION_DATE type="TIMESTAMP">
                 <xsl:choose>
                   <xsl:when test="string-length(ns1:OLifE/ns1:SourceInfo/ns1:CreationDate) &gt; 0">
                     <xsl:call-template name="formatDateTime">
@@ -263,13 +263,13 @@
               <CREATED_BY>
                 <xsl:text>pilotfish</xsl:text>
               </CREATED_BY>
-              <CREATED_DATE pattern="to_date(?, 'YYYY-MM-DD HH24:MI:SS')" type="VARCHAR">
+              <CREATED_DATE type="TIMESTAMP">
                 <xsl:call-template name="currentDateTime" />
               </CREATED_DATE>
               <LAST_MODIFIED_BY>
                 <xsl:text>pilotfish</xsl:text>
               </LAST_MODIFIED_BY>
-              <LAST_MODIFIED_DATE pattern="to_date(?, 'YYYY-MM-DD HH24:MI:SS')" type="VARCHAR">
+              <LAST_MODIFIED_DATE type="TIMESTAMP">
                 <xsl:call-template name="currentDateTime" />
               </LAST_MODIFIED_DATE>
             </CRLTRANSACTION>
@@ -492,7 +492,7 @@
                   <APP_JURISDICTION_TXT>
                     <xsl:value-of select="ns1:Policy/ns1:ApplicationInfo/ns1:ApplicationJurisdiction" />
                   </APP_JURISDICTION_TXT>
-                  <SIGNED_DATE pattern="to_date(?, 'YYYY-MM-DD HH24:MI:SS')" type="VARCHAR">
+                  <SIGNED_DATE type="TIMESTAMP">
                     <xsl:call-template name="formatDate">
                       <xsl:with-param name="date" select="ns1:Policy/ns1:ApplicationInfo/ns1:SignedDate" />
                     </xsl:call-template>
@@ -555,12 +555,12 @@
                       <UNIQUEID>
                         <xsl:value-of select="ns1:RequirementInfoUniqueID" />
                       </UNIQUEID>
-                      <REQ_DATE pattern="to_date(?, 'YYYY-MM-DD HH24:MI:SS')" type="VARCHAR">
+                      <REQ_DATE type="TIMESTAMP">
                         <xsl:call-template name="formatDate">
                           <xsl:with-param name="date" select="ns1:RequestedDate" />
                         </xsl:call-template>
                       </REQ_DATE>
-                      <REQ_SCHEDULED_DATE_TIME pattern="to_date(?, 'YYYY-MM-DD HH24:MI:SS')" type="VARCHAR">
+                      <REQ_SCHEDULED_DATE_TIME type="TIMESTAMP">
                         <xsl:call-template name="formatDateTime">
                           <xsl:with-param name="date">
                             <xsl:choose>
@@ -584,7 +584,7 @@
                         </xsl:call-template>
                       </REQ_SCHEDULED_DATE_TIME>
                       <xsl:if test="string-length(ns1:RequestedScheduleTimeEnd) &gt; 0">
-                        <REQ_SCHEDULED_END_TIME pattern="to_date(?, 'YYYY-MM-DD HH24:MI:SS')" type="VARCHAR">
+                        <REQ_SCHEDULED_END_TIME type="TIMESTAMP">
                           <xsl:call-template name="formatDateTime">
                             <xsl:with-param name="date">
                               <xsl:choose>
@@ -748,7 +748,7 @@
                   <GENDER_TXT>
                     <xsl:value-of select="substring(ns1:Person/ns1:Gender,1,45)" />
                   </GENDER_TXT>
-                  <BIRTHDATE pattern="to_date(?, 'YYYY-MM-DD HH24:MI:SS')" type="VARCHAR">
+                  <BIRTHDATE type="TIMESTAMP">
                     <xsl:call-template name="formatDate">
                       <xsl:with-param name="date" select="ns1:Person/ns1:BirthDate" />
                     </xsl:call-template>
@@ -1054,7 +1054,7 @@
           <xsl:choose>
             <xsl:when test="$sourceClient = 'METL'">
               <ns1:SQL>
-                <xsl:text>UPDATE CRLTRANSACTION SET MODE_TC = 6, MODE_TXT = 'Cancel', LAST_MODIFIED_BY = 'pilotfish', LAST_MODIFIED_DATE = to_date(?, 'YYYY-MM-DD HH24:MI:SS')  WHERE TRANSACTION_ID in (SELECT p.TRANSACTION_ID FROM POLICY p INNER JOIN REQ_INFO r ON p.POLICY_ID=r.POLICY_ID WHERE r.CARRIER_ORDER_NUM = ?)</xsl:text>
+                <xsl:text>UPDATE CRLTRANSACTION SET MODE_TC = 6, MODE_TXT = 'Cancel', LAST_MODIFIED_BY = 'pilotfish', LAST_MODIFIED_DATE = ?  WHERE TRANSACTION_ID in (SELECT p.TRANSACTION_ID FROM POLICY p INNER JOIN REQ_INFO r ON p.POLICY_ID=r.POLICY_ID WHERE r.CARRIER_ORDER_NUM = ?)</xsl:text>
               </ns1:SQL>
               <ns1:Params>
                 <xsl:call-template name="currentDateTime" />
@@ -1065,7 +1065,7 @@
             </xsl:when>
             <xsl:when test="$sourceClient = 'PACT'">
               <ns1:SQL>
-                <xsl:text>UPDATE CRLTRANSACTION SET MODE_TC = 6, MODE_TXT = 'Cancel', LAST_MODIFIED_BY = 'pilotfish', LAST_MODIFIED_DATE = to_date(?, 'YYYY-MM-DD HH24:MI:SS') WHERE TRANSACTION_ID in (SELECT p.TRANSACTION_ID FROM POLICY p WHERE p.TRACKING_ID = ?)</xsl:text>
+                <xsl:text>UPDATE CRLTRANSACTION SET MODE_TC = 6, MODE_TXT = 'Cancel', LAST_MODIFIED_BY = 'pilotfish', LAST_MODIFIED_DATE = ? WHERE TRANSACTION_ID in (SELECT p.TRANSACTION_ID FROM POLICY p WHERE p.TRACKING_ID = ?)</xsl:text>
               </ns1:SQL>
               <ns1:Params>
                 <xsl:call-template name="currentDateTime" />
@@ -1083,7 +1083,7 @@
             </xsl:when>
             <xsl:when test="string-length(ns1:OLifE/ns1:Holding/ns1:Policy/ns1:PolNumber) = 0 and string-length(ns1:OLifE/ns1:Holding/ns1:Policy/ns1:ApplicationInfo/ns1:TrackingID) &gt; 0">
               <ns1:SQL>
-                <xsl:text>UPDATE CRLTRANSACTION SET MODE_TC = 6, MODE_TXT = 'Cancel', LAST_MODIFIED_BY = 'pilotfish', LAST_MODIFIED_DATE = to_date(?, 'YYYY-MM-DD HH24:MI:SS') WHERE TRANSACTION_ID in (SELECT p.TRANSACTION_ID FROM POLICY p WHERE p.TRACKING_ID = ?)</xsl:text>
+                <xsl:text>UPDATE CRLTRANSACTION SET MODE_TC = 6, MODE_TXT = 'Cancel', LAST_MODIFIED_BY = 'pilotfish', LAST_MODIFIED_DATE = ? WHERE TRANSACTION_ID in (SELECT p.TRANSACTION_ID FROM POLICY p WHERE p.TRACKING_ID = ?)</xsl:text>
               </ns1:SQL>
               <ns1:Params>
                 <xsl:call-template name="currentDateTime" />
@@ -1094,7 +1094,7 @@
             </xsl:when>
             <xsl:otherwise>
               <ns1:SQL>
-                <xsl:text>UPDATE CRLTRANSACTION SET MODE_TC = 6, MODE_TXT = 'Cancel', LAST_MODIFIED_BY = 'pilotfish', LAST_MODIFIED_DATE = to_date(?, 'YYYY-MM-DD HH24:MI:SS') WHERE TRANSACTION_ID in (SELECT p.TRANSACTION_ID FROM POLICY p WHERE p.POLNUMBER = ?)</xsl:text>
+                <xsl:text>UPDATE CRLTRANSACTION SET MODE_TC = 6, MODE_TXT = 'Cancel', LAST_MODIFIED_BY = 'pilotfish', LAST_MODIFIED_DATE = ? WHERE TRANSACTION_ID in (SELECT p.TRANSACTION_ID FROM POLICY p WHERE p.POLNUMBER = ?)</xsl:text>
               </ns1:SQL>
               <ns1:Params>
                 <xsl:call-template name="currentDateTime" />
@@ -1208,7 +1208,7 @@
               <CARRIER_ORDER_NUM>
                 <xsl:value-of select="substring(ns1:OLifE/ns1:Holding/ns1:Policy/ns1:RequirementInfo/ns1:CarrierOrderNum,1,45)" />
               </CARRIER_ORDER_NUM>
-              <TRANSACTION_DATE pattern="to_date(?, 'YYYY-MM-DD HH24:MI:SS')" type="VARCHAR">
+              <TRANSACTION_DATE type="TIMESTAMP">
                 <xsl:choose>
                   <xsl:when test="string-length(ns1:TransExeDate) &gt; 0">
                     <xsl:call-template name="formatDateTime">
@@ -1224,7 +1224,7 @@
                   </xsl:otherwise>
                 </xsl:choose>
               </TRANSACTION_DATE>
-              <RECEIVED_DATE pattern="to_date(?, 'YYYY-MM-DD HH24:MI:SS')" type="VARCHAR">
+              <RECEIVED_DATE type="TIMESTAMP">
                 <xsl:call-template name="currentDateTime" />
               </RECEIVED_DATE>
               <MESSAGE_BODY literal="true">

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors />
+  <Source icon="" name="834 inbound">
+    <FormatProfile name="EDI 834 to XML" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="Poll EDI 834">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <PollingInterval>5</PollingInterval>
+        <PollingDirectory>$$EDI_INBOUND_DIRECTORY</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction />
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>$$EDI_ARCHIVE_DIRECTORY</TargetDirectory>
+        <CompatModeMoved>false</CompatModeMoved>
+        <Tokenizers />
+        <SerializedTransactionsTag>1</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>2</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+        <SynchResponse>false</SynchResponse>
+        <Timeout>60</Timeout>
+        <FileSortingMethod>System Default</FileSortingMethod>
+        <FileSortingDirection>Ascending</FileSortingDirection>
+      </ModuleConfig>
+    </Listener>
+    <Processors />
+  </Source>
+  <Target icon="" name="CSV Outbound">
+    <FormatProfile name="834 XML to CSV" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Write Enrollment CSV" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$CSV_OUTPUT_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:getAttribute('com.pilotfish.FileName')}</FileName>
+        <FileExtension>csv</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors />
+  </Target>
+</Route>

@@ -34,7 +34,7 @@ def _set_job(**fields) -> None:
         _job.update(fields)
 
 
-def run(cmd: list[str], *, cwd: Path | None = None, timeout: int = 120) -> tuple[int, str]:
+def run(cmd: list[str], *, cwd: Path | None = None, timeout: int = 120, env: dict | None = None) -> tuple[int, str]:
     try:
         proc = subprocess.run(
             cmd,
@@ -42,6 +42,7 @@ def run(cmd: list[str], *, cwd: Path | None = None, timeout: int = 120) -> tuple
             capture_output=True,
             text=True,
             timeout=timeout,
+            env=env,
         )
     except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as exc:
         return 1, str(exc)
@@ -269,6 +270,8 @@ def stop_other_clients_stacks(keep: Path | None = None) -> list[str]:
                 continue
             name = str(row.get("Names") or "")
             if not name.startswith("pf-"):
+                continue
+            if name == "pf-healthcare-buzz-scout":
                 continue
             if keep_slug and f"pf-{keep_slug}" in name:
                 continue

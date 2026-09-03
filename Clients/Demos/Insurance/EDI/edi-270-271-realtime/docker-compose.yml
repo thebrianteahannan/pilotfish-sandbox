@@ -13,6 +13,10 @@ services:
     profiles: ["full"]
     build:
       context: ./pilotfish
+      pull: false
+      additional_contexts:
+        eip_base: docker-image://pilotfish-eip:23R1
+    pull_policy: never
     image: pilotfish-edi-270-271-realtime:23R1
     container_name: pf-edi270rt-pilotfish
     restart: unless-stopped
@@ -28,7 +32,7 @@ services:
       - ./logs:/usr/local/tomcat/webapps/eip/logs
       - ./pilotfish/demo-eip-root/routes:/usr/local/tomcat/webapps/eip/eip-root/routes
       - ./pilotfish/demo-eip-root/environment-settings.conf:/usr/local/tomcat/webapps/eip/eip-root/environment-settings.conf:ro
-      - ../../../../../EDI/TableData/x12:/usr/local/tomcat/webapps/eip/eip-root/edi-tabledata:ro
+      - ./pilotfish/edi-tabledata:/usr/local/tomcat/webapps/eip/eip-root/edi-tabledata:ro
 
   webui:
     profiles: ["stage", "full"]

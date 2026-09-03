@@ -50,3 +50,16 @@ def notify(title: str, detail: str, *, slug: str = "", req_id: str = "", tags: s
     body = "\n".join(p for p in (detail.strip(), url) if p)
     tag_list = [t for t in (tags or "").split(",") if t]
     threading.Thread(target=_post, args=(title, body, url, tag_list), daemon=True).start()
+
+
+def notify_hub_up(port: int | None = None) -> None:
+    """Ping when the Sandbox control hub is listening."""
+    port = int(port or os.environ.get("SANDBOX_HUB_PORT", "8077"))
+    lan = demos.lan_ip()
+    url = f"http://{lan}:{port}/"
+    body = f"PilotFish Sandbox hub is up.\nLocal http://127.0.0.1:{port}/\nLAN {url}"
+    threading.Thread(
+        target=_post,
+        args=("Sandbox up", body, url, ["white_check_mark", "rocket"]),
+        daemon=True,
+    ).start()

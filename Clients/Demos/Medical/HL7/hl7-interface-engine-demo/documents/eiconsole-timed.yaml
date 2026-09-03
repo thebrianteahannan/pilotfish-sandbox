@@ -1,0 +1,409 @@
+# Spoken copy follows the public 5:15 video (source of truth):
+# https://www.youtube.com/watch?v=RaaR2TcQQHQ
+# https://cms.pilotfishtechnology.com/hl7-interface-engine-demo/
+# Full transcript also on healthcare.pilotfishtechnology.com
+# Do not run generate_eiconsole_walkthrough.py over this file.
+name: eiconsole-hl7-interface-engine-demo
+steps:
+  - id: wait-fm
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 400
+  - id: basic
+    action: click
+    target: { type: tab, contains: "Basic" }
+    detail: "Welcome. In this demonstration you will see some of the unique capabilities of the eiConsole for Healthcare."
+    dwell_ms: 7980
+  - id: open-pkg
+    action: double_click
+    target: { type: table, contains: "HL7 Hospital To Database" }
+    detail: "In this example, HL7 is coming from a hospital and then sent on to a data measures store or a database."
+    dwell_ms: 8316
+  - id: r1-open
+    action: double_click
+    target: { type: table, contains: "1 - Hospital HL7 To Database" }
+    detail: "We begin in the main route grid that depicts the flow of data between our Source System, a hospital, and our Target System, an external database."
+    dwell_ms: 10500
+  - id: r1-grid
+    action: wait_for
+    target: { type: table, contains: "RoutingSource" }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-src
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 0 }
+    detail: "Those end-system names are just labels. The work is the stages in between."
+    optional: true
+    dwell_ms: 5940
+  - id: r1-listener
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 1 }
+    detail: "We'll begin with our Listener. In this case, we're using HL7 over LLP."
+    dwell_ms: 6852
+  - id: r1-lmod
+    action: click
+    target: { type: table, contains: "HL7 over LLP" }
+    detail: ""
+    optional: true
+    dwell_ms: 300
+  - id: r1-ltype
+    action: click
+    target: { contains: "Listener Type" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-lbasic
+    action: click
+    target: { type: tab, contains: "Basic" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-lport
+    action: click
+    target: { type: label, contains: "Port" }
+    detail: "This listener monitors the specified TCP socket for HL7 messages. Here that socket is port 2578."
+    optional: true
+    dwell_ms: 9348
+  - id: r1-stx
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 2 }
+    detail: "We'll then move on to the Source Transformation. This will take the HL7 data and convert it into a generic XML representation."
+    dwell_ms: 9444
+  - id: r1-sfmt
+    action: click
+    target: { type: table, contains: "HL7 2.x to XML" }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-sfmt-wait
+    action: wait_for
+    target: { contains: "Format Profile" }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-smod
+    action: click
+    target: { contains: "Transformation Module" }
+    detail: "We do this by using the eiConsole's HL7 to XML Transformation Module. In this drop-down, we'll choose HL7 2.x to find our version."
+    optional: true
+    dwell_ms: 12180
+  - id: r1-sto
+    action: click
+    target: { type: tab, contains: "To XML" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-sfmt-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-sfmt-off
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 2 }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-sedit
+    action: click
+    target: { type: button, text: Edit }
+    detail: "Then we'll move on to the logical transformation. Data transformations in the eiConsole are handled using PilotFish's Data Mapper."
+    dwell_ms: 9636
+  - id: r1-smap-tab
+    action: click
+    target: { type: tab, contains: "Mapping" }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-smap-opensrc
+    action: click
+    target: { text: "Open source format" }
+    detail: ""
+    dwell_ms: 700
+  - id: r1-smap-opensrc-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-smap-opentgt
+    action: click
+    target: { text: "Open target format" }
+    detail: ""
+    dwell_ms: 700
+  - id: r1-smap-opentgt-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-smap-drag
+    action: drag
+    target: { type: FormatTree, side: left }
+    dest: { type: FormatTree, side: right }
+    detail: ""
+    dwell_ms: 500
+  - id: r1-smap2
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "All of your logical mapping is done here between your source format — in this case our HL7 data represented as a tree to the left — and our target format, a custom XML representation of some of the patient data we wanted to retain in our database."
+    dwell_ms: 18492
+  - id: r1-smap3
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Logical mapping rules are created through dragging and dropping onto the structure in the middle, with green nodes representing XML elements from our custom XML file and our blue nodes representing values mapped to those fields."
+    dwell_ms: 16140
+  - id: r1-smap4
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Here we can see the patient information mapped into the person's last name, first name, and date of birth field."
+    dwell_ms: 7908
+  - id: r1-smap5
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "We can also see a yellow note underneath the birth date that demonstrates how the eiConsole's Data Mapper can be used to perform data manipulation during the mapping process."
+    dwell_ms: 10668
+  - id: r1-smap6
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Here we're formatting the date of birth value coming in from our HL7 into an XML date format using our date formatting tool from the palette above."
+    dwell_ms: 10500
+  - id: r1-smap7
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "PID.7 is coming in with this format yyyyMMdd. Our desired output format for our XML file will be yyyy-MM-dd."
+    dwell_ms: 13044
+  - id: r1-smap8
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "We define that using our date-time formatter so that all incoming data will automatically change to that format. As this mapping was created, XSLT was generated under the covers."
+    dwell_ms: 13332
+  - id: r1-smap9
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Once all of our fields have been mapped and our mapping is complete, we can move on to the Routing stage."
+    dwell_ms: 6924
+  - id: r1-sback
+    action: click
+    target: { contains: "Return to Console" }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-snosave
+    action: click
+    target: { text: "Don't Save" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-route
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 3 }
+    detail: "In the Routing stage, we route the data along to our single Target System, which includes the target transformation to convert our generic XML representation of the HL7 into the specific SQL database statement."
+    optional: true
+    dwell_ms: 16404
+  - id: r1-ttx
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 4 }
+    detail: "In our next stage, the Target Transform, we will now do another logical transformation — taking that XML representation and creating SQL statements from that."
+    dwell_ms: 12228
+  - id: r1-tfmt
+    action: click
+    target: { type: table, contains: "Patient XML to SQL" }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-tfmt-wait
+    action: wait_for
+    target: { contains: "Format Profile" }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-tfrom
+    action: click
+    target: { type: tab, contains: "From XML" }
+    detail: "We'll do this using our Data Mapper."
+    optional: true
+    dwell_ms: 2652
+  - id: r1-tfmt-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-tfmt-off
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 4 }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-tedit
+    action: click
+    target: { type: button, text: Edit }
+    detail: "On the left-hand side of our Data Mapper, you can see that simplified patient data that we took from the HL7 message initially, then parsed out and created this custom XML file with."
+    dwell_ms: 13188
+  - id: r1-tmap-tab
+    action: click
+    target: { type: tab, contains: "Mapping" }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-tmap-opensrc
+    action: click
+    target: { text: "Open source format" }
+    detail: ""
+    dwell_ms: 700
+  - id: r1-tmap-opensrc-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-tmap-opentgt
+    action: click
+    target: { text: "Open target format" }
+    detail: ""
+    dwell_ms: 700
+  - id: r1-tmap-opentgt-esc
+    action: escape
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 200
+  - id: r1-tmap-drag
+    action: drag
+    target: { type: FormatTree, side: left }
+    dest: { type: FormatTree, side: right }
+    detail: ""
+    dwell_ms: 500
+  - id: r1-txslt2
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "On the right-hand side we have connected up to a database and loaded in our tables, and also have statements and functions below."
+    dwell_ms: 8508
+  - id: r1-txslt3
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Our mapping here in the middle indicates that we will insert this information from our source system into these rows and tables."
+    dwell_ms: 7884
+  - id: r1-tback
+    action: click
+    target: { contains: "Return to Console" }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-tnosave
+    action: click
+    target: { text: "Don't Save" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-tr
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 5 }
+    detail: "In our Transport stage, we've chosen that we'll connect up to a database. There are other options for Transport, much like our Listener stage."
+    dwell_ms: 9948
+  - id: r1-trmod
+    action: click
+    target: { type: table, contains: "Write Patients SQL" }
+    detail: ""
+    optional: true
+    dwell_ms: 300
+  - id: r1-trtab
+    action: click
+    target: { type: tab, contains: "Transport Configuration" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-trjdbc
+    action: click
+    target: { contains: "JDBC" }
+    detail: "To connect up to that database we choose this from the drop-down and enter some basic connection credentials. We can also test our database connection below using this button."
+    optional: true
+    dwell_ms: 11388
+  - id: r1-mode
+    action: click
+    target: { type: JMenu, text: Mode }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-testing
+    action: click
+    target: { type: JRadioButtonMenuItem, text: "Testing Mode" }
+    detail: ""
+    optional: true
+    dwell_ms: 400
+  - id: r1-nosave
+    action: click
+    target: { text: "Don't Save" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-test1
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Now that we've viewed the configuration of these stages, let's move along to Testing Mode to see it in action."
+    dwell_ms: 6804
+  - id: r1-test2
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Here we'll see all the stages that we just talked about represented as question marks. We can choose to start our tests at any stage and end it at any stage."
+    dwell_ms: 10116
+  - id: r1-test3
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "We'll start the test at the Listener so it's actually listening on that TCP port for an HL7 feed."
+    dwell_ms: 6540
+  - id: r1-tmc
+    action: click
+    target: { contains: "Test Mode Configuration" }
+    detail: ""
+    dwell_ms: 250
+  - id: r1-tmopen
+    action: click
+    target: { type: JMenu, text: Open }
+    detail: ""
+    dwell_ms: 400
+  - id: r1-tmsamp
+    action: click
+    target: { type: JRadioButtonMenuItem, contains: "Sample ADT" }
+    detail: "This saved test starts at the Listener. After we execute, it waits on port 2578 for a message."
+    dwell_ms: 7956
+  - id: r1-tm-ok
+    action: click
+    target: { type: button, text: "No" }
+    detail: ""
+    optional: true
+    dwell_ms: 200
+  - id: r1-exec
+    action: click
+    target: { contains: "Execute Test" }
+    detail: "Once we hit execute test, the listener starts and waits on port 2578."
+    dwell_ms: 6588
+  - id: r1-send
+    action: shell
+    text: python3 "$SEND_MLLP" --port 2578 --file "$CONSTRUCTION_VIDEO_DEMO/samples/hospital_ADT_A01.hl7"
+    target: { type: JMenu, text: File }
+    detail: "Now we send it a sample HL7 message over LLP. The question marks turn to green check marks."
+    dwell_ms: 8076
+  - id: r1-exec-wait
+    action: pause
+    target: { type: JMenu, text: File }
+    detail: ""
+    dwell_ms: 2500
+  - id: r1-stop
+    action: click
+    target: { type: button, text: "Stop" }
+    detail: ""
+    optional: true
+    dwell_ms: 400
+  - id: r1-test6
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 1 }
+    detail: "Starting at the Listener, we can see each stage output throughout Testing Mode. Here is the HL7 that just arrived over LLP."
+    dwell_ms: 9780
+  - id: r1-test7
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Here we can see an XML representation of that HL7 that was created."
+    dwell_ms: 5844
+  - id: r1-test8
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Here we can see the XML that we parsed just using those simplified patient data."
+    dwell_ms: 5628
+  - id: r1-test9
+    action: click
+    target: { type: table, contains: "RoutingSource", column: 4 }
+    detail: "At the Target Transform, here we can see the XML representation of what will happen in our SQL database, which will then be sent on to a live database by entering that connectivity information."
+    dwell_ms: 14100
+  - id: r1-test10
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "And that's all there is to it. It's just that simple to use the eiConsole for Healthcare to manipulate HL7 data and convert HL7 data into virtually any other file format."
+    dwell_ms: 13572

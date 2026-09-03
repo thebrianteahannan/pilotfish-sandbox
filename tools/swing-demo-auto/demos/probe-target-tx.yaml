@@ -1,0 +1,7 @@
+name: probe-target
+steps:
+  - id: target
+    action: click
+    target: { type: table, contains: RoutingSource, column: 4 }
+    detail: "Target Transform."
+    dwell_ms: 1200

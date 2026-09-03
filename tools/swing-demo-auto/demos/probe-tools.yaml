@@ -1,0 +1,12 @@
+name: probe-tools
+steps:
+  - id: wait-file
+    action: wait_for
+    target: { type: JMenu, text: Tools }
+    detail: "Wait for Tools menu."
+    dwell_ms: 400
+  - id: click-tools
+    action: click
+    target: { type: JMenu, text: Tools }
+    detail: "Open Tools."
+    dwell_ms: 800

@@ -1,0 +1,22 @@
+---
+description: Never rewrite the sandbox hub page; patch only and do not drop tabs or cards.
+globs: tools/sandbox_control/templates/index.html,tools/sandbox_control/static/*.js,tools/sandbox_control/app.py
+alwaysApply: true
+---
+
+# Hub UI — patch, do not rebuild
+
+`tools/sandbox_control/templates/index.html` is the whole hub chrome. Do **not** replace it (or `app.js` tab lists) with a “simpler” layout.
+
+## Do
+- Smallest possible edit: insert or change only the feature asked for.
+- Keep existing top tabs, Admin subtabs, Demos cards (Buzz Scout, Docs portal), header links, Calendar, Clients, script tags, and `?v=` bumps for files you actually touch.
+- If a tab’s JS/Python still exists on disk, the HTML must still load it.
+
+## Don’t
+- Reconstruct `index.html` or `app.js` from memory of an older hub.
+- Remove My Calendar, Buzz Scout, Docs, or other working hub UI unless Brian explicitly asks to remove that thing.
+- Drop `/api/demos` fields (`scout`, `docs`) or unhook `hub_calendar.register` as a side effect of another change.
+- Restart the hub unless a Python file you changed requires it.
+
+My Emails stays off unless he asks to bring it back.

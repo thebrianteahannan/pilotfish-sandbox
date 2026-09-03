@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "interface": "eiConsole for Healthcare – HL7 Demo",
+  "description": "Hospital ADT over LLP to SQL Patients (public HL7 interface-engine demo).",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8142",
+    "eip": "http://127.0.0.1:8141/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8142/",
+    "http://127.0.0.1:8142/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["HL7", "LLP"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        }
+      ]
+    },
+    {
+      "id": "adt-sql",
+      "name": "ADT to SQL",
+      "tests": [
+        {
+          "id": "send-llp",
+          "name": "Send sample ADT over LLP",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/inject",
+            "json": { "sample": "hospital_ADT_A01.hl7" }
+          },
+          "expect": { "status": 200, "contains": ["ok"] }
+        },
+        {
+          "id": "sql-row",
+          "name": "SQL row has SMITH / JOHN / 1980-05-15",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/wait-patient?control=HOSP-ADT-001&timeout=120" },
+          "expect": { "status": 200, "contains": ["SMITH", "JOHN", "1980-05-15"] }
+        }
+      ]
+    }
+  ]
+}

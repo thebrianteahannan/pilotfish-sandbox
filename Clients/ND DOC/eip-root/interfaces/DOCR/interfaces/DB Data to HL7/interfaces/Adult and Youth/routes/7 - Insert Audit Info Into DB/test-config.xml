@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TestConfigurations>
+  <TestConfig name="Test">
+    <AlternateDataSource>From Text</AlternateDataSource>
+    <StartingText>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#13;
+&lt;RECENTEVENTS&gt;&#13;
+	&lt;EVENT&gt;&#13;
+		&lt;EVENTTYPE&gt;ADMIT&lt;/EVENTTYPE&gt;&#13;
+		&lt;HL7TYPE&gt;A01&lt;/HL7TYPE&gt;&#13;
+		&lt;LASTNAME&gt;FORSCHEN&lt;/LASTNAME&gt;&#13;
+		&lt;FIRSTNAME&gt;CHAD&lt;/FIRSTNAME&gt;&#13;
+		&lt;MIDDLENAME&gt;WILLIAM&lt;/MIDDLENAME&gt;&#13;
+		&lt;ROOTOFFENDERID&gt;965762&lt;/ROOTOFFENDERID&gt;&#13;
+		&lt;BIRTHDATE&gt;1976-01-07 00:00:00.0&lt;/BIRTHDATE&gt;&#13;
+		&lt;SEXCODE&gt;M&lt;/SEXCODE&gt;&#13;
+		&lt;RACECODE&gt;CAUCASIAN&lt;/RACECODE&gt;&#13;
+		&lt;OFFENDERBOOKID&gt;124209&lt;/OFFENDERBOOKID&gt;&#13;
+		&lt;BOOKINGBEGINDATE&gt;2022-02-17 00:00:00.0&lt;/BOOKINGBEGINDATE&gt;&#13;
+		&lt;ELITECOMMITDTTM&gt;2022-02-17 00:00:00.0&lt;/ELITECOMMITDTTM&gt;&#13;
+		&lt;DESCRIPTION&gt;NDSP-HOLD&lt;/DESCRIPTION&gt;&#13;
+		&lt;LIVUNITBEDLOC&gt;NDSP-HOLD&lt;/LIVUNITBEDLOC&gt;&#13;
+		&lt;TOAGYLOCID&gt;NDSP&lt;/TOAGYLOCID&gt;&#13;
+		&lt;ACTIVEFLAG&gt;Y&lt;/ACTIVEFLAG&gt;&#13;
+		&lt;ALIASNAMETYPE&gt;G&lt;/ALIASNAMETYPE&gt;&#13;
+	&lt;/EVENT&gt;&#13;
+&lt;/RECENTEVENTS&gt;</StartingText>
+    <Stage>
+      <Identifier>xslt@transport=New Architecture.7 - Insert into Log Table DB.Database (SQL) Transport</Identifier>
+      <IsStart>true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+      <TransactionAttributes>
+        <Attribute name="event_type">ADMIT</Attribute>
+        <Attribute name="succcess">1</Attribute>
+        <Attribute name="hl7_type">A01</Attribute>
+      </TransactionAttributes>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=New Architecture.7 - Insert into Log Table DB.Database (SQL) Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=New Architecture.7 - Insert into Log Table DB.Database (SQL) Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=New Architecture.7 - Insert into Log Table DB.Database (SQL) Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+</TestConfigurations>

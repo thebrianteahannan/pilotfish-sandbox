@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="patients" type="patients_type" />
+			<xsd:complexType name="patient_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="mrn" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="lastName" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="firstName" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="dob" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="address" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="city" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="state" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="postalCode" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="patients_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="patient" type="patient_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

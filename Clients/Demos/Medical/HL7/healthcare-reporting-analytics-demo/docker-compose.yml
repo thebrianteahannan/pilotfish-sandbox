@@ -1,0 +1,149 @@
+services:
+  sqlserver:
+    profiles: ["full"]
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-healthcare-reporting-sqlserver
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "PilotFish_Demo1!"
+      MSSQL_PID: Developer
+    ports:
+      - "14344:1433"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"PilotFish_Demo1!\" -C -Q \"SELECT 1\" || exit 1",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 25s
+
+  sqlserver-init:
+    profiles: ["full"]
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-healthcare-reporting-sqlserver-init
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ./sql:/sql:ro
+    entrypoint:
+      - /bin/bash
+      - -lc
+      - |
+        set -euo pipefail
+        echo "Initializing AnalyticsDemo..."
+        /opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P 'PilotFish_Demo1!' -C -i /sql/01_init.sql
+        echo "SQL seed complete."
+
+  ftp:
+    profiles: ["full"]
+    image: delfer/alpine-ftp-server
+    container_name: pf-healthcare-reporting-ftp
+    restart: unless-stopped
+    environment:
+      USERS: demo|demo|/ftp/in
+      ADDRESS: ftp
+      MIN_PORT: "30000"
+      MAX_PORT: "30009"
+    ports:
+      - "2121:21"
+      - "30000-30009:30000-30009"
+    volumes:
+      - ./ftp/in:/ftp/in
+
+  analytics:
+    profiles: ["full"]
+    build:
+      context: ./analytics
+    image: pilotfish-healthcare-reporting-analytics-mock:latest
+    container_name: pf-healthcare-reporting-analytics
+    restart: unless-stopped
+    environment:
+      PORT: "7072"
+      ANALYTICS_DIR: /output/analytics
+    ports:
+      - "7072:7072"
+    volumes:
+      - ./output/analytics:/output/analytics
+
+  pilotfish:
+    profiles: ["full"]
+    build:
+      context: ./pilotfish
+      pull: false
+      additional_contexts:
+        eip_base: docker-image://pilotfish-eip:23R1
+    pull_policy: never
+    image: pilotfish-healthcare-reporting-analytics-demo:23R1
+    container_name: pf-healthcare-reporting-pilotfish
+    restart: unless-stopped
+    depends_on:
+      sqlserver-init:
+        condition: service_completed_successfully
+      ftp:
+        condition: service_started
+      analytics:
+        condition: service_started
+    environment:
+      CATALINA_OPTS: "-Xms512M -Xmx2048M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8153:8080"
+      - "10001:10001"
+    volumes:
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+      - ./pilotfish/demo-eip-root/routes:/usr/local/tomcat/webapps/eip/eip-root/routes
+      - ./pilotfish/demo-eip-root/formats:/usr/local/tomcat/webapps/eip/eip-root/formats
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/usr/local/tomcat/webapps/eip/eip-root/environment-settings.conf:ro
+      - ../../../../../EDI/TableData/x12:/usr/local/tomcat/webapps/eip/eip-root/edi-tabledata:ro
+
+  webui:
+    profiles: ["stage", "full"]
+    build:
+      context: ./webui
+    image: pilotfish-healthcare-reporting-analytics-demo-webui:latest
+    container_name: pf-healthcare-reporting-webui
+    restart: unless-stopped
+    environment:
+      WEBUI_PORT: "8154"
+      DEMO_SLUG: "healthcare-reporting-analytics-demo"
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      SAMPLE_DIR: /samples
+      SNAPSHOT_DIR: /output/snapshots
+      DEBUG_TRACE_DIR: /output/debug-trace
+      ANALYTICS_DIR: /output/analytics
+      FTP_IN_DIR: /ftp-in
+      LAN_HINT: "http://192.168.68.62:8154/"
+      EIP_PUBLIC_URL: "http://127.0.0.1:8153/eip/"
+      EIP_HEALTH_URL: "http://pilotfish:8080/eip/"
+      EIP_LLP_HOST: pilotfish
+      EIP_LLP_PORT: "10001"
+      EIP_FHIR_URL: "http://pilotfish:8080/eip/rest/FHIR/Patient"
+      DB_HOST: sqlserver
+      DB_PORT: "1433"
+      DB_USER: sa
+      DB_PASSWORD: "PilotFish_Demo1!"
+      DB_NAME: AnalyticsDemo
+      ROUTE_PDF_NAME: "Healthcare_Reporting_Analytics_V2_Route_Diagrams.pdf"
+      CAPABILITY_PDF_NAME: "Healthcare_Reporting_Analytics_Capability_Brief.pdf"
+    ports:
+      - "8154:8154"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./documents:/documents:ro
+      - ./samples:/samples:ro
+      - ./output:/output
+      - ./ftp/in:/ftp-in
+      - ./pilotfish/demo-eip-root/routes:/routes:ro
+      - ./webui/static:/app/static:ro
+      - ./webui/templates:/app/templates:ro
+      - ./webui/app.py:/app/app.py:ro
+      - ./webui/document_routes.py:/app/document_routes.py:ro
+      - ./webui/video_review_api.py:/app/video_review_api.py:ro

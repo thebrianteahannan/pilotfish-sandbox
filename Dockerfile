@@ -1,7 +1,11 @@
-# PilotFish eiPlatform on Linux (Tomcat 10 + OpenJDK 17)
+# PilotFish eiPlatform on Linux
+# 23R1+ → Tomcat 10 / JDK 17 (jakarta). 20R1 → Tomcat 9 / JDK 11 (javax).
 # Based on: https://cms.pilotfishtechnology.com/eiplatform-installation-guide-linux/
 
-FROM tomcat:10.1-jdk17-temurin
+ARG TOMCAT_IMAGE=tomcat:10.1-jdk17-temurin
+FROM ${TOMCAT_IMAGE}
+ARG TOMCAT_IMAGE
+LABEL pf.tomcat_image="${TOMCAT_IMAGE}"
 
 ENV CATALINA_OPTS="-Xms512M -Xmx1024M -server -XX:+UseParallelGC" \
     JAVA_OPTS="-Djava.security.egd=file:///dev/urandom"
@@ -17,8 +21,9 @@ RUN mkdir -p \
       /opt/pilotfish/database \
       /usr/local/tomcat/webapps/eip
 
-# Rename-equivalent: install WAR as exploded webapps/eip (same as guide's eip.war deploy)
-COPY eip.war.hs.23R1.127 /tmp/eip.war
+# Install eiPlatform WAR (staged as eip.war by docker-run.sh / hub from
+# PilotFish Documentation/PilotFish WARs — e.g. eip.war.hs.23R1.127).
+COPY eip.war /tmp/eip.war
 RUN cd /usr/local/tomcat/webapps/eip \
  && jar -xf /tmp/eip.war \
  && rm -f /tmp/eip.war \

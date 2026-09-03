@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Companies · Buzz Scout</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <p class="kicker">PilotFish Sandbox · Buzz Scout</p>
+      <h1>Companies that may need PilotFish</h1>
+      <p class="lead">A running list from the last two years of hiring posts, news, and public asks. Each card is a rundown — who they are, what they do, and why they might need PilotFish. Mark Interested, Not interested, or Already a client.</p>
+    </div>
+    <div class="actions">
+      <a class="btn" href="{{ url_for('briefing') }}">Find work</a>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <a href="{{ url_for('briefing') }}">Find work</a>
+    <a href="{{ url_for('index') }}">Signals</a>
+    <a class="on" href="{{ url_for('companies') }}">Companies</a>
+    <a href="{{ url_for('market') }}">Market</a>
+    <a href="{{ url_for('search') }}">When People Search</a>
+    <a href="{{ url_for('marketing') }}">Marketing</a>
+  </nav>
+
+  <section class="stats">
+    <div><span class="n">{{ stats.total }}</span><span class="l">on the list</span></div>
+    <div><span class="n">{{ stats.hiring }}</span><span class="l">hiring integration</span></div>
+    <div><span class="n">{{ stats.healthcare }}</span><span class="l">healthcare</span></div>
+    <div><span class="n">{{ stats.interested }}</span><span class="l">interested</span></div>
+    <div><span class="n">{{ stats.already_client }}</span><span class="l">already a client</span></div>
+    <div class="wide muted">Mark Interested, Not interested, or Already a client. New signals still add hops. Status sticks.</div>
+  </section>
+
+  <div class="filters live">
+    <div class="chip-block">
+      <span class="chip-label">Status</span>
+      <div class="chips" id="status-chips">
+        {% for s, lab in [('all','all'),('new','new'),('interested','interested'),('not_interested','not interested'),('already_client','already a client')] %}
+        <button type="button" class="chip{% if status==s %} on{% endif %}" data-filter="status" data-value="{{ s }}">{{ lab }}</button>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="chip-block">
+      <span class="chip-label">Market</span>
+      <div class="chips" id="market-chips">
+        <button type="button" class="chip{% if not market %} on{% endif %}" data-filter="market" data-value="">any</button>
+        <button type="button" class="chip{% if market=='healthcare' %} on{% endif %}" data-filter="market" data-value="healthcare">healthcare</button>
+        <button type="button" class="chip{% if market=='insurance' %} on{% endif %}" data-filter="market" data-value="insurance">insurance</button>
+      </div>
+    </div>
+    <label class="grow">Search
+      <input id="co-search" type="search" name="q" value="{{ q }}" list="co-names" placeholder="Type a company…" autocomplete="off" />
+    </label>
+    <datalist id="co-names">
+      {% for n in names %}<option value="{{ n }}"></option>{% endfor %}
+    </datalist>
+    <p class="muted show-count" id="show-count"></p>
+  </div>
+
+  <main class="brief">
+    {% if not companies %}
+      <p class="empty">No companies yet — run the scout from Signals.</p>
+    {% endif %}
+    <p class="empty" id="no-match" hidden>Nothing matches this filter.</p>
+    {% for c in companies %}
+    <article class="card status-{{ c.status }} co-card" data-status="{{ c.status }}" data-market="{{ c.market or '' }}" data-name="{{ c.name | e }}" data-q="{{ ([c.name, c.who, c.does, c.why_pf] + (c.hops or []) + (c.reasons or []) + [c.notes or '']) | join(' ') | e }}">
+      <div class="theme-head">
+        <span class="score">{{ c.score }}</span>
+        <span class="src {{ c.market or 'healthcare' }}">{{ c.market or 'healthcare' }}</span>
+        <strong>{{ c.name }}</strong>
+        <span class="muted">{% if c.reasons %}{{ c.reasons[0] }}{% endif %}{% if c.hiring_count %} · {{ c.hiring_count }} hiring{% endif %}</span>
+        <span class="badge">{{ c.status_label }}</span>
+      </div>
+      <form class="co-marks" method="post" action="{{ url_for('company_status', company_id=c.id) }}">
+        <button class="chip{% if c.status=='interested' %} on{% endif %}" type="submit" name="status" value="interested">Interested</button>
+        <button class="chip{% if c.status=='not_interested' %} on{% endif %}" type="submit" name="status" value="not_interested">Not interested</button>
+        <button class="chip{% if c.status=='already_client' %} on{% endif %}" type="submit" name="status" value="already_client">Already a client</button>
+      </form>
+      <details>
+        <summary class="muted">Who they are / why PilotFish / notes</summary>
+        <p>{{ c.who }}</p>
+        <p><strong>What they do:</strong> {{ c.does }}</p>
+        <p><strong>Why they might need PilotFish:</strong> {{ c.why_pf }}</p>
+        {% if c.site %}<p><a class="btn" href="{{ c.site }}" target="_blank" rel="noopener">Their site</a></p>{% endif %}
+        {% if c.hops %}
+        <p class="extras">{{ c.hops[:4] | join(' · ') }}</p>
+        {% endif %}
+        {% if c.samples %}
+        <ul class="samples">
+          {% for s in c.samples[:2] %}
+          <li><a href="{{ url_for('post_detail', post_id=s.id) }}">{{ s.title }}</a> <span class="muted">{{ source_label(s.source) }}</span></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        <form class="notes" method="post" action="{{ url_for('company_status', company_id=c.id) }}">
+          <input type="hidden" name="status" value="{{ c.status }}" />
+          <label>Notes
+            <textarea name="notes" rows="2" placeholder="Who to call, what hop, next step…">{{ c.notes }}</textarea>
+          </label>
+          <button class="btn primary" type="submit">Save notes</button>
+        </form>
+      </details>
+    </article>
+    {% endfor %}
+  </main>
+  <script>
+    const state = { status: {{ status|tojson }}, market: {{ market|tojson }}, q: {{ q|tojson }} };
+    const cards = [...document.querySelectorAll(".co-card")];
+    const search = document.getElementById("co-search");
+    const count = document.getElementById("show-count");
+    const none = document.getElementById("no-match");
+
+    function apply() {
+      const q = (state.q || "").trim().toLowerCase();
+      let shown = 0;
+      for (const el of cards) {
+        const st = el.dataset.status;
+        const mk = el.dataset.market;
+        const hay = (el.dataset.q || "").toLowerCase();
+        const okSt = state.status === "all" || st === state.status;
+        const okMk = !state.market || mk === state.market || mk === "both";
+        const okQ = !q || hay.includes(q);
+        const on = okSt && okMk && okQ;
+        el.hidden = !on;
+        if (on) shown += 1;
+      }
+      count.textContent = shown === cards.length ? `${shown} companies` : `${shown} of ${cards.length}`;
+      none.hidden = shown !== 0 || !cards.length;
+      const params = new URLSearchParams();
+      if (state.status && state.status !== "all") params.set("status", state.status);
+      if (state.market) params.set("market", state.market);
+      if (state.q) params.set("q", state.q);
+      const next = params.toString();
+      history.replaceState(null, "", next ? `?${next}` : location.pathname);
+    }
+
+    document.querySelectorAll(".chip[data-filter]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const key = btn.dataset.filter;
+        state[key] = btn.dataset.value;
+        btn.parentElement.querySelectorAll(".chip").forEach((b) => b.classList.toggle("on", b === btn));
+        apply();
+      });
+    });
+    search?.addEventListener("input", () => {
+      state.q = search.value;
+      apply();
+    });
+    apply();
+  </script>
+</body>
+</html>

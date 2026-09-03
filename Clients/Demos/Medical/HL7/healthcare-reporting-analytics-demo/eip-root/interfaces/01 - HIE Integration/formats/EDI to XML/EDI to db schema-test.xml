@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XCSData>
+	<Interchange AckRequested="0" AuthorizationQual="00" ControlNumber="000010216" Date="061015" ElementDelim="*" RepetitionDelim="&gt;" SecurityQual="00" SegmentDelim="~" SubElementDelim=":" TestIndicator="T" Time="1705" Version="00501">
+		<SenderId Qualifier="ZZ">123456789012345</SenderId>
+		<ReceiverId Qualifier="ZZ">123456789012346</ReceiverId>
+		<Group ApplReceiver="9876543210" ApplSender="1234567890" ControlNumber="20213" Date="20061015" GroupType="HC" StandardCode="X" StandardVersion="005010X222A1" Time="1705">
+			<Transaction ControlNumber="0021" DocName="Health Care Claim" DocType="837" Version="005010X222A1">
+				<ST Name="Transaction Set Header">
+					<ST01 Name="Transaction Set Identifier Code">837</ST01>
+					<ST02 Name="Transaction Set Control Number">0021</ST02>
+					<ST03 Name="Implementation Convention Reference">005010X222A1</ST03>
+				</ST>
+				<BHT Name="Beginning of Hierarchical Transaction">
+					<BHT01 Name="Hierarchical Structure Code">0019</BHT01>
+					<BHT02 Name="Transaction Set Purpose Code">00</BHT02>
+					<BHT03 Name="Originator Application Transaction Identifier">0123</BHT03>
+					<BHT04 Name="Transaction Set Creation Date">20061015</BHT04>
+					<BHT05 Name="Transaction Set Creation Time">1023</BHT05>
+					<BHT06 Name="Claim or Encounter Identifier">RP</BHT06>
+				</BHT>
+				<Loop_1000A Name="Submitter Name">
+					<NM1 Name="Submitter Name">
+						<NM101 Name="Entity Identifier Code">41</NM101>
+						<NM102 Name="Entity Type Qualifier">2</NM102>
+						<NM103 Name="Submitter Last or Organization Name">PREMIER BILLING SERVICE</NM103>
+						<NM108 Name="Identification Code Qualifier">46</NM108>
+						<NM109 Name="Submitter Identifier">TGJ23</NM109>
+					</NM1>
+					<PER Name="Submitter EDI Contact Information">
+						<PER01 Name="Contact Function Code">IC</PER01>
+						<PER02 Name="Submitter Contact Name">JERRY</PER02>
+						<PER03 Name="Communication Number Qualifier">TE</PER03>
+						<PER04 Name="Communication Number">3055552222</PER04>
+						<PER05 Name="Communication Number Qualifier">EX</PER05>
+						<PER06 Name="Communication Number">231</PER06>
+					</PER>
+				</Loop_1000A>
+				<Loop_1000B Name="Receiver Name">
+					<NM1 Name="Receiver Name">
+						<NM101 Name="Entity Identifier Code">40</NM101>
+						<NM102 Name="Entity Type Qualifier">2</NM102>
+						<NM103 Name="Receiver Name">AHLIC</NM103>
+						<NM108 Name="Identification Code Qualifier">46</NM108>
+						<NM109 Name="Receiver Primary Identifier">66783JJT</NM109>
+					</NM1>
+				</Loop_1000B>
+				<Loop_2000A Name="Billing Provider Hierarchical Level">
+					<HL Name="Billing Provider Hierarchical Level">
+						<HL01 Name="Hierarchical ID Number">1</HL01>
+						<HL03 Name="Hierarchical Level Code">20</HL03>
+						<HL04 Name="Hierarchical Child Code">1</HL04>
+					</HL>
+					<PRV Name="Billing Provider Specialty Information">
+						<PRV01 Name="Provider Code">BI</PRV01>
+						<PRV02 Name="Reference Identification Qualifier">PXC</PRV02>
+						<PRV03 Name="Provider Taxonomy Code">203BF0100Y</PRV03>
+					</PRV>
+					<Loop_2010AA Name="Billing Provider Name">
+						<NM1 Name="Billing Provider Name">
+							<NM101 Name="Entity Identifier Code">85</NM101>
+							<NM102 Name="Entity Type Qualifier">2</NM102>
+							<NM103 Name="Billing Provider Last or Organizational Name">BEN KILDARE SERVICE</NM103>
+							<NM108 Name="Identification Code Qualifier">XX</NM108>
+							<NM109 Name="Billing Provider Identifier">9876543210</NM109>
+						</NM1>
+						<N3 Name="Billing Provider Address">
+							<N301 Name="Billing Provider Address Line">234 SEAWAY ST</N301>
+						</N3>
+						<N4 Name="Billing Provider City, State, ZIP Code">
+							<N401 Name="Billing Provider City Name">MIAMI</N401>
+							<N402 Name="Billing Provider State or Province Code">FL</N402>
+							<N403 Name="Billing Provider Postal Zone or ZIP Code">33111</N403>
+						</N4>
+						<REF Name="Billing Provider Tax Identification">
+							<REF01 Name="Reference Identification Qualifier">EI</REF01>
+							<REF02 Name="Billing Provider Tax Identification Number">587654321</REF02>
+						</REF>
+					</Loop_2010AA>
+					<Loop_2010AB Name="Pay-to Address Name">
+						<NM1 Name="Pay-to Address Name">
+							<NM101 Name="Entity Identifier Code">87</NM101>
+							<NM102 Name="Entity Type Qualifier">2</NM102>
+						</NM1>
+						<N3 Name="Pay-to Address - ADDRESS">
+							<N301 Name="Pay-To Address Line">2345 OCEAN BLVD</N301>
+						</N3>
+						<N4 Name="Pay-To Address City, State, ZIP Code">
+							<N401 Name="Pay-to Address City Name">MIAMI</N401>
+							<N402 Name="Pay-to Address State Code">FL</N402>
+							<N403 Name="Pay-to Address Postal Zone or ZIP Code">33111</N403>
+						</N4>
+					</Loop_2010AB>
+				</Loop_2000A>
+				<Loop_2000B Name="Subscriber Hierarchical Level">
+					<HL Name="Subscriber Hierarchical Level">
+						<HL01 Name="Hierarchical ID Number">2</HL01>
+						<HL02 Name="Hierarchical Parent ID Number">1</HL02>
+						<HL03 Name="Hierarchical Level Code">22</HL03>
+						<HL04 Name="Hierarchical Child Code">0</HL04>
+					</HL>
+					<SBR Name="Subscriber Information">
+						<SBR01 Name="Payer Responsibility Sequence Number Code">P</SBR01>
+						<SBR02 Name="Individual Relationship Code">18</SBR02>
+						<SBR03 Name="Subscriber Group or Policy Number">12312-A</SBR03>
+						<SBR09 Name="Claim Filing Indicator Code">HM</SBR09>
+					</SBR>
+					<Loop_2010BA Name="Subscriber Name">
+						<NM1 Name="Subscriber Name">
+							<NM101 Name="Entity Identifier Code">IL</NM101>
+							<NM102 Name="Entity Type Qualifier">1</NM102>
+							<NM103 Name="Subscriber Last Name">SMITH</NM103>
+							<NM104 Name="Subscriber First Name">TED</NM104>
+							<NM108 Name="Identification Code Qualifier">MI</NM108>
+							<NM109 Name="Subscriber Primary Identifier">00221111</NM109>
+						</NM1>
+						<N3 Name="Subscriber Address">
+							<N301 Name="Subscriber Address Line">236 N MAIN ST</N301>
+						</N3>
+						<N4 Name="Subscriber City, State, ZIP Code">
+							<N401 Name="Subscriber City Name">MIAMI</N401>
+							<N402 Name="Subscriber State Code">FL</N402>
+							<N403 Name="Subscriber Postal Zone or ZIP Code">33413</N403>
+						</N4>
+						<DMG Name="Subscriber Demographic Information">
+							<DMG01 Name="Date Time Period Format Qualifier">D8</DMG01>
+							<DMG02 Name="Subscriber Birth Date">19430501</DMG02>
+							<DMG03 Name="Subscriber Gender Code">M</DMG03>
+						</DMG>
+					</Loop_2010BA>
+					<Loop_2010BB Name="Payer Name">
+						<NM1 Name="Payer Name">
+							<NM101 Name="Entity Identifier Code">PR</NM101>
+							<NM102 Name="Entity Type Qualifier">2</NM102>
+							<NM103 Name="Payer Name">ALLIANCE HEALTH AND LIFE INSURANCE</NM103>
+							<NM108 Name="Identification Code Qualifier">PI</NM108>
+							<NM109 Name="Payer Identifier">741234</NM109>
+						</NM1>
+					</Loop_2010BB>
+					<Loop_2300 Name="Claim Information">
+						<CLM Name="Claim Information">
+							<CLM01 Name="Patient Control Number">26462967</CLM01>
+							<CLM02 Name="Total Claim Charge Amount">100</CLM02>
+							<CLM05 Name="Health Care Service Location Information">
+								<CLM05_01 Name="Place of Service Code">11</CLM05_01>
+								<CLM05_02 Name="Facility Code Qualifier">B</CLM05_02>
+								<CLM05_03 Name="Claim Frequency Code">1</CLM05_03>
+							</CLM05>
+							<CLM06 Name="Provider or Supplier Signature Indicator">Y</CLM06>
+							<CLM07 Name="Assignment or Plan Participation Code">A</CLM07>
+							<CLM08 Name="Benefits Assignment Certification Indicator">Y</CLM08>
+							<CLM09 Name="Release of Information Code">I</CLM09>
+						</CLM>
+						<DTP Name="Date - Onset of Current Illness or Symptom">
+							<DTP01 Name="Date Time Qualifier">431</DTP01>
+							<DTP02 Name="Date Time Period Format Qualifier">D8</DTP02>
+							<DTP03 Name="Onset of Current Illness or Injury Date">19981003</DTP03>
+						</DTP>
+						<REF Name="Claim Identifier For Transmission Intermediaries">
+							<REF01 Name="Reference Identification Qualifier">D9</REF01>
+							<REF02 Name="Value Added Network Trace Number">17312345600006351</REF02>
+						</REF>
+						<HI Name="Health Care Diagnosis Code">
+							<HI01 Name="Health Care Code Information">
+								<HI01_01 Name="Diagnosis Type Code">BK</HI01_01>
+								<HI01_02 Name="Diagnosis Code">0340</HI01_02>
+							</HI01>
+							<HI02 Name="Health Care Code Information">
+								<HI02_01 Name="Diagnosis Type Code">BF</HI02_01>
+								<HI02_02 Name="Diagnosis Code">V7389</HI02_02>
+							</HI02>
+						</HI>
+						<Loop_2310C Name="Service Facility Location Name">
+							<NM1 Name="Service Facility Location Name">
+								<NM101 Name="Entity Identifier Code">77</NM101>
+								<NM102 Name="Entity Type Qualifier">2</NM102>
+								<NM103 Name="Laboratory or Facility Name">KILDARE ASSOCIATES</NM103>
+								<NM108 Name="Identification Code Qualifier">XX</NM108>
+								<NM109 Name="Laboratory or Facility Primary Identifier">5812345679</NM109>
+							</NM1>
+							<N3 Name="Service Facility Location Address">
+								<N301 Name="Laboratory or Facility Address Line">2345 OCEAN BLVD</N301>
+							</N3>
+							<N4 Name="Service Facility Location City, State, ZIP Code">
+								<N401 Name="Laboratory or Facility City Name">MIAMI</N401>
+								<N402 Name="Laboratory or Facility State or Province Code">FL</N402>
+								<N403 Name="Laboratory or Facility Postal Zone or ZIP Code">33111</N403>
+							</N4>
+						</Loop_2310C>
+						<Loop_2400 Name="Service Line Number">
+							<LX Name="Service Line Number">
+								<LX01 Name="Assigned Number">1</LX01>
+							</LX>
+							<SV1 Name="Professional Service">
+								<SV101 Name="Composite Medical Procedure Identifier">
+									<SV101_01 Name="Product or Service ID Qualifier">HC</SV101_01>
+									<SV101_02 Name="Procedure Code">99213</SV101_02>
+								</SV101>
+								<SV102 Name="Line Item Charge Amount">40</SV102>
+								<SV103 Name="Unit or Basis for Measurement Code">UN</SV103>
+								<SV104 Name="Service Unit Count">1</SV104>
+								<SV107 Name="Composite Diagnosis Code Pointer">1</SV107>
+							</SV1>
+							<DTP Name="Date - Service Date">
+								<DTP01 Name="Date Time Qualifier">472</DTP01>
+								<DTP02 Name="Date Time Period Format Qualifier">D8</DTP02>
+								<DTP03 Name="Service Date">20061003</DTP03>
+							</DTP>
+						</Loop_2400>
+						<Loop_2400 Name="Service Line Number">
+							<LX Name="Service Line Number">
+								<LX01 Name="Assigned Number">2</LX01>
+							</LX>
+							<SV1 Name="Professional Service">
+								<SV101 Name="Composite Medical Procedure Identifier">
+									<SV101_01 Name="Product or Service ID Qualifier">HC</SV101_01>
+									<SV101_02 Name="Procedure Code">87072</SV101_02>
+								</SV101>
+								<SV102 Name="Line Item Charge Amount">15</SV102>
+								<SV103 Name="Unit or Basis for Measurement Code">UN</SV103>
+								<SV104 Name="Service Unit Count">1</SV104>
+								<SV107 Name="Composite Diagnosis Code Pointer">1</SV107>
+							</SV1>
+							<DTP Name="Date - Service Date">
+								<DTP01 Name="Date Time Qualifier">472</DTP01>
+								<DTP02 Name="Date Time Period Format Qualifier">D8</DTP02>
+								<DTP03 Name="Service Date">20061003</DTP03>
+							</DTP>
+						</Loop_2400>
+						<Loop_2400 Name="Service Line Number">
+							<LX Name="Service Line Number">
+								<LX01 Name="Assigned Number">3</LX01>
+							</LX>
+							<SV1 Name="Professional Service">
+								<SV101 Name="Composite Medical Procedure Identifier">
+									<SV101_01 Name="Product or Service ID Qualifier">HC</SV101_01>
+									<SV101_02 Name="Procedure Code">99214</SV101_02>
+								</SV101>
+								<SV102 Name="Line Item Charge Amount">35</SV102>
+								<SV103 Name="Unit or Basis for Measurement Code">UN</SV103>
+								<SV104 Name="Service Unit Count">1</SV104>
+								<SV107 Name="Composite Diagnosis Code Pointer">2</SV107>
+							</SV1>
+							<DTP Name="Date - Service Date">
+								<DTP01 Name="Date Time Qualifier">472</DTP01>
+								<DTP02 Name="Date Time Period Format Qualifier">D8</DTP02>
+								<DTP03 Name="Service Date">20061010</DTP03>
+							</DTP>
+						</Loop_2400>
+						<Loop_2400 Name="Service Line Number">
+							<LX Name="Service Line Number">
+								<LX01 Name="Assigned Number">4</LX01>
+							</LX>
+							<SV1 Name="Professional Service">
+								<SV101 Name="Composite Medical Procedure Identifier">
+									<SV101_01 Name="Product or Service ID Qualifier">HC</SV101_01>
+									<SV101_02 Name="Procedure Code">86663</SV101_02>
+								</SV101>
+								<SV102 Name="Line Item Charge Amount">10</SV102>
+								<SV103 Name="Unit or Basis for Measurement Code">UN</SV103>
+								<SV104 Name="Service Unit Count">1</SV104>
+								<SV107 Name="Composite Diagnosis Code Pointer">2</SV107>
+							</SV1>
+							<DTP Name="Date - Service Date">
+								<DTP01 Name="Date Time Qualifier">472</DTP01>
+								<DTP02 Name="Date Time Period Format Qualifier">D8</DTP02>
+								<DTP03 Name="Service Date">20061010</DTP03>
+							</DTP>
+						</Loop_2400>
+					</Loop_2300>
+				</Loop_2000B>
+				<SE Name="Transaction Set Trailer">
+					<SE01 Name="Number of Included Segments">41</SE01>
+					<SE02 Name="Transaction Set Control Number">0021</SE02>
+				</SE>
+			</Transaction>
+		</Group>
+	</Interchange>
+	<ValidationErrors count="0" />
+</XCSData>
+

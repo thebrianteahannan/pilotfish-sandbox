@@ -10,6 +10,7 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 
+import client_dive
 import clients
 
 HERE = Path(__file__).resolve().parent
@@ -67,6 +68,27 @@ def ocr_vision(path: Path) -> str:
         return ""
     code, out = _run(["/usr/bin/swift", str(SWIFT), str(path)], timeout=90)
     return out.strip() if code == 0 else ""
+
+
+def ocr_vision_boxes(path: Path) -> list[tuple[float, float, float, float, str]]:
+    if not SWIFT.is_file():
+        return []
+    code, out = _run(["/usr/bin/swift", str(SWIFT), "--boxes", str(path)], timeout=90)
+    if code != 0 or not out:
+        return []
+    rows: list[tuple[float, float, float, float, str]] = []
+    for line in out.splitlines():
+        parts = line.split("\t", 4)
+        if len(parts) < 5:
+            continue
+        try:
+            x, y, w, h = float(parts[0]), float(parts[1]), float(parts[2]), float(parts[3])
+        except ValueError:
+            continue
+        text = parts[4].strip()
+        if text:
+            rows.append((x, y, w, h, text))
+    return rows
 
 
 def ocr_image(path: Path) -> str:
@@ -144,7 +166,7 @@ def parse_email_text(text: str) -> dict:
             break
     return {
         "from": sender,
-        "subject": subject,
+        "subject": client_dive.clean_subject(subject),
         "received_at": received,
         "email": body or raw,
         "ocr": raw,

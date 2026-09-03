@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="720ffde4-9648-4ab1-a559-4196a72e32c5" name="1 - Hospital HL7 To Database">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="9624856b-a43f-487c-8b2d-a33cbd71907a" moduleId="dbbc58da-9464-4afd-bb8f-2a2157719235" label="HL7 over LLP" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="92ad80ce-4164-4588-82aa-bdd054a39fd8" moduleId="009f972b-c2a1-4724-92c7-038f15228c20" label="HL7 2.x to XML" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="bf4b0c1e-715b-4927-b8a8-2bf2ca0038bb" moduleId="1cc00dbb-7343-4bd2-aff7-af1affd5151d" label="Snapshot HL7 XML" x="520.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="17227eee-3a24-40ea-93f0-3c030c52d75c" moduleId="9077f4b3-c815-4bab-9b59-6203aba0fd1e" label="Map PID to Patient XML" x="780.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="c2851664-d52f-4747-ad98-e2082b4777d9" moduleId="c3eeef24-21a0-4fa0-89a3-58c2ddf5ba89" label="Snapshot Patient XML" x="1040.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="27e5f388-2f7c-4632-adcf-3a22c544d5be" moduleId="405189a8-86f9-4b08-ad62-bd7f40538c85" label="Map Patient XML to SQL" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="313ec58b-1aab-4b30-9c01-5b6fb469fde0" moduleId="b028854c-9374-47c4-969d-9404c9ffb4a6" label="Snapshot SQL XML" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="b026c907-b035-4451-b577-70702e3a9753" moduleId="9d7096f2-9cd8-4782-9def-731e96a0f532" label="Write Patients SQL" x="1820.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="5222a7f8-1466-4e17-b27e-3a8314ac6f23" sourceNodeId="9624856b-a43f-487c-8b2d-a33cbd71907a" targetNodeId="92ad80ce-4164-4588-82aa-bdd054a39fd8" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="10e47dd7-6e2f-4c81-9c40-30fa4b49fbdb" sourceNodeId="92ad80ce-4164-4588-82aa-bdd054a39fd8" targetNodeId="bf4b0c1e-715b-4927-b8a8-2bf2ca0038bb" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="76824a5a-fcb4-4c07-a9c1-f2d6935e4d1a" sourceNodeId="bf4b0c1e-715b-4927-b8a8-2bf2ca0038bb" targetNodeId="17227eee-3a24-40ea-93f0-3c030c52d75c" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="73448a94-4ebf-44ae-aa55-aa96d5639955" sourceNodeId="17227eee-3a24-40ea-93f0-3c030c52d75c" targetNodeId="c2851664-d52f-4747-ad98-e2082b4777d9" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="196bbd32-ecb7-4548-beaa-43805b346f59" sourceNodeId="27e5f388-2f7c-4632-adcf-3a22c544d5be" targetNodeId="313ec58b-1aab-4b30-9c01-5b6fb469fde0" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="eb40b644-7c15-431b-b6ac-26d8197ad532" sourceNodeId="313ec58b-1aab-4b30-9c01-5b6fb469fde0" targetNodeId="b026c907-b035-4451-b577-70702e3a9753" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="69405f6a-196c-48a2-a3b6-eb69be962034" sourceNodeId="c2851664-d52f-4747-ad98-e2082b4777d9" targetNodeId="27e5f388-2f7c-4632-adcf-3a22c544d5be" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

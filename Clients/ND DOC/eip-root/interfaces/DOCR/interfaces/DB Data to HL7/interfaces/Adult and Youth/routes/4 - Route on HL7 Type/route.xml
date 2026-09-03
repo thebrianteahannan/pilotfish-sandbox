@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="A02PROG Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('hl7_type') == 'A02PROG'</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="A03 Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('hl7_type') == "A03" || getAttribute('hl7_type') == "A03LOAD" || getAttribute('hl7_type') == "A03TFIDIS"</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="A21BED Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('hl7_type') == "A21"</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="A01 Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('hl7_type') == "A01" || getAttribute('hl7_type') == "A01LOAD"</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="A21TFO Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('hl7_type') == 'A21TFO'</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="A22BED Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('hl7_type') == 'A22' || getAttribute('hl7_type') == 'A22TFIDIS'</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="A22TFI Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('hl7_type') == 'A22TFI'</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="A02OTHER Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('hl7_type') == 'A02OTHER'</OGNLExpression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="A01TFI Transport" />
+          </Targets>
+          <Condition>
+            <OGNLExpression>getAttribute('hl7_type') == 'A01TFI'</OGNLExpression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Adult.5 - Send HL7 File.Transaction Monitor-Copy-1">
+      <ModuleConfig>
+        <ErrorListenerName>Error Handling Insert Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <MustContainString />
+        <MustNotContainString />
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="" name="System Unnamed">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="New Architecture.4 - Route on Event Type and Generate Single HL7 File (Oldest Event In Result Set).Programmable (Trigger) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>10:31-10:31</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.other.XPathEvaluatorProcessor" name="New Architecture.4 - Route on Event Type and Generate Single HL7 File (Oldest Event In Result Set).Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeScope>Transaction</AttributeScope>
+          <XPathExpressions>[eip_pair:event_type:eip_name://EVENTTYPE:eip_value][eip_pair:hl7_type:eip_name://HL7TYPE:eip_value][eip_pair:orig_hl7_type:eip_name://ORIGHL7TYPE:eip_value]</XPathExpressions>
+          <GlobalAttributeExpressions />
+          <Namespaces>null</Namespaces>
+          <Namespace />
+          <XPath1Compatibility>false</XPath1Compatibility>
+        </ModuleConfig>
+      </Processor>
+      <Processor class="com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor" name="New Architecture - Adult.4 - Route on Event Type and Generate Single HL7 File (Oldest Event In Result Set).Processor">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <AttributeName>current_event_xml</AttributeName>
+          <SAVEOUTTAG>false</SAVEOUTTAG>
+          <SAVEINTAG>true</SAVEINTAG>
+          <USEDOCUMENTOBJECTMODEL>false</USEDOCUMENTOBJECTMODEL>
+          <StoreAsStream>true</StoreAsStream>
+          <IsGlobalAttribute>false</IsGlobalAttribute>
+          <GlobalAttributeBucket>DEFAULT</GlobalAttributeBucket>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Source>
+  <Target icon="" name="A02PROG">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="A02PROG Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>New Architecture.4e - A02 - Prog Transfer.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="A03 - Discharge">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="A03 Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>New Architecture.4d - A03 - Discharge.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="A01 - Admit">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="A01 Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>New Architecture.4a - A01 - Admit.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="A21BED">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="A21BED Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>New Architecture.4c0 - A02 - Transfer - Bed Is Not Null.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="A21TFO">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="A21TFO Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>New Architecture.4b - A02 - Transfer - Bed Is Null.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="A22BED">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="A22BED Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>New Architecture.4c2 - A22 - Return From Leave and Assign Bed.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="A22TFI">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="A22TFI Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>DOCR.DB Data to HL7.Adult.4g - A22TFI.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="A02 - Other">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="A02OTHER Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>DOCR.DB Data to HL7.Adult.4a - A02OTHER - Transfer - Program Change.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+  <Target icon="" name="A01TFI">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.internal.EIPTransport" name="A01TFI Transport" retries="1">
+      <ModuleConfig>
+        <ServiceName>New Architecture.4a - A01 - Admit.Programmable (Trigger) Listener</ServiceName>
+        <CallbackListenerName />
+        <Timeout>60</Timeout>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

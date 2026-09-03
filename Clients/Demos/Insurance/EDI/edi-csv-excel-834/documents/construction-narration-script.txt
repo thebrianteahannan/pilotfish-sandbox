@@ -1,0 +1,33 @@
+Construction narration script — edi-csv-excel-834
+Spoken in the construction video. On-screen spelling stays 834 / CSV / XML.
+Voice says eight thirty-four, csv, xml.
+
+First up, enrollment files become an EDI 834. CSV, spreadsheet, or tab text — same map either way.
+
+This first route takes those enrollment files and writes the 834.
+
+Here's the line. File comes in, we turn it into XML, we map it, we write the 834.
+
+The Listener watches a folder for the enrollment file.
+
+It polls that folder every few seconds.
+
+Source Transform turns whatever showed up into XML, so the 834 map always sees the same shape.
+
+It's comma-delimited, and it can pick up tab or pipe if that's what came in.
+
+The columns are named — member id, names, plan dates — so the mapper can find them.
+
+Members go on to the 834. Anything we can't use goes to kickout.
+
+This is the map. CSV fields land on 834 segments — Loop 2000 for each member.
+
+That's the stylesheet. Source on the left, 834 on the right. When a column changes, you change this map — not the rest of the route.
+
+Transport writes the 834. Kickout is the other door.
+
+We're on 834-A1 table data, 5010. Friendly names stay off so large files stay fast.
+
+Testing Mode lets you run a file from the Listener all the way through.
+
+Same package has the other direction — 834 back to CSV. Same map, flipped around.

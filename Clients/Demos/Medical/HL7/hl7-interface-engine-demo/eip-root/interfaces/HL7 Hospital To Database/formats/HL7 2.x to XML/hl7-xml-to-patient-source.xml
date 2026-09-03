@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="XCSData">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ADT_A01" type="ADT_A01_element_type" minOccurs="1" maxOccurs="1" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="ADT_A01_element_type">
+				<xsd:sequence>
+					<xsd:element name="MSH" type="MSH_element_type" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="EVN" type="EVN_element_type" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="PID" type="PID_element_type" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="PV1" type="PV1_element_type" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="MSH_element_type">
+				<xsd:sequence>
+					<xsd:element name="MSH.1" type="xsd:string" minOccurs="0" />
+					<xsd:element name="MSH.2" type="xsd:string" minOccurs="0" />
+					<xsd:element name="MSH.3" type="xsd:string" minOccurs="0" />
+					<xsd:element name="MSH.4" type="xsd:string" minOccurs="0" />
+					<xsd:element name="MSH.5" type="xsd:string" minOccurs="0" />
+					<xsd:element name="MSH.6" type="xsd:string" minOccurs="0" />
+					<xsd:element name="MSH.7" type="xsd:string" minOccurs="0" />
+					<xsd:element name="MSH.9" type="MSH9_element_type" minOccurs="0" />
+					<xsd:element name="MSH.10" type="xsd:string" minOccurs="0" />
+					<xsd:element name="MSH.11" type="xsd:string" minOccurs="0" />
+					<xsd:element name="MSH.12" type="xsd:string" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="MSH9_element_type">
+				<xsd:sequence>
+					<xsd:element name="MSG.1" type="xsd:string" minOccurs="0" />
+					<xsd:element name="MSG.2" type="xsd:string" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="EVN_element_type">
+				<xsd:sequence>
+					<xsd:element name="EVN.1" type="xsd:string" minOccurs="0" />
+					<xsd:element name="EVN.2" type="xsd:string" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PID_element_type">
+				<xsd:sequence>
+					<xsd:element name="PID.1" type="xsd:string" minOccurs="0" />
+					<xsd:element name="PID.3" type="CX_element_type" minOccurs="0" />
+					<xsd:element name="PID.5" type="XPN_element_type" minOccurs="0" />
+					<xsd:element name="PID.7" type="xsd:string" minOccurs="0" />
+					<xsd:element name="PID.8" type="xsd:string" minOccurs="0" />
+					<xsd:element name="PID.11" type="XAD_element_type" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="CX_element_type">
+				<xsd:sequence>
+					<xsd:element name="CX.1" type="xsd:string" minOccurs="0" />
+					<xsd:element name="CX.4" type="xsd:string" minOccurs="0" />
+					<xsd:element name="CX.5" type="xsd:string" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="XPN_element_type">
+				<xsd:sequence>
+					<xsd:element name="XPN.1" type="xsd:string" minOccurs="0" />
+					<xsd:element name="XPN.2" type="xsd:string" minOccurs="0" />
+					<xsd:element name="XPN.3" type="xsd:string" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="XAD_element_type">
+				<xsd:sequence>
+					<xsd:element name="XAD.1" type="xsd:string" minOccurs="0" />
+					<xsd:element name="XAD.3" type="xsd:string" minOccurs="0" />
+					<xsd:element name="XAD.4" type="xsd:string" minOccurs="0" />
+					<xsd:element name="XAD.5" type="xsd:string" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PV1_element_type">
+				<xsd:sequence>
+					<xsd:element name="PV1.1" type="xsd:string" minOccurs="0" />
+					<xsd:element name="PV1.2" type="xsd:string" minOccurs="0" />
+					<xsd:element name="PV1.3" type="PL_element_type" minOccurs="0" />
+					<xsd:element name="PV1.7" type="XCN_element_type" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PL_element_type">
+				<xsd:sequence>
+					<xsd:element name="PL.1" type="xsd:string" minOccurs="0" />
+					<xsd:element name="PL.2" type="xsd:string" minOccurs="0" />
+					<xsd:element name="PL.3" type="xsd:string" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="XCN_element_type">
+				<xsd:sequence>
+					<xsd:element name="XCN.1" type="xsd:string" minOccurs="0" />
+					<xsd:element name="XCN.2" type="xsd:string" minOccurs="0" />
+					<xsd:element name="XCN.3" type="xsd:string" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>

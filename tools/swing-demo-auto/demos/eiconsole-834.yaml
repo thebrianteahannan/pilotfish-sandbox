@@ -1,0 +1,122 @@
+# eiConsole walkthrough. detail = spoken line (empty = click only, no voice).
+# Path matches Brian's pass: forward route, land on Target Transform / XSLT in Testing Mode.
+name: eiconsole-834-csv-excel
+steps:
+  - id: wait-fm
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "First up, enrollment files become an EDI 834. CSV, spreadsheet, or tab text — same map either way."
+    dwell_ms: 400
+  - id: advanced
+    action: click
+    target: { type: tab, contains: Advanced }
+    detail: ""
+    dwell_ms: 250
+  - id: basic
+    action: click
+    target: { type: tab, contains: Basic }
+    detail: ""
+    dwell_ms: 250
+  - id: open-pkg
+    action: double_click
+    target: { type: table, contains: "EDI 834 CSV Excel Conversion" }
+    detail: "This first route takes those enrollment files and writes the 834."
+    dwell_ms: 500
+  - id: open-fwd
+    action: double_click
+    target: { type: table, contains: "1 - CSV TXT to EDI 834" }
+    detail: "Here's the line. File comes in, we turn it into XML, we map it, we write the 834."
+    dwell_ms: 500
+  - id: source
+    action: click
+    target: { type: table, contains: RoutingSource, column: 0 }
+    detail: ""
+    dwell_ms: 200
+  - id: listener
+    action: click
+    target: { type: table, contains: RoutingSource, column: 1 }
+    detail: "The Listener watches a folder for the enrollment file."
+    dwell_ms: 300
+  - id: listener-type
+    action: click
+    target: { contains: "Listener Type" }
+    optional: true
+    detail: ""
+    dwell_ms: 150
+  - id: polling
+    action: click
+    target: { contains: "Polling" }
+    optional: true
+    detail: "It polls that folder every few seconds."
+    dwell_ms: 200
+  - id: source-tx
+    action: click
+    target: { type: table, contains: RoutingSource, column: 2 }
+    detail: "Source Transform turns whatever showed up into XML, so the 834 map always sees the same shape."
+    dwell_ms: 300
+  - id: delim
+    action: click
+    target: { contains: "Delimiter" }
+    optional: true
+    detail: "It's comma-delimited, and it can pick up tab or pipe if that's what came in."
+    dwell_ms: 200
+  - id: xform-mod
+    action: click
+    target: { contains: "Transformation Module" }
+    optional: true
+    detail: "The columns are named — member id, names, plan dates — so the mapper can find them."
+    dwell_ms: 200
+  - id: routing
+    action: click
+    target: { type: table, contains: RoutingSource, column: 3 }
+    detail: "Members go on to the 834. Anything we can't use goes to kickout."
+    dwell_ms: 300
+  - id: routing-rules
+    action: click
+    target: { type: tab, contains: "Routing Rules" }
+    optional: true
+    detail: ""
+    dwell_ms: 150
+  - id: xpath
+    action: click
+    target: { contains: "XPath" }
+    optional: true
+    detail: ""
+    dwell_ms: 150
+  - id: target-tx
+    action: click
+    target: { type: table, contains: RoutingSource, column: 4 }
+    detail: "This is the map. CSV fields land on 834 segments — Loop 2000 for each member."
+    dwell_ms: 400
+  - id: xslt
+    action: click
+    target: { contains: "XSLT" }
+    optional: true
+    detail: "That's the stylesheet. Source on the left, 834 on the right. When a column changes, you change this map — not the rest of the route."
+    dwell_ms: 400
+  - id: transport
+    action: click
+    target: { type: table, contains: RoutingSource, column: 5 }
+    detail: "Transport writes the 834. Kickout is the other door."
+    dwell_ms: 300
+  - id: edi-proc
+    action: click
+    target: { type: table, contains: "XML to EDI 834" }
+    optional: true
+    detail: "We're on 834-A1 table data, 5010. Friendly names stay off so large files stay fast."
+    dwell_ms: 200
+  - id: mode
+    action: click
+    target: { type: JMenu, text: Mode }
+    detail: ""
+    dwell_ms: 200
+  - id: testing
+    action: click
+    target: { type: JRadioButtonMenuItem, text: "Testing Mode" }
+    detail: "Testing Mode lets you run a file from the Listener all the way through."
+    dwell_ms: 400
+  - id: test-target
+    action: click
+    target: { type: table, contains: RoutingSource, column: 4 }
+    detail: "Same package has the other direction — 834 back to CSV. Same map, flipped around."
+    dwell_ms: 500

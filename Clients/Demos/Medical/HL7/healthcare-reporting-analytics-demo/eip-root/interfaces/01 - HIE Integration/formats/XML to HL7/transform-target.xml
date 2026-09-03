@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="XCSData">
+				<xsd:complexType>
+					<xsd:sequence />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ADT_A01" type="ADT_A01_type" />
+					<xsd:attribute form="unqualified" name="space" type="xsd:string" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="PID.5_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XPN.1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XPN.2" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PV1.17_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Component_1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Component_2" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Component_3" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="OBX.3_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CE.1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CE.2" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="MSH.9_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CM_MSG.1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CM_MSG.2" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="OBX_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBX.1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBX.2" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBX.3" type="OBX.3_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBX.5" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBX.6" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBX.11" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="AL1_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AL1.1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AL1.3" type="AL1.3_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="EVN_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EVN.1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EVN.2" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EVN.5" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PD1_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PD1.7" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PD1.11" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PV1.3_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PL.1" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="AL1.3_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CE.2" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PV1_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.2" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.3" type="PV1.3_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.4" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.7" type="PV1.7_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.10" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.14" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.16" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.17" type="PV1.17_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.18" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.19" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.20" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.44" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PID_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.3" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.5" type="PID.5_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.7" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.8" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.10" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.11" type="PID.11_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.12" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.13" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.16" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.17" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.18" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.19" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PV1.7_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Component_1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Component_2" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="Component_3" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="DG1_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DG1.1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DG1.2" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DG1.3" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DG1.4" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DG1.6" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ADT_A01_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH" type="MSH_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="EVN" type="EVN_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID" type="PID_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PD1" type="PD1_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1" type="PV1_type" />
+					<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="1" name="OBX" type="OBX_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="AL1" type="AL1_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="DG1" type="DG1_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="MSH_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.2" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.3" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.4" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.5" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.6" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.7" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.9" type="MSH.9_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.10" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.11" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.12" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.13" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.17" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PID.11_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XAD.1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XAD.3" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XAD.4" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XAD.5" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

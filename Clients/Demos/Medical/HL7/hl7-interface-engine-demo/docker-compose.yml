@@ -1,0 +1,108 @@
+services:
+  sqlserver:
+    profiles: ["full"]
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-hl7-interface-engine-sqlserver
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "PilotFish_Demo1!"
+      MSSQL_PID: Developer
+    ports:
+      - "14342:1433"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"PilotFish_Demo1!\" -C -Q \"SELECT 1\" || exit 1",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 25s
+
+  sqlserver-init:
+    profiles: ["full"]
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pf-hl7-interface-engine-sqlserver-init
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ./sql:/sql:ro
+    entrypoint:
+      - /bin/bash
+      - -lc
+      - |
+        set -euo pipefail
+        echo "Initializing Hl7MeasuresDemo..."
+        /opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P 'PilotFish_Demo1!' -C -i /sql/01_init.sql
+        echo "SQL seed complete."
+
+  pilotfish:
+    profiles: ["full"]
+    build:
+      context: ./pilotfish
+      pull: false
+      additional_contexts:
+        eip_base: docker-image://pilotfish-eip:23R1
+    pull_policy: never
+    image: pilotfish-hl7-interface-engine-demo:23R1
+    container_name: pf-hl7-interface-engine-pilotfish
+    restart: unless-stopped
+    depends_on:
+      sqlserver-init:
+        condition: service_completed_successfully
+    environment:
+      CATALINA_OPTS: "-Xms512M -Xmx2048M -server -XX:+UseG1GC"
+      JAVA_OPTS: "-Djava.security.egd=file:///dev/urandom"
+    ports:
+      - "8141:8080"
+      - "2578:2578"
+    volumes:
+      - ./output:/opt/pilotfish/output
+      - ./logs:/usr/local/tomcat/webapps/eip/logs
+      - ./pilotfish/demo-eip-root/routes:/usr/local/tomcat/webapps/eip/eip-root/routes
+      - ./pilotfish/demo-eip-root/formats:/usr/local/tomcat/webapps/eip/eip-root/formats
+      - ./pilotfish/demo-eip-root/environment-settings.conf:/usr/local/tomcat/webapps/eip/eip-root/environment-settings.conf:ro
+
+  webui:
+    profiles: ["stage", "full"]
+    build:
+      context: ./webui
+    image: pilotfish-hl7-interface-engine-demo-webui:latest
+    container_name: pf-hl7-interface-engine-webui
+    restart: unless-stopped
+    environment:
+      WEBUI_PORT: "8142"
+      DEMO_SLUG: "hl7-interface-engine-demo"
+      ROUTES_DIR: /routes
+      DOCUMENTS_DIR: /documents
+      SAMPLE_DIR: /samples
+      SNAPSHOT_DIR: /output/snapshots
+      DEBUG_TRACE_DIR: /output/debug-trace
+      LAN_HINT: "http://192.168.68.62:8142/"
+      EIP_PUBLIC_URL: "http://127.0.0.1:8141/eip/"
+      EIP_HEALTH_URL: "http://pilotfish:8080/eip/"
+      EIP_LLP_HOST: pilotfish
+      EIP_LLP_PORT: "2578"
+      DB_HOST: sqlserver
+      DB_PORT: "1433"
+      DB_USER: sa
+      DB_PASSWORD: "PilotFish_Demo1!"
+      DB_NAME: Hl7MeasuresDemo
+      ROUTE_PDF_NAME: "HL7_Interface_Engine_V2_Route_Diagrams.pdf"
+      CAPABILITY_PDF_NAME: "HL7_Interface_Engine_Capability_Brief.pdf"
+    ports:
+      - "8142:8142"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./documents:/documents:ro
+      - ./samples:/samples:ro
+      - ./output:/output
+      - ./pilotfish/demo-eip-root/routes:/routes:ro
+      - ./webui/static:/app/static:ro
+      - ./webui/templates:/app/templates:ro
+      - ./webui/app.py:/app/app.py:ro
+      - ./webui/document_routes.py:/app/document_routes.py:ro

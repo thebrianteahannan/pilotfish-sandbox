@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "interface": "EDI 834 CSV Excel Conversion",
+  "description": "CSV/TXT to X12 834 and the reverse path back to CSV.",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8140",
+    "eip": "http://127.0.0.1:8139/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8140/",
+    "http://127.0.0.1:8140/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["834", "CSV"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        },
+        {
+          "id": "routes",
+          "name": "Routes API",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/v2/routes" },
+          "expect": { "status": 200, "contains": ["csv-txt-to-edi-834"] }
+        }
+      ]
+    },
+    {
+      "id": "forward",
+      "name": "CSV to 834",
+      "tests": [
+        {
+          "id": "drop-csv",
+          "name": "Copy sample CSV into inbound",
+          "type": "shell",
+          "shell": {
+            "command": "mkdir -p input/inbound && cp -f samples/enrollment_834.csv input/inbound/"
+          },
+          "expect": { "exit_code": 0 }
+        },
+        {
+          "id": "edi-out",
+          "name": "834 output contains ST*834 and member name",
+          "type": "file",
+          "file": {
+            "path": "output/834/enrollment_834.edi",
+            "exists": true,
+            "timeout_sec": 120,
+            "contains": ["ST*834", "NM1*IL", "SMITH"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "834 to CSV",
+      "tests": [
+        {
+          "id": "drop-edi",
+          "name": "Copy tabledata 834 into EDI inbound",
+          "type": "shell",
+          "shell": {
+            "command": "mkdir -p input/edi && cp -f samples/tabledata/X220-add-subscriber-coverage.edi input/edi/"
+          },
+          "expect": { "exit_code": 0 }
+        },
+        {
+          "id": "csv-out",
+          "name": "CSV output has subscriber name",
+          "type": "file",
+          "file": {
+            "path": "output/csv/X220-add-subscriber-coverage.csv",
+            "exists": true,
+            "timeout_sec": 120,
+            "contains": ["SMITH"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documents",
+      "tests": [
+        {
+          "id": "route-pdf",
+          "name": "Route PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI834_CSV_Excel_V2_Route_Diagrams.pdf", "exists": true }
+        },
+        {
+          "id": "brief-pdf",
+          "name": "Capability Brief PDF on disk",
+          "type": "file",
+          "file": { "path": "documents/EDI834_CSV_Excel_Capability_Brief.pdf", "exists": true }
+        }
+      ]
+    }
+  ]
+}

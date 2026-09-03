@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "interface": "HL7, EDI & FHIR Data Integration for Analytics & Reporting",
+  "description": "HL7 ADT over LLP to SQL PATIENT and JSON analytics (public healthcare reporting demo).",
+  "base_urls": {
+    "webui": "http://127.0.0.1:8154",
+    "eip": "http://127.0.0.1:8153/eip"
+  },
+  "healthcheck_urls": [
+    "http://127.0.0.1:8154/",
+    "http://127.0.0.1:8154/api/health"
+  ],
+  "suites": [
+    {
+      "id": "health",
+      "name": "Health",
+      "tests": [
+        {
+          "id": "webui",
+          "name": "Web UI loads",
+          "type": "ui",
+          "ui": { "url": "{webui}/" },
+          "expect": { "status": 200, "contains": ["HL7", "LLP"] }
+        },
+        {
+          "id": "api-health",
+          "name": "API health",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/health" },
+          "expect": { "status": 200 }
+        }
+      ]
+    },
+    {
+      "id": "adt-sql",
+      "name": "ADT to SQL and JSON",
+      "tests": [
+        {
+          "id": "send-llp",
+          "name": "Send sample ADT over LLP",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/inject",
+            "json": { "kind": "hl7", "sample": "test.hl7" }
+          },
+          "expect": { "status": 200, "contains": ["ok"] }
+        },
+        {
+          "id": "sql-row",
+          "name": "SQL row has BUNNY / BUGS",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/wait-patient?last=BUNNY&timeout=120" },
+          "expect": { "status": 200, "contains": ["BUNNY", "BUGS"] }
+        }
+      ]
+    },
+    {
+      "id": "fhir-sql",
+      "name": "FHIR Patient to SQL",
+      "tests": [
+        {
+          "id": "send-fhir",
+          "name": "POST sample FHIR Patient",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/inject",
+            "json": { "kind": "fhir", "sample": "test_fhir.json" }
+          },
+          "expect": { "status": 200, "contains": ["ok"] }
+        },
+        {
+          "id": "sql-chalmers",
+          "name": "SQL row has Chalmers",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/wait-patient?last=CHALMERS&timeout=60" },
+          "expect": { "status": 200, "contains": ["Chalmers"] }
+        }
+      ]
+    },
+    {
+      "id": "edi-sql",
+      "name": "837 over FTP to SQL",
+      "tests": [
+        {
+          "id": "send-edi",
+          "name": "Drop sample 837 on FTP",
+          "type": "http",
+          "request": {
+            "method": "POST",
+            "url": "{webui}/api/inject",
+            "json": { "kind": "edi", "sample": "837-sample-encounter.edi" }
+          },
+          "expect": { "status": 200, "contains": ["ok"] }
+        },
+        {
+          "id": "sql-kildare",
+          "name": "SQL row has billing provider Kildare",
+          "type": "http",
+          "request": { "method": "GET", "url": "{webui}/api/wait-patient?last=KILDARE&timeout=60" },
+          "expect": { "status": 200, "contains": ["KILDARE"] }
+        }
+      ]
+    }
+  ]
+}

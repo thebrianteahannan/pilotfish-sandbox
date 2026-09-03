@@ -1,0 +1,12 @@
+name: probe-advanced
+steps:
+  - id: wait-file
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Wait for File Management."
+    dwell_ms: 400
+  - id: advanced
+    action: click
+    target: { type: tab, contains: Advanced }
+    detail: "Switch to Advanced View."
+    dwell_ms: 1200

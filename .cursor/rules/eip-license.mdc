@@ -1,0 +1,16 @@
+---
+description: Use the Sandbox EIP license from Julian as pflicense.key
+alwaysApply: true
+---
+
+# EIP license key
+
+Canonical file (gitignored): repo-root `pflicense.key`.
+
+Source: Julian’s sandbox key (`pflicense-fromJulian-ForSandbox.key`). Brian installed it 2026-08-14.
+
+When building or running eiPlatform Docker (`Dockerfile` `COPY pflicense.key`, demo `pilotfish/` images, Med Rec `docker-run.sh`):
+
+- Use **only** that repo-root `pflicense.key`.
+- Do not copy a different `.key` from Downloads, guinea, or another machine unless Brian replaces this file.
+- Do not commit `pflicense.key` (already in `.gitignore`).

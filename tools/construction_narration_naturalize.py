@@ -339,11 +339,52 @@ def naturalize_demo_test_json(path: Path) -> int:
     return changed
 
 
+def naturalize_eiconsole_yaml(path: Path) -> int:
+    """Rewrite spoken detail lines on eiconsole-walkthrough.yaml."""
+    if not path.is_file():
+        return 0
+    head = path.read_text(encoding="utf-8")[:600]
+    if "source of truth" in head.lower() or "Do not run generate_eiconsole_walkthrough" in head:
+        return 0
+    try:
+        import yaml  # type: ignore
+    except ImportError:
+        return 0
+    raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    if not isinstance(raw, dict):
+        return 0
+    steps = raw.get("steps")
+    if not isinstance(steps, list):
+        return 0
+    changed = 0
+    new_steps = []
+    for step in steps:
+        if not isinstance(step, dict):
+            new_steps.append(step)
+            continue
+        nxt = dict(step)
+        detail = nxt.get("detail")
+        if isinstance(detail, str) and detail.strip():
+            spoken = naturalize_spoken(detail)
+            if spoken != detail:
+                nxt["detail"] = spoken
+                changed += 1
+        new_steps.append(nxt)
+    if changed:
+        raw["steps"] = new_steps
+        path.write_text(
+            yaml.safe_dump(raw, sort_keys=False, allow_unicode=True),
+            encoding="utf-8",
+        )
+    return changed
+
+
 def naturalize_demo_root(demo: Path) -> dict[str, int]:
     docs = demo / "documents"
     return {
         "manifest": naturalize_manifest(docs / "build-replay" / "manifest.json"),
         "demo_test": naturalize_demo_test_json(docs / "construction-demo-test.json"),
+        "eiconsole": naturalize_eiconsole_yaml(docs / "eiconsole-walkthrough.yaml"),
     }
 
 
@@ -379,7 +420,8 @@ def main() -> int:
     print(
         f"Naturalized {demo.name}: "
         f"manifest steps changed={counts['manifest']}, "
-        f"demo-test lines changed={counts['demo_test']}"
+        f"demo-test lines changed={counts['demo_test']}, "
+        f"eiconsole lines changed={counts.get('eiconsole', 0)}"
     )
     if args.export_transcript:
         rc = export_transcript(demo)

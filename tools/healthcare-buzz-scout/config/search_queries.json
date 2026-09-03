@@ -1,0 +1,30 @@
+{
+  "web": [
+    {"q": "HL7 interface engine", "theme": "hl7_adt_oru"},
+    {"q": "Mirth alternative", "theme": "hl7_adt_oru"},
+    {"q": "Cloverleaf replacement", "theme": "hl7_adt_oru"},
+    {"q": "FHIR integration engine", "theme": "fhir"},
+    {"q": "SNIP validation X12", "theme": "edi_hard"},
+    {"q": "837 835 interface engine", "theme": "edi_claims"},
+    {"q": "270 271 eligibility interface", "theme": "edi_eligibility_auth"},
+    {"q": "ACORD TxLife integration", "theme": "acord_txlife"},
+    {"q": "Epic interface engine", "theme": "ehr_emr"},
+    {"q": "life insurance STP interface", "theme": "acord_txlife"}
+  ],
+  "ai_ask": [
+    {"q": "best HL7 interface engine for a hospital", "theme": "hl7_adt_oru"},
+    {"q": "what software for HIPAA X12 837 SNIP validation", "theme": "edi_hard"},
+    {"q": "recommend engine for ACORD TxLife and HL7", "theme": "acord_txlife"},
+    {"q": "alternative to Mirth Connect for FHIR and EDI", "theme": "fhir"}
+  ],
+  "listicles": [
+    "https://digitalhealth.folio3.com/blog/best-hl7-interface-engines/",
+    "https://healthcareitskills.com/hl7-interfaces-healthcare-interface-engines/",
+    "https://hl7interfacer.blogspot.com/2025/04/comparing-hl7-interface-engines.html"
+  ],
+  "prompts": [
+    "A mid-size hospital needs an HL7 interface engine for ADT and ORU over MLLP. They are tired of Mirth. What products should they evaluate and why?",
+    "A payer needs SNIP validation and companion-guide edits on 837/835 plus 270/271. Who actually does this well — engines, not clearinghouses?",
+    "A life carrier needs ACORD TxLife / 121 / 1122 and also HL7 from a clinic. Name products that can do both hops in one engine."
+  ]
+}

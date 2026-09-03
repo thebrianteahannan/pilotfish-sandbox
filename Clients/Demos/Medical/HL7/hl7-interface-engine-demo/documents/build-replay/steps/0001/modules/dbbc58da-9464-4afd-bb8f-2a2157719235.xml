@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="dbbc58da-9464-4afd-bb8f-2a2157719235" name="HL7 over LLP" type="HL7TCPListener" tag="Listener" class="com.pilotfish.eip.modules.hl7.HL7TCPListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      
+        
+      <Engine>PilotFish</Engine>
+      
+        
+      <Port>2578</Port>
+      
+        
+      <TimeoutTag>0</TimeoutTag>
+      
+        
+      <SynchronousTag>false</SynchronousTag>
+      
+        
+      <SynchronousTimeout>60</SynchronousTimeout>
+      
+        
+      <AutogenerateSynchronousACK>true</AutogenerateSynchronousACK>
+      
+        
+      <MaximumConnections>10</MaximumConnections>
+      
+      
+   </ModuleConfig>
+</Module>

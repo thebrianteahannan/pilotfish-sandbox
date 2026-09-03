@@ -12,6 +12,10 @@ import client_proof as p
 import clients
 
 KEEP = ("9000001999", "KEEP,HMC", "HMC")
+KAREN_ACCT = {
+    "OR TL": "30101805251",
+    "HMC 201": "30101976049",
+}
 CHARGE_HEAD = (
     "HSP_CSN|HSP_ACCOUNT_NAME|CPT_Code|QUANTITY|PROC_CODE (CDM)|SERVICE_DATE|"
     "PATH_NPI|PATH_NAME|IS_LATE_CHARGE|RESULT_DX|UCLID"
@@ -180,6 +184,13 @@ def _hl7_check(text: str, keep: str, strip_accts: list[str]) -> tuple[bool, str]
     return True, f"keep {keep} present; stripped accounts absent"
 
 
+def _proof_loc(code: str) -> str:
+    compact = re.sub(r"\s+", "", code or "")
+    if compact.upper() == "TLGI":
+        return "TLGI"
+    return f"{code}  "
+
+
 def prove_live_strip(root: Path, dive: dict, folder: Path | None = None) -> list[dict]:
     codes = p.strip_codes(dive)
     if not codes:
@@ -189,7 +200,10 @@ def prove_live_strip(root: Path, dive: dict, folder: Path | None = None) -> list
     incoming.mkdir(parents=True, exist_ok=True)
     outgoing.mkdir(parents=True, exist_ok=True)
     head = _demo_head()
-    rows = [KEEP] + [(f"9000002{i:03d}", f"STRIP,{code}", code) for i, code in enumerate(codes, start=1)]
+    rows = [KEEP]
+    for i, code in enumerate(codes, start=1):
+        acct = KAREN_ACCT.get(code) or f"9000002{i:03d}"
+        rows.append((acct, f"STRIP,{code}", _proof_loc(code)))
     demo_body = head + "\n" + "\n".join(_demo_row(head, a, n, loc) for a, n, loc in rows) + "\n"
     charge_body = CHARGE_HEAD + "\n" + "\n".join(_charge_row(a, n, i) for i, (a, n, _loc) in enumerate(rows, start=1)) + "\n"
     stamp = time.strftime("%Y%m%d_%H%M%S")

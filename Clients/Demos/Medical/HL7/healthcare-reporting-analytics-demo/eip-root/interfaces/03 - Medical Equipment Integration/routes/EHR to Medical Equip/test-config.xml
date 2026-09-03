@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TestConfigurations>
+  <TestConfig name="hl7_test1">
+    <AlternateDataSource>From File</AlternateDataSource>
+    <Stage>
+      <Identifier>transform@listener=EHR HL7 Inbound</Identifier>
+      <IsStart file="/Users/jennifer/PilotFish/HIMSS 2018 Demos/interfaces/03 - Medical Equipment Integration/data/samples/PCD-01_Observation_Report.hl7">true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>forking@listener=EHR HL7 Inbound</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>routing</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>xslt@transport=Medical Equip RESTful Service</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=Medical Equip RESTful Service</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=Medical Equip RESTful Service</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=Medical Equip RESTful Service</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>true</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+  <TestConfig name="hl7_test">
+        
+    <AlternateDataSource>From File</AlternateDataSource>
+        
+    <Stage>
+            
+      <Identifier>transform@listener=EHR HL7 Inbound</Identifier>
+            
+      <IsStart file="/usr/local/pfcommon/HIMSS_Demo/HIMSS 2018 Demos/interfaces/03 - Medical Equipment Integration/data/samples/PCD-01_Observation_Report.hl7">true</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>forking@listener=EHR HL7 Inbound</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>routing</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>xslt@transport=Medical Equip RESTful Service</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>joining@transport=Medical Equip RESTful Service</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>transform@transport=Medical Equip RESTful Service</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>transport@transport=Medical Equip RESTful Service</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+      
+  </TestConfig>
+</TestConfigurations>

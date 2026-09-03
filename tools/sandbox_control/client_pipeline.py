@@ -15,10 +15,15 @@ from pathlib import Path
 import client_comment_plan
 import client_dive
 import client_git
+import client_impl_guide
 import client_package
 import client_plan_pdf
+import client_plan_smart
 import client_proof
+import client_questions
+import client_regression
 import client_requests as reqs
+import client_strip_plan
 import clients
 import hub_ntfy
 
@@ -26,12 +31,18 @@ SKIP_DIR = {".venv", "lib", "icons", "__pycache__", "node_modules", ".git", "req
 SUFFIXES = {".xml", ".xslt", ".xsl", ".sql", ".conf", ".txt", ".json"}
 
 _lock = threading.Lock()
-_job: dict = {"busy": False, "slug": "", "request_id": "", "message": "Idle", "error": ""}
+_job: dict = {"busy": False, "slug": "", "request_id": "", "message": "Idle", "error": "", "kind": "", "test_step": 0, "test_total": 0, "test_name": ""}
 
 
 def job_snapshot() -> dict:
     with _lock:
-        return dict(_job)
+        data = dict(_job)
+    rg = client_regression.job()
+    if rg.get("busy") or (data.get("busy") and data.get("kind") == "regression"):
+        data["regression"] = rg
+        if rg.get("message"):
+            data["message"] = rg["message"]
+    return data
 
 
 def _set(**fields) -> None:
@@ -159,10 +170,14 @@ def wait_url(url: str, timeout: float = 60) -> bool:
     while time.time() < deadline:
         try:
             with urllib.request.urlopen(url, timeout=4) as resp:
-                if getattr(resp, "status", 200) < 500:
+                if getattr(resp, "status", 200) < 400:
                     return True
+        except urllib.error.HTTPError as exc:
+            if exc.code in (401, 403):
+                return True
         except (OSError, urllib.error.URLError, TimeoutError):
-            time.sleep(2)
+            pass
+        time.sleep(2)
     return False
 
 
@@ -219,22 +234,53 @@ def ensure_sandbox(root: Path, folder: Path) -> None:
 
 
 def _run_tests(slug: str, root: Path, folder: Path, meta: dict, dive: dict | None = None) -> dict:
-    _set(message="Running sandbox tests…")
+    dive = dive or {}
+    hint = 2
+    if client_proof.wants_ara(dive):
+        hint += len(client_proof.CASES)
+    elif dive.get("edits"):
+        hint += len(dive.get("edits") or [])
+    elif client_proof.strip_codes(dive):
+        hint += len(client_proof.strip_codes(dive))
+    if client_proof.wants_strip_report(dive):
+        hint += len(client_proof.strip_codes(dive) or [1])
+    step = {"i": 0}
+
+    def on_prog(name: str) -> None:
+        step["i"] += 1
+        _set(
+            kind="tests",
+            test_step=step["i"],
+            test_total=max(hint, step["i"]),
+            test_name=name,
+            message=f"Testing {step['i']} of {max(hint, step['i'])}: {name}",
+        )
+
+    client_proof.set_progress(on_prog)
+    _set(kind="tests", message="Running sandbox tests…", test_step=0, test_total=hint, test_name="")
     reqs.append_log(folder, "Running sandbox tests")
-    if slug == "crl-plus":
-        tests = test_crl_plus(root, folder)
-    elif slug == "med-rec":
-        tests = test_med_rec(folder, dive)
-    else:
-        tests = {"ok": False, "items": [{"name": "tests", "ok": False, "detail": "no sandbox tests wired"}]}
+    try:
+        if slug == "crl-plus":
+            tests = test_crl_plus(root, folder)
+        elif slug == "med-rec":
+            tests = test_med_rec(folder, dive)
+        else:
+            tests = {"ok": False, "items": [{"name": "tests", "ok": False, "detail": "no sandbox tests wired"}]}
+    finally:
+        client_proof.set_progress(None)
     meta["tests"] = tests
     reqs.save_meta(folder, meta)
     reqs.append_log(folder, "Sandbox tests passed" if tests.get("ok") else "Sandbox tests failed")
     _set(message="Collecting code diffs…")
-    changes, diff_text, diff_html = collect_changes(root, folder, meta.get("likely_files") or [])
-    meta["changes"] = changes
-    (folder / "changes.diff").write_text(diff_text or "(no file diffs)\n", encoding="utf-8")
-    (folder / "changes-side.html").write_text(diff_html, encoding="utf-8")
+    import client_request_diffs
+
+    if client_request_diffs.paths(meta, dive):
+        changes = client_request_diffs.write(root, folder, meta, dive=dive)
+    else:
+        changes, diff_text, diff_html = collect_changes(root, folder, meta.get("likely_files") or [])
+        meta["changes"] = changes
+        (folder / "changes.diff").write_text(diff_text or "(no file diffs)\n", encoding="utf-8")
+        (folder / "changes-side.html").write_text(diff_html, encoding="utf-8")
     reqs.save_meta(folder, meta)
     reqs.append_log(folder, f"{len(changes)} file(s) changed")
     return tests
@@ -255,9 +301,28 @@ def process_request(slug: str, req_id: str) -> None:
         email = (folder / "email.txt").read_text(encoding="utf-8", errors="replace")
         comments = str(meta.get("comments") or "")
         prev = client_plan_pdf.previous_dive(folder)
-        _set(message="Reading eip-root against the email…")
-        dive = client_dive.dive(root, email, str(meta.get("subject") or ""), "")
+
+        def progress(msg: str, step: int = 0, steps: int = 0) -> None:
+            _set(message=msg)
+            meta["message"] = msg
+            meta["plan_step"] = step
+            meta["plan_steps"] = steps
+            reqs.save_meta(folder, meta)
+
+        if slug == "med-rec":
+            dive = client_plan_smart.plan(
+                root, email, str(meta.get("subject") or ""), comments, on_progress=progress
+            )
+            progress("Applying strip-location and implementation-guide rules…", 7, 8)
+            dive = client_strip_plan.apply(root, dive, email, comments)
+            dive = client_impl_guide.apply(root, dive)
+        else:
+            _set(message="Reading eip-root against the email…")
+            dive = client_dive.dive(root, email, str(meta.get("subject") or ""))
         dive = client_comment_plan.refine(root, dive, comments, prev)
+        dive = client_questions.attach(dive, email, prev)
+        llm = ((dive.get("plan_trace") or {}).get("llm") or {})
+        meta["llm"] = llm
         if comments:
             dive["comments"] = comments
             dive["delta"] = client_comment_plan.human_delta(prev or {}, dive)
@@ -270,6 +335,7 @@ def process_request(slug: str, req_id: str) -> None:
         meta["edit_count"] = len(dive.get("edits") or [])
         meta["status"] = "planned"
         meta["phase"] = "review"
+        meta["error"] = ""
         meta["message"] = "Change plan PDF ready — review it, then Start work"
         if comments and dive.get("delta"):
             meta["message"] = "Change plan rebuilt from comments — review Proposed changes, then Start work"
@@ -288,7 +354,7 @@ def process_request(slug: str, req_id: str) -> None:
         _set(busy=False)
 
 
-def apply_work(slug: str, req_id: str) -> None:
+def apply_work(slug: str, req_id: str, *, finish_job: bool = True) -> None:
     _set(busy=True, slug=slug, request_id=req_id, message="Applying planned edits…", error="")
     root = clients.require_root(slug)
     folder = reqs.request_path(root, req_id)
@@ -315,6 +381,11 @@ def apply_work(slug: str, req_id: str) -> None:
         else:
             meta["applied"] = applied
             reqs.append_log(folder, f"Applied {len(applied)} file edit(s)")
+        import client_request_diffs
+
+        client_request_diffs.write(root, folder, meta, dive=dive)
+        reqs.save_meta(folder, meta)
+        reqs.append_log(folder, f"{len(meta.get('changes') or [])} file(s) in Code changes")
         rels = client_git.work_paths(root, meta, dive, applied)
         meta["phase"] = "loading"
         reqs.save_meta(folder, meta)
@@ -331,6 +402,7 @@ def apply_work(slug: str, req_id: str) -> None:
         meta["status"] = "tested"
         meta["phase"] = "review"
         meta["tests"] = tests
+        meta["error"] = ""
         if tests.get("ok"):
             meta["message"] = f"Tests passed on {meta['git_branch']}. Review the diff, then Merge into main."
         else:
@@ -346,7 +418,8 @@ def apply_work(slug: str, req_id: str) -> None:
         reqs.save_meta(folder, meta)
         _set(error=str(exc)[:800], message="Start work failed")
     finally:
-        _set(busy=False)
+        if finish_job:
+            _set(busy=False)
 
 
 def package_client(slug: str, req_id: str = "") -> None:
@@ -359,13 +432,164 @@ def package_client(slug: str, req_id: str = "") -> None:
         _set(busy=False)
 
 
-def _enqueue(fn, slug: str, req_id: str) -> dict:
+def _enqueue(fn, slug: str, req_id: str, **extra) -> dict:
     with _lock:
         if _job.get("busy"):
             return {"ok": False, "error": "Already processing a client request."}
-        _job.update({"busy": True, "slug": slug, "request_id": req_id, "message": "Queued", "error": ""})
-    threading.Thread(target=fn, args=(slug, req_id), daemon=True).start()
+        _job.update({"busy": True, "slug": slug, "request_id": req_id, "message": "Queued", "error": "", "kind": "", "test_step": 0, "test_total": 0, "test_name": ""})
+    threading.Thread(target=fn, args=(slug, req_id), kwargs=extra, daemon=True).start()
     return {"ok": True, "slug": slug, "request_id": req_id}
+
+
+def retest_request(slug: str, req_id: str) -> None:
+    _set(busy=True, slug=slug, request_id=req_id, message="Re-running sandbox tests…", error="", kind="tests", test_step=0, test_total=0, test_name="Starting sandbox…")
+    root = clients.require_root(slug)
+    folder = reqs.request_path(root, req_id)
+    meta = reqs.load_meta(folder)
+    if not meta:
+        _set(busy=False, error="Unknown request")
+        return
+    try:
+        dive = {}
+        dive_path = folder / "dive.json"
+        if dive_path.is_file():
+            dive = json.loads(dive_path.read_text(encoding="utf-8"))
+        meta["phase"] = "testing"
+        reqs.save_meta(folder, meta)
+        ensure_sandbox(root, folder)
+        if slug == "med-rec" and dive:
+            rels = client_git.work_paths(root, meta, dive, meta.get("applied") or [])
+            copied = clients.push_eip_files(root, rels)
+            reqs.append_log(folder, f"Copied {copied} file(s) into EIP" if copied else "Sandbox using host files")
+        tests = _run_tests(slug, root, folder, meta, dive or None)
+        meta = reqs.load_meta(folder)
+        meta["tests"] = tests
+        meta["phase"] = "review"
+        meta["error"] = ""
+        if meta.get("deployed"):
+            meta["status"] = "applied"
+        elif meta.get("git_merged"):
+            meta["status"] = "ready" if tests.get("ok") else "tested"
+        else:
+            meta["status"] = "tested"
+        meta["message"] = "Tests passed." if tests.get("ok") else "Tests failed."
+        reqs.save_meta(folder, meta)
+        reqs.append_log(folder, meta["message"])
+        _set(message=meta["message"])
+    except Exception as exc:
+        reqs.append_log(folder, f"Retest failed: {exc}")
+        meta = reqs.load_meta(folder)
+        meta["status"] = "error"
+        meta["error"] = str(exc)[:800]
+        reqs.save_meta(folder, meta)
+        _set(error=str(exc)[:800], message="Retest failed")
+    finally:
+        _set(busy=False)
+
+
+def regression_request(slug: str, req_id: str, capture: bool = False) -> None:
+    verb = "Capturing regression baseline…" if capture else "Running regression against baseline…"
+    _set(busy=True, slug=slug, request_id=req_id, message=verb, error="", kind="regression")
+    root = clients.require_root(slug)
+    folder = reqs.request_path(root, req_id)
+    meta = reqs.load_meta(folder)
+    if not meta:
+        _set(busy=False, error="Unknown request")
+        return
+    meta["message"] = verb
+    meta["error"] = ""
+    meta["regression"] = {}
+    meta["phase"] = "regression-capture" if capture else "regression-after"
+    reqs.save_meta(folder, meta)
+    try:
+        if capture:
+            before = client_regression.run_sync(slug, capture=True)
+            (folder / "regression-before.json").write_text(json.dumps(before, indent=2) + "\n", encoding="utf-8")
+            meta = reqs.load_meta(folder)
+            meta["regression_baseline"] = True
+            meta["phase"] = "review"
+            n = len(before.get("results") or [])
+            if before.get("ok"):
+                done = bool(
+                    meta.get("git_branch")
+                    or meta.get("tests")
+                    or meta.get("git_merged")
+                    or meta.get("deployed")
+                )
+                nxt = (
+                    "Run Regression to compare the same files."
+                    if done
+                    else "Implement, then Run Regression to compare the same files."
+                )
+                meta["message"] = f"Baseline captured for {n} case{'s' if n != 1 else ''}. {nxt}"
+            else:
+                meta["message"] = before.get("error") or "Baseline capture failed."
+            if not before.get("ok"):
+                meta["status"] = "error"
+                meta["error"] = before.get("error") or meta["message"]
+            reqs.save_meta(folder, meta)
+            reqs.append_log(folder, meta["message"])
+            _set(message=meta["message"], kind="regression")
+            return
+        if (
+            not meta.get("regression_baseline")
+            and not (folder / "regression-before.json").is_file()
+            and client_regression.needs_baseline(slug)
+        ):
+            raise RuntimeError("Capture Regression Baseline first (same in/ files, current EIP outputs).")
+        dive = {}
+        dive_path = folder / "dive.json"
+        if dive_path.is_file():
+            dive = json.loads(dive_path.read_text(encoding="utf-8"))
+        meta["phase"] = "regression-after"
+        reqs.save_meta(folder, meta)
+        after = client_regression.run_sync(slug, capture=False)
+        (folder / "regression-after.json").write_text(json.dumps(after, indent=2) + "\n", encoding="utf-8")
+        before = {}
+        before_path = folder / "regression-before.json"
+        if before_path.is_file():
+            try:
+                before = json.loads(before_path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                before = {}
+        expected = client_regression.expected_case_ids(root, dive, meta)
+        report = client_regression.classify_runs(before, after, expected)
+        report["captured_before"] = True
+        report["coverage"] = after.get("coverage") or {}
+        meta = reqs.load_meta(folder)
+        meta["regression"] = report
+        meta["phase"] = "review"
+        if report.get("ok"):
+            n = len(report.get("expected_changed") or [])
+            meta["message"] = (
+                f"Regression passed. {n} feed(s) changed as expected for this feature; nothing else moved."
+                if n
+                else "Regression passed. No other feeds changed."
+            )
+        elif report.get("incomplete") and not report.get("unexpected"):
+            n = len(report.get("incomplete") or [])
+            meta["message"] = (
+                f"Regression did not finish collecting ADT/DFT for {n} feed(s). "
+                "That is missing or extra files from an incomplete run, not a field change. Re-run Regression."
+            )
+            meta["status"] = "error"
+        else:
+            n = len(report.get("unexpected") or [])
+            meta["message"] = f"Regression found {n} unexpected feed change(s). Only this feature should have moved."
+            meta["status"] = "error"
+        reqs.save_meta(folder, meta)
+        reqs.append_log(folder, meta["message"])
+        _set(message=meta["message"], kind="regression")
+    except Exception as exc:
+        reqs.append_log(folder, f"Regression failed: {exc}")
+        meta = reqs.load_meta(folder)
+        meta["status"] = "error"
+        meta["error"] = str(exc)[:800]
+        meta["phase"] = "review"
+        reqs.save_meta(folder, meta)
+        _set(error=str(exc)[:800], message="Regression failed")
+    finally:
+        _set(busy=False, kind="")
 
 
 def enqueue_process(slug: str, req_id: str) -> dict:
@@ -374,6 +598,14 @@ def enqueue_process(slug: str, req_id: str) -> dict:
 
 def enqueue_work(slug: str, req_id: str) -> dict:
     return _enqueue(apply_work, slug, req_id)
+
+
+def enqueue_retest(slug: str, req_id: str) -> dict:
+    return _enqueue(retest_request, slug, req_id)
+
+
+def enqueue_regression(slug: str, req_id: str, capture: bool = False) -> dict:
+    return _enqueue(regression_request, slug, req_id, capture=bool(capture))
 
 
 def merge_request(slug: str, req_id: str) -> None:

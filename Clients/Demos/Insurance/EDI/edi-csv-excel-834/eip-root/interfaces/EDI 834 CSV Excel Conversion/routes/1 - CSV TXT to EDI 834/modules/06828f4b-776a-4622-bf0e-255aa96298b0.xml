@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="06828f4b-776a-4622-bf0e-255aa96298b0" name="Conditional Router" type="Conditional Node Router" tag="RoutingModule" class="com.pilotfish.eip.modules.internal.ConditionalNodeRoutingModule">
+   <ModuleConfig>
+      <SelectionMode>FIRST_MATCH</SelectionMode>
+      <RoutingPorts version="1">
+         <inputs>
+            <input id="b051a7e3-2ed1-497c-95f7-318821dafdf8" name="Input"/>
+         </inputs>
+         <outputs>
+            <output id="c181a1ef-e6eb-416b-8b4b-948715ee65c9" name="Rule 1 - Write EDI 834" type="XPATH">
+               <condition>//*[local-name()='XCSRecord'][*[translate(local-name(),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')='MEMBERID' or translate(local-name(),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')='LASTNAME'][normalize-space()!='']]</condition>
+            </output>
+            <output id="b1db4cce-8f5b-48bd-a37f-71e263314e34" name="Rule 2 - Write Kickout" type="XPATH">
+               <condition>true()</condition>
+            </output>
+         </outputs>
+      </RoutingPorts>
+   </ModuleConfig>
+</Module>

@@ -74,6 +74,7 @@ CLASS_FALLBACKS: dict[str, tuple[str, str]] = {
     "DatabaseSqlTransport": ("Transport", "Database (SQL)"),
     "TriggerableListener": ("Listener", "Programmable (Trigger)"),
     "HL7TCPListener": ("Listener", "HL7 LLP"),
+    "HL7TransformationProcessor": ("Processor", "HL7 XML"),
     "RESTfulWebServiceListener": ("Listener", "RESTful Web Service"),
     "CSVTransformationProcessor": ("Processor", "CSV"),
     "JSONTransformationProcessor": ("Processor", "JSON"),
@@ -84,6 +85,7 @@ GUIDE_FALLBACKS: dict[str, str] = {
     # Relative to Documents/
     "CSVTransformationProcessor": "Listeners/26R1.11/PilotFish-CSV-XML-Guide-26R1.11.pdf",
     "JSONTransformationProcessor": "Processors/26R1.11/PilotFish-JSON-Formatting-Reference-26R1.11.pdf",
+    "HL7TransformationProcessor": "Processors/26R1.11/PilotFish-HL7-XML-Guide-26R1.11.md",
 }
 
 # Format / plumbing modules with no deep-dive PDF (skip quietly)

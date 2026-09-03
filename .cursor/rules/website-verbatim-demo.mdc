@@ -1,0 +1,42 @@
+---
+description: Recreate a public PilotFish page/video verbatim — format stages and official script first, not Relay+processors
+alwaysApply: true
+---
+
+# Website-verbatim demos
+
+When Brian asks to recreate a **public PilotFish page or video** (`cms.pilotfishtechnology.com`, `healthcare.pilotfishtechnology.com`, YouTube on that page):
+
+## Source of truth (do this first)
+
+1. Fetch the page, the **Full Transcript** if present, and the YouTube (`yt-dlp` captions + duration).
+2. The **video** is the route layout **and** the spoken script. A generated 12-line click-through is wrong.
+3. Info Access must list the public page, the YouTube, Local / LAN / EIP, and every extra service (playbook §6.5).
+
+## V1 grid — match the video stages
+
+The public eiConsole grid uses **Source Transform** and **Target Transform**. Those are **Format Profiles**, not `Relay (System Format)` with the work hidden on Listener/Transport processors.
+
+| Video stage | Where it lives |
+|-------------|----------------|
+| Wire transform (HL7 2.x to XML, EDI to XML, …) | Source format `TransformationModule` |
+| Logical Data Mapper (patient XML, date format, …) | Source format XSLT **ToXML** |
+| Target Data Mapper (XML → SQL / CSV / …) | Target format XSLT **FromXML** |
+| Listener / Transport | Those columns only |
+
+- Ship formats in **both** `pilotfish/demo-eip-root/formats/<Exact Name>/` (23R1 EIP loads here) **and** `eip-root/interfaces/<pkg>/formats/`.
+- 23R1: XSLT-only formats use `RelayTransformationModule`. **`NullTransformationModule` does not exist** (route will not load).
+- Listener processors stay empty unless the video shows them. One FileWrite on the **target** (after the target format) is OK for a Demo-tab snapshot.
+- Source processors run **before** the source format (raw inbound). Do not FileWrite `patient.xml` there. Mid-stage Demo panes come from EIP `debuggingTrace` files.
+- Reference: `Clients/Demos/Medical/HL7/hl7-interface-engine-demo`. Do **not** copy `csv-sftp-to-sql` Relay+processor layout for a website clone.
+
+## Speech / transcript
+
+- Hand-write `documents/eiconsole-walkthrough.yaml` from the official Full Transcript / YouTube captions. Aim for the video’s length (5:15 ≈ 850 words).
+- Copy it to `tools/swing-demo-auto/demos/`. **Do not** run `generate_eiconsole_walkthrough.py` after that — it wipes the script.
+- Learn speak-strings from the **source YouTube audio** (`yt-dlp` + whisper, or `learn_construction_pronunciation.py --from-wav`) for HL7 / LLP / PID.7 / X12 — do not guess. Shared TTS rate is **`-10%`**.
+- After Source/Target Transform, click format **Edit** (Data Mapper), switch to the **Mapping** tab, show **Open source/target format** on the side rails, and drag left rail → right rail. Ship `test-config.xml` and **Execute Test** against the live stack. See `construction-video-live-demo.mdc`.
+- Official YouTube open and close (Product Demo / eiConsole card, then the 90-day trial / phone card) are wrapped by `tools/construction_official_open.py`. Do not skip them. Do not invent a fish-lockup open card.
+- Export transcript. Do **not** auto-record the MP4. Do **not** mark the demo complete until Brian says so. Do **not** run the naturalizer over official spoken lines.
+
+V2 canvas may still draw format stages as nodes (same as `edi-csv-excel-834`). That is not the eiConsole grid.

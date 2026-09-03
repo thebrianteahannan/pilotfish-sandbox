@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="169d3c54-e5e6-4d5d-b096-94c3539f7c60" name="RESTful Listener" type="RESTful Web Service" tag="Listener" class="com.pilotfish.eip.modules.http.rest.RESTfulWebServiceListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <CLIAllowed>false</CLIAllowed>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <FIFOQueueName/>
+      
+        
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      
+        
+      <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      
+        
+      <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+      
+        
+      <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      
+        
+      <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+      
+        
+      <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+      
+        
+      <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+      
+        
+      <SERVICE_NAME>FHIR</SERVICE_NAME>
+      
+        
+      <USER_NAME/>
+      
+        
+      <PASSWORD/>
+      
+        
+      <POST_SUPPORTED>true</POST_SUPPORTED>
+      
+        
+      <GET_SUPPORTED>false</GET_SUPPORTED>
+      
+        
+      <PUT_SUPPORTED>false</PUT_SUPPORTED>
+      
+        
+      <DELETE_SUPPORTED>false</DELETE_SUPPORTED>
+      
+        
+      <SupportedResources>Patient</SupportedResources>
+      
+        
+      <Timeout>600</Timeout>
+      
+        
+      <RequireSSL>false</RequireSSL>
+      
+        
+      <Synchronous>false</Synchronous>
+      
+        
+      <HTTPHeaders/>
+      
+        
+      <WadlFile/>
+      
+      
+   </ModuleConfig>
+</Module>

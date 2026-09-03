@@ -1,0 +1,40 @@
+---
+description: Construction videos — natural speech, open Data Mapper, run a real Testing Mode test
+alwaysApply: true
+---
+
+# Construction video — every demo
+
+Applies to **every** Sandbox construction-replay (website-verbatim or not). Do not special-case a slug.
+
+## Speech
+
+- Edge **AvaNeural**, rate **`-10%`** (`DEFAULT_EDGE_RATE`). Do not use `+8%` — it sounds rushed.
+- Keep post-speech pad small (~180 ms). Optional click misses must not burn 4 s of silence (agent FIND timeout: 1.2 s when `optional: true`).
+- Display/transcript spelling stays human. TTS uses `docs/construction-narration-pronunciation.json` via `for_speech`.
+- **eiConsole** is “ee-eye, console”: ei quick and together, small pause, then console. Not “E I Console”.
+- Website-verbatim: learn speak-strings from the **source YouTube audio** (`yt-dlp` + whisper, or `tools/learn_construction_pronunciation.py --from-wav` on a clip). Do not guess letter-soup (HL7, LLP, PID.7, X12).
+
+## Data Mapper
+
+- Format work lives on the **format profile**, not a processor table row.
+- After the Source/Target Transform column, click the format’s **Edit** button (`type: button`, `text: Edit`) — that opens the Data Mapper. `{ contains: XSLT }` is a label, not the mapper.
+- Switch to the **Mapping** tab. 26R1 often opens **XSLT View**; the side rails are on Mapping.
+- Show that formats load on those rails: click **Open source format** (left) and **Open target format** (right). Dismiss the file dialog with Escape unless the script is actually loading a file.
+- Ship mapper sidecars next to the format XSLT (`<xslt>-source.xml`, `-target.xml`, optional `-source-sample.xml` / `-target-sample.xml` / notes) so **Edit → Mapping** opens with trees already on the rails. Empty rails are a missing-sidecar problem, not a click-through miss.
+- Re-record one stretch without remaking the whole video: `--section <name>` on `export_construction_video.py` (walkthrough `sections:` / Video tab **Re-record this section**). Use this when Brian asks to change just the Data Mapper (or any named part).
+- Drag from the left `FormatTree` onto the right `FormatTree` (`action: drag`, `side: left` → `side: right`) so the video shows rail-to-rail drag-and-drop.
+- Hold on the mapper while those lines play, then click **Return to Console** (toolbar tooltip; icon-only). Do not look for a File menu item in the console window.
+
+## Testing Mode
+
+- Ship `test-config.xml` on the V1 route.
+- Host JDBC must reach the live demo stack (`eip-root/environment-settings.conf` → `127.0.0.1:<published-port>`).
+- **HL7 LLP / TCP listener:** start the saved test **at the Listener** (`AlternateDataSource` none). Execute Test opens “waiting for data”; send the sample over the wire (`tools/send_mllp.py`). If Docker is bound to that host port, stop the demo EIP container for the walkthrough only, then start it again.
+- File/text inject (start after Listener) only when there is no live socket to send to.
+- Click stages after Execute so outputs show. Talking about Testing Mode while sitting on Transport is not enough.
+
+## Do not
+
+- Run `generate_eiconsole_walkthrough.py` over a handwritten script.
+- Leave `construction-video-job.json` as `status: running` after the mp4 is done.

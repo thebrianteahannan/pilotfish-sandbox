@@ -1,0 +1,19 @@
+{# Timing tab — playbook §4.1 / §6.6. Include:
+     {% include 'partials/timing_tab.html' %}
+#}
+<div id="tab-timing" hidden>
+  <main class="timing-main">
+    <section class="panel timing-panel">
+      <div class="row-head">
+        <h2>Build timing</h2>
+        <div class="timing-actions">
+          <button type="button" class="btn" id="timing-refresh-btn">Refresh</button>
+          <a class="btn" href="/documents/build-timing.json" target="_blank" rel="noopener">Raw JSON</a>
+        </div>
+      </div>
+      <p class="section-lead">End-to-end construction time from first request to completion (<code>documents/build-timing.json</code>).</p>
+      <p id="timing-status" class="status muted"></p>
+      <div id="timing-root" class="timing-root" aria-live="polite"></div>
+    </section>
+  </main>
+</div>

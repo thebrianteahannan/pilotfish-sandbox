@@ -9,29 +9,127 @@
     "unix_path_speak": "Speak folder segments as words separated by short pauses (commas). Example: /opt/pilotfish/input/staged \u2192 opt, pilotfish, input, staged.",
     "windows_path_speak": "Same for backslash paths. Example: C:\\data\\in \u2192 C, data, in.",
     "prefer_friendly_folder": "When a well-known env folder is meant, prefer the role name in speech: staged folder, archive folder, upload folder \u2014 and only spell the full path when the exact location matters.",
-    "file_extensions": "Leading dot extensions: say 'dot' then spell the letters. Example: .csv \u2192 dot C S V."
+    "file_extensions": "Leading dot extensions: say 'dot' then the usual name. Example: .csv \u2192 dot csv. Do not letter-spell csv or xml."
   },
   "replacements": [
+    {
+      "id": "2-x",
+      "match": "\\b2\\.x\\b",
+      "flags": "i",
+      "speak": "two dot x",
+      "notes": "Spoken sample; heard \u201ctwo dot x\u201d."
+    },
+    {
+      "id": "fhir",
+      "match": "\\bFHIR\\b",
+      "flags": "i",
+      "speak": "fire",
+      "notes": "Brian: say fire, not letter-soup."
+    },
+    {
+      "id": "hl7",
+      "match": "\\bHL7\\b",
+      "flags": "i",
+      "speak": "HL seven",
+      "notes": "Spoken sample."
+    },
+    {
+      "id": "llp",
+      "match": "\\bLLP\\b",
+      "flags": "i",
+      "speak": "LL P",
+      "notes": "Spoken sample."
+    },
+    {
+      "id": "pid-7",
+      "match": "\\bPID\\.7\\b",
+      "flags": "i",
+      "speak": "P I D seven",
+      "notes": "HL7 PID-7 / date of birth field."
+    },
+    {
+      "id": "yyyymmdd-dash",
+      "match": "\\byyyy-MM-dd\\b",
+      "flags": "i",
+      "speak": "Y Y Y Y dash M M dash D D",
+      "notes": "ISO date pattern. Applied before the compact form."
+    },
+    {
+      "id": "yyyymmdd",
+      "match": "\\byyyyMMdd\\b",
+      "flags": "i",
+      "speak": "Y Y Y Y M M D D",
+      "notes": "Compact HL7 date pattern."
+    },
+    {
+      "id": "adt",
+      "match": "\\bADT\\b",
+      "flags": "",
+      "speak": "A D T",
+      "notes": "Admit/discharge/transfer. Letter-by-letter like the source video."
+    },
+    {
+      "id": "834-a1",
+      "match": "\\b834-A1\\b",
+      "flags": "i",
+      "speak": "eight thirty-four A-one",
+      "notes": "X12 834 table-data folder. Never 'eight hundred thirty-four'."
+    },
+    {
+      "id": "834",
+      "match": "\\b834\\b",
+      "flags": "",
+      "speak": "eight thirty-four",
+      "notes": "Always eight thirty-four. Never eight hundred thirty-four."
+    },
+    {
+      "id": "x12",
+      "match": "\\bX12\\b",
+      "flags": "i",
+      "speak": "X twelve",
+      "notes": "Do not say X one two."
+    },
+    {
+      "id": "edi",
+      "match": "\\bEDI\\b",
+      "flags": "",
+      "speak": "E D I",
+      "notes": "Letter-by-letter, then 834 as eight thirty-four. Never eight hundred thirty-four."
+    },
+    {
+      "id": "5010",
+      "match": "\\b5010\\b",
+      "flags": "",
+      "speak": "five oh ten",
+      "notes": "HIPAA 5010 version."
+    },
+    {
+      "id": "loop-2000",
+      "match": "\\bLoop\\s*2000\\b",
+      "flags": "i",
+      "speak": "loop two thousand",
+      "notes": ""
+    },
     {
       "id": "csv-to-sqlxml",
       "match": "\\bcsv-to-sqlxml\\b",
       "flags": "i",
-      "speak": "C S V to S Q L X M L",
+      "speak": "csv to sequel xml",
       "notes": "Demo stylesheet basename without extension."
     },
     {
       "id": "sftp",
       "match": "\\bSFTP\\b",
-      "flags": "",
-      "speak": "F T P",
-      "notes": "Say FTP (letter-by-letter). The S is just secure — do not say S F T P."
+      "flags": "i",
+      "speak": "FTP",
+      "notes": "Spoken sample."
     },
     {
-      "id": "sftp-lower",
-      "match": "\\bsftp\\b",
-      "flags": "",
-      "speak": "F T P",
-      "notes": "Lowercase protocol word → FTP. Hostnames like a docker service named sftp also become F T P, which is fine in demos."
+      "id": "ftps",
+      "match": "\\bFTPS\\b",
+      "flags": "i",
+      "speak": "F T P S",
+      "notes": "Spoken sample."
     },
     {
       "id": "ftp",
@@ -93,36 +191,36 @@
       "id": "csv",
       "match": "\\bCSV\\b",
       "flags": "",
-      "speak": "C S V",
-      "notes": ""
+      "speak": "csv",
+      "notes": "Say it as a word, not C S V."
     },
     {
       "id": "xml",
       "match": "\\bXML\\b",
       "flags": "",
-      "speak": "X M L",
-      "notes": ""
+      "speak": "xml",
+      "notes": "Say it as a word, not X M L."
     },
     {
       "id": "xslt",
       "match": "\\bXSLT\\b",
       "flags": "",
-      "speak": "X S L T",
-      "notes": ""
+      "speak": "xslt",
+      "notes": "Say it as a word, not X S L T."
     },
     {
       "id": "xpath",
       "match": "\\bXPath\\b",
       "flags": "i",
-      "speak": "X Path",
-      "notes": ""
+      "speak": "ex-path",
+      "notes": "Spoken sample."
     },
     {
       "id": "json",
       "match": "\\bJSON\\b",
       "flags": "i",
-      "speak": "jay son",
-      "notes": ""
+      "speak": "jay-sonn",
+      "notes": "Spoken sample."
     },
     {
       "id": "api",
@@ -151,25 +249,32 @@
       "notes": ""
     },
     {
+      "id": "eiconsole-s",
+      "match": "\\beiConsole's\\b",
+      "flags": "i",
+      "speak": "ee-eye-kahn-sohl's",
+      "notes": "Spoken sample."
+    },
+    {
       "id": "eiconsole",
       "match": "\\beiConsole\\b",
       "flags": "i",
-      "speak": "E I Console",
-      "notes": ""
+      "speak": "ee-eye-kahn-sohl",
+      "notes": "Spoken sample."
     },
     {
       "id": "ognl",
       "match": "\\bOGNL\\b",
-      "flags": "",
-      "speak": "O G N L",
-      "notes": ""
+      "flags": "i",
+      "speak": "Ohhh-Gee-NL",
+      "notes": "Spoken sample."
     },
     {
       "id": "fqcn",
       "match": "\\bFQCN\\b",
       "flags": "i",
-      "speak": "fully qualified class name",
-      "notes": ""
+      "speak": "f-cue-c-n",
+      "notes": "Spoken sample."
     },
     {
       "id": "dbo",
@@ -226,7 +331,7 @@
     },
     {
       "display": "Uses stylesheet csv-to-sqlxml.xslt on Saxon.",
-      "speak": "Uses stylesheet C S V to S Q L X M L dot X S L T on Saxon."
+      "speak": "Uses stylesheet csv to sequel xml dot xslt on Saxon."
     },
     {
       "display": "JDBC to sqlserver, database CsvSftpDemo.",

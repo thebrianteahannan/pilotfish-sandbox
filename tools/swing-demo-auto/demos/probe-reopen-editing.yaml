@@ -1,0 +1,27 @@
+name: probe-reopen-editing
+steps:
+  - id: file
+    action: click
+    target: { type: JMenu, text: File }
+    detail: "File menu."
+    dwell_ms: 500
+  - id: filemgmt
+    action: click
+    target: { type: menuitem, contains: "File Management" }
+    detail: "Back to File Management."
+    dwell_ms: 2000
+  - id: open-pkg
+    action: double_click
+    target: { type: table, contains: "EDI 834 CSV Excel Conversion" }
+    detail: "Open package."
+    dwell_ms: 2000
+  - id: open-route
+    action: double_click
+    target: { type: table, contains: "1 - CSV TXT to EDI 834" }
+    detail: "Open forward route in Editing Mode."
+    dwell_ms: 2500
+  - id: listener
+    action: click
+    target: { type: table, contains: RoutingSource, column: 1 }
+    detail: "Listener stage."
+    dwell_ms: 1200

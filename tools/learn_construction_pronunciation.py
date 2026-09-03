@@ -93,14 +93,32 @@ def _term_id(word: str) -> str:
     return slug or "term"
 
 
+def _display_word(item: dict) -> str:
+    if item.get("word"):
+        return str(item["word"])
+    raw = str(item.get("match") or "")
+    raw = raw.replace(r"\b", "")
+    raw = re.sub(r"\\s\*", " ", raw)
+    return re.sub(r"\\(.)", r"\1", raw)
+
+
+def _same_term(item: dict, word: str, tid: str, match: str) -> bool:
+    if not isinstance(item, dict):
+        return False
+    if (item.get("id") or "") == tid:
+        return True
+    if (item.get("match") or "") == match:
+        return True
+    return _display_word(item).strip().lower() == word.strip().lower()
+
+
 def _upsert(word: str, speak: str, heard: str) -> dict:
     guide = json.loads(GUIDE_JSON.read_text(encoding="utf-8"))
-    items = guide.setdefault("replacements", [])
+    items = list(guide.setdefault("replacements", []))
+    word = word.strip()
     tid = _term_id(word)
-    escaped = re.escape(word.strip())
-    match = rf"\b{escaped}\b"
+    match = rf"\b{re.escape(word)}\b"
     note = f"Spoken sample; heard “{heard}”." if heard else "Spoken sample."
-    existing = next((x for x in items if x.get("id") == tid), None)
     payload = {
         "id": tid,
         "match": match,
@@ -108,12 +126,24 @@ def _upsert(word: str, speak: str, heard: str) -> dict:
         "speak": speak,
         "notes": note,
     }
-    if existing is None:
-        items.insert(0, payload)
-    else:
-        existing.update(payload)
+    kept = None
+    out = []
+    for item in items:
+        if not _same_term(item, word, tid, match):
+            out.append(item)
+            continue
+        if kept is not None:
+            continue
+        payload["id"] = item.get("id") or tid
+        item.update(payload)
+        kept = item
+        out.append(item)
+    if kept is None:
+        out.insert(0, payload)
+        kept = payload
+    guide["replacements"] = out
     GUIDE_JSON.write_text(json.dumps(guide, indent=2) + "\n", encoding="utf-8")
-    return payload
+    return kept
 
 
 def _preview_robot(word: str, speak: str) -> Path:
@@ -126,7 +156,7 @@ def _preview_robot(word: str, speak: str) -> Path:
     cmd = [str(venv_tts) if venv_tts.is_file() else "edge-tts"]
     cmd += [
         "--voice", "en-US-AvaNeural",
-        "--rate", "-5%",
+        "--rate", "-10%",
         "--text", line,
         "--write-media", str(out),
     ]

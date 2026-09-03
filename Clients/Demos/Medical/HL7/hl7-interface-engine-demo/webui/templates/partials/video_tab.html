@@ -1,0 +1,53 @@
+{# Demo video tab. Include from index.html after info_tab:
+
+     {% include 'partials/video_tab.html' %}
+
+   Add a main-tab button: data-main-tab="video" label Video
+#}
+<div id="tab-video" hidden>
+  <main>
+    <section class="panel">
+      <h2>Demo video</h2>
+      <div id="pf-construction-video-row">
+        <div class="pf-video-watch" id="pf-video-watch" hidden>
+          <a href="/documents/construction-replay.mp4" target="_blank" rel="noopener" id="pf-construction-video-link" class="btn btn-primary pf-watch-video-btn">Watch construction video</a>
+          <span class="pf-video-ready-badge" id="pf-video-ready-badge"></span>
+        </div>
+        <p class="muted pf-construction-video-hint" id="pf-construction-video-hint" hidden>Narrated module-by-module build, then a live Demo-tab test.</p>
+        <div class="pf-create-video">
+          <button type="button" class="btn btn-primary" id="pf-create-video-btn">Create construction video</button>
+          <span class="muted" id="pf-create-video-status"></span>
+        </div>
+        <div class="pf-video-section-row" id="pf-video-section-row" hidden>
+          <label class="muted" for="pf-video-section">Re-record one part
+            <select id="pf-video-section"></select>
+          </label>
+          <button type="button" class="btn" id="pf-rerecord-section-btn">Re-record this section</button>
+          <p class="muted">Keeps the rest of the current video. Use this to try a change before remaking the whole take.</p>
+        </div>
+        <div id="pf-create-video-panel" class="pf-video-panel" hidden>
+          <p class="pf-video-panel-phase" id="pf-video-panel-phase"></p>
+          <div class="pf-video-panel-barwrap" id="pf-video-panel-barwrap" hidden>
+            <progress id="pf-video-panel-bar" max="1" value="0"></progress>
+          </div>
+          <p class="pf-video-panel-msg" id="pf-video-panel-msg"></p>
+          <p class="muted" id="pf-video-panel-time"></p>
+          <ul class="pf-video-panel-log" id="pf-video-panel-log"></ul>
+        </div>
+      </div>
+      <ul>
+        <li>
+          <a href="/documents/construction-replay-transcript.pdf" target="_blank" rel="noopener">Construction replay transcript (PDF)</a>
+          <span class="muted"> —
+            <a href="/documents/construction-replay-transcript.txt" target="_blank" rel="noopener">plain text</a>
+          </span>
+        </li>
+        {% for link in info_extra_links or [] %}
+        {% if 'youtube.com' in (link.href or '') or 'youtu.be' in (link.href or '') %}
+        <li><a href="{{ link.href }}" target="_blank" rel="noopener">{{ link.label }}</a></li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+</div>

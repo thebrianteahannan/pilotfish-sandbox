@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="2.0" id="cf5e6ef9-b744-451c-9146-4b8d45da1bc1" name="2 - EDI 834 to CSV">
+   <RouteSettings RouteSpecificPooling="true" debuggingTrace="false" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" transactionTimeToLive="300000"/>
+   <Nodes>
+      <Node id="fb35020b-f965-450d-9b3e-8d1b3b48e6a6" moduleId="f3f85eed-40af-4b3e-bbab-121b8f5877a7" label="Poll EDI 834" x="0.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="56b122e0-04c0-42c3-a6b9-0223164a6dcb" moduleId="87c76750-ff38-4d0d-a7ff-8289fc86a67f" label="EDI 834 to XML" x="260.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="9f383c42-a857-48ca-ba68-416dced05b4c" moduleId="59ab90d8-d4af-47df-9828-e41c61212ef6" label="Map 834 XML to CSV XML" x="1300.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="5a3581ff-26ed-4f6e-b4ef-eb876992582a" moduleId="1a7fc928-bd22-4a43-887b-974bd7fae9ce" label="XML to CSV" x="1560.0" y="0.0" width="180.0" height="64.0"/>
+      <Node id="bdeaa1bd-6162-4d0f-b5b8-d2c5ad080a6f" moduleId="ace53c15-4624-4f45-8049-c29ba4a9897c" label="Write Enrollment CSV" x="1820.0" y="0.0" width="180.0" height="64.0" retries="1"/>
+   </Nodes>
+   <Connections>
+      <Connection id="71a5f52a-6249-433c-aefc-c10eb32bb74f" sourceNodeId="fb35020b-f965-450d-9b3e-8d1b3b48e6a6" targetNodeId="56b122e0-04c0-42c3-a6b9-0223164a6dcb" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="a3fa45bc-9608-4918-89ee-dab6daca40ab" sourceNodeId="9f383c42-a857-48ca-ba68-416dced05b4c" targetNodeId="5a3581ff-26ed-4f6e-b4ef-eb876992582a" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="acea5cd5-cd7c-4879-b933-22fcca309697" sourceNodeId="5a3581ff-26ed-4f6e-b4ef-eb876992582a" targetNodeId="bdeaa1bd-6162-4d0f-b5b8-d2c5ad080a6f" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+      <Connection id="f23012d2-dfd1-48c9-b618-fe0d8bcb5867" sourceNodeId="56b122e0-04c0-42c3-a6b9-0223164a6dcb" targetNodeId="9f383c42-a857-48ca-ba68-416dced05b4c" sourceConnector="right-output" targetConnector="left-input" condition="true"/>
+   </Connections>
+</Route>

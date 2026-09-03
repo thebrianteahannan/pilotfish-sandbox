@@ -1,0 +1,97 @@
+{
+  "interface": "EDI 834 CSV Excel Conversion",
+  "root": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-csv-excel-834",
+  "started_at": "2026-08-28T17:47:08.689974+00:00",
+  "finished_at": "2026-08-28T17:47:08.722590+00:00",
+  "summary": {
+    "pass": 9,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 9
+  },
+  "results": [
+    {
+      "id": "webui",
+      "name": "Web UI loads",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "UI OK (http://127.0.0.1:8140/)",
+      "detail": ""
+    },
+    {
+      "id": "api-health",
+      "name": "API health",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 1,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "routes",
+      "name": "Routes API",
+      "suite": "Health",
+      "status": "pass",
+      "duration_ms": 2,
+      "message": "HTTP 200",
+      "detail": ""
+    },
+    {
+      "id": "drop-csv",
+      "name": "Copy sample CSV into inbound",
+      "suite": "CSV to 834",
+      "status": "pass",
+      "duration_ms": 14,
+      "message": "ok",
+      "detail": ""
+    },
+    {
+      "id": "edi-out",
+      "name": "834 output contains ST*834 and member name",
+      "suite": "CSV to 834",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-csv-excel-834/output/834/enrollment_834.edi",
+      "detail": ""
+    },
+    {
+      "id": "drop-edi",
+      "name": "Copy tabledata 834 into EDI inbound",
+      "suite": "834 to CSV",
+      "status": "pass",
+      "duration_ms": 9,
+      "message": "ok",
+      "detail": ""
+    },
+    {
+      "id": "csv-out",
+      "name": "CSV output has subscriber name",
+      "suite": "834 to CSV",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-csv-excel-834/output/csv/X220-add-subscriber-coverage.csv",
+      "detail": ""
+    },
+    {
+      "id": "route-pdf",
+      "name": "Route PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-csv-excel-834/documents/EDI834_CSV_Excel_V2_Route_Diagrams.pdf",
+      "detail": ""
+    },
+    {
+      "id": "brief-pdf",
+      "name": "Capability Brief PDF on disk",
+      "suite": "Documents",
+      "status": "pass",
+      "duration_ms": 0,
+      "message": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-csv-excel-834/documents/EDI834_CSV_Excel_Capability_Brief.pdf",
+      "detail": ""
+    }
+  ],
+  "plan_path": "/Users/brianhannan/Documents/PilotFish Sandbox/Clients/Demos/Insurance/EDI/edi-csv-excel-834/tests/plan.json"
+}

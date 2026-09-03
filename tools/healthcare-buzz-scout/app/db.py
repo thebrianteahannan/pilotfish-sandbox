@@ -9,6 +9,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator
 
+from feeds import FRESH_SQL, min_created_utc, min_fetched_iso, signal_too_old
+
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS posts (
   id TEXT PRIMARY KEY,
@@ -93,6 +95,11 @@ class Store:
         with self.connect() as conn:
             conn.executescript(SCHEMA)
             self._migrate(conn)
+        self.purge_g2()
+        if self.purge_old_signals():
+            from companies import refresh_companies
+
+            refresh_companies(self, rebuild=True)
 
     @staticmethod
     def _migrate(conn: sqlite3.Connection) -> None:
@@ -100,6 +107,28 @@ class Store:
         for col, decl in POST_EXTRA_COLUMNS.items():
             if col not in existing:
                 conn.execute(f"ALTER TABLE posts ADD COLUMN {col} {decl}")
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS companies (
+              id TEXT PRIMARY KEY,
+              name TEXT NOT NULL,
+              market TEXT DEFAULT '',
+              status TEXT DEFAULT 'new',
+              notes TEXT DEFAULT '',
+              score INTEGER DEFAULT 0,
+              hiring_count INTEGER DEFAULT 0,
+              signal_count INTEGER DEFAULT 0,
+              reasons_json TEXT DEFAULT '[]',
+              hops_json TEXT DEFAULT '[]',
+              samples_json TEXT DEFAULT '[]',
+              first_seen TEXT,
+              last_seen TEXT,
+              updated_at TEXT
+            )
+            """
+        )
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_companies_status ON companies(status)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_companies_score ON companies(score DESC)")
 
     @contextmanager
     def connect(self) -> Iterator[sqlite3.Connection]:
@@ -210,7 +239,8 @@ class Store:
         if status and status != "all":
             clauses.append("status=?")
             args.append(status)
-        if source and source != "all":
+        clauses.append("COALESCE(source,'reddit') != 'g2'")
+        if source and source not in {"all", "g2"}:
             clauses.append("COALESCE(source,'reddit')=?")
             args.append(source)
         if capability:
@@ -222,6 +252,8 @@ class Store:
             )
             like = f"%{q}%"
             args.extend([like, like, like, like, like, like, like])
+        clauses.append(FRESH_SQL)
+        args.extend([min_created_utc(), min_fetched_iso()])
         args.append(limit)
         sql = f"""
           SELECT * FROM posts
@@ -244,13 +276,20 @@ class Store:
     def get_post(self, post_id: str) -> dict[str, Any] | None:
         with self.connect() as conn:
             row = conn.execute("SELECT * FROM posts WHERE id=?", (post_id,)).fetchone()
-        return self._row(row) if row else None
+        post = self._row(row) if row else None
+        if post and signal_too_old(post.get("created_utc"), post.get("fetched_at")):
+            return None
+        return post
 
     def replace_comments(self, post_id: str, comments: list[dict[str, Any]]) -> None:
         with self.connect() as conn:
             conn.execute("DELETE FROM comments WHERE post_id=?", (post_id,))
             now = utc_now()
+            cutoff = min_created_utc()
             for c in comments:
+                created = float(c.get("created_utc") or 0)
+                if created >= 1_000_000_000 and created < cutoff:
+                    continue
                 conn.execute(
                     """
                     INSERT INTO comments (
@@ -275,8 +314,8 @@ class Store:
                 )
 
     def list_comments(self, post_id: str, *, signals_only: bool = False) -> list[dict[str, Any]]:
-        sql = "SELECT * FROM comments WHERE post_id=?"
-        args: list[Any] = [post_id]
+        sql = "SELECT * FROM comments WHERE post_id=? AND (created_utc < 1000000000 OR created_utc >= ?)"
+        args: list[Any] = [post_id, min_created_utc()]
         if signals_only:
             sql += " AND is_signal=1"
         sql += " ORDER BY is_signal DESC, relevance DESC, created_utc ASC"
@@ -324,25 +363,65 @@ class Store:
                 WHERE (comments_fetched_at IS NULL OR comments_fetched_at='')
                   AND status != 'dismissed'
                   AND COALESCE(source,'reddit') = 'reddit'
+                  AND """
+                + FRESH_SQL
+                + """
                 ORDER BY relevance DESC, created_utc DESC
                 LIMIT ?
                 """,
-                (limit,),
+                (min_created_utc(), min_fetched_iso(), limit),
             ).fetchall()
         return [self._row(r) for r in rows]
 
+    def purge_g2(self) -> int:
+        with self.connect() as conn:
+            ids = [r[0] for r in conn.execute("SELECT id FROM posts WHERE source='g2'").fetchall()]
+            if not ids:
+                return 0
+            q = ",".join("?" * len(ids))
+            conn.execute(f"DELETE FROM comments WHERE post_id IN ({q})", ids)
+            conn.execute("DELETE FROM posts WHERE source='g2'")
+            return len(ids)
+
+    def purge_old_signals(self) -> int:
+        cutoff = min_created_utc()
+        fetched = min_fetched_iso()
+        with self.connect() as conn:
+            ids = [
+                r[0]
+                for r in conn.execute(
+                    f"SELECT id FROM posts WHERE NOT ({FRESH_SQL})",
+                    (cutoff, fetched),
+                ).fetchall()
+            ]
+            conn.execute(
+                "DELETE FROM comments WHERE created_utc >= 1000000000 AND created_utc < ?",
+                (cutoff,),
+            )
+            if not ids:
+                return 0
+            q = ",".join("?" * len(ids))
+            conn.execute(f"DELETE FROM comments WHERE post_id IN ({q})", ids)
+            conn.execute(f"DELETE FROM posts WHERE id IN ({q})", ids)
+            return len(ids)
+
     def stats(self) -> dict[str, Any]:
         with self.connect() as conn:
-            by_status = {
-                r["status"]: r["n"]
-                for r in conn.execute(
-                    "SELECT status, COUNT(*) AS n FROM posts GROUP BY status"
-                ).fetchall()
-            }
             last = conn.execute(
                 "SELECT * FROM runs ORDER BY id DESC LIMIT 1"
             ).fetchone()
-            total = conn.execute("SELECT COUNT(*) AS n FROM posts").fetchone()["n"]
+            fresh = (min_created_utc(), min_fetched_iso())
+            total = conn.execute(
+                f"SELECT COUNT(*) AS n FROM posts WHERE COALESCE(source,'reddit') != 'g2' AND {FRESH_SQL}",
+                fresh,
+            ).fetchone()["n"]
+            by_status = {
+                r["status"]: r["n"]
+                for r in conn.execute(
+                    f"SELECT status, COUNT(*) AS n FROM posts WHERE COALESCE(source,'reddit') != 'g2' AND {FRESH_SQL} GROUP BY status",
+                    fresh,
+                ).fetchall()
+            }
         return {
             "total": total,
             "by_status": by_status,

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="bthannan@pilotfishtechnology.com" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.internal.NullRoutingModule" />
+  <TransactionMonitors>
+    <TransactionMonitor class="com.pilotfish.eip.modules.internal.RouteTriggerMonitor" name="Adult.5 - Send HL7 File.Transaction Monitor-Copy-1">
+      <ModuleConfig>
+        <ErrorListenerName>Error Handling Insert Listener</ErrorListenerName>
+        <IncludeData>true</IncludeData>
+        <IncludeAttributes>true</IncludeAttributes>
+        <SetDataAsMessage>false</SetDataAsMessage>
+        <ExceptionClassName />
+        <ExceptionMessageLevel>-1</ExceptionMessageLevel>
+        <MustContainString />
+        <MustNotContainString />
+        <IncludeStages />
+      </ModuleConfig>
+    </TransactionMonitor>
+  </TransactionMonitors>
+  <Source icon="DocApiGear_Green_1.png" name="Timed Trigger">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.internal.NullListener" enabled="true" name="DOCR.DB Data to HL7.New Architecture - Adult.1b - Query Elite Trans DB.Null (Empty/Trigger) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>10:47-10:47</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <PollingInterval>82575360</PollingInterval>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Source icon="" name="Get More Results">
+    <FormatProfile name="Relay (System Format)" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.core.TriggerableListener" enabled="true" name="Adult.1b - Query Elite Trans DB.Programmable (Trigger) Listener">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <TransactionLoggingLogAllAttributes>false</TransactionLoggingLogAllAttributes>
+        <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+        <CheckInactivity>false</CheckInactivity>
+        <InactivityTransactionCount>1</InactivityTransactionCount>
+        <InactivityPolling>500</InactivityPolling>
+        <MonitoringTime>12:59-12:59</MonitoringTime>
+        <InactivityExcludedDays />
+        <InactivityIncludeErrors>false</InactivityIncludeErrors>
+        <ThrottlingMode>None</ThrottlingMode>
+        <ThrottlingMechanism>Blocking</ThrottlingMechanism>
+        <ThrottlingConcurrentMessages>1</ThrottlingConcurrentMessages>
+        <ThrottlingTimedInterval>1</ThrottlingTimedInterval>
+        <ThrottlingSynchronousTimeout>60</ThrottlingSynchronousTimeout>
+        <CallingRoutes />
+      </ModuleConfig>
+    </Listener>
+  </Source>
+  <Target icon="DataStore_OrangePurple_2.png" name="Database">
+    <FormatProfile name="Query Elite Trans DB SQLXML" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.db.DatabaseSqlTransport" name="DOCR.DB Data to HL7.New Architecture - Adult.1b - Query Elite Trans DB.Database (SQL) Transport" retries="1">
+      <ModuleConfig>
+        <InputFile />
+        <WriteQuery>false</WriteQuery>
+        <Query />
+        <QueryParams />
+        <UserName>$$records.db.username</UserName>
+        <Password>$$records.db.password</Password>
+        <UseDataSource>false</UseDataSource>
+        <DataSource />
+        <JdbcDriver>$$records.db.jdbc.driver</JdbcDriver>
+        <JdbcURL>$$records.db.jdbc.url</JdbcURL>
+        <KeepConnection>false</KeepConnection>
+        <Autocommit>false</Autocommit>
+        <EnableTimeout>false</EnableTimeout>
+        <Timeout>600</Timeout>
+        <RestrictMetaDataToCatalog />
+        <RestrictMetaDataToSchema />
+        <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+        <CallbackListenerName>Adult.1b - Split Multi Events.Programmable (Trigger) Listener</CallbackListenerName>
+        <UseSingleOutputStream>false</UseSingleOutputStream>
+        <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+        <UseJdbcGeneratedKeys>true</UseJdbcGeneratedKeys>
+        <JDBCProperties>null</JDBCProperties>
+        <UseConnectionPooling>false</UseConnectionPooling>
+        <PermittedDBConnections>5</PermittedDBConnections>
+        <LogMetadata>false</LogMetadata>
+        <LogSQL>false</LogSQL>
+        <UseJdbcTyping>false</UseJdbcTyping>
+        <TransactionIsolationLevel>Default</TransactionIsolationLevel>
+        <TransactionIsolationDriverSpecific>-1</TransactionIsolationDriverSpecific>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>
+

@@ -1,0 +1,12 @@
+name: probe-filemgmt
+steps:
+  - id: wait-file
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Wait for Route File Management."
+    dwell_ms: 1500
+  - id: click-file
+    action: click
+    target: { type: JMenu, text: File }
+    detail: "Open the File menu so we can see Route File Management."
+    dwell_ms: 800

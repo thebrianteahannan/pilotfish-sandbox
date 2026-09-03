@@ -1,9 +1,12 @@
 {
       "user_agent": "PilotFishSandboxHealthcareBuzzScout/1.0 (local research; contact: sandbox)",
       "poll_interval_seconds": 3600,
-      "min_score_to_keep": 18,
-      "max_posts_per_query": 25,
-  "max_g2_reviews_per_product": 20,
+  "min_score_to_keep": 18,
+  "min_score_feeds": 14,
+  "min_score_regs": 10,
+  "min_score_jobs": 10,
+  "max_posts_per_query": 25,
+  "max_feed_items": 15,
   "subreddits": [
     "healthcareIT",
     "healthIT",
@@ -13,6 +16,8 @@
     "medicalbilling",
     "healthinsurance",
     "lifeinsurance",
+    "insurance",
+    "insurtech",
     "EHR",
     "epic"
   ],
@@ -20,7 +25,14 @@
     "EDI OR X12 OR \"837\" OR \"835\" OR \"834\" OR \"270\" OR \"271\" OR \"278\" integration",
     "HL7 OR ADT OR ORU OR MLLP interface OR integration",
     "FHIR OR \"SMART on FHIR\" OR \"Bulk FHIR\" integration",
-    "ACORD OR TxLife OR eApp OR \"life insurance\" XML OR STP"
+    "ACORD OR TxLife OR eApp OR \"life insurance\" XML OR STP",
+    "mirth OR rhapsody OR cloverleaf OR corepoint alternative OR replace OR \"interface engine\"",
+    "\"looking for\" (HL7 OR EDI OR FHIR OR \"interface engine\" OR consultant OR vendor)",
+    "(sunset OR \"end of life\" OR \"end of support\" OR EOL) (mirth OR rhapsody OR cloverleaf OR \"interface engine\" OR nextgen)",
+    "(CMS OR TEFCA OR ONC OR \"information blocking\" OR \"final rule\" OR mandate) (FHIR OR HL7 OR EDI OR interoperability OR \"prior auth\")",
+    "SNIP OR \"companion guide\" OR \"implementation guide\" OR 5010 OR 8020 OR WEDI OR \"X12 version\" OR \"EDI specialist\" OR \"EDI expert\"",
+    "Guidewire OR \"Duck Creek\" OR PolicyCenter OR ClaimCenter OR IVANS OR \"comparative rater\" OR ACORD",
+    "(\"life insurance\" OR \"P&C\" OR \"workers comp\" OR \"property casualty\") (integration OR interface OR EDI OR STP OR eApp)"
   ],
   "capability_map": [
     {
@@ -29,6 +41,13 @@
       "keywords": ["837", "835", "snip", "claims", "remit", "835era", "x12", "edi", "clearinghouse", "companion guide", "999", "277ca"],
       "demo_hints": ["edi-837-snip-sqlserver", "edi-837-claim-scrub", "edi-835-payment-integrity", "edi-835-oci-bucket"],
       "pitch_refs": ["2.2 claim scrub", "2.5 payment integrity"]
+    },
+    {
+      "id": "edi_hard",
+      "label": "Hard EDI (SNIP, standard change, specialists)",
+      "keywords": ["snip", "snp validation", "companion guide", "implementation guide", "tr3", "5010", "8020", "wedi", "caqh", "operating rules", "277ca", "edi expert", "edi specialist", "x12 version"],
+      "demo_hints": ["edi-837-snip-sqlserver", "edi-837-claim-scrub", "edi-999-ta1-ack-triage"],
+      "pitch_refs": ["SNIP + companion guide", "EDI specialists"]
     },
     {
       "id": "edi_eligibility_auth",
@@ -68,7 +87,7 @@
     {
       "id": "acord_txlife",
       "label": "ACORD / TxLife / life insurance STP",
-      "keywords": ["acord", "txlife", "tx life", "eapp", "life insurance", "new business", "underwriting", "policy admin", "stp", "straight through"],
+      "keywords": ["acord", "txlife", "tx life", "eapp", "life insurance", "new business", "underwriting", "policy admin", "stp", "straight through", "guidewire", "duck creek", "policycenter", "claimcenter", "ivans"],
       "demo_hints": [],
       "pitch_refs": ["ACORD / eApp STP", "workers comp / P&C"]
     },
@@ -78,6 +97,13 @@
       "keywords": ["rcm", "medical billing", "denial", "underpay", "ar aging", "charge capture", "coding"],
       "demo_hints": ["edi-835-payment-integrity", "edi-837-claim-scrub"],
       "pitch_refs": ["2.5 payment integrity"]
+    },
+    {
+      "id": "mandate_interop",
+      "label": "Mandated / regulatory interop (CMS, TEFCA, Cures, PHE)",
+      "keywords": ["tefca", "qhin", "information blocking", "cms interoperability", "prior auth final rule", "21st century cures", "onc", "public health emergency", "covid reporting", "mandate", "final rule", "icd-11"],
+      "demo_hints": ["fhir-r4-platform", "edi-278-prior-auth", "hl7-healthcare-automation"],
+      "pitch_refs": ["mandate wave"]
     }
   ]
 }

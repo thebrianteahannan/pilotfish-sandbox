@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TestConfigurations>
+  <TestConfig name="Test1">
+    <AlternateDataSource>From Text</AlternateDataSource>
+    <StartingText>&lt;BLANK /&gt;</StartingText>
+    <Stage>
+      <Identifier>xslt@transport=DOCR.DB Data to HL7.New Architecture - Adult.1b - Query Elite Trans DB.Database (SQL) Transport</Identifier>
+      <IsStart>true</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>joining@transport=DOCR.DB Data to HL7.New Architecture - Adult.1b - Query Elite Trans DB.Database (SQL) Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transform@transport=DOCR.DB Data to HL7.New Architecture - Adult.1b - Query Elite Trans DB.Database (SQL) Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+    <Stage>
+      <Identifier>transport@transport=DOCR.DB Data to HL7.New Architecture - Adult.1b - Query Elite Trans DB.Database (SQL) Transport</Identifier>
+      <IsStart>false</IsStart>
+      <IsTrace>false</IsTrace>
+      <IsEnd>false</IsEnd>
+      <IsSkipping>false</IsSkipping>
+    </Stage>
+  </TestConfig>
+  <TestConfig name="Test_a01_load">
+        
+    <AlternateDataSource>From Text</AlternateDataSource>
+        
+    <StartingText>&lt;BLANK /&gt;</StartingText>
+        
+    <Stage>
+            
+      <Identifier>xslt@transport=New Architecture.1 - Query DB (All Events Since Last Event Processed Time).Database (SQL) Transport</Identifier>
+            
+      <IsStart>true</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>joining@transport=New Architecture.1 - Query DB (All Events Since Last Event Processed Time).Database (SQL) Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>transform@transport=New Architecture.1 - Query DB (All Events Since Last Event Processed Time).Database (SQL) Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+        
+    <Stage>
+            
+      <Identifier>transport@transport=New Architecture.1 - Query DB (All Events Since Last Event Processed Time).Database (SQL) Transport</Identifier>
+            
+      <IsStart>false</IsStart>
+            
+      <IsTrace>false</IsTrace>
+            
+      <IsEnd>false</IsEnd>
+            
+      <IsSkipping>false</IsSkipping>
+          
+    </Stage>
+      
+  </TestConfig>
+  <TestConfig name="Test3">
+            
+    
+    <AlternateDataSource>From Text</AlternateDataSource>
+            
+    
+    <StartingText>&lt;blank /&gt;</StartingText>
+            
+    
+    <Stage>
+                  
+      
+      <Identifier>transport@transport=New Architecture.1 - Query DB (All Events Since Last Event Processed Time).Database (SQL) Transport-1</Identifier>
+                  
+      
+      <IsStart>true</IsStart>
+                  
+      
+      <IsTrace>false</IsTrace>
+                  
+      
+      <IsEnd>false</IsEnd>
+                  
+      
+      <IsSkipping>false</IsSkipping>
+                
+    
+    </Stage>
+          
+  
+  </TestConfig>
+  <TestConfig name="Test2">
+                
+    
+    
+    <AlternateDataSource>From Text</AlternateDataSource>
+                
+    
+    
+    <StartingText>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;ns1:SQLXML xmlns:ns1="http://pilotfish.sqlxml"&gt;
+	&lt;ns1:Execute as="recent_admit" into="recent_admits"&gt;
+		&lt;ns1:SQL&gt;SELECT "A01" as 'HL7Type', 
+"OFFENDERS"."ALIAS_NAME_TYPE",  
+"OFFENDERS"."ROOT_OFFENDER_ID" ,
+"OFFENDERS"."LAST_NAME", "OFFENDERS"."FIRST_NAME", "OFFENDERS"."MIDDLE_NAME",
+"OFFENDERS"."BIRTH_DATE", 
+"OFFENDERS"."SEX_CODE", "OFFENDERS"."RACE_CODE", 
+"OFFENDER_BOOKINGS"."OFFENDER_BOOK_ID", 
+ "OFFENDER_BOOKINGS"."BOOK_START_DATE", 
+"LIVING_UNITS"."Description" As "LivUnitBedLoc",
+"LIVING_UNITS"."AGY_LOC_ID", "OFFENDER_BOOKINGS"."ACTIVE_FLAG"
+FROM   
+"OMS_OWNER"."OFFENDERS" "OFFENDERS" 
+LEFT OUTER JOIN "OMS_OWNER"."OFFENDER_BOOKINGS" "OFFENDER_BOOKINGS" 
+    ON "OFFENDERS"."ROOT_OFFENDER_ID"="OFFENDER_BOOKINGS"."ROOT_OFFENDER_ID"
+LEFT OUTER JOIN "OMS_OWNER"."LIVING_UNITS" "LIVING_UNITS" 
+    ON "OFFENDER_BOOKINGS"."LIVING_UNIT_ID"="LIVING_UNITS"."LIVING_UNIT_ID"
+WHERE  
+"OFFENDER_BOOKINGS"."BOOKING_END_DATE" IS  NULL  
+AND "OFFENDERS"."ALIAS_NAME_TYPE"='G' 
+AND "OFFENDER_BOOKINGS"."ACTIVE_FLAG"='Y'
+AND
+("LIVING_UNITS"."AGY_LOC_ID"= 'DWCRC' OR
+"LIVING_UNITS"."AGY_LOC_ID"= 'JRCC' OR
+"LIVING_UNITS"."AGY_LOC_ID"=  'DWCRC' OR
+"LIVING_UNITS"."AGY_LOC_ID"= 'MRCC' OR
+"LIVING_UNITS"."AGY_LOC_ID"= 'NDSP') 
+&lt;/ns1:SQL&gt;
+	&lt;/ns1:Execute&gt;
+	&lt;ns1:XMLOut output="xml" var="recent_events" /&gt;
+&lt;/ns1:SQLXML&gt;</StartingText>
+                
+    
+    
+    <Stage>
+                        
+      
+      
+      <Identifier>transport@transport=New Architecture.1 - Query DB (All Events Since Last Event Processed Time).Database (SQL) Transport</Identifier>
+                        
+      
+      
+      <IsStart>true</IsStart>
+                        
+      
+      
+      <IsTrace>false</IsTrace>
+                        
+      
+      
+      <IsEnd>false</IsEnd>
+                        
+      
+      
+      <IsSkipping>false</IsSkipping>
+                      
+    
+    
+    </Stage>
+              
+  
+  
+  </TestConfig>
+</TestConfigurations>

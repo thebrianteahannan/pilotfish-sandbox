@@ -1,0 +1,17 @@
+name: probe-manage-res
+steps:
+  - id: wait
+    action: wait_for
+    target: { type: JMenu, text: File }
+    detail: "Wait for File."
+    dwell_ms: 300
+  - id: file
+    action: click
+    target: { type: JMenu, text: File }
+    detail: "File menu."
+    dwell_ms: 500
+  - id: manage
+    action: click
+    target: { type: menuitem, contains: Manage Resources }
+    detail: "Open Manage Resources."
+    dwell_ms: 1500

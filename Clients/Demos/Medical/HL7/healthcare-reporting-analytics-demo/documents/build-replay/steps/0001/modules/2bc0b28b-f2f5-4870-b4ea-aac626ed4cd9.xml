@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="2bc0b28b-f2f5-4870-b4ea-aac626ed4cd9" name="Populate Database" type="Database (SQL)" tag="Transport" class="com.pilotfish.eip.modules.db.DatabaseSqlTransport">
+   <ModuleConfig>
+      <InputFile/>
+      
+        
+      <WriteQuery>false</WriteQuery>
+      
+        
+      <Query/>
+      
+        
+      <QueryParams/>
+      
+        
+      <UserName>$$db.user</UserName>
+      
+        
+      <Password>$$db.password</Password>
+      
+        
+      <UseDataSource>false</UseDataSource>
+      
+        
+      <DataSource/>
+      
+        
+      <JdbcDriver>$$db.driver</JdbcDriver>
+      
+        
+      <JdbcURL>$$db.url</JdbcURL>
+      
+        
+      <KeepConnection>false</KeepConnection>
+      
+        
+      <Autocommit>false</Autocommit>
+      
+        
+      <EnableTimeout>false</EnableTimeout>
+      
+        
+      <Timeout>600</Timeout>
+      
+        
+      <RestrictMetaDataToCatalog/>
+      
+        
+      <RestrictMetaDataToSchema/>
+      
+        
+      <RestrictMetaDataToTable>%</RestrictMetaDataToTable>
+      
+        
+      <CallbackListenerName/>
+      
+        
+      <ErrorOnUnknownElement>false</ErrorOnUnknownElement>
+      
+        
+      <JDBCProperties>null</JDBCProperties>
+      
+        
+      <UseConnectionPooling>false</UseConnectionPooling>
+      
+        
+      <PermittedDBConnections>5</PermittedDBConnections>
+      
+        
+      <LogMetadata>false</LogMetadata>
+      
+        
+      <LogSQL>true</LogSQL>
+      
+      
+   </ModuleConfig>
+</Module>

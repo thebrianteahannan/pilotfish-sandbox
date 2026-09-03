@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="XCSData" type="XCSData_type" />
+			<xsd:complexType name="XCSData_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="query_results" type="query_results_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="query_results_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDERS_ALIAS_NAME_TYPE" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDERS_ROOT_OFFENDER_ID" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDERS_LAST_NAME" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDERS_FIRST_NAME" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDERS_BIRTH_DATE" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDERS_SEX_CODE" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDERS_RACE_CODE" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDER_EXTERNAL_MOVEMENTS_MOVEMENT_DATE" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDER_EXTERNAL_MOVEMENTS_MOVEMENT_TIME" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDER_EXTERNAL_MOVEMENTS_MOVEMENT_TYPE" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDER_EXTERNAL_MOVEMENTS_MOVEMENT_SEQ" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDER_EXTERNAL_MOVEMENTS_MOVEMENT_REASON_CODE" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDER_EXTERNAL_MOVEMENTS_FROM_AGY_LOC_ID" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OFFENDER_EXTERNAL_MOVEMENTS_TO_AGY_LOC_ID" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="LIVING_UNITS_LEVEL_1_CODE" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="LIVING_UNITS_LEVEL_2_CODE" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="LIVING_UNITS_LEVEL_3_CODE" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

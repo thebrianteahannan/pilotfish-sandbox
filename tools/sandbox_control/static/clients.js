@@ -8,7 +8,53 @@
   if (!listEl) return;
 
   let rows = [], pipeline = {}, job = {}, selected = "", selectedReq = "", detail = null;
-  let timer = null, q = "", draft = emptyDraft(), ocrBusy = false, viewSig = "", planOpen = null, commentsOpen = false, newOpen = null;
+  let timer = null, q = "", draft = emptyDraft(), ocrBusy = false, viewSig = "", planOpen = null, commentsOpen = false, newOpen = null, histTab = "active";
+  const regrOpen = new Set();
+  const regrScroll = {};
+  let paintGen = 0;
+
+  function regrRoots() {
+    return [$("req-regr-slot")].filter(Boolean);
+  }
+
+  function snapRegrUi() {
+    const seen = {};
+    const scrolls = {};
+    regrRoots().forEach((root) => {
+      root.querySelectorAll("details[data-regr-key]").forEach((el) => {
+        const k = el.getAttribute("data-regr-key");
+        if (k) seen[k] = !!(seen[k] || el.open);
+      });
+      root.querySelectorAll("[data-regr-scroll]").forEach((el) => {
+        const k = el.getAttribute("data-regr-scroll");
+        if (!k) return;
+        const cur = scrolls[k] || { x: 0, y: 0 };
+        scrolls[k] = { x: Math.max(cur.x, el.scrollLeft), y: Math.max(cur.y, el.scrollTop) };
+      });
+    });
+    Object.keys(seen).forEach((k) => {
+      if (seen[k]) regrOpen.add(k);
+      else regrOpen.delete(k);
+    });
+    Object.keys(scrolls).forEach((k) => { regrScroll[k] = scrolls[k]; });
+  }
+
+  function restoreRegrUi() {
+    regrRoots().forEach((root) => {
+      root.querySelectorAll("details[data-regr-key]").forEach((el) => {
+        const k = el.getAttribute("data-regr-key");
+        if (k && regrOpen.has(k)) el.open = true;
+      });
+      root.querySelectorAll("[data-regr-scroll]").forEach((el) => {
+        const k = el.getAttribute("data-regr-scroll");
+        const pos = k && regrScroll[k];
+        if (pos) {
+          el.scrollLeft = pos.x;
+          el.scrollTop = pos.y;
+        }
+      });
+    });
+  }
 
   function emptyDraft() { return { from: "", subject: "", received_at: "", email: "", comments: "", screenshots: [], previews: [], status: "" }; }
 
@@ -16,24 +62,143 @@
     return String(s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
-  function remember(part) { if (window.pfHub) window.pfHub.write(part); }
-
-  function paintBanner() {
-    const banner = $("job-banner");
-    if (!banner) return;
-    const err = (job && job.error) || (pipeline && pipeline.error) || "";
-    const msg = (pipeline && pipeline.busy && (pipeline.message || "Processing client request…")) || (job && job.busy && (job.message || "")) || err;
-    banner.hidden = !msg;
-    if (msg) { banner.textContent = err || msg; banner.classList.toggle("is-err", !!err); }
+  function mdInline(s) {
+    return esc(s).replace(/`([^`]+)`/g, "<code>$1</code>");
   }
 
-  const statusLabel = (s) => ({ planned: "plan ready", processing: "working", tested: "review", ready: "ready to deploy", applied: "applied" }[s] || s || "saved");
+  function planHtml(md) {
+    if (!md) return "";
+    const lines = String(md).replace(/\r\n/g, "\n").split("\n");
+    const out = [];
+    let i = 0;
+    while (i < lines.length) {
+      const line = lines[i];
+      if (line.startsWith("```")) {
+        const buf = [];
+        i += 1;
+        while (i < lines.length && !lines[i].startsWith("```")) {
+          buf.push(lines[i]);
+          i += 1;
+        }
+        if (i < lines.length) i += 1;
+        out.push(`<pre class="plan-code">${esc(buf.join("\n"))}</pre>`);
+        continue;
+      }
+      if (line.startsWith("# ")) {
+        out.push(`<h3 class="plan-title">${mdInline(line.slice(2))}</h3>`);
+        i += 1;
+        continue;
+      }
+      if (line.startsWith("## ")) {
+        out.push(`<h3>${mdInline(line.slice(3))}</h3>`);
+        i += 1;
+        continue;
+      }
+      if (/^\s*-\s/.test(line)) {
+        const items = [];
+        while (i < lines.length && /^\s*-\s/.test(lines[i])) {
+          let item = mdInline(lines[i].replace(/^\s*-\s/, ""));
+          i += 1;
+          const notes = [];
+          while (i < lines.length && lines[i] && !/^\s*-\s/.test(lines[i]) && !lines[i].startsWith("#") && !lines[i].startsWith("```") && /^\s+/.test(lines[i])) {
+            notes.push(mdInline(lines[i].trim()));
+            i += 1;
+          }
+          items.push(`<li>${item}${notes.map((n) => `<div class="plan-note">${n}</div>`).join("")}</li>`);
+        }
+        out.push(`<ul>${items.join("")}</ul>`);
+        continue;
+      }
+      if (!line.trim()) {
+        i += 1;
+        continue;
+      }
+      const para = [line];
+      i += 1;
+      while (i < lines.length && lines[i].trim() && !lines[i].startsWith("#") && !lines[i].startsWith("```") && !/^\s*-\s/.test(lines[i])) {
+        para.push(lines[i]);
+        i += 1;
+      }
+      out.push(`<p>${mdInline(para.join(" "))}</p>`);
+    }
+    return `<div class="plan-doc">${out.join("")}</div>`;
+  }
+
+  function remember(part) { if (window.pfHub) window.pfHub.write(part); }
+
+  async function paintBanner() {
+    const gen = ++paintGen;
+    snapRegrUi();
+    const banner = $("job-banner");
+    const live = $("regr-live");
+    if (!banner) return;
+    const err = (job && job.error) || (pipeline && pipeline.error) || "";
+    const rg = { ...((pipeline && pipeline.regression) || {}) };
+    try {
+      const extra = await fetch("/static/regr-live.json?t=" + Date.now(), { cache: "no-store" });
+      if (extra.ok) Object.assign(rg, await extra.json());
+    } catch (err) {}
+    try {
+      const timing = await fetch("/static/regr-timing.json?t=" + Date.now(), { cache: "no-store" });
+      if (timing.ok) {
+        const t = await timing.json();
+        if (t.capture_sec) {
+          rg.capture_sec = t.capture_sec;
+          if (!rg.expected_sec) rg.expected_sec = t.capture_sec;
+          window.pfRegrCaptureSec = t.capture_sec;
+        }
+      }
+    } catch (err) {}
+    try {
+      const score = await fetch("/static/regr-score.json?t=" + Date.now(), { cache: "no-store" });
+      if (score.ok) {
+        const s = await score.json();
+        if (s.passed || s.failed || s.ignored) {
+          rg.passed = s.passed || [];
+          rg.failed = s.failed || [];
+          rg.ignored = s.ignored || [];
+        }
+      }
+    } catch (err) {}
+    const testsHere = pipeline && pipeline.busy && pipeline.kind === "tests" && pipeline.request_id === selectedReq;
+    const msg = testsHere
+      ? err
+      : (pipeline && pipeline.busy && (pipeline.message || "Processing client request…")) || (job && job.busy && (job.message || "")) || err;
+    const showLive = !!(pipeline && pipeline.kind === "regression" && (rg.busy || pipeline.busy));
+    const liveHtml = showLive
+      ? regrLive({
+          ...rg,
+          busy: rg.busy || pipeline.busy,
+          message: rg.message || pipeline.message,
+          capture: rg.capture != null ? rg.capture : (pipeline.regression && pipeline.regression.capture),
+          error: rg.error || err,
+          wait_sec: rg.wait_sec || (pipeline.regression && pipeline.regression.wait_sec),
+          started_at: rg.started_at || (pipeline.regression && pipeline.regression.started_at),
+          capture_sec: rg.capture_sec || window.pfRegrCaptureSec,
+        })
+      : "";
+    if (gen !== paintGen) return;
+    snapRegrUi();
+    if (live) {
+      live.hidden = true;
+      live.innerHTML = "";
+    }
+    if ($("req-regr-slot")) $("req-regr-slot").innerHTML = liveHtml;
+    restoreRegrUi();
+    banner.hidden = !msg || showLive;
+    if (msg && !showLive) {
+      banner.textContent = err || msg;
+      banner.classList.toggle("is-err", !!err);
+    }
+  }
+
+  const statusLabel = (s) => ({ planned: "plan ready", processing: "working", tested: "review", ready: "ready to deploy", applied: "deployed" }[s] || s || "saved");
   const busy = () => !!(job && job.busy) || !!(pipeline && pipeline.busy);
 
   function renderList() {
     const shown = rows.filter((c) => {
       if (!q) return true;
-      return `${c.title} ${c.name} ${c.slug}`.toLowerCase().includes(q);
+      return `${c.title} ${c.name} ${c.slug} ${c.eip_version || ""}`.toLowerCase().includes(q);
     });
     $("client-count").textContent = `${shown.length} client${shown.length === 1 ? "" : "s"}`;
     if (!shown.length) { listEl.innerHTML = '<p class="empty">No clients under Clients/ (excluding Demos).</p>'; return; }
@@ -52,6 +217,7 @@
           <div>
             <h3>${esc(c.title)}</h3>
             <code>${esc(c.path)}</code>
+            <div class="muted">eiPlatform ${c.eip_version ? esc(c.eip_version) : "not tagged"}</div>
             ${urls}
             ${latest}
           </div>
@@ -61,7 +227,9 @@
               <span class="badge off">${c.request_count || 0} request${c.request_count === 1 ? "" : "s"}</span>
             </div>
             <div class="actions">
+              <button type="button" class="eic-open" data-cact="eiconsole" title="Open eiConsole" aria-label="Open eiConsole"></button>
               <button type="button" class="btn btn-primary" data-cact="open">Requests</button>
+              <button type="button" class="btn" data-cact="manage">Manage</button>
               <button type="button" class="btn" data-cact="start" ${busy() || c.running || !c.has_sandbox ? "disabled" : ""}>Start</button>
               <button type="button" class="btn btn-quiet" data-cact="stop" ${busy() || !c.running ? "disabled" : ""}>Stop</button>
             </div>
@@ -69,6 +237,189 @@
         </article>`;
       })
       .join("");
+  }
+
+  function regrFeedLabel(row) {
+    return row && typeof row === "object" ? (row.title || row.id || "") : String(row || "");
+  }
+
+  function regrWhyCell(r, ch, e, withExplain) {
+    e = e || esc;
+    if (r.error && !ch) return e(r.error);
+    if (!ch) return e("diff");
+    if (ch.kind === "missing" && !(withExplain && ch.explain)) return e("missing this run");
+    if (ch.kind === "extra" && !(withExplain && ch.explain)) return e("new this run");
+    const labelWhy = ch.kind === "ignored" ? (ch.reason || "ignored") : "changed";
+    const bits = (ch.lines || []).map((ln) => String(ln).replace(/\n$/, "")).filter((ln) => {
+      if (ln.startsWith("+++") || ln.startsWith("---") || ln.startsWith("@@")) return false;
+      return ln.startsWith("+") || ln.startsWith("-");
+    });
+    const prose = withExplain && ch.explain ? `<p class="regr-explain">${e(ch.explain)}</p>` : "";
+    if (!bits.length) return prose || e(ch.kind === "missing" ? "missing this run" : ch.kind === "extra" ? "new this run" : labelWhy);
+    const head = withExplain && ch.explain ? "" : `<div>${e(labelWhy)}</div>`;
+    return `${prose}${head}${regrDiffBody({ kind: "changed", lines: bits }, "")}`;
+  }
+
+  function regrFailTable(feeds, e, withExplain) {
+    e = e || esc;
+    const rows = [];
+    (feeds || []).forEach((r) => {
+      const feed = regrFeedLabel(r);
+      const changes = r.changes || [];
+      if (!changes.length) rows.push(`<tr><td>${e(feed)}</td><td></td><td>${regrWhyCell(r, null, e, withExplain)}</td></tr>`);
+      else changes.forEach((ch) => {
+        rows.push(`<tr><td>${e(feed)}</td><td><code>${e(ch.file || "")}</code></td><td>${regrWhyCell(r, ch, e, withExplain)}</td></tr>`);
+      });
+    });
+    if (!rows.length) return '<p class="muted">None yet</p>';
+    return `<table class="regr-fail-table"><thead><tr><th>Feed</th><th>File</th><th>Why</th></tr></thead><tbody>${rows.join("")}</tbody></table>`;
+  }
+
+  window.pfRegrScoreHtml = function (job, escapeHtml) {
+    const e = escapeHtml || esc;
+    const pass = job.passed || [];
+    const fail = job.failed || [];
+    const ign = job.ignored || [];
+    if (!pass.length && !fail.length && !ign.length) return "";
+    const chips = pass.length
+      ? pass.map((r) => `<span class="regr-chip">${e(regrFeedLabel(r))}</span>`).join("")
+      : '<span class="muted">None yet</span>';
+    return `<div class="regr-score">
+      <section class="regr-fail-block"><h4 class="bad">Failed (${e(String(fail.length))})</h4>${regrFailTable(fail, e)}</section>
+      ${ign.length ? `<details class="fold regr-fold"><summary>Ignored differences (${e(String(ign.length))})</summary>${regrFailTable(ign, e)}</details>` : ""}
+      <details class="fold regr-fold"><summary class="ok">Passed (${e(String(pass.length))})</summary><div class="regr-pass-chips">${chips}</div></details>
+    </div>`;
+  };
+
+  function regrElapsed(job) {
+    let n = Number(job.wait_sec) || 0;
+    const started = Date.parse(job.started_at || "") || 0;
+    if (started) n = Math.max(n, Math.max(0, Math.round((Date.now() - started) / 1000)));
+    const msg = String(job.message || "");
+    const hit = msg.match(/\((\d+)\s*s\)\s*$/i);
+    if (hit) n = Math.max(n, Number(hit[1]));
+    return n;
+  }
+
+  function regrPct(job, elapsed) {
+    const cap = Number(job.capture_sec || job.expected_sec || window.pfRegrCaptureSec) || 1031;
+    const raw = cap ? Math.round((elapsed / cap) * 100) : 0;
+    const pct = Math.min(100, elapsed > 0 ? Math.max(1, raw) : 0);
+    const fmt = (s) => {
+      s = Math.max(0, Math.round(Number(s) || 0));
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return m ? `${m}m ${String(r).padStart(2, "0")}s` : `${r}s`;
+    };
+    const over = elapsed > cap;
+    const text = over
+      ? `${raw}% · elapsed ${fmt(elapsed)} of last capture ${fmt(cap)} · still running`
+      : `${pct}% · elapsed ${fmt(elapsed)} of last capture ${fmt(cap)} · ${fmt(cap - elapsed)} left`;
+    return { pct, text };
+  }
+
+  function regrLive(job) {
+    if (!job || !job.busy) return "";
+    const busy = !!job.busy;
+    const step = Number(job.step) || 0;
+    const total = Number(job.step_total) || 0;
+    const elapsed = regrElapsed(job);
+    const log = (job.log || []).slice(-12).map((l) => `<li>${esc(l)}</li>`).join("");
+    const lists = window.pfRegrLiveLists ? window.pfRegrLiveLists(job, esc) : "";
+    const pickedN = Number(job.picked_n) || 0;
+    const totalIn = Number(job.step_total) || total;
+    const eta = regrPct({ ...job, capture_sec: job.capture_sec || window.pfRegrCaptureSec || 0 }, elapsed);
+    const score = window.pfRegrScoreHtml ? window.pfRegrScoreHtml(job, esc) : "";
+    return `<div class="regr-progress${job.error ? " is-err" : ""}">
+      <p class="video-phase">${esc(busy ? (job.capture ? "Capturing baseline" : "Running regression") : "Regression")}</p>
+      <p class="video-msg">${esc(job.message || (busy ? "Working…" : ""))}</p>
+      ${busy ? `<div class="regr-bar-row"><strong class="regr-pct">${esc(String(eta.pct))}%</strong><progress max="100" value="${esc(String(eta.pct))}"></progress></div>
+      <p class="muted">${esc(eta.text)}</p>
+      <p class="muted">${esc(String(step))}/${esc(String(total || "?"))} feeds · this drop ${esc(String(pickedN || 0))}/${esc(String(job.inbound_n != null ? (Number(job.inbound_n)+pickedN) : "?"))} inbound · ${esc(String(job.output_n || job.files || 0))} ADT/DFT</p>` : ""}
+      ${score}
+      ${lists}
+      ${job.error ? `<p class="video-err">${esc(job.error)}</p>` : ""}
+      ${log ? `<ul class="video-log">${log}</ul>` : ""}
+    </div>`;
+  }
+
+  function regrKind(kind) {
+    if (kind === "missing") return "missing this run";
+    if (kind === "extra") return "new this run";
+    return "changed";
+  }
+
+  function regrDiffBody(ch, feedId) {
+    const lines = ch.lines || [];
+    if (!lines.length) return '<p class="muted">No line detail.</p>';
+    if (ch.kind === "missing" || ch.kind === "extra") return `<p>${esc(lines.join(" "))}</p>`;
+    const body = lines
+      .map((line) => {
+        const raw = String(line);
+        let cls = "";
+        if (raw.startsWith("+") && !raw.startsWith("+++")) cls = "diff_add";
+        else if (raw.startsWith("-") && !raw.startsWith("---")) cls = "diff_sub";
+        return `<span class="${cls}">${esc(raw)}</span>`;
+      })
+      .join("\n");
+    return `<pre class="diff-view regr-diff-pre">${body}</pre>`;
+  }
+
+  function regrFeed(u, cls) {
+    const changes = u.changes || [];
+    const n = changes.length || Number(u.diffs) || 0;
+    const missing = changes.length && changes.every((c) => c.kind === "missing");
+    const hint = missing
+      ? "no ADT/DFT this run"
+      : `${n} file(s)`;
+    const files = changes
+      .map((ch) => `<details class="diff-file regr-diff" data-regr-key="${esc("file:" + (u.id || "") + ":" + (ch.file || ""))}" open>
+        <summary class="diff-name"><span class="diff-path">${esc(ch.file || u.id)}</span> <span class="muted">${esc(regrKind(ch.kind))}</span></summary>
+        ${regrDiffBody(ch, u.id)}
+      </details>`)
+      .join("");
+    const base = (u.baseline_files || []).join(", ");
+    const last = (u.last_files || []).join(", ");
+    const extra = u.error ? `<p class="bad">${esc(u.error)}</p>` : "";
+    const meta = `<p class="muted">Baseline: ${esc(base || "none")} · This run: ${esc(last || "none")}</p>`;
+    return `<details class="db-client cc-client regr-feed" data-regr-key="${esc("feed:" + (u.id || ""))}">
+      <summary class="${esc(cls || "")}"><strong>${esc(u.id)}</strong> <span class="muted">${esc(hint)}${u.error ? " · " + esc(u.error) : ""}</span></summary>
+      ${extra}${meta}${files || `<p class="muted">${esc(String(n))} diff(s)</p>`}
+    </details>`;
+  }
+
+  function regrReport(rg) {
+    if (!rg) return "";
+    const un = rg.unexpected || [];
+    const inc = rg.incomplete || [];
+    const ex = rg.expected_changed || [];
+    const ign = rg.ignored || [];
+    const ok = !!rg.ok;
+    const head = ok
+      ? "Only this feature moved (or nothing else did)."
+      : inc.length && !un.length
+        ? "This run did not finish collecting ADT/DFT. Missing or extra files here are not field changes — Re-run Regression."
+        : "Unexpected feeds changed — those should not have moved.";
+    return `<div class="regr-report${ok ? " is-ok" : ""}" id="req-regression-report">
+      <p>${head}</p>
+      ${inc.length ? `<p class="muted">Incomplete collection</p>${regrFailTable(inc)}` : ""}
+      ${un.length ? `<p class="muted">Unexpected</p>${regrFailTable(un)}` : ""}
+      ${ex.length ? `<details class="fold regr-fold"><summary>Expected for this feature (${esc(String(ex.length))})</summary>${regrFailTable(ex, esc, true)}</details>` : ""}
+      ${ign.length ? `<details class="fold regr-fold"><summary>Ignored differences (${esc(String(ign.length))})</summary><p class="muted">FT1 order and PV1 ordering physician can move without failing the run.</p>${regrFailTable(ign)}</details>` : ""}
+      <details class="fold regr-fold"><summary>${esc(String(rg.clean || 0))} feed(s) unchanged</summary><p class="muted">These matched baseline.</p></details>
+      ${coverageBlock(rg.coverage)}
+    </div>`;
+  }
+
+  function coverageBlock(cov) {
+    if (!cov || !(cov.categories || []).length) return "";
+    const cats = (cov.categories || [])
+      .map((c) => `<li><strong>${esc(c.label)}</strong> ${esc(String(c.hit))}/${esc(String(c.total))} (${esc(String(c.pct))}%)</li>`)
+      .join("");
+    const n = (cov.clients || []).length;
+    const coding = cov.coding || {};
+    const cr = coding.total ? ` Custom coding ${esc(String(coding.hit || 0))}/${esc(String(coding.total))} (${esc(String(coding.pct))}%).` : "";
+    return `<h4>Coverage</h4><ul>${cats}</ul><p class="muted">${esc(String(n))} client(s) produced HL7 this run.${cr} Full table is on Manage → Regression.</p>`;
   }
 
   function testsHtml(tests) {
@@ -87,6 +438,8 @@
     $("client-detail-title").textContent = c.title;
     const reqs = (detail && detail.requests) || [];
     const open = detail && detail.request;
+    const pdfUrl = (open && open.plan_pdf_url) || "";
+    const planMd = (open && open.plan) || "";
     const pipe = (detail && detail.pipeline) || pipeline;
     const processing = !!(pipe && pipe.busy && pipe.slug === selected);
     const formOpen = newOpen || !reqs.length || ocrBusy || !!(draft.email || draft.from || draft.subject || (draft.screenshots || []).length);
@@ -114,34 +467,100 @@
     </details>`;
     const top = window.pfGroup ? window.pfGroup.top(reqs, detail && detail.deploy, processing) : null;
     const hist = window.pfGroup
-      ? window.pfGroup.hist(reqs, open)
+      ? window.pfGroup.hist(reqs, open, histTab, detail && detail.deploy)
       : `<article class="panel"><h2>Request history</h2><p class="empty">No requests saved yet.</p></article>`;
     let reqPanel = "";
     if (open) {
       const showResults = ["processing", "tested", "ready", "error", "applied"].includes(open.status);
       const testsOk = !!(open.tests && open.tests.ok);
+      const testing = !!(pipe && pipe.busy && pipe.kind === "tests" && pipe.request_id === open.id);
+      const testProg = testing
+        ? (pipe.test_total
+          ? `Testing ${pipe.test_step || 0} of ${pipe.test_total}${pipe.test_name ? " — " + pipe.test_name : ""}`
+          : (pipe.test_name || pipe.message || "Running tests…"))
+        : "";
+      const testJump = testing
+        ? `<p><span class="test-jump is-run">${esc(testProg)}</span></p>`
+        : "";
       const reviewOk = testsOk && !processing && (open.status === "tested" || open.status === "ready" || open.status === "error");
       const canMerge = reviewOk && !open.git_merged;
-      const pdfUrl = open.plan_pdf_url || "";
-      const showPlan = planOpen == null ? (open.status === "planned" && !!pdfUrl) : planOpen;
+      const showPlan = planOpen == null ? !!(planMd || pdfUrl) : planOpen;
       const pdfIcon = pdfUrl ? `<a class="pdf-open" href="${esc(pdfUrl)}" target="_blank" rel="noopener" title="Open change plan PDF" aria-label="Open change plan PDF"></a>` : "";
-      const pdfBody = pdfUrl
-        ? `<iframe class="plan-frame" src="${esc(pdfUrl)}" title="Change plan PDF"></iframe>`
-        : '<p class="muted">Build a change plan to inspect eip-root and write a PDF of the proposed edits.</p>';
+      const pdfBody = planMd
+        ? planHtml(planMd)
+        : (pdfUrl
+          ? `<p class="muted">Plan text is missing. <a href="${esc(pdfUrl)}" target="_blank" rel="noopener">Open the PDF</a>.</p>`
+          : '<p class="muted">Build a change plan to inspect eip-root and write the proposed edits.</p>');
       const hasDiff = open.diff && !String(open.diff).startsWith("(no file");
       const diffView = open.diff_html
         ? `<div class="diff-side">${open.diff_html}</div>`
         : (hasDiff ? `<pre class="diff-view">${esc(open.diff)}</pre>` : "");
+      const workMsg = (() => {
+        let msg = open.message || "";
+        msg = msg.replace(/^Tests passed[^.]*\.\s*/i, "").replace(/^Tests passed\s*·\s*/i, "");
+        const implemented = !!(open.git_branch || open.tests || open.git_merged || open.deployed);
+        if (implemented) {
+          msg = msg.replace(/\s*Implement,\s*then\s+/i, " ");
+        }
+        const stale = /^(Capturing baseline|Running regression|Implementing the planned|Regression:|Ready\s+[—\-].*stopped|Stopped\.?|Regression failed: name '_typical_sec')/i.test(msg);
+        const body = stale || !msg ? "" : msg;
+        if (!body) return "";
+        if (/^tests (passed|failed)/i.test(body)) return "";
+        const fail = /fail|error|unexpected/i.test(body);
+        return `<p class="${fail ? "bad" : ""}">${esc(body)}</p>`;
+      })();
+      const recVid = !!(open.video && open.video.status === "running");
+      const featNext = !pdfUrl ? "process" : !(showResults || open.git_branch) ? "work" : !testsOk ? "retest" : "";
+      const regrNext = open.regression_baseline || /baseline captured/i.test(open.message || "") ? "regression" : "capture";
+      const go = (step) => (!processing && (step === featNext || step === regrNext) ? " btn-go" : "");
+      const featBusy = processing && pipe && pipe.request_id === open.id && pipe.kind !== "regression";
+      const featStatus = testing
+        ? testJump
+        : featBusy
+          ? `<p class="req-status">${esc(pipe.message || "Working…")}</p>`
+          : !pdfUrl
+            ? `<p class="req-status">Build a change plan first.</p>`
+            : !(showResults || open.git_branch)
+              ? `<p class="req-status">Plan is ready. Implement next.</p>`
+              : !open.tests
+                ? `<p class="req-status">Implemented. Re-run tests next.</p>`
+                : !testsOk
+                  ? `<p class="req-status bad">Feature tests failed. Fix it, then Re-run tests.</p>`
+                  : (open.git_merged || open.deployed || open.status === "applied")
+                    ? `<p class="req-status ok">Feature tests passed. This change is ${open.deployed || open.status === "applied" ? "applied" : "merged"}.</p>`
+                    : canMerge
+                      ? `<p class="req-status ok">Feature tests passed. Merge when you're ready.</p>`
+                      : `<p class="req-status ok">Feature tests passed.</p>`;
+      const liveRegr = !!(pipe && pipe.busy && pipe.request_id === open.id && (pipe.kind === "regression" || (pipe.regression && pipe.regression.busy)));
+      const regrStatus = liveRegr ? "" : (/baseline|regression/i.test(open.message || "") ? workMsg : "");
       reqPanel = `<article class="panel">
-        <h2 class="req-head">${window.pfGroup ? window.pfGroup.hours(open) : ""}${esc(open.subject || open.id)}<span class="file-icons">${pdfIcon}${window.pfVideo ? window.pfVideo.icon(open, selected) : ""}</span></h2>
-        <p class="muted">${esc(open.from)} · ${esc(open.received_at)} · ${esc(statusLabel(open.status))}${open.phase ? " · " + esc(open.phase) : ""}</p>
+        <h2 class="req-head">${window.pfGroup ? window.pfGroup.hours(open) : ""}${esc(open.subject || open.id)}<span class="file-icons">${pdfIcon}${window.pfVideo ? window.pfVideo.icon(open, selected, { can: reviewOk && !processing, rec: recVid }) : ""}</span></h2>
+        <p class="muted">${esc(open.from)} · ${esc(open.received_at)} · ${esc(statusLabel(open.status))}${open.phase && !(String(open.phase).startsWith("regression") && !processing) ? " · " + esc(open.phase) : ""}</p>
+        ${selected === "crl-plus" && c && c.local_url ? `<p>Implementation is the <a href="${esc(c.local_url)}" target="_blank" rel="noopener">CRL Plus Sandbox</a></p>` : ""}
         ${window.pfGroup ? window.pfGroup.where(open, canMerge) : ""}
-        <p>${esc(open.message || "")}</p>
-        <div class="actions" style="margin:0.6rem 0">
-          ${open.tests ? `<a class="test-jump ${testsOk ? "ok" : "bad"}" href="#req-tests">${testsOk ? "Tests passed" : "Tests failed"}</a>` : ""}
-          <button type="button" class="btn" id="req-process" ${processing ? "disabled" : ""}>${pdfUrl ? "Re-Build plan" : "Build plan"}</button>
-          <button type="button" class="btn${!testsOk && pdfUrl ? " btn-primary" : ""}" id="req-work" ${processing || !pdfUrl ? "disabled" : ""}>${showResults || open.git_branch ? "Re-Implement plan" : "Implement"}</button>
-          ${window.pfVideo ? window.pfVideo.bar(open, reviewOk, processing, selected) : ""}
+        <div class="req-action-groups">
+          <div class="req-action-group">
+            <p class="muted req-action-label">Feature</p>
+            <div class="actions">
+              <button type="button" class="btn${go("process")}" id="req-process" ${processing ? "disabled" : ""}>${pdfUrl ? "Re-Build plan" : "Build plan"}</button>
+              <button type="button" class="btn${go("work")}" id="req-work" ${processing || !pdfUrl ? "disabled" : ""}>${showResults || open.git_branch ? "Re-Implement plan" : "Implement"}</button>
+              <button type="button" class="btn${go("retest")}" id="req-retest" ${processing || (!open.tests && !pdfUrl) ? "disabled" : ""}>Re-run tests</button>
+              <button type="button" class="btn${testsOk && ((open.changes || []).length || open.applied) && !processing ? " btn-go" : ""}" id="req-package" ${processing || !testsOk || !((open.changes || []).length || (open.applied || []).length) ? "disabled" : ""}>${open.deploy_zip ? "Rebuild TEST zip" : "Create TEST zip"}</button>
+            </div>
+            ${featStatus}
+            ${open.tests ? `<details class="fold tests-fold${testsOk ? " is-ok" : ""}" id="req-tests"${testsOk ? "" : " open"}><summary>Feature tests ${testsOk ? "passed" : "failed"}</summary><div class="tests-block${testsOk ? " is-ok" : ""}">${testsHtml(open.tests)}</div></details>` : ""}
+          </div>
+          <div class="req-action-group">
+            <p class="muted req-action-label">Regression</p>
+            <div class="actions">
+              <button type="button" class="btn${go("capture")}" id="req-regr-capture" ${processing ? "disabled" : ""}>Capture Regression Baseline</button>
+              <button type="button" class="btn${go("regression")}" id="req-regression" ${processing ? "disabled" : ""}>Run Regression</button>
+              ${pipe && pipe.busy && (pipe.kind === "regression" || (pipe.regression && pipe.regression.busy)) && pipe.request_id === open.id ? `<button type="button" class="btn" id="req-regr-stop">Stop ${pipe.regression && pipe.regression.capture ? "baseline capture" : "regression"}</button>` : ""}
+            </div>
+            <div id="req-regr-slot"></div>
+            ${regrStatus}
+            ${!liveRegr && open.regression ? regrReport(open.regression) : ""}
+          </div>
         </div>${window.pfVideo ? window.pfVideo.place(open, selected) : ""}
         ${(open.request_summary || (open.dive && (open.dive.ask || open.dive.summary)) || open.subject) ? `<div class="change-blurb"><strong>What is being requested</strong><p>${esc(open.request_summary || (open.dive && (open.dive.ask || open.dive.summary)) || open.subject)}</p></div>` : ""}
         ${window.pfComments ? window.pfComments.fold(open, commentsOpen) : ""}
@@ -153,7 +572,7 @@
           <summary>Proposed changes</summary>
           ${pdfBody}
         </details>
-        ${showResults && diffView ? `${(open.change_summary || (open.dive && open.dive.summary)) ? `<div class="change-blurb"><strong>What changed</strong><p>${esc(open.change_summary || open.dive.summary)}</p></div>` : ""}<h3>Code changes</h3>${diffView}` : ""}${open.tests ? `<div class="tests-block${testsOk ? " is-ok" : ""}" id="req-tests"><h3>Test results</h3>${testsHtml(open.tests)}</div>` : ""}
+        ${showResults && diffView ? `${(open.change_summary || (open.dive && open.dive.summary)) ? `<div class="change-blurb"><strong>What changed</strong><p>${esc(open.change_summary || open.dive.summary)}</p></div>` : ""}<h3>Code changes</h3>${diffView}` : ""}
       </article>`;
     }
     detailEl.innerHTML =
@@ -164,6 +583,8 @@
           ${c.local_url ? `<div class="urls"><a href="${esc(c.local_url)}" target="_blank" rel="noopener">Local</a>${c.lan_url ? `<a href="${esc(c.lan_url)}" target="_blank" rel="noopener">LAN</a>` : ""}</div>` : ""}
         </div>
         <div class="actions">
+          <button type="button" class="eic-open" data-cact="eiconsole" title="Open eiConsole" aria-label="Open eiConsole"></button>
+          <button type="button" class="btn" data-cact="manage">Manage</button>
           <span class="badge ${c.running ? "on" : "off"}">${c.running ? "Running" : "Stopped"}</span>
           <button type="button" class="btn" data-cact="start" ${busy() || c.running || !c.has_sandbox ? "disabled" : ""}>Start sandbox</button>
           <button type="button" class="btn btn-quiet" data-cact="stop" ${busy() || !c.running ? "disabled" : ""}>Stop</button>
@@ -172,8 +593,8 @@
       </article>` +
       (top ? top.strip : "") +
       form +
-      hist +
-      reqPanel;
+      reqPanel +
+      hist;
     applyDraft();
     if (window.pfDiff) window.pfDiff.fold(detailEl);
   }
@@ -240,11 +661,12 @@
     paintBanner();
     const r = (detail && detail.request) || {};
     const v = r.video || {};
-    const sig = [selected, selectedReq, r.updated_at, r.status, r.phase, r.message, r.plan_pdf_url, r.git_merged, !!(r.diff_html), (r.changes || []).length, pipeline && pipeline.busy, v.status, v.ready, v.phase, v.step, v.message, detail && detail.deploy && detail.deploy.path, ((detail && detail.requests) || []).map((x) => x.id + x.status).join()].join("|");
+    const sig = [selected, selectedReq, r.status, r.phase, r.plan_pdf_url, (r.plan || "").length, r.git_merged, !!(r.diff_html), (r.changes || []).length, !!(pipeline && pipeline.busy), pipeline && pipeline.kind, v.status, v.ready, v.phase, detail && detail.deploy && detail.deploy.path, ((detail && detail.requests) || []).map((x) => x.id + x.status).join()].join("|");
     if (sig === viewSig && $("req-form")) return;
     viewSig = sig;
     if (window.pfHub && window.pfHub.holdScroll) window.pfHub.holdScroll(renderDetail);
     else renderDetail();
+    paintBanner();
   }
 
   function schedule() {
@@ -258,12 +680,13 @@
         if (selected) await loadDetail();
       } catch (err) {}
       schedule();
-    }, rec ? 1000 : 4000);
+    }, rec ? (pipeline && (pipeline.kind === "tests" || pipeline.kind === "regression") ? 400 : 1000) : 4000);
   }
 
   async function show() {
     listView.hidden = false;
     detailView.hidden = true;
+    if (window.pfManage) window.pfManage.hide();
     selected = "";
     selectedReq = "";
     viewSig = "";
@@ -282,7 +705,8 @@
     draft = emptyDraft();
     listView.hidden = true;
     detailView.hidden = false;
-    remember({ tab: "clients", client: slug, request: selectedReq });
+    if (window.pfManage) window.pfManage.hide();
+    remember({ tab: "clients", client: slug, request: selectedReq, manage: false });
     await loadList();
     await loadDetail();
     schedule();
@@ -290,9 +714,11 @@
 
   function restore() {
     const st = (window.pfHub && window.pfHub.read()) || {};
+    histTab = st.reqHist === "deployed" ? "deployed" : "active";
     const cq = st.clientQ || "";
     q = cq.trim().toLowerCase();
     if (filter) filter.value = cq;
+    if (st.client && st.manage && window.pfManage) return window.pfManage.open(st.client);
     if (st.client) return openClient(st.client, st.request || "");
     return show();
   }
@@ -313,6 +739,18 @@
     if (!slug) return;
     if (act === "open") {
       openClient(slug);
+      return;
+    }
+    if (act === "manage" && window.pfManage) {
+      window.pfManage.open(slug);
+      return;
+    }
+    if (act === "eiconsole") {
+      btn.disabled = true;
+      const resp = await fetch(`/api/clients/${encodeURIComponent(slug)}/eiconsole`, { method: "POST" });
+      const data = await resp.json().catch(() => ({}));
+      btn.disabled = false;
+      if (!resp.ok) alert(data.error || "Could not open eiConsole");
       return;
     }
     btn.disabled = true;
@@ -414,6 +852,20 @@
   });
 
   detailEl.addEventListener("click", async (ev) => {
+    const manageBtn = ev.target.closest("button[data-cact=\"manage\"]");
+    if (manageBtn && selected && window.pfManage) {
+      window.pfManage.open(selected);
+      return;
+    }
+    const eic = ev.target.closest("button[data-cact=\"eiconsole\"]");
+    if (eic && selected) {
+      eic.disabled = true;
+      const resp = await fetch(`/api/clients/${encodeURIComponent(selected)}/eiconsole`, { method: "POST" });
+      const data = await resp.json().catch(() => ({}));
+      eic.disabled = false;
+      if (!resp.ok) alert(data.error || "Could not open eiConsole");
+      return;
+    }
     const backAct = ev.target.closest("button[data-cact]");
     if (backAct && selected) {
       const act = backAct.dataset.cact;
@@ -421,6 +873,14 @@
       await fetch(`/api/clients/${encodeURIComponent(selected)}/${act}`, { method: "POST" });
       await loadList();
       await loadDetail();
+      return;
+    }
+    const histBtn = ev.target.closest("[data-hist]");
+    if (histBtn) {
+      histTab = histBtn.dataset.hist === "deployed" ? "deployed" : "active";
+      remember({ reqHist: histTab });
+      viewSig = "";
+      renderDetail();
       return;
     }
     const item = ev.target.closest("button[data-rid]");
@@ -434,13 +894,30 @@
     if (window.pfGroup && await window.pfGroup.handle(ev, selected, () => loadDetail())) return;
     if (window.pfComments && await window.pfComments.handle(ev, selected, selectedReq, () => { commentsOpen = true; return loadDetail(); })) return;
     if (window.pfVideo && await window.pfVideo.handle(ev, selected, selectedReq, () => loadDetail())) return;
-    const actBtn = ev.target.closest("#req-process, #req-work, #req-merge");
+    const stopBtn = ev.target.closest("#req-regr-stop");
+    if (stopBtn && selected) {
+      stopBtn.disabled = true;
+      await fetch(`/api/clients/${encodeURIComponent(selected)}/regression/stop`, { method: "POST" });
+      await loadDetail();
+      return;
+    }
+    const packBtn = ev.target.closest("#req-package");
+    if (packBtn && selected && selectedReq) {
+      packBtn.disabled = true;
+      const resp = await fetch(`/api/clients/${encodeURIComponent(selected)}/requests/${encodeURIComponent(selectedReq)}/package`, { method: "POST" });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok) alert(data.error || "Could not create the TEST zip");
+      histTab = "deployed";
+      await loadDetail();
+      return;
+    }
+    const actBtn = ev.target.closest("#req-process, #req-work, #req-merge, #req-retest, #req-regression, #req-regr-capture");
     if (actBtn && selectedReq) {
-      const kind = actBtn.id === "req-process" ? "process" : actBtn.id === "req-merge" ? "merge" : "work";
+      const kind = actBtn.id === "req-process" ? "process" : actBtn.id === "req-merge" ? "merge" : actBtn.id === "req-retest" ? "retest" : actBtn.id === "req-regr-capture" || actBtn.id === "req-regression" ? "regression" : "work";
       if (kind === "work") planOpen = false; else if (kind === "process") planOpen = true;
       actBtn.disabled = true;
       const comments = kind === "process" && $("req-comments") ? $("req-comments").value : "";
-      const resp = await fetch(`/api/clients/${encodeURIComponent(selected)}/requests/${encodeURIComponent(selectedReq)}/${kind}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ comments }) });
+      const resp = await fetch(`/api/clients/${encodeURIComponent(selected)}/requests/${encodeURIComponent(selectedReq)}/${kind}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ comments, capture: actBtn.id === "req-regr-capture" }) });
       const data = await resp.json().catch(() => ({}));
       if (!resp.ok) alert(data.error || "Request failed");
       await loadDetail();

@@ -5,8 +5,23 @@ from __future__ import annotations
 import re
 import subprocess
 import tempfile
+import urllib.error
+import urllib.request
 from pathlib import Path
 from xml.etree import ElementTree as ET
+
+_progress = None
+
+
+def set_progress(fn) -> None:
+    global _progress
+    _progress = fn
+
+
+def tick(name: str) -> None:
+    if _progress:
+        _progress(name)
+
 
 ARA_A04 = (
     "eip-root/interfaces/Flat File to HL7 and Kickout Reports/"
@@ -200,6 +215,18 @@ def _stylesheet(in1_1: str, in1_15: str, in1_16: str) -> str:
     )
 
 
+def wants_ngp(dive: dict) -> bool:
+    blob = " ".join(
+        [
+            str(dive.get("summary") or ""),
+            str(dive.get("ask") or ""),
+            str(dive.get("subject") or ""),
+            str((dive.get("feed") or {}).get("name") or ""),
+        ]
+    )
+    return bool(re.search(r"NGP|Healthfirst", blob, re.I) and re.search(r"self[\s-]?pay|PPP|missing.{0,40}IN1", blob, re.I))
+
+
 def wants_ara(dive: dict) -> bool:
     blob = " ".join(
         [
@@ -209,7 +236,9 @@ def wants_ara(dive: dict) -> bool:
             " ".join((e.get("title") or "") + " " + (e.get("why") or "") for e in dive.get("edits") or []),
         ]
     )
-    return bool(re.search(r"IN1[.\-]?16|self[\s-]?pay|SELFPAY", blob, re.I))
+    ara = bool(re.search(r"\bariana\b|\bARA\b|LigoLab", blob, re.I))
+    ins = bool(re.search(r"IN1[.\-]?16|self[\s-]?pay|SELFPAY", blob, re.I))
+    return ara and ins
 
 
 def strip_codes(dive: dict) -> list[str]:
@@ -242,10 +271,17 @@ def note(dive: dict) -> str:
             "Outgoing Ariana ADT. The full A04 stylesheet is XSLT 3.1 with Java date functions, "
             "so this proof runs the insurance fields and shows the ADT segments the interface emits."
         )
-    if wants_strip_report(dive):
+    if wants_ngp(dive):
         return (
-            "Checked every planned edit on disk, then proved each location flags "
-            "stripped_flagged_locations and would appear on FLG Location Charges."
+            "Outgoing NGP Healthfirst ADT. Self-pay must still emit IN1 PPP and the patient name "
+            "(Karen’s TEST still has no IN1)."
+        )
+    from client_proof_out import is_hal
+
+    if is_hal(dive) or wants_strip_report(dive):
+        return (
+            "Dropped Halifax charges + demographics through EIP. Stripped locations must be absent "
+            "from HAX ADT/DFT and listed on FLG Location Charges."
         )
     if dive.get("edits"):
         return "Checked every planned edit on disk, plus any change-specific proof for this request."
@@ -257,18 +293,30 @@ def note(dive: dict) -> str:
 def smoke_eip(wait_url) -> list[dict]:
     import clients
 
-    up = wait_url("http://127.0.0.1:8080/eip/", timeout=90)
+    tick("EIP http://127.0.0.1:18080/eip/")
+    url = "http://127.0.0.1:18080/eip/"
+    up = wait_url(url, timeout=90)
+    detail = "answered"
+    if not up:
+        try:
+            urllib.request.urlopen(url, timeout=4)
+            detail = "did not answer"
+        except urllib.error.HTTPError as exc:
+            detail = f"HTTP {exc.code}"
+        except Exception as exc:
+            detail = str(exc).split("\n", 1)[0][:120] or "did not answer"
     items = [
         _item(
-            "EIP http://127.0.0.1:8080/eip/",
+            "EIP http://127.0.0.1:18080/eip/",
             up,
             "up" if up else "not responding",
-            ["Sandbox eiPlatform " + ("answered" if up else "did not answer") + " on :8080/eip/"],
-            input="GET http://127.0.0.1:8080/eip/",
+            ["Sandbox eiPlatform " + (detail if up else f"{detail} on :18080/eip/")],
+            input="GET http://127.0.0.1:18080/eip/",
             output="HTTP from sandbox eiPlatform",
         )
     ]
     log = clients.ROOT / "logs" / "eip.log"
+    tick("eip.log")
     if log.is_file():
         tail = log.read_text(encoding="utf-8", errors="replace")[-4000:]
         bad = "SEVERE" in tail and "Exception" in tail
@@ -301,6 +349,7 @@ def prove_ara(root: Path, folder: Path | None = None) -> list[dict]:
         return [_item("Outgoing Ariana ADT", False, "could not read IN1.1/15/16 from the A04 transform", [])]
     xslt = _stylesheet(in1_1, in1_15, in1_16)
     for i, case in enumerate(CASES, start=1):
+        tick(case["name"])
         inbound = case["xml"].replace("><", ">\n<")
         src = _save(folder, f"ara-{i}-in.xml", inbound)
         try:
@@ -349,6 +398,7 @@ def prove_edits(root: Path, dive: dict) -> list[dict]:
     items = []
     for ed in dive.get("edits") or []:
         rel = str(ed.get("path") or "")
+        tick(str(ed.get("title") or ed.get("code") or rel or "edit"))
         path = root / rel
         text = path.read_text(encoding="utf-8", errors="replace") if path.is_file() else ""
         bak = path.with_name(path.name + ".bak-req")
@@ -432,6 +482,7 @@ def prove_strips(root: Path, dive: dict) -> list[dict]:
     text = path.read_text(encoding="utf-8", errors="replace") if path.is_file() else ""
     items = []
     for code in codes:
+        tick(f"Location {code}")
         still = _code_in(text, code)
         items.append(
             _item(
@@ -452,6 +503,18 @@ def prove(root: Path, dive: dict, folder: Path | None = None) -> list[dict]:
     items: list[dict] = []
     if wants_ara(dive):
         items.extend(prove_ara(root, folder))
+        return items
+    if wants_ngp(dive):
+        from client_proof_out import prove_ngp_adt
+
+        items.extend(prove_ngp_adt(root, dive, folder))
+        return items
+    from client_proof_out import is_hal
+
+    if is_hal(dive):
+        from client_proof_live import prove_live_strip
+
+        items.extend(prove_live_strip(root, dive, folder))
         return items
     if dive.get("edits"):
         items.extend(prove_edits(root, dive))

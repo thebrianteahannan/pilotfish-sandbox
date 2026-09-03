@@ -3,8 +3,9 @@
 	<Assign name="pf_processing_key" exp="#key = new java.text.SimpleDateFormat('yyyy-MM-dd-HH-mm-ss').format(new java.util.Date()), #txData.getAttributes().setAttribute('pf_processing_key', #key), #key"/>
 	<Execute>
 		<SQL>
-			UPDATE CRLTRANSACTION T 
+			UPDATE T
 			SET T.PF_PROCESSING_KEY = ?
+			FROM CRLTRANSACTION T
 			WHERE ((
 				T.LAST_MODIFIED_DATE &gt; T.CREATED_DATE
 				AND T.ORDER_COMPLETE_DATE IS NULL
@@ -27,7 +28,7 @@
 			AND (
 				T.PF_PROCESSING_KEY IS NULL
 				OR
-				(sysdate - to_date(T.PF_PROCESSING_KEY, 'YYYY-MM-DD-HH24-MI_SS')) &gt;= (4.0 / 24.0)
+				(DATEDIFF(hour, TRY_CONVERT(datetime, REPLACE(T.PF_PROCESSING_KEY, '_','-'), 120), GETDATE()) >= 4)
 			)
 			AND T.AWAITING_ATTACHMENTS &lt;&gt; 'Y'
 			AND T.FLOWNET_ORDER_NUM &lt;&gt; 'INVALID'

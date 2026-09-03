@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formatWrapper>
+	<formatBuilderData>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://com.pilotfish/eip/gui/mapper/formats/FormatToXsdWriter">
+			<xsd:element name="XCSData">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORM_O01_Order_message" type="ORM_O01_Order_message_type" />
+					</xsd:sequence>
+					<xsd:attribute form="unqualified" name="space" type="xsd:string" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="OBR.4_Universal_Service_ID_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CE.1_identifier" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CE.2_text" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CE.3_name_of_coding_system" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PID.11_Patient_Address_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XAD.1_street_address" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XAD.2_other_designation" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XAD.3_city" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XAD.4_state_or_province" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XAD.5_zip_or_postal_code" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XAD.6_country" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ORM_O01.PATIENT_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID_Patient_identification_segment" type="PID_Patient_identification_segment_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORM_O01.PATIENT_VISIT" type="ORM_O01.PATIENT_VISIT_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="OBR_Observation_request_segment_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBR.1_Set_ID_-_OBR" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBR.2_Placer_Order_Number" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBR.3_Filler_Order_Number" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBR.4_Universal_Service_ID" type="OBR.4_Universal_Service_ID_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBR.5_Priority-OBR" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBR.6_Requested_Date_time" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBR.7_Observation_Date_Time_" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ORM_O01.CHOICE_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="OBR_Observation_request_segment" type="OBR_Observation_request_segment_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ORM_O01.ORDER_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORC_Common_order_segment" type="ORC_Common_order_segment_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORM_O01.ORDER_DETAIL" type="ORM_O01.ORDER_DETAIL_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PV1.7_Attending_Doctor_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XCN.1_ID_number_ST_" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XCN.2_family_name" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XCN.3_given_name" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ORM_O01.ORDER_DETAIL_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORM_O01.CHOICE" type="ORM_O01.CHOICE_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PID.5_Patient_Name_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XPN.1_family_name" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XPN.2_given_name" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XPN.3_middle_initial_or_name" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XPN.4_suffix_e.g._JR_or_III_" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="XPN.5_prefix_e.g._DR_" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ORM_O01_Order_message_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH_Message_header_segment" type="MSH_Message_header_segment_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORM_O01.PATIENT" type="ORM_O01.PATIENT_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORM_O01.ORDER" type="ORM_O01.ORDER_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="MSH_Message_header_segment_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.1_Field_Separator" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.2_Encoding_Characters" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.3_Sending_Application" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.4_Sending_Facility" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.5_Receiving_Application" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.6_Receiving_Facility" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.7_Date_Time_Of_Message" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.8_Security" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.9_Message_Type" type="MSH.9_Message_Type_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.10_Message_Control_ID" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.11_Processing_ID" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="MSH.12_Version_ID" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="MSH.9_Message_Type_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CM_MSG.1_message_type" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="CM_MSG.2_trigger_event" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ORM_O01.PATIENT_VISIT_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1_Patient_visit_segment" type="PV1_Patient_visit_segment_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PV1.3_Assigned_Patient_Location_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PL.1_point_of_care_ID_" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PL.2_room" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PV1_Patient_visit_segment_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.1_Set_ID_-_PV1" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.2_Patient_Class" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.3_Assigned_Patient_Location" type="PV1.3_Assigned_Patient_Location_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.4_Admission_Type" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.5_Preadmit_Number" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.6_Prior_Patient_Location" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.7_Attending_Doctor" type="PV1.7_Attending_Doctor_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.8_Referring_Doctor" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.9_Consulting_Doctor" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.10_Hospital_Service" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.11_Temporary_Location" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.12_Preadmit_Test_Indicator" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.13_Re-admission_Indicator" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.14_Admit_Source" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.15_Ambulatory_Status" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.16_VIP_Indicator" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.17_Admitting_Doctor" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.18_Patient_Type" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.19_Visit_Number" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.20_Financial_Class" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.21_Charge_Price_Indicator" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.22_Courtesy_Code" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.23_Credit_Rating" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.24_Contract_Code" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.25_Contract_Effective_Date" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.26_Contract_Amount" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.27_Contract_Period" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.28_Interest_Code" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.29_Transfer_to_Bad_Debt_Code" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.30_Transfer_to_Bad_Debt_Date" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.31_Bad_Debt_Agency_Code" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.32_Bad_Debt_Transfer_Amount" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.33_Bad_Debt_Recovery_Amount" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.34_Delete_Account_Indicator" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.35_Delete_Account_Date" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.36_Discharge_Disposition" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.37_Discharged_to_Location" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.38_Diet_Type" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.39_Servicing_Facility" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.40_Bed_Status" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.41_Account_Status" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.42_Pending_Location" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.43_Prior_Temporary_Location" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PV1.44_Admit_Date_Time" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ORC_Common_order_segment_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORC.1_Order_Control" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="ORC.2_Placer_Order_Number" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PID_Patient_identification_segment_type">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.1_Set_ID_-_PID" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.2_Patient_ID" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.3_Patient_Identifier_List" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.4_Alternate_Patient_ID_-_PID" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.5_Patient_Name" type="PID.5_Patient_Name_type" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.6_Mother_s_Maiden_Name" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.7_Date_Time_of_Birth" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.8_Sex" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.9_Patient_Alias" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.10_Race" type="xsd:string" />
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="1" name="PID.11_Patient_Address" type="PID.11_Patient_Address_type" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</formatBuilderData>
+</formatWrapper>
+

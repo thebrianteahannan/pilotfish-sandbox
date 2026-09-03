@@ -9,13 +9,23 @@ from pathlib import Path
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 
+from briefing import build_briefing
+from companies import COMPANY_STATUSES, company_stats, list_companies, normalize_company_status, refresh_companies, set_company
+from market import build_market
+from marketing import build_marketing
+from searchcomp import ingest_ai_paste, load_search, run_probe
 from curate import enrich_post
 from db import Store
+from feeds import SOURCE_LABELS, format_when, source_label, when_stale
 from scout import db_path, load_config, run_scout
 
 _HERE = Path(__file__).resolve().parent
 ROOT = _HERE if (_HERE / "templates").is_dir() else _HERE.parent
 app = Flask(__name__, template_folder=str(ROOT / "templates"), static_folder=str(ROOT / "static"))
+app.jinja_env.globals["source_label"] = source_label
+app.jinja_env.globals["format_when"] = format_when
+app.jinja_env.globals["when_stale"] = when_stale
+app.jinja_env.globals["SOURCE_CHOICES"] = ["all", *SOURCE_LABELS.keys()]
 store = Store(db_path())
 scheduler = BackgroundScheduler(daemon=True)
 _run_lock = threading.Lock()
@@ -35,7 +45,7 @@ def index():
     posts = store.list_posts(
         status=status,
         capability=capability or None,
-        source=source or None,
+        source=source,
         q=q or None,
     )
     stats = store.stats()
@@ -52,6 +62,94 @@ def index():
         capabilities=caps,
         oauth=bool(os.environ.get("REDDIT_CLIENT_ID")),
     )
+
+
+@app.get("/briefing")
+def briefing():
+    cfg = load_config()
+    pack = build_briefing(store, cfg)
+    return render_template("briefing.html", **pack)
+
+
+@app.get("/api/briefing")
+def api_briefing():
+    return jsonify(build_briefing(store, load_config()))
+
+
+@app.get("/market")
+def market():
+    return render_template("market.html", **build_market(store, load_config()))
+
+
+@app.get("/api/market")
+def api_market():
+    return jsonify(build_market(store, load_config()))
+
+
+@app.get("/search")
+def search():
+    return render_template("search.html", **load_search(store))
+
+
+@app.post("/api/search/probe")
+@app.get("/api/search/probe")
+def api_search_probe():
+    try:
+        return jsonify({"ok": True, **run_probe(store)})
+    except Exception as exc:  # noqa: BLE001
+        return jsonify({"ok": False, "error": str(exc)}), 500
+
+
+@app.post("/api/search/ai-paste")
+def api_search_ai_paste():
+    data = request.get_json(silent=True) or request.form
+    source = (data.get("source") or "chatgpt").strip()
+    text = data.get("text") or ""
+    n = ingest_ai_paste(store, source=source, text=text)
+    if request.headers.get("X-Requested-With") == "fetch" or request.is_json:
+        return jsonify({"ok": True, "named": n})
+    return redirect(url_for("search"))
+
+
+@app.get("/marketing")
+def marketing():
+    return render_template("marketing.html", **build_marketing(store, load_config()))
+
+
+@app.get("/api/marketing")
+def api_marketing():
+    return jsonify(build_marketing(store, load_config()))
+
+
+@app.get("/companies")
+def companies():
+    status = request.args.get("status") or "all"
+    market = request.args.get("market") or ""
+    q = request.args.get("q") or ""
+    normalize_company_status(store)
+    rows = list_companies(store, status="all")
+    if not rows:
+        refresh_companies(store)
+        rows = list_companies(store, status="all")
+    return render_template(
+        "companies.html",
+        companies=rows,
+        names=sorted({c["name"] for c in rows}),
+        stats=company_stats(store),
+        status=status,
+        market=market,
+        q=q,
+    )
+
+
+@app.post("/companies/<company_id>/status")
+def company_status(company_id: str):
+    status = (request.form.get("status") or "watching").strip()
+    notes = request.form.get("notes")
+    if status not in COMPANY_STATUSES:
+        return "Bad status", 400
+    set_company(store, company_id, status=status, notes=notes)
+    return redirect(request.referrer or url_for("companies"))
 
 
 @app.get("/post/<post_id>")

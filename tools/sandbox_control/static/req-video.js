@@ -30,17 +30,20 @@
     return parts.join(" · ");
   }
 
-  function icon(open, selected) {
+  function icon(open, selected, opts) {
     const v = open.video || {};
-    if (!v.ready) return "";
-    return `<a class="vid-open" href="${href(selected, open.id)}" target="_blank" rel="noopener" title="Watch demo video" aria-label="Watch demo video"></a>`;
+    const rec = v.status === "running" || !!(opts && opts.rec);
+    const can = !!(opts && opts.can && !rec);
+    const watch = v.ready
+      ? `<a class="vid-open" href="${href(selected, open.id)}" target="_blank" rel="noopener" title="Watch demo video" aria-label="Watch demo video"></a>`
+      : "";
+    const title = rec ? "Recording demo video…" : v.ready ? "Re-generate demo video" : "Generate demo video";
+    const make = `<button type="button" class="vid-make" id="req-video" ${can ? "" : "disabled"} title="${esc(title)}" aria-label="${esc(title)}"></button>`;
+    return `${watch}${make}`;
   }
 
-  function bar(open, zipNext, processing) {
-    const v = open.video || {};
-    const rec = v.status === "running";
-    const label = rec ? "Recording…" : v.ready ? "Re-generate Demo Video" : "Generate Demo Video";
-    return `<button type="button" class="btn" id="req-video" ${zipNext && !processing && !rec ? "" : "disabled"}>${label}</button>`;
+  function bar() {
+    return "";
   }
 
   function place(open, selected) {

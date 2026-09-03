@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module version="2.0" id="c0100194-5b7d-429e-a60d-ffea73f148b0" name="HL7 Source System" type="HL7TCPListener" tag="Listener" class="com.pilotfish.eip.modules.hl7.HL7TCPListener">
+   <ModuleConfig>
+      <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+      
+        
+      <CLIAllowed>false</CLIAllowed>
+      
+        
+      <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+      
+        
+      <FIFOQueueName/>
+      
+        
+      <FIFOQueueDelay>500</FIFOQueueDelay>
+      
+        
+      <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+      
+        
+      <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+      
+        
+      <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+      
+        
+      <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+      
+        
+      <TransactionLoggingLogAllAttributes>true</TransactionLoggingLogAllAttributes>
+      
+        
+      <TransactionLoggingAllowedLoggedAttributes>[eip_pair:Transaction Resubmit Attribute:eip_name:com.pilotfish.Dashboard.ResubmissionOriginalTxID:eip_value]</TransactionLoggingAllowedLoggedAttributes>
+      
+        
+      <Port>10001</Port>
+      
+        
+      <Engine>PilotFish</Engine>
+      
+        
+      <SynchronousTag>false</SynchronousTag>
+      
+        
+      <AutogenerateSynchronousACK>true</AutogenerateSynchronousACK>
+      
+        
+      <TimeoutTag>0</TimeoutTag>
+      
+        
+      <Validate>false</Validate>
+      
+        
+      <AckModeTag>Always</AckModeTag>
+      
+        
+      <IgnoreAckTag>false</IgnoreAckTag>
+      
+        
+      <EnableComplianceMode>false</EnableComplianceMode>
+      
+        
+      <InvalidCharacterHandling>Reject</InvalidCharacterHandling>
+      
+        
+      <CloseOnError>false</CloseOnError>
+      
+      
+   </ModuleConfig>
+</Module>

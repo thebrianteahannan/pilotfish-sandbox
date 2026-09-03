@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<err:errorReport xmlns:err="http://www.pilotfishtechnology.com/eip/RouteErrorReport">
+	<err:transactionID>4_2047</err:transactionID>
+	<err:errorStage>Processor</err:errorStage>
+	<err:errorComponent>270-271.2 - EDI 271 Response to Excel.Processor2</err:errorComponent>
+	<err:errorRoute>EDI 271 Response to Excel</err:errorRoute>
+	<err:errorInterface>270-271 Interface</err:errorInterface>
+	<err:exceptionClass>com.pilotfish.eip.EIPException</err:exceptionClass>
+	<err:exceptionMessage>Error in SaveDataToAttributeProcessor.</err:exceptionMessage>
+	<err:rootExceptionMessage>Couldn't load attribute EDI_271_Payload - no attribute found.</err:rootExceptionMessage>
+	<err:exceptionTrace>com.pilotfish.eip.EIPException: Error in SaveDataToAttributeProcessor.
+	at com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor.processData(SaveDataToAttributeProcessor.java:271)
+	at com.pilotfish.eip.transact.stages.ProcessorStage.process(ProcessorStage.java:44)
+	at com.pilotfish.eip.transact.StageHandler.process(StageHandler.java:108)
+	at com.pilotfish.eip.server.ntm.transact.StageTransactionRunner.runStage(StageTransactionRunner.java:159)
+	at com.pilotfish.eip.server.ntm.transact.StageTransactionRunner.run(StageTransactionRunner.java:78)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: com.pilotfish.eip.EIPException: Couldn't load attribute EDI_271_Payload - no attribute found.
+	at com.pilotfish.eip.modules.internal.SaveDataToAttributeProcessor.processData(SaveDataToAttributeProcessor.java:258)
+	... 7 more</err:exceptionTrace>
+	<err:transactionData ContentType="XML">SomeData</err:transactionData>
+	&gt;
+</err:errorReport>
+

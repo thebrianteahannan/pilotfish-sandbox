@@ -1,0 +1,20 @@
+---
+description: After implementing a client request, always write hub Code changes (do not leave REVIEW with an empty pane)
+alwaysApply: true
+---
+
+# Hub request — Code changes after implement
+
+When you implement a client email request (hub **Implement** or chat-side `apply_edits` / XSLT edits):
+
+1. Do **not** mark the request `tested` / REVIEW and walk away.
+2. Write the hub **Code changes** artifacts the page actually renders:
+   - `Clients/<client>/requests/<id>/changes.diff`
+   - `Clients/<client>/requests/<id>/changes-side.html`
+   - `request.json` → `changes` (paths), `change_summary`, `applied`
+3. Diff **this request’s files only** vs **git HEAD** (today’s edits). Do **not** use a stale `*.bak-req` from an older request — that dumps months of unrelated XSLT.
+4. Prefer `client_request_diffs.write` (`tools/sandbox_control/client_request_diffs.py`). Opening the request also refreshes stale/missing diffs.
+
+**REVIEW** + **Re-Implement plan** only means `status` is past plan-ready. **Code changes** is a separate file. **No branch yet** is separate (hub Implement creates `req/…`). If you skip hub Implement (20R1 license), still write the diffs.
+
+Do not treat the plan PDF as the implemented diff.

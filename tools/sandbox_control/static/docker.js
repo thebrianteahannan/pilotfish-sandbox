@@ -69,4 +69,5 @@
   const refresh = $("docker-refresh");
   if (refresh) refresh.addEventListener("click", load);
   window.pfDocker = { load };
+  if (window.pfHub && window.pfHub.read().tab === "docker") load();
 })();

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route xmlns="http://www.pilotfishtechnology.com/eipr/RouteSpec" CreatedBy="cursor-agent" RouteSpecificPooling="true" debugTraceCurrentSecondsToKeepFiles="-1" debugTraceMaxFiles="-1" debuggingTrace="false" debuggingTraceExpression="" debuggingTracePath="" transactionTimeToLive="300000">
+  <RouteMetadata />
+  <RoutingModule class="com.pilotfish.eip.modules.routing.XPathRoutingModule">
+    <ModuleConfig>
+      <RuleSet accumulate="false">
+        <Rule>
+          <Targets>
+            <TransportTarget name="Write EDI 834" />
+          </Targets>
+          <Condition>
+            <Expression>
+              //*[local-name()='XCSRecord'][*[translate(local-name(),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')='MEMBERID' or translate(local-name(),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')='LASTNAME'][normalize-space()!='']]
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+        <Rule>
+          <Targets>
+            <TransportTarget name="Write Kickout" />
+          </Targets>
+          <Condition>
+            <Expression>
+              true()
+              <Namespaces />
+            </Expression>
+          </Condition>
+        </Rule>
+      </RuleSet>
+    </ModuleConfig>
+  </RoutingModule>
+  <TransactionMonitors />
+  <Source icon="" name="CSV inbound">
+    <FormatProfile name="CSV to XML" />
+    <SourceMetadata />
+    <Listener class="com.pilotfish.eip.modules.file.DirectoryListener" enabled="true" name="Poll Enrollment CSV TXT">
+      <ModuleConfig>
+        <IS_TRIGGERABLE_LISTENER>false</IS_TRIGGERABLE_LISTENER>
+        <CLIAllowed>false</CLIAllowed>
+        <RESTART_ON_ERROR_TAG>false</RESTART_ON_ERROR_TAG>
+        <StopWhenPollingFailure>true</StopWhenPollingFailure>
+        <FIFOQueueName />
+        <FIFOQueueDelay>500</FIFOQueueDelay>
+        <TransactionLoggingAllowed>false</TransactionLoggingAllowed>
+        <TransactionLoggingStoreData>false</TransactionLoggingStoreData>
+        <TransactionLoggingStoreDataBase64>false</TransactionLoggingStoreDataBase64>
+        <TransactionLoggingStoreAttributes>false</TransactionLoggingStoreAttributes>
+        <PollingInterval>5</PollingInterval>
+        <PollingDirectory>$$CSV_INBOUND_DIRECTORY</PollingDirectory>
+        <FileNameRestriction />
+        <FileExtensionRestriction />
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <PostProcessOperation>Move</PostProcessOperation>
+        <TargetDirectory>$$CSV_ARCHIVE_DIRECTORY</TargetDirectory>
+        <CompatModeMoved>false</CompatModeMoved>
+        <Tokenizers />
+        <SerializedTransactionsTag>1</SerializedTransactionsTag>
+        <SubFolderIterationTag>false</SubFolderIterationTag>
+        <FullFolderPathRestrictionsTag />
+        <HiddenFilesTag>false</HiddenFilesTag>
+        <SchedulerStartTag />
+        <SchedulerEndTag />
+        <ExcludeDaysTag />
+        <ExcludeDatesTag />
+        <TimeZone>System Default</TimeZone>
+        <MinSecondsSinceFileModified>2</MinSecondsSinceFileModified>
+        <MinDaysSinceFileModified>-1</MinDaysSinceFileModified>
+        <MaxDaysSinceFileModified>-1</MaxDaysSinceFileModified>
+        <CombineFiles>false</CombineFiles>
+        <HeaderLines>0</HeaderLines>
+        <SynchResponse>false</SynchResponse>
+        <Timeout>60</Timeout>
+        <FileSortingMethod>System Default</FileSortingMethod>
+        <FileSortingDirection>Ascending</FileSortingDirection>
+      </ModuleConfig>
+    </Listener>
+    <Processors />
+  </Source>
+  <Target icon="" name="834 Outbound">
+    <FormatProfile name="CSV XML to 834" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Write EDI 834" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$EDI_834_OUTPUT_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:getAttribute('com.pilotfish.FileName')}</FileName>
+        <FileExtension>edi</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+    <Processors>
+      <Processor class="com.pilotfish.eip.modules.transform.EDITransformationProcessor" name="XML to EDI 834">
+        <ModuleConfig>
+          <ExecuteProcessor>true</ExecuteProcessor>
+          <ExecuteTransformation>true</ExecuteTransformation>
+          <TransformationDirection>XML to EDI</TransformationDirection>
+          <UseInternalData>false</UseInternalData>
+          <USE_ENHANCED_CONTEXT>true</USE_ENHANCED_CONTEXT>
+          <TransactionDataWithVersion>[eip_pair:{ognl:@com.pilotfish.utils.PilotFishUtils@getWorkingDirectory()+'/edi-tabledata/834-A1'}:eip_name:5010:eip_value]</TransactionDataWithVersion>
+          <FriendlyNamesLevel>None</FriendlyNamesLevel>
+          <CODE_DEFS>false</CODE_DEFS>
+          <SegmentIndexing>true</SegmentIndexing>
+          <OutputEndlines>true</OutputEndlines>
+          <UseProvidedDelimiters>true</UseProvidedDelimiters>
+          <DataDelimiter>*</DataDelimiter>
+          <SubDelimiter>:</SubDelimiter>
+          <RepetitionDelimiter>^</RepetitionDelimiter>
+          <RecordDelimiter>~</RecordDelimiter>
+          <USE_LEGACY_FORMAT>false</USE_LEGACY_FORMAT>
+        </ModuleConfig>
+      </Processor>
+    </Processors>
+  </Target>
+  <Target icon="" name="Kickout">
+    <FormatProfile name="Relay (System Format)" />
+    <TargetMetadata />
+    <Transport class="com.pilotfish.eip.modules.file.DirectoryTransport" name="Write Kickout" retries="1">
+      <ModuleConfig>
+        <TargetDirectory>$$KICKOUT_DIRECTORY</TargetDirectory>
+        <FileName>{ognl:'kickout_' + getAttribute('com.pilotfish.FileName')}</FileName>
+        <FileExtension>txt</FileExtension>
+        <UseFullFilePath>Disabled</UseFullFilePath>
+        <FullPathToFile />
+        <AppendToFile>Overwrite</AppendToFile>
+        <MAXIMUM_MEMORY_SIZE>-1</MAXIMUM_MEMORY_SIZE>
+        <FileNameConflictPattern />
+        <BatchSensitive>false</BatchSensitive>
+        <Command />
+        <Shell>/bin/bash</Shell>
+      </ModuleConfig>
+    </Transport>
+  </Target>
+</Route>

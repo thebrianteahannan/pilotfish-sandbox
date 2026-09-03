@@ -1,0 +1,7 @@
+name: probe-mode-menu
+steps:
+  - id: mode
+    action: click
+    target: { type: JMenu, text: Mode }
+    detail: "Open Mode to list items."
+    dwell_ms: 800

@@ -9,27 +9,22 @@
 <body>
   <header class="top">
     <div>
-      <p class="kicker"><a href="{{ url_for('index') }}">← Back</a></p>
+      <p class="kicker"><a href="{{ url_for('briefing') }}">← Find work</a> · <a href="{{ url_for('index') }}">Signals</a> · <a href="{{ url_for('companies') }}">Companies</a> · <a href="{{ url_for('market') }}">Market</a> · <a href="{{ url_for('search') }}">When People Search</a> · <a href="{{ url_for('marketing') }}">Marketing</a></p>
       <h1>{{ post.title }}</h1>
       <p class="lead">
-        {% if (post.source or 'reddit') == 'g2' %}
-          G2 · {{ post.product_name or post.subreddit }} · relevance {{ post.relevance }} · {{ post.status }}
-        {% else %}
-          r/{{ post.subreddit }} · relevance {{ post.relevance }} · {{ post.status }}
-        {% endif %}
+        {{ source_label(post.source) }}{% if (post.source or '') == 'jobs' and post.product_name %} · <strong>{{ post.product_name }}</strong>{% elif (post.source or 'reddit') == 'reddit' %} · r/{{ post.subreddit }}{% else %} · {{ post.subreddit }}{% endif %}
+        {% set posted = format_when(post.created_utc, post.fetched_at) %}
+        {% if posted %} · <span class="when{% if when_stale(post.created_utc, post.fetched_at) %} old{% endif %}">{{ posted }}</span>{% endif %}
+        · relevance {{ post.relevance }} · {{ post.status }}
         {% if signal_count %} · {{ signal_count }} signal{{ 's' if signal_count != 1 else '' }}{% endif %}
       </p>
     </div>
     <div class="actions">
       <form method="get" action="{{ url_for('post_detail', post_id=post.id) }}">
         <input type="hidden" name="refresh" value="1" />
-        <button class="btn primary" type="submit">
-          {% if (post.source or 'reddit') == 'g2' %}Refresh curation{% else %}Refresh comments{% endif %}
-        </button>
+        <button class="btn primary" type="submit">Refresh comments</button>
       </form>
-      <a class="btn" href="{{ post.permalink }}" target="_blank" rel="noopener">
-        {% if (post.source or 'reddit') == 'g2' %}View on G2{% else %}View on Reddit{% endif %}
-      </a>
+      <a class="btn" href="{{ post.permalink }}" target="_blank" rel="noopener">View source</a>
     </div>
   </header>
 
@@ -39,22 +34,8 @@
     {% endif %}
 
     <section class="panel">
-      <h2>{% if (post.source or 'reddit') == 'g2' %}G2 review{% else %}Original post{% endif %}</h2>
-      {% if (post.source or 'reddit') == 'g2' %}
-        {% if post.like_text %}
-        <h3 class="subhead">What they like</h3>
-        <pre class="body">{{ post.like_text }}</pre>
-        {% endif %}
-        {% if post.dislike_text %}
-        <h3 class="subhead">Workflow gaps / dislike</h3>
-        <pre class="body gap">{{ post.dislike_text }}</pre>
-        {% endif %}
-        {% if not post.like_text and not post.dislike_text %}
-        <pre class="body">{{ post.selftext or '(no review text)' }}</pre>
-        {% endif %}
-      {% else %}
+      <h2>Original post</h2>
       <pre class="body">{{ post.selftext or '(link/outbound post — no self text)' }}</pre>
-      {% endif %}
       <p class="why">{{ post.why }}</p>
       {% if post.demo_hints %}
       <p class="hints"><strong>Nearby demos:</strong> {{ post.demo_hints | join(', ') }}</p>
@@ -85,14 +66,8 @@
     </section>
 
     <section class="panel">
-      <h2>{% if (post.source or 'reddit') == 'g2' %}Talk track{% else %}Reply you can send{% endif %}</h2>
-      <p class="muted">
-        {% if (post.source or 'reddit') == 'g2' %}
-        Sales / SE talk track grounded in this paying-user G2 complaint — edit before using.
-        {% else %}
-        Draft grounded in the curated comments — edit before posting.
-        {% endif %}
-      </p>
+      <h2>Reply you can send</h2>
+      <p class="muted">Draft grounded in the curated comments — edit before posting.</p>
       <textarea id="reply-draft" class="reply" rows="14">{{ reply_draft }}</textarea>
       <div class="row">
         <button class="btn primary" type="button" id="copy-reply">Copy</button>
@@ -102,11 +77,7 @@
 
     <section class="panel">
       <h2>
-        {% if (post.source or 'reddit') == 'g2' %}
-          Curated review signals <span class="muted">(likes / dislikes)</span>
-        {% else %}
-          Curated comments <span class="muted">(meat &amp; potatoes)</span>
-        {% endif %}
+        Curated comments <span class="muted">(meat &amp; potatoes)</span>
       </h2>
       {% if not signal_comments %}
       <p class="empty">No signal comments yet. Hit <strong>Refresh comments</strong> or check “Other comments” below.</p>
@@ -116,6 +87,8 @@
         <div class="meta">
           <span class="score">{{ c.relevance }}</span>
           <span class="sub">u/{{ c.author or 'anon' }}</span>
+          {% set cwhen = format_when(c.created_utc) %}
+          {% if cwhen %}<span class="when{% if when_stale(c.created_utc) %} old{% endif %}">{{ cwhen }}</span>{% endif %}
           <span class="badge">signal</span>
           {% if c.permalink %}<a href="{{ c.permalink }}" target="_blank" rel="noopener">link</a>{% endif %}
         </div>
@@ -137,6 +110,8 @@
       <article class="comment">
         <div class="meta">
           <span class="sub">u/{{ c.author or 'anon' }}</span>
+          {% set cwhen = format_when(c.created_utc) %}
+          {% if cwhen %}<span class="when{% if when_stale(c.created_utc) %} old{% endif %}">{{ cwhen }}</span>{% endif %}
           <span class="muted">rel {{ c.relevance }}</span>
         </div>
         <pre class="cbody">{{ c.body }}</pre>

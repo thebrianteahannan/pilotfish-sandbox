@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Marketing · Buzz Scout</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <p class="kicker">PilotFish Sandbox · Buzz Scout</p>
+      <h1>Ads from this week’s buzz</h1>
+      <p class="lead">Curated campaigns from the live feed — who to reach, the hook they already said out loud, and the offer. Paid search and LinkedIn first. We do not scrape LinkedIn; upload the company list yourself.</p>
+    </div>
+    <div class="actions">
+      <a class="btn" href="{{ url_for('briefing') }}">Find work</a>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <a href="{{ url_for('briefing') }}">Find work</a>
+    <a href="{{ url_for('index') }}">Signals</a>
+    <a href="{{ url_for('companies') }}">Companies</a>
+    <a href="{{ url_for('market') }}">Market</a>
+    <a href="{{ url_for('search') }}">When People Search</a>
+    <a class="on" href="{{ url_for('marketing') }}">Marketing</a>
+  </nav>
+
+  <section class="stats">
+    <div><span class="n">{{ idea_count }}</span><span class="l">campaigns this week</span></div>
+    <div><span class="n">{{ active_count }}</span><span class="l">buzz items behind them</span></div>
+    <div><span class="n">{{ hire_count }}</span><span class="l">hiring accounts</span></div>
+    <div class="wide muted">{% if top_theme %}Hottest hook: <strong>{{ top_theme }}</strong>.{% endif %} Lean on {{ top_channel }}.</div>
+  </section>
+
+  <main class="brief">
+    <section class="panel">
+      <h2>Run these first</h2>
+      <p class="muted">Ranked from this week’s counts. One search theme, one lane, one account list if we have names.</p>
+      {% if not first %}
+      <p class="empty">Run the scout from Signals so this page has live numbers.</p>
+      {% endif %}
+      {% for ad in first %}
+      <article class="move">
+        <h3>{{ loop.index }}. {{ ad.title }}</h3>
+        <p><strong>{{ ad.channel }}</strong> — {{ ad.headline }}</p>
+        <p class="muted">{{ ad.why }}</p>
+        {% if ad.do_links %}
+        <p class="do-links">
+          {% for l in ad.do_links %}
+          <a class="btn" href="{{ l.href }}" target="_blank" rel="noopener">{{ l.label }}</a>
+          {% endfor %}
+        </p>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </section>
+
+    <section class="panel">
+      <h2>Campaigns</h2>
+      <p class="muted">Collapsed on purpose. Open one, copy the ad, buy the keywords.</p>
+      <div class="lanes">
+        {% for ad in ideas %}
+        <details class="lane lane-{{ ad.kind }}">
+          <summary class="theme-head">
+            <strong>{{ ad.title }}</strong>
+            <span class="muted">{{ ad.channel }}</span>
+          </summary>
+          <p class="muted">{{ ad.why }}</p>
+          <p><strong>Audience:</strong> {{ ad.audience }}</p>
+          <p><strong>Headline:</strong> {{ ad.headline }}</p>
+          <p class="ad-copy">{{ ad.ad_text }}</p>
+          <p><strong>Offer:</strong> {{ ad.offer }}</p>
+          <p><strong>Where:</strong> {{ ad.place }}</p>
+          {% if ad.do_links %}
+          <p class="do-links">
+            {% for l in ad.do_links %}
+            <a class="btn" href="{{ l.href }}" target="_blank" rel="noopener">{{ l.label }}</a>
+            {% endfor %}
+          </p>
+          {% endif %}
+          {% if ad.keywords %}
+          <p class="hints"><strong>Keywords:</strong> {{ ad.keywords | join(' · ') }}</p>
+          {% endif %}
+          {% if ad.samples %}
+          <ul class="samples">
+            {% for s in ad.samples %}
+            {% if s.id %}<li><a href="{{ url_for('post_detail', post_id=s.id) }}">{{ s.title }}</a></li>{% endif %}
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </details>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -5,7 +5,9 @@ alwaysApply: true
 
 # Construction video — keep the look, fix words only
 
-Brian approved the current construction-replay **look** (theater, overlays, timing, Edge `en-US-AvaNeural`). Do **not** overhaul recording, visuals, or switch to a cloned/human voice unless he asks.
+Brian approved the current construction-replay **look** (theater, overlays, Edge `en-US-AvaNeural`). Rate is **`-10%`** (slightly slower). Do **not** overhaul recording, visuals, or switch to a cloned/human voice unless he asks.
+
+Every construction video **must** open with the official YouTube Product Demo card and **end** with the official trial/contact card. See `construction-video-official-open.mdc`. That is required, not an overhaul. Do not invent a fish-lockup open card.
 
 ## Pronunciation (robot voice stays)
 
@@ -16,4 +18,4 @@ He will name a mangled term and speak it once. Do not ask him to read the whole 
 2. Display/transcript spelling stays human-readable. Only `docs/construction-narration-pronunciation.json` `speak` strings change (`tools/construction_speech.py` `for_speech`).
 3. After the batch of words, re-export that demo’s construction video. Do not batch other demos.
 
-Optional: `--speak "…"` if the take transcribes wrong.
+Optional: `--speak "…"` if the take transcribes wrong. Website-verbatim: clip the official YouTube audio and pass `--from-wav` instead of a mic take.

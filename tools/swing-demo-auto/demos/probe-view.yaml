@@ -1,0 +1,12 @@
+name: probe-view
+steps:
+  - id: wait-file
+    action: wait_for
+    target: { type: JMenu, text: View }
+    detail: "Wait for View menu."
+    dwell_ms: 400
+  - id: click-view
+    action: click
+    target: { type: JMenu, text: View }
+    detail: "Open View."
+    dwell_ms: 800

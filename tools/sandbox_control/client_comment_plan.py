@@ -6,6 +6,9 @@ import re
 from pathlib import Path
 
 import client_dive
+import client_halifax_strip_followup_plan
+import client_ngp_accession_plan
+import client_nsp_pps_mue_plan
 
 HAL_MAP = (
     "eip-root/interfaces/Flat File to HL7 and Kickout Reports/"
@@ -133,7 +136,21 @@ def propose_strip_report(root: Path, codes: list[str]) -> list[dict]:
 
 
 def refine(root: Path, dive: dict, comments: str, prev: dict | None = None) -> dict:
-    recover_map_strips(root, dive)
+    ask = str(dive.get("ask") or "")
+    subj = str(dive.get("subject") or "")
+    if (
+        not client_halifax_strip_followup_plan.is_ask(ask, subj)
+        and not client_ngp_accession_plan.is_ask(ask, subj)
+        and not client_nsp_pps_mue_plan.is_ask(ask, subj)
+        and not client_dive.is_hal_strip_bug_ask(ask, subj)
+        and not client_dive.is_mue_bug_ask(ask, subj)
+        and not client_dive.is_ntx_pv12_pos24_ask(ask, subj)
+        and not client_dive.is_nhl_cat_bug_ask(ask, subj)
+        and not client_dive.is_nhl_cat_lc_dft_ask(ask, subj)
+        and not client_dive.is_nhl_cat_guarantor_ask(ask, subj)
+        and not client_dive.is_hal_flg_change_ask(ask, subj)
+    ):
+        recover_map_strips(root, dive)
     note = (comments or "").strip()
     if not note:
         return dive

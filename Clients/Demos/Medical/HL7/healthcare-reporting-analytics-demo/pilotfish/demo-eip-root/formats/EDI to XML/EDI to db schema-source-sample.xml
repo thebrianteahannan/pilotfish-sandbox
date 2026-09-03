@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XCSData>
+	<ediroot>
+		<interchange AckRequest="0" AuthorizationQual="00" Control="000000248" Date="120923" ElementDelim="*" RepetitionDelim="^" SecurityQual="00" SegmentDelim="~" SubElementDelim=":" TestIndicator="P" Time="2017" Version="00501">
+			<sender>
+				<address Id="S32433         " Qual="ZZ" />
+			</sender>
+			<receiver>
+				<address Id="Zirmed         " Qual="ZZ" />
+			</receiver>
+			<group ApplReceiver="Zirmed" ApplSender="S32433" Control="248" Date="20120923" GroupType="HC" StandardCode="X" StandardVersion="005010X222A1" Time="2017">
+				<transaction Control="000000248" DocName="Health Care Claim" DocType="837" Version="005010X222A1">
+					<BHT_BeginningofHierarchicalTransaction>
+						<BHT01_HierarchicalStructureCode>0019</BHT01_HierarchicalStructureCode>
+						<BHT02_TransactionSetPurposeCode>00</BHT02_TransactionSetPurposeCode>
+						<BHT03_ReferenceIdentification>000000248</BHT03_ReferenceIdentification>
+						<BHT04_Date>20120923</BHT04_Date>
+						<BHT05_Time>2017</BHT05_Time>
+						<BHT06_TransactionTypeCode>CH</BHT06_TransactionTypeCode>
+					</BHT_BeginningofHierarchicalTransaction>
+					<LOOP_1000A_SubmitterName>
+						<NM1_SubmitterName>
+							<NM101_EntityIdentifierCode>41</NM101_EntityIdentifierCode>
+							<NM102_EntityTypeQualifier>2</NM102_EntityTypeQualifier>
+							<NM103_NameLastorOrganizationName>Mayo Clinic</NM103_NameLastorOrganizationName>
+							<NM108_IdentificationCodeQualifier>46</NM108_IdentificationCodeQualifier>
+							<NM109_IdentificationCode>S32433</NM109_IdentificationCode>
+						</NM1_SubmitterName>
+						<PER_AdministrativeCommunicationsContact>
+							<PER01_ContactFunctionCode>IC</PER01_ContactFunctionCode>
+							<PER02_Name>Mayo Clinic</PER02_Name>
+							<PER03_CommunicationNumberQualifier>TE</PER03_CommunicationNumberQualifier>
+							<PER04_CommunicationNumber>9547487111</PER04_CommunicationNumber>
+							<PER05_CommunicationNumberQualifier>FX</PER05_CommunicationNumberQualifier>
+							<PER06_CommunicationNumber>9547487222</PER06_CommunicationNumber>
+						</PER_AdministrativeCommunicationsContact>
+					</LOOP_1000A_SubmitterName>
+					<LOOP_1000B_ReceiverName>
+						<NM1_ReceiverName>
+							<NM101_EntityIdentifierCode>40</NM101_EntityIdentifierCode>
+							<NM102_EntityTypeQualifier>2</NM102_EntityTypeQualifier>
+							<NM103_NameLastorOrganizationName>Zirmed</NM103_NameLastorOrganizationName>
+							<NM108_IdentificationCodeQualifier>46</NM108_IdentificationCodeQualifier>
+							<NM109_IdentificationCode>Zirmed</NM109_IdentificationCode>
+						</NM1_ReceiverName>
+					</LOOP_1000B_ReceiverName>
+					<LOOP_2000A_BillingProviderHierarchicalLevel>
+						<HL_BillingProviderHierarchicalLevel>
+							<HL01_HierarchicalIDNumber>1</HL01_HierarchicalIDNumber>
+							<HL03_HierarchicalLevelCode>20</HL03_HierarchicalLevelCode>
+							<HL04_HierarchicalChildCode>1</HL04_HierarchicalChildCode>
+						</HL_BillingProviderHierarchicalLevel>
+						<LOOP_2010AA_BillingProviderName>
+							<NM1_BillingProviderName>
+								<NM101_EntityIdentifierCode>85</NM101_EntityIdentifierCode>
+								<NM102_EntityTypeQualifier>1</NM102_EntityTypeQualifier>
+								<NM103_NameLastorOrganizationName>Sean</NM103_NameLastorOrganizationName>
+								<NM104_NameFirst>Smith</NM104_NameFirst>
+								<NM105_NameMiddle>K</NM105_NameMiddle>
+								<NM108_IdentificationCodeQualifier>XX</NM108_IdentificationCodeQualifier>
+								<NM109_IdentificationCode>6565656565</NM109_IdentificationCode>
+							</NM1_BillingProviderName>
+							<N3_PartyLocation>
+								<N301_AddressInformation>5537 KINGS HIGHWAY</N301_AddressInformation>
+								<N302_AddressInformation>APT 6G</N302_AddressInformation>
+							</N3_PartyLocation>
+							<N4_GeographicLocation>
+								<N401_CityName>Frisco City</N401_CityName>
+								<N402_StateorProvinceCode>NY</N402_StateorProvinceCode>
+								<N403_PostalCode>112348888</N403_PostalCode>
+							</N4_GeographicLocation>
+							<REF_ReferenceInformation>
+								<REF01_ReferenceIdentificationQualifier>EI</REF01_ReferenceIdentificationQualifier>
+								<REF02_ReferenceIdentification>222222222</REF02_ReferenceIdentification>
+							</REF_ReferenceInformation>
+						</LOOP_2010AA_BillingProviderName>
+					</LOOP_2000A_BillingProviderHierarchicalLevel>
+					<LOOP_2000B_SubscriberHierarchicalLevel>
+						<HL_SubscriberHierarchicalLevel>
+							<HL01_HierarchicalIDNumber>2</HL01_HierarchicalIDNumber>
+							<HL02_HierarchicalParentIDNumber>1</HL02_HierarchicalParentIDNumber>
+							<HL03_HierarchicalLevelCode>22</HL03_HierarchicalLevelCode>
+							<HL04_HierarchicalChildCode>0</HL04_HierarchicalChildCode>
+						</HL_SubscriberHierarchicalLevel>
+						<SBR_SubscriberInformation>
+							<SBR01_PayerResponsibilitySequenceNumberCode>P</SBR01_PayerResponsibilitySequenceNumberCode>
+							<SBR02_IndividualRelationshipCode>18</SBR02_IndividualRelationshipCode>
+							<SBR03_ReferenceIdentification>K34532</SBR03_ReferenceIdentification>
+							<SBR04_Name>GFAMPLAN</SBR04_Name>
+							<SBR09_ClaimFilingIndicatorCode>ZZ</SBR09_ClaimFilingIndicatorCode>
+						</SBR_SubscriberInformation>
+						<LOOP_2010BA_SubscriberName>
+							<NM1_SubscriberName>
+								<NM101_EntityIdentifierCode>IL</NM101_EntityIdentifierCode>
+								<NM102_EntityTypeQualifier>1</NM102_EntityTypeQualifier>
+								<NM103_NameLastorOrganizationName>SIMMONS</NM103_NameLastorOrganizationName>
+								<NM104_NameFirst>FOSTER</NM104_NameFirst>
+								<NM108_IdentificationCodeQualifier>MI</NM108_IdentificationCodeQualifier>
+								<NM109_IdentificationCode>Y333RF3333</NM109_IdentificationCode>
+							</NM1_SubscriberName>
+							<N3_PartyLocation>
+								<N301_AddressInformation>8367 ALIQUAM ROAD</N301_AddressInformation>
+								<N302_AddressInformation>AP #117-8770</N302_AddressInformation>
+							</N3_PartyLocation>
+							<N4_GeographicLocation>
+								<N401_CityName>SUGAR LAND</N401_CityName>
+								<N402_StateorProvinceCode>CA</N402_StateorProvinceCode>
+								<N403_PostalCode>743434232</N403_PostalCode>
+							</N4_GeographicLocation>
+							<DMG_DemographicInformation>
+								<DMG01_DateTimePeriodFormatQualifier>D8</DMG01_DateTimePeriodFormatQualifier>
+								<DMG02_DateTimePeriod>19451123</DMG02_DateTimePeriod>
+								<DMG03_GenderCode>M</DMG03_GenderCode>
+							</DMG_DemographicInformation>
+						</LOOP_2010BA_SubscriberName>
+						<LOOP_2010BB_PayerName>
+							<NM1_PayerName>
+								<NM101_EntityIdentifierCode>PR</NM101_EntityIdentifierCode>
+								<NM102_EntityTypeQualifier>2</NM102_EntityTypeQualifier>
+								<NM103_NameLastorOrganizationName>AETNA HEALTH INC</NM103_NameLastorOrganizationName>
+								<NM108_IdentificationCodeQualifier>PI</NM108_IdentificationCodeQualifier>
+								<NM109_IdentificationCode>9393</NM109_IdentificationCode>
+							</NM1_PayerName>
+							<N3_PartyLocation>
+								<N301_AddressInformation>P.O. BOX 1125</N301_AddressInformation>
+							</N3_PartyLocation>
+							<N4_GeographicLocation>
+								<N401_CityName>Blue Bell</N401_CityName>
+								<N402_StateorProvinceCode>PA</N402_StateorProvinceCode>
+								<N403_PostalCode>19422</N403_PostalCode>
+							</N4_GeographicLocation>
+						</LOOP_2010BB_PayerName>
+						<LOOP_2300_ClaimInformation>
+							<CLM_ClaimInformation>
+								<CLM01_ClaimSubmittersIdentifier>249</CLM01_ClaimSubmittersIdentifier>
+								<CLM02_MonetaryAmount>60</CLM02_MonetaryAmount>
+								<CLM05_HealthCareServiceLocationInformation>
+									<CLM05_01_FacilityCodeValue>11</CLM05_01_FacilityCodeValue>
+									<CLM05_02_FacilityCodeQualifier>B</CLM05_02_FacilityCodeQualifier>
+									<CLM05_03_ClaimFrequencyTypeCode>1</CLM05_03_ClaimFrequencyTypeCode>
+								</CLM05_HealthCareServiceLocationInformation>
+								<CLM06_YesNoConditionorResponseCode>Y</CLM06_YesNoConditionorResponseCode>
+								<CLM07_ProviderAcceptAssignmentCode>A</CLM07_ProviderAcceptAssignmentCode>
+								<CLM08_YesNoConditionorResponseCode>Y</CLM08_YesNoConditionorResponseCode>
+								<CLM09_ReleaseofInformationCode>Y</CLM09_ReleaseofInformationCode>
+							</CLM_ClaimInformation>
+							<REF_ReferenceInformation>
+								<REF01_ReferenceIdentificationQualifier>X4</REF01_ReferenceIdentificationQualifier>
+								<REF02_ReferenceIdentification>CL324234</REF02_ReferenceIdentification>
+							</REF_ReferenceInformation>
+							<HI_HealthCareInformationCodes>
+								<HI01_HealthCareCodeInformation>
+									<HI01_01_CodeListQualifierCode>BK</HI01_01_CodeListQualifierCode>
+									<HI01_02_IndustryCode>41012</HI01_02_IndustryCode>
+								</HI01_HealthCareCodeInformation>
+							</HI_HealthCareInformationCodes>
+							<LOOP_2310B_RenderingProviderName>
+								<NM1_RenderingProviderName>
+									<NM101_EntityIdentifierCode>82</NM101_EntityIdentifierCode>
+									<NM102_EntityTypeQualifier>1</NM102_EntityTypeQualifier>
+									<NM103_NameLastorOrganizationName>Sean</NM103_NameLastorOrganizationName>
+									<NM104_NameFirst>Smith</NM104_NameFirst>
+									<NM105_NameMiddle>K</NM105_NameMiddle>
+									<NM108_IdentificationCodeQualifier>XX</NM108_IdentificationCodeQualifier>
+									<NM109_IdentificationCode>6565656565</NM109_IdentificationCode>
+								</NM1_RenderingProviderName>
+							</LOOP_2310B_RenderingProviderName>
+							<LOOP_2310C_ServiceFacilityLocationName>
+								<NM1_ServiceFacilityLocationName>
+									<NM101_EntityIdentifierCode>77</NM101_EntityIdentifierCode>
+									<NM102_EntityTypeQualifier>2</NM102_EntityTypeQualifier>
+									<NM103_NameLastorOrganizationName>NY Office</NM103_NameLastorOrganizationName>
+									<NM108_IdentificationCodeQualifier>XX</NM108_IdentificationCodeQualifier>
+									<NM109_IdentificationCode>1336177328</NM109_IdentificationCode>
+								</NM1_ServiceFacilityLocationName>
+								<N3_PartyLocation>
+									<N301_AddressInformation>5081 Tellus. Avenue</N301_AddressInformation>
+									<N302_AddressInformation>668-2204 Non Rd.</N302_AddressInformation>
+								</N3_PartyLocation>
+								<N4_GeographicLocation>
+									<N401_CityName>White Plains</N401_CityName>
+									<N402_StateorProvinceCode>NY</N402_StateorProvinceCode>
+									<N403_PostalCode>809051232</N403_PostalCode>
+								</N4_GeographicLocation>
+								<REF_ReferenceInformation>
+									<REF01_ReferenceIdentificationQualifier>LU</REF01_ReferenceIdentificationQualifier>
+									<REF02_ReferenceIdentification>484345</REF02_ReferenceIdentification>
+								</REF_ReferenceInformation>
+							</LOOP_2310C_ServiceFacilityLocationName>
+							<LOOP_2400_ServiceLineNumber>
+								<LX_ServiceLineNumber>
+									<LX01_AssignedNumber>1</LX01_AssignedNumber>
+								</LX_ServiceLineNumber>
+								<SV1_ProfessionalService>
+									<SV101_CompositeMedicalProcedureIdentifier>
+										<SV101_01_ProductServiceIDQualifier>HC</SV101_01_ProductServiceIDQualifier>
+										<SV101_02_ProductServiceID>99214</SV101_02_ProductServiceID>
+									</SV101_CompositeMedicalProcedureIdentifier>
+									<SV102_MonetaryAmount>60</SV102_MonetaryAmount>
+									<SV103_UnitorBasisforMeasurementCode>UN</SV103_UnitorBasisforMeasurementCode>
+									<SV104_Quantity>1</SV104_Quantity>
+									<SV105_FacilityCodeValue>11</SV105_FacilityCodeValue>
+									<SV107_CompositeDiagnosisCodePointer>1</SV107_CompositeDiagnosisCodePointer>
+								</SV1_ProfessionalService>
+								<DTP_DateorTimeorPeriod>
+									<DTP01_DateTimeQualifier>472</DTP01_DateTimeQualifier>
+									<DTP02_DateTimePeriodFormatQualifier>RD8</DTP02_DateTimePeriodFormatQualifier>
+									<DTP03_DateTimePeriod>20120921-20120921</DTP03_DateTimePeriod>
+								</DTP_DateorTimeorPeriod>
+								<REF_ReferenceInformation>
+									<REF01_ReferenceIdentificationQualifier>6R</REF01_ReferenceIdentificationQualifier>
+									<REF02_ReferenceIdentification>1134</REF02_ReferenceIdentification>
+								</REF_ReferenceInformation>
+							</LOOP_2400_ServiceLineNumber>
+						</LOOP_2300_ClaimInformation>
+					</LOOP_2000B_SubscriberHierarchicalLevel>
+				</transaction>
+			</group>
+		</interchange>
+	</ediroot>
+</XCSData>
+
